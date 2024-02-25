@@ -30,16 +30,16 @@ export class BattleComponent implements OnInit {
   player1Deck: CardDto[] = [];
   player1Hand: CardDto[] = [];
   player1Defense: CardDto[] = [];
-  player: Player = { image: 'assets/cards/' + 'king_of_hearts2.png' };
+  player: Player = { image: './assets/cards/' + 'king_of_hearts2.png' };
   player1Health: number = 10;
 
   player2Deck: CardDto[] = [];
   player2Hand: CardDto[] = [];
   player2Defense: CardDto[] = [];
   enemyPlayers: Player[] = [
-    { id: 1, image: 'assets/cards/' + 'jack_of_spades.png' },
-    { id: 2, image: 'assets/cards/' + 'queen_of_spades.png' },
-    { id: 3, image: 'assets/cards/' + 'king_of_spades2.png' },
+    { id: 1, image: './assets/cards/' + 'jack_of_spades.png' },
+    { id: 2, image: './assets/cards/' + 'queen_of_spades.png' },
+    { id: 3, image: './assets/cards/' + 'king_of_spades2.png' },
   ];
   enemyTarget: number = 0;
   player2Health: number = 10;
