@@ -136,8 +136,8 @@ export class CardService {
 
     return {
       valid: false,
-      highCard: Number(array[0].value),
-      cards: array,
+      cards: [],
+      highCard: 0,
     };
   }
 
@@ -154,8 +154,8 @@ export class CardService {
 
     return {
       valid: false,
-      highCard: Number(array[0].value),
-      cards: array,
+      cards: [],
+      highCard: 0,
     };
   }
 
@@ -172,8 +172,8 @@ export class CardService {
 
     return {
       valid: false,
-      highCard: Number(array[0].value),
-      cards: array,
+      cards: [],
+      highCard: 0,
     };
   }
 
@@ -195,14 +195,20 @@ export class CardService {
       return {
         valid: true,
         cards: array,
-        highCard: keyArr[4],
+        highCard: Number(
+          array.reduce(function (prev, current) {
+            return prev && Number(prev.value) > Number(current.value)
+              ? prev
+              : current;
+          }).value
+        ),
       };
     }
 
     return {
       valid: false,
-      cards: array,
-      highCard: keyArr[4],
+      cards: [],
+      highCard: 0,
     };
   }
 
@@ -219,14 +225,20 @@ export class CardService {
       return {
         valid: true,
         cards: array,
-        highCard: keyArr[4],
+        highCard: Number(
+          array.reduce(function (prev, current) {
+            return prev && Number(prev.value) > Number(current.value)
+              ? prev
+              : current;
+          }).value
+        ),
       };
     }
 
     return {
       valid: false,
-      cards: array,
-      highCard: keyArr[4],
+      cards: [],
+      highCard: 0,
     };
   }
 
@@ -246,14 +258,20 @@ export class CardService {
       return {
         valid: true,
         cards: array,
-        highCard: keyArr[4],
+        highCard: Number(
+          array.reduce(function (prev, current) {
+            return prev && Number(prev.value) > Number(current.value)
+              ? prev
+              : current;
+          }).value
+        ),
       };
     }
 
     return {
       valid: false,
-      cards: array,
-      highCard: keyArr[4],
+      cards: [],
+      highCard: 0,
     };
   }
 
@@ -269,14 +287,14 @@ export class CardService {
       return {
         valid: true,
         cards: array,
-        highCard: keyArr[3],
+        highCard: Number(array[0].value),
       };
     }
 
     return {
       valid: false,
-      cards: array,
-      highCard: keyArr[3],
+      cards: [],
+      highCard: 0,
     };
   }
 
@@ -296,14 +314,20 @@ export class CardService {
       return {
         valid: true,
         cards: array,
-        highCard: keyArr[4],
+        highCard: Number(
+          array.reduce(function (prev, current) {
+            return prev && Number(prev.value) > Number(current.value)
+              ? prev
+              : current;
+          }).value
+        ),
       };
     }
 
     return {
       valid: false,
-      cards: array,
-      highCard: keyArr[4],
+      cards: [],
+      highCard: 0,
     };
   }
 
@@ -471,7 +495,7 @@ export class CardService {
       return {
         valid: true,
         cards: [result[0], result[1]],
-        highCard: result[0].value,
+        highCard: Number(result[0].value),
       };
     }
 
@@ -499,7 +523,7 @@ export class CardService {
       return {
         valid: true,
         cards: [result[0], result[1], result[2]],
-        highCard: result[0].value,
+        highCard: Number(result[0].value),
       };
     }
 
@@ -569,16 +593,7 @@ export class CardService {
       return {
         valid: true,
         cards: [result[0], result[1], result[2], result[3]],
-        highCard: Number(
-          [result[0], result[1], result[2], result[3]].reduce(function (
-            prev,
-            current
-          ) {
-            return prev && Number(prev.value) > Number(current.value)
-              ? prev
-              : current;
-          }).value
-        ),
+        highCard: Number(result[0].value),
       };
     }
 
@@ -718,11 +733,81 @@ export class CardService {
     player1: DetermineObject,
     player2: DetermineObject
   ): DetermineWinnerObject {
-    console.log('Player Hand: ', player1);
-    console.log('Bot Hand: ', player2);
+    const player1Ranking = player1.ranking!;
+    const player2Ranking = player2.ranking!;
+    const player1HighCard = player1.highCard!;
+    const player2HighCard = player2.highCard!;
+
+    // Tie occured
+    if (
+      player1Ranking === player2Ranking &&
+      player1HighCard === player2HighCard
+    ) {
+      return {
+        tie: true,
+        player1Winner: false,
+        player1Determine: player1,
+        player2Winner: false,
+        player2Determine: player2,
+      };
+    }
+
+    // Same ranking but player 1 high card wins
+    if (
+      player1Ranking === player2Ranking &&
+      player1HighCard > player2HighCard
+    ) {
+      return {
+        tie: false,
+        player1Winner: true,
+        player1Determine: player1,
+        player2Winner: false,
+        player2Determine: player2,
+      };
+    }
+
+    // Same ranking but player 2 high card wins
+    if (
+      player1Ranking === player2Ranking &&
+      player2HighCard > player1HighCard
+    ) {
+      return {
+        tie: false,
+        player1Winner: false,
+        player1Determine: player1,
+        player2Winner: true,
+        player2Determine: player2,
+      };
+    }
+
+    // Player 1 high ranking wins
+    if (player1Ranking > player2Ranking) {
+      return {
+        tie: false,
+        player1Winner: true,
+        player1Determine: player1,
+        player2Winner: false,
+        player2Determine: player2,
+      };
+    }
+
+    // Player 2 high ranking wins
+    if (player2Ranking > player1Ranking) {
+      return {
+        tie: false,
+        player1Winner: false,
+        player1Determine: player1,
+        player2Winner: true,
+        player2Determine: player2,
+      };
+    }
+
     return {
-      player1Winner: true,
+      tie: true,
+      player1Winner: false,
+      player1Determine: player1,
       player2Winner: false,
+      player2Determine: player2,
     };
   }
 }

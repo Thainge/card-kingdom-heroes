@@ -87,34 +87,22 @@ export class BattleComponent implements OnInit {
     this.attackStarted = true;
     this.redrawHide = true;
     this.redrawing = false;
+
+    // StraightFlush
     this.player2Hand = [
       {
         suit: 'hearts',
-        value: '2',
-        image: '2_of_hearts.png',
-      },
-      {
-        suit: 'hearts',
-        value: '3',
-        image: '3_of_hearts.png',
-      },
-      {
-        suit: 'spades',
-        value: '6',
-        image: '6_of_spades.png',
-      },
-      {
-        suit: 'hearts',
-        value: '5',
-        image: '5_of_hearts.png',
-      },
-      {
-        suit: 'hearts',
-        value: '4',
-        image: '4_of_hearts.png',
+        value: '12',
+        image: 'queen_of_hearts2.png',
       },
     ];
-    this.selectedCards = this.player2Hand;
+    this.selectedCards = [
+      {
+        suit: 'spades',
+        value: '13',
+        image: 'king_of_spades2.png',
+      },
+    ];
     this.attack();
   }
 
@@ -276,7 +264,24 @@ export class BattleComponent implements OnInit {
       this.player2Defense = botHand.cards;
       // Play animations for attacking cards
       // Determine winner
-      const winner = this.cardService.determineWinner(playerHand, botHand);
+      const result = this.cardService.determineWinner(playerHand, botHand);
+
+      // Also show hand name above cards played and player name/bot
+
+      // Success!
+      if (result.player1Winner) {
+        console.log('player');
+      }
+
+      // Fail
+      if (result.player2Winner) {
+        console.log('bot');
+      }
+
+      // Tie
+      if (result.tie) {
+        console.log('tie');
+      }
     }, 1000);
   }
 

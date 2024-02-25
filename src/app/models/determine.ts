@@ -10,6 +10,9 @@ export interface DetermineObject {
 }
 
 export interface DetermineWinnerObject {
+  tie: boolean;
   player1Winner: boolean;
+  player1Determine: DetermineObject;
   player2Winner: boolean;
+  player2Determine: DetermineObject;
 }
