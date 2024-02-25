@@ -11,6 +11,8 @@ import {
   fadeInOnEnterAnimation,
 } from 'angular-animations';
 import { Player } from 'src/app/models/player';
+import { HandDto } from 'src/app/models/hand';
+import { DetermineObject } from 'src/app/models/determine';
 
 @Component({
   selector: 'app-battle',
@@ -89,51 +91,30 @@ export class BattleComponent implements OnInit {
       {
         suit: 'hearts',
         value: '2',
-        image: '2_of_spades.png',
+        image: '2_of_hearts.png',
       },
       {
-        suit: 'diamonds',
-        value: '5',
-        image: '5_of_diamonds.png',
+        suit: 'hearts',
+        value: '3',
+        image: '3_of_hearts.png',
       },
-      {
-        suit: 'spades',
-        value: '5',
-        image: '5_of_diamonds.png',
-      },
-      {
-        suit: 'clubs',
-        value: '6',
-        image: '6_of_diamonds.png',
-      },
-      {
-        suit: 'clubs',
-        value: '6',
-        image: '6_of_diamonds.png',
-      },
-    ];
-    this.selectedCards = [
       {
         suit: 'spades',
-        value: '10',
-        image: '10_of_spades.png',
+        value: '6',
+        image: '6_of_spades.png',
       },
       {
-        suit: 'diamonds',
-        value: '10',
-        image: '10_of_diamonds.png',
+        suit: 'hearts',
+        value: '5',
+        image: '5_of_hearts.png',
       },
       {
-        suit: 'diamonds',
-        value: '7',
-        image: '7_of_diamonds.png',
-      },
-      {
-        suit: 'diamonds',
-        value: '7',
-        image: '7_of_diamonds.png',
+        suit: 'hearts',
+        value: '4',
+        image: '4_of_hearts.png',
       },
     ];
+    this.selectedCards = this.player2Hand;
     this.attack();
   }
 
@@ -265,7 +246,9 @@ export class BattleComponent implements OnInit {
   }
 
   attack() {
-    const hand = this.cardService.determineHand(this.selectedCards);
+    const hand: DetermineObject = this.cardService.determineHand(
+      this.selectedCards
+    );
 
     if (!hand.valid) {
       this.canSelectCards = true;
@@ -280,19 +263,20 @@ export class BattleComponent implements OnInit {
     this.canSelectCards = false;
     this.attackStarted = true;
     // Valid attack hand, commence battle
-    this.initiateBotDefense();
+    this.initiateBotDefense(hand);
   }
 
-  initiateBotDefense() {
-    const botHand: CardDto[] = this.cardService.generateBotDefenseHand(
+  initiateBotDefense(playerHand: DetermineObject) {
+    const botHand: DetermineObject = this.cardService.generateBotDefenseHand(
       this.player2Hand,
       this.selectedCards.length
     );
 
     setTimeout(() => {
-      this.player2Defense = botHand;
+      this.player2Defense = botHand.cards;
       // Play animations for attacking cards
       // Determine winner
+      const winner = this.cardService.determineWinner(playerHand, botHand);
     }, 1000);
   }
 
