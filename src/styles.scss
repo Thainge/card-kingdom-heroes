@@ -1,0 +1,13 @@
+@font-face {
+  font-family: futureTime;
+  src: url("./assets/fonts/vinque.otf") format("opentype");
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: futureTime;
+  letter-spacing: 2px;
+}

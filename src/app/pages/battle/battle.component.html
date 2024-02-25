@@ -1,0 +1,275 @@
+<div class="container">
+  <!-- Attack Phase -->
+  <div class="redrawPanel attackPanel" *ngIf="attackStarted">
+    <div class="relativeRedrawPanel">
+      <div
+        class="panelBackground"
+        [ngClass]="{
+          fadeIn: attackStarted,
+          fadeHide: !attackStarted
+        }"
+      ></div>
+      <div
+        class="redrawCardsContainer player1defense"
+        [ngClass]="{
+          fadeIn: attackStarted,
+          fadeHide: !attackStarted
+        }"
+      >
+        <div
+          *ngFor="let card of player2Defense; index as i"
+          class="redrawCardBox"
+          [@fadeUpEnter]="{
+            value: '',
+            params: { duration: 400, delay: 0, translate: '30px' }
+          }"
+          [@fadeUpLeave]
+        >
+          <div class="redrawCard attackCard">
+            <div class="cardBorder redrawBorder">
+              <img
+                [src]="'../../../assets/cards/' + card.image"
+                class="cardBackgroundImage"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="redrawCardsContainer player1offense"
+        [ngClass]="{
+          fadeIn: attackStarted,
+          fadeHide: !attackStarted
+        }"
+      >
+        <div
+          *ngFor="let card of selectedCards; index as i"
+          class="redrawCardBox"
+          [@fadeUpEnter]="{
+            value: '',
+            params: { duration: 400, delay: 0, translate: '30px' }
+          }"
+          [@fadeUpLeave]
+        >
+          <div class="redrawCard attackCard">
+            <div class="cardBorder redrawBorder">
+              <img
+                [src]="'../../../assets/cards/' + card.image"
+                class="cardBackgroundImage"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Redraw cards panel -->
+  <div class="redrawPanel" *ngIf="!redrawHide">
+    <div class="relativeRedrawPanel">
+      <div
+        class="panelBackground"
+        [ngClass]="{
+          fade: !redrawing,
+          fadeHide: redrawHide
+        }"
+      ></div>
+      <div
+        class="redrawBox"
+        [ngClass]="{
+          fade: !redrawing,
+          fadeHide: redrawHide
+        }"
+      >
+        <div class="redrawText">Redraw cards</div>
+        <div class="redrawDetailText">
+          Can select up to {{ 2 - redrawSelectedCards.length }} more cards to
+          redraw
+        </div>
+      </div>
+      <div
+        class="redrawCardsContainer"
+        [ngClass]="{
+          fade: !redrawing,
+          fadeHide: redrawHide
+        }"
+      >
+        <div
+          *ngFor="let card of redrawCards; index as i"
+          class="redrawCardBox"
+          [@fadeUpEnter]="{
+            value: '',
+            params: { duration: 400, delay: i * 100, translate: '30px' }
+          }"
+          [@fadeUpLeave]
+        >
+          <div
+            class="redrawCard"
+            [ngClass]="{
+              activeRedrawCard: redrawCardIsSelected(card)
+            }"
+            (click)="selectRedrawCard(card)"
+          >
+            <div
+              class="cardBorder redrawBorder"
+              [ngClass]="{
+                activeCardBorder: redrawCardIsSelected(card)
+              }"
+            >
+              <img
+                [src]="'../../../assets/cards/' + card.image"
+                class="cardBackgroundImage"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="goBtnContainer">
+          <div class="goButton" (click)="finishedRedraw()">Go!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating text -->
+  <div class="floatingText">
+    <div class="floatingRelative" *ngFor="let item of errorList">
+      <div
+        class="floatingTextMessage"
+        [ngClass]="{
+          fade: errorListInactive.includes(item.id)
+        }"
+        [@zoomInEnter]="{
+          value: '',
+          params: { duration: 1000, delay: 0, translate: '30px' }
+        }"
+        [@fadeOutLeave]
+      >
+        {{ item.message }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Player 2 -->
+  <div class="top">
+    <div class="topLeft"><div class="deck"></div></div>
+    <div class="topMiddle" *ngIf="redrawHide">
+      <div
+        class="bottomCard topCard"
+        *ngFor="let card of player2Hand; index as i"
+        (click)="selectCard(card)"
+        [@fadeUpEnter]="{
+          value: '',
+          params: { duration: 400, delay: 2000 + i * 100, translate: '30px' }
+        }"
+        [@fadeUpLeave]
+      >
+        <div class="cardBorder">
+          <img [src]="'../../../assets/back.png'" class="cardBackgroundImage" />
+        </div>
+      </div>
+    </div>
+    <div class="topRight"><div class="deck"></div></div>
+  </div>
+
+  <!-- Middle -->
+  <div class="middle">
+    <div class="middleLeft">
+      <div
+        class="attackButtonBox"
+        *ngIf="redrawHide"
+        [@fadeEnter]="{
+          value: '',
+          params: { duration: 400, delay: 1200, translate: '30px' }
+        }"
+        [@fadeUpLeave]
+      >
+        <div
+          class="attackButton"
+          (click)="attack()"
+          [ngClass]="{ disabledButton: !canSelectCards }"
+        >
+          Attack
+        </div>
+      </div>
+      <div class="middleRightBox">
+        <div
+          class="middleCard middleRightCard middleLeftCard"
+          *ngIf="redrawHide"
+          [@fadeUpEnter]="{
+            value: '',
+            params: { duration: 400, delay: 1000, translate: '30px' }
+          }"
+          [@fadeUpLeave]
+        >
+          <div class="cardBorder">
+            <img [src]="player.image" class="cardBackgroundImage" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="middleRight">
+      <div class="middleRightBox" *ngFor="let item of enemyPlayers; index as i">
+        <div
+          class="middleCard middleRightCard"
+          *ngIf="redrawHide"
+          [@fadeUpEnter]="{
+            value: '',
+            params: {
+              duration: 400,
+              delay: 1300,
+              translate: '30px'
+            }
+          }"
+          [@fadeUpLeave]
+          [ngClass]="{
+            errorEnemyBorder: enemyTarget === item.id
+          }"
+          (click)="setEnemyPlayerHover(item)"
+        >
+          <div class="cardBorder middleCardBorder">
+            <img [src]="item.image" class="cardBackgroundImage" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Player 1 -->
+  <div class="bottom">
+    <div class="bottomLeft">
+      <div class="deck"></div>
+    </div>
+    <div class="bottomMiddle">
+      <div
+        class="bottomCard"
+        *ngFor="let card of player1Hand; index as i"
+        [ngClass]="{
+          activeCard: cardIsSelected(card)
+        }"
+        (click)="selectCard(card)"
+        [@fadeUpEnter]="{
+          value: '',
+          params: { duration: 400, delay: i * 100, translate: '30px' }
+        }"
+        [@fadeUpLeave]
+      >
+        <div
+          class="cardBorder"
+          [ngClass]="{
+            activeCardBorder: cardIsSelected(card),
+            validCardBorder: cardIsValid(card),
+            errorCardBorder: !cardIsValid(card) && cardIsSelected(card)
+          }"
+        >
+          <img
+            [src]="'../../../assets/cards/' + card.image"
+            class="cardBackgroundImage"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="bottomRight">
+      <div class="deck"></div>
+    </div>
+  </div>
+</div>
