@@ -111,6 +111,127 @@
     </div>
   </div>
 
+  <!-- Attack Phase Bot turn -->
+  <div class="redrawPanel attackPanel" *ngIf="enemyAttackStarted">
+    <div class="relativeRedrawPanel">
+      <div
+        class="panelBackground"
+        [ngClass]="{
+          fade: attackEnding,
+          fadeHide: !enemyAttackStarted
+        }"
+      >
+        <div class="defendBtnContainer">
+          <div class="goButton" (click)="chooseDefensePlayerCards()">
+            Defend
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="attackContainer"
+        [ngClass]="{
+          fade: attackEnding,
+          fadeHide: !enemyAttackStarted
+        }"
+      >
+        <div class="topAttackContainer">
+          <div
+            class="redrawDetailTextInvisible"
+            *ngIf="(enemyAttackHand?.name ?? '').length < 1"
+          >
+            .
+          </div>
+          <div
+            class="redrawDetailText"
+            [ngClass]="{
+              successText: enemyWinner,
+              failText: enemyLoser,
+              tieText: tie
+            }"
+            [@zoomInEnter]="{
+              value: '',
+              params: { duration: 400, delay: 500, translate: '30px' }
+            }"
+            [@fadeUpLeave]
+            *ngIf="(enemyAttackHand?.name ?? '').length > 1"
+          >
+            {{ enemyAttackHand?.name }}
+            {{ enemyWinner ? " - Winner!" : tie ? " - Tie" : "" }}
+          </div>
+          <div class="attackCardFlexRow">
+            <div
+              *ngFor="let card of enemyDefense; index as i"
+              class="attackCardBox"
+              [@fadeUpEnter]="{
+                value: '',
+                params: { duration: 400, delay: 500, translate: '30px' }
+              }"
+              [@fadeUpLeave]
+            >
+              <div class="attackCard">
+                <div class="cardBorder">
+                  <img
+                    [src]="'./assets/cards/' + card.image"
+                    class="cardBackgroundImage"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="bottomAttackContainer"
+          *ngIf="finishedChoosingDefensePlayer"
+        >
+          <div
+            class="redrawDetailTextInvisible"
+            *ngIf="(playerAttackHand?.name ?? '').length < 1"
+          >
+            .
+          </div>
+          <div
+            class="redrawDetailText"
+            [ngClass]="{
+              successText: playerWinner,
+              failText: playerLoser,
+              tieText: tie
+            }"
+            [@zoomInEnter]="{
+              value: '',
+              params: { duration: 400, delay: 500, translate: '30px' }
+            }"
+            [@fadeUpLeave]
+            *ngIf="(playerAttackHand?.name ?? '').length > 1"
+          >
+            {{ playerAttackHand?.name
+            }}{{ playerWinner ? " - Winner!" : tie ? " - Tie" : "" }}
+          </div>
+          <div class="attackCardFlexRow" *ngIf="chooseDefensePlayerCards">
+            <div
+              *ngFor="let card of selectedCards; index as i"
+              class="attackCardBox"
+              [@fadeUpEnter]="{
+                value: '',
+                params: { duration: 400, delay: 0, translate: '30px' }
+              }"
+              [@fadeUpLeave]
+            >
+              <div class="attackCard">
+                <div class="cardBorder">
+                  <img
+                    [src]="'./assets/cards/' + card.image"
+                    class="cardBackgroundImage"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Redraw cards panel -->
   <div class="redrawPanel" *ngIf="!redrawHide">
     <div class="relativeRedrawPanel">
@@ -199,14 +320,20 @@
   <!-- Player 2 -->
   <div class="top">
     <div class="topLeft"><div class="deck"></div></div>
-    <div class="topMiddle" *ngIf="redrawHide">
+    <div
+      class="topMiddle"
+      *ngIf="(redrawHide && canSelectCards) || (redrawHide && showBotCards)"
+    >
       <div
         class="bottomCard topCard"
         *ngFor="let card of enemyHand; index as i"
+        [ngClass]="{
+          activeEnemyCard: enemyCardIsSelected(card)
+        }"
         (click)="selectCard(card)"
         [@fadeUpEnter]="{
           value: '',
-          params: { duration: 400, delay: 2000 + i * 100, translate: '30px' }
+          params: { duration: 400, delay: i * 100, translate: '30px' }
         }"
         [@fadeUpLeave]
       >
@@ -226,7 +353,7 @@
         *ngIf="redrawHide"
         [@fadeEnter]="{
           value: '',
-          params: { duration: 400, delay: 1200, translate: '30px' }
+          params: { duration: 400, delay: 700, translate: '30px' }
         }"
         [@fadeUpLeave]
       >
@@ -247,6 +374,9 @@
             params: { duration: 400, delay: 1000, translate: '30px' }
           }"
           [@fadeUpLeave]
+          [ngClass]="{
+            errorEnemyBorder: playerTarget === player.id
+          }"
         >
           <div class="cardBorder">
             <img [src]="player.image" class="cardBackgroundImage" />
@@ -263,7 +393,7 @@
             value: '',
             params: {
               duration: 400,
-              delay: 1300,
+              delay: 1100,
               translate: '30px'
             }
           }"
@@ -286,7 +416,17 @@
     <div class="bottomLeft">
       <div class="deck"></div>
     </div>
-    <div class="bottomMiddle">
+    <div
+      class="bottomMiddle"
+      [ngClass]="{
+        attackingBottomMiddle:
+          !showBotCards && enemyAttackStarted && canSelectCards
+      }"
+      *ngIf="
+        canSelectCards ||
+        (!showBotCards && enemyAttackStarted && canSelectCards)
+      "
+    >
       <div
         class="bottomCard"
         *ngFor="let card of playerHand; index as i"
@@ -304,8 +444,9 @@
           class="cardBorder"
           [ngClass]="{
             activeCardBorder: cardIsSelected(card),
-            validCardBorder: cardIsValid(card),
-            errorCardBorder: !cardIsValid(card) && cardIsSelected(card)
+            validCardBorder: cardIsValid(card) && !enemyAttackStarted,
+            errorCardBorder:
+              !cardIsValid(card) && cardIsSelected(card) && !enemyAttackStarted
           }"
         >
           <img

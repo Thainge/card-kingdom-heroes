@@ -36,11 +36,14 @@ export class BattleComponent implements OnInit {
   playerHand: CardDto[] = [];
   playerDefense: CardDto[] = [];
   player: Player = { image: './assets/cards/' + 'king_of_hearts2.png' };
+  playerTarget: number = 0;
   playerHealth: number = 10;
   playerAttackHand!: DetermineObject;
   playerWinner: boolean = false;
   playerLoser: boolean = false;
+  finishedChoosingDefensePlayer: boolean = false;
 
+  selectedEnemyCards: CardDto[] = [];
   enemyDeck: CardDto[] = [];
   enemyHand: CardDto[] = [];
   enemyDefense: CardDto[] = [];
@@ -54,6 +57,8 @@ export class BattleComponent implements OnInit {
   enemyAttackHand!: DetermineObject;
   enemyWinner: boolean = false;
   enemyLoser: boolean = false;
+  enemyAttackStarted: boolean = false;
+  showBotCards: boolean = false;
   tie: boolean = false;
 
   attackEnding: boolean = false;
@@ -97,6 +102,16 @@ export class BattleComponent implements OnInit {
 
   cardIsSelected(card: CardDto): boolean {
     const includesCard = this.selectedCards.find(
+      (x: CardDto) => x.value === card.value && x.suit === card.suit
+    );
+    if (includesCard) {
+      return true;
+    }
+    return false;
+  }
+
+  enemyCardIsSelected(card: CardDto): boolean {
+    const includesCard = this.selectedEnemyCards.find(
       (x: CardDto) => x.value === card.value && x.suit === card.suit
     );
     if (includesCard) {
@@ -277,11 +292,11 @@ export class BattleComponent implements OnInit {
       // Play animations for attacking cards
       // Determine winner
       const result = this.cardService.determineWinner(playerHand, botHand);
-      this.setWinner(result);
+      this.setWinner(result, true);
     }, 1000);
   }
 
-  setWinner(result: DetermineWinnerObject) {
+  setWinner(result: DetermineWinnerObject, playerTurn: boolean) {
     // Play confeti on winner
     // Show god rays on winner
     setTimeout(() => {
@@ -306,20 +321,85 @@ export class BattleComponent implements OnInit {
       this.attackEnding = true;
       setTimeout(() => {
         this.attackStarted = false;
-        this.newTurnPlayer();
+        this.newTurn();
+        if (playerTurn) {
+          this.startBotTurn();
+        }
       }, 1000);
     }, 2500);
   }
 
-  newTurnPlayer() {
+  startBotTurn() {
+    this.showBotCards = true;
+    this.canSelectCards = false;
+    // Determine attack hand
+    const botHand: DetermineObject = this.cardService.generateBotOffenseHand(
+      this.enemyHand
+    );
+
+    setTimeout(() => {
+      // Select player target
+      this.playerTarget = this.player.id!;
+    }, 500);
+
+    setTimeout(() => {
+      // Select enemy cards
+      this.selectedEnemyCards = botHand.cards;
+    }, 1500);
+    setTimeout(() => {
+      // Attack
+      this.showBotCards = false;
+      this.enemyAttackStarted = true;
+      this.canSelectCards = true;
+      // Valid attack hand, commence battle
+      this.enemyAttackHand = botHand;
+      this.enemyDefense = botHand.cards;
+    }, 2500);
+  }
+
+  chooseDefensePlayerCards() {
+    if (this.selectedCards.length !== this.enemyAttackHand.cards.length) {
+      this.canSelectCards = true;
+      this.pushError(
+        'Please Select ' + this.enemyAttackHand.cards.length + ' Cards'
+      );
+      return;
+    }
+
+    this.canSelectCards = false;
+    const hand: DetermineObject = this.cardService.determineHand(
+      this.selectedCards
+    );
+    this.playerAttackHand = hand;
+
+    this.playerHand = this.playerHand.filter((x) => {
+      const includes = hand.cards.find(
+        (a) => a.suit === x.suit && a.value === x.value
+      );
+      if (includes) {
+        return false;
+      }
+      return true;
+    });
+
+    this.finishedChoosingDefensePlayer = true;
+    const result = this.cardService.determineWinner(hand, this.enemyAttackHand);
+    this.setWinner(result, false);
+  }
+
+  newTurn() {
+    this.finishedChoosingDefensePlayer = false;
     this.enemyTarget = 0;
+    this.playerTarget = 0;
     this.canSelectCards = true;
     this.selectedCards = [];
+    this.selectedEnemyCards = [];
     this.attackEnding = false;
     this.playerWinner = false;
     this.playerLoser = false;
     this.enemyLoser = false;
     this.enemyWinner = false;
+    this.enemyAttackStarted = false;
     this.tie = false;
     this.enemyDefense = [];
     this.playerAttackHand = { cards: [], highCard: 0, valid: false };

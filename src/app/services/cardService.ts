@@ -494,6 +494,107 @@ export class CardService {
     };
   }
 
+  public generateBotOffenseHand(array: CardDto[]): DetermineObject {
+    const pairInfo = this.botHandIncludesPair(array);
+    const twoPair = this.botHandIncludesTwoPair(array);
+    const threeOfAKindInfo = this.botHandIncludesThreeOfAKind(array);
+    const straightInfo = this.botHandIncludesStraight(array);
+    const flushInfo = this.botHandIncludesFlush(array);
+    const fullHouseInfo = this.botHandIncludesFullHouse(array);
+    const fourOfAKindInfo = this.botHandIncludesFourOfAKind(array);
+    const straightFlushInfo = this.botHandIncludesStraightFlush(array);
+
+    if (straightFlushInfo.valid) {
+      return {
+        name: 'Straight Flush',
+        valid: true,
+        power: 5,
+        ranking: 9,
+        highCard: straightFlushInfo.highCard,
+        cards: straightFlushInfo.cards,
+      };
+    } else if (fourOfAKindInfo.valid) {
+      return {
+        name: 'Four of a Kind',
+        valid: true,
+        power: 4,
+        ranking: 8,
+        highCard: fourOfAKindInfo.highCard,
+        cards: fourOfAKindInfo.cards,
+      };
+    } else if (fullHouseInfo.valid) {
+      return {
+        name: 'Full House',
+        valid: true,
+        power: 5,
+        ranking: 7,
+        highCard: fullHouseInfo.highCard,
+        cards: fullHouseInfo.cards,
+      };
+    } else if (flushInfo.valid) {
+      return {
+        name: 'Flush',
+        valid: true,
+        power: 5,
+        ranking: 6,
+        highCard: flushInfo.highCard,
+        cards: flushInfo.cards,
+      };
+    } else if (straightInfo.valid) {
+      return {
+        name: 'Straight',
+        valid: true,
+        power: 5,
+        ranking: 5,
+        highCard: straightInfo.highCard,
+        cards: straightInfo.cards,
+      };
+    } else if (threeOfAKindInfo.valid) {
+      return {
+        name: 'Three of a Kind',
+        valid: true,
+        power: 3,
+        ranking: 4,
+        highCard: threeOfAKindInfo.highCard,
+        cards: threeOfAKindInfo.cards,
+      };
+    } else if (twoPair.valid) {
+      return {
+        name: 'Two Pair',
+        valid: true,
+        power: 4,
+        ranking: 3,
+        highCard: twoPair.highCard,
+        cards: twoPair.cards,
+      };
+    } else if (pairInfo.valid) {
+      return {
+        name: 'Two of a Kind',
+        valid: true,
+        power: 2,
+        ranking: 2,
+        highCard: pairInfo.highCard,
+        cards: pairInfo.cards,
+      };
+    }
+
+    // Generate array of cards that fill since no match
+
+    const maxCard: CardDto = array.reduce(function (prev, current) {
+      return prev && Number(prev.value) > Number(current.value)
+        ? prev
+        : current;
+    });
+    return {
+      name: 'High Card',
+      valid: true,
+      power: 1,
+      ranking: 1,
+      highCard: Number(maxCard.value),
+      cards: [maxCard],
+    };
+  }
+
   private botHandIncludesPair(array: CardDto[]): DetermineObject {
     const valuesCount = this.getValuesCount(array);
     const includesPair =
