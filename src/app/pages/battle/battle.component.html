@@ -122,7 +122,11 @@
         }"
       >
         <div class="defendBtnContainer">
-          <div class="goButton" (click)="chooseDefensePlayerCards()">
+          <div
+            class="goButton"
+            (click)="chooseDefensePlayerCards()"
+            *ngIf="canSelectCards"
+          >
             Defend
           </div>
         </div>
@@ -375,36 +379,91 @@
           }"
           [@fadeUpLeave]
           [ngClass]="{
-            errorEnemyBorder: playerTarget === player.id
+            leavingFieldCard: player.health < 1
           }"
         >
-          <div class="cardBorder">
-            <img [src]="player.image" class="cardBackgroundImage" />
+          <div
+            class="cardBorder middleCardBorder playerCardBorder"
+            [ngClass]="{
+              errorEnemyBorder: playerTarget === player.id
+            }"
+          >
+            <div class="cardDetailsContainer">
+              <div class="cardHeaderName">{{ player.name }}</div>
+              <div class="cardFooter">
+                <div class="cardFooterIconBox">
+                  <img src="./assets/attack.png" class="cardIcon" />
+                  <div class="cardIconValue">{{ player.attack }}</div>
+                </div>
+                <div class="cardFooterIconBox">
+                  <img src="./assets/health.png" class="cardIcon" />
+                  <div class="cardIconValue">{{ player.health }}</div>
+                </div>
+                <div class="cardFooterIconBox">
+                  <img src="./assets/defense.png" class="cardIcon" />
+                  <div class="cardIconValue">{{ player.defense }}</div>
+                </div>
+              </div>
+            </div>
+            <img
+              [src]="player.image"
+              class="cardBackgroundImage playerBackground"
+            />
           </div>
         </div>
       </div>
     </div>
     <div class="middleRight">
-      <div class="middleRightBox" *ngFor="let item of enemyPlayers; index as i">
+      <div class="enemyCardsBox">
         <div
-          class="middleCard middleRightCard"
-          *ngIf="redrawHide"
-          [@fadeUpEnter]="{
-            value: '',
-            params: {
-              duration: 400,
-              delay: 1100,
-              translate: '30px'
-            }
-          }"
-          [@fadeUpLeave]
-          [ngClass]="{
-            errorEnemyBorder: enemyTarget === item.id
-          }"
-          (click)="setEnemyPlayerHover(item)"
+          class="middleRightBox"
+          *ngFor="let item of enemyPlayers; index as i"
         >
-          <div class="cardBorder middleCardBorder">
-            <img [src]="item.image" class="cardBackgroundImage" />
+          <div
+            class="middleCard middleRightCard"
+            *ngIf="redrawHide"
+            [@fadeUpEnter]="{
+              value: '',
+              params: {
+                duration: 400,
+                delay: 1100,
+                translate: '30px'
+              }
+            }"
+            [@fadeUpLeave]
+            [ngClass]="{
+              leavingFieldCard: item.health < 1
+            }"
+            (click)="setEnemyPlayerHover(item)"
+          >
+            <div
+              class="cardBorder middleCardBorder playerCardBorder"
+              [ngClass]="{
+                errorEnemyBorder: enemyTarget === item.id
+              }"
+            >
+              <div class="cardDetailsContainer">
+                <div class="cardHeaderName">{{ item.name }}</div>
+                <div class="cardFooter">
+                  <div class="cardFooterIconBox">
+                    <img src="./assets/attack.png" class="cardIcon" />
+                    <div class="cardIconValue">{{ item.attack }}</div>
+                  </div>
+                  <div class="cardFooterIconBox">
+                    <img src="./assets/health.png" class="cardIcon" />
+                    <div class="cardIconValue">{{ item.health }}</div>
+                  </div>
+                  <div class="cardFooterIconBox">
+                    <img src="./assets/defense.png" class="cardIcon" />
+                    <div class="cardIconValue">{{ item.defense }}</div>
+                  </div>
+                </div>
+              </div>
+              <img
+                [src]="item.image"
+                class="cardBackgroundImage playerBackground"
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -35,7 +35,14 @@ export class BattleComponent implements OnInit {
   playerDeck: CardDto[] = [];
   playerHand: CardDto[] = [];
   playerDefense: CardDto[] = [];
-  player: Player = { image: './assets/cards/' + 'king_of_hearts2.png' };
+  player: Player = {
+    id: 5,
+    image: './assets/' + 'link.png',
+    name: 'Link',
+    attack: 2,
+    defense: 2,
+    health: 9,
+  };
   playerTarget: number = 0;
   playerHealth: number = 10;
   playerAttackHand!: DetermineObject;
@@ -48,9 +55,30 @@ export class BattleComponent implements OnInit {
   enemyHand: CardDto[] = [];
   enemyDefense: CardDto[] = [];
   enemyPlayers: Player[] = [
-    { id: 1, image: './assets/cards/' + 'jack_of_spades.png' },
-    { id: 2, image: './assets/cards/' + 'queen_of_spades.png' },
-    { id: 3, image: './assets/cards/' + 'king_of_spades2.png' },
+    {
+      id: 1,
+      image: './assets/' + 'link.png',
+      name: 'Link',
+      attack: 2,
+      defense: 0,
+      health: 4,
+    },
+    {
+      id: 2,
+      image: './assets/' + 'link.png',
+      name: 'Link',
+      attack: 4,
+      defense: 1,
+      health: 2,
+    },
+    {
+      id: 3,
+      image: './assets/' + 'link.png',
+      name: 'Link',
+      attack: 1,
+      defense: 3,
+      health: 7,
+    },
   ];
   enemyTarget: number = 0;
   enemyHealth: number = 10;
@@ -300,21 +328,10 @@ export class BattleComponent implements OnInit {
     // Play confeti on winner
     // Show god rays on winner
     setTimeout(() => {
-      // Success!
-      if (result.player1Winner) {
-        this.playerWinner = true;
-        this.enemyLoser = true;
-      }
-
-      // Fail
-      if (result.player2Winner) {
-        this.enemyWinner = true;
-        this.playerLoser = true;
-      }
-
-      // Tie
-      if (result.tie) {
-        this.tie = true;
+      if (playerTurn) {
+        this.combatFinishPlayer(result);
+      } else {
+        this.combatFinishBot(result);
       }
     }, 1500);
     setTimeout(() => {
@@ -327,6 +344,89 @@ export class BattleComponent implements OnInit {
         }
       }, 1000);
     }, 2500);
+  }
+
+  combatFinishPlayer(result: DetermineWinnerObject) {
+    // Player finishes combat
+
+    // If player won combat, attack selected opponent
+    if (result.player1Winner) {
+      this.playerWinner = true;
+      this.enemyLoser = true;
+      this.enemyPlayers = this.enemyPlayers.map((x) => {
+        if (x.id === this.enemyTarget) {
+          let newHealth = x.health;
+          let newDefense = x.defense;
+
+          let incomingAttackPower =
+            result.player1Determine.power! + this.player.attack;
+          newDefense = x.defense - 1;
+          incomingAttackPower = incomingAttackPower - x.defense;
+          if (newDefense < 1) {
+            newDefense = 0;
+          }
+          if (incomingAttackPower >= 1) {
+            newHealth = x.health - incomingAttackPower;
+          }
+          return { ...x, health: newHealth, defense: newDefense };
+        }
+        return x;
+      });
+    }
+
+    // Fail
+    if (result.player2Winner) {
+      this.enemyWinner = true;
+      this.playerLoser = true;
+    }
+
+    // Tie
+    if (result.tie) {
+      this.tie = true;
+    }
+  }
+
+  combatFinishBot(result: DetermineWinnerObject) {
+    // Bot finishes combat
+
+    // If bot won combat, attack player
+    if (result.player1Winner) {
+      this.playerWinner = true;
+      this.enemyLoser = true;
+    }
+
+    // Fail
+    if (result.player2Winner) {
+      this.enemyWinner = true;
+      this.playerLoser = true;
+      this.player.health = this.player.health - result.player2Determine.power!;
+      const foundAttacker = this.enemyPlayers.find((x) => x.health > 0)!;
+
+      let newHealth = this.player.health;
+      let newDefense = this.player.defense;
+
+      let incomingAttackPower =
+        result.player2Determine.power! + foundAttacker.attack;
+      newDefense = this.player.defense - 1;
+      incomingAttackPower = incomingAttackPower - this.player.defense;
+      if (newDefense < 1) {
+        newDefense = 0;
+      }
+
+      if (incomingAttackPower >= 1) {
+        newHealth = this.player.health - incomingAttackPower;
+      }
+
+      this.player = { ...this.player, health: newHealth, defense: newDefense };
+      if (this.player.health < 1) {
+        // Defeat
+      }
+    }
+
+    // Tie
+    if (result.tie) {
+      this.tie = true;
+    }
   }
 
   startBotTurn() {
