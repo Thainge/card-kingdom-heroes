@@ -12,7 +12,10 @@ import {
 } from 'angular-animations';
 import { Player } from 'src/app/models/player';
 import { HandDto } from 'src/app/models/hand';
-import { DetermineObject } from 'src/app/models/determine';
+import {
+  DetermineObject,
+  DetermineWinnerObject,
+} from 'src/app/models/determine';
 
 @Component({
   selector: 'app-battle',
@@ -29,23 +32,31 @@ import { DetermineObject } from 'src/app/models/determine';
   ],
 })
 export class BattleComponent implements OnInit {
-  player1Deck: CardDto[] = [];
-  player1Hand: CardDto[] = [];
-  player1Defense: CardDto[] = [];
+  playerDeck: CardDto[] = [];
+  playerHand: CardDto[] = [];
+  playerDefense: CardDto[] = [];
   player: Player = { image: './assets/cards/' + 'king_of_hearts2.png' };
-  player1Health: number = 10;
+  playerHealth: number = 10;
+  playerAttackHand!: DetermineObject;
+  playerWinner: boolean = false;
+  playerLoser: boolean = false;
 
-  player2Deck: CardDto[] = [];
-  player2Hand: CardDto[] = [];
-  player2Defense: CardDto[] = [];
+  enemyDeck: CardDto[] = [];
+  enemyHand: CardDto[] = [];
+  enemyDefense: CardDto[] = [];
   enemyPlayers: Player[] = [
     { id: 1, image: './assets/cards/' + 'jack_of_spades.png' },
     { id: 2, image: './assets/cards/' + 'queen_of_spades.png' },
     { id: 3, image: './assets/cards/' + 'king_of_spades2.png' },
   ];
   enemyTarget: number = 0;
-  player2Health: number = 10;
+  enemyHealth: number = 10;
+  enemyAttackHand!: DetermineObject;
+  enemyWinner: boolean = false;
+  enemyLoser: boolean = false;
+  tie: boolean = false;
 
+  attackEnding: boolean = false;
   selectedCards: CardDto[] = [];
   canSelectCards: boolean = true;
 
@@ -64,46 +75,24 @@ export class BattleComponent implements OnInit {
 
   ngOnInit() {
     // Shuffle player decks
-    this.player1Deck = this.cardService.shuffle(Cards);
-    this.player2Deck = this.cardService.shuffle(Cards);
+    this.playerDeck = this.cardService.shuffle(Cards);
+    this.enemyDeck = this.cardService.shuffle(Cards);
 
     // Both players draw 5 cards
     for (const num of [0, 0, 0, 0, 0]) {
       // Add to player 1 hand and remove player 1 deck
-      // this.player1Hand.push(this.player1Deck[num]);
-      // this.player1Deck.push(this.player1Deck[num]);
-      // this.player1Deck.shift();
-      this.redrawCards.push(this.player1Deck[num]);
-      this.player1Deck.push(this.player1Deck[num]);
-      this.player1Deck.shift();
+      // this.player1Hand.push(this.playerDeck[num]);
+      // this.playerDeck.push(this.playerDeck[num]);
+      // this.playerDeck.shift();
+      this.redrawCards.push(this.playerDeck[num]);
+      this.playerDeck.push(this.playerDeck[num]);
+      this.playerDeck.shift();
 
       // Add to player 2 hand and remove player 2 deck
-      this.player2Hand.push(this.player2Deck[num]);
-      this.player2Deck.push(this.player2Deck[num]);
-      this.player2Deck.shift();
+      this.enemyHand.push(this.enemyDeck[num]);
+      this.enemyDeck.push(this.enemyDeck[num]);
+      this.enemyDeck.shift();
     }
-
-    // Testing attack
-    this.attackStarted = true;
-    this.redrawHide = true;
-    this.redrawing = false;
-
-    // StraightFlush
-    this.player2Hand = [
-      {
-        suit: 'hearts',
-        value: '12',
-        image: 'queen_of_hearts2.png',
-      },
-    ];
-    this.selectedCards = [
-      {
-        suit: 'spades',
-        value: '13',
-        image: 'king_of_spades2.png',
-      },
-    ];
-    this.attack();
   }
 
   cardIsSelected(card: CardDto): boolean {
@@ -154,12 +143,12 @@ export class BattleComponent implements OnInit {
     setTimeout(() => {
       // Remove selected redraw cards
       this.redrawSelectedCards.forEach((x, i) => {
-        this.redrawCards.push(this.player1Deck[0]);
-        this.player1Deck.push(this.player1Deck[0]);
-        this.player1Deck.shift();
+        this.redrawCards.push(this.playerDeck[0]);
+        this.playerDeck.push(this.playerDeck[0]);
+        this.playerDeck.shift();
       });
 
-      this.player1Hand = this.redrawCards;
+      this.playerHand = this.redrawCards;
     }, 900);
   }
 
@@ -248,41 +237,109 @@ export class BattleComponent implements OnInit {
       this.setEnemyPlayerHover(this.enemyPlayers[0]);
     }
 
+    this.playerHand = this.playerHand.filter((x) => {
+      const includes = this.selectedCards.find(
+        (a) => a.suit === x.suit && a.value === x.value
+      );
+      if (includes) {
+        return false;
+      }
+      return true;
+    });
+
     this.canSelectCards = false;
     this.attackStarted = true;
     // Valid attack hand, commence battle
+    this.playerAttackHand = hand;
     this.initiateBotDefense(hand);
   }
 
   initiateBotDefense(playerHand: DetermineObject) {
     const botHand: DetermineObject = this.cardService.generateBotDefenseHand(
-      this.player2Hand,
+      this.enemyHand,
       this.selectedCards.length
     );
 
+    this.enemyHand = this.enemyHand.filter((x) => {
+      const includes = botHand.cards.find(
+        (a) => a.suit === x.suit && a.value === x.value
+      );
+      if (includes) {
+        return false;
+      }
+      return true;
+    });
+
     setTimeout(() => {
-      this.player2Defense = botHand.cards;
+      this.enemyAttackHand = botHand;
+      this.enemyDefense = botHand.cards;
+
       // Play animations for attacking cards
       // Determine winner
       const result = this.cardService.determineWinner(playerHand, botHand);
+      this.setWinner(result);
+    }, 1000);
+  }
 
-      // Also show hand name above cards played and player name/bot
-
+  setWinner(result: DetermineWinnerObject) {
+    // Play confeti on winner
+    // Show god rays on winner
+    setTimeout(() => {
       // Success!
       if (result.player1Winner) {
-        console.log('player');
+        this.playerWinner = true;
+        this.enemyLoser = true;
       }
 
       // Fail
       if (result.player2Winner) {
-        console.log('bot');
+        this.enemyWinner = true;
+        this.playerLoser = true;
       }
 
       // Tie
       if (result.tie) {
-        console.log('tie');
+        this.tie = true;
       }
-    }, 1000);
+    }, 1500);
+    setTimeout(() => {
+      this.attackEnding = true;
+      setTimeout(() => {
+        this.attackStarted = false;
+        this.newTurnPlayer();
+      }, 1000);
+    }, 2500);
+  }
+
+  newTurnPlayer() {
+    this.enemyTarget = 0;
+    this.canSelectCards = true;
+    this.selectedCards = [];
+    this.attackEnding = false;
+    this.playerWinner = false;
+    this.playerLoser = false;
+    this.enemyLoser = false;
+    this.enemyWinner = false;
+    this.tie = false;
+    this.enemyDefense = [];
+    this.playerAttackHand = { cards: [], highCard: 0, valid: false };
+    this.enemyAttackHand = { cards: [], highCard: 0, valid: false };
+
+    const addLength = 5 - this.playerHand.length;
+    const addArr = Array.from(Array(addLength).keys());
+    addArr.forEach((x, i) => {
+      this.playerHand.push(this.playerDeck[0]);
+      this.playerDeck.push(this.playerDeck[0]);
+      this.playerDeck.shift();
+    });
+
+    const addLengthEnemy = 5 - this.enemyHand.length;
+    const addArrEnemy = Array.from(Array(addLengthEnemy).keys());
+    addArrEnemy.forEach((x, i) => {
+      this.enemyHand.push(this.enemyDeck[0]);
+      this.enemyDeck.push(this.enemyDeck[0]);
+      this.enemyDeck.shift();
+    });
   }
 
   pushError(message: string) {

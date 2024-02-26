@@ -117,8 +117,10 @@ export class CardService {
 
     return {
       valid: false,
-      name: '',
+      name: 'High Card',
       highCard: 0,
+      power: 1,
+      ranking: 1,
       cards: [],
     };
   }
@@ -467,11 +469,28 @@ export class CardService {
       };
     }
 
+    // Generate array of cards that fill since no match
+
+    let defenseCards: CardDto[] = [];
+    array.forEach((x, i) => {
+      if (i < defenseLength) {
+        defenseCards.push(x);
+      }
+    });
+
     return {
       valid: false,
-      name: '',
-      highCard: 0,
-      cards: [],
+      power: 0,
+      ranking: 0,
+      name: 'High Card',
+      highCard: Number(
+        [...defenseCards].reduce(function (prev, current) {
+          return prev && Number(prev.value) > Number(current.value)
+            ? prev
+            : current;
+        }).value
+      ),
+      cards: [...defenseCards],
     };
   }
 

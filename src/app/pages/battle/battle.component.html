@@ -5,58 +5,105 @@
       <div
         class="panelBackground"
         [ngClass]="{
-          fadeIn: attackStarted,
+          fade: attackEnding,
           fadeHide: !attackStarted
         }"
       ></div>
+
       <div
-        class="redrawCardsContainer player1defense"
+        class="attackContainer"
         [ngClass]="{
-          fadeIn: attackStarted,
+          fade: attackEnding,
           fadeHide: !attackStarted
         }"
       >
-        <div
-          *ngFor="let card of player2Defense; index as i"
-          class="redrawCardBox"
-          [@fadeUpEnter]="{
-            value: '',
-            params: { duration: 400, delay: 0, translate: '30px' }
-          }"
-          [@fadeUpLeave]
-        >
-          <div class="redrawCard attackCard">
-            <div class="cardBorder redrawBorder">
-              <img
-                [src]="'./assets/cards/' + card.image"
-                class="cardBackgroundImage"
-              />
+        <div class="topAttackContainer">
+          <div
+            class="redrawDetailTextInvisible"
+            *ngIf="(enemyAttackHand?.name ?? '').length < 1"
+          >
+            .
+          </div>
+          <div
+            class="redrawDetailText"
+            [ngClass]="{
+              successText: enemyWinner,
+              failText: enemyLoser,
+              tieText: tie
+            }"
+            [@zoomInEnter]="{
+              value: '',
+              params: { duration: 400, delay: 500, translate: '30px' }
+            }"
+            [@fadeUpLeave]
+            *ngIf="(enemyAttackHand?.name ?? '').length > 1"
+          >
+            {{ enemyAttackHand?.name }}
+            {{ enemyWinner ? " - Winner!" : tie ? " - Tie" : "" }}
+          </div>
+          <div class="attackCardFlexRow">
+            <div
+              *ngFor="let card of enemyDefense; index as i"
+              class="attackCardBox"
+              [@fadeUpEnter]="{
+                value: '',
+                params: { duration: 400, delay: 500, translate: '30px' }
+              }"
+              [@fadeUpLeave]
+            >
+              <div class="attackCard">
+                <div class="cardBorder">
+                  <img
+                    [src]="'./assets/cards/' + card.image"
+                    class="cardBackgroundImage"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div
-        class="redrawCardsContainer player1offense"
-        [ngClass]="{
-          fadeIn: attackStarted,
-          fadeHide: !attackStarted
-        }"
-      >
-        <div
-          *ngFor="let card of selectedCards; index as i"
-          class="redrawCardBox"
-          [@fadeUpEnter]="{
-            value: '',
-            params: { duration: 400, delay: 0, translate: '30px' }
-          }"
-          [@fadeUpLeave]
-        >
-          <div class="redrawCard attackCard">
-            <div class="cardBorder redrawBorder">
-              <img
-                [src]="'./assets/cards/' + card.image"
-                class="cardBackgroundImage"
-              />
+        <div class="bottomAttackContainer">
+          <div
+            class="redrawDetailTextInvisible"
+            *ngIf="(playerAttackHand?.name ?? '').length < 1"
+          >
+            .
+          </div>
+          <div
+            class="redrawDetailText"
+            [ngClass]="{
+              successText: playerWinner,
+              failText: playerLoser,
+              tieText: tie
+            }"
+            [@zoomInEnter]="{
+              value: '',
+              params: { duration: 400, delay: 500, translate: '30px' }
+            }"
+            [@fadeUpLeave]
+            *ngIf="(playerAttackHand?.name ?? '').length > 1"
+          >
+            {{ playerAttackHand?.name
+            }}{{ playerWinner ? " - Winner!" : tie ? " - Tie" : "" }}
+          </div>
+          <div class="attackCardFlexRow">
+            <div
+              *ngFor="let card of selectedCards; index as i"
+              class="attackCardBox"
+              [@fadeUpEnter]="{
+                value: '',
+                params: { duration: 400, delay: 0, translate: '30px' }
+              }"
+              [@fadeUpLeave]
+            >
+              <div class="attackCard">
+                <div class="cardBorder">
+                  <img
+                    [src]="'./assets/cards/' + card.image"
+                    class="cardBackgroundImage"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -155,7 +202,7 @@
     <div class="topMiddle" *ngIf="redrawHide">
       <div
         class="bottomCard topCard"
-        *ngFor="let card of player2Hand; index as i"
+        *ngFor="let card of enemyHand; index as i"
         (click)="selectCard(card)"
         [@fadeUpEnter]="{
           value: '',
@@ -242,7 +289,7 @@
     <div class="bottomMiddle">
       <div
         class="bottomCard"
-        *ngFor="let card of player1Hand; index as i"
+        *ngFor="let card of playerHand; index as i"
         [ngClass]="{
           activeCard: cardIsSelected(card)
         }"

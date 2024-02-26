@@ -305,6 +305,12 @@
   position: relative;
 }
 
+.redrawDetailTextInvisible {
+  font-size: 2em;
+  opacity: 0;
+  position: relative;
+}
+
 .redrawCard {
   position: relative;
   bottom: -10%;
@@ -405,14 +411,55 @@
   pointer-events: none !important;
 }
 
-.attackCard {
-  bottom: -10% !important;
-  cursor: default !important;
-  user-select: none !important;
-  pointer-events: none !important;
+.attackContainer {
+  height: 100%;
 }
 
-.player1defense {
+.topAttackContainer {
   height: 50%;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: space-evenly;
+}
+
+.bottomAttackContainer {
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.attackCardBox {
+  width: 10%;
+}
+
+.attackCardFlexRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.attackCard {
+  position: relative;
+  width: 100%;
+  padding: 0.5%;
+  cursor: default;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.successText {
+  color: rgb(0, 196, 0);
+}
+
+.failText {
+  color: rgb(206, 0, 0);
+}
+
+.tieText {
+  color: grey;
 }
