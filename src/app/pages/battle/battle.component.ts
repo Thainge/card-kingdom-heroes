@@ -372,6 +372,15 @@ export class BattleComponent implements OnInit {
     );
     this.playerAttackHand = hand;
 
+    this.enemyHand = this.enemyHand.filter((x) => {
+      const includes = this.enemyHand.find(
+        (a) => a.suit === x.suit && a.value === x.value
+      );
+      if (includes) {
+        return false;
+      }
+      return true;
+    });
     this.playerHand = this.playerHand.filter((x) => {
       const includes = hand.cards.find(
         (a) => a.suit === x.suit && a.value === x.value
