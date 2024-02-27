@@ -8,7 +8,201 @@
           fade: attackEnding,
           fadeHide: !attackStarted
         }"
+        [@fadeEnter]="{
+          value: '',
+          params: { duration: 500, delay: 0, translate: '300px' }
+        }"
       ></div>
+
+      <div class="middleRightBox specialAttacKBoxPlayer2">
+        <div
+          class="middleCard middleRightCard middleLeftCard specialAttacKBoxPlayerCard2"
+          [@fadeRightEnter]="{
+            value: '',
+            params: { duration: 800, delay: 0, translate: '200px' }
+          }"
+          [@fadeRightLeave]
+          [ngClass]="{
+            fade: attackEnding,
+            fadeHide: !attackStarted,
+            zoomOutDarken: enemyWinner,
+            zoomIn: enemyLoser
+          }"
+        >
+          <!-- Start of animations -->
+          <div
+            class="playerResultText redrawDetailText"
+            [@zoomInEnter]="{
+              value: '',
+              params: { duration: 400, delay: 100, translate: '100px' }
+            }"
+            [@fadeUpLeave]
+            *ngIf="enemyWinner"
+            [ngClass]="{
+              successText: enemyWinner,
+              failText: enemyLoser,
+              tieText: tie
+            }"
+          >
+            {{ enemyWinner ? "Winner!" : tie ? "Tie" : "-2" }}
+          </div>
+          <div class="redrawDetailTextInvisible" *ngIf="!enemyWinner">.</div>
+          <!-- End of animations -->
+          <div
+            class="cardBorder middleCardBorder playerCardBorder"
+            [ngClass]="{
+              deadEnemy: findEnemyPlayer().health < 1
+            }"
+          >
+            <!-- Start of animations -->
+            <div class="cardPlayerBorder">
+              <img src="./assets/greenBorder.png" class="cardIcon" />
+              <img
+                src="./assets/confetti.gif"
+                class="cardIcon confetti"
+                *ngIf="enemyWinner"
+                [@fadeDownEnter]="{
+                  value: '',
+                  params: { duration: 500, delay: 100, translate: '300px' }
+                }"
+                [@fadeDownLeave]
+              />
+              <div class="cardIcon darkenCard"></div>
+              <img
+                src="./assets/claws.png"
+                class="cardIcon confetti claws"
+                *ngIf="enemyLoser"
+                [@fadeEnter]="{
+                  value: '',
+                  params: { duration: 500, delay: 2000, translate: '300px' }
+                }"
+                [@fadeOutLeave]
+              />
+            </div>
+            <!-- End of animations -->
+            <div class="cardFooterIconBox swordBox">
+              <img src="./assets/sword.png" class="cardIcon" />
+              <div class="cardIconValue">
+                <div class="attackDefenseText swordText">
+                  {{ findEnemyPlayer().attack }}
+                </div>
+              </div>
+            </div>
+            <div class="cardFooterIconBox heartBox">
+              <img src="./assets/heart.png" class="cardIcon" />
+              <div class="cardIconValue">
+                <div
+                  class="attackDefenseText"
+                  [ngClass]="{
+                    redHealthText:
+                      findEnemyPlayer().health < findEnemyPlayer().baseHealth
+                  }"
+                >
+                  {{ findEnemyPlayer().health }}
+                </div>
+              </div>
+            </div>
+            <img
+              [src]="findEnemyPlayer().image"
+              class="cardBackgroundImage playerBackground"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="middleRightBox specialAttacKBoxPlayer">
+        <div
+          class="middleCard middleRightCard middleLeftCard specialAttacKBoxPlayerCard"
+          [@fadeLeftEnter]="{
+            value: '',
+            params: { duration: 800, delay: 100, translate: '200px' }
+          }"
+          [@fadeLeftLeave]
+          [ngClass]="{
+            fade: attackEnding,
+            fadeHide: !attackStarted,
+            zoomOutDarken: playerWinner,
+            zoomIn: playerLoser
+          }"
+        >
+          <!-- Start of animations -->
+          <div
+            class="playerResultText redrawDetailText"
+            [@zoomInEnter]="{
+              value: '',
+              params: { duration: 400, delay: 100, translate: '100px' }
+            }"
+            [@fadeUpLeave]
+            *ngIf="playerWinner"
+            [ngClass]="{
+              successText: playerWinner,
+              failText: playerLoser,
+              tieText: tie
+            }"
+          >
+            {{ playerWinner ? "Winner!" : tie ? "Tie" : "-2" }}
+          </div>
+          <div class="redrawDetailTextInvisible" *ngIf="!playerWinner">.</div>
+          <!-- End of animations -->
+          <div
+            class="cardBorder middleCardBorder playerCardBorder"
+            [ngClass]="{
+              deadEnemy: player.health < 1
+            }"
+          >
+            <!-- Start of animations -->
+            <div class="cardPlayerBorder">
+              <img src="./assets/greenBorder.png" class="cardIcon" />
+              <img
+                src="./assets/confetti.gif"
+                class="cardIcon confetti"
+                *ngIf="playerWinner"
+                [@fadeDownEnter]="{
+                  value: '',
+                  params: { duration: 500, delay: 100, translate: '300px' }
+                }"
+                [@fadeDownLeave]
+              />
+              <img
+                src="./assets/claws.png"
+                class="cardIcon confetti claws"
+                *ngIf="playerLoser"
+                [@fadeEnter]="{
+                  value: '',
+                  params: { duration: 500, delay: 2000, translate: '300px' }
+                }"
+                [@fadeOutLeave]
+              />
+            </div>
+            <!-- End of animations -->
+            <div class="cardFooterIconBox swordBox">
+              <img src="./assets/sword.png" class="cardIcon" />
+              <div class="cardIconValue">
+                <div class="attackDefenseText swordText">
+                  {{ player.attack }}
+                </div>
+              </div>
+            </div>
+            <div class="cardFooterIconBox heartBox">
+              <img src="./assets/heart.png" class="cardIcon" />
+              <div class="cardIconValue">
+                <div
+                  class="attackDefenseText"
+                  [ngClass]="{
+                    redHealthText: player.health < player.baseHealth
+                  }"
+                >
+                  {{ player.health }}
+                </div>
+              </div>
+            </div>
+            <img
+              [src]="player.image"
+              class="cardBackgroundImage playerBackground"
+            />
+          </div>
+        </div>
+      </div>
 
       <div
         class="attackContainer"
@@ -26,30 +220,24 @@
           </div>
           <div
             class="redrawDetailText"
-            [ngClass]="{
-              successText: enemyWinner,
-              failText: enemyLoser,
-              tieText: tie
-            }"
             [@zoomInEnter]="{
               value: '',
-              params: { duration: 400, delay: 500, translate: '30px' }
+              params: { duration: 400, delay: 1000, translate: '30px' }
             }"
             [@fadeUpLeave]
             *ngIf="(enemyAttackHand?.name ?? '').length > 1"
           >
             {{ enemyAttackHand?.name }}
-            {{ enemyWinner ? " - Winner!" : tie ? " - Tie" : "" }}
           </div>
           <div class="attackCardFlexRow">
             <div
               *ngFor="let card of enemyDefense; index as i"
               class="attackCardBox"
-              [@fadeUpEnter]="{
+              [@fadeDownEnter]="{
                 value: '',
-                params: { duration: 400, delay: 500, translate: '30px' }
+                params: { duration: 500, delay: 500, translate: '30px' }
               }"
-              [@fadeUpLeave]
+              [@fadeDownLeave]
             >
               <div class="attackCard">
                 <div class="cardBorder">
@@ -71,20 +259,14 @@
           </div>
           <div
             class="redrawDetailText"
-            [ngClass]="{
-              successText: playerWinner,
-              failText: playerLoser,
-              tieText: tie
-            }"
             [@zoomInEnter]="{
               value: '',
-              params: { duration: 400, delay: 500, translate: '30px' }
+              params: { duration: 400, delay: 1000, translate: '30px' }
             }"
             [@fadeUpLeave]
             *ngIf="(playerAttackHand?.name ?? '').length > 1"
           >
-            {{ playerAttackHand?.name
-            }}{{ playerWinner ? " - Winner!" : tie ? " - Tie" : "" }}
+            {{ playerAttackHand?.name }}
           </div>
           <div class="attackCardFlexRow">
             <div
@@ -92,7 +274,7 @@
               class="attackCardBox"
               [@fadeUpEnter]="{
                 value: '',
-                params: { duration: 400, delay: 0, translate: '30px' }
+                params: { duration: 500, delay: 500, translate: '300px' }
               }"
               [@fadeUpLeave]
             >
@@ -120,7 +302,202 @@
           fade: attackEnding,
           fadeHide: !enemyAttackStarted
         }"
+        [@fadeEnter]="{
+          value: '',
+          params: { duration: 500, delay: 0, translate: '300px' }
+        }"
       >
+        <div class="middleRightBox specialAttacKBoxPlayer2">
+          <div
+            class="middleCard middleRightCard middleLeftCard specialAttacKBoxPlayerCard2"
+            [@fadeRightEnter]="{
+              value: '',
+              params: { duration: 800, delay: 0, translate: '200px' }
+            }"
+            [@fadeRightLeave]
+            [ngClass]="{
+              fade: attackEnding,
+              fadeHide: !enemyAttackStarted,
+              zoomOutDarken: enemyWinner,
+              zoomIn: enemyLoser
+            }"
+          >
+            <!-- Start of animations -->
+            <div
+              class="playerResultText redrawDetailText"
+              [@zoomInEnter]="{
+                value: '',
+                params: { duration: 400, delay: 100, translate: '100px' }
+              }"
+              [@fadeUpLeave]
+              *ngIf="enemyWinner"
+              [ngClass]="{
+                successText: enemyWinner,
+                failText: enemyLoser,
+                tieText: tie
+              }"
+            >
+              {{ enemyWinner ? "Winner!" : tie ? "Tie" : "-2" }}
+            </div>
+            <div class="redrawDetailTextInvisible" *ngIf="!enemyWinner">.</div>
+            <!-- End of animations -->
+            <div
+              class="cardBorder middleCardBorder playerCardBorder"
+              [ngClass]="{
+                deadEnemy: findEnemyPlayerAttack().health < 1
+              }"
+            >
+              <!-- Start of animations -->
+              <div class="cardPlayerBorder">
+                <img src="./assets/greenBorder.png" class="cardIcon" />
+                <img
+                  src="./assets/confetti.gif"
+                  class="cardIcon confetti"
+                  *ngIf="enemyWinner"
+                  [@fadeDownEnter]="{
+                    value: '',
+                    params: { duration: 500, delay: 100, translate: '300px' }
+                  }"
+                  [@fadeDownLeave]
+                />
+                <div class="cardIcon darkenCard"></div>
+                <img
+                  src="./assets/claws.png"
+                  class="cardIcon confetti claws"
+                  *ngIf="enemyLoser"
+                  [@fadeEnter]="{
+                    value: '',
+                    params: { duration: 500, delay: 2000, translate: '300px' }
+                  }"
+                  [@fadeOutLeave]
+                />
+              </div>
+              <!-- End of animations -->
+              <div class="cardFooterIconBox swordBox">
+                <img src="./assets/sword.png" class="cardIcon" />
+                <div class="cardIconValue">
+                  <div class="attackDefenseText swordText">
+                    {{ findEnemyPlayerAttack().attack }}
+                  </div>
+                </div>
+              </div>
+              <div class="cardFooterIconBox heartBox">
+                <img src="./assets/heart.png" class="cardIcon" />
+                <div class="cardIconValue">
+                  <div
+                    class="attackDefenseText"
+                    [ngClass]="{
+                      redHealthText:
+                        findEnemyPlayerAttack().health <
+                        findEnemyPlayerAttack().baseHealth
+                    }"
+                  >
+                    {{ findEnemyPlayerAttack().health }}
+                  </div>
+                </div>
+              </div>
+              <img
+                [src]="findEnemyPlayerAttack().image"
+                class="cardBackgroundImage playerBackground"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="middleRightBox specialAttacKBoxPlayer">
+          <div
+            class="middleCard middleRightCard middleLeftCard specialAttacKBoxPlayerCard"
+            [@fadeLeftEnter]="{
+              value: '',
+              params: { duration: 800, delay: 100, translate: '200px' }
+            }"
+            [@fadeLeftLeave]
+            [ngClass]="{
+              fade: attackEnding,
+              fadeHide: !enemyAttackStarted,
+              zoomOutDarken: playerWinner,
+              zoomIn: playerLoser
+            }"
+          >
+            <!-- Start of animations -->
+            <div
+              class="playerResultText redrawDetailText"
+              [@zoomInEnter]="{
+                value: '',
+                params: { duration: 400, delay: 100, translate: '100px' }
+              }"
+              [@fadeUpLeave]
+              *ngIf="playerWinner"
+              [ngClass]="{
+                successText: playerWinner,
+                failText: playerLoser,
+                tieText: tie
+              }"
+            >
+              {{ playerWinner ? "Winner!" : tie ? "Tie" : "-2" }}
+            </div>
+            <div class="redrawDetailTextInvisible" *ngIf="!playerWinner">.</div>
+            <!-- End of animations -->
+            <div
+              class="cardBorder middleCardBorder playerCardBorder"
+              [ngClass]="{
+                deadEnemy: player.health < 1
+              }"
+            >
+              <!-- Start of animations -->
+              <div class="cardPlayerBorder">
+                <img src="./assets/greenBorder.png" class="cardIcon" />
+                <img
+                  src="./assets/confetti.gif"
+                  class="cardIcon confetti"
+                  *ngIf="playerWinner"
+                  [@fadeDownEnter]="{
+                    value: '',
+                    params: { duration: 500, delay: 100, translate: '300px' }
+                  }"
+                  [@fadeDownLeave]
+                />
+                <img
+                  src="./assets/claws.png"
+                  class="cardIcon confetti claws"
+                  *ngIf="playerLoser"
+                  [@fadeEnter]="{
+                    value: '',
+                    params: { duration: 500, delay: 2000, translate: '300px' }
+                  }"
+                  [@fadeOutLeave]
+                />
+              </div>
+              <!-- End of animations -->
+              <div class="cardFooterIconBox swordBox">
+                <img src="./assets/sword.png" class="cardIcon" />
+                <div class="cardIconValue">
+                  <div class="attackDefenseText swordText">
+                    {{ player.attack }}
+                  </div>
+                </div>
+              </div>
+              <div class="cardFooterIconBox heartBox">
+                <img src="./assets/heart.png" class="cardIcon" />
+                <div class="cardIconValue">
+                  <div
+                    class="attackDefenseText"
+                    [ngClass]="{
+                      redHealthText: player.health < player.baseHealth
+                    }"
+                  >
+                    {{ player.health }}
+                  </div>
+                </div>
+              </div>
+              <img
+                [src]="player.image"
+                class="cardBackgroundImage playerBackground"
+              />
+            </div>
+          </div>
+        </div>
+
         <div class="defendBtnContainer">
           <div
             class="goButton"
@@ -131,7 +508,6 @@
           </div>
         </div>
       </div>
-
       <div
         class="attackContainer"
         [ngClass]="{
@@ -148,20 +524,14 @@
           </div>
           <div
             class="redrawDetailText"
-            [ngClass]="{
-              successText: enemyWinner,
-              failText: enemyLoser,
-              tieText: tie
-            }"
             [@zoomInEnter]="{
               value: '',
-              params: { duration: 400, delay: 500, translate: '30px' }
+              params: { duration: 400, delay: 100, translate: '30px' }
             }"
             [@fadeUpLeave]
             *ngIf="(enemyAttackHand?.name ?? '').length > 1"
           >
             {{ enemyAttackHand?.name }}
-            {{ enemyWinner ? " - Winner!" : tie ? " - Tie" : "" }}
           </div>
           <div class="attackCardFlexRow">
             <div
@@ -169,7 +539,7 @@
               class="attackCardBox"
               [@fadeUpEnter]="{
                 value: '',
-                params: { duration: 400, delay: 500, translate: '30px' }
+                params: { duration: 400, delay: 400, translate: '30px' }
               }"
               [@fadeUpLeave]
             >
@@ -196,11 +566,6 @@
           </div>
           <div
             class="redrawDetailText"
-            [ngClass]="{
-              successText: playerWinner,
-              failText: playerLoser,
-              tieText: tie
-            }"
             [@zoomInEnter]="{
               value: '',
               params: { duration: 400, delay: 500, translate: '30px' }
@@ -208,8 +573,7 @@
             [@fadeUpLeave]
             *ngIf="(playerAttackHand?.name ?? '').length > 1"
           >
-            {{ playerAttackHand?.name
-            }}{{ playerWinner ? " - Winner!" : tie ? " - Tie" : "" }}
+            {{ playerAttackHand?.name }}
           </div>
           <div class="attackCardFlexRow" *ngIf="chooseDefensePlayerCards">
             <div
@@ -244,6 +608,10 @@
         [ngClass]="{
           fade: !redrawing,
           fadeHide: redrawHide
+        }"
+        [@fadeEnter]="{
+          value: '',
+          params: { duration: 1000, delay: 0, translate: '300px' }
         }"
       ></div>
       <div
@@ -323,7 +691,7 @@
   </div>
 
   <!-- Player 2 -->
-  <div class="top" id="toptest">
+  <div class="top">
     <div
       class="topLeft"
       *ngIf="redrawHide"
@@ -510,6 +878,10 @@
         canSelectCards ||
         (!showBotCards && enemyAttackStarted && canSelectCards)
       "
+      [@fadeOutLeave]="{
+        value: '',
+        params: { duration: 400, delay: 0, translate: '30px' }
+      }"
     >
       <div
         class="bottomCard playerBottomCard"
@@ -523,7 +895,7 @@
           value: '',
           params: { duration: 400, delay: (i + 1) * 100, translate: '30px' }
         }"
-        [@fadeUpLeave]
+        [@fadeOutLeave]
       >
         <div
           class="cardBorder"

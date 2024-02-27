@@ -12,6 +12,10 @@ import {
   flipInYOnEnterAnimation,
   fadeOutDownOnLeaveAnimation,
   fadeInDownOnEnterAnimation,
+  fadeInLeftOnEnterAnimation,
+  fadeInRightOnEnterAnimation,
+  fadeOutLeftOnLeaveAnimation,
+  fadeOutRightOnLeaveAnimation,
 } from 'angular-animations';
 import { PlayerDto } from 'src/app/models/player';
 import {
@@ -30,13 +34,22 @@ declare let LeaderLine: any;
   standalone: true,
   imports: [CommonModule, CharacterCardComponent],
   animations: [
-    fadeInOnEnterAnimation({ anchor: 'fadeEnter' }),
-    fadeInUpOnEnterAnimation({ anchor: 'fadeUpEnter' }),
-    fadeInDownOnEnterAnimation({ anchor: 'fadeDownEnter' }),
     fadeOutUpOnLeaveAnimation({ anchor: 'fadeUpLeave' }),
+    fadeInUpOnEnterAnimation({ anchor: 'fadeUpEnter' }),
+
+    fadeOutLeftOnLeaveAnimation({ anchor: 'fadeLeftLeave' }),
+    fadeInLeftOnEnterAnimation({ anchor: 'fadeLeftEnter' }),
+
+    fadeOutRightOnLeaveAnimation({ anchor: 'fadeRightLeave' }),
+    fadeInRightOnEnterAnimation({ anchor: 'fadeRightEnter' }),
+
+    fadeInDownOnEnterAnimation({ anchor: 'fadeDownEnter' }),
     fadeOutDownOnLeaveAnimation({ anchor: 'fadeDownLeave' }),
-    zoomInOnEnterAnimation({ anchor: 'zoomInEnter' }),
+
+    fadeInOnEnterAnimation({ anchor: 'fadeEnter' }),
     fadeOutOnLeaveAnimation({ anchor: 'fadeOutLeave' }),
+
+    zoomInOnEnterAnimation({ anchor: 'zoomInEnter' }),
     flipInYOnEnterAnimation({ anchor: 'flipInYonEnter' }),
   ],
 })
@@ -113,7 +126,7 @@ export class BattleComponent implements OnInit {
 
   attackStarted: boolean = false;
 
-  canDefendWithMultipleCards: boolean = true;
+  canDefendWithMultipleCards: boolean = false;
   hasWildCards: boolean = true;
   wildCards: CardDto[] = [];
   alwaysWinTies: boolean = false;
@@ -126,6 +139,7 @@ export class BattleComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.enemyDeck = this.cardService.shuffle(Cards);
     // Wild cards
     const redWildCard: CardDto = {
       id: 53,
@@ -150,7 +164,6 @@ export class BattleComponent implements OnInit {
 
     // Shuffle player decks
     this.playerDeck = this.cardService.shuffle(Cards);
-    this.enemyDeck = this.cardService.shuffle(Cards);
 
     // Both players draw 5 cards
     for (const num of [0, 1, 2, 3, 4]) {
@@ -167,49 +180,17 @@ export class BattleComponent implements OnInit {
     this.topRedrawCard = 0;
     setTimeout(() => {
       this.topRedrawCard = this.playerDeck[0].id!;
-      console.log(this.topRedrawCard);
     }, 400);
 
-    this.enemyHand = this.redrawCards;
-
+    // this.enemyHand = [this.redrawCards[1]];
+    // this.selectedCards = [this.redrawCards[0]];
     // this.redrawHide = true;
     // this.redrawing = false;
-    this.canDefendWithMultipleCards = true;
-    this.alwaysWinTies = true;
-    this.canSeeTopCard = true;
+    // this.attack();
 
-    this.redrawCards = [
-      {
-        id: 52,
-        suit: 'hearts',
-        value: '14',
-        image: 'ace_of_hearts.png',
-      },
-      {
-        id: 54,
-        suit: 'hearts',
-        value: '14',
-        image: 'ace_of_hearts.png',
-      },
-      {
-        id: 55,
-        suit: 'hearts',
-        value: '14',
-        image: 'ace_of_hearts.png',
-      },
-      {
-        id: 56,
-        suit: 'hearts',
-        value: '14',
-        image: 'ace_of_hearts.png',
-      },
-      {
-        id: 57,
-        suit: 'spades',
-        value: '14',
-        image: 'ace_of_spades.png',
-      },
-    ];
+    this.canDefendWithMultipleCards = true;
+    // this.alwaysWinTies = true;
+    // this.canSeeTopCard = true;
   }
 
   ngAfterViewInit() {
@@ -323,6 +304,14 @@ export class BattleComponent implements OnInit {
     }
   }
 
+  findEnemyPlayer(): PlayerDto {
+    return this.enemyPlayers.find((x) => x.id === this.enemyTarget)!;
+  }
+
+  findEnemyPlayerAttack(): PlayerDto {
+    return this.enemyPlayers.find((x) => x.health > 0)!;
+  }
+
   redrawCardIsSelected(card: CardDto): boolean {
     const includesCard = this.redrawSelectedCards.find(
       (x: CardDto) => x.id === card.id
@@ -358,7 +347,6 @@ export class BattleComponent implements OnInit {
       this.topRedrawCard = 0;
       setTimeout(() => {
         this.topRedrawCard = this.playerDeck[0].id!;
-        console.log(this.topRedrawCard);
       }, 400);
 
       this.playerHand = this.redrawCards;
@@ -490,9 +478,46 @@ export class BattleComponent implements OnInit {
     }, 1000);
   }
 
-  setWinner(result: DetermineWinnerObject, playerTurn: boolean) {
-    // Play confeti on winner
-    // Show god rays on winner
+  async numbersGoDownIncrementally(
+    currentHealth: number,
+    newHealth: number,
+    isAttackingPlayer: boolean = false
+  ) {
+    await this.timeout(2500);
+    if (isAttackingPlayer) {
+      // Player goes down
+      const difference = currentHealth - newHealth;
+      const differentArr = Array.from(Array(difference).keys());
+
+      for await (const i of differentArr) {
+        const updateHealth = currentHealth - (i + 1);
+        await this.timeout(100 * i);
+        this.player.health = updateHealth;
+      }
+    } else {
+      const difference = currentHealth - newHealth;
+      const foundIndex = this.enemyPlayers.findIndex(
+        (x) => x.id === this.enemyTarget
+      );
+
+      const differentArr = Array.from(Array(difference).keys());
+
+      for await (const i of differentArr) {
+        const updateHealth = currentHealth - (i + 1);
+        await this.timeout(100 * i);
+        this.enemyPlayers[foundIndex] = {
+          ...this.enemyPlayers[foundIndex],
+          health: updateHealth,
+        };
+      }
+    }
+  }
+
+  timeout(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async setWinner(result: DetermineWinnerObject, playerTurn: boolean) {
     setTimeout(() => {
       if (playerTurn) {
         this.combatFinishPlayer(result);
@@ -500,34 +525,23 @@ export class BattleComponent implements OnInit {
         this.combatFinishBot(result);
       }
     }, 1500);
-    setTimeout(() => {
-      this.attackEnding = true;
-      setTimeout(() => {
-        this.attackStarted = false;
-        this.newTurn();
-        if (playerTurn) {
-          this.startBotTurn();
-        }
-      }, 1000);
-    }, 2500);
   }
 
-  combatFinishPlayer(result: DetermineWinnerObject) {
+  async combatFinishPlayer(result: DetermineWinnerObject) {
     // Player finishes combat
 
     // If player won combat, attack selected opponent
     if (result.player1Winner) {
       this.playerWinner = true;
       this.enemyLoser = true;
-      this.enemyPlayers = this.enemyPlayers.map((x) => {
+      for await (const x of this.enemyPlayers) {
         if (x.id === this.enemyTarget) {
           const incomingAttackPower =
             result.player1Determine.power! + this.player.attack;
           const newHealth = x.health - incomingAttackPower;
-          return { ...x, health: newHealth };
+          await this.numbersGoDownIncrementally(x.health, newHealth);
         }
-        return x;
-      });
+      }
     }
 
     // Fail
@@ -540,9 +554,16 @@ export class BattleComponent implements OnInit {
     if (result.tie) {
       this.tie = true;
     }
+
+    await this.timeout(1000);
+    this.attackEnding = true;
+    await this.timeout(1000);
+    this.attackStarted = false;
+    this.newTurn();
+    this.startBotTurn();
   }
 
-  combatFinishBot(result: DetermineWinnerObject) {
+  async combatFinishBot(result: DetermineWinnerObject) {
     // Bot finishes combat
 
     // If bot won combat, attack player
@@ -561,13 +582,25 @@ export class BattleComponent implements OnInit {
       const incomingAttackPower =
         result.player2Determine.power! + foundAttacker.attack;
       const newHealth = this.player.health - incomingAttackPower;
-      this.player = { ...this.player, health: newHealth };
+      await this.numbersGoDownIncrementally(
+        this.player.health,
+        newHealth,
+        true
+      );
+      // this.player = { ...this.player, health: newHealth };
     }
 
     // Tie
     if (result.tie) {
       this.tie = true;
     }
+
+    console.log('finishing');
+    await this.timeout(1000);
+    this.attackEnding = true;
+    await this.timeout(1000);
+    this.attackStarted = false;
+    this.newTurn();
   }
 
   startBotTurn() {
@@ -675,7 +708,6 @@ export class BattleComponent implements OnInit {
     this.topRedrawCard = 0;
     setTimeout(() => {
       this.topRedrawCard = this.playerDeck[0].id!;
-      console.log(this.topRedrawCard);
     }, 400);
 
     const addLengthEnemy = 5 - this.enemyHand.length;

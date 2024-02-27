@@ -287,7 +287,7 @@
   pointer-events: none !important;
   cursor: normal !important;
   opacity: 0;
-  transition: all 1s;
+  transition: all 0.5s;
 }
 
 .fadeHide {
@@ -554,7 +554,7 @@
 }
 
 .failText {
-  color: rgb(206, 0, 0);
+  color: rgba(206, 0, 0, 1);
 }
 
 .tieText {
@@ -604,6 +604,7 @@
   left: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
 .cardIcon {
@@ -761,5 +762,108 @@
   }
   100% {
     background-position: 0% 82%;
+  }
+}
+
+.specialAttacKBoxPlayer {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.specialAttacKBoxPlayerCard {
+  width: 60%;
+}
+
+.specialAttacKBoxPlayer2 {
+  position: absolute;
+  top: 0;
+  right: 10%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.specialAttacKBoxPlayerCard2 {
+  width: 60%;
+}
+
+.playerResultText {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  top: -5%;
+}
+
+.confetti {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.claws {
+  top: 10%;
+  animation: zoomOutClaws;
+  animation-duration: 1s;
+  animation-delay: 2s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes zoomOutClaws {
+  0% {
+    scale: 2;
+  }
+  70% {
+    scale: 1;
+  }
+  100% {
+    scale: 1;
+  }
+}
+
+.deadEnemy {
+  filter: brightness(0.3);
+  transition: all 1s;
+}
+
+.zoomOutDarken {
+  animation: darkenZoomOut;
+  animation-duration: 1s;
+  animation-delay: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes darkenZoomOut {
+  0% {
+    scale: 1;
+  }
+  100% {
+    scale: 0.9;
+  }
+}
+
+.zoomIn {
+  animation: zoomIn;
+  animation-duration: 1s;
+  animation-delay: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes zoomIn {
+  0% {
+    scale: 1;
+  }
+  50% {
+    scale: 1;
+  }
+  100% {
+    scale: 1.1;
   }
 }
