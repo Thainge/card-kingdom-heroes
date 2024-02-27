@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { CardDto } from 'src/app/models/card';
 import { CardService } from 'src/app/services/cardService';
 import { Cards } from 'src/assets/data/cards';
@@ -9,39 +9,48 @@ import {
   zoomInOnEnterAnimation,
   fadeOutOnLeaveAnimation,
   fadeInOnEnterAnimation,
+  flipInYOnEnterAnimation,
+  fadeOutDownOnLeaveAnimation,
+  fadeInDownOnEnterAnimation,
 } from 'angular-animations';
-import { Player } from 'src/app/models/player';
-import { HandDto } from 'src/app/models/hand';
+import { PlayerDto } from 'src/app/models/player';
 import {
   DetermineObject,
   DetermineWinnerObject,
 } from 'src/app/models/determine';
+import { DOCUMENT } from '@angular/common';
+import 'leader-line';
+import { CharacterCardComponent } from 'src/app/components/character-card/character-card.component';
+declare let LeaderLine: any;
 
 @Component({
   selector: 'app-battle',
   templateUrl: './battle.component.html',
   styleUrls: ['./battle.component.scss'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CharacterCardComponent],
   animations: [
     fadeInOnEnterAnimation({ anchor: 'fadeEnter' }),
     fadeInUpOnEnterAnimation({ anchor: 'fadeUpEnter' }),
+    fadeInDownOnEnterAnimation({ anchor: 'fadeDownEnter' }),
     fadeOutUpOnLeaveAnimation({ anchor: 'fadeUpLeave' }),
+    fadeOutDownOnLeaveAnimation({ anchor: 'fadeDownLeave' }),
     zoomInOnEnterAnimation({ anchor: 'zoomInEnter' }),
     fadeOutOnLeaveAnimation({ anchor: 'fadeOutLeave' }),
+    flipInYOnEnterAnimation({ anchor: 'flipInYonEnter' }),
   ],
 })
 export class BattleComponent implements OnInit {
   playerDeck: CardDto[] = [];
   playerHand: CardDto[] = [];
   playerDefense: CardDto[] = [];
-  player: Player = {
+  player: PlayerDto = {
     id: 5,
     image: './assets/' + 'link.png',
     name: 'Link',
     attack: 2,
-    defense: 2,
     health: 9,
+    baseHealth: 9,
   };
   playerTarget: number = 0;
   playerHealth: number = 10;
@@ -54,30 +63,30 @@ export class BattleComponent implements OnInit {
   enemyDeck: CardDto[] = [];
   enemyHand: CardDto[] = [];
   enemyDefense: CardDto[] = [];
-  enemyPlayers: Player[] = [
+  enemyPlayers: PlayerDto[] = [
     {
       id: 1,
       image: './assets/' + 'link.png',
       name: 'Link',
       attack: 2,
-      defense: 0,
       health: 4,
+      baseHealth: 4,
     },
     {
       id: 2,
       image: './assets/' + 'link.png',
       name: 'Link',
       attack: 4,
-      defense: 1,
       health: 2,
+      baseHealth: 2,
     },
     {
       id: 3,
       image: './assets/' + 'link.png',
       name: 'Link',
       attack: 1,
-      defense: 3,
       health: 7,
+      baseHealth: 7,
     },
   ];
   enemyTarget: number = 0;
@@ -104,43 +113,201 @@ export class BattleComponent implements OnInit {
 
   attackStarted: boolean = false;
 
-  constructor(private cardService: CardService) {}
+  canDefendWithMultipleCards: boolean = true;
+  hasWildCards: boolean = true;
+  wildCards: CardDto[] = [];
+  alwaysWinTies: boolean = false;
+  canSeeTopCard: boolean = false;
+  topRedrawCard: number = 0;
+
+  constructor(
+    private cardService: CardService,
+    @Inject(DOCUMENT) private document: any
+  ) {}
 
   ngOnInit() {
+    // Wild cards
+    const redWildCard: CardDto = {
+      id: 53,
+      wild: true,
+      suit: 'hearts',
+      value: '2',
+      image: 'red_joker.png',
+    };
+    const blackWildCard: CardDto = {
+      id: 54,
+      wild: true,
+      suit: 'spades',
+      value: '2',
+      image: 'black_joker.png',
+    };
+    this.wildCards = [redWildCard, blackWildCard];
+
+    let playerCards = Cards;
+    this.wildCards.forEach((x) => {
+      playerCards.push(x);
+    });
+
     // Shuffle player decks
     this.playerDeck = this.cardService.shuffle(Cards);
     this.enemyDeck = this.cardService.shuffle(Cards);
 
     // Both players draw 5 cards
-    for (const num of [0, 0, 0, 0, 0]) {
+    for (const num of [0, 1, 2, 3, 4]) {
       // Add to player 1 hand and remove player 1 deck
-      // this.player1Hand.push(this.playerDeck[num]);
-      // this.playerDeck.push(this.playerDeck[num]);
-      // this.playerDeck.shift();
-      this.redrawCards.push(this.playerDeck[num]);
-      this.playerDeck.push(this.playerDeck[num]);
+      this.redrawCards.push(this.playerDeck[0]);
+      this.playerDeck.push(this.playerDeck[0]);
       this.playerDeck.shift();
 
       // Add to player 2 hand and remove player 2 deck
-      this.enemyHand.push(this.enemyDeck[num]);
-      this.enemyDeck.push(this.enemyDeck[num]);
+      this.enemyHand.push(this.enemyDeck[0]);
+      this.enemyDeck.push(this.enemyDeck[0]);
       this.enemyDeck.shift();
     }
+    this.topRedrawCard = 0;
+    setTimeout(() => {
+      this.topRedrawCard = this.playerDeck[0].id!;
+      console.log(this.topRedrawCard);
+    }, 400);
+
+    this.enemyHand = this.redrawCards;
+
+    // this.redrawHide = true;
+    // this.redrawing = false;
+    this.canDefendWithMultipleCards = true;
+    this.alwaysWinTies = true;
+    this.canSeeTopCard = true;
+
+    this.redrawCards = [
+      {
+        id: 52,
+        suit: 'hearts',
+        value: '14',
+        image: 'ace_of_hearts.png',
+      },
+      {
+        id: 54,
+        suit: 'hearts',
+        value: '14',
+        image: 'ace_of_hearts.png',
+      },
+      {
+        id: 55,
+        suit: 'hearts',
+        value: '14',
+        image: 'ace_of_hearts.png',
+      },
+      {
+        id: 56,
+        suit: 'hearts',
+        value: '14',
+        image: 'ace_of_hearts.png',
+      },
+      {
+        id: 57,
+        suit: 'spades',
+        value: '14',
+        image: 'ace_of_spades.png',
+      },
+    ];
+  }
+
+  ngAfterViewInit() {
+    // const cards = this.document.getElementsByClassName(
+    //   'playerBottomCard'
+    // ) as HTMLCollection;
+    // console.log(cards);
+    // new LeaderLine(
+    //   LeaderLine.mouseHoverAnchor(),
+    //   this.document.getElementById('toptest')
+    // ),
+    //   {
+    //     startPlugColor: '#1a6be0',
+    //     endPlugColor: '#1efdaa',
+    //     gradient: true,
+    //     dropShadow: true,
+    //     dash: { animation: true },
+    //     hide: true,
+    //     duration: 300,
+    //     timing: 'linear',
+    //     endPlug: 'arrow3',
+    //   };
   }
 
   cardIsSelected(card: CardDto): boolean {
     const includesCard = this.selectedCards.find(
-      (x: CardDto) => x.value === card.value && x.suit === card.suit
+      (x: CardDto) => x.id === card.id
     );
+
     if (includesCard) {
+      // Test lines
       return true;
     }
     return false;
+  }
+
+  wildCardChange(scroll: any, card: CardDto) {
+    if (scroll.deltaY === -100 && card.wild) {
+      // scroll up
+      const value = Number(card.value) + 1;
+      if (value < 15) {
+        const newCard: CardDto = {
+          ...Cards.find(
+            (a) => a.suit === card.suit && a.value === value.toString()
+          ),
+          id: card.id,
+          wild: true,
+        };
+        this.playerHand = this.playerHand.map((x) => {
+          if (x.suit === card.suit && x.value === card.value && x.wild) {
+            return newCard;
+          }
+
+          return x;
+        });
+      }
+    } else if (card.wild) {
+      // scroll down
+      const value = Number(card.value) - 1;
+      if (value > 1) {
+        const newCard: CardDto = {
+          ...Cards.find(
+            (a) => a.suit === card.suit && a.value === value.toString()
+          ),
+          id: card.id,
+          wild: true,
+        };
+        this.playerHand = this.playerHand.map((x) => {
+          if (x.suit === card.suit && x.value === card.value && x.wild) {
+            return newCard;
+          }
+
+          return x;
+        });
+      }
+    }
+
+    // Check if valid
+    this.selectedCards = this.selectedCards.map((x) => {
+      const foundCard = this.playerHand.find((a) => a.id === x.id);
+
+      if (foundCard) {
+        return foundCard;
+      }
+
+      return x;
+    });
+    const hand = this.cardService.determineHand(this.selectedCards);
+    if (hand.valid) {
+      this.validCards = this.selectedCards;
+    } else {
+      this.validCards = [];
+    }
   }
 
   enemyCardIsSelected(card: CardDto): boolean {
     const includesCard = this.selectedEnemyCards.find(
-      (x: CardDto) => x.value === card.value && x.suit === card.suit
+      (x: CardDto) => x.id === card.id
     );
     if (includesCard) {
       return true;
@@ -148,7 +315,7 @@ export class BattleComponent implements OnInit {
     return false;
   }
 
-  setEnemyPlayerHover(card: Player) {
+  setEnemyPlayerHover(card: PlayerDto) {
     if (card.id === this.enemyTarget) {
       this.enemyTarget = 0;
     } else {
@@ -158,7 +325,7 @@ export class BattleComponent implements OnInit {
 
   redrawCardIsSelected(card: CardDto): boolean {
     const includesCard = this.redrawSelectedCards.find(
-      (x: CardDto) => x.value === card.value && x.suit === card.suit
+      (x: CardDto) => x.id === card.id
     );
     if (includesCard) {
       return true;
@@ -173,9 +340,7 @@ export class BattleComponent implements OnInit {
     }, 1000);
 
     this.redrawCards = this.redrawCards.filter((x) => {
-      const foundCard = this.redrawSelectedCards.find(
-        (a) => a.suit === x.suit && a.value === x.value
-      );
+      const foundCard = this.redrawSelectedCards.find((a) => a.id === x.id);
       if (!foundCard) {
         return true;
       }
@@ -190,6 +355,11 @@ export class BattleComponent implements OnInit {
         this.playerDeck.push(this.playerDeck[0]);
         this.playerDeck.shift();
       });
+      this.topRedrawCard = 0;
+      setTimeout(() => {
+        this.topRedrawCard = this.playerDeck[0].id!;
+        console.log(this.topRedrawCard);
+      }, 400);
 
       this.playerHand = this.redrawCards;
     }, 900);
@@ -197,7 +367,7 @@ export class BattleComponent implements OnInit {
 
   selectRedrawCard(card: CardDto) {
     const includesCard = this.redrawSelectedCards.find(
-      (x: CardDto) => x.value === card.value && x.suit === card.suit
+      (x: CardDto) => x.id === card.id
     );
 
     // Add card to selectedCards
@@ -208,7 +378,7 @@ export class BattleComponent implements OnInit {
     if (includesCard) {
       this.redrawSelectedCards = this.redrawSelectedCards.filter(
         (x: CardDto) => {
-          const foundItem = x.value === card.value && x.suit === card.suit;
+          const foundItem = x.id === card.id;
           if (foundItem) {
             return false;
           }
@@ -219,19 +389,19 @@ export class BattleComponent implements OnInit {
   }
 
   cardIsValid(card: CardDto): boolean {
-    const includesCard = this.validCards.find(
-      (x: CardDto) => x.value === card.value && x.suit === card.suit
-    );
+    const includesCard = this.validCards.find((x: CardDto) => x.id === card.id);
     if (includesCard) {
       return true;
     }
     return false;
   }
 
+  trackById = (index: number, item: CardDto) => item.id;
+
   selectCard(card: CardDto) {
     if (this.canSelectCards) {
       const includesCard = this.selectedCards.find(
-        (x: CardDto) => x.value === card.value && x.suit === card.suit
+        (x: CardDto) => x.id === card.id
       );
 
       // Add card to selectedCards
@@ -241,7 +411,7 @@ export class BattleComponent implements OnInit {
       // Remove card from selectedCards
       if (includesCard) {
         this.selectedCards = this.selectedCards.filter((x: CardDto) => {
-          const foundItem = x.value === card.value && x.suit === card.suit;
+          const foundItem = x.id === card.id;
           if (foundItem) {
             return false;
           }
@@ -281,9 +451,7 @@ export class BattleComponent implements OnInit {
     }
 
     this.playerHand = this.playerHand.filter((x) => {
-      const includes = this.selectedCards.find(
-        (a) => a.suit === x.suit && a.value === x.value
-      );
+      const includes = this.selectedCards.find((a) => a.id === x.id);
       if (includes) {
         return false;
       }
@@ -304,9 +472,7 @@ export class BattleComponent implements OnInit {
     );
 
     this.enemyHand = this.enemyHand.filter((x) => {
-      const includes = botHand.cards.find(
-        (a) => a.suit === x.suit && a.value === x.value
-      );
+      const includes = botHand.cards.find((a) => a.id === x.id);
       if (includes) {
         return false;
       }
@@ -355,20 +521,10 @@ export class BattleComponent implements OnInit {
       this.enemyLoser = true;
       this.enemyPlayers = this.enemyPlayers.map((x) => {
         if (x.id === this.enemyTarget) {
-          let newHealth = x.health;
-          let newDefense = x.defense;
-
-          let incomingAttackPower =
+          const incomingAttackPower =
             result.player1Determine.power! + this.player.attack;
-          newDefense = x.defense - 1;
-          incomingAttackPower = incomingAttackPower - x.defense;
-          if (newDefense < 1) {
-            newDefense = 0;
-          }
-          if (incomingAttackPower >= 1) {
-            newHealth = x.health - incomingAttackPower;
-          }
-          return { ...x, health: newHealth, defense: newDefense };
+          const newHealth = x.health - incomingAttackPower;
+          return { ...x, health: newHealth };
         }
         return x;
       });
@@ -402,25 +558,10 @@ export class BattleComponent implements OnInit {
       this.player.health = this.player.health - result.player2Determine.power!;
       const foundAttacker = this.enemyPlayers.find((x) => x.health > 0)!;
 
-      let newHealth = this.player.health;
-      let newDefense = this.player.defense;
-
-      let incomingAttackPower =
+      const incomingAttackPower =
         result.player2Determine.power! + foundAttacker.attack;
-      newDefense = this.player.defense - 1;
-      incomingAttackPower = incomingAttackPower - this.player.defense;
-      if (newDefense < 1) {
-        newDefense = 0;
-      }
-
-      if (incomingAttackPower >= 1) {
-        newHealth = this.player.health - incomingAttackPower;
-      }
-
-      this.player = { ...this.player, health: newHealth, defense: newDefense };
-      if (this.player.health < 1) {
-        // Defeat
-      }
+      const newHealth = this.player.health - incomingAttackPower;
+      this.player = { ...this.player, health: newHealth };
     }
 
     // Tie
@@ -458,10 +599,24 @@ export class BattleComponent implements OnInit {
   }
 
   chooseDefensePlayerCards() {
-    if (this.selectedCards.length !== this.enemyAttackHand.cards.length) {
+    if (
+      this.selectedCards.length !== this.enemyAttackHand.cards.length &&
+      !this.canDefendWithMultipleCards
+    ) {
       this.canSelectCards = true;
       this.pushError(
         'Please Select ' + this.enemyAttackHand.cards.length + ' Cards'
+      );
+      return;
+    }
+
+    if (
+      this.canDefendWithMultipleCards &&
+      this.selectedCards.length < this.enemyAttackHand.cards.length
+    ) {
+      this.canSelectCards = true;
+      this.pushError(
+        'Please Select At Least ' + this.enemyAttackHand.cards.length + ' Cards'
       );
       return;
     }
@@ -473,18 +628,14 @@ export class BattleComponent implements OnInit {
     this.playerAttackHand = hand;
 
     this.enemyHand = this.enemyHand.filter((x) => {
-      const includes = this.enemyHand.find(
-        (a) => a.suit === x.suit && a.value === x.value
-      );
+      const includes = this.enemyHand.find((a) => a.id === x.id);
       if (includes) {
         return false;
       }
       return true;
     });
     this.playerHand = this.playerHand.filter((x) => {
-      const includes = hand.cards.find(
-        (a) => a.suit === x.suit && a.value === x.value
-      );
+      const includes = hand.cards.find((a) => a.id === x.id);
       if (includes) {
         return false;
       }
@@ -521,6 +672,11 @@ export class BattleComponent implements OnInit {
       this.playerDeck.push(this.playerDeck[0]);
       this.playerDeck.shift();
     });
+    this.topRedrawCard = 0;
+    setTimeout(() => {
+      this.topRedrawCard = this.playerDeck[0].id!;
+      console.log(this.topRedrawCard);
+    }, 400);
 
     const addLengthEnemy = 5 - this.enemyHand.length;
     const addArrEnemy = Array.from(Array(addLengthEnemy).keys());

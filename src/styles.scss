@@ -3,6 +3,11 @@
   src: url("~src/assets/fonts/vinque.otf") format("opentype");
 }
 
+@font-face {
+  font-family: HeaderFont;
+  src: url(~src/assets/fonts/bolder.ttf);
+}
+
 body,
 html {
   margin: 0;

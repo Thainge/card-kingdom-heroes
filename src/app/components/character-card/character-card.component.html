@@ -1,0 +1,47 @@
+<div class="middleRightBox">
+  <div
+    class="middleCard middleRightCard"
+    *ngIf="display"
+    [@fadeUpEnter]="{
+      value: '',
+      params: {
+        duration: 400,
+        delay: 1100,
+        translate: '30px'
+      }
+    }"
+    [@fadeUpLeave]
+    [ngClass]="{
+      leavingFieldCard: item.health < 1
+    }"
+    (click)="onPlayerClicked()"
+  >
+    <div
+      class="cardBorder middleCardBorder playerCardBorder"
+      [ngClass]="{
+        errorEnemyBorder: activeTarget
+      }"
+    >
+      <div class="cardPlayerBorder">
+        <img src="./assets/greenBorder.png" class="cardIcon" />
+      </div>
+      <div class="cardFooterIconBox swordBox">
+        <img src="./assets/sword.png" class="cardIcon" />
+        <div class="cardIconValue">
+          <div class="attackDefenseText swordText">
+            {{ item.attack }}
+          </div>
+        </div>
+      </div>
+      <div class="cardFooterIconBox heartBox">
+        <img src="./assets/heart.png" class="cardIcon" />
+        <div class="cardIconValue">
+          <div class="attackDefenseText">
+            {{ item.health }}
+          </div>
+        </div>
+      </div>
+      <img [src]="item.image" class="cardBackgroundImage playerBackground" />
+    </div>
+  </div>
+</div>

@@ -271,7 +271,7 @@
           class="redrawCardBox"
           [@fadeUpEnter]="{
             value: '',
-            params: { duration: 400, delay: i * 100, translate: '30px' }
+            params: { duration: 400, delay: (i + 1) * 100, translate: '30px' }
           }"
           [@fadeUpLeave]
         >
@@ -292,6 +292,7 @@
                 [src]="'./assets/cards/' + card.image"
                 class="cardBackgroundImage"
               />
+              <div class="wildCard" *ngIf="card.wild"></div>
             </div>
           </div>
         </div>
@@ -322,8 +323,18 @@
   </div>
 
   <!-- Player 2 -->
-  <div class="top">
-    <div class="topLeft"><div class="deck"></div></div>
+  <div class="top" id="toptest">
+    <div
+      class="topLeft"
+      *ngIf="redrawHide"
+      [@fadeDownEnter]="{ value: '', params: { delay: 300 } }"
+    >
+      <div class="deck deckCard"></div>
+      <div class="deck deck1 topdeck1"></div>
+      <div class="deck deck2 topdeck2"></div>
+      <div class="deck deck3 topdeck3" *ngIf="!canSeeTopCard"></div>
+      <div class="deck deckTopImage"></div>
+    </div>
     <div
       class="topMiddle"
       *ngIf="(redrawHide && canSelectCards) || (redrawHide && showBotCards)"
@@ -337,7 +348,7 @@
         (click)="selectCard(card)"
         [@fadeUpEnter]="{
           value: '',
-          params: { duration: 400, delay: i * 100, translate: '30px' }
+          params: { duration: 400, delay: (i + 1) * 100, translate: '30px' }
         }"
         [@fadeUpLeave]
       >
@@ -346,7 +357,7 @@
         </div>
       </div>
     </div>
-    <div class="topRight"><div class="deck"></div></div>
+    <div class="topRight"><div class="decktest"></div></div>
   </div>
 
   <!-- Middle -->
@@ -357,7 +368,7 @@
         *ngIf="redrawHide"
         [@fadeEnter]="{
           value: '',
-          params: { duration: 400, delay: 700, translate: '30px' }
+          params: { duration: 400, delay: 1000, translate: '30px' }
         }"
         [@fadeUpLeave]
       >
@@ -375,7 +386,7 @@
           *ngIf="redrawHide"
           [@fadeUpEnter]="{
             value: '',
-            params: { duration: 400, delay: 1000, translate: '30px' }
+            params: { duration: 400, delay: 1400, translate: '30px' }
           }"
           [@fadeUpLeave]
           [ngClass]="{
@@ -388,20 +399,27 @@
               errorEnemyBorder: playerTarget === player.id
             }"
           >
-            <div class="cardDetailsContainer">
-              <div class="cardHeaderName">{{ player.name }}</div>
-              <div class="cardFooter">
-                <div class="cardFooterIconBox">
-                  <img src="./assets/attack.png" class="cardIcon" />
-                  <div class="cardIconValue">{{ player.attack }}</div>
+            <div class="cardPlayerBorder">
+              <img src="./assets/greenBorder.png" class="cardIcon" />
+            </div>
+            <div class="cardFooterIconBox swordBox">
+              <img src="./assets/sword.png" class="cardIcon" />
+              <div class="cardIconValue">
+                <div class="attackDefenseText swordText">
+                  {{ player.attack }}
                 </div>
-                <div class="cardFooterIconBox">
-                  <img src="./assets/health.png" class="cardIcon" />
-                  <div class="cardIconValue">{{ player.health }}</div>
-                </div>
-                <div class="cardFooterIconBox">
-                  <img src="./assets/defense.png" class="cardIcon" />
-                  <div class="cardIconValue">{{ player.defense }}</div>
+              </div>
+            </div>
+            <div class="cardFooterIconBox heartBox">
+              <img src="./assets/heart.png" class="cardIcon" />
+              <div class="cardIconValue">
+                <div
+                  class="attackDefenseText"
+                  [ngClass]="{
+                    redHealthText: player.health < player.baseHealth
+                  }"
+                >
+                  {{ player.health }}
                 </div>
               </div>
             </div>
@@ -417,7 +435,7 @@
       <div class="enemyCardsBox">
         <div
           class="middleRightBox"
-          *ngFor="let item of enemyPlayers; index as i"
+          *ngFor="let item of enemyPlayers; index as i; trackBy: trackById"
         >
           <div
             class="middleCard middleRightCard"
@@ -426,7 +444,7 @@
               value: '',
               params: {
                 duration: 400,
-                delay: 1100,
+                delay: 1400,
                 translate: '30px'
               }
             }"
@@ -442,20 +460,27 @@
                 errorEnemyBorder: enemyTarget === item.id
               }"
             >
-              <div class="cardDetailsContainer">
-                <div class="cardHeaderName">{{ item.name }}</div>
-                <div class="cardFooter">
-                  <div class="cardFooterIconBox">
-                    <img src="./assets/attack.png" class="cardIcon" />
-                    <div class="cardIconValue">{{ item.attack }}</div>
+              <div class="cardPlayerBorder">
+                <img src="./assets/greenBorder.png" class="cardIcon" />
+              </div>
+              <div class="cardFooterIconBox swordBox">
+                <img src="./assets/sword.png" class="cardIcon" />
+                <div class="cardIconValue">
+                  <div class="attackDefenseText swordText">
+                    {{ item.attack }}
                   </div>
-                  <div class="cardFooterIconBox">
-                    <img src="./assets/health.png" class="cardIcon" />
-                    <div class="cardIconValue">{{ item.health }}</div>
-                  </div>
-                  <div class="cardFooterIconBox">
-                    <img src="./assets/defense.png" class="cardIcon" />
-                    <div class="cardIconValue">{{ item.defense }}</div>
+                </div>
+              </div>
+              <div class="cardFooterIconBox heartBox">
+                <img src="./assets/heart.png" class="cardIcon" />
+                <div class="cardIconValue">
+                  <div
+                    class="attackDefenseText"
+                    [ngClass]="{
+                      redHealthText: item.health < item.baseHealth
+                    }"
+                  >
+                    {{ item.health }}
                   </div>
                 </div>
               </div>
@@ -473,7 +498,7 @@
   <!-- Player 1 -->
   <div class="bottom">
     <div class="bottomLeft">
-      <div class="deck"></div>
+      <div class="decktest"></div>
     </div>
     <div
       class="bottomMiddle"
@@ -487,15 +512,16 @@
       "
     >
       <div
-        class="bottomCard"
-        *ngFor="let card of playerHand; index as i"
+        class="bottomCard playerBottomCard"
+        *ngFor="let card of playerHand; index as i; trackBy: trackById"
         [ngClass]="{
           activeCard: cardIsSelected(card)
         }"
         (click)="selectCard(card)"
+        (wheel)="wildCardChange($event, card)"
         [@fadeUpEnter]="{
           value: '',
-          params: { duration: 400, delay: i * 100, translate: '30px' }
+          params: { duration: 400, delay: (i + 1) * 100, translate: '30px' }
         }"
         [@fadeUpLeave]
       >
@@ -512,11 +538,28 @@
             [src]="'./assets/cards/' + card.image"
             class="cardBackgroundImage"
           />
+          <div class="wildCard" *ngIf="card.wild"></div>
         </div>
       </div>
     </div>
-    <div class="bottomRight">
-      <div class="deck"></div>
+    <div
+      class="bottomRight"
+      *ngIf="redrawHide"
+      [@fadeUpEnter]="{ value: '', params: { delay: 300 } }"
+    >
+      <div class="deck deckCard"></div>
+      <div class="deck deck1"></div>
+      <div class="deck deck2"></div>
+      <div class="deck deck3" *ngIf="!canSeeTopCard"></div>
+      <div
+        [@flipInYonEnter]
+        [@fadeDownLeave]
+        [ngStyle]="{
+          'background-image': 'url(./assets/cards/' + playerDeck[0].image + ')'
+        }"
+        *ngIf="canSeeTopCard && topRedrawCard === playerDeck[0].id"
+        class="deck deckTopImage"
+      ></div>
     </div>
   </div>
 </div>
