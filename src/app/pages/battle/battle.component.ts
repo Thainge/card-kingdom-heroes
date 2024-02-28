@@ -98,7 +98,7 @@ export class BattleComponent implements OnInit {
       id: 2,
       image: './assets/' + 'link.png',
       name: 'Link',
-      attack: 4,
+      attack: 1,
       health: 2,
       baseHealth: 2,
     },
@@ -106,9 +106,9 @@ export class BattleComponent implements OnInit {
       id: 3,
       image: './assets/' + 'link.png',
       name: 'Link',
-      attack: 1,
-      health: 0,
-      baseHealth: 7,
+      attack: 0,
+      health: 3,
+      baseHealth: 3,
     },
   ];
   enemyTarget: number = 0;
@@ -230,9 +230,9 @@ export class BattleComponent implements OnInit {
 
     // this.enemyHand = [this.redrawCards[1]];
     // this.selectedCards = [this.redrawCards[0]];
-    this.redrawHide = true;
-    this.redrawing = false;
-    this.playerHand = this.redrawCards;
+    // this.redrawHide = true;
+    // this.redrawing = false;
+    // this.playerHand = this.redrawCards;
     // this.attack();
 
     this.canDefendWithMultipleCards = true;
