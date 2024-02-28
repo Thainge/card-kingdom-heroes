@@ -143,6 +143,7 @@ export class BattleComponent implements OnInit {
   topRedrawCard: number = 0;
 
   activeLeaderLines: any[] = [];
+  staticEnemyTarget: number = 0;
   wrappingTurn: boolean = false;
 
   @ViewChildren('myActiveCards')
@@ -382,6 +383,7 @@ export class BattleComponent implements OnInit {
   setEnemyPlayerHoverTarget(card: PlayerDto) {
     if (card && card.id !== this.enemyTarget && this.canSelectCards) {
       this.enemyTarget = card.id;
+      this.staticEnemyTarget = this.enemyTarget;
       const hand = this.cardService.determineHand(this.selectedCards);
       this.setAttackArrowsPlayer(hand.valid);
     }
@@ -393,6 +395,10 @@ export class BattleComponent implements OnInit {
 
   findEnemyPlayerAttack(): PlayerDto {
     return this.enemyPlayers.find((x) => x.health > 0)!;
+  }
+
+  findStaticEnemyPlayer(): PlayerDto {
+    return this.enemyPlayers.find((x) => x.id === this.staticEnemyTarget)!;
   }
 
   redrawCardIsSelected(card: CardDto): boolean {
@@ -518,6 +524,7 @@ export class BattleComponent implements OnInit {
     if (this.enemyTarget === 0) {
       const foundValidEnemy = this.findEnemyPlayerAttack();
       this.enemyTarget = foundValidEnemy.id;
+      this.staticEnemyTarget = this.enemyTarget;
     }
 
     setTimeout(() => {
@@ -809,7 +816,8 @@ export class BattleComponent implements OnInit {
       this.playerWinner = true;
       this.enemyLoser = true;
       // Attack bot for 1 damage
-      this.enemyTarget = this.findEnemyPlayerAttack().id;
+      this.enemyTarget = this.findStaticEnemyPlayer().id;
+      this.staticEnemyTarget = this.findStaticEnemyPlayer().id;
       for await (const x of this.enemyPlayers) {
         if (x.id === this.enemyTarget) {
           const incomingAttackPower = this.selectedCards.length;
@@ -854,7 +862,8 @@ export class BattleComponent implements OnInit {
       this.playerWinner = true;
       this.enemyLoser = true;
       // Attack bot for 1 damage
-      this.enemyTarget = this.findEnemyPlayerAttack().id;
+      this.enemyTarget = this.findStaticEnemyPlayer().id;
+      this.staticEnemyTarget = this.enemyTarget;
       for await (const x of this.enemyPlayers) {
         if (x.id === this.enemyTarget) {
           const incomingAttackPower = this.selectedCards.length;
@@ -891,6 +900,8 @@ export class BattleComponent implements OnInit {
 
     setTimeout(() => {
       // Attack
+      const attackPlayer = this.findEnemyPlayerAttack();
+      this.staticEnemyTarget = attackPlayer.id;
       this.showBotCards = false;
       this.enemyAttackStarted = true;
       this.canSelectCards = true;
@@ -968,6 +979,7 @@ export class BattleComponent implements OnInit {
     this.enemyLoser = false;
     this.enemyWinner = false;
     this.enemyAttackStarted = false;
+    this.staticEnemyTarget = 0;
     this.tie = false;
     this.enemyDefense = [];
     this.activeLeaderLines = [];

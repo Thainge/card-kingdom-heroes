@@ -381,7 +381,7 @@
             <div
               class="cardBorder middleCardBorder playerCardBorder"
               [ngClass]="{
-                deadEnemy: findEnemyPlayerAttack().health < 1
+                deadEnemy: findStaticEnemyPlayer().health < 1
               }"
             >
               <!-- Start of animations -->
@@ -414,7 +414,7 @@
                 <img src="./assets/sword.png" class="cardIcon" />
                 <div class="cardIconValue">
                   <div class="attackDefenseText swordText">
-                    {{ findEnemyPlayerAttack().attack }}
+                    {{ findStaticEnemyPlayer().attack }}
                   </div>
                 </div>
               </div>
@@ -425,16 +425,16 @@
                     class="attackDefenseText"
                     [ngClass]="{
                       redHealthText:
-                        findEnemyPlayerAttack().health <
-                        findEnemyPlayerAttack().baseHealth
+                        findStaticEnemyPlayer().health <
+                        findStaticEnemyPlayer().baseHealth
                     }"
                   >
-                    {{ findEnemyPlayerAttack().health }}
+                    {{ findStaticEnemyPlayer().health }}
                   </div>
                 </div>
               </div>
               <img
-                [src]="findEnemyPlayerAttack().image"
+                [src]="findStaticEnemyPlayer().image"
                 class="cardBackgroundImage playerBackground"
               />
             </div>
@@ -909,14 +909,16 @@
                     [ngClass]="{
                       redHealthText:
                         item.health < item.baseHealth ||
-                        (enemyTarget === item.id && selectedCards.length > 0)
+                        (enemyTarget === item.id &&
+                          selectedCards.length > 0 &&
+                          !attackEnding)
                     }"
                   >
                     {{
-                      enemyTarget === item.id &&
-                      canSelectCards &&
-                      !attackStarted &&
-                      !enemyAttackStarted
+                      (enemyTarget === item.id &&
+                        attackStarted &&
+                        !attackEnding) ||
+                      (canSelectCards && enemyTarget === item.id)
                         ? item.health - selectedCards.length
                         : item.health
                     }}
