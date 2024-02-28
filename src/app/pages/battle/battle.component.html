@@ -798,10 +798,8 @@
       </div>
       <div class="middleRightBox">
         <div
-          class="deathSkullBox"
-          [ngClass]="{
-            deathSkullAnimation: player.health < 1
-          }"
+          *ngIf="player.health < 1"
+          class="deathSkullBox deathSkullAnimation"
         >
           <img src="./assets/skull.png" class="deathSkull" />
         </div>
@@ -863,10 +861,8 @@
           *ngFor="let item of enemyPlayers; index as i; trackBy: trackById"
         >
           <div
-            class="deathSkullBox"
-            [ngClass]="{
-              deathSkullAnimation: item.health < 1
-            }"
+            *ngIf="item.health < 1"
+            class="deathSkullBox deathSkullAnimation"
           >
             <img src="./assets/skull.png" class="deathSkull" />
           </div>
@@ -911,10 +907,26 @@
                   <div
                     class="attackDefenseText"
                     [ngClass]="{
-                      redHealthText: item.health < item.baseHealth
+                      redHealthText:
+                        item.health < item.baseHealth ||
+                        (enemyTarget === item.id && selectedCards.length > 0)
                     }"
                   >
-                    {{ item.health }}
+                    {{
+                      enemyTarget === item.id
+                        ? item.health - selectedCards.length
+                        : item.health
+                    }}
+                  </div>
+                  <div
+                    class="centerNumberValue failText"
+                    [ngClass]="{
+                      showHitText: enemyTarget === item.id
+                    }"
+                  >
+                    {{
+                      selectedCards.length > 0 ? "-" + selectedCards.length : ""
+                    }}
                   </div>
                 </div>
               </div>

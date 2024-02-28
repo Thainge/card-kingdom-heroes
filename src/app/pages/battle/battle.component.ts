@@ -250,10 +250,6 @@ export class BattleComponent implements OnInit {
     // this.redrawing = false;
     // this.canSelectCards = false;
     // this.startBotTurn();
-
-    setTimeout(() => {
-      this.player.health = 0;
-    }, 1500);
   }
 
   ngAfterViewInit() {}
