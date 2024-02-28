@@ -913,7 +913,10 @@
                     }"
                   >
                     {{
-                      enemyTarget === item.id
+                      enemyTarget === item.id &&
+                      canSelectCards &&
+                      !attackStarted &&
+                      !enemyAttackStarted
                         ? item.health - selectedCards.length
                         : item.health
                     }}
@@ -921,7 +924,7 @@
                   <div
                     class="centerNumberValue failText"
                     [ngClass]="{
-                      showHitText: enemyTarget === item.id
+                      showHitText: enemyTarget === item.id && canSelectCards
                     }"
                   >
                     {{
