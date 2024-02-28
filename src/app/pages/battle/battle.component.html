@@ -34,19 +34,30 @@
             class="playerResultText redrawDetailText"
             [@zoomInEnter]="{
               value: '',
-              params: { duration: 400, delay: 100, translate: '100px' }
+              params: {
+                duration: 400,
+                delay: enemyWinner ? 400 : 2000,
+                translate: '100px'
+              }
             }"
             [@fadeUpLeave]
-            *ngIf="enemyWinner"
+            *ngIf="enemyWinner || playerWinner || tie"
             [ngClass]="{
               successText: enemyWinner,
               failText: enemyLoser,
               tieText: tie
             }"
           >
-            {{ enemyWinner ? "Winner!" : tie ? "Tie" : "-2" }}
+            {{
+              enemyWinner ? "Winner!" : tie ? "Tie" : "-" + selectedCards.length
+            }}
           </div>
-          <div class="redrawDetailTextInvisible" *ngIf="!enemyWinner">.</div>
+          <div
+            class="redrawDetailTextInvisible"
+            *ngIf="!playerWinner && !playerLoser && !tie"
+          >
+            .
+          </div>
           <!-- End of animations -->
           <div
             class="cardBorder middleCardBorder playerCardBorder"
@@ -130,19 +141,30 @@
             class="playerResultText redrawDetailText"
             [@zoomInEnter]="{
               value: '',
-              params: { duration: 400, delay: 100, translate: '100px' }
+              params: {
+                duration: 400,
+                delay: playerWinner ? 400 : 2000,
+                translate: '100px'
+              }
             }"
             [@fadeUpLeave]
-            *ngIf="playerWinner"
+            *ngIf="enemyWinner || playerWinner || tie"
             [ngClass]="{
               successText: playerWinner,
               failText: playerLoser,
               tieText: tie
             }"
           >
-            {{ playerWinner ? "Winner!" : tie ? "Tie" : "-2" }}
+            {{
+              playerWinner ? "Winner!" : tie ? "Tie" : "-" + enemyDefense.length
+            }}
           </div>
-          <div class="redrawDetailTextInvisible" *ngIf="!playerWinner">.</div>
+          <div
+            class="redrawDetailTextInvisible"
+            *ngIf="!playerWinner && !playerLoser && !tie"
+          >
+            .
+          </div>
           <!-- End of animations -->
           <div
             class="cardBorder middleCardBorder playerCardBorder"
@@ -327,19 +349,34 @@
               class="playerResultText redrawDetailText"
               [@zoomInEnter]="{
                 value: '',
-                params: { duration: 400, delay: 100, translate: '100px' }
+                params: {
+                  duration: 400,
+                  delay: enemyWinner ? 400 : 2000,
+                  translate: '100px'
+                }
               }"
               [@fadeUpLeave]
-              *ngIf="enemyWinner"
+              *ngIf="enemyWinner || playerWinner || tie"
               [ngClass]="{
                 successText: enemyWinner,
                 failText: enemyLoser,
                 tieText: tie
               }"
             >
-              {{ enemyWinner ? "Winner!" : tie ? "Tie" : "-2" }}
+              {{
+                enemyWinner
+                  ? "Winner!"
+                  : tie
+                  ? "Tie"
+                  : "-" + selectedCards.length
+              }}
             </div>
-            <div class="redrawDetailTextInvisible" *ngIf="!enemyWinner">.</div>
+            <div
+              class="redrawDetailTextInvisible"
+              *ngIf="!playerWinner && !playerLoser && !tie"
+            >
+              .
+            </div>
             <!-- End of animations -->
             <div
               class="cardBorder middleCardBorder playerCardBorder"
@@ -424,19 +461,34 @@
               class="playerResultText redrawDetailText"
               [@zoomInEnter]="{
                 value: '',
-                params: { duration: 400, delay: 100, translate: '100px' }
+                params: {
+                  duration: 400,
+                  delay: playerWinner ? 400 : 2000,
+                  translate: '100px'
+                }
               }"
               [@fadeUpLeave]
-              *ngIf="playerWinner"
+              *ngIf="enemyWinner || playerWinner || tie"
               [ngClass]="{
                 successText: playerWinner,
                 failText: playerLoser,
                 tieText: tie
               }"
             >
-              {{ playerWinner ? "Winner!" : tie ? "Tie" : "-2" }}
+              {{
+                playerWinner
+                  ? "Winner!"
+                  : tie
+                  ? "Tie"
+                  : "-" + enemyDefense.length
+              }}
             </div>
-            <div class="redrawDetailTextInvisible" *ngIf="!playerWinner">.</div>
+            <div
+              class="redrawDetailTextInvisible"
+              *ngIf="!playerWinner && !playerLoser && !tie"
+            >
+              .
+            </div>
             <!-- End of animations -->
             <div
               class="cardBorder middleCardBorder playerCardBorder"
@@ -533,7 +585,7 @@
           >
             {{ enemyAttackHand?.name }}
           </div>
-          <div class="attackCardFlexRow">
+          <div class="attackCardFlexRow" #enemyAttackCardsRef>
             <div
               *ngFor="let card of enemyDefense; index as i"
               class="attackCardBox"
@@ -608,10 +660,6 @@
         [ngClass]="{
           fade: !redrawing,
           fadeHide: redrawHide
-        }"
-        [@fadeEnter]="{
-          value: '',
-          params: { duration: 1000, delay: 0, translate: '300px' }
         }"
       ></div>
       <div
@@ -713,7 +761,7 @@
         [ngClass]="{
           activeEnemyCard: enemyCardIsSelected(card)
         }"
-        (click)="selectCard(card)"
+        #activeEnemyCards
         [@fadeUpEnter]="{
           value: '',
           params: { duration: 400, delay: (i + 1) * 100, translate: '30px' }
@@ -729,7 +777,7 @@
   </div>
 
   <!-- Middle -->
-  <div class="middle">
+  <div class="middle" id="testArrow">
     <div class="middleLeft">
       <div
         class="attackButtonBox"
@@ -754,7 +802,7 @@
           *ngIf="redrawHide"
           [@fadeUpEnter]="{
             value: '',
-            params: { duration: 400, delay: 1400, translate: '30px' }
+            params: { duration: 400, delay: 1000, translate: '30px' }
           }"
           [@fadeUpLeave]
           [ngClass]="{
@@ -764,8 +812,9 @@
           <div
             class="cardBorder middleCardBorder playerCardBorder"
             [ngClass]="{
-              errorEnemyBorder: playerTarget === player.id
+              errorEnemyBorder: playerTarget === player.id && !wrappingTurn
             }"
+            #playerRef
           >
             <div class="cardPlayerBorder">
               <img src="./assets/greenBorder.png" class="cardIcon" />
@@ -812,7 +861,7 @@
               value: '',
               params: {
                 duration: 400,
-                delay: 1400,
+                delay: 1000,
                 translate: '30px'
               }
             }"
@@ -820,13 +869,14 @@
             [ngClass]="{
               leavingFieldCard: item.health < 1
             }"
-            (click)="setEnemyPlayerHover(item)"
+            (click)="setEnemyPlayerHoverTarget(item)"
           >
             <div
               class="cardBorder middleCardBorder playerCardBorder"
               [ngClass]="{
-                errorEnemyBorder: enemyTarget === item.id
+                errorEnemyBorder: enemyTarget === item.id && !wrappingTurn
               }"
+              #enemyPlayerRef
             >
               <div class="cardPlayerBorder">
                 <img src="./assets/greenBorder.png" class="cardIcon" />
@@ -874,6 +924,7 @@
         attackingBottomMiddle:
           !showBotCards && enemyAttackStarted && canSelectCards
       }"
+      #myActiveCardsDefending
       *ngIf="
         canSelectCards ||
         (!showBotCards && enemyAttackStarted && canSelectCards)
@@ -889,6 +940,7 @@
         [ngClass]="{
           activeCard: cardIsSelected(card)
         }"
+        #myActiveCards
         (click)="selectCard(card)"
         (wheel)="wildCardChange($event, card)"
         [@fadeUpEnter]="{
@@ -901,7 +953,7 @@
           class="cardBorder"
           [ngClass]="{
             activeCardBorder: cardIsSelected(card),
-            validCardBorder: cardIsValid(card) && !enemyAttackStarted,
+            validCardBorder: cardIsValid(card),
             errorCardBorder:
               !cardIsValid(card) && cardIsSelected(card) && !enemyAttackStarted
           }"

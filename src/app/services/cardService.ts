@@ -30,6 +30,7 @@ export class CardService {
     const isFlush: DetermineObject = this.isFlush(array);
     const isFullHouse: DetermineObject = this.isFullHouse(array);
     const isFourOfAKind: DetermineObject = this.isFourOfAKind(array);
+    const isFiveOfAKind: DetermineObject = this.isFiveOfAKind(array);
     const isStraightFlush: DetermineObject = this.isStraightFlush(array);
 
     if (isStraightFlush.valid) {
@@ -37,9 +38,18 @@ export class CardService {
         name: 'Straight Flush',
         valid: true,
         power: 5,
-        ranking: 9,
+        ranking: 10,
         highCard: isStraightFlush.highCard,
         cards: isStraightFlush.cards,
+      };
+    } else if (isFiveOfAKind.valid) {
+      return {
+        name: 'Five of a Kind',
+        valid: true,
+        power: 5,
+        ranking: 9,
+        highCard: isFiveOfAKind.highCard,
+        cards: isFiveOfAKind.cards,
       };
     } else if (isFourOfAKind.valid) {
       return {
@@ -300,6 +310,29 @@ export class CardService {
     };
   }
 
+  private isFiveOfAKind(array: CardDto[]): DetermineObject {
+    const valuesCount = this.getValuesCount(array);
+
+    let keyArr: number[] = [];
+    Object.keys(valuesCount).forEach(function (key) {
+      keyArr.push(Number(key));
+    });
+
+    if (array.length === 5 && valuesCount.includes(5)) {
+      return {
+        valid: true,
+        cards: array,
+        highCard: Number(array[0].value),
+      };
+    }
+
+    return {
+      valid: false,
+      cards: [],
+      highCard: 0,
+    };
+  }
+
   private isStraightFlush(array: CardDto[]): DetermineObject {
     const valuesCount = this.getValuesCount(array);
 
@@ -502,6 +535,7 @@ export class CardService {
     const flushInfo = this.botHandIncludesFlush(array);
     const fullHouseInfo = this.botHandIncludesFullHouse(array);
     const fourOfAKindInfo = this.botHandIncludesFourOfAKind(array);
+    const fiveOfAKindInfo = this.botHandIncludesFiveOfAKind(array);
     const straightFlushInfo = this.botHandIncludesStraightFlush(array);
 
     if (straightFlushInfo.valid) {
@@ -509,9 +543,18 @@ export class CardService {
         name: 'Straight Flush',
         valid: true,
         power: 5,
-        ranking: 9,
+        ranking: 10,
         highCard: straightFlushInfo.highCard,
         cards: straightFlushInfo.cards,
+      };
+    } else if (fiveOfAKindInfo.valid) {
+      return {
+        name: 'Five of a Kind',
+        valid: true,
+        power: 5,
+        ranking: 9,
+        highCard: fiveOfAKindInfo.highCard,
+        cards: fiveOfAKindInfo.cards,
       };
     } else if (fourOfAKindInfo.valid) {
       return {
@@ -713,6 +756,34 @@ export class CardService {
       return {
         valid: true,
         cards: [result[0], result[1], result[2], result[3]],
+        highCard: Number(result[0].value),
+      };
+    }
+
+    return {
+      valid: false,
+      cards: [],
+      highCard: 0,
+    };
+  }
+
+  private botHandIncludesFiveOfAKind(array: CardDto[]): DetermineObject {
+    const valuesCount = this.getValuesCount(array);
+    const includesFive = valuesCount.includes(5);
+
+    if (includesFive) {
+      var result: any = Object.values(
+        array.reduce((c: any, v: any) => {
+          let k = v.value;
+          c[k] = c[k] || [];
+          c[k].push(v);
+          return c;
+        }, {})
+      ).reduce((c: any, v: any) => (v.length > 1 ? c.concat(v) : c), []);
+
+      return {
+        valid: true,
+        cards: array,
         highCard: Number(result[0].value),
       };
     }

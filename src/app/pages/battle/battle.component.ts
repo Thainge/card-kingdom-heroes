@@ -1,5 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  Inject,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import { CardDto } from 'src/app/models/card';
 import { CardService } from 'src/app/services/cardService';
 import { Cards } from 'src/assets/data/cards';
@@ -133,6 +142,23 @@ export class BattleComponent implements OnInit {
   canSeeTopCard: boolean = false;
   topRedrawCard: number = 0;
 
+  activeLeaderLines: any[] = [];
+  wrappingTurn: boolean = false;
+
+  @ViewChildren('myActiveCards')
+  myActiveCards: QueryList<ElementRef> | undefined;
+
+  @ViewChildren('activeEnemyCards') activeEnemyCards:
+    | QueryList<ElementRef>
+    | undefined;
+
+  @ViewChildren('enemyPlayerRef') enemyPlayerRef:
+    | QueryList<ElementRef>
+    | undefined;
+
+  @ViewChildren('playerRef') playerRef: QueryList<ElementRef> | undefined;
+  @ViewChild('enemyAttackCardsRef') enemyAttackCardsRef: ElementRef | undefined;
+
   constructor(
     private cardService: CardService,
     @Inject(DOCUMENT) private document: any
@@ -145,15 +171,15 @@ export class BattleComponent implements OnInit {
       id: 53,
       wild: true,
       suit: 'hearts',
-      value: '2',
-      image: 'red_joker.png',
+      value: '14',
+      image: 'ace_of_hearts.png',
     };
     const blackWildCard: CardDto = {
       id: 54,
       wild: true,
       suit: 'spades',
-      value: '2',
-      image: 'black_joker.png',
+      value: '14',
+      image: 'ace_of_spades.png',
     };
     this.wildCards = [redWildCard, blackWildCard];
 
@@ -184,35 +210,35 @@ export class BattleComponent implements OnInit {
 
     // this.enemyHand = [this.redrawCards[1]];
     // this.selectedCards = [this.redrawCards[0]];
-    // this.redrawHide = true;
-    // this.redrawing = false;
+    this.redrawHide = true;
+    this.redrawing = false;
+    this.playerHand = this.redrawCards;
     // this.attack();
 
     this.canDefendWithMultipleCards = true;
-    // this.alwaysWinTies = true;
+    this.alwaysWinTies = true;
     // this.canSeeTopCard = true;
+
+    // this.attackStarted = false;
+    // this.enemyAttackStarted = false;
+    // this.playerHand = this.enemyHand;
+    // this.selectedEnemyCards = [this.enemyHand[0]];
+    // this.redrawHide = true;
+    // this.redrawing = false;
+    // this.canSelectCards = false;
+    // this.startBotTurn();
   }
 
-  ngAfterViewInit() {
-    // const cards = this.document.getElementsByClassName(
-    //   'playerBottomCard'
-    // ) as HTMLCollection;
-    // console.log(cards);
-    // new LeaderLine(
-    //   LeaderLine.mouseHoverAnchor(),
-    //   this.document.getElementById('toptest')
-    // ),
-    //   {
-    //     startPlugColor: '#1a6be0',
-    //     endPlugColor: '#1efdaa',
-    //     gradient: true,
-    //     dropShadow: true,
-    //     dash: { animation: true },
-    //     hide: true,
-    //     duration: 300,
-    //     timing: 'linear',
-    //     endPlug: 'arrow3',
-    //   };
+  ngAfterViewInit() {}
+
+  @HostListener('document:keypress', ['$event'])
+  giveHint(event: KeyboardEvent) {
+    // this.key = event.key;
+    if (event.key && event.key.toLowerCase() === 'h') {
+      const playerBestHand: DetermineObject =
+        this.cardService.generateBotOffenseHand(this.playerHand);
+      this.validCards = playerBestHand.cards;
+    }
   }
 
   cardIsSelected(card: CardDto): boolean {
@@ -296,11 +322,11 @@ export class BattleComponent implements OnInit {
     return false;
   }
 
-  setEnemyPlayerHover(card: PlayerDto) {
-    if (card.id === this.enemyTarget) {
-      this.enemyTarget = 0;
-    } else {
-      this.enemyTarget = card.id ?? 0;
+  setEnemyPlayerHoverTarget(card: PlayerDto) {
+    if (card && card.id !== this.enemyTarget && this.canSelectCards) {
+      this.enemyTarget = card.id;
+      const hand = this.cardService.determineHand(this.selectedCards);
+      this.setAttackArrowsPlayer(hand.valid);
     }
   }
 
@@ -394,6 +420,10 @@ export class BattleComponent implements OnInit {
 
       // Add card to selectedCards
       if (!includesCard) {
+        if (this.selectedCards.length === 5) {
+          this.pushError('Max 5 cards');
+          return;
+        }
         this.selectedCards.push(card);
       }
       // Remove card from selectedCards
@@ -409,12 +439,125 @@ export class BattleComponent implements OnInit {
     }
 
     // Check if valid
+
     const hand = this.cardService.determineHand(this.selectedCards);
-    if (hand.valid) {
+
+    if (this.enemyAttackStarted && hand.valid) {
       this.validCards = this.selectedCards;
-    } else {
+    } else if (this.enemyAttackStarted) {
       this.validCards = [];
     }
+
+    if (hand.valid && !this.enemyAttackStarted) {
+      this.validCards = this.selectedCards;
+      this.setAttackArrowsPlayer(true);
+    } else if (!this.enemyAttackStarted) {
+      this.setAttackArrowsPlayer(false);
+      this.validCards = [];
+    }
+  }
+
+  setAttackArrowsPlayer(valid: boolean) {
+    if (this.enemyTarget === 0) {
+      const foundValidEnemy = this.findEnemyPlayerAttack();
+      this.enemyTarget = foundValidEnemy.id;
+    }
+
+    setTimeout(() => {
+      let foundTarget: ElementRef | null;
+      this.enemyPlayerRef?.forEach((x) => {
+        if (x.nativeElement.className.includes('errorEnemyBorder')) {
+          foundTarget = x.nativeElement;
+        }
+      });
+      const myNewActiveLines: any[] = [];
+      this.myActiveCards?.forEach((x) => {
+        if (x.nativeElement.className.includes('activeCard')) {
+          const myLineOptions: any = {
+            dash: { animation: true },
+            endSocket: 'bottom',
+            startSocket: 'top',
+            dropShadow: true,
+            gradient: {
+              startColor: valid
+                ? 'rgba(0, 255, 0, 0.281)'
+                : 'rgba(255, 0, 0, 0.281)',
+              endColor: valid ? 'rgb(0, 255, 0)' : 'rgb(228, 35, 35)',
+            },
+            animOptions: {
+              duration: 30,
+              timing: 'linear',
+            },
+            hide: true,
+            endPlug: 'arrow3',
+            endPlugColor: valid ? 'rgb(0, 255, 0)' : 'rgb(228, 35, 35)',
+          };
+          let myNewLine: any = new LeaderLine(
+            x.nativeElement,
+            foundTarget,
+            myLineOptions
+          );
+          myNewLine.show('draw', { duration: 200, timing: 'linear' });
+          myNewActiveLines.push(myNewLine);
+        }
+      });
+      this.activeLeaderLines.forEach((x) => {
+        x.hide('fade', { duration: 100, timing: 'linear' });
+        setTimeout(() => {
+          x.remove();
+        }, 100);
+      });
+      this.activeLeaderLines = myNewActiveLines;
+    }, 150);
+  }
+
+  setAttackArrowsEnemy() {
+    this.playerTarget = this.player.id;
+
+    setTimeout(() => {
+      let foundTarget: ElementRef | null;
+      this.playerRef?.forEach((x) => {
+        if (x.nativeElement.className.includes('errorEnemyBorder')) {
+          foundTarget = x.nativeElement;
+        }
+      });
+      const myNewActiveLines: any[] = [];
+      this.activeEnemyCards?.forEach((x) => {
+        if (x.nativeElement.className.includes('activeEnemyCard')) {
+          const myLineOptions: any = {
+            dash: { animation: true },
+            endSocket: 'top',
+            startSocket: 'bottom',
+            dropShadow: true,
+            gradient: {
+              startColor: 'rgba(0, 255, 0, 0.281)',
+              endColor: 'rgb(0, 255, 0)',
+            },
+            animOptions: {
+              duration: 30,
+              timing: 'linear',
+            },
+            hide: true,
+            endPlug: 'arrow3',
+            endPlugColor: 'rgb(0, 255, 0)',
+          };
+          let myNewLine: any = new LeaderLine(
+            x.nativeElement,
+            foundTarget,
+            myLineOptions
+          );
+          myNewLine.show('draw', { duration: 200, timing: 'linear' });
+          myNewActiveLines.push(myNewLine);
+        }
+      });
+      this.activeLeaderLines.forEach((x) => {
+        x.hide('fade', { duration: 100, timing: 'linear' });
+        setTimeout(() => {
+          x.remove();
+        }, 100);
+      });
+      this.activeLeaderLines = myNewActiveLines;
+    }, 150);
   }
 
   attackButtonEnabled(): boolean {
@@ -434,10 +577,6 @@ export class BattleComponent implements OnInit {
       return;
     }
 
-    if (!this.enemyTarget) {
-      this.setEnemyPlayerHover(this.enemyPlayers[0]);
-    }
-
     this.playerHand = this.playerHand.filter((x) => {
       const includes = this.selectedCards.find((a) => a.id === x.id);
       if (includes) {
@@ -448,6 +587,12 @@ export class BattleComponent implements OnInit {
 
     this.canSelectCards = false;
     this.attackStarted = true;
+    this.activeLeaderLines.forEach((x) => {
+      x.hide('fade', { duration: 100, timing: 'linear' });
+      setTimeout(() => {
+        x.remove();
+      }, 100);
+    });
     // Valid attack hand, commence battle
     this.playerAttackHand = hand;
     this.initiateBotDefense(hand);
@@ -483,6 +628,7 @@ export class BattleComponent implements OnInit {
     newHealth: number,
     isAttackingPlayer: boolean = false
   ) {
+    const enemyTarget = this.enemyTarget;
     await this.timeout(2500);
     if (isAttackingPlayer) {
       // Player goes down
@@ -497,7 +643,7 @@ export class BattleComponent implements OnInit {
     } else {
       const difference = currentHealth - newHealth;
       const foundIndex = this.enemyPlayers.findIndex(
-        (x) => x.id === this.enemyTarget
+        (x) => x.id === enemyTarget
       );
 
       const differentArr = Array.from(Array(difference).keys());
@@ -511,6 +657,8 @@ export class BattleComponent implements OnInit {
         };
       }
     }
+    this.wrappingTurn = true;
+    return await this.timeout(1000);
   }
 
   timeout(ms: number) {
@@ -536,9 +684,13 @@ export class BattleComponent implements OnInit {
       this.enemyLoser = true;
       for await (const x of this.enemyPlayers) {
         if (x.id === this.enemyTarget) {
-          const incomingAttackPower =
-            result.player1Determine.power! + this.player.attack;
+          const incomingAttackPower = result.player1Determine.power!;
           const newHealth = x.health - incomingAttackPower;
+          console.log(
+            'Player Wins Attack: Attacking bot for ' +
+              incomingAttackPower +
+              ' damage'
+          );
           await this.numbersGoDownIncrementally(x.health, newHealth);
         }
       }
@@ -548,6 +700,17 @@ export class BattleComponent implements OnInit {
     if (result.player2Winner) {
       this.enemyWinner = true;
       this.playerLoser = true;
+
+      const incomingAttackPower = this.enemyDefense.length;
+      const newHealth = this.player.health - incomingAttackPower;
+      console.log(
+        'Bot Defended: Attacking player for ' + incomingAttackPower + ' damage'
+      );
+      await this.numbersGoDownIncrementally(
+        this.player.health,
+        newHealth,
+        true
+      );
     }
 
     // Tie
@@ -555,7 +718,25 @@ export class BattleComponent implements OnInit {
       this.tie = true;
     }
 
-    await this.timeout(1000);
+    // Always win ties enabled? win
+    if (result.tie && this.alwaysWinTies) {
+      this.tie = false;
+      this.playerWinner = true;
+      this.enemyLoser = true;
+      for await (const x of this.enemyPlayers) {
+        if (x.id === this.enemyTarget) {
+          const incomingAttackPower = result.player1Determine.power!;
+          const newHealth = x.health - incomingAttackPower;
+          console.log(
+            'Player Wins Attack: Attacking bot for ' +
+              incomingAttackPower +
+              ' damage'
+          );
+          await this.numbersGoDownIncrementally(x.health, newHealth);
+        }
+      }
+    }
+
     this.attackEnding = true;
     await this.timeout(1000);
     this.attackStarted = false;
@@ -566,28 +747,43 @@ export class BattleComponent implements OnInit {
   async combatFinishBot(result: DetermineWinnerObject) {
     // Bot finishes combat
 
-    // If bot won combat, attack player
+    // Success, player defended
     if (result.player1Winner) {
       this.playerWinner = true;
       this.enemyLoser = true;
+      // Attack bot for 1 damage
+      this.enemyTarget = this.findEnemyPlayerAttack().id;
+      for await (const x of this.enemyPlayers) {
+        if (x.id === this.enemyTarget) {
+          const incomingAttackPower = this.selectedCards.length;
+          console.log(
+            'Player Defended: Attacking bot for ' +
+              incomingAttackPower +
+              ' damage'
+          );
+          const newHealth = x.health - incomingAttackPower;
+          await this.numbersGoDownIncrementally(x.health, newHealth);
+        }
+      }
     }
 
-    // Fail
+    // Fail, bot wins
     if (result.player2Winner) {
       this.enemyWinner = true;
       this.playerLoser = true;
-      this.player.health = this.player.health - result.player2Determine.power!;
-      const foundAttacker = this.enemyPlayers.find((x) => x.health > 0)!;
 
-      const incomingAttackPower =
-        result.player2Determine.power! + foundAttacker.attack;
+      const incomingAttackPower = result.player2Determine.power!;
       const newHealth = this.player.health - incomingAttackPower;
+      console.log(
+        'Bot Wins Attack: Attacking player for ' +
+          incomingAttackPower +
+          ' damage'
+      );
       await this.numbersGoDownIncrementally(
         this.player.health,
         newHealth,
         true
       );
-      // this.player = { ...this.player, health: newHealth };
     }
 
     // Tie
@@ -595,8 +791,27 @@ export class BattleComponent implements OnInit {
       this.tie = true;
     }
 
-    console.log('finishing');
-    await this.timeout(1000);
+    // Always win ties enabled? win
+    if (result.tie && this.alwaysWinTies) {
+      this.tie = false;
+      this.playerWinner = true;
+      this.enemyLoser = true;
+      // Attack bot for 1 damage
+      this.enemyTarget = this.findEnemyPlayerAttack().id;
+      for await (const x of this.enemyPlayers) {
+        if (x.id === this.enemyTarget) {
+          const incomingAttackPower = this.selectedCards.length;
+          console.log(
+            'Player Defended: Attacking bot for ' +
+              incomingAttackPower +
+              ' damage'
+          );
+          const newHealth = x.health - incomingAttackPower;
+          await this.numbersGoDownIncrementally(x.health, newHealth);
+        }
+      }
+    }
+
     this.attackEnding = true;
     await this.timeout(1000);
     this.attackStarted = false;
@@ -612,19 +827,22 @@ export class BattleComponent implements OnInit {
     );
 
     setTimeout(() => {
-      // Select player target
-      this.playerTarget = this.player.id!;
-    }, 500);
-
-    setTimeout(() => {
-      // Select enemy cards
+      this.playerTarget = this.player.id;
       this.selectedEnemyCards = botHand.cards;
+      this.setAttackArrowsEnemy();
     }, 1500);
+
     setTimeout(() => {
       // Attack
       this.showBotCards = false;
       this.enemyAttackStarted = true;
       this.canSelectCards = true;
+      this.activeLeaderLines.forEach((x) => {
+        x.hide('fade', { duration: 100, timing: 'linear' });
+        setTimeout(() => {
+          x.remove();
+        }, 100);
+      });
       // Valid attack hand, commence battle
       this.enemyAttackHand = botHand;
       this.enemyDefense = botHand.cards;
@@ -695,8 +913,13 @@ export class BattleComponent implements OnInit {
     this.enemyAttackStarted = false;
     this.tie = false;
     this.enemyDefense = [];
+    this.activeLeaderLines = [];
     this.playerAttackHand = { cards: [], highCard: 0, valid: false };
     this.enemyAttackHand = { cards: [], highCard: 0, valid: false };
+
+    setTimeout(() => {
+      this.wrappingTurn = false;
+    }, 1000);
 
     const addLength = 5 - this.playerHand.length;
     const addArr = Array.from(Array(addLength).keys());
