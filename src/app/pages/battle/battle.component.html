@@ -996,6 +996,25 @@
             class="cardBackgroundImage"
           />
           <div class="wildCard bottomWildCard" *ngIf="card.wild"></div>
+          <!-- <div class="wildCardIcon">
+            <div class="wildText wildStar">⋆</div>
+          </div> -->
+          <div
+            class="wildCardIcon"
+            *ngIf="card.wild && card.wildRange && card.wildRange > 0"
+            [ngClass]="{
+              specialWildRangeIcon: card.wildRange === 14
+            }"
+          >
+            <div
+              class="wildText"
+              [ngClass]="{
+                specialWildRangeIconText: card.wildRange === 14
+              }"
+            >
+              {{ card.wildRange === 14 ? "★" : "+" + card.wildRange }}
+            </div>
+          </div>
           <div
             class="wildCardSuites bottomWildCard"
             *ngIf="card.wild && card.wildSuit"

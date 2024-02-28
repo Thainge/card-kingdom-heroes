@@ -15,4 +15,13 @@ html {
   overflow: hidden;
   font-family: futureTime;
   letter-spacing: 2px;
+  cursor: url(./Assets/cursor1.cur), auto;
+}
+
+body:active {
+  cursor: url(./Assets/cursor2.cur), auto;
+}
+
+::-webkit-scrollbar-thumb {
+  cursor: url(./Assets/cursor1.cur), auto;
 }

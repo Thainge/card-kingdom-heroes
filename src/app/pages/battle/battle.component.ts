@@ -231,9 +231,9 @@ export class BattleComponent implements OnInit {
 
     // this.enemyHand = [this.redrawCards[1]];
     // this.selectedCards = [this.redrawCards[0]];
-    // this.redrawHide = true;
-    // this.redrawing = false;
-    // this.playerHand = this.redrawCards;
+    this.redrawHide = true;
+    this.redrawing = false;
+    this.playerHand = this.redrawCards;
     // this.attack();
 
     this.canDefendWithMultipleCards = true;
