@@ -4,6 +4,7 @@ export interface CardDto {
   value?: string;
   image?: string;
   wild?: boolean;
+  wildInitial?: string;
   wildRange?: number;
   wildSuit?: boolean;
 }

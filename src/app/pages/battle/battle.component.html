@@ -798,6 +798,14 @@
       </div>
       <div class="middleRightBox">
         <div
+          class="deathSkullBox"
+          [ngClass]="{
+            deathSkullAnimation: player.health < 1
+          }"
+        >
+          <img src="./assets/skull.png" class="deathSkull" />
+        </div>
+        <div
           class="middleCard middleRightCard middleLeftCard"
           *ngIf="redrawHide"
           [@fadeUpEnter]="{
@@ -854,6 +862,14 @@
           class="middleRightBox"
           *ngFor="let item of enemyPlayers; index as i; trackBy: trackById"
         >
+          <div
+            class="deathSkullBox"
+            [ngClass]="{
+              deathSkullAnimation: item.health < 1
+            }"
+          >
+            <img src="./assets/skull.png" class="deathSkull" />
+          </div>
           <div
             class="middleCard middleRightCard"
             *ngIf="redrawHide"
@@ -942,7 +958,7 @@
         }"
         #myActiveCards
         (click)="selectCard(card)"
-        (wheel)="wildCardChange($event, card)"
+        (wheel)="wildCardScrollChange($event, card)"
         [@fadeUpEnter]="{
           value: '',
           params: { duration: 400, delay: (i + 1) * 100, translate: '30px' }
@@ -962,7 +978,32 @@
             [src]="'./assets/cards/' + card.image"
             class="cardBackgroundImage"
           />
-          <div class="wildCard" *ngIf="card.wild"></div>
+          <div class="wildCard bottomWildCard" *ngIf="card.wild"></div>
+          <div
+            class="wildCardSuites bottomWildCard"
+            *ngIf="card.wild && card.wildSuit"
+          >
+            <img
+              src="./assets/heart.png"
+              class="suit"
+              (click)="chooseWildSuit($event, card, 'hearts')"
+            />
+            <img
+              src="./assets/diamond.png"
+              class="suit"
+              (click)="chooseWildSuit($event, card, 'diamonds')"
+            />
+            <img
+              src="./assets/club.png"
+              class="suit"
+              (click)="chooseWildSuit($event, card, 'clubs')"
+            />
+            <img
+              src="./assets/spade.png"
+              class="suit suitLast"
+              (click)="chooseWildSuit($event, card, 'spades')"
+            />
+          </div>
         </div>
       </div>
     </div>

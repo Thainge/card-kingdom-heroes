@@ -107,7 +107,7 @@ export class BattleComponent implements OnInit {
       image: './assets/' + 'link.png',
       name: 'Link',
       attack: 1,
-      health: 7,
+      health: 0,
       baseHealth: 7,
     },
   ];
@@ -173,17 +173,33 @@ export class BattleComponent implements OnInit {
       wildRange: 1,
       wildSuit: false,
       suit: 'hearts',
-      value: '14',
-      image: 'ace_of_hearts.png',
+      value: '10',
+      wildInitial: '10',
+      image: '10_of_hearts.png',
     };
+
+    // Wild Suit && wild range 2
     const blackWildCard: CardDto = {
       id: 54,
+      wild: true,
+      wildRange: 2,
+      wildSuit: true,
+      suit: 'spades',
+      value: '10',
+      wildInitial: '10',
+      image: '10_of_spades.png',
+    };
+
+    // Everything
+    const blackWildCard2: CardDto = {
+      id: 55,
       wild: true,
       wildRange: 14,
       wildSuit: true,
       suit: 'spades',
-      value: '14',
-      image: 'ace_of_spades.png',
+      value: '5',
+      wildInitial: '5',
+      image: '5_of_spades.png',
     };
     // this.wildCards = [redWildCard, blackWildCard];
 
@@ -221,10 +237,11 @@ export class BattleComponent implements OnInit {
 
     this.canDefendWithMultipleCards = true;
     this.alwaysWinTies = true;
-    // this.canSeeTopCard = true;
+    this.canSeeTopCard = true;
 
     this.redrawCards[0] = redWildCard;
     this.redrawCards[1] = blackWildCard;
+    this.redrawCards[2] = blackWildCard2;
     // this.attackStarted = false;
     // this.enemyAttackStarted = false;
     // this.playerHand = this.enemyHand;
@@ -233,6 +250,10 @@ export class BattleComponent implements OnInit {
     // this.redrawing = false;
     // this.canSelectCards = false;
     // this.startBotTurn();
+
+    setTimeout(() => {
+      this.player.health = 0;
+    }, 1500);
   }
 
   ngAfterViewInit() {}
@@ -259,20 +280,49 @@ export class BattleComponent implements OnInit {
     return false;
   }
 
-  wildCardChange(scroll: any, card: CardDto) {
+  chooseWildSuit(event: any, card: CardDto, suit: string) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    // Find card with same value and different suit
+    const newCard = {
+      ...card,
+      suit: suit,
+      image: card.value + '_of_' + suit + '.png',
+    };
+    this.playerHand = this.playerHand.map((x) => {
+      if (x.id === card.id) {
+        return newCard;
+      }
+
+      return x;
+    });
+  }
+
+  wildCardScrollChange(scroll: any, card: CardDto) {
+    // wild?: boolean; true || false
+    // wildRange?: number; 1 || 2 || 14
+    // wildSuit?: boolean; true || false
+
+    // Wild, ability to scroll card with limited range
     if (scroll.deltaY === -100 && card.wild) {
       // scroll up
       const value = Number(card.value) + 1;
-      if (value < 15) {
+      const initialValue = Math.abs(Number(card.wildInitial) - value) - 1;
+
+      if (value < 15 && initialValue < Number(card.wildRange)) {
         const newCard: CardDto = {
           ...Cards.find(
             (a) => a.suit === card.suit && a.value === value.toString()
           ),
+          wildInitial: card.wildInitial,
+          wildRange: card.wildRange,
+          wildSuit: card.wildSuit,
           id: card.id,
           wild: true,
         };
         this.playerHand = this.playerHand.map((x) => {
-          if (x.suit === card.suit && x.value === card.value && x.wild) {
+          if (x.id === card.id) {
             return newCard;
           }
 
@@ -282,16 +332,21 @@ export class BattleComponent implements OnInit {
     } else if (card.wild) {
       // scroll down
       const value = Number(card.value) - 1;
-      if (value > 1) {
+      const initialValue = Math.abs(Number(card.wildInitial) - value) - 1;
+
+      if (value > 1 && initialValue < Number(card.wildRange)) {
         const newCard: CardDto = {
           ...Cards.find(
             (a) => a.suit === card.suit && a.value === value.toString()
           ),
+          wildInitial: card.wildInitial,
+          wildRange: card.wildRange,
+          wildSuit: card.wildSuit,
           id: card.id,
           wild: true,
         };
         this.playerHand = this.playerHand.map((x) => {
-          if (x.suit === card.suit && x.value === card.value && x.wild) {
+          if (x.id === card.id) {
             return newCard;
           }
 
