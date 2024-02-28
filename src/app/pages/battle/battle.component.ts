@@ -170,6 +170,8 @@ export class BattleComponent implements OnInit {
     const redWildCard: CardDto = {
       id: 53,
       wild: true,
+      wildRange: 1,
+      wildSuit: false,
       suit: 'hearts',
       value: '14',
       image: 'ace_of_hearts.png',
@@ -177,11 +179,13 @@ export class BattleComponent implements OnInit {
     const blackWildCard: CardDto = {
       id: 54,
       wild: true,
+      wildRange: 14,
+      wildSuit: true,
       suit: 'spades',
       value: '14',
       image: 'ace_of_spades.png',
     };
-    this.wildCards = [redWildCard, blackWildCard];
+    // this.wildCards = [redWildCard, blackWildCard];
 
     let playerCards = Cards;
     this.wildCards.forEach((x) => {
@@ -219,6 +223,8 @@ export class BattleComponent implements OnInit {
     this.alwaysWinTies = true;
     // this.canSeeTopCard = true;
 
+    this.redrawCards[0] = redWildCard;
+    this.redrawCards[1] = blackWildCard;
     // this.attackStarted = false;
     // this.enemyAttackStarted = false;
     // this.playerHand = this.enemyHand;
