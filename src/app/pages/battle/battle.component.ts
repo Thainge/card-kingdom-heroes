@@ -145,6 +145,7 @@ export class BattleComponent implements OnInit {
   activeLeaderLines: any[] = [];
   staticEnemyTarget: number = 0;
   wrappingTurn: boolean = false;
+  doingWildCardChange: boolean = false;
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -231,18 +232,22 @@ export class BattleComponent implements OnInit {
 
     // this.enemyHand = [this.redrawCards[1]];
     // this.selectedCards = [this.redrawCards[0]];
-    this.redrawHide = true;
-    this.redrawing = false;
-    this.playerHand = this.redrawCards;
+    // this.redrawHide = true;
+    // this.redrawing = false;
+    this.redrawCards[0] = redWildCard;
+    this.redrawCards[1] = blackWildCard;
+    this.redrawCards[2] = blackWildCard2;
+    // this.redrawCards[3] = blackWildCard2;
+    // this.redrawCards[4] = blackWildCard2;
+    // this.playerHand = this.redrawCards;
+    // this.selectedCards = this.redrawCards;
+    // this.enemyTarget = this.enemyPlayers[0].id;
     // this.attack();
 
     this.canDefendWithMultipleCards = true;
     this.alwaysWinTies = true;
     this.canSeeTopCard = true;
 
-    this.redrawCards[0] = redWildCard;
-    this.redrawCards[1] = blackWildCard;
-    this.redrawCards[2] = blackWildCard2;
     // this.attackStarted = false;
     // this.enemyAttackStarted = false;
     // this.playerHand = this.enemyHand;
@@ -297,11 +302,12 @@ export class BattleComponent implements OnInit {
   }
 
   wildCardScrollChange(scroll: any, card: CardDto) {
-    // wild?: boolean; true || false
-    // wildRange?: number; 1 || 2 || 14
-    // wildSuit?: boolean; true || false
+    if (this.doingWildCardChange || !card.wild) {
+      return;
+    }
 
     // Wild, ability to scroll card with limited range
+    this.doingWildCardChange = true;
     if (scroll.deltaY === -100 && card.wild) {
       // scroll up
       const value = Number(card.value) + 1;
@@ -368,6 +374,7 @@ export class BattleComponent implements OnInit {
     } else {
       this.validCards = [];
     }
+    this.doingWildCardChange = false;
   }
 
   enemyCardIsSelected(card: CardDto): boolean {

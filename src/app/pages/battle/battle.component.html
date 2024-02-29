@@ -248,6 +248,9 @@
             }"
             [@fadeUpLeave]
             *ngIf="(enemyAttackHand?.name ?? '').length > 1"
+            [ngClass]="{
+              specialNameText: enemyAttackHand.power === 5
+            }"
           >
             {{ enemyAttackHand?.name }}
           </div>
@@ -287,6 +290,9 @@
             }"
             [@fadeUpLeave]
             *ngIf="(playerAttackHand?.name ?? '').length > 1"
+            [ngClass]="{
+              specialNameText: playerAttackHand.power === 5
+            }"
           >
             {{ playerAttackHand?.name }}
           </div>
@@ -551,13 +557,12 @@
         </div>
 
         <div class="defendBtnContainer">
-          <div
+          <img
+            src="./assets/defend.png"
             class="goButton"
             (click)="chooseDefensePlayerCards()"
             *ngIf="canSelectCards"
-          >
-            Defend
-          </div>
+          />
         </div>
       </div>
       <div
@@ -582,6 +587,9 @@
             }"
             [@fadeUpLeave]
             *ngIf="(enemyAttackHand?.name ?? '').length > 1"
+            [ngClass]="{
+              specialNameText: enemyAttackHand.power === 5
+            }"
           >
             {{ enemyAttackHand?.name }}
           </div>
@@ -624,6 +632,9 @@
             }"
             [@fadeUpLeave]
             *ngIf="(playerAttackHand?.name ?? '').length > 1"
+            [ngClass]="{
+              specialNameText: playerAttackHand.power === 5
+            }"
           >
             {{ playerAttackHand?.name }}
           </div>
@@ -712,8 +723,19 @@
             </div>
           </div>
         </div>
-        <div class="goBtnContainer">
-          <div class="goButton" (click)="finishedRedraw()">Go!</div>
+        <div
+          class="goBtnContainer"
+          [@fadeRightEnter]="{
+            value: '',
+            params: { duration: 600, delay: 500, translate: '200px' }
+          }"
+          [@fadeLeftLeave]
+        >
+          <img
+            src="./assets/attack.png"
+            class="attackButton"
+            (click)="finishedRedraw()"
+          />
         </div>
       </div>
     </div>
@@ -788,13 +810,12 @@
         }"
         [@fadeUpLeave]
       >
-        <div
+        <img
+          src="./assets/attack.png"
           class="attackButton"
-          (click)="attack()"
           [ngClass]="{ disabledButton: !canSelectCards }"
-        >
-          Attack
-        </div>
+          (click)="attack()"
+        />
       </div>
       <div class="middleRightBox">
         <div
@@ -952,7 +973,7 @@
       <div class="decktest"></div>
     </div>
     <div
-      class="bottomMiddle"
+      class="bottomMiddle veryBottomMiddle"
       [ngClass]="{
         attackingBottomMiddle:
           !showBotCards && enemyAttackStarted && canSelectCards
