@@ -49,7 +49,12 @@ export class playerService implements OnInit {
   ngOnInit(): void {}
 
   public getPlayerWildCards(): CardDto[] {
-    return [this.wildCard];
+    return [
+      this.wildCard,
+      { ...this.wildCard, id: 56 },
+      { ...this.wildCard, id: 57 },
+      { ...this.wildCard, id: 58 },
+    ];
   }
 
   public getPlayerCheats(): CheatDto {
