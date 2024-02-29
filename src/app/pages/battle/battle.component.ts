@@ -66,10 +66,21 @@ export class BattleComponent implements OnInit {
   playerDeck: CardDto[] = [];
   playerHand: CardDto[] = [];
   playerDefense: CardDto[] = [];
-  player!: PlayerDto;
+  player: PlayerDto = {
+    id: 0,
+    health: 1,
+    attack: 1,
+    image: '',
+    name: '',
+    baseHealth: 1,
+  };
   playerTarget: number = 0;
   playerHealth: number = 10;
-  playerAttackHand!: DetermineObject;
+  playerAttackHand: DetermineObject = {
+    valid: false,
+    highCard: 0,
+    cards: [],
+  };
   playerWinner: boolean = false;
   playerLoser: boolean = false;
   finishedChoosingDefensePlayer: boolean = false;
@@ -81,7 +92,11 @@ export class BattleComponent implements OnInit {
   enemyPlayers: PlayerDto[] = [];
   enemyTarget: number = 0;
   enemyHealth: number = 10;
-  enemyAttackHand!: DetermineObject;
+  enemyAttackHand: DetermineObject = {
+    valid: false,
+    highCard: 0,
+    cards: [],
+  };
   enemyWinner: boolean = false;
   enemyLoser: boolean = false;
   enemyAttackStarted: boolean = false;
@@ -243,7 +258,9 @@ export class BattleComponent implements OnInit {
     }
     this.topRedrawCard = 0;
     setTimeout(() => {
-      this.topRedrawCard = this.playerDeck[0].id!;
+      if (this.playerDeck[0] && this.playerDeck[0].id) {
+        this.topRedrawCard = this.playerDeck[0].id;
+      }
     }, 400);
   }
 
@@ -396,15 +413,49 @@ export class BattleComponent implements OnInit {
   }
 
   findEnemyPlayer(): PlayerDto {
-    return this.enemyPlayers.find((x) => x.id === this.enemyTarget)!;
+    const enemyPlayer = this.enemyPlayers.find(
+      (x) => x.id === this.enemyTarget
+    );
+    return (
+      enemyPlayer ?? {
+        id: 0,
+        health: 1,
+        attack: 1,
+        image: '',
+        name: '',
+        baseHealth: 1,
+      }
+    );
   }
 
   findEnemyPlayerAttack(): PlayerDto {
-    return this.enemyPlayers.find((x) => x.health > 0)!;
+    const enemyPlayer = this.enemyPlayers.find((x) => x.health > 0);
+    return (
+      enemyPlayer ?? {
+        id: 0,
+        health: 1,
+        attack: 1,
+        image: '',
+        name: '',
+        baseHealth: 1,
+      }
+    );
   }
 
   findStaticEnemyPlayer(): PlayerDto {
-    return this.enemyPlayers.find((x) => x.id === this.staticEnemyTarget)!;
+    const enemyPlayer = this.enemyPlayers.find(
+      (x) => x.id === this.staticEnemyTarget
+    );
+    return (
+      enemyPlayer ?? {
+        id: 0,
+        health: 1,
+        attack: 1,
+        image: '',
+        name: '',
+        baseHealth: 1,
+      }
+    );
   }
 
   redrawCardIsSelected(card: CardDto): boolean {
@@ -441,7 +492,9 @@ export class BattleComponent implements OnInit {
       });
       this.topRedrawCard = 0;
       setTimeout(() => {
-        this.topRedrawCard = this.playerDeck[0].id!;
+        if (this.playerDeck[0] && this.playerDeck[0].id) {
+          this.topRedrawCard = this.playerDeck[0].id;
+        }
       }, 400);
 
       this.playerHand = this.redrawCards;
@@ -753,8 +806,8 @@ export class BattleComponent implements OnInit {
       this.playerWinner = true;
       this.enemyLoser = true;
       for await (const x of this.enemyPlayers) {
-        if (x.id === this.enemyTarget) {
-          const incomingAttackPower = result.player1Determine.power!;
+        if (x.id === this.enemyTarget && result.player1Determine.power) {
+          const incomingAttackPower = result.player1Determine.power;
           const newHealth = x.health - incomingAttackPower;
           console.log(
             'Player Wins Attack: Attacking bot for ' +
@@ -794,8 +847,8 @@ export class BattleComponent implements OnInit {
       this.playerWinner = true;
       this.enemyLoser = true;
       for await (const x of this.enemyPlayers) {
-        if (x.id === this.enemyTarget) {
-          const incomingAttackPower = result.player1Determine.power!;
+        if (x.id === this.enemyTarget && result.player1Determine.power) {
+          const incomingAttackPower = result.player1Determine.power;
           const newHealth = x.health - incomingAttackPower;
           console.log(
             'Player Wins Attack: Attacking bot for ' +
@@ -840,11 +893,11 @@ export class BattleComponent implements OnInit {
     }
 
     // Fail, bot wins
-    if (result.player2Winner) {
+    if (result.player2Winner && result.player2Determine.power) {
       this.enemyWinner = true;
       this.playerLoser = true;
 
-      const incomingAttackPower = result.player2Determine.power!;
+      const incomingAttackPower = result.player2Determine.power;
       const newHealth = this.player.health - incomingAttackPower;
       console.log(
         'Bot Wins Attack: Attacking player for ' +
@@ -1006,7 +1059,9 @@ export class BattleComponent implements OnInit {
     });
     this.topRedrawCard = 0;
     setTimeout(() => {
-      this.topRedrawCard = this.playerDeck[0].id!;
+      if (this.playerDeck[0] && this.playerDeck[0].id) {
+        this.topRedrawCard = this.playerDeck[0].id;
+      }
     }, 400);
 
     const addLengthEnemy = 5 - this.enemyHand.length;
