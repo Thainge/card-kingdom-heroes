@@ -1,7 +1,7 @@
 .container {
   height: 100vh;
   width: 100vw;
-  background-image: url(~src/assets/battleBackground.png);
+  // background-image: url(~src/assets/battleBackground.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -90,15 +90,19 @@
 }
 
 .disabledButton {
-  animation: none !important;
   box-shadow: none !important;
   pointer-events: none !important;
+  filter: brightness(60%);
+}
+
+.disabledButtonAnimation {
+  animation: none !important;
 }
 
 .deck {
   width: 85%;
   height: 85%;
-  background-image: url(~src/assets/cardBack.png);
+  // background-image: url(~src/assets/cardBack.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -208,7 +212,7 @@
 
 .cardBackgroundImage {
   width: 100%;
-  background-image: url(~src/assets/cards/10_of_clubs.png);
+  // background-image: url(~src/assets/cards/10_of_clubs.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -312,7 +316,7 @@
   background-color: rgba(0, 0, 0, 0.479);
   height: 100%;
   width: 100%;
-  backdrop-filter: blur(40px);
+  backdrop-filter: blur(30px);
 }
 
 .redrawCardsContainer {
@@ -347,6 +351,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  row-gap: 2%;
   width: 100%;
   height: 100%;
   right: -38%;
@@ -489,11 +495,6 @@
   }
 }
 
-.attackButtonBox {
-  position: absolute;
-  left: 11%;
-}
-
 .topMiddle {
   display: flex;
   justify-content: center;
@@ -632,7 +633,7 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-family: HeaderFont;
+  // font-family: HeaderFont;
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -648,7 +649,7 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-family: HeaderFont;
+  // font-family: HeaderFont;
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -782,7 +783,7 @@
 }
 
 .confetti {
-  position: absolute;
+  position: absolute !important;
   top: 0;
   left: 0;
 }
@@ -967,7 +968,7 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-family: HeaderFont;
+  // font-family: HeaderFont;
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -987,7 +988,7 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-family: HeaderFont;
+  // font-family: HeaderFont;
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1021,7 +1022,7 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-family: HeaderFont;
+  // font-family: HeaderFont;
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1053,7 +1054,7 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-family: HeaderFont;
+  // font-family: HeaderFont;
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1077,7 +1078,7 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-family: HeaderFont;
+  // font-family: HeaderFont;
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1103,4 +1104,49 @@
   width: 100%;
   position: relative;
   z-index: 9;
+}
+
+.defendAttackTxt {
+  position: absolute;
+  margin-top: -110%;
+  width: 100%;
+  text-align: center;
+}
+
+.attackButtonBox {
+  position: absolute;
+  left: 35%;
+  top: -50%;
+  transition: all 0.3s;
+}
+
+.attackTxt {
+  margin-left: -12%;
+  margin-top: -100%;
+}
+
+.specialAbilityCard {
+  -webkit-user-drag: none;
+  transition: all 0.3s;
+}
+
+.specialAbilityCard:hover {
+  filter: drop-shadow(0 0 0.3em yellow);
+}
+
+.disabledAbilityBtn {
+  user-select: none;
+  pointer-events: none;
+  animation: disableBurst 1500ms;
+  animation-fill-mode: forwards;
+}
+
+@keyframes disableBurst {
+  0% {
+    filter: drop-shadow(0 0 0.3em yellow);
+  }
+
+  100% {
+    filter: drop-shadow(0 0 5em rgba(38, 132, 219, 0)) brightness(60%);
+  }
 }

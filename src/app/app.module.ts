@@ -5,8 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BattleComponent } from './pages/battle/battle.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DeckCardComponent } from './components/deck-card/deck-card.component';
-import { CharacterCardComponent } from './components/character-card/character-card.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,8 +12,6 @@ import { CharacterCardComponent } from './components/character-card/character-ca
     BrowserModule,
     AppRoutingModule,
     BattleComponent,
-    DeckCardComponent,
-    CharacterCardComponent,
     BrowserAnimationsModule,
   ],
   providers: [],

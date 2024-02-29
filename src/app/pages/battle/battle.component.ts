@@ -10,8 +10,7 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { CardDto } from 'src/app/models/card';
-import { CardService } from 'src/app/services/cardService';
-import { Cards } from 'src/assets/data/cards';
+import { CardService } from 'src/app/services/card.service';
 import {
   fadeInUpOnEnterAnimation,
   fadeOutUpOnLeaveAnimation,
@@ -31,9 +30,10 @@ import {
   DetermineObject,
   DetermineWinnerObject,
 } from 'src/app/models/determine';
-import { DOCUMENT } from '@angular/common';
 import 'leader-line';
-import { CharacterCardComponent } from 'src/app/components/character-card/character-card.component';
+import { playerService } from 'src/app/services/player.service';
+import { gameTheme } from 'src/app/models/theme';
+import { CheatDto } from 'src/app/models/cheat';
 declare let LeaderLine: any;
 
 @Component({
@@ -41,7 +41,7 @@ declare let LeaderLine: any;
   templateUrl: './battle.component.html',
   styleUrls: ['./battle.component.scss'],
   standalone: true,
-  imports: [CommonModule, CharacterCardComponent],
+  imports: [CommonModule],
   animations: [
     fadeOutUpOnLeaveAnimation({ anchor: 'fadeUpLeave' }),
     fadeInUpOnEnterAnimation({ anchor: 'fadeUpEnter' }),
@@ -66,14 +66,7 @@ export class BattleComponent implements OnInit {
   playerDeck: CardDto[] = [];
   playerHand: CardDto[] = [];
   playerDefense: CardDto[] = [];
-  player: PlayerDto = {
-    id: 5,
-    image: './assets/' + 'link.png',
-    name: 'Link',
-    attack: 2,
-    health: 9,
-    baseHealth: 9,
-  };
+  player!: PlayerDto;
   playerTarget: number = 0;
   playerHealth: number = 10;
   playerAttackHand!: DetermineObject;
@@ -85,32 +78,7 @@ export class BattleComponent implements OnInit {
   enemyDeck: CardDto[] = [];
   enemyHand: CardDto[] = [];
   enemyDefense: CardDto[] = [];
-  enemyPlayers: PlayerDto[] = [
-    {
-      id: 1,
-      image: './assets/' + 'link.png',
-      name: 'Link',
-      attack: 2,
-      health: 4,
-      baseHealth: 4,
-    },
-    {
-      id: 2,
-      image: './assets/' + 'link.png',
-      name: 'Link',
-      attack: 1,
-      health: 2,
-      baseHealth: 2,
-    },
-    {
-      id: 3,
-      image: './assets/' + 'link.png',
-      name: 'Link',
-      attack: 0,
-      health: 3,
-      baseHealth: 3,
-    },
-  ];
+  enemyPlayers: PlayerDto[] = [];
   enemyTarget: number = 0;
   enemyHealth: number = 10;
   enemyAttackHand!: DetermineObject;
@@ -132,6 +100,8 @@ export class BattleComponent implements OnInit {
   validCards: CardDto[] = [];
   errorList: any[] = [];
   errorListInactive: any[] = [];
+  specialAbilityList: any[] = [];
+  specialAbilityListInactive: any[] = [];
 
   attackStarted: boolean = false;
 
@@ -146,6 +116,11 @@ export class BattleComponent implements OnInit {
   staticEnemyTarget: number = 0;
   wrappingTurn: boolean = false;
   doingWildCardChange: boolean = false;
+
+  usedSpecialCardThisTurn: boolean = false;
+
+  gameThemePath: gameTheme = 'default';
+  Cards: CardDto[] = [];
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -163,55 +138,96 @@ export class BattleComponent implements OnInit {
 
   constructor(
     private cardService: CardService,
-    @Inject(DOCUMENT) private document: any
+    private userService: playerService
   ) {}
 
   ngOnInit() {
-    this.enemyDeck = this.cardService.shuffle(Cards);
-    // Wild cards
-    const redWildCard: CardDto = {
-      id: 53,
-      wild: true,
-      wildRange: 1,
-      wildSuit: false,
-      suit: 'hearts',
-      value: '10',
-      wildInitial: '10',
-      image: '10_of_hearts.png',
-    };
+    // Get game theme
+    this.userService.gameTheme$.subscribe((x) => {
+      this.gameThemePath = x;
+      this.player = {
+        id: 5,
+        image: './assets/' + this.gameThemePath + '/' + 'link.png',
+        name: 'Link',
+        attack: 2,
+        health: 9,
+        baseHealth: 9,
+      };
+      this.enemyPlayers = [
+        {
+          id: 1,
+          image: './assets/' + this.gameThemePath + '/' + 'link.png',
+          name: 'Link',
+          attack: 2,
+          health: 4,
+          baseHealth: 4,
+        },
+        {
+          id: 2,
+          image: './assets/' + this.gameThemePath + '/' + 'link.png',
+          name: 'Link',
+          attack: 1,
+          health: 2,
+          baseHealth: 2,
+        },
+        {
+          id: 3,
+          image: './assets/' + this.gameThemePath + '/' + 'link.png',
+          name: 'Link',
+          attack: 0,
+          health: 3,
+          baseHealth: 3,
+        },
+      ];
 
-    // Wild Suit && wild range 2
-    const blackWildCard: CardDto = {
-      id: 54,
-      wild: true,
-      wildRange: 2,
-      wildSuit: true,
-      suit: 'spades',
-      value: '10',
-      wildInitial: '10',
-      image: '10_of_spades.png',
-    };
+      if (this.Cards.length < 1) {
+        this.importCardsData();
+      }
+    });
 
-    // Everything
-    const blackWildCard2: CardDto = {
-      id: 55,
-      wild: true,
-      wildRange: 14,
-      wildSuit: true,
-      suit: 'spades',
-      value: '5',
-      wildInitial: '5',
-      image: '5_of_spades.png',
-    };
     // this.wildCards = [redWildCard, blackWildCard];
 
-    let playerCards = Cards;
-    this.wildCards.forEach((x) => {
+    // this.enemyHand = [this.redrawCards[1]];
+    // this.selectedCards = [this.redrawCards[0]];
+    // this.redrawHide = true;
+    // this.redrawing = false;
+    // this.redrawCards[0] = redWildCard;
+    // this.redrawCards[1] = blackWildCard;
+    // this.redrawCards[2] = blackWildCard2;
+    // this.redrawCards[3] = blackWildCard2;
+    // this.redrawCards[4] = blackWildCard2;
+    // this.playerHand = this.redrawCards;
+    // this.selectedCards = this.redrawCards;
+    // this.enemyTarget = this.enemyPlayers[0].id;
+    // this.attack();
+
+    // this.attackStarted = false;
+    // this.enemyAttackStarted = false;
+    // this.playerHand = this.enemyHand;
+    // this.selectedEnemyCards = [this.enemyHand[0]];
+    // this.redrawHide = true;
+    // this.redrawing = false;
+    // this.canSelectCards = false;
+    // this.startBotTurn();
+  }
+
+  gameInit() {
+    // Cheats
+    const cheats: CheatDto = this.userService.getPlayerCheats();
+    this.canDefendWithMultipleCards = cheats.canDefendWithMultipleCards;
+    this.alwaysWinTies = cheats.alwaysWinTies;
+    this.canSeeTopCard = cheats.canSeeTopCard;
+
+    // Add wildcards to deck
+    let playerCards = this.Cards;
+    const wildCards: CardDto[] = this.userService.getPlayerWildCards();
+    wildCards.forEach((x) => {
       playerCards.push(x);
     });
 
     // Shuffle player decks
-    this.playerDeck = this.cardService.shuffle(Cards);
+    this.playerDeck = this.cardService.shuffle(this.Cards);
+    this.enemyDeck = this.cardService.shuffle(this.Cards);
 
     // Both players draw 5 cards
     for (const num of [0, 1, 2, 3, 4]) {
@@ -229,36 +245,7 @@ export class BattleComponent implements OnInit {
     setTimeout(() => {
       this.topRedrawCard = this.playerDeck[0].id!;
     }, 400);
-
-    // this.enemyHand = [this.redrawCards[1]];
-    // this.selectedCards = [this.redrawCards[0]];
-    // this.redrawHide = true;
-    // this.redrawing = false;
-    this.redrawCards[0] = redWildCard;
-    this.redrawCards[1] = blackWildCard;
-    this.redrawCards[2] = blackWildCard2;
-    // this.redrawCards[3] = blackWildCard2;
-    // this.redrawCards[4] = blackWildCard2;
-    // this.playerHand = this.redrawCards;
-    // this.selectedCards = this.redrawCards;
-    // this.enemyTarget = this.enemyPlayers[0].id;
-    // this.attack();
-
-    this.canDefendWithMultipleCards = true;
-    this.alwaysWinTies = true;
-    this.canSeeTopCard = true;
-
-    // this.attackStarted = false;
-    // this.enemyAttackStarted = false;
-    // this.playerHand = this.enemyHand;
-    // this.selectedEnemyCards = [this.enemyHand[0]];
-    // this.redrawHide = true;
-    // this.redrawing = false;
-    // this.canSelectCards = false;
-    // this.startBotTurn();
   }
-
-  ngAfterViewInit() {}
 
   @HostListener('document:keypress', ['$event'])
   giveHint(event: KeyboardEvent) {
@@ -268,6 +255,18 @@ export class BattleComponent implements OnInit {
         this.cardService.generateBotOffenseHand(this.playerHand);
       this.validCards = playerBestHand.cards;
     }
+  }
+
+  async importCardsData() {
+    import(`src/assets/${this.gameThemePath}/data/cards.ts`).then((data) => {
+      this.Cards = data.Cards;
+      this.gameInit();
+    });
+  }
+
+  useSpecialAbilityCard() {
+    this.usedSpecialCardThisTurn = true;
+    this.pushSpecialAbilityImage('Test test test');
   }
 
   cardIsSelected(card: CardDto): boolean {
@@ -315,8 +314,8 @@ export class BattleComponent implements OnInit {
 
       if (value < 15 && initialValue < Number(card.wildRange)) {
         const newCard: CardDto = {
-          ...Cards.find(
-            (a) => a.suit === card.suit && a.value === value.toString()
+          ...this.Cards.find(
+            (a: CardDto) => a.suit === card.suit && a.value === value.toString()
           ),
           wildInitial: card.wildInitial,
           wildRange: card.wildRange,
@@ -339,8 +338,8 @@ export class BattleComponent implements OnInit {
 
       if (value > 1 && initialValue < Number(card.wildRange)) {
         const newCard: CardDto = {
-          ...Cards.find(
-            (a) => a.suit === card.suit && a.value === value.toString()
+          ...this.Cards.find(
+            (a: CardDto) => a.suit === card.suit && a.value === value.toString()
           ),
           wildInitial: card.wildInitial,
           wildRange: card.wildRange,
@@ -813,6 +812,7 @@ export class BattleComponent implements OnInit {
     this.attackStarted = false;
     this.newTurn();
     this.startBotTurn();
+    this.usedSpecialCardThisTurn = false;
   }
 
   async combatFinishBot(result: DetermineWinnerObject) {
@@ -1024,6 +1024,15 @@ export class BattleComponent implements OnInit {
 
     setTimeout(() => {
       this.errorListInactive.push(ID);
+    }, 1100);
+  }
+
+  pushSpecialAbilityImage(message: string) {
+    const ID = this.specialAbilityList.length + 1;
+    this.specialAbilityList.push({ id: ID, message: message });
+
+    setTimeout(() => {
+      this.specialAbilityListInactive.push(ID);
     }, 1100);
   }
 }
