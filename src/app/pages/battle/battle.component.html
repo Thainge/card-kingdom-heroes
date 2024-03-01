@@ -356,7 +356,7 @@
               class="attackCardBox"
               [@fadeUpEnter]="{
                 value: '',
-                params: { duration: 500, delay: 500, translate: '300px' }
+                params: { duration: 500, delay: 500, translate: '150px' }
               }"
               [@fadeUpLeave]
             >
@@ -651,6 +651,7 @@
             [ngStyle]="{
               'font-family': gameThemePath + '-HeaderFont'
             }"
+            *ngIf="canSelectCards"
           >
             Defend
           </div>
@@ -697,7 +698,7 @@
           >
             {{ enemyAttackHand?.name }}
           </div>
-          <div class="attackCardFlexRow" #enemyAttackCardsRef>
+          <div class="attackCardFlexRow" #enemyDefenseRef>
             <div
               *ngFor="let card of enemyDefense; index as i"
               class="attackCardBox"
@@ -755,7 +756,7 @@
               class="attackCardBox"
               [@fadeUpEnter]="{
                 value: '',
-                params: { duration: 400, delay: 0, translate: '30px' }
+                params: { duration: 400, delay: 0, translate: '150px' }
               }"
               [@fadeUpLeave]
             >
@@ -898,6 +899,25 @@
     </div>
   </div>
 
+  <!-- Floating Message Fade -->
+  <div class="floatingText">
+    <div class="floatingRelative" *ngFor="let item of messageList">
+      <div
+        class="floatingTextMessage floatingMessageInfo"
+        [ngClass]="{
+          fade: messageListInactive.includes(item.id)
+        }"
+        [@zoomInEnter]="{
+          value: '',
+          params: { duration: 1000, delay: 0, translate: '30px' }
+        }"
+        [@fadeOutLeave]
+      >
+        {{ item.message }}
+      </div>
+    </div>
+  </div>
+
   <!-- Player 2 -->
   <div class="top">
     <div
@@ -937,22 +957,18 @@
         }"
       ></div>
     </div>
-    <div
-      class="topMiddle"
-      *ngIf="(redrawHide && canSelectCards) || (redrawHide && showBotCards)"
-    >
+    <div class="topMiddle" *ngIf="redrawHide">
       <div
-        class="bottomCard topCard"
+        class="bottomCard topCard enemyTopCard"
         *ngFor="let card of enemyHand; index as i"
         [ngClass]="{
           activeEnemyCard: enemyCardIsSelected(card)
         }"
         #activeEnemyCards
-        [@fadeUpEnter]="{
-          value: '',
-          params: { duration: 400, delay: (i + 1) * 100, translate: '30px' }
+        [ngStyle]="{
+          'animation-delay': (i + 1) * 100 + 'ms'
         }"
-        [@fadeUpLeave]
+        [@cardLeaving]
       >
         <div class="cardBorder">
           <img
@@ -1074,14 +1090,16 @@
             }"
             [@fadeUpLeave]
             [ngClass]="{
-              leavingFieldCard: item.health < 1
+              leavingFieldCard: item.health < 1,
+              turnIsOverCard: isFinishedWithTurn(item)
             }"
             (click)="setEnemyPlayerHoverTarget(item)"
           >
             <div
               class="cardBorder middleCardBorder playerCardBorder"
               [ngClass]="{
-                errorEnemyBorder: enemyTarget === item.id && !wrappingTurn
+                errorEnemyBorder: enemyTarget === item.id && !wrappingTurn,
+                enemyTargetActive: currentEnemyTurn.id === item.id
               }"
               #enemyPlayerRef
             >
@@ -1184,13 +1202,12 @@
       class="bottomMiddle veryBottomMiddle"
       [ngClass]="{
         attackingBottomMiddle:
-          !showBotCards && enemyAttackStarted && canSelectCards
+          !showBotCards && enemyAttackStarted && canSelectCards,
+        disabledCards:
+          !canSelectCards ||
+          (showBotCards && !enemyAttackStarted && !canSelectCards)
       }"
       #myActiveCardsDefending
-      *ngIf="
-        canSelectCards ||
-        (!showBotCards && enemyAttackStarted && canSelectCards)
-      "
       [@fadeOutLeave]="{
         value: '',
         params: { duration: 400, delay: 0, translate: '30px' }
@@ -1205,11 +1222,10 @@
         #myActiveCards
         (click)="selectCard(card)"
         (wheel)="wildCardScrollChange($event, card)"
-        [@fadeUpEnter]="{
-          value: '',
-          params: { duration: 400, delay: (i + 1) * 100, translate: '30px' }
+        [ngStyle]="{
+          'animation-delay': (i + 1) * 100 + 'ms'
         }"
-        [@fadeOutLeave]
+        [@cardLeaving]
       >
         <div
           class="cardBorder"
@@ -1234,6 +1250,10 @@
           >
             <div
               class="wildText"
+              [@fadeEnter]="{
+                value: '',
+                params: { duration: 400, delay: 1000, translate: '30px' }
+              }"
               [ngClass]="{
                 specialWildRangeIconText: card.wildRange === 14
               }"

@@ -34,6 +34,13 @@ import 'leader-line';
 import { playerService } from 'src/app/services/player.service';
 import { gameTheme } from 'src/app/models/theme';
 import { CheatDto } from 'src/app/models/cheat';
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+} from '@angular/animations';
 declare let LeaderLine: any;
 
 @Component({
@@ -43,6 +50,13 @@ declare let LeaderLine: any;
   standalone: true,
   imports: [CommonModule],
   animations: [
+    trigger('cardLeaving', [
+      transition(':leave', [
+        style({ width: '12%' }),
+        animate('.5s ease-in', style({ width: '0%' })),
+      ]),
+    ]),
+
     fadeOutUpOnLeaveAnimation({ anchor: 'fadeUpLeave' }),
     fadeInUpOnEnterAnimation({ anchor: 'fadeUpEnter' }),
 
@@ -117,6 +131,8 @@ export class BattleComponent implements OnInit {
   errorListInactive: any[] = [];
   specialAbilityList: any[] = [];
   specialAbilityListInactive: any[] = [];
+  messageList: any[] = [];
+  messageListInactive: any[] = [];
 
   attackStarted: boolean = false;
 
@@ -136,6 +152,15 @@ export class BattleComponent implements OnInit {
 
   gameThemePath: gameTheme = 'default';
   Cards: CardDto[] = [];
+  completedEnemyTurns: number[] = [];
+  currentEnemyTurn: PlayerDto = {
+    id: 0,
+    health: 1,
+    attack: 1,
+    image: '',
+    name: '',
+    baseHealth: 1,
+  };
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -149,7 +174,7 @@ export class BattleComponent implements OnInit {
     | undefined;
 
   @ViewChildren('playerRef') playerRef: QueryList<ElementRef> | undefined;
-  @ViewChild('enemyAttackCardsRef') enemyAttackCardsRef: ElementRef | undefined;
+  @ViewChild('enemyDefenseRef') enemyDefenseRef: ElementRef | undefined;
 
   constructor(
     private cardService: CardService,
@@ -262,11 +287,14 @@ export class BattleComponent implements OnInit {
         this.topRedrawCard = this.playerDeck[0].id;
       }
     }, 400);
+
+    // this.redrawing = false;
+    // this.redrawHide = true;
+    // this.playerHand = this.redrawCards;
   }
 
   @HostListener('document:keypress', ['$event'])
   giveHint(event: KeyboardEvent) {
-    // this.key = event.key;
     if (event.key && event.key.toLowerCase() === 'h') {
       const playerBestHand: DetermineObject =
         this.cardService.generateBotOffenseHand(this.playerHand);
@@ -429,7 +457,7 @@ export class BattleComponent implements OnInit {
   }
 
   findEnemyPlayerAttack(): PlayerDto {
-    const enemyPlayer = this.enemyPlayers.find((x) => x.health > 0);
+    const enemyPlayer = this.currentEnemyTurn;
     return (
       enemyPlayer ?? {
         id: 0,
@@ -470,6 +498,10 @@ export class BattleComponent implements OnInit {
 
   finishedRedraw() {
     this.redrawing = false;
+    setTimeout(() => {
+      this.pushMessage('Player Turn');
+    }, 2500);
+
     setTimeout(() => {
       this.redrawHide = true;
     }, 1000);
@@ -564,11 +596,13 @@ export class BattleComponent implements OnInit {
 
     const hand = this.cardService.determineHand(this.selectedCards);
 
-    if (this.enemyAttackStarted && hand.valid) {
-      this.validCards = this.selectedCards;
-    } else if (this.enemyAttackStarted) {
-      this.validCards = [];
-    }
+    // if (this.enemyAttackStarted && hand.valid) {
+    //   this.validCards = this.selectedCards;
+    //   this.setDefendArrowsPlayer(true);
+    // } else if (this.enemyAttackStarted) {
+    //   this.validCards = [];
+    //   this.setDefendArrowsPlayer(false);
+    // }
 
     if (hand.valid && !this.enemyAttackStarted) {
       this.validCards = this.selectedCards;
@@ -579,9 +613,53 @@ export class BattleComponent implements OnInit {
     }
   }
 
+  async setDefendArrowsPlayer(valid: boolean) {
+    // this.activeLeaderLines = [];
+    // const foundTarget: ElementRef = this.enemyDefenseRef?.nativeElement;
+    // const myNewActiveLines: any[] = [];
+    // this.myActiveCards?.forEach((x) => {
+    //   if (x.nativeElement.className.includes('activeCard')) {
+    //     const myLineOptions: any = {
+    //       dash: { animation: true },
+    //       endSocket: 'bottom',
+    //       startSocket: 'top',
+    //       dropShadow: true,
+    //       gradient: {
+    //         startColor: valid
+    //           ? 'rgba(0, 255, 0, 0.281)'
+    //           : 'rgba(255, 0, 0, 0.281)',
+    //         endColor: valid ? 'rgb(0, 255, 0)' : 'rgb(228, 35, 35)',
+    //       },
+    //       animOptions: {
+    //         duration: 30,
+    //         timing: 'linear',
+    //       },
+    //       hide: true,
+    //       endPlug: 'arrow3',
+    //       endPlugColor: valid ? 'rgb(0, 255, 0)' : 'rgb(228, 35, 35)',
+    //     };
+    //     let myNewLine: any = new LeaderLine(
+    //       x.nativeElement,
+    //       foundTarget,
+    //       myLineOptions
+    //     );
+    //     myNewLine.show('draw', { duration: 200, timing: 'linear' });
+    //     myNewActiveLines.push(myNewLine);
+    //   }
+    // });
+    // for await (const x of this.activeLeaderLines) {
+    //   x.hide('fade', { duration: 100, timing: 'linear' });
+    //   setTimeout(() => {
+    //     x.remove();
+    //   }, 100);
+    // }
+    // await this.timeout(300);
+    // this.activeLeaderLines = myNewActiveLines;
+  }
+
   setAttackArrowsPlayer(valid: boolean) {
-    if (this.enemyTarget === 0) {
-      const foundValidEnemy = this.findEnemyPlayerAttack();
+    const foundValidEnemy = this.enemyPlayers.find((x) => x.health > 1);
+    if (this.enemyTarget === 0 && foundValidEnemy) {
       this.enemyTarget = foundValidEnemy.id;
       this.staticEnemyTarget = this.enemyTarget;
     }
@@ -722,28 +800,40 @@ export class BattleComponent implements OnInit {
   }
 
   initiateBotDefense(playerHand: DetermineObject) {
-    const botHand: DetermineObject = this.cardService.generateBotDefenseHand(
-      this.enemyHand,
-      this.selectedCards.length
-    );
-
-    this.enemyHand = this.enemyHand.filter((x) => {
-      const includes = botHand.cards.find((a) => a.id === x.id);
-      if (includes) {
-        return false;
-      }
-      return true;
+    const addLengthEnemy = this.enemyPlayers.find(
+      (x) => x.id === this.currentEnemyTurn.id
+    )?.attack;
+    const addArrEnemy = Array.from(Array(addLengthEnemy).keys());
+    addArrEnemy.forEach((x, i) => {
+      this.enemyHand.push(this.enemyDeck[0]);
+      this.enemyDeck.push(this.enemyDeck[0]);
+      this.enemyDeck.shift();
     });
 
     setTimeout(() => {
-      this.enemyAttackHand = botHand;
-      this.enemyDefense = botHand.cards;
+      const botHand: DetermineObject = this.cardService.generateBotDefenseHand(
+        this.enemyHand,
+        this.selectedCards.length
+      );
 
-      // Play animations for attacking cards
-      // Determine winner
-      const result = this.cardService.determineWinner(playerHand, botHand);
-      this.setWinner(result, true);
-    }, 1000);
+      this.enemyHand = this.enemyHand.filter((x) => {
+        const includes = botHand.cards.find((a) => a.id === x.id);
+        if (includes) {
+          return false;
+        }
+        return true;
+      });
+
+      setTimeout(() => {
+        this.enemyAttackHand = botHand;
+        this.enemyDefense = botHand.cards;
+
+        // Play animations for attacking cards
+        // Determine winner
+        const result = this.cardService.determineWinner(playerHand, botHand);
+        this.setWinner(result, true);
+      }, 500);
+    }, 1500);
   }
 
   async numbersGoDownIncrementally(
@@ -864,8 +954,92 @@ export class BattleComponent implements OnInit {
     await this.timeout(1000);
     this.attackStarted = false;
     this.newTurn();
-    this.startBotTurn();
+    const addLength = 5 - this.playerHand.length;
+    const addArr = Array.from(Array(addLength).keys());
+    addArr.forEach((x, i) => {
+      this.playerHand.push(this.playerDeck[0]);
+      this.playerDeck.push(this.playerDeck[0]);
+      this.playerDeck.shift();
+    });
+    this.topRedrawCard = 0;
+    setTimeout(() => {
+      if (this.playerDeck[0] && this.playerDeck[0].id) {
+        this.topRedrawCard = this.playerDeck[0].id;
+      }
+    }, 400);
+
+    const addLengthEnemy = 5 - this.enemyHand.length;
+    const addArrEnemy = Array.from(Array(addLengthEnemy).keys());
+    addArrEnemy.forEach((x, i) => {
+      this.enemyHand.push(this.enemyDeck[0]);
+      this.enemyDeck.push(this.enemyDeck[0]);
+      this.enemyDeck.shift();
+    });
+    this.startBotTurnsLoop();
+    this.pushError('Enemy Turn');
     this.usedSpecialCardThisTurn = false;
+  }
+
+  startBotTurnsLoop() {
+    // Bot turns that have been finished
+
+    // Find next valid attack enemy
+    const nextEnemy = this.enemyPlayers.find((x: PlayerDto) => {
+      // Turn already done? return
+      if (this.completedEnemyTurns.includes(x.id)) {
+        return;
+      }
+
+      // Health is 0 or lower? return
+      if (x.health < 1) {
+        return;
+      }
+
+      if (!this.completedEnemyTurns.includes(x.id)) {
+        this.completedEnemyTurns.push(x.id);
+        this.currentEnemyTurn = x;
+        this.startBotTurn();
+        return true;
+      }
+
+      return;
+    });
+
+    if (!nextEnemy) {
+      this.pushMessage('Player Turn');
+      this.completedEnemyTurns = [];
+      this.newTurn();
+      const addLength = 5 - this.playerHand.length;
+      const addArr = Array.from(Array(addLength).keys());
+      addArr.forEach((x, i) => {
+        this.playerHand.push(this.playerDeck[0]);
+        this.playerDeck.push(this.playerDeck[0]);
+        this.playerDeck.shift();
+      });
+      this.topRedrawCard = 0;
+      setTimeout(() => {
+        if (this.playerDeck[0] && this.playerDeck[0].id) {
+          this.topRedrawCard = this.playerDeck[0].id;
+        }
+      }, 400);
+
+      const addLengthEnemy = 5 - this.enemyHand.length;
+      const addArrEnemy = Array.from(Array(addLengthEnemy).keys());
+      addArrEnemy.forEach((x, i) => {
+        this.enemyHand.push(this.enemyDeck[0]);
+        this.enemyDeck.push(this.enemyDeck[0]);
+        this.enemyDeck.shift();
+      });
+    }
+
+    // Loop through bot turns
+    // Check through bot code to make sure target is set correctly for bot
+    // Show bot cards when bot is defending
+  }
+
+  isFinishedWithTurn(player: PlayerDto): boolean {
+    const isFinished = this.completedEnemyTurns.includes(player.id);
+    return isFinished ? true : false;
   }
 
   async combatFinishBot(result: DetermineWinnerObject) {
@@ -942,11 +1116,17 @@ export class BattleComponent implements OnInit {
     await this.timeout(1000);
     this.attackStarted = false;
     this.newTurn();
+    this.startBotTurnsLoop();
   }
 
   startBotTurn() {
     this.showBotCards = true;
     this.canSelectCards = false;
+    // option #1
+    // draw additionally cards based on his attack value
+
+    // Draw cards for bot based on attack value
+
     // Determine attack hand
     const botHand: DetermineObject = this.cardService.generateBotOffenseHand(
       this.enemyHand
@@ -974,6 +1154,20 @@ export class BattleComponent implements OnInit {
       // Valid attack hand, commence battle
       this.enemyAttackHand = botHand;
       this.enemyDefense = botHand.cards;
+
+      const addLength = this.player.attack;
+      const addArr = Array.from(Array(addLength).keys());
+      addArr.forEach((x, i) => {
+        this.playerHand.push(this.playerDeck[0]);
+        this.playerDeck.push(this.playerDeck[0]);
+        this.playerDeck.shift();
+      });
+      this.topRedrawCard = 0;
+      setTimeout(() => {
+        if (this.playerDeck[0] && this.playerDeck[0].id) {
+          this.topRedrawCard = this.playerDeck[0].id;
+        }
+      }, 400);
     }, 2500);
   }
 
@@ -1007,14 +1201,14 @@ export class BattleComponent implements OnInit {
     this.playerAttackHand = hand;
 
     this.enemyHand = this.enemyHand.filter((x) => {
-      const includes = this.enemyHand.find((a) => a.id === x.id);
+      const includes = this.enemyDefense.find((a) => a.id === x.id);
       if (includes) {
         return false;
       }
       return true;
     });
     this.playerHand = this.playerHand.filter((x) => {
-      const includes = hand.cards.find((a) => a.id === x.id);
+      const includes = this.selectedCards.find((a) => a.id === x.id);
       if (includes) {
         return false;
       }
@@ -1029,6 +1223,14 @@ export class BattleComponent implements OnInit {
   newTurn() {
     this.finishedChoosingDefensePlayer = false;
     this.enemyTarget = 0;
+    this.currentEnemyTurn = {
+      id: 0,
+      health: 1,
+      attack: 1,
+      image: '',
+      name: '',
+      baseHealth: 1,
+    };
     this.playerTarget = 0;
     this.canSelectCards = true;
     this.selectedCards = [];
@@ -1049,28 +1251,6 @@ export class BattleComponent implements OnInit {
     setTimeout(() => {
       this.wrappingTurn = false;
     }, 1000);
-
-    const addLength = 5 - this.playerHand.length;
-    const addArr = Array.from(Array(addLength).keys());
-    addArr.forEach((x, i) => {
-      this.playerHand.push(this.playerDeck[0]);
-      this.playerDeck.push(this.playerDeck[0]);
-      this.playerDeck.shift();
-    });
-    this.topRedrawCard = 0;
-    setTimeout(() => {
-      if (this.playerDeck[0] && this.playerDeck[0].id) {
-        this.topRedrawCard = this.playerDeck[0].id;
-      }
-    }, 400);
-
-    const addLengthEnemy = 5 - this.enemyHand.length;
-    const addArrEnemy = Array.from(Array(addLengthEnemy).keys());
-    addArrEnemy.forEach((x, i) => {
-      this.enemyHand.push(this.enemyDeck[0]);
-      this.enemyDeck.push(this.enemyDeck[0]);
-      this.enemyDeck.shift();
-    });
   }
 
   pushError(message: string) {
@@ -1079,6 +1259,15 @@ export class BattleComponent implements OnInit {
 
     setTimeout(() => {
       this.errorListInactive.push(ID);
+    }, 1100);
+  }
+
+  pushMessage(message: string) {
+    const ID = this.messageList.length + 1;
+    this.messageList.push({ id: ID, message: message });
+
+    setTimeout(() => {
+      this.messageListInactive.push(ID);
     }, 1100);
   }
 
