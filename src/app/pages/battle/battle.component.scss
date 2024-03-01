@@ -259,11 +259,12 @@
   transform: translate(-50%, -5000%);
   user-select: none;
   width: 50%;
-  z-index: 100;
+  z-index: 999;
 }
 
 .floatingRelative {
   position: relative;
+  z-index: 999;
 }
 
 .floatingTextMessage {
@@ -277,6 +278,7 @@
   text-shadow: 0 0 0.3em black;
   user-select: none;
   text-align: center;
+  z-index: 999;
 }
 
 .redrawPanel {
@@ -286,6 +288,7 @@
   transform: translate(-50%, -50%);
   width: 100%;
   height: 100%;
+  z-index: 99;
 }
 
 .attackPanel {
@@ -326,6 +329,9 @@
   justify-content: center;
   align-items: flex-start;
   height: 70%;
+  column-gap: 1%;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 .redrawBox {
@@ -339,6 +345,14 @@
 }
 
 .goBtnContainer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 8%;
+}
+
+.discardButtonBox {
   position: relative;
   display: flex;
   justify-content: center;
@@ -366,6 +380,7 @@
   width: 6%;
 
   user-select: none;
+  -webkit-user-drag: none;
   color: whitesmoke;
   display: flex;
   justify-content: center;
@@ -425,8 +440,27 @@
   bottom: 7% !important;
 }
 
-.redrawCard:hover {
+.activeDiscardCard {
+  bottom: -15% !important;
+}
+
+.discardCard {
+  position: relative;
   bottom: 0%;
+  width: 100%;
+  padding: 0.5%;
+  transition: all 0.3s;
+
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.redrawCard:hover {
+  bottom: -5%;
+}
+
+.discardCard:hover {
+  bottom: -9%;
 }
 
 .redrawBorder {

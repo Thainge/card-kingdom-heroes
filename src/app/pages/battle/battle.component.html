@@ -775,6 +775,96 @@
     </div>
   </div>
 
+  <!-- Discard cards panel -->
+  <div class="redrawPanel discardPanel" *ngIf="!discardHide">
+    <div class="relativeRedrawPanel">
+      <div
+        class="panelBackground"
+        [ngClass]="{
+          fade: !discarding,
+          fadeHide: discardHide
+        }"
+        [@fadeEnter]="{
+          value: '',
+          params: { duration: 500, delay: 0, translate: '300px' }
+        }"
+      ></div>
+      <div
+        class="redrawBox"
+        [ngClass]="{
+          fade: !discarding,
+          fadeHide: discardHide
+        }"
+      >
+        <div class="redrawText">Hand Is Full</div>
+        <div class="redrawDetailText">
+          Discard
+          {{ discardCards.length - 5 - discardSelectedCards.length }} cards
+        </div>
+      </div>
+      <div
+        class="redrawCardsContainer"
+        [ngClass]="{
+          fade: !discarding,
+          fadeHide: discardHide
+        }"
+      >
+        <div
+          *ngFor="let card of discardCards; index as i"
+          class="redrawCardBox"
+          [@fadeUpEnter]="{
+            value: '',
+            params: { duration: 400, delay: (i + 1) * 100, translate: '30px' }
+          }"
+          [@fadeUpLeave]
+        >
+          <div
+            class="discardCard"
+            [ngClass]="{
+              activeDiscardCard: discardCardIsSelected(card)
+            }"
+            (click)="selectDiscardCard(card)"
+          >
+            <div
+              class="cardBorder redrawBorder"
+              [ngClass]="{
+                activeCardBorder: discardCardIsSelected(card)
+              }"
+            >
+              <img
+                [src]="'./assets/' + gameThemePath + '/cards/' + card.image"
+                class="cardBackgroundImage"
+              />
+              <div class="wildCard" *ngIf="card.wild"></div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="goBtnContainer"
+          [@fadeUpEnter]="{
+            value: '',
+            params: { duration: 600, delay: 500, translate: '200px' }
+          }"
+          [@fadeUpLeave]
+        >
+          <img
+            [src]="'./assets/' + gameThemePath + '/attack.png'"
+            class="attackButton"
+            (click)="finishedDiscarding()"
+          />
+          <div
+            class="defendAttackTxt wildText"
+            [ngStyle]="{
+              'font-family': gameThemePath + '-HeaderFont'
+            }"
+          >
+            Ok
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Redraw cards panel -->
   <div class="redrawPanel" *ngIf="!redrawHide">
     <div class="relativeRedrawPanel">
@@ -792,7 +882,7 @@
           fadeHide: redrawHide
         }"
       >
-        <div class="redrawText">Redraw cards</div>
+        <div class="redrawText">Redraw Cards</div>
         <div class="redrawDetailText">
           Can select up to {{ 2 - redrawSelectedCards.length }} more cards to
           redraw
@@ -995,7 +1085,7 @@
           />
         </div>
         <div
-          class="middleCard middleRightCard middleLeftCard"
+          class="middleCard middleRightCard middleLeftCard playerMid"
           *ngIf="redrawHide"
           [@fadeUpEnter]="{
             value: '',

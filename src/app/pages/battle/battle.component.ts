@@ -162,6 +162,12 @@ export class BattleComponent implements OnInit {
     baseHealth: 1,
   };
 
+  discardCards: CardDto[] = [];
+  discardSelectedCards: CardDto[] = [];
+  discarding: boolean = false;
+  discardHide: boolean = true;
+  enemyNextTurn: boolean = false;
+
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
 
@@ -189,7 +195,7 @@ export class BattleComponent implements OnInit {
         id: 5,
         image: './assets/' + this.gameThemePath + '/' + 'link.png',
         name: 'Link',
-        attack: 2,
+        attack: 6,
         health: 9,
         baseHealth: 9,
       };
@@ -198,26 +204,26 @@ export class BattleComponent implements OnInit {
           id: 1,
           image: './assets/' + this.gameThemePath + '/' + 'link.png',
           name: 'Link',
-          attack: 2,
+          attack: 6,
           health: 4,
           baseHealth: 4,
         },
-        {
-          id: 2,
-          image: './assets/' + this.gameThemePath + '/' + 'link.png',
-          name: 'Link',
-          attack: 1,
-          health: 2,
-          baseHealth: 2,
-        },
-        {
-          id: 3,
-          image: './assets/' + this.gameThemePath + '/' + 'link.png',
-          name: 'Link',
-          attack: 0,
-          health: 3,
-          baseHealth: 3,
-        },
+        // {
+        //   id: 2,
+        //   image: './assets/' + this.gameThemePath + '/' + 'link.png',
+        //   name: 'Link',
+        //   attack: 1,
+        //   health: 2,
+        //   baseHealth: 2,
+        // },
+        // {
+        //   id: 3,
+        //   image: './assets/' + this.gameThemePath + '/' + 'link.png',
+        //   name: 'Link',
+        //   attack: 0,
+        //   health: 3,
+        //   baseHealth: 3,
+        // },
       ];
 
       if (this.Cards.length < 1) {
@@ -288,9 +294,12 @@ export class BattleComponent implements OnInit {
       }
     }, 400);
 
-    // this.redrawing = false;
-    // this.redrawHide = true;
-    // this.playerHand = this.redrawCards;
+    this.redrawing = false;
+    this.redrawHide = true;
+    this.playerHand = [...this.redrawCards, ...this.enemyHand];
+    // this.newTurn();
+    // this.startBotTurnsLoop();
+    // this.playerDiscardPhase();
   }
 
   @HostListener('document:keypress', ['$event'])
@@ -803,12 +812,14 @@ export class BattleComponent implements OnInit {
     const addLengthEnemy = this.enemyPlayers.find(
       (x) => x.id === this.currentEnemyTurn.id
     )?.attack;
-    const addArrEnemy = Array.from(Array(addLengthEnemy).keys());
-    addArrEnemy.forEach((x, i) => {
-      this.enemyHand.push(this.enemyDeck[0]);
-      this.enemyDeck.push(this.enemyDeck[0]);
-      this.enemyDeck.shift();
-    });
+    if (addLengthEnemy && addLengthEnemy > 0) {
+      const addArrEnemy = Array.from(Array(addLengthEnemy).keys());
+      addArrEnemy.forEach((x, i) => {
+        this.enemyHand.push(this.enemyDeck[0]);
+        this.enemyDeck.push(this.enemyDeck[0]);
+        this.enemyDeck.shift();
+      });
+    }
 
     setTimeout(() => {
       const botHand: DetermineObject = this.cardService.generateBotDefenseHand(
@@ -954,30 +965,115 @@ export class BattleComponent implements OnInit {
     await this.timeout(1000);
     this.attackStarted = false;
     this.newTurn();
-    const addLength = 5 - this.playerHand.length;
-    const addArr = Array.from(Array(addLength).keys());
-    addArr.forEach((x, i) => {
-      this.playerHand.push(this.playerDeck[0]);
-      this.playerDeck.push(this.playerDeck[0]);
-      this.playerDeck.shift();
-    });
-    this.topRedrawCard = 0;
-    setTimeout(() => {
-      if (this.playerDeck[0] && this.playerDeck[0].id) {
-        this.topRedrawCard = this.playerDeck[0].id;
-      }
-    }, 400);
+    this.addCardsToBothHands();
 
-    const addLengthEnemy = 5 - this.enemyHand.length;
-    const addArrEnemy = Array.from(Array(addLengthEnemy).keys());
-    addArrEnemy.forEach((x, i) => {
-      this.enemyHand.push(this.enemyDeck[0]);
-      this.enemyDeck.push(this.enemyDeck[0]);
-      this.enemyDeck.shift();
+    // Player turn ends
+
+    // Bot auto discard
+    this.botDiscardPhase();
+
+    if (this.playerHand.length < 6) {
+      this.startBotTurnsLoop();
+      this.pushError('Enemy Turn');
+      this.usedSpecialCardThisTurn = false;
+    } else {
+      // If player needs to discard
+      this.enemyNextTurn = true;
+      this.playerDiscardPhase();
+    }
+  }
+
+  botDiscardPhase() {
+    if (this.enemyHand.length > 5) {
+      // Reduce array to 5
+      this.enemyHand = this.enemyHand.filter((x, i) => {
+        // 0, 1, 2, 3, 4
+        if (i < 5) {
+          return true;
+        }
+        return false;
+      });
+    }
+  }
+
+  playerDiscardPhase() {
+    // Show discard window
+    this.discarding = true;
+    this.discardHide = false;
+    this.playerHand.push(this.enemyHand[0]);
+    this.discardCards = this.playerHand;
+    this.playerHand = [];
+  }
+
+  finishedDiscarding() {
+    this.completedEnemyTurns = [];
+    if (this.discardCards.length - this.discardSelectedCards.length !== 5) {
+      this.errorList.push('test');
+      return;
+    }
+
+    // finished
+    this.discardCards = this.discardCards.filter((x) => {
+      const foundCard = this.discardSelectedCards.find((a) => a.id === x.id);
+      if (!foundCard) {
+        return true;
+      }
+
+      return false;
     });
-    this.startBotTurnsLoop();
-    this.pushError('Enemy Turn');
-    this.usedSpecialCardThisTurn = false;
+    this.playerHand = this.discardCards;
+    this.discarding = false;
+
+    setTimeout(() => {
+      this.discardHide = true;
+    }, 1000);
+
+    if (this.enemyNextTurn) {
+      this.startBotTurnsLoop();
+      this.pushError('Enemy Turn');
+      this.addCardsToBothHands();
+      this.usedSpecialCardThisTurn = false;
+    } else {
+      this.pushMessage('Player Turn');
+      this.addCardsToBothHands();
+      this.newTurn();
+    }
+  }
+
+  discardCardIsSelected(card: CardDto) {
+    const includesCard = this.discardSelectedCards.find(
+      (x: CardDto) => x.id === card.id
+    );
+    if (includesCard) {
+      return true;
+    }
+    return false;
+  }
+
+  selectDiscardCard(card: CardDto) {
+    const includesCard = this.discardSelectedCards.find(
+      (x: CardDto) => x.id === card.id
+    );
+
+    // Add card to selectedCards
+    if (
+      !includesCard &&
+      this.discardCards.length - this.discardSelectedCards.length !== 5
+    ) {
+      this.discardSelectedCards.push(card);
+    }
+    // Remove card from selectedCards
+    if (includesCard) {
+      this.discardSelectedCards = this.discardSelectedCards.filter(
+        (x: CardDto) => {
+          const foundItem = x.id === card.id;
+          if (foundItem) {
+            return false;
+          }
+          return true;
+        }
+      );
+    }
   }
 
   startBotTurnsLoop() {
@@ -1006,10 +1102,25 @@ export class BattleComponent implements OnInit {
     });
 
     if (!nextEnemy) {
-      this.pushMessage('Player Turn');
-      this.completedEnemyTurns = [];
-      this.newTurn();
-      const addLength = 5 - this.playerHand.length;
+      // Bot auto discard
+      this.botDiscardPhase();
+
+      if (this.playerHand.length < 6) {
+        console.log('hit: ', this.playerHand);
+        this.completedEnemyTurns = [];
+        this.pushMessage('Player Turn');
+        this.addCardsToBothHands();
+      } else {
+        // If player needs to discard
+        this.enemyNextTurn = false;
+        this.playerDiscardPhase();
+      }
+    }
+  }
+
+  addCardsToBothHands() {
+    const addLength = 5 - this.playerHand.length;
+    if (addLength > 0) {
       const addArr = Array.from(Array(addLength).keys());
       addArr.forEach((x, i) => {
         this.playerHand.push(this.playerDeck[0]);
@@ -1022,8 +1133,13 @@ export class BattleComponent implements OnInit {
           this.topRedrawCard = this.playerDeck[0].id;
         }
       }, 400);
+    }
+    this.addCardsToEnemyHands();
+  }
 
-      const addLengthEnemy = 5 - this.enemyHand.length;
+  addCardsToEnemyHands() {
+    const addLengthEnemy = 5 - this.enemyHand.length;
+    if (addLengthEnemy > 0) {
       const addArrEnemy = Array.from(Array(addLengthEnemy).keys());
       addArrEnemy.forEach((x, i) => {
         this.enemyHand.push(this.enemyDeck[0]);
@@ -1031,10 +1147,6 @@ export class BattleComponent implements OnInit {
         this.enemyDeck.shift();
       });
     }
-
-    // Loop through bot turns
-    // Check through bot code to make sure target is set correctly for bot
-    // Show bot cards when bot is defending
   }
 
   isFinishedWithTurn(player: PlayerDto): boolean {
@@ -1128,9 +1240,17 @@ export class BattleComponent implements OnInit {
     // Draw cards for bot based on attack value
 
     // Determine attack hand
-    const botHand: DetermineObject = this.cardService.generateBotOffenseHand(
-      this.enemyHand
-    );
+    let botHand: DetermineObject = {
+      valid: false,
+      highCard: 0,
+      cards: [],
+    };
+    if (this.enemyHand.length > 1) {
+      botHand = this.cardService.generateBotOffenseHand(this.enemyHand);
+    } else {
+      this.newTurn();
+      return;
+    }
 
     setTimeout(() => {
       this.playerTarget = this.player.id;
@@ -1243,8 +1363,10 @@ export class BattleComponent implements OnInit {
     this.enemyAttackStarted = false;
     this.staticEnemyTarget = 0;
     this.tie = false;
+    this.discarding = false;
     this.enemyDefense = [];
     this.activeLeaderLines = [];
+    this.discardSelectedCards = [];
     this.playerAttackHand = { cards: [], highCard: 0, valid: false };
     this.enemyAttackHand = { cards: [], highCard: 0, valid: false };
 
