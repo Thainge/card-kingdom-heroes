@@ -230,7 +230,6 @@ export class BattleComponent implements OnInit {
       if (this.Cards.length < 1) {
         this.Cards = Cards;
         this.gameInit();
-        // this.importCardsData();
       }
     });
 

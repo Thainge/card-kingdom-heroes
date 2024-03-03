@@ -46,6 +46,11 @@
   row-gap: 3%;
 }
 
+.bottomMiddle,
+.topMiddle {
+  scale: 0.9;
+}
+
 .middleLeft,
 .middleRight {
   display: flex;
@@ -53,6 +58,7 @@
   align-items: center;
   width: 50%;
   top: -35%;
+  scale: 0.9;
 }
 
 .middleRight {
@@ -203,16 +209,17 @@
 .topRight {
   height: 90%;
   width: 12%;
-}
-
-.bottomLeft,
-.topLeft {
-  margin-left: 2%;
+  scale: 0.9;
 }
 
 .bottomRight,
+.bottomLeft {
+  bottom: -20%;
+}
+
+.topLeft,
 .topRight {
-  margin-right: 2%;
+  top: 4%;
 }
 
 .bottomMiddle {
@@ -1176,7 +1183,7 @@
 
 .attackButtonBox {
   position: absolute;
-  left: 35%;
+  left: 28%;
   top: -50%;
   transition: all 0.3s;
 }
