@@ -169,6 +169,9 @@ export class BattleComponent implements OnInit {
   discarding: boolean = false;
   discardHide: boolean = true;
   enemyNextTurn: boolean = false;
+  duringBotTurnDiscard: boolean = false;
+
+  currentExtraDmg: number = 0;
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -203,22 +206,22 @@ export class BattleComponent implements OnInit {
           health: 4,
           baseHealth: 4,
         },
-        // {
-        //   id: 2,
-        //   image: './assets/' + this.gameThemePath + '/' + 'link.png',
-        //   name: 'Link',
-        //   attack: 1,
-        //   health: 2,
-        //   baseHealth: 2,
-        // },
-        // {
-        //   id: 3,
-        //   image: './assets/' + this.gameThemePath + '/' + 'link.png',
-        //   name: 'Link',
-        //   attack: 0,
-        //   health: 3,
-        //   baseHealth: 3,
-        // },
+        {
+          id: 2,
+          image: './assets/' + this.gameThemePath + '/' + 'link.png',
+          name: 'Link',
+          attack: 1,
+          health: 2,
+          baseHealth: 2,
+        },
+        {
+          id: 3,
+          image: './assets/' + this.gameThemePath + '/' + 'link.png',
+          name: 'Link',
+          attack: 0,
+          health: 3,
+          baseHealth: 3,
+        },
       ];
 
       if (this.Cards.length < 1) {
@@ -304,9 +307,9 @@ export class BattleComponent implements OnInit {
       }
     }, 400);
 
-    this.redrawing = false;
-    this.redrawHide = true;
-    this.playerHand = [...this.redrawCards];
+    // this.redrawing = false;
+    // this.redrawHide = true;
+    // this.playerHand = [...this.redrawCards];
     // this.newTurn();
     // this.startBotTurnsLoop();
     // this.playerDiscardPhase();
@@ -482,6 +485,16 @@ export class BattleComponent implements OnInit {
 
       return x;
     });
+    this.selectedCards = this.selectedCards.map((x) => {
+      const foundCard = this.playerHand.find((a) => a.id === x.id);
+
+      if (foundCard) {
+        return foundCard;
+      }
+
+      return x;
+    });
+    this.determineSubtractValue();
   }
 
   wildCardScrollChange(scroll: any, card: CardDto) {
@@ -560,6 +573,7 @@ export class BattleComponent implements OnInit {
       this.validCards = [];
     }
     this.doingWildCardChange = false;
+    this.determineSubtractValue();
   }
 
   enemyCardIsSelected(card: CardDto): boolean {
@@ -752,6 +766,7 @@ export class BattleComponent implements OnInit {
       this.setAttackArrowsPlayer(false);
       this.validCards = [];
     }
+    this.determineSubtractValue();
   }
 
   async setDefendArrowsPlayer(valid: boolean) {
@@ -799,7 +814,7 @@ export class BattleComponent implements OnInit {
   }
 
   setAttackArrowsPlayer(valid: boolean) {
-    const foundValidEnemy = this.enemyPlayers.find((x) => x.health > 1);
+    const foundValidEnemy = this.enemyPlayers.find((x) => x.health > 0);
     if (this.enemyTarget === 0 && foundValidEnemy) {
       this.enemyTarget = foundValidEnemy.id;
       this.staticEnemyTarget = this.enemyTarget;
@@ -941,16 +956,17 @@ export class BattleComponent implements OnInit {
   }
 
   initiateBotDefense(playerHand: DetermineObject) {
-    const addLengthEnemy = this.enemyPlayers.find(
-      (x) => x.id === this.currentEnemyTurn.id
-    )?.attack;
-    if (addLengthEnemy && addLengthEnemy > 0) {
-      const addArrEnemy = Array.from(Array(addLengthEnemy).keys());
-      addArrEnemy.forEach((x, i) => {
-        this.enemyHand.push(this.enemyDeck[0]);
-        this.enemyDeck.push(this.enemyDeck[0]);
-        this.enemyDeck.shift();
-      });
+    const addLengthEnemy =
+      this.enemyPlayers.find((x) => x.id === this.currentEnemyTurn.id)
+        ?.attack ?? 0;
+
+    if (addLengthEnemy === 0) {
+      const foundEnemy = this.enemyPlayers.find(
+        (x) => x.id === this.enemyTarget
+      );
+      this.addBotCardsToHand(foundEnemy?.attack ?? 0);
+    } else {
+      this.addBotCardsToHand(addLengthEnemy);
     }
 
     setTimeout(() => {
@@ -993,7 +1009,6 @@ export class BattleComponent implements OnInit {
 
       for await (const i of differentArr) {
         const updateHealth = currentHealth - (i + 1);
-        // const updateHealth = this.cardService.determineExtraDamage(this.player);
         await this.timeout(100 * i);
         this.player.health = updateHealth;
       }
@@ -1007,11 +1022,7 @@ export class BattleComponent implements OnInit {
 
       for await (const i of differentArr) {
         const newEnemyHealth = currentHealth - (i + 1);
-        const extraDamage = this.cardService.determineExtraDamage(
-          this.selectedCards,
-          this.player
-        );
-        const updateHealth = newEnemyHealth - extraDamage;
+        const updateHealth = newEnemyHealth - this.currentExtraDmg;
         await this.timeout(100 * i);
         this.enemyPlayers[foundIndex] = {
           ...this.enemyPlayers[foundIndex],
@@ -1121,6 +1132,14 @@ export class BattleComponent implements OnInit {
     }
   }
 
+  determineSubtractValue() {
+    const extraDmg = this.cardService.determineExtraDamage(
+      this.selectedCards,
+      this.player
+    );
+    this.currentExtraDmg = extraDmg;
+  }
+
   botDiscardPhase() {
     if (this.enemyHand.length > 5) {
       // Reduce array to 5
@@ -1138,13 +1157,22 @@ export class BattleComponent implements OnInit {
     // Show discard window
     this.discarding = true;
     this.discardHide = false;
-    this.playerHand.push(this.enemyHand[0]);
     this.discardCards = this.playerHand;
+    this.duringBotTurnDiscard = false;
     this.playerHand = [];
   }
 
+  playerDiscardPhaseExtra() {
+    // Show discard window
+    this.discarding = true;
+    this.discardHide = false;
+    this.discardCards = this.playerHand;
+    this.playerHand = [];
+
+    this.duringBotTurnDiscard = true;
+  }
+
   finishedDiscarding() {
-    this.completedEnemyTurns = [];
     if (this.discardCards.length - this.discardSelectedCards.length !== 5) {
       this.errorList.push('test');
       return;
@@ -1166,12 +1194,19 @@ export class BattleComponent implements OnInit {
       this.discardHide = true;
     }, 1000);
 
+    if (this.duringBotTurnDiscard) {
+      this.startBotTurn();
+      return;
+    }
+
     if (this.enemyNextTurn) {
+      this.completedEnemyTurns = [];
       this.startBotTurnsLoop();
       this.pushError('Enemy Turn');
       this.addCardsToBothHands();
       this.usedSpecialCardThisTurn = false;
     } else {
+      this.completedEnemyTurns = [];
       this.pushMessage('Player Turn');
       this.addCardsToBothHands();
       this.newTurn();
@@ -1257,36 +1292,46 @@ export class BattleComponent implements OnInit {
 
   async addCardsToBothHands() {
     const addLength = 5 - this.playerHand.length;
+    const addLengthEnemy = 5 - this.enemyHand.length;
+
+    this.addPlayerCardsToHand(addLength);
+    this.addBotCardsToHand(addLengthEnemy);
+  }
+
+  async addBotCardsToHand(addLength: number) {
+    if (addLength > 0) {
+      const addArrEnemy = Array.from(Array(addLength).keys());
+      for await (const x of addArrEnemy) {
+        this.enemyHand.push(this.enemyDeck[0]);
+        this.enemyDeck.push(this.enemyDeck[0]);
+        this.enemyDeck.shift();
+      }
+      await this.timeout(400);
+      if (this.enemyDeck[0] && this.enemyDeck[0].id) {
+        this.topRedrawCardEnemy = this.enemyDeck[0].id;
+      }
+    }
+  }
+
+  async addPlayerCardsToHand(addLength: number) {
     if (addLength > 0) {
       const addArr = Array.from(Array(addLength).keys());
       for await (const x of addArr) {
         this.playerHand.push(this.playerDeck[0]);
         this.playerDeck.push(this.playerDeck[0]);
         this.playerDeck.shift();
-        await this.timeout(200);
       }
+      // console.log(
+      //   (this.playerHand = this.playerHand.filter(
+      //     (value, index, self) =>
+      //       index ===
+      //       self.findIndex((t) => t.id === value.id && t.id === value.id)
+      //   ))
+      // );
       this.topRedrawCard = 0;
       await this.timeout(400);
       if (this.playerDeck[0] && this.playerDeck[0].id) {
         this.topRedrawCard = this.playerDeck[0].id;
-      }
-    }
-    this.addCardsToEnemyHands();
-  }
-
-  async addCardsToEnemyHands() {
-    const addLengthEnemy = 5 - this.enemyHand.length;
-    if (addLengthEnemy > 0) {
-      const addArrEnemy = Array.from(Array(addLengthEnemy).keys());
-      for await (const x of addArrEnemy) {
-        this.enemyHand.push(this.enemyDeck[0]);
-        this.enemyDeck.push(this.enemyDeck[0]);
-        this.enemyDeck.shift();
-        await this.timeout(200);
-      }
-      await this.timeout(400);
-      if (this.enemyDeck[0] && this.enemyDeck[0].id) {
-        this.topRedrawCardEnemy = this.enemyDeck[0].id;
       }
     }
   }
@@ -1376,10 +1421,12 @@ export class BattleComponent implements OnInit {
   async startBotTurn() {
     this.showBotCards = true;
     this.canSelectCards = false;
-    // option #1
-    // draw additionally cards based on his attack value
 
-    // Draw cards for bot based on attack value
+    // Discard any remaining player hand over 5
+    if (this.playerHand.length > 5) {
+      this.playerDiscardPhaseExtra();
+      return;
+    }
 
     // Determine attack hand
     let botHand: DetermineObject = {
@@ -1418,18 +1465,7 @@ export class BattleComponent implements OnInit {
     this.enemyDefense = botHand.cards;
 
     const addLength = this.player.attack;
-    const addArr = Array.from(Array(addLength).keys());
-    for await (const x of addArr) {
-      this.playerHand.push(this.playerDeck[0]);
-      this.playerDeck.push(this.playerDeck[0]);
-      this.playerDeck.shift();
-      await this.timeout(200);
-    }
-    this.topRedrawCard = 0;
-    await this.timeout(400);
-    if (this.playerDeck[0] && this.playerDeck[0].id) {
-      this.topRedrawCard = this.playerDeck[0].id;
-    }
+    this.addPlayerCardsToHand(addLength);
   }
 
   chooseDefensePlayerCards() {
@@ -1502,12 +1538,14 @@ export class BattleComponent implements OnInit {
     this.enemyLoser = false;
     this.enemyWinner = false;
     this.enemyAttackStarted = false;
+    this.duringBotTurnDiscard = false;
     this.staticEnemyTarget = 0;
     this.tie = false;
     this.discarding = false;
     this.enemyDefense = [];
     this.activeLeaderLines = [];
     this.discardSelectedCards = [];
+    this.currentExtraDmg = 0;
     this.playerAttackHand = { cards: [], highCard: 0, valid: false };
     this.enemyAttackHand = { cards: [], highCard: 0, valid: false };
 

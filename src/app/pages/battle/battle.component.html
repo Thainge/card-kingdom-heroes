@@ -55,7 +55,11 @@
             }"
           >
             {{
-              enemyWinner ? "Winner!" : tie ? "Tie" : "-" + selectedCards.length
+              enemyWinner
+                ? "Winner!"
+                : tie
+                ? "Tie"
+                : "-" + (selectedCards.length + currentExtraDmg)
             }}
           </div>
           <div
@@ -428,7 +432,7 @@
                   ? "Winner!"
                   : tie
                   ? "Tie"
-                  : "-" + selectedCards.length
+                  : "-" + (selectedCards.length + currentExtraDmg)
               }}
             </div>
             <div
@@ -836,6 +840,35 @@
                 class="cardBackgroundImage"
               />
               <div class="wildCard" *ngIf="card.wild"></div>
+              <div
+                class="wildCardIcon"
+                *ngIf="card.wild && card.wildRange && card.wildRange > 0"
+                [ngClass]="{
+                  specialWildRangeIcon: card.wildRange === 14
+                }"
+              >
+                <div
+                  class="wildText wildValueText"
+                  [@fadeEnter]="{
+                    value: '',
+                    params: { duration: 400, delay: 1000, translate: '30px' }
+                  }"
+                  [ngClass]="{
+                    specialWildRangeIconText: card.wildRange === 14
+                  }"
+                  [ngStyle]="
+                    card.wildRange === 14
+                      ? {
+                          'font-family': gameThemePath + '-HeaderFont'
+                        }
+                      : {
+                          'font-family': gameThemePath + '-HeaderFont'
+                        }
+                  "
+                >
+                  {{ card.wildRange === 14 ? "★" : "+" + card.wildRange }}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -922,16 +955,45 @@
                 class="cardBackgroundImage"
               />
               <div class="wildCard" *ngIf="card.wild"></div>
+              <div
+                class="wildCardIcon"
+                *ngIf="card.wild && card.wildRange && card.wildRange > 0"
+                [ngClass]="{
+                  specialWildRangeIcon: card.wildRange === 14
+                }"
+              >
+                <div
+                  class="wildText wildValueText"
+                  [@fadeEnter]="{
+                    value: '',
+                    params: { duration: 400, delay: 1000, translate: '30px' }
+                  }"
+                  [ngClass]="{
+                    specialWildRangeIconText: card.wildRange === 14
+                  }"
+                  [ngStyle]="
+                    card.wildRange === 14
+                      ? {
+                          'font-family': gameThemePath + '-HeaderFont'
+                        }
+                      : {
+                          'font-family': gameThemePath + '-HeaderFont'
+                        }
+                  "
+                >
+                  {{ card.wildRange === 14 ? "★" : "+" + card.wildRange }}
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <div
           class="goBtnContainer"
-          [@fadeRightEnter]="{
+          [@fadeUpEnter]="{
             value: '',
             params: { duration: 600, delay: 500, translate: '200px' }
           }"
-          [@fadeLeftLeave]
+          [@fadeUpLeave]
         >
           <img
             [src]="'./assets/' + gameThemePath + '/attack.png'"
@@ -1041,7 +1103,7 @@
         *ngIf="!canSeeTopCard"
       ></div>
       <div
-        [@flipInYonEnter]
+        [@flipInYonEnter]="{ value: '', params: { delay: 1000 } }"
         [@fadeDownLeave]
         [ngStyle]="{
           'background-image':
@@ -1247,7 +1309,7 @@
                         attackStarted &&
                         !attackEnding) ||
                       (canSelectCards && enemyTarget === item.id)
-                        ? item.health - selectedCards.length
+                        ? item.health - selectedCards.length - currentExtraDmg
                         : item.health
                     }}
                   </div>
@@ -1261,7 +1323,9 @@
                     }"
                   >
                     {{
-                      selectedCards.length > 0 ? "-" + selectedCards.length : ""
+                      selectedCards.length > 0
+                        ? "-" + (selectedCards.length + currentExtraDmg)
+                        : ""
                     }}
                   </div>
                 </div>
@@ -1468,7 +1532,7 @@
         *ngIf="!canSeeTopCard"
       ></div>
       <div
-        [@flipInYonEnter]
+        [@flipInYonEnter]="{ value: '', params: { delay: 600 } }"
         [@fadeDownLeave]
         [ngStyle]="{
           'background-image':

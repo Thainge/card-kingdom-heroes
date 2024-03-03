@@ -1023,17 +1023,17 @@ export class CardService {
     const suitsDetails: suitValuesDto = this.getSuitsDetails(cards);
     let extraDmg = 0;
 
-    if (player.skills?.extraHeartsDamage) {
-      extraDmg = extraDmg + suitsDetails.hearts;
+    if (player.skills?.extraHeartsDamage && suitsDetails.hearts) {
+      extraDmg = extraDmg + Number(suitsDetails.hearts);
     }
-    if (player.skills?.extraDiamondsDamage) {
-      extraDmg = extraDmg + suitsDetails.diamonds;
+    if (player.skills?.extraDiamondsDamage && suitsDetails.diamonds) {
+      extraDmg = extraDmg + Number(suitsDetails.diamonds);
     }
-    if (player.skills?.extraSpadesDamage) {
-      extraDmg = extraDmg + suitsDetails.spades;
+    if (player.skills?.extraSpadesDamage && suitsDetails.spades) {
+      extraDmg = extraDmg + Number(suitsDetails.spades);
     }
-    if (player.skills?.extraClubsDamage) {
-      extraDmg = extraDmg + suitsDetails.clubs;
+    if (player.skills?.extraClubsDamage && suitsDetails.clubs) {
+      extraDmg = extraDmg + Number(suitsDetails.clubs);
     }
 
     return extraDmg;
