@@ -43,6 +43,7 @@ import {
 } from '@angular/animations';
 declare let LeaderLine: any;
 import { Cards } from 'src/assets/data/cards';
+import { EnviornmentSettings } from 'src/assets/data/environement';
 
 @Component({
   selector: 'app-battle',
@@ -172,6 +173,7 @@ export class BattleComponent implements OnInit {
   duringBotTurnDiscard: boolean = false;
 
   currentExtraDmg: number = 0;
+  randomBgImage: string = '';
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -193,6 +195,7 @@ export class BattleComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.importRandomBgImage();
     // Get game theme
     this.userService.gameTheme$.subscribe((x) => {
       this.gameThemePath = x;
@@ -255,6 +258,14 @@ export class BattleComponent implements OnInit {
     // this.redrawing = false;
     // this.canSelectCards = false;
     // this.startBotTurn();
+  }
+
+  async importRandomBgImage() {
+    const imagesArray = Array.from(
+      Array(EnviornmentSettings.backgroundCount).keys()
+    );
+    const shuffledArray = this.cardService.shuffle(imagesArray);
+    this.randomBgImage = shuffledArray[0] + 1;
   }
 
   gameInit() {
@@ -442,13 +453,6 @@ export class BattleComponent implements OnInit {
         this.cardService.generateBotOffenseHand(this.playerHand);
       this.validCards = playerBestHand.cards;
     }
-  }
-
-  async importCardsData() {
-    import(`src/assets/${this.gameThemePath}/data/cards.ts`).then((data) => {
-      this.Cards = data.Cards;
-      this.gameInit();
-    });
   }
 
   useSpecialAbilityCard() {
