@@ -42,6 +42,7 @@ import {
   animate,
 } from '@angular/animations';
 declare let LeaderLine: any;
+import { Cards } from 'src/assets/data/cards';
 
 @Component({
   selector: 'app-battle',
@@ -142,6 +143,7 @@ export class BattleComponent implements OnInit {
   alwaysWinTies: boolean = false;
   canSeeTopCard: boolean = false;
   topRedrawCard: number = 0;
+  topRedrawCardEnemy: number = 0;
 
   activeLeaderLines: any[] = [];
   staticEnemyTarget: number = 0;
@@ -191,14 +193,7 @@ export class BattleComponent implements OnInit {
     // Get game theme
     this.userService.gameTheme$.subscribe((x) => {
       this.gameThemePath = x;
-      this.player = {
-        id: 5,
-        image: './assets/' + this.gameThemePath + '/' + 'link.png',
-        name: 'Link',
-        attack: 6,
-        health: 9,
-        baseHealth: 9,
-      };
+      this.player = this.userService.getPlayer(this.gameThemePath);
       this.enemyPlayers = [
         {
           id: 1,
@@ -227,7 +222,9 @@ export class BattleComponent implements OnInit {
       ];
 
       if (this.Cards.length < 1) {
-        this.importCardsData();
+        this.Cards = Cards;
+        this.gameInit();
+        // this.importCardsData();
       }
     });
 
@@ -264,15 +261,25 @@ export class BattleComponent implements OnInit {
     this.alwaysWinTies = cheats.alwaysWinTies;
     this.canSeeTopCard = cheats.canSeeTopCard;
 
+    // Change deck values based on player skills
+    this.updateDeckBasedOnPlayerSkills();
+
     // Add wildcards to deck
-    let playerCards = this.Cards;
-    const wildCards: CardDto[] = this.userService.getPlayerWildCards();
-    wildCards.forEach((x) => {
-      playerCards.push(x);
+    let playerCards: CardDto[] = this.Cards.map((x) => {
+      return { ...x, wildInitial: x.value };
     });
+    const wildCards = Array.from(
+      Array(this.player.skills?.wildCardsCount).keys()
+    );
+    if (wildCards.length > 0) {
+      wildCards.forEach((x) => {
+        const newWildCard = this.userService.generateWildCard(playerCards);
+        playerCards.push(newWildCard);
+      });
+    }
 
     // Shuffle player decks
-    this.playerDeck = this.cardService.shuffle(this.Cards);
+    this.playerDeck = this.cardService.shuffle(playerCards);
     this.enemyDeck = this.cardService.shuffle(this.Cards);
 
     // Both players draw 5 cards
@@ -292,14 +299,137 @@ export class BattleComponent implements OnInit {
       if (this.playerDeck[0] && this.playerDeck[0].id) {
         this.topRedrawCard = this.playerDeck[0].id;
       }
+      if (this.enemyDeck[0] && this.enemyDeck[0].id) {
+        this.topRedrawCardEnemy = this.enemyDeck[0].id;
+      }
     }, 400);
 
     this.redrawing = false;
     this.redrawHide = true;
-    this.playerHand = [...this.redrawCards, ...this.enemyHand];
+    this.playerHand = [...this.redrawCards];
     // this.newTurn();
     // this.startBotTurnsLoop();
     // this.playerDiscardPhase();
+  }
+
+  updateDeckBasedOnPlayerSkills() {
+    // // What range can wild cards go
+    // rangeHearts: 0,
+    // rangeDiamonds: 0,
+    // rangeSpades: 0,
+    // rangeClubs: 0,
+    const Player = this.player.skills;
+
+    this.Cards = this.Cards.map((x) => {
+      let alteredCard = x;
+
+      let shownWildSuits = [0, 0, 0, 0];
+      // Update Shown Suits
+      if (Player?.showWildHearts) {
+        shownWildSuits[0] = 1;
+      }
+      if (Player?.showWildDiamonds) {
+        shownWildSuits[1] = 1;
+      }
+      if (Player?.showWildSpades) {
+        shownWildSuits[2] = 1;
+      }
+      if (Player?.showWildClubs) {
+        shownWildSuits[3] = 1;
+      }
+
+      // --- Wild Suit Cards --- //
+      if (Player?.wildHearts && x.suit === 'hearts') {
+        // All Hearts Wild
+        alteredCard = {
+          ...alteredCard,
+          wild: true,
+          wildSuit: true,
+          wildSuits: shownWildSuits,
+        };
+      }
+
+      if (Player?.wildDiamonds && x.suit === 'diamonds') {
+        // All Diamonds Wild
+        alteredCard = {
+          ...alteredCard,
+          wild: true,
+          wildSuit: true,
+          wildSuits: shownWildSuits,
+        };
+      }
+
+      if (Player?.wildSpades && x.suit === 'spades') {
+        // All Spades Wild
+        alteredCard = {
+          ...alteredCard,
+          wild: true,
+          wildSuit: true,
+          wildSuits: shownWildSuits,
+        };
+      }
+
+      if (Player?.wildClubs && x.suit === 'clubs') {
+        // All Clubs Wild
+        alteredCard = {
+          ...alteredCard,
+          wild: true,
+          wildSuit: true,
+          wildSuits: shownWildSuits,
+        };
+      }
+
+      // --- Wild Range Cards --- //
+      if (
+        Player?.rangeHearts &&
+        Player?.rangeHearts > 0 &&
+        x.suit === 'hearts'
+      ) {
+        // All Hearts Wild
+        alteredCard = {
+          ...alteredCard,
+          wild: true,
+          wildRange: Player?.rangeHearts,
+        };
+      }
+
+      if (
+        Player?.rangeDiamonds &&
+        Player?.rangeDiamonds > 0 &&
+        x.suit === 'diamonds'
+      ) {
+        // All Diamonds Wild
+        alteredCard = {
+          ...alteredCard,
+          wild: true,
+          wildRange: Player?.rangeDiamonds,
+        };
+      }
+
+      if (
+        Player?.rangeSpades &&
+        Player?.rangeSpades > 0 &&
+        x.suit === 'spades'
+      ) {
+        // All Spades Wild
+        alteredCard = {
+          ...alteredCard,
+          wild: true,
+          wildRange: Player?.rangeSpades,
+        };
+      }
+
+      if (Player?.rangeClubs && Player?.rangeClubs > 0 && x.suit === 'clubs') {
+        // All Clubs Wild
+        alteredCard = {
+          ...alteredCard,
+          wild: true,
+          wildRange: Player?.rangeClubs,
+        };
+      }
+
+      return alteredCard;
+    });
   }
 
   @HostListener('document:keypress', ['$event'])
@@ -374,6 +504,7 @@ export class BattleComponent implements OnInit {
           wildInitial: card.wildInitial,
           wildRange: card.wildRange,
           wildSuit: card.wildSuit,
+          wildSuits: card.wildSuits,
           id: card.id,
           wild: true,
         };
@@ -398,6 +529,7 @@ export class BattleComponent implements OnInit {
           wildInitial: card.wildInitial,
           wildRange: card.wildRange,
           wildSuit: card.wildSuit,
+          wildSuits: card.wildSuits,
           id: card.id,
           wild: true,
         };
@@ -861,6 +993,7 @@ export class BattleComponent implements OnInit {
 
       for await (const i of differentArr) {
         const updateHealth = currentHealth - (i + 1);
+        // const updateHealth = this.cardService.determineExtraDamage(this.player);
         await this.timeout(100 * i);
         this.player.health = updateHealth;
       }
@@ -873,7 +1006,12 @@ export class BattleComponent implements OnInit {
       const differentArr = Array.from(Array(difference).keys());
 
       for await (const i of differentArr) {
-        const updateHealth = currentHealth - (i + 1);
+        const newEnemyHealth = currentHealth - (i + 1);
+        const extraDamage = this.cardService.determineExtraDamage(
+          this.selectedCards,
+          this.player
+        );
+        const updateHealth = newEnemyHealth - extraDamage;
         await this.timeout(100 * i);
         this.enemyPlayers[foundIndex] = {
           ...this.enemyPlayers[foundIndex],
@@ -1106,7 +1244,6 @@ export class BattleComponent implements OnInit {
       this.botDiscardPhase();
 
       if (this.playerHand.length < 6) {
-        console.log('hit: ', this.playerHand);
         this.completedEnemyTurns = [];
         this.pushMessage('Player Turn');
         this.addCardsToBothHands();
@@ -1118,34 +1255,39 @@ export class BattleComponent implements OnInit {
     }
   }
 
-  addCardsToBothHands() {
+  async addCardsToBothHands() {
     const addLength = 5 - this.playerHand.length;
     if (addLength > 0) {
       const addArr = Array.from(Array(addLength).keys());
-      addArr.forEach((x, i) => {
+      for await (const x of addArr) {
         this.playerHand.push(this.playerDeck[0]);
         this.playerDeck.push(this.playerDeck[0]);
         this.playerDeck.shift();
-      });
+        await this.timeout(200);
+      }
       this.topRedrawCard = 0;
-      setTimeout(() => {
-        if (this.playerDeck[0] && this.playerDeck[0].id) {
-          this.topRedrawCard = this.playerDeck[0].id;
-        }
-      }, 400);
+      await this.timeout(400);
+      if (this.playerDeck[0] && this.playerDeck[0].id) {
+        this.topRedrawCard = this.playerDeck[0].id;
+      }
     }
     this.addCardsToEnemyHands();
   }
 
-  addCardsToEnemyHands() {
+  async addCardsToEnemyHands() {
     const addLengthEnemy = 5 - this.enemyHand.length;
     if (addLengthEnemy > 0) {
       const addArrEnemy = Array.from(Array(addLengthEnemy).keys());
-      addArrEnemy.forEach((x, i) => {
+      for await (const x of addArrEnemy) {
         this.enemyHand.push(this.enemyDeck[0]);
         this.enemyDeck.push(this.enemyDeck[0]);
         this.enemyDeck.shift();
-      });
+        await this.timeout(200);
+      }
+      await this.timeout(400);
+      if (this.enemyDeck[0] && this.enemyDeck[0].id) {
+        this.topRedrawCardEnemy = this.enemyDeck[0].id;
+      }
     }
   }
 
@@ -1231,7 +1373,7 @@ export class BattleComponent implements OnInit {
     this.startBotTurnsLoop();
   }
 
-  startBotTurn() {
+  async startBotTurn() {
     this.showBotCards = true;
     this.canSelectCards = false;
     // option #1
@@ -1252,43 +1394,42 @@ export class BattleComponent implements OnInit {
       return;
     }
 
-    setTimeout(() => {
-      this.playerTarget = this.player.id;
-      this.selectedEnemyCards = botHand.cards;
-      this.setAttackArrowsEnemy();
-    }, 1500);
+    await this.timeout(1500);
 
-    setTimeout(() => {
-      // Attack
-      const attackPlayer = this.findEnemyPlayerAttack();
-      this.staticEnemyTarget = attackPlayer.id;
-      this.showBotCards = false;
-      this.enemyAttackStarted = true;
-      this.canSelectCards = true;
-      this.activeLeaderLines.forEach((x) => {
-        x.hide('fade', { duration: 100, timing: 'linear' });
-        setTimeout(() => {
-          x.remove();
-        }, 100);
-      });
-      // Valid attack hand, commence battle
-      this.enemyAttackHand = botHand;
-      this.enemyDefense = botHand.cards;
+    this.playerTarget = this.player.id;
+    this.selectedEnemyCards = botHand.cards;
+    this.setAttackArrowsEnemy();
 
-      const addLength = this.player.attack;
-      const addArr = Array.from(Array(addLength).keys());
-      addArr.forEach((x, i) => {
-        this.playerHand.push(this.playerDeck[0]);
-        this.playerDeck.push(this.playerDeck[0]);
-        this.playerDeck.shift();
-      });
-      this.topRedrawCard = 0;
+    await this.timeout(2500);
+    // Attack
+    const attackPlayer = this.findEnemyPlayerAttack();
+    this.staticEnemyTarget = attackPlayer.id;
+    this.showBotCards = false;
+    this.enemyAttackStarted = true;
+    this.canSelectCards = true;
+    this.activeLeaderLines.forEach((x) => {
+      x.hide('fade', { duration: 100, timing: 'linear' });
       setTimeout(() => {
-        if (this.playerDeck[0] && this.playerDeck[0].id) {
-          this.topRedrawCard = this.playerDeck[0].id;
-        }
-      }, 400);
-    }, 2500);
+        x.remove();
+      }, 100);
+    });
+    // Valid attack hand, commence battle
+    this.enemyAttackHand = botHand;
+    this.enemyDefense = botHand.cards;
+
+    const addLength = this.player.attack;
+    const addArr = Array.from(Array(addLength).keys());
+    for await (const x of addArr) {
+      this.playerHand.push(this.playerDeck[0]);
+      this.playerDeck.push(this.playerDeck[0]);
+      this.playerDeck.shift();
+      await this.timeout(200);
+    }
+    this.topRedrawCard = 0;
+    await this.timeout(400);
+    if (this.playerDeck[0] && this.playerDeck[0].id) {
+      this.topRedrawCard = this.playerDeck[0].id;
+    }
   }
 
   chooseDefensePlayerCards() {

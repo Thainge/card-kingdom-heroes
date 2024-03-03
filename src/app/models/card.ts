@@ -3,8 +3,11 @@ export interface CardDto {
   suit?: string;
   value?: string;
   image?: string;
+
   wild?: boolean;
   wildInitial?: string;
+
   wildRange?: number;
   wildSuit?: boolean;
+  wildSuits?: number[];
 }

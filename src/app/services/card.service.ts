@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
 import { CardDto } from '../models/card';
 import { DetermineObject, DetermineWinnerObject } from '../models/determine';
+import { PlayerDto } from '../models/player';
+
+interface suitValuesDto {
+  hearts: number;
+  diamonds: number;
+  spades: number;
+  clubs: number;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -399,6 +407,15 @@ export class CardService {
       valuesList.push(value);
     });
     return valuesList;
+  }
+
+  private getSuitsDetails(array: CardDto[]) {
+    const arrayValues: any[] = array.map((x) => x.suit);
+    const detailedList = arrayValues.reduce((m, k) => {
+      m[k] = m[k] + 1 || 1;
+      return m;
+    }, {});
+    return detailedList;
   }
 
   public generateBotDefenseHand(
@@ -1000,5 +1017,25 @@ export class CardService {
       player2Winner: false,
       player2Determine: player2,
     };
+  }
+
+  determineExtraDamage(cards: CardDto[], player: PlayerDto): number {
+    const suitsDetails: suitValuesDto = this.getSuitsDetails(cards);
+    let extraDmg = 0;
+
+    if (player.skills?.extraHeartsDamage) {
+      extraDmg = extraDmg + suitsDetails.hearts;
+    }
+    if (player.skills?.extraDiamondsDamage) {
+      extraDmg = extraDmg + suitsDetails.diamonds;
+    }
+    if (player.skills?.extraSpadesDamage) {
+      extraDmg = extraDmg + suitsDetails.spades;
+    }
+    if (player.skills?.extraClubsDamage) {
+      extraDmg = extraDmg + suitsDetails.clubs;
+    }
+
+    return extraDmg;
   }
 }

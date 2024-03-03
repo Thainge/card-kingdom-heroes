@@ -341,7 +341,7 @@
               specialNameText: playerAttackHand?.power === 5
             }"
             [ngStyle]="
-              enemyAttackHand?.power === 5
+              playerAttackHand?.power === 5
                 ? {
                     'font-family': gameThemePath + '-HeaderFont'
                   }
@@ -741,7 +741,7 @@
               specialNameText: playerAttackHand?.power === 5
             }"
             [ngStyle]="
-              enemyAttackHand?.power === 5
+              playerAttackHand?.power === 5
                 ? {
                     'font-family': gameThemePath + '-HeaderFont'
                   }
@@ -1041,10 +1041,18 @@
         *ngIf="!canSeeTopCard"
       ></div>
       <div
-        class="deck deckTopImage"
+        [@flipInYonEnter]
+        [@fadeDownLeave]
         [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
+          'background-image':
+            'url(./assets/' +
+            gameThemePath +
+            '/cards/' +
+            enemyDeck[0].image +
+            ')'
         }"
+        *ngIf="canSeeTopCard && topRedrawCardEnemy === enemyDeck[0].id"
+        class="deck deckTopImage"
       ></div>
     </div>
     <div class="topMiddle" *ngIf="redrawHide">
@@ -1339,7 +1347,7 @@
             }"
           >
             <div
-              class="wildText"
+              class="wildText wildValueText"
               [@fadeEnter]="{
                 value: '',
                 params: { duration: 400, delay: 1000, translate: '30px' }
@@ -1352,7 +1360,9 @@
                   ? {
                       'font-family': gameThemePath + '-HeaderFont'
                     }
-                  : {}
+                  : {
+                      'font-family': gameThemePath + '-HeaderFont'
+                    }
               "
             >
               {{ card.wildRange === 14 ? "★" : "+" + card.wildRange }}
@@ -1365,21 +1375,33 @@
             <img
               [src]="'./assets/' + gameThemePath + '/heart.png'"
               class="suit"
+              *ngIf="
+                card.wildSuits && card.wildSuits[0] && card.wildSuits[0] === 1
+              "
               (click)="chooseWildSuit($event, card, 'hearts')"
             />
             <img
               [src]="'./assets/' + gameThemePath + '/diamond.png'"
               class="suit"
+              *ngIf="
+                card.wildSuits && card.wildSuits[1] && card.wildSuits[1] === 1
+              "
               (click)="chooseWildSuit($event, card, 'diamonds')"
             />
             <img
               [src]="'./assets/' + gameThemePath + '/club.png'"
               class="suit"
+              *ngIf="
+                card.wildSuits && card.wildSuits[2] && card.wildSuits[2] === 1
+              "
               (click)="chooseWildSuit($event, card, 'clubs')"
             />
             <img
               [src]="'./assets/' + gameThemePath + '/spade.png'"
               class="suit suitLast"
+              *ngIf="
+                card.wildSuits && card.wildSuits[3] && card.wildSuits[3] === 1
+              "
               (click)="chooseWildSuit($event, card, 'spades')"
             />
           </div>

@@ -3,6 +3,7 @@ import { gameTheme } from './../models/theme';
 import { Injectable, OnInit } from '@angular/core';
 import { CardDto } from '../models/card';
 import { CheatDto } from '../models/cheat';
+import { PlayerDto } from '../models/player';
 
 @Injectable({
   providedIn: 'root',
@@ -34,6 +35,7 @@ export class playerService implements OnInit {
     wild: true,
     wildRange: 14,
     wildSuit: true,
+    wildSuits: [1, 1, 1, 1],
     suit: 'clubs',
     value: '5',
     wildInitial: '5',
@@ -48,13 +50,58 @@ export class playerService implements OnInit {
 
   ngOnInit(): void {}
 
-  public getPlayerWildCards(): CardDto[] {
-    return [
-      this.wildCard,
-      { ...this.wildCard, id: 56 },
-      { ...this.wildCard, id: 57 },
-      { ...this.wildCard, id: 58 },
-    ];
+  public getPlayer(gameThemePath: gameTheme): PlayerDto {
+    const playerSkills = {
+      // Which cards are wild
+      wildHearts: true,
+      wildDiamonds: true,
+      wildSpades: false,
+      wildClubs: false,
+
+      // What range can wild cards go
+      rangeHearts: 1,
+      rangeDiamonds: 1,
+      rangeSpades: 0,
+      rangeClubs: 0,
+
+      // What suit options should appear
+      showWildHearts: true,
+      showWildDiamonds: true,
+      showWildSpades: false,
+      showWildClubs: false,
+
+      // Extra damage for suites
+      extraHeartsDamage: true,
+      extraDiamondsDamage: false,
+      extraSpadesDamage: false,
+      extraClubsDamage: false,
+
+      // Wild cards unlocked
+      wildCardsCount: 4,
+
+      // Extra health
+      extraHealth: 1,
+
+      // Extra attack
+      extraAttack: 1,
+    };
+    return {
+      id: 5,
+      image: './assets/' + gameThemePath + '/' + 'link.png',
+      name: 'Link',
+      attack: 6 + playerSkills.extraAttack,
+      health: 9 + playerSkills.extraHealth,
+      baseHealth: 9 + playerSkills.extraHealth,
+      skills: playerSkills,
+    };
+  }
+
+  public generateWildCard(cards: CardDto[]): CardDto {
+    const newWildCard: CardDto = {
+      ...this.wildCard,
+      id: cards.length + 1,
+    };
+    return newWildCard;
   }
 
   public getPlayerCheats(): CheatDto {

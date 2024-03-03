@@ -106,6 +106,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
+  border-radius: 5%;
   filter: drop-shadow(0 0 2px black);
 }
 
@@ -217,6 +218,7 @@
   background-repeat: no-repeat;
   background-size: contain;
   -webkit-user-drag: none;
+  border-radius: 5%;
 }
 
 .bottomCard:hover {
@@ -1055,13 +1057,14 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   // font-family: HeaderFont;
-  font-size: 100%;
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-background-clip: text;
   -moz-text-fill-color: transparent;
   font-weight: bold;
+  // font-size: 230%;
+  // font-family: bolder;
 }
 
 .showHitText {
