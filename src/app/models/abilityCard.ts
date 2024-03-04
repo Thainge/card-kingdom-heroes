@@ -1,7 +1,7 @@
 export interface AbilityCard {
   id: number;
   name: string;
-  cost: number[];
+  cost: costValue[];
   description: string;
   level: number;
   image: string;
@@ -10,3 +10,4 @@ export interface AbilityCard {
 }
 
 type AbilityFunction = 'damage' | 'heal';
+type costValue = 'heart' | 'diamond' | 'spade' | 'club';

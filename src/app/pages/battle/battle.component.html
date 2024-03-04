@@ -1483,14 +1483,22 @@
           />
           <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
             <div class="abilityTitle">
-              <div>test</div>
-              <div>test</div>
+              <div class="abilityTitleText">test</div>
+              <div class="abilitySuitsBox">
+                <img
+                  *ngFor="let cost of card.cost"
+                  [src]="'./assets/' + gameThemePath + '/' + cost + '.png'"
+                  class="abilitySuit"
+                />
+              </div>
             </div>
             <div class="abilityBorder1"></div>
             <div class="abilityBorder2"></div>
             <div class="abilityDescription">
-              <div>test</div>
-              <div>test</div>
+              <div class="abilityDescriptionLevel"><div class="levelText">Level {{ card.level }}</div></div>
+              <div class="abilityDescriptionText">
+                test test test est est set sets etset tse
+              </div>
             </div>
           </div>
         </div>
