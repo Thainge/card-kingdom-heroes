@@ -44,6 +44,7 @@ import {
 declare let LeaderLine: any;
 import { Cards } from 'src/assets/data/cards';
 import { EnviornmentSettings } from 'src/assets/data/environement';
+import { AbilityCard } from 'src/app/models/abilityCard';
 
 @Component({
   selector: 'app-battle',
@@ -175,6 +176,9 @@ export class BattleComponent implements OnInit {
   currentExtraDmg: number = 0;
   randomBgImage: string = '';
 
+  abilityCardsHand: AbilityCard[] = [];
+  abilityDeck: AbilityCard[] = [];
+
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
 
@@ -200,6 +204,8 @@ export class BattleComponent implements OnInit {
     this.userService.gameTheme$.subscribe((x) => {
       this.gameThemePath = x;
       this.player = this.userService.getPlayer(this.gameThemePath);
+      this.abilityDeck = this.userService.getAbilityCards(this.gameThemePath);
+      this.drawAbilityCard(2);
       this.enemyPlayers = [
         {
           id: 1,
@@ -232,31 +238,15 @@ export class BattleComponent implements OnInit {
         this.gameInit();
       }
     });
+  }
 
-    // this.wildCards = [redWildCard, blackWildCard];
-
-    // this.enemyHand = [this.redrawCards[1]];
-    // this.selectedCards = [this.redrawCards[0]];
-    // this.redrawHide = true;
-    // this.redrawing = false;
-    // this.redrawCards[0] = redWildCard;
-    // this.redrawCards[1] = blackWildCard;
-    // this.redrawCards[2] = blackWildCard2;
-    // this.redrawCards[3] = blackWildCard2;
-    // this.redrawCards[4] = blackWildCard2;
-    // this.playerHand = this.redrawCards;
-    // this.selectedCards = this.redrawCards;
-    // this.enemyTarget = this.enemyPlayers[0].id;
-    // this.attack();
-
-    // this.attackStarted = false;
-    // this.enemyAttackStarted = false;
-    // this.playerHand = this.enemyHand;
-    // this.selectedEnemyCards = [this.enemyHand[0]];
-    // this.redrawHide = true;
-    // this.redrawing = false;
-    // this.canSelectCards = false;
-    // this.startBotTurn();
+  drawAbilityCard(amount: number) {
+    const abilityCardAddArr = Array.from(Array(amount).keys());
+    for (const x of abilityCardAddArr) {
+      this.abilityCardsHand.push(this.abilityDeck[0]);
+      this.abilityDeck.push(this.abilityDeck[0]);
+      this.abilityDeck.shift();
+    }
   }
 
   async importRandomBgImage() {
@@ -317,20 +307,30 @@ export class BattleComponent implements OnInit {
       }
     }, 400);
 
-    // this.redrawing = false;
-    // this.redrawHide = true;
-    // this.playerHand = [...this.redrawCards];
+    this.redrawing = false;
+    this.redrawHide = true;
+    this.playerHand = [...this.redrawCards];
     // this.newTurn();
     // this.startBotTurnsLoop();
     // this.playerDiscardPhase();
   }
 
+  selectAbilityCard(card: any) {}
+
+  abilityCardIsSelected(card: any): boolean {
+    return false;
+  }
+
+  abilityCardIsValid(card: any): boolean {
+    return false;
+  }
+
+  hoverAbilityEnter(card: any) {}
+
+  hoverAbilityOut(card: any) {}
+
   updateDeckBasedOnPlayerSkills() {
     // // What range can wild cards go
-    // rangeHearts: 0,
-    // rangeDiamonds: 0,
-    // rangeSpades: 0,
-    // rangeClubs: 0,
     const Player = this.player.skills;
 
     this.Cards = this.Cards.map((x) => {

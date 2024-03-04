@@ -1257,6 +1257,57 @@
   bottom: 0 !important;
 }
 
+.playerBottomCard {
+  width: 0%;
+  transform: translate(0, 0%);
+  animation: cardFadeUp 800ms;
+  animation-fill-mode: forwards;
+}
+
+.bottomAbilityStuff {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.abilityTitle {
+  width: 100%;
+  height: 15%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(236, 232, 197);
+  font-size: 100%;
+  z-index: 2;
+}
+
+.abilityDescription {
+  width: 100%;
+  height: 35%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(236, 232, 197);
+  font-size: 100%;
+  z-index: 2;
+}
+
+.abilityBorder1 {
+  position: absolute;
+  background-color: rgb(236, 232, 197);
+  width: 3%;
+  right: 0;
+  height: 100%;
+}
+
+.abilityBorder2 {
+  position: absolute;
+  background-color: rgb(236, 232, 197);
+  width: 3%;
+  left: 0;
+  height: 100%;
+}
+
 @keyframes cardFadeDown {
   0% {
     opacity: 0;
@@ -1268,13 +1319,6 @@
     width: 12%;
     transform: translate(0, 0%);
   }
-}
-
-.playerBottomCard {
-  width: 0%;
-  transform: translate(0, 0%);
-  animation: cardFadeUp 800ms;
-  animation-fill-mode: forwards;
 }
 
 @keyframes cardFadeUp {
@@ -1296,4 +1340,31 @@
 
 .activeEnemyCard {
   bottom: -2em !important;
+}
+
+@media screen and (max-width: 800px) {
+  .redrawText {
+    font-size: 120%;
+  }
+
+  .redrawDetailText {
+    font-size: 120%;
+  }
+
+  .attackButton {
+    width: 50%;
+  }
+
+  .defendAttackTxt {
+    margin-top: -70%;
+  }
+
+  .wildText {
+    font-size: 50%;
+    -webkit-text-stroke: 0.5px #000;
+  }
+
+  .redrawCardBox {
+    width: 15%;
+  }
 }

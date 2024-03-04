@@ -4,6 +4,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { CardDto } from '../models/card';
 import { CheatDto } from '../models/cheat';
 import { PlayerDto } from '../models/player';
+import { AbilityCard } from '../models/abilityCard';
 
 @Injectable({
   providedIn: 'root',
@@ -94,6 +95,51 @@ export class playerService implements OnInit {
       baseHealth: 9 + playerSkills.extraHealth,
       skills: playerSkills,
     };
+  }
+
+  public getAbilityCards(gameThemePath: string): AbilityCard[] {
+    return [
+      {
+        id: 1,
+        abilityFunction: 'damage',
+        abilityValue: 2,
+        cost: [1, 1, 0, 0],
+        name: 'test name1',
+        description: 'test desc',
+        image: './assets/' + gameThemePath + '/abilitycard.png',
+        level: 1,
+      },
+      {
+        id: 2,
+        abilityFunction: 'heal',
+        abilityValue: 2,
+        cost: [0, 1, 1, 0],
+        name: 'test name2',
+        description: 'test desc',
+        image: '',
+        level: 1,
+      },
+      {
+        id: 3,
+        abilityFunction: 'damage',
+        abilityValue: 3,
+        cost: [0, 0, 1, 1],
+        name: 'test name3',
+        description: 'test desc',
+        image: '',
+        level: 2,
+      },
+      {
+        id: 4,
+        abilityFunction: 'heal',
+        abilityValue: 3,
+        cost: [2, 0, 2, 0],
+        name: 'test name4',
+        description: 'test desc',
+        image: '',
+        level: 2,
+      },
+    ];
   }
 
   public generateWildCard(cards: CardDto[]): CardDto {
