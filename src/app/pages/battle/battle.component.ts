@@ -194,6 +194,17 @@ export class BattleComponent implements OnInit {
   hoveringAbilityHand: CardDto[] = [];
   activeAbilityLeaderLines: any[] = [];
   currentlyRunning: boolean = false;
+  usedAbilityCard: boolean = false;
+  errorAbilityCard: AbilityCard = {
+    id: 0,
+    abilityFunction: 'damage',
+    abilityValue: 1,
+    cost: ['hearts'],
+    description: '',
+    image: '',
+    level: 1,
+    name: '',
+  };
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -339,28 +350,91 @@ export class BattleComponent implements OnInit {
   }
 
   selectAbilityCard(ability: AbilityCard) {
+    const canUse: CardDto[] = this.abilityService.checkCanUseAbility(
+      ability,
+      this.playerHand
+    );
+
+    if (canUse.length > 0) {
+      this.errorAbilityCard = ability;
+      this.usedAbilityCard = true;
+
+      // Remove ability card from hand
+      this.abilityCardsHand = this.abilityCardsHand.filter(
+        (x) => x.id !== ability.id
+      );
+
+      // Remove cards from hand
+      this.hoveringAbilityHand.forEach((x) => {
+        this.playerHand = this.playerHand.filter((a) => a.id !== x.id);
+      });
+
+      // Hide lines
+      this.activeAbilityLeaderLines.forEach((x) => {
+        x.hide('fade', { duration: 100, timing: 'linear' });
+        setTimeout(() => {
+          x.remove();
+        }, 100);
+      });
+      this.activeAbilityLeaderLines = [];
+
+      // Use ability card
+      this.useAbilityCard(ability);
+    } else {
+      this.errorAbilityCard = ability;
+    }
+  }
+
+  useAbilityCard(ability: AbilityCard) {
     console.log('Use Ability Card');
+    console.log(ability);
 
-    // Remove cards from hand
-    // Remove ability card from hand
+    // hide hand
+    const playerHand = [...this.playerHand];
+    this.playerHand = [];
 
-    console.log(this.playerDeck);
+    // Functions for ability cards
+    if (ability.abilityFunction === 'damage') {
+      // Show text on screen saying please select a target
+      // Hovering over target shows arrows
+      // Onclick show arrows to target enemy
+      // slash/fire animation on player
+
+      // Options, animation: claws/fire
+      // Options, all targets or select target
+
+      // this.abilityDamage();
+      console.log('damage');
+    }
+
+    if (ability.abilityFunction === 'heal') {
+      console.log('heal');
+      // heal player gradually
+      // green hp while healing
+      // potion fades on player
+
+      // this.abilityHeal();
+    }
   }
 
   hoverAbilityEnter(ability: AbilityCard) {
     // If currently running, return
-    if (this.currentlyRunning) {
+    if (this.currentlyRunning || this.usedAbilityCard) {
+      return;
+    }
+
+    const canUse: CardDto[] = this.abilityService.checkCanUseAbility(
+      ability,
+      this.playerHand
+    );
+
+    if (canUse.length < 1) {
       return;
     }
 
     if (!this.currentlyRunning) {
       this.currentlyRunning = true;
       this.hoveringAbilityCard = ability;
-      const canUse: CardDto[] = this.abilityService.checkCanUseAbility(
-        ability,
-        this.playerHand
-      );
-
       this.hoveringAbilityHand = canUse;
 
       if (canUse.length > 0) {
@@ -370,7 +444,31 @@ export class BattleComponent implements OnInit {
   }
 
   hoverAbilityOut(ability: AbilityCard) {
+    if (this.usedAbilityCard) {
+      return;
+    }
+
+    this.errorAbilityCard = {
+      id: 0,
+      abilityFunction: 'damage',
+      abilityValue: 1,
+      cost: ['hearts'],
+      description: '',
+      image: '',
+      level: 1,
+      name: '',
+    };
     this.hoveringAbilityHand = [];
+    this.hoveringAbilityCard = {
+      id: 0,
+      abilityFunction: 'damage',
+      abilityValue: 1,
+      cost: ['hearts'],
+      description: '',
+      image: '',
+      level: 1,
+      name: '',
+    };
     this.currentlyRunning = false;
     this.activeAbilityLeaderLines.forEach((x) => {
       x.hide('fade', { duration: 100, timing: 'linear' });

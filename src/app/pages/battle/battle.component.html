@@ -1478,7 +1478,8 @@
           [ngClass]="{
             hoveringAbilityCard: cardIsValidForAbilityCard(card),
             activeCardBorder: abilityCardIsSelected(card),
-            validCardBorder: abilityCardIsValid(card)
+            validCardBorder: abilityCardIsValid(card),
+            errorCardBorder: errorAbilityCard.id === card.id
           }"
         >
           <img
