@@ -1111,7 +1111,7 @@
         *ngIf="!canSeeTopCard"
       ></div>
       <div
-        [@flipInYonEnter]="{ value: '', params: { delay: 1000 } }"
+        [@flipInYonEnter]="{ value: '', params: { delay: 600 } }"
         [@fadeDownLeave]
         [ngStyle]="{
           'background-image':
@@ -1140,7 +1140,7 @@
       >
         <div class="cardBorder">
           <img
-            [src]="'./assets/' + gameThemePath + '/back.png'"
+            [src]="'./assets/' + gameThemePath + '/cardBack.png'"
             class="cardBackgroundImage"
           />
         </div>
@@ -1154,47 +1154,74 @@
       <div
         class="deck deckCard"
         [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
+          'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
         }"
       ></div>
       <div
         class="deck deck1 topdeck1"
         [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
+          'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
         }"
       ></div>
       <div
         class="deck deck2 topdeck2"
         [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
+          'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
         }"
       ></div>
       <div
         class="deck deck3 topdeck3"
         [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
+          'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
         }"
         *ngIf="!canSeeTopCard"
       ></div>
-      <div
-        [@flipInYonEnter]="{ value: '', params: { delay: 1000 } }"
-        [@fadeDownLeave]
-        [ngStyle]="{
-          'background-image':
-            'url(./assets/' +
-            gameThemePath +
-            '/cards/' +
-            enemyDeck[0].image +
-            ')'
-        }"
-        *ngIf="canSeeTopCard && topRedrawCardEnemy === enemyDeck[0].id"
-        class="deck deckTopImage"
-      ></div>
+      <div class="abilityDeckCardBox">
+        <div
+          class="abilityDeckCard"
+          *ngIf="canSeeTopCard"
+          [@flipInYonEnter]="{ value: '', params: { delay: 900 } }"
+          [@fadeDownLeave]
+        >
+          <div class="cardBorder">
+            <img
+              [src]="'./assets/' + gameThemePath + '/abilitycard.png'"
+              class="cardBackgroundImage"
+            />
+            <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
+              <div class="abilityTitle paperBg">
+                <div class="abilityTitleText">
+                  {{ topAbilityCardBot.name }}
+                </div>
+                <div class="abilitySuitsBox">
+                  <img
+                    *ngFor="let cost of topAbilityCardBot.cost"
+                    [src]="'./assets/' + gameThemePath + '/' + cost + '.png'"
+                    class="abilitySuit"
+                  />
+                </div>
+              </div>
+              <div class="abilityBorder1 paperBg"></div>
+              <div class="abilityBorder2 paperBg"></div>
+              <div class="abilityDescription paperBg">
+                <div class="abilityDescriptionLevel">
+                  <div class="levelText paperBg">
+                    Level {{ topAbilityCardBot.level }}
+                  </div>
+                </div>
+                <div class="abilityDescriptionText">
+                  {{ topAbilityCardBot.description }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- Middle -->
-  <div class="middle" id="testArrow">
+  <div class="middle">
     <div class="middleLeft">
       <div class="middleRightBox">
         <div
@@ -1429,45 +1456,67 @@
       <div
         class="deck deckCard"
         [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
+          'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
         }"
       ></div>
       <div
         class="deck deck1"
         [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
+          'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
         }"
       ></div>
       <div
         class="deck deck2"
         [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
+          'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
         }"
       ></div>
       <div
-        [@flipInYonEnter]="{ value: '', params: { delay: 600 } }"
-        [@fadeDownLeave]
+        class="deck deck3"
         [ngStyle]="{
-          'background-image':
-            'url(./assets/' +
-            gameThemePath +
-            '/cards/' +
-            playerDeck[0].image +
-            ')'
+          'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
         }"
-        class="deck deckTopImage"
+        *ngIf="!canSeeTopCard"
       ></div>
-      <!-- <div
-        class="deck specialAbilityCard"
-        (click)="useSpecialAbilityCard()"
-        [ngClass]="{
-          disabledAbilityBtn: usedSpecialCardThisTurn
-        }"
-        [ngStyle]="{
-          'background-image':
-            'url(./assets/' + gameThemePath + '/abilitycard.png)'
-        }"
-      ></div> -->
+      <div class="abilityDeckCardBox">
+        <div
+          class="abilityDeckCard"
+          *ngIf="canSeeTopCard"
+          [@flipInYonEnter]="{ value: '', params: { delay: 900 } }"
+          [@fadeDownLeave]
+        >
+          <div class="cardBorder">
+            <img
+              [src]="'./assets/' + gameThemePath + '/abilitycard.png'"
+              class="cardBackgroundImage"
+            />
+            <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
+              <div class="abilityTitle paperBg">
+                <div class="abilityTitleText">{{ topAbilityCard.name }}</div>
+                <div class="abilitySuitsBox">
+                  <img
+                    *ngFor="let cost of topAbilityCard.cost"
+                    [src]="'./assets/' + gameThemePath + '/' + cost + '.png'"
+                    class="abilitySuit"
+                  />
+                </div>
+              </div>
+              <div class="abilityBorder1 paperBg"></div>
+              <div class="abilityBorder2 paperBg"></div>
+              <div class="abilityDescription paperBg">
+                <div class="abilityDescriptionLevel">
+                  <div class="levelText paperBg">
+                    Level {{ topAbilityCard.level }}
+                  </div>
+                </div>
+                <div class="abilityDescriptionText">
+                  {{ topAbilityCard.description }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div
       class="bottomMiddle veryBottomMiddle"
@@ -1514,7 +1563,7 @@
           />
           <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
             <div class="abilityTitle paperBg">
-              <div class="abilityTitleText">test</div>
+              <div class="abilityTitleText">{{ card.name }}</div>
               <div class="abilitySuitsBox">
                 <img
                   *ngFor="let cost of card.cost"
@@ -1530,7 +1579,7 @@
                 <div class="levelText paperBg">Level {{ card.level }}</div>
               </div>
               <div class="abilityDescriptionText">
-                test test test est est set sets etset tse
+                {{ card.description }}
               </div>
             </div>
           </div>

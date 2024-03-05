@@ -21,14 +21,42 @@ export class AbilityService {
     let SuitsDetails = this.getSuitsDetails(array);
 
     let handValues: any = { diamonds: 0, spades: 0, clubs: 0, hearts: 0 };
+    let foundValue = 0;
 
     [...ability.cost].forEach((x: any) => {
       // Suits count are the values in hand
+      let keyIndex = x;
 
-      // player would have 1 diamond for instance
-      if (SuitsDetails[x] > 0) {
-        handValues[x]++;
-        SuitsDetails[x]--;
+      if (foundValue !== [...ability.cost].length) {
+        if (keyIndex === 'red') {
+          // convert red to diamond or heart
+          if (SuitsDetails['hearts'] > 0) {
+            handValues['hearts']++;
+            SuitsDetails['hearts']--;
+            foundValue++;
+          }
+          if (SuitsDetails['diamonds'] > 0) {
+            handValues['diamonds']++;
+            SuitsDetails['diamonds']--;
+            foundValue++;
+          }
+        } else if (keyIndex === 'black') {
+          // convert black to spade or club
+          if (SuitsDetails['spades'] > 0) {
+            handValues['spades']++;
+            SuitsDetails['spades']--;
+            foundValue++;
+          }
+          if (SuitsDetails['clubs'] > 0) {
+            handValues['clubs']++;
+            SuitsDetails['clubs']--;
+            foundValue++;
+          }
+        } else if (SuitsDetails[x] > 0) {
+          handValues[x]++;
+          SuitsDetails[x]--;
+          foundValue++;
+        }
       }
     });
     const totalValidCards =
@@ -47,10 +75,25 @@ export class AbilityService {
       [...array].forEach((x) => {
         const alreadyAdded = foundCards.find((a) => a.id === x.id);
 
-        // ['hearts', 'spades']
-
         totalValidCardsArray.forEach((z, i) => {
-          if (!alreadyAdded && z === x.suit) {
+          if (
+            !alreadyAdded &&
+            z === 'red' &&
+            (x.suit === 'diamonds' || x.suit === 'hearts')
+          ) {
+            // Add if red
+            foundCards.push(x);
+            totalValidCardsArray.splice(i, 1);
+          } else if (
+            !alreadyAdded &&
+            z === 'black' &&
+            (x.suit === 'spades' || x.suit === 'clubs')
+          ) {
+            // Add if black
+            foundCards.push(x);
+            totalValidCardsArray.splice(i, 1);
+          } else if (!alreadyAdded && z === x.suit) {
+            // Else add if suit matches
             foundCards.push(x);
             totalValidCardsArray.splice(i, 1);
           }

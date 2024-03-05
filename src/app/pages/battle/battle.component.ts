@@ -47,6 +47,19 @@ import { EnviornmentSettings } from 'src/assets/data/environement';
 import { AbilityCard } from 'src/app/models/abilityCard';
 import { AbilityService } from 'src/app/services/ability.service';
 
+const defaultAbilityCard: AbilityCard = {
+  id: 0,
+  abilityFunction: 'damage',
+  targetAll: false,
+  abilityValue: 1,
+  cost: ['hearts'],
+  description: '',
+  image: '',
+  level: 1,
+  name: '',
+  hitAnimation: 'heal',
+};
+
 @Component({
   selector: 'app-battle',
   templateUrl: './battle.component.html',
@@ -181,35 +194,15 @@ export class BattleComponent implements OnInit {
 
   abilityCardsHand: AbilityCard[] = [];
   abilityDeck: AbilityCard[] = [];
-  hoveringAbilityCard: AbilityCard = {
-    id: 0,
-    abilityFunction: 'damage',
-    targetAll: false,
-    abilityValue: 1,
-    cost: ['hearts'],
-    description: '',
-    image: '',
-    level: 1,
-    name: '',
-    hitAnimation: 'heal',
-  };
+  hoveringAbilityCard: AbilityCard = defaultAbilityCard;
   hoveringAbilityHand: CardDto[] = [];
   activeAbilityLeaderLines: any[] = [];
   currentlyRunning: boolean = false;
   usedAbilityCard: boolean = false;
-  errorAbilityCard: AbilityCard = {
-    id: 0,
-    abilityFunction: 'damage',
-    targetAll: false,
-    abilityValue: 1,
-    cost: ['hearts'],
-    description: '',
-    image: '',
-    level: 1,
-    name: '',
-    hitAnimation: 'heal',
-  };
+  errorAbilityCard: AbilityCard = defaultAbilityCard;
+  topAbilityCard: AbilityCard = defaultAbilityCard;
 
+  topAbilityCardBot: AbilityCard = defaultAbilityCard;
   flamesOnEnemies: PlayerDto[] = [];
   slashOnEnemies: PlayerDto[] = [];
   healOnPlayer: boolean = false;
@@ -289,6 +282,10 @@ export class BattleComponent implements OnInit {
       this.abilityDeck.push(this.abilityDeck[0]);
       this.abilityDeck.shift();
     }
+
+    setTimeout(() => {
+      this.topAbilityCard = this.abilityDeck[0];
+    }, 400);
   }
 
   async importRandomBgImage() {
@@ -440,6 +437,7 @@ export class BattleComponent implements OnInit {
       }
 
       // this.abilityDamage();
+      this.pushMessage('Player Turn');
     }
 
     if (ability.abilityFunction === 'heal') {
