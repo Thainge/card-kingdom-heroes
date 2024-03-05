@@ -184,12 +184,14 @@ export class BattleComponent implements OnInit {
   hoveringAbilityCard: AbilityCard = {
     id: 0,
     abilityFunction: 'damage',
+    targetAll: false,
     abilityValue: 1,
     cost: ['hearts'],
     description: '',
     image: '',
     level: 1,
     name: '',
+    hitAnimation: 'heal',
   };
   hoveringAbilityHand: CardDto[] = [];
   activeAbilityLeaderLines: any[] = [];
@@ -198,13 +200,19 @@ export class BattleComponent implements OnInit {
   errorAbilityCard: AbilityCard = {
     id: 0,
     abilityFunction: 'damage',
+    targetAll: false,
     abilityValue: 1,
     cost: ['hearts'],
     description: '',
     image: '',
     level: 1,
     name: '',
+    hitAnimation: 'heal',
   };
+
+  flamesOnEnemies: PlayerDto[] = [];
+  slashOnEnemies: PlayerDto[] = [];
+  healOnPlayer: boolean = false;
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -247,24 +255,24 @@ export class BattleComponent implements OnInit {
           baseHealth: 4,
           level: 1,
         },
-        // {
-        //   id: 2,
-        //   image: './assets/' + this.gameThemePath + '/' + 'link.png',
-        //   name: 'Link',
-        //   attack: 1,
-        //   health: 2,
-        //   baseHealth: 2,
-        //   level: 1,
-        // },
-        // {
-        //   id: 3,
-        //   image: './assets/' + this.gameThemePath + '/' + 'link.png',
-        //   name: 'Link',
-        //   attack: 0,
-        //   health: 3,
-        //   baseHealth: 3,
-        //   level: 1,
-        // },
+        {
+          id: 2,
+          image: './assets/' + this.gameThemePath + '/' + 'link.png',
+          name: 'Link',
+          attack: 1,
+          health: 2,
+          baseHealth: 2,
+          level: 1,
+        },
+        {
+          id: 3,
+          image: './assets/' + this.gameThemePath + '/' + 'link.png',
+          name: 'Link',
+          attack: 0,
+          health: 3,
+          baseHealth: 3,
+          level: 1,
+        },
       ];
 
       if (this.Cards.length < 1) {
@@ -379,42 +387,78 @@ export class BattleComponent implements OnInit {
       this.activeAbilityLeaderLines = [];
 
       // Use ability card
+      this.activeLeaderLines.forEach((x) => {
+        x.hide('fade', { duration: 100, timing: 'linear' });
+        setTimeout(() => {
+          x.remove();
+        }, 100);
+      });
       this.useAbilityCard(ability);
     } else {
       this.errorAbilityCard = ability;
     }
   }
 
-  useAbilityCard(ability: AbilityCard) {
+  async useAbilityCard(ability: AbilityCard) {
     console.log('Use Ability Card');
     console.log(ability);
 
     // hide hand
-    const playerHand = [...this.playerHand];
-    this.playerHand = [];
+    // const playerHand = [...this.playerHand];
+    // this.playerHand = [];
 
     // Functions for ability cards
     if (ability.abilityFunction === 'damage') {
-      // Show text on screen saying please select a target
-      // Hovering over target shows arrows
-      // Onclick show arrows to target enemy
-      // slash/fire animation on player
+      if (ability.targetAll) {
+        console.log('damage all');
+        // Automatically attack all enemies
+        for await (const x of this.enemyPlayers) {
+          const incomingAttackPower = ability.abilityValue;
+          const newHealth = x.health - incomingAttackPower;
+          if (ability.hitAnimation === 'fire') {
+            this.flamesOnEnemies.push(x);
+          } else if (ability.hitAnimation === 'slash') {
+            this.slashOnEnemies.push(x);
+          }
+          this.enemyTarget = x.id;
+          this.numbersGoDownIncrementally(x.health, newHealth, false, 0);
+        }
 
-      // Options, animation: claws/fire
-      // Options, all targets or select target
+        setTimeout(() => {
+          this.flamesOnEnemies = [];
+          this.slashOnEnemies = [];
+          this.enemyTarget = 0;
+        }, 800);
+        // slash/fire animation on enemies
+      } else {
+        // Show text on screen saying please select a target
+        // Hovering over target shows arrows
+        // Onclick show arrows to target enemy
+        // slash/fire animation on enemies
+        console.log('select target');
+      }
 
       // this.abilityDamage();
-      console.log('damage');
     }
 
     if (ability.abilityFunction === 'heal') {
       console.log('heal');
-      // heal player gradually
       // green hp while healing
       // potion fades on player
+      let newHealth = this.player.health + ability.abilityValue;
+      if (newHealth > this.player.baseHealth) {
+        newHealth = this.player.baseHealth;
+      }
 
-      // this.abilityHeal();
+      this.healOnPlayer = true;
+      await this.timeout(400);
+      this.numbersGoUpIncrementallyPlayer(this.player.health, newHealth);
+
+      setTimeout(() => {
+        this.healOnPlayer = false;
+      }, 1000);
     }
+    this.usedAbilityCard = false;
   }
 
   hoverAbilityEnter(ability: AbilityCard) {
@@ -443,6 +487,24 @@ export class BattleComponent implements OnInit {
     }
   }
 
+  showFireAnimation(player: PlayerDto) {
+    const foundPlayer = this.flamesOnEnemies.find((x) => x.id === player.id);
+    if (foundPlayer) {
+      return true;
+    }
+
+    return false;
+  }
+
+  showSliceAnimation(player: PlayerDto) {
+    const foundPlayer = this.slashOnEnemies.find((x) => x.id === player.id);
+    if (foundPlayer) {
+      return true;
+    }
+
+    return false;
+  }
+
   hoverAbilityOut(ability: AbilityCard) {
     if (this.usedAbilityCard) {
       return;
@@ -451,23 +513,27 @@ export class BattleComponent implements OnInit {
     this.errorAbilityCard = {
       id: 0,
       abilityFunction: 'damage',
+      targetAll: false,
       abilityValue: 1,
       cost: ['hearts'],
       description: '',
       image: '',
       level: 1,
       name: '',
+      hitAnimation: 'heal',
     };
     this.hoveringAbilityHand = [];
     this.hoveringAbilityCard = {
       id: 0,
       abilityFunction: 'damage',
+      targetAll: false,
       abilityValue: 1,
       cost: ['hearts'],
       description: '',
       image: '',
       level: 1,
       name: '',
+      hitAnimation: 'heal',
     };
     this.currentlyRunning = false;
     this.activeAbilityLeaderLines.forEach((x) => {
@@ -1004,6 +1070,9 @@ export class BattleComponent implements OnInit {
       this.enemyTarget = foundValidEnemy.id;
       this.staticEnemyTarget = this.enemyTarget;
     }
+    console.log(foundValidEnemy);
+    console.log(this.enemyTarget);
+    console.log(this.wrappingTurn);
 
     setTimeout(() => {
       let foundTarget: ElementRef | null;
@@ -1180,13 +1249,28 @@ export class BattleComponent implements OnInit {
     }, 1500);
   }
 
+  async numbersGoUpIncrementallyPlayer(
+    currentHealth: number,
+    newHealth: number
+  ) {
+    const difference = newHealth - currentHealth;
+    const differentArr = Array.from(Array(difference).keys());
+
+    for await (const i of differentArr) {
+      const updateHealth = currentHealth + (i + 1);
+      await this.timeout(100 * i);
+      this.player.health = updateHealth;
+    }
+  }
+
   async numbersGoDownIncrementally(
     currentHealth: number,
     newHealth: number,
-    isAttackingPlayer: boolean = false
+    isAttackingPlayer: boolean = false,
+    defaultTimeout: number = 2500
   ) {
     const enemyTarget = this.enemyTarget;
-    await this.timeout(2500);
+    await this.timeout(defaultTimeout);
     if (isAttackingPlayer) {
       // Player goes down
       const difference = currentHealth - newHealth;
@@ -1204,7 +1288,6 @@ export class BattleComponent implements OnInit {
       );
 
       const differentArr = Array.from(Array(difference).keys());
-
       for await (const i of differentArr) {
         const newEnemyHealth = currentHealth - (i + 1);
         const updateHealth = newEnemyHealth - this.currentExtraDmg;
@@ -1215,8 +1298,13 @@ export class BattleComponent implements OnInit {
         };
       }
     }
-    this.wrappingTurn = true;
-    return await this.timeout(1000);
+
+    if (defaultTimeout === 2500) {
+      this.wrappingTurn = true;
+      return await this.timeout(1000);
+    } else {
+      return;
+    }
   }
 
   timeout(ms: number) {

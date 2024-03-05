@@ -1225,6 +1225,11 @@
             }"
             #playerRef
           >
+            <img
+              [src]="'./assets/' + gameThemePath + '/potion.png'"
+              class="cardIcon confetti claws healing"
+              *ngIf="healOnPlayer"
+            />
             <div class="cardPlayerBorder">
               <div class="abilityTitle abilityTitlePlayer paperBg"></div>
               <div class="abilityBorder1 paperBg paperBgPlayer1"></div>
@@ -1259,7 +1264,8 @@
                     'font-family': gameThemePath + '-HeaderFont'
                   }"
                   [ngClass]="{
-                    redHealthText: player.health < player.baseHealth
+                    redHealthText: player.health < player.baseHealth,
+                    greenHealthText: healOnPlayer
                   }"
                 >
                   {{ player.health }}
@@ -1315,6 +1321,26 @@
               }"
               #enemyPlayerRef
             >
+              <img
+                [src]="'./assets/' + gameThemePath + '/claws.png'"
+                class="cardIcon confetti claws"
+                *ngIf="showSliceAnimation(item)"
+                [@fadeEnter]="{
+                  value: '',
+                  params: { duration: 500, delay: 0, translate: '300px' }
+                }"
+                [@fadeOutLeave]
+              />
+              <img
+                [src]="'./assets/' + gameThemePath + '/fire.gif'"
+                class="cardIcon confetti claws"
+                *ngIf="showFireAnimation(item)"
+                [@fadeEnter]="{
+                  value: '',
+                  params: { duration: 500, delay: 0, translate: '300px' }
+                }"
+                [@fadeOutLeave]
+              />
               <div class="cardPlayerBorder">
                 <div class="abilityTitle abilityTitlePlayer paperBgEnemy"></div>
                 <div class="abilityBorder1 paperBgEnemy paperBgPlayer1"></div>
@@ -1593,7 +1619,7 @@
               [src]="'./assets/' + gameThemePath + '/spades.png'"
               class="suit suitLast"
               *ngIf="
-                card.wildSuits && card.wildSuits[3] && card.wildSuits[3] === 1
+                card.wildSuits && card.wildSuits[2] && card.wildSuits[2] === 1
               "
               (click)="chooseWildSuit($event, card, 'spades')"
             />
@@ -1601,7 +1627,7 @@
               [src]="'./assets/' + gameThemePath + '/clubs.png'"
               class="suit"
               *ngIf="
-                card.wildSuits && card.wildSuits[2] && card.wildSuits[2] === 1
+                card.wildSuits && card.wildSuits[3] && card.wildSuits[3] === 1
               "
               (click)="chooseWildSuit($event, card, 'clubs')"
             />

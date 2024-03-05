@@ -885,6 +885,42 @@
   }
 }
 
+.healing {
+  animation: zoomOutHeal !important;
+  animation-duration: 1s !important;
+  animation-fill-mode: forwards !important;
+}
+
+@keyframes zoomOutHeal {
+  0% {
+    opacity: 0;
+    scale: 1;
+  }
+  70% {
+    opacity: 1;
+    scale: 2;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.greenHealthText {
+  background: -webkit-linear-gradient(#15ff00, #ffffff);
+  -webkit-text-stroke: 2px #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  // font-family: HeaderFont;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+  font-size: 100%;
+}
+
 .deadEnemy {
   filter: brightness(0.3);
   transition: all 1s;
