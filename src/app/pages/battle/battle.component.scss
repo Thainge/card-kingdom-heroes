@@ -276,6 +276,11 @@
   box-shadow: 0 0 3px 3px rgba(234, 255, 47, 0.5);
 }
 
+.hoveringAbilityCard {
+  background-color: rgba(234, 255, 47, 1);
+  box-shadow: 0 0 3px 3px rgba(234, 255, 47, 0.5);
+}
+
 .validCardBorder {
   background-color: rgba(44, 219, 38, 1);
   box-shadow: 0 0 10px 1px rgba(44, 219, 38, 0.5);
@@ -284,6 +289,11 @@
 .errorCardBorder {
   background-color: rgba(235, 0, 0, 1);
   box-shadow: 0 0 3px 3px rgba(235, 0, 0, 0.5);
+}
+
+.abilityActiveCardBorder {
+  background-color: rgba(44, 219, 38, 1);
+  box-shadow: 0 0 10px 1px rgba(44, 219, 38, 0.5);
 }
 
 .floatingText {
@@ -675,6 +685,7 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
+  border-radius: 4%;
 }
 
 .swordBox {
@@ -1270,14 +1281,21 @@
   flex-direction: column;
 }
 
+.paperBg {
+  background: url(~src/assets/default/paper.png);
+}
+
+.paperBgEnemy {
+  background: url(~src/assets/default/paperEnemy.png);
+  z-index: 11 !important;
+}
+
 .abilityTitle {
   width: 100%;
   height: 10%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgb(236, 232, 197);
-  background: url(~src/assets/default/paper.png);
   background-position: center;
   background-position: 50% 12%;
   font-size: 100%;
@@ -1290,8 +1308,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgb(236, 232, 197);
-  background: url(~src/assets/default/paper.png);
   background-position: bottom;
   background-position: 50% 90%;
   font-size: 100%;
@@ -1306,24 +1322,42 @@
 
 .abilityBorder1 {
   position: absolute;
-  background-color: rgb(236, 232, 197);
-  background: url(~src/assets/default/paper.png);
   background-position: top;
-  background-position: 50% 30%;
+  background-position: 50% 50%;
   width: 3%;
+  top: 0;
   right: 0;
   height: 100%;
 }
 
 .abilityBorder2 {
   position: absolute;
-  background-color: rgb(236, 232, 197);
-  background: url(~src/assets/default/paper.png);
   background-position: top;
   background-position: 50% 30%;
   width: 3%;
+  top: 0;
   left: 0;
   height: 100%;
+}
+
+.abilityBorder3 {
+  position: absolute;
+  background-position: top;
+  background-position: 50% 30%;
+  height: 3%;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.abilityBorder4 {
+  position: absolute;
+  background-position: top;
+  background-position: 50% 30%;
+  height: 3%;
+  left: 0;
+  bottom: 0;
+  width: 100%;
 }
 
 .abilityDescription {
@@ -1342,7 +1376,6 @@
 .levelText {
   font-size: 70%;
   border-radius: 5%;
-  background: url(~src/assets/default/paper.png);
   background-position: center;
   box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.377);
   padding: 3%;
@@ -1352,6 +1385,31 @@
   text-align: start;
   padding-left: 4%;
   padding-right: 4%;
+}
+
+.abilityTitlePlayer {
+  position: relative;
+  z-index: 12 !important;
+  background-position: 50% 5%;
+  height: 3%;
+  font-size: 90%;
+}
+
+.paperBgPlayer1 {
+  background-position: 50% 25%;
+  background-size: cover;
+  z-index: 11 !important;
+}
+
+.paperBgPlayer2 {
+  background-position: 50% 25%;
+  background-size: cover;
+  z-index: 11 !important;
+}
+
+.paperBgPlayer3 {
+  background-position: 50% 9%;
+  z-index: 11 !important;
 }
 
 @keyframes cardFadeDown {

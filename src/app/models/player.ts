@@ -5,6 +5,7 @@ export interface PlayerDto {
   image: string;
   name: string;
   baseHealth: number;
+  level: number;
   skills?: PlayerUnlockedAbilties;
 }
 

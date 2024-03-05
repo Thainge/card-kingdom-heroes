@@ -10,4 +10,4 @@ export interface AbilityCard {
 }
 
 type AbilityFunction = 'damage' | 'heal';
-type costValue = 'heart' | 'diamond' | 'spade' | 'club';
+type costValue = 'hearts' | 'diamonds' | 'spades' | 'clubs';

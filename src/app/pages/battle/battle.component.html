@@ -85,10 +85,10 @@
           >
             <!-- Start of animations -->
             <div class="cardPlayerBorder">
-              <img
-                [src]="'./assets/' + gameThemePath + '/greenBorder.png'"
-                class="cardIcon"
-              />
+              <div class="abilityTitle abilityTitlePlayer paperBgEnemy"></div>
+              <div class="abilityBorder1 paperBgEnemy paperBgPlayer1"></div>
+              <div class="abilityBorder2 paperBgEnemy paperBgPlayer2"></div>
+              <div class="abilityBorder3 paperBgEnemy paperBgPlayer3"></div>
               <img
                 [src]="'./assets/' + gameThemePath + '/confetti.gif'"
                 class="cardIcon confetti"
@@ -209,10 +209,10 @@
           >
             <!-- Start of animations -->
             <div class="cardPlayerBorder">
-              <img
-                [src]="'./assets/' + gameThemePath + '/greenBorder.png'"
-                class="cardIcon"
-              />
+              <div class="abilityTitle abilityTitlePlayer paperBg"></div>
+              <div class="abilityBorder1 paperBg paperBgPlayer1"></div>
+              <div class="abilityBorder2 paperBg paperBgPlayer2"></div>
+              <div class="abilityBorder3 paperBg paperBgPlayer3"></div>
               <img
                 [src]="'./assets/' + gameThemePath + '/confetti.gif'"
                 class="cardIcon confetti"
@@ -458,10 +458,10 @@
             >
               <!-- Start of animations -->
               <div class="cardPlayerBorder">
-                <img
-                  [src]="'./assets/' + gameThemePath + '/greenBorder.png'"
-                  class="cardIcon"
-                />
+                <div class="abilityTitle abilityTitlePlayer paperBgEnemy"></div>
+                <div class="abilityBorder1 paperBgEnemy paperBgPlayer1"></div>
+                <div class="abilityBorder2 paperBgEnemy paperBgPlayer2"></div>
+                <div class="abilityBorder3 paperBgEnemy paperBgPlayer3"></div>
                 <img
                   [src]="'./assets/' + gameThemePath + '/confetti.gif'"
                   class="cardIcon confetti"
@@ -588,10 +588,10 @@
             >
               <!-- Start of animations -->
               <div class="cardPlayerBorder">
-                <img
-                  [src]="'./assets/' + gameThemePath + '/greenBorder.png'"
-                  class="cardIcon"
-                />
+                <div class="abilityTitle abilityTitlePlayer paperBg"></div>
+                <div class="abilityBorder1 paperBg paperBgPlayer1"></div>
+                <div class="abilityBorder2 paperBg paperBgPlayer2"></div>
+                <div class="abilityBorder3 paperBg paperBgPlayer3"></div>
                 <img
                   [src]="'./assets/' + gameThemePath + '/confetti.gif'"
                   class="cardIcon confetti"
@@ -1226,10 +1226,10 @@
             #playerRef
           >
             <div class="cardPlayerBorder">
-              <img
-                [src]="'./assets/' + gameThemePath + '/greenBorder.png'"
-                class="cardIcon"
-              />
+              <div class="abilityTitle abilityTitlePlayer paperBg"></div>
+              <div class="abilityBorder1 paperBg paperBgPlayer1"></div>
+              <div class="abilityBorder2 paperBg paperBgPlayer2"></div>
+              <div class="abilityBorder3 paperBg paperBgPlayer3"></div>
             </div>
             <div class="cardFooterIconBox swordBox">
               <img
@@ -1316,10 +1316,10 @@
               #enemyPlayerRef
             >
               <div class="cardPlayerBorder">
-                <img
-                  [src]="'./assets/' + gameThemePath + '/greenBorder.png'"
-                  class="cardIcon"
-                />
+                <div class="abilityTitle abilityTitlePlayer paperBgEnemy"></div>
+                <div class="abilityBorder1 paperBgEnemy paperBgPlayer1"></div>
+                <div class="abilityBorder2 paperBgEnemy paperBgPlayer2"></div>
+                <div class="abilityBorder3 paperBgEnemy paperBgPlayer3"></div>
               </div>
               <div class="cardFooterIconBox swordBox">
                 <img
@@ -1462,9 +1462,12 @@
         class="bottomCard playerBottomCard"
         *ngFor="let card of abilityCardsHand; index as i; trackBy: trackById"
         #activeAbilityCards
+        [ngClass]="{
+          abilityIsActive: abilityCardIsSelected(card)
+        }"
         (click)="selectAbilityCard(card)"
-        (mouseover)="hoverAbilityEnter(card)"
-        (mouseout)="hoverAbilityOut(card)"
+        (mouseenter)="hoverAbilityEnter(card)"
+        (mouseleave)="hoverAbilityOut(card)"
         [ngStyle]="{
           'animation-delay': (i + 1) * 100 + 'ms'
         }"
@@ -1473,6 +1476,7 @@
         <div
           class="cardBorder"
           [ngClass]="{
+            hoveringAbilityCard: cardIsValidForAbilityCard(card),
             activeCardBorder: abilityCardIsSelected(card),
             validCardBorder: abilityCardIsValid(card)
           }"
@@ -1482,7 +1486,7 @@
             class="cardBackgroundImage"
           />
           <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
-            <div class="abilityTitle">
+            <div class="abilityTitle paperBg">
               <div class="abilityTitleText">test</div>
               <div class="abilitySuitsBox">
                 <img
@@ -1492,10 +1496,12 @@
                 />
               </div>
             </div>
-            <div class="abilityBorder1"></div>
-            <div class="abilityBorder2"></div>
-            <div class="abilityDescription">
-              <div class="abilityDescriptionLevel"><div class="levelText">Level {{ card.level }}</div></div>
+            <div class="abilityBorder1 paperBg"></div>
+            <div class="abilityBorder2 paperBg"></div>
+            <div class="abilityDescription paperBg">
+              <div class="abilityDescriptionLevel">
+                <div class="levelText paperBg">Level {{ card.level }}</div>
+              </div>
               <div class="abilityDescriptionText">
                 test test test est est set sets etset tse
               </div>
@@ -1507,7 +1513,8 @@
         class="bottomCard playerBottomCard"
         *ngFor="let card of playerHand; index as i; trackBy: trackById"
         [ngClass]="{
-          activeCard: cardIsSelected(card)
+          activeCard: cardIsSelected(card),
+          abilityActiveCard: cardIsValidForAbilityCard(card)
         }"
         #myActiveCards
         (click)="selectCard(card)"
@@ -1520,6 +1527,7 @@
         <div
           class="cardBorder"
           [ngClass]="{
+            abilityActiveCardBorder: cardIsValidForAbilityCard(card),
             activeCardBorder: cardIsSelected(card),
             validCardBorder: cardIsValid(card),
             errorCardBorder:
@@ -1565,7 +1573,7 @@
             *ngIf="card.wild && card.wildSuit"
           >
             <img
-              [src]="'./assets/' + gameThemePath + '/heart.png'"
+              [src]="'./assets/' + gameThemePath + '/hearts.png'"
               class="suit"
               *ngIf="
                 card.wildSuits && card.wildSuits[0] && card.wildSuits[0] === 1
@@ -1573,7 +1581,7 @@
               (click)="chooseWildSuit($event, card, 'hearts')"
             />
             <img
-              [src]="'./assets/' + gameThemePath + '/diamond.png'"
+              [src]="'./assets/' + gameThemePath + '/diamonds.png'"
               class="suit"
               *ngIf="
                 card.wildSuits && card.wildSuits[1] && card.wildSuits[1] === 1
@@ -1581,20 +1589,20 @@
               (click)="chooseWildSuit($event, card, 'diamonds')"
             />
             <img
-              [src]="'./assets/' + gameThemePath + '/club.png'"
-              class="suit"
-              *ngIf="
-                card.wildSuits && card.wildSuits[2] && card.wildSuits[2] === 1
-              "
-              (click)="chooseWildSuit($event, card, 'clubs')"
-            />
-            <img
-              [src]="'./assets/' + gameThemePath + '/spade.png'"
+              [src]="'./assets/' + gameThemePath + '/spades.png'"
               class="suit suitLast"
               *ngIf="
                 card.wildSuits && card.wildSuits[3] && card.wildSuits[3] === 1
               "
               (click)="chooseWildSuit($event, card, 'spades')"
+            />
+            <img
+              [src]="'./assets/' + gameThemePath + '/clubs.png'"
+              class="suit"
+              *ngIf="
+                card.wildSuits && card.wildSuits[2] && card.wildSuits[2] === 1
+              "
+              (click)="chooseWildSuit($event, card, 'clubs')"
             />
           </div>
         </div>
