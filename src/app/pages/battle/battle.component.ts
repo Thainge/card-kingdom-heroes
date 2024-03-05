@@ -393,6 +393,7 @@ export class BattleComponent implements OnInit {
           x.remove();
         }, 100);
       });
+      this.selectedCards = [];
       this.useAbilityCard(ability);
     } else {
       this.errorAbilityCard = ability;
@@ -421,7 +422,7 @@ export class BattleComponent implements OnInit {
             this.slashOnEnemies.push(x);
           }
           this.enemyTarget = x.id;
-          this.numbersGoDownIncrementally(x.health, newHealth, false, 0);
+          await this.numbersGoDownIncrementallyBot(x.health, newHealth);
         }
 
         setTimeout(() => {
@@ -1260,6 +1261,25 @@ export class BattleComponent implements OnInit {
       const updateHealth = currentHealth + (i + 1);
       await this.timeout(100 * i);
       this.player.health = updateHealth;
+    }
+  }
+
+  async numbersGoDownIncrementallyBot(
+    currentHealth: number,
+    newHealth: number
+  ) {
+    const enemyTarget = this.enemyTarget;
+    const difference = currentHealth - newHealth;
+    const foundIndex = this.enemyPlayers.findIndex((x) => x.id === enemyTarget);
+
+    const differentArr = Array.from(Array(difference).keys());
+    for await (const i of differentArr) {
+      const newEnemyHealth = currentHealth - (i + 1);
+      await this.timeout(100 * i);
+      this.enemyPlayers[foundIndex] = {
+        ...this.enemyPlayers[foundIndex],
+        health: newEnemyHealth,
+      };
     }
   }
 
