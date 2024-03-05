@@ -151,6 +151,8 @@ export class BattleComponent implements OnInit {
   specialAbilityListInactive: any[] = [];
   messageList: any[] = [];
   messageListInactive: any[] = [];
+  displayMessageList: any[] = [];
+  displayMessageListInactive: any[] = [];
 
   attackStarted: boolean = false;
 
@@ -201,11 +203,13 @@ export class BattleComponent implements OnInit {
   usedAbilityCard: boolean = false;
   errorAbilityCard: AbilityCard = defaultAbilityCard;
   topAbilityCard: AbilityCard = defaultAbilityCard;
+  currentAbility: AbilityCard = defaultAbilityCard;
+  startedAbilityTurn: boolean = false;
 
   topAbilityCardBot: AbilityCard = defaultAbilityCard;
   flamesOnEnemies: PlayerDto[] = [];
-  slashOnEnemies: PlayerDto[] = [];
   healOnPlayer: boolean = false;
+  abilityEnemyTarget: number = 0;
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -364,11 +368,6 @@ export class BattleComponent implements OnInit {
       this.errorAbilityCard = ability;
       this.usedAbilityCard = true;
 
-      // Remove ability card from hand
-      this.abilityCardsHand = this.abilityCardsHand.filter(
-        (x) => x.id !== ability.id
-      );
-
       // Remove cards from hand
       this.hoveringAbilityHand.forEach((x) => {
         this.playerHand = this.playerHand.filter((a) => a.id !== x.id);
@@ -391,6 +390,7 @@ export class BattleComponent implements OnInit {
         }, 100);
       });
       this.selectedCards = [];
+      this.enemyTarget = 0;
       this.useAbilityCard(ability);
     } else {
       this.errorAbilityCard = ability;
@@ -398,50 +398,42 @@ export class BattleComponent implements OnInit {
   }
 
   async useAbilityCard(ability: AbilityCard) {
-    console.log('Use Ability Card');
-    console.log(ability);
-
-    // hide hand
-    // const playerHand = [...this.playerHand];
-    // this.playerHand = [];
-
     // Functions for ability cards
     if (ability.abilityFunction === 'damage') {
       if (ability.targetAll) {
-        console.log('damage all');
         // Automatically attack all enemies
         for await (const x of this.enemyPlayers) {
           const incomingAttackPower = ability.abilityValue;
           const newHealth = x.health - incomingAttackPower;
           if (ability.hitAnimation === 'fire') {
             this.flamesOnEnemies.push(x);
-          } else if (ability.hitAnimation === 'slash') {
-            this.slashOnEnemies.push(x);
           }
           this.enemyTarget = x.id;
           await this.numbersGoDownIncrementallyBot(x.health, newHealth);
         }
 
+        // Remove ability card from hand
+        this.abilityCardsHand = this.abilityCardsHand.filter(
+          (x) => x.id !== ability.id
+        );
+
         setTimeout(() => {
           this.flamesOnEnemies = [];
-          this.slashOnEnemies = [];
           this.enemyTarget = 0;
+          this.pushMessage('Player Turn');
         }, 800);
-        // slash/fire animation on enemies
       } else {
-        // Show text on screen saying please select a target
-        // Hovering over target shows arrows
-        // Onclick show arrows to target enemy
-        // slash/fire animation on enemies
-        console.log('select target');
+        this.canSelectCards = false;
+        const ID = this.pushDisplayMessage('Select An Enemy To Deal Damage To');
+        setTimeout(() => {
+          this.displayMessageListInactive.push(ID);
+        }, 3000);
+        this.currentAbility = ability;
+        console.log(this.currentAbility);
       }
-
-      // this.abilityDamage();
-      this.pushMessage('Player Turn');
     }
 
     if (ability.abilityFunction === 'heal') {
-      console.log('heal');
       // green hp while healing
       // potion fades on player
       let newHealth = this.player.health + ability.abilityValue;
@@ -453,11 +445,59 @@ export class BattleComponent implements OnInit {
       await this.timeout(400);
       this.numbersGoUpIncrementallyPlayer(this.player.health, newHealth);
 
+      // Remove ability card from hand
+      this.abilityCardsHand = this.abilityCardsHand.filter(
+        (x) => x.id !== ability.id
+      );
+
       setTimeout(() => {
+        this.enemyTarget = 0;
         this.healOnPlayer = false;
+        this.pushMessage('Player Turn');
       }, 1000);
     }
     this.usedAbilityCard = false;
+  }
+
+  async onSelectTargetAbilityFire() {
+    const ability = this.currentAbility;
+    this.startedAbilityTurn = true;
+
+    for await (const x of this.enemyPlayers) {
+      if (x.id === this.enemyTarget) {
+        const incomingAttackPower = ability.abilityValue;
+        const newHealth = x.health - incomingAttackPower;
+        if (ability.hitAnimation === 'fire') {
+          this.flamesOnEnemies.push(x);
+        }
+        await this.numbersGoDownIncrementallyBot(x.health, newHealth);
+      }
+    }
+
+    // Remove ability card from hand
+    this.abilityCardsHand = this.abilityCardsHand.filter(
+      (x) => x.id !== ability.id
+    );
+
+    this.activeAbilityLeaderLines.forEach((x) => {
+      x.hide('fade', { duration: 100, timing: 'linear' });
+      setTimeout(() => {
+        x.remove();
+      }, 100);
+    });
+    this.activeAbilityLeaderLines = [];
+    setTimeout(() => {
+      this.enemyTarget = 0;
+      this.flamesOnEnemies = [];
+      this.currentAbility = defaultAbilityCard;
+      this.pushMessage('Player Turn');
+      this.startedAbilityTurn = false;
+      console.log(this.startedAbilityTurn);
+      this.canSelectCards = true;
+      setTimeout(() => {
+        this.abilityEnemyTarget = 0;
+      }, 3000);
+    }, 1000);
   }
 
   hoverAbilityEnter(ability: AbilityCard) {
@@ -488,15 +528,6 @@ export class BattleComponent implements OnInit {
 
   showFireAnimation(player: PlayerDto) {
     const foundPlayer = this.flamesOnEnemies.find((x) => x.id === player.id);
-    if (foundPlayer) {
-      return true;
-    }
-
-    return false;
-  }
-
-  showSliceAnimation(player: PlayerDto) {
-    const foundPlayer = this.slashOnEnemies.find((x) => x.id === player.id);
     if (foundPlayer) {
       return true;
     }
@@ -568,6 +599,77 @@ export class BattleComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  cardIsValidForAbility(card: AbilityCard): boolean {
+    const includesAbility = this.hoveringAbilityCard.id === card.id;
+
+    if (includesAbility) {
+      // Test lines
+      return true;
+    }
+    return false;
+  }
+
+  setAttackArrowsPlayerAbilityDamage() {
+    // this.hoveringAbilityCard = ability;
+    // this.hoveringAbilityHand = canUse;
+    const abilityCards = this.activeAbilityCards;
+
+    try {
+      setTimeout(() => {
+        let foundTarget: ElementRef | null;
+        abilityCards?.forEach((x) => {
+          if (x.nativeElement.className.includes('abilityIsActiveTarget')) {
+            foundTarget = x.nativeElement;
+          }
+        });
+
+        let foundEnemyTarget: ElementRef | null;
+        this.enemyPlayerRef?.forEach((x) => {
+          if (x.nativeElement.className.includes('enemyAbilityTarget')) {
+            foundEnemyTarget = x.nativeElement;
+          }
+        });
+
+        setTimeout(() => {
+          if (foundTarget && foundEnemyTarget) {
+            const myNewActiveLines: any[] = [];
+            const myLineOptions: any = {
+              dash: { animation: true },
+              endSocket: 'bottom',
+              startSocket: 'top',
+              dropShadow: true,
+              gradient: {
+                startColor: 'rgba(0, 255, 0, 0.281)',
+                endColor: 'rgb(0, 255, 0)',
+              },
+              animOptions: {
+                duration: 30,
+                timing: 'linear',
+              },
+              hide: true,
+              endPlug: 'arrow3',
+              endPlugColor: 'rgb(0, 255, 0)',
+            };
+            let myNewLine: any = new LeaderLine(
+              foundTarget,
+              foundEnemyTarget,
+              myLineOptions
+            );
+            myNewLine.show('draw', { duration: 200, timing: 'linear' });
+            myNewActiveLines.push(myNewLine);
+            this.activeAbilityLeaderLines.forEach((x) => {
+              x.hide('fade', { duration: 100, timing: 'linear' });
+              setTimeout(() => {
+                x.remove();
+              }, 100);
+            });
+            this.activeAbilityLeaderLines = myNewActiveLines;
+          }
+        }, 10);
+      }, 50);
+    } catch (err) {}
   }
 
   setAttackArrowsPlayerAbility() {
@@ -886,7 +988,34 @@ export class BattleComponent implements OnInit {
     return false;
   }
 
+  hoverAbilityPlayerIn(card: PlayerDto) {
+    console.log(this.currentAbility);
+    if (this.currentAbility.id !== 0 && !this.startedAbilityTurn) {
+      this.abilityEnemyTarget = card.id;
+      this.setAttackArrowsPlayerAbilityDamage();
+    }
+  }
+
+  hoverAbilityPlayerOut(card: PlayerDto) {
+    console.log(this.startedAbilityTurn);
+    if (!this.startedAbilityTurn) {
+      this.abilityEnemyTarget = 0;
+    }
+  }
+
   setEnemyPlayerHoverTarget(card: PlayerDto) {
+    if (this.currentAbility.id !== 0) {
+      this.enemyTarget = card.id;
+      this.staticEnemyTarget = this.enemyTarget;
+      this.abilityEnemyTarget = this.enemyTarget;
+
+      if (this.currentAbility.abilityFunction === 'damage') {
+        this.onSelectTargetAbilityFire();
+      }
+
+      return;
+    }
+
     if (card && card.id !== this.enemyTarget && this.canSelectCards) {
       this.enemyTarget = card.id;
       this.staticEnemyTarget = this.enemyTarget;
@@ -1069,9 +1198,6 @@ export class BattleComponent implements OnInit {
       this.enemyTarget = foundValidEnemy.id;
       this.staticEnemyTarget = this.enemyTarget;
     }
-    console.log(foundValidEnemy);
-    console.log(this.enemyTarget);
-    console.log(this.wrappingTurn);
 
     setTimeout(() => {
       let foundTarget: ElementRef | null;
@@ -1836,6 +1962,7 @@ export class BattleComponent implements OnInit {
     this.staticEnemyTarget = 0;
     this.tie = false;
     this.discarding = false;
+    this.currentAbility = defaultAbilityCard;
     this.enemyDefense = [];
     this.activeLeaderLines = [];
     this.activeAbilityLeaderLines = [];
@@ -1858,13 +1985,21 @@ export class BattleComponent implements OnInit {
     }, 1100);
   }
 
-  pushMessage(message: string) {
+  pushMessage(message: string): number {
     const ID = this.messageList.length + 1;
     this.messageList.push({ id: ID, message: message });
 
     setTimeout(() => {
       this.messageListInactive.push(ID);
     }, 1100);
+
+    return ID;
+  }
+
+  pushDisplayMessage(message: string): number {
+    const ID = this.displayMessageList.length + 1;
+    this.displayMessageList.push({ id: ID, message: message });
+    return ID;
   }
 
   pushSpecialAbilityImage(message: string) {

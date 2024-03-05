@@ -34,8 +34,7 @@ export class AbilityService {
             handValues['hearts']++;
             SuitsDetails['hearts']--;
             foundValue++;
-          }
-          if (SuitsDetails['diamonds'] > 0) {
+          } else if (SuitsDetails['diamonds'] > 0) {
             handValues['diamonds']++;
             SuitsDetails['diamonds']--;
             foundValue++;
@@ -46,8 +45,7 @@ export class AbilityService {
             handValues['spades']++;
             SuitsDetails['spades']--;
             foundValue++;
-          }
-          if (SuitsDetails['clubs'] > 0) {
+          } else if (SuitsDetails['clubs'] > 0) {
             handValues['clubs']++;
             SuitsDetails['clubs']--;
             foundValue++;

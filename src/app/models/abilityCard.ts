@@ -13,4 +13,4 @@ export interface AbilityCard {
 
 type AbilityFunction = 'damage' | 'heal';
 type CostValue = 'hearts' | 'diamonds' | 'spades' | 'clubs' | 'black' | 'red';
-type AnimationType = 'slash' | 'fire' | 'heal';
+type AnimationType = 'fire' | 'heal';

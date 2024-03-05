@@ -312,10 +312,16 @@
   position: absolute;
   top: 33%;
   left: 50%;
-  transform: translate(-50%, -5000%);
+  transform: translate(-50%, -50%);
   user-select: none;
   width: 50%;
   z-index: 999;
+}
+
+.floatingTextAbility {
+  top: 15%;
+  transform: translate(-50%, 0%);
+  font-size: 70%;
 }
 
 .floatingRelative {
@@ -1449,6 +1455,22 @@
 .paperBgPlayer3 {
   background-position: 50% 9%;
   z-index: 11 !important;
+}
+
+.centerHoverText {
+  background: -webkit-linear-gradient(#ff0000, #ffffff);
+  -webkit-text-stroke: 2px #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  // font-family: HeaderFont;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+  font-size: 200%;
 }
 
 @keyframes cardFadeDown {

@@ -1078,6 +1078,25 @@
     </div>
   </div>
 
+  <!-- Floating Message Fade -->
+  <div class="floatingText floatingTextAbility">
+    <div class="floatingRelative" *ngFor="let item of displayMessageList">
+      <div
+        class="floatingTextMessage floatingMessageInfo"
+        [ngClass]="{
+          fade: displayMessageListInactive.includes(item.id)
+        }"
+        [@zoomInEnter]="{
+          value: '',
+          params: { duration: 1000, delay: 0, translate: '30px' }
+        }"
+        [@fadeOutLeave]
+      >
+        {{ item.message }}
+      </div>
+    </div>
+  </div>
+
   <!-- Player 2 -->
   <div class="top">
     <div
@@ -1339,25 +1358,21 @@
               turnIsOverCard: isFinishedWithTurn(item)
             }"
             (click)="setEnemyPlayerHoverTarget(item)"
+            (mouseenter)="hoverAbilityPlayerIn(item)"
+            (mouseleave)="hoverAbilityPlayerOut(item)"
           >
             <div
               class="cardBorder middleCardBorder playerCardBorder"
               [ngClass]="{
                 errorEnemyBorder: enemyTarget === item.id && !wrappingTurn,
-                enemyTargetActive: currentEnemyTurn.id === item.id
+                enemyTargetActive: currentEnemyTurn.id === item.id,
+                enemyAbilityTarget:
+                  currentAbility.abilityFunction === 'damage' &&
+                  currentAbility.targetAll === false &&
+                  abilityEnemyTarget === item.id
               }"
               #enemyPlayerRef
             >
-              <img
-                [src]="'./assets/' + gameThemePath + '/claws.png'"
-                class="cardIcon confetti claws"
-                *ngIf="showSliceAnimation(item)"
-                [@fadeEnter]="{
-                  value: '',
-                  params: { duration: 500, delay: 0, translate: '300px' }
-                }"
-                [@fadeOutLeave]
-              />
               <img
                 [src]="'./assets/' + gameThemePath + '/fire.gif'"
                 class="cardIcon confetti claws"
@@ -1368,6 +1383,25 @@
                 }"
                 [@fadeOutLeave]
               />
+              <div
+                class="cardIconValue centerHoverText"
+                *ngIf="
+                  currentAbility.abilityFunction === 'damage' &&
+                  currentAbility.targetAll === false &&
+                  abilityEnemyTarget === item.id &&
+                  !startedAbilityTurn
+                "
+                [ngStyle]="{
+                  'font-family': gameThemePath + '-HeaderFont'
+                }"
+                [@fadeEnter]="{
+                  value: '',
+                  params: { duration: 500, delay: 0, translate: '300px' }
+                }"
+                [@fadeOutLeave]="{ value: '', params: { duration: 200 } }"
+              >
+                -{{ currentAbility.abilityValue }}
+              </div>
               <div class="cardPlayerBorder">
                 <div class="abilityTitle abilityTitlePlayer paperBgEnemy"></div>
                 <div class="abilityBorder1 paperBgEnemy paperBgPlayer1"></div>
@@ -1406,7 +1440,11 @@
                         item.health < item.baseHealth ||
                         (enemyTarget === item.id &&
                           selectedCards.length > 0 &&
-                          !attackEnding)
+                          !attackEnding) ||
+                        (currentAbility.abilityFunction === 'damage' &&
+                          currentAbility.targetAll === false &&
+                          abilityEnemyTarget === item.id &&
+                          !startedAbilityTurn)
                     }"
                   >
                     {{
@@ -1415,6 +1453,11 @@
                         !attackEnding) ||
                       (canSelectCards && enemyTarget === item.id)
                         ? item.health - selectedCards.length - currentExtraDmg
+                        : currentAbility.abilityFunction === "damage" &&
+                          currentAbility.targetAll === false &&
+                          abilityEnemyTarget === item.id &&
+                          !startedAbilityTurn
+                        ? item.health - currentAbility.abilityValue
                         : item.health
                     }}
                   </div>
@@ -1538,7 +1581,8 @@
         *ngFor="let card of abilityCardsHand; index as i; trackBy: trackById"
         #activeAbilityCards
         [ngClass]="{
-          abilityIsActive: abilityCardIsSelected(card)
+          abilityIsActive: abilityCardIsSelected(card),
+          abilityIsActiveTarget: currentAbility.id === card.id
         }"
         (click)="selectAbilityCard(card)"
         (mouseenter)="hoverAbilityEnter(card)"
@@ -1551,7 +1595,8 @@
         <div
           class="cardBorder"
           [ngClass]="{
-            hoveringAbilityCard: cardIsValidForAbilityCard(card),
+            hoveringAbilityCard:
+              cardIsValidForAbility(card) || currentAbility.id === card.id,
             activeCardBorder: abilityCardIsSelected(card),
             validCardBorder: abilityCardIsValid(card),
             errorCardBorder: errorAbilityCard.id === card.id
