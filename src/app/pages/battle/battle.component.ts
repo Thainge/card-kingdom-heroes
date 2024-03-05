@@ -339,16 +339,12 @@ export class BattleComponent implements OnInit {
   }
 
   selectAbilityCard(ability: AbilityCard) {
-    const canUse: CardDto[] = this.abilityService.checkCanUseAbility(
-      ability,
-      this.playerHand
-    );
+    console.log('Use Ability Card');
 
-    this.hoveringAbilityHand = canUse;
+    // Remove cards from hand
+    // Remove ability card from hand
 
-    if (canUse.length > 0) {
-      this.setAttackArrowsPlayerAbility();
-    }
+    console.log(this.playerDeck);
   }
 
   hoverAbilityEnter(ability: AbilityCard) {
@@ -360,7 +356,16 @@ export class BattleComponent implements OnInit {
     if (!this.currentlyRunning) {
       this.currentlyRunning = true;
       this.hoveringAbilityCard = ability;
-      this.selectAbilityCard(ability);
+      const canUse: CardDto[] = this.abilityService.checkCanUseAbility(
+        ability,
+        this.playerHand
+      );
+
+      this.hoveringAbilityHand = canUse;
+
+      if (canUse.length > 0) {
+        this.setAttackArrowsPlayerAbility();
+      }
     }
   }
 
@@ -416,7 +421,6 @@ export class BattleComponent implements OnInit {
       });
 
       if (this.currentlyRunning) {
-        console.log('hit');
         setTimeout(() => {
           const myNewActiveLines: any[] = [];
           this.myActiveCards?.forEach((x) => {
