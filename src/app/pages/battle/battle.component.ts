@@ -241,7 +241,7 @@ export class BattleComponent implements OnInit {
       this.gameThemePath = x;
       this.player = this.userService.getPlayer(this.gameThemePath);
       this.abilityDeck = this.userService.getAbilityCards(this.gameThemePath);
-      this.drawAbilityCard(2);
+      this.abilityDeck = this.cardService.shuffle(this.abilityDeck);
       this.enemyPlayers = [
         {
           id: 1,
@@ -350,9 +350,9 @@ export class BattleComponent implements OnInit {
       }
     }, 400);
 
-    this.redrawing = false;
-    this.redrawHide = true;
-    this.playerHand = [...this.redrawCards];
+    // this.redrawing = false;
+    // this.redrawHide = true;
+    // this.playerHand = [...this.redrawCards];
     // this.newTurn();
     // this.startBotTurnsLoop();
     // this.playerDiscardPhase();
@@ -397,66 +397,209 @@ export class BattleComponent implements OnInit {
     }
   }
 
-  async useAbilityCard(ability: AbilityCard) {
-    // Functions for ability cards
+  useAbilityCard(ability: AbilityCard) {
     if (ability.abilityFunction === 'damage') {
-      if (ability.targetAll) {
-        // Automatically attack all enemies
-        for await (const x of this.enemyPlayers) {
-          const incomingAttackPower = ability.abilityValue;
-          const newHealth = x.health - incomingAttackPower;
-          if (ability.hitAnimation === 'fire') {
-            this.flamesOnEnemies.push(x);
-          }
-          this.enemyTarget = x.id;
-          await this.numbersGoDownIncrementallyBot(x.health, newHealth);
-        }
-
-        // Remove ability card from hand
-        this.abilityCardsHand = this.abilityCardsHand.filter(
-          (x) => x.id !== ability.id
-        );
-
-        setTimeout(() => {
-          this.flamesOnEnemies = [];
-          this.enemyTarget = 0;
-          this.pushMessage('Player Turn');
-        }, 800);
-      } else {
-        this.canSelectCards = false;
-        const ID = this.pushDisplayMessage('Select An Enemy To Deal Damage To');
-        setTimeout(() => {
-          this.displayMessageListInactive.push(ID);
-        }, 3000);
-        this.currentAbility = ability;
-        console.log(this.currentAbility);
-      }
+      this.damageAbility(ability);
     }
 
     if (ability.abilityFunction === 'heal') {
-      // green hp while healing
-      // potion fades on player
-      let newHealth = this.player.health + ability.abilityValue;
-      if (newHealth > this.player.baseHealth) {
-        newHealth = this.player.baseHealth;
-      }
-
-      this.healOnPlayer = true;
-      await this.timeout(400);
-      this.numbersGoUpIncrementallyPlayer(this.player.health, newHealth);
-
-      // Remove ability card from hand
-      this.abilityCardsHand = this.abilityCardsHand.filter(
-        (x) => x.id !== ability.id
-      );
-
-      setTimeout(() => {
-        this.enemyTarget = 0;
-        this.healOnPlayer = false;
-        this.pushMessage('Player Turn');
-      }, 1000);
+      this.healAbility(ability);
     }
-    this.usedAbilityCard = false;
+
+    // Draw x cards
+    if (ability.abilityFunction === 'draw') {
+      this.drawAbility(ability);
+    }
+
+    // Redraw all number/face cards
+    if (ability.abilityFunction === 'redraw') {
+      this.redrawAbility(ability);
+    }
+
+    // Redraw whole hand including abilities
+    if (ability.abilityFunction === 'redrawAll') {
+      this.redrawAllAbility(ability);
+    }
+
+    // Bot discards x
+    if (ability.abilityFunction === 'discard') {
+      this.discardAbility(ability);
+    }
+
+    // Bot offense -x
+    if (ability.abilityFunction === 'offense') {
+      this.offenseAbility(ability);
+    }
+
+    // All Bots offense -x
+    if (ability.abilityFunction === 'offenseAll') {
+      this.offenseAllAbility(ability);
+    }
+
+    // Bot offense -x
+    if (ability.abilityFunction === 'leach') {
+      this.leachAbility(ability);
+    }
+
+    // All Bots offense -x
+    if (ability.abilityFunction === 'leachAll') {
+      this.leachAllAbility(ability);
+    }
+
+    // Bot offense -x
+    if (ability.abilityFunction === 'wildSuit') {
+      this.wildSuitAbility(ability);
+    }
+
+    // Bot offense -x
+    if (ability.abilityFunction === 'wildRange') {
+      this.wildRangeAbility(ability);
+    }
+
+    // Bot offense -x
+    if (ability.abilityFunction === 'wildSuitRange') {
+      this.wildSuitRangeAbility(ability);
+    }
+  }
+
+  async drawAbility(ability: AbilityCard) {
+    this.addPlayerCardsToHand(ability.abilityValue);
+    this.endAbilityTurn(ability, 100);
+  }
+
+  async redrawAbility(ability: AbilityCard) {
+    // Redraw all other cards
+    this.playerHand = [];
+    this.selectedCards = [];
+    this.addPlayerCardsToHand(5);
+
+    this.endAbilityTurn(ability, 100);
+  }
+
+  async redrawAllAbility(ability: AbilityCard) {
+    // Redraw ability cards
+    this.abilityCardsHand = [];
+    this.drawAbilityCard(2);
+
+    // Redraw all other cards
+    this.playerHand = [];
+    this.selectedCards = [];
+    this.addPlayerCardsToHand(5);
+
+    this.endAbilityTurn(ability, 100);
+  }
+
+  async discardAbility(ability: AbilityCard) {
+    let usedDiscards: number = 0;
+    const abilityCost = ability.abilityValue;
+
+    this.enemyHand = this.enemyHand.filter((x, i) => {
+      if (usedDiscards !== abilityCost) {
+        usedDiscards++;
+        return false;
+      } else {
+        return true;
+      }
+    });
+    this.endAbilityTurn(ability, 100);
+  }
+
+  async offenseAbility(ability: AbilityCard) {
+    // Target enemy player
+  }
+
+  async offenseAllAbility(ability: AbilityCard) {
+    // Target enemy player
+  }
+
+  async leachAbility(ability: AbilityCard) {
+    // Target enemy player
+  }
+
+  async leachAllAbility(ability: AbilityCard) {
+    // Target enemy player
+  }
+
+  async wildSuitAbility(ability: AbilityCard) {
+    // Target card in hand
+  }
+
+  async wildRangeAbility(ability: AbilityCard) {
+    // Target card in hand
+  }
+
+  async wildSuitRangeAbility(ability: AbilityCard) {
+    // Target card in hand
+  }
+
+  async damageAbility(ability: AbilityCard) {
+    if (ability.targetAll) {
+      // Automatically attack all enemies
+      for await (const x of this.enemyPlayers) {
+        const incomingAttackPower = ability.abilityValue;
+        const newHealth = x.health - incomingAttackPower;
+        if (ability.hitAnimation === 'fire') {
+          this.flamesOnEnemies.push(x);
+        }
+        this.enemyTarget = x.id;
+        await this.numbersGoDownIncrementallyBot(x.health, newHealth);
+      }
+      this.endAbilityTurn(ability, 800);
+    } else {
+      this.canSelectCards = false;
+      const ID = this.pushDisplayMessage('Select An Enemy To Deal Damage To');
+      setTimeout(() => {
+        this.displayMessageListInactive.push(ID);
+      }, 2000);
+      this.currentAbility = ability;
+    }
+  }
+
+  async healAbility(ability: AbilityCard) {
+    // green hp while healing
+    // potion fades on player
+    let newHealth = this.player.health + ability.abilityValue;
+    if (newHealth > this.player.baseHealth) {
+      newHealth = this.player.baseHealth;
+    }
+
+    // Remove ability card from hand
+    this.abilityCardsHand = this.abilityCardsHand.filter(
+      (x) => x.id !== ability.id
+    );
+    await this.timeout(200);
+    this.healOnPlayer = true;
+    await this.timeout(800);
+    this.numbersGoUpIncrementallyPlayer(this.player.health, newHealth);
+
+    this.endAbilityTurn(ability, 400);
+  }
+
+  endAbilityTurn(ability: AbilityCard, timeout: number) {
+    // Remove ability card from hand
+    this.abilityCardsHand = this.abilityCardsHand.filter(
+      (x) => x.id !== ability.id
+    );
+
+    // Remove active lines
+    this.activeAbilityLeaderLines.forEach((x) => {
+      x.hide('fade', { duration: 100, timing: 'linear' });
+      setTimeout(() => {
+        x.remove();
+      }, 100);
+    });
+    this.activeAbilityLeaderLines = [];
+
+    setTimeout(() => {
+      this.healOnPlayer = false;
+      this.usedAbilityCard = false;
+      this.flamesOnEnemies = [];
+      this.enemyTarget = 0;
+      this.currentAbility = defaultAbilityCard;
+      this.startedAbilityTurn = false;
+      this.canSelectCards = true;
+      this.pushMessage('Player Turn');
+    }, timeout);
   }
 
   async onSelectTargetAbilityFire() {
@@ -474,30 +617,10 @@ export class BattleComponent implements OnInit {
       }
     }
 
-    // Remove ability card from hand
-    this.abilityCardsHand = this.abilityCardsHand.filter(
-      (x) => x.id !== ability.id
-    );
-
-    this.activeAbilityLeaderLines.forEach((x) => {
-      x.hide('fade', { duration: 100, timing: 'linear' });
-      setTimeout(() => {
-        x.remove();
-      }, 100);
-    });
-    this.activeAbilityLeaderLines = [];
+    this.endAbilityTurn(ability, 1000);
     setTimeout(() => {
-      this.enemyTarget = 0;
-      this.flamesOnEnemies = [];
-      this.currentAbility = defaultAbilityCard;
-      this.pushMessage('Player Turn');
-      this.startedAbilityTurn = false;
-      console.log(this.startedAbilityTurn);
-      this.canSelectCards = true;
-      setTimeout(() => {
-        this.abilityEnemyTarget = 0;
-      }, 3000);
-    }, 1000);
+      this.abilityEnemyTarget = 0;
+    }, 4000);
   }
 
   hoverAbilityEnter(ability: AbilityCard) {
@@ -989,7 +1112,6 @@ export class BattleComponent implements OnInit {
   }
 
   hoverAbilityPlayerIn(card: PlayerDto) {
-    console.log(this.currentAbility);
     if (this.currentAbility.id !== 0 && !this.startedAbilityTurn) {
       this.abilityEnemyTarget = card.id;
       this.setAttackArrowsPlayerAbilityDamage();
@@ -1103,6 +1225,7 @@ export class BattleComponent implements OnInit {
 
     setTimeout(() => {
       // Remove selected redraw cards
+      this.drawAbilityCard(2);
       this.redrawSelectedCards.forEach((x, i) => {
         this.redrawCards.push(this.playerDeck[0]);
         this.playerDeck.push(this.playerDeck[0]);

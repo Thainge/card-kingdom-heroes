@@ -11,6 +11,19 @@ export interface AbilityCard {
   hitAnimation: AnimationType;
 }
 
-type AbilityFunction = 'damage' | 'heal';
+type AbilityFunction =
+  | 'damage'
+  | 'heal'
+  | 'draw'
+  | 'redraw'
+  | 'redrawAll'
+  | 'discard'
+  | 'offense'
+  | 'leach'
+  | 'wildSuit'
+  | 'wildRange'
+  | 'wildSuitRange'
+  | 'offenseAll'
+  | 'leachAll';
 type CostValue = 'hearts' | 'diamonds' | 'spades' | 'clubs' | 'black' | 'red';
 type AnimationType = 'fire' | 'heal';

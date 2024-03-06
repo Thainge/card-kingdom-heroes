@@ -51,6 +51,11 @@
   scale: 0.9;
 }
 
+* {
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
 .middleLeft,
 .middleRight {
   display: flex;

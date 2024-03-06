@@ -1389,7 +1389,8 @@
                   currentAbility.abilityFunction === 'damage' &&
                   currentAbility.targetAll === false &&
                   abilityEnemyTarget === item.id &&
-                  !startedAbilityTurn
+                  !startedAbilityTurn &&
+                  !canSelectCards
                 "
                 [ngStyle]="{
                   'font-family': gameThemePath + '-HeaderFont'
@@ -1444,7 +1445,8 @@
                         (currentAbility.abilityFunction === 'damage' &&
                           currentAbility.targetAll === false &&
                           abilityEnemyTarget === item.id &&
-                          !startedAbilityTurn)
+                          !startedAbilityTurn &&
+                          !canSelectCards)
                     }"
                   >
                     {{
@@ -1456,7 +1458,8 @@
                         : currentAbility.abilityFunction === "damage" &&
                           currentAbility.targetAll === false &&
                           abilityEnemyTarget === item.id &&
-                          !startedAbilityTurn
+                          !startedAbilityTurn &&
+                          !canSelectCards
                         ? item.health - currentAbility.abilityValue
                         : item.health
                     }}
