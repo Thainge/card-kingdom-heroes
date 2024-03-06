@@ -22,8 +22,6 @@ type AbilityFunction =
   | 'leach'
   | 'wildSuit'
   | 'wildRange'
-  | 'wildSuitRange'
-  | 'offenseAll'
-  | 'leachAll';
+  | 'wildSuitRange';
 type CostValue = 'hearts' | 'diamonds' | 'spades' | 'clubs' | 'black' | 'red';
-type AnimationType = 'fire' | 'heal';
+type AnimationType = 'fire' | 'heal' | 'shield';

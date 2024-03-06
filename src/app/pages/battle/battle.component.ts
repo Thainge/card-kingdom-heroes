@@ -104,10 +104,10 @@ export class BattleComponent implements OnInit {
     image: '',
     name: '',
     baseHealth: 1,
+    baseAttack: 1,
     level: 1,
   };
   playerTarget: number = 0;
-  playerHealth: number = 10;
   playerAttackHand: DetermineObject = {
     valid: false,
     highCard: 0,
@@ -123,7 +123,6 @@ export class BattleComponent implements OnInit {
   enemyDefense: CardDto[] = [];
   enemyPlayers: PlayerDto[] = [];
   enemyTarget: number = 0;
-  enemyHealth: number = 10;
   enemyAttackHand: DetermineObject = {
     valid: false,
     highCard: 0,
@@ -181,6 +180,7 @@ export class BattleComponent implements OnInit {
     image: '',
     name: '',
     baseHealth: 1,
+    baseAttack: 1,
     level: 1,
   };
 
@@ -208,8 +208,12 @@ export class BattleComponent implements OnInit {
 
   topAbilityCardBot: AbilityCard = defaultAbilityCard;
   flamesOnEnemies: PlayerDto[] = [];
+  shieldOnEnemies: PlayerDto[] = [];
+  leachOnEnemies: PlayerDto[] = [];
   healOnPlayer: boolean = false;
   abilityEnemyTarget: number = 0;
+
+  skippingCombat: boolean = false;
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -247,9 +251,10 @@ export class BattleComponent implements OnInit {
           id: 1,
           image: './assets/' + this.gameThemePath + '/' + 'link.png',
           name: 'Link',
-          attack: 6,
+          attack: 0,
           health: 4,
           baseHealth: 4,
+          baseAttack: 6,
           level: 1,
         },
         {
@@ -259,6 +264,7 @@ export class BattleComponent implements OnInit {
           attack: 1,
           health: 2,
           baseHealth: 2,
+          baseAttack: 1,
           level: 1,
         },
         {
@@ -268,6 +274,7 @@ export class BattleComponent implements OnInit {
           attack: 0,
           health: 3,
           baseHealth: 3,
+          baseAttack: 0,
           level: 1,
         },
       ];
@@ -350,12 +357,18 @@ export class BattleComponent implements OnInit {
       }
     }, 400);
 
-    // this.redrawing = false;
-    // this.redrawHide = true;
-    // this.playerHand = [...this.redrawCards];
+    this.redrawing = false;
+    this.redrawHide = true;
+    this.playerHand = [...this.redrawCards];
+    // this.abilityDeck = this.userService.getAbilityCards(this.gameThemePath);
+    this.drawAbilityCard(2);
     // this.newTurn();
     // this.startBotTurnsLoop();
     // this.playerDiscardPhase();
+  }
+
+  skipCombat() {
+    this.skippingCombat = true;
   }
 
   selectAbilityCard(ability: AbilityCard) {
@@ -364,7 +377,7 @@ export class BattleComponent implements OnInit {
       this.playerHand
     );
 
-    if (canUse.length > 0) {
+    if (canUse.length > 0 || ability.cost.length === 0) {
       this.errorAbilityCard = ability;
       this.usedAbilityCard = true;
 
@@ -398,6 +411,7 @@ export class BattleComponent implements OnInit {
   }
 
   useAbilityCard(ability: AbilityCard) {
+    this.canSelectCards = false;
     if (ability.abilityFunction === 'damage') {
       this.damageAbility(ability);
     }
@@ -431,19 +445,9 @@ export class BattleComponent implements OnInit {
       this.offenseAbility(ability);
     }
 
-    // All Bots offense -x
-    if (ability.abilityFunction === 'offenseAll') {
-      this.offenseAllAbility(ability);
-    }
-
     // Bot offense -x
     if (ability.abilityFunction === 'leach') {
       this.leachAbility(ability);
-    }
-
-    // All Bots offense -x
-    if (ability.abilityFunction === 'leachAll') {
-      this.leachAllAbility(ability);
     }
 
     // Bot offense -x
@@ -506,30 +510,86 @@ export class BattleComponent implements OnInit {
 
   async offenseAbility(ability: AbilityCard) {
     // Target enemy player
-  }
-
-  async offenseAllAbility(ability: AbilityCard) {
-    // Target enemy player
+    if (ability.targetAll) {
+      // Automatically apply -x to all enemies
+      this.enemyPlayers = this.enemyPlayers.map((x) => {
+        let newAttack = x.attack - this.currentAbility.abilityValue;
+        if (newAttack < 1) {
+          newAttack = 0;
+        }
+        this.shieldOnEnemies.push(x);
+        return { ...x, attack: newAttack };
+      });
+      this.endAbilityTurn(ability, 800);
+    } else {
+      const ID = this.pushDisplayMessage(
+        `Select An Enemy To Apply -${ability.abilityValue} Offense To`
+      );
+      this.currentAbility = ability;
+    }
   }
 
   async leachAbility(ability: AbilityCard) {
     // Target enemy player
-  }
+    if (ability.targetAll) {
+      const totalEnemyPlayersValid = this.enemyPlayers.filter(
+        (x) => x.health > 0
+      );
+      const totalHealthRegained =
+        totalEnemyPlayersValid.length * ability.abilityValue;
 
-  async leachAllAbility(ability: AbilityCard) {
-    // Target enemy player
+      // Automatically apply -x to all enemies
+      this.enemyPlayers = this.enemyPlayers.map((x) => {
+        // Decrease enemy health by value
+        let newHealth = x.health - ability.abilityValue;
+        this.leachOnEnemies.push(x);
+
+        return { ...x, health: newHealth };
+      });
+
+      // Remove active lines
+      this.activeAbilityLeaderLines.forEach((x) => {
+        x.hide('fade', { duration: 100, timing: 'linear' });
+        setTimeout(() => {
+          x.remove();
+        }, 100);
+      });
+      this.activeAbilityLeaderLines = [];
+
+      let healAbility = { ...ability };
+      healAbility.abilityFunction = 'heal';
+      healAbility.abilityValue = totalHealthRegained;
+
+      await this.timeout(1000);
+      this.healAbility(healAbility);
+    } else {
+      const ID = this.pushDisplayMessage(
+        `Select An Enemy To Steal ${ability.abilityValue} Health From`
+      );
+      this.currentAbility = ability;
+    }
   }
 
   async wildSuitAbility(ability: AbilityCard) {
     // Target card in hand
+    this.currentAbility = ability;
+    const ID = this.pushDisplayMessage(`Select A Card To Give Wild Suit To`);
   }
 
   async wildRangeAbility(ability: AbilityCard) {
     // Target card in hand
+    this.currentAbility = ability;
+    const ID = this.pushDisplayMessage(
+      `Select A Card To Give Wild Suit and Range +${ability.abilityValue} To`
+    );
   }
 
   async wildSuitRangeAbility(ability: AbilityCard) {
     // Target card in hand
+    this.currentAbility = ability;
+    const ID = this.pushDisplayMessage(
+      `Select A Card To Give Wild Range +1 To`
+    );
   }
 
   async damageAbility(ability: AbilityCard) {
@@ -546,11 +606,9 @@ export class BattleComponent implements OnInit {
       }
       this.endAbilityTurn(ability, 800);
     } else {
-      this.canSelectCards = false;
-      const ID = this.pushDisplayMessage('Select An Enemy To Deal Damage To');
-      setTimeout(() => {
-        this.displayMessageListInactive.push(ID);
-      }, 2000);
+      const ID = this.pushDisplayMessage(
+        `Select An Enemy To Deal ${ability.abilityValue} Damage To`
+      );
       this.currentAbility = ability;
     }
   }
@@ -590,10 +648,16 @@ export class BattleComponent implements OnInit {
     });
     this.activeAbilityLeaderLines = [];
 
+    this.displayMessageList.forEach((x) => {
+      this.displayMessageListInactive.push(x.id);
+    });
+
     setTimeout(() => {
       this.healOnPlayer = false;
       this.usedAbilityCard = false;
       this.flamesOnEnemies = [];
+      this.shieldOnEnemies = [];
+      this.leachOnEnemies = [];
       this.enemyTarget = 0;
       this.currentAbility = defaultAbilityCard;
       this.startedAbilityTurn = false;
@@ -623,9 +687,131 @@ export class BattleComponent implements OnInit {
     }, 4000);
   }
 
+  async onSelectTargetAbilityOffense() {
+    const ability = this.currentAbility;
+    this.startedAbilityTurn = true;
+
+    this.enemyPlayers = this.enemyPlayers.map((x) => {
+      if (x.id === this.enemyTarget) {
+        let newAttack = x.attack - this.currentAbility.abilityValue;
+        if (newAttack < 1) {
+          newAttack = 0;
+        }
+        this.shieldOnEnemies.push(x);
+        return { ...x, attack: newAttack };
+      }
+
+      return x;
+    });
+
+    this.endAbilityTurn(ability, 800);
+    setTimeout(() => {
+      this.abilityEnemyTarget = 0;
+    }, 4000);
+  }
+
+  async onSelectTargetAbilityLeach() {
+    const ability = this.currentAbility;
+    this.startedAbilityTurn = true;
+
+    this.enemyPlayers = this.enemyPlayers.map((x) => {
+      if (x.id === this.enemyTarget) {
+        // Decrease enemy health by value
+        let newHealth = x.health - ability.abilityValue;
+        this.leachOnEnemies.push(x);
+
+        return { ...x, health: newHealth };
+      }
+      return x;
+    });
+
+    const totalEnemyPlayersValid = this.enemyPlayers.filter(
+      (x) => x.id === this.enemyTarget
+    );
+    const totalHealthRegained =
+      totalEnemyPlayersValid.length * ability.abilityValue;
+    let healAbility = ability;
+    healAbility.abilityFunction = 'heal';
+    healAbility.abilityValue = totalHealthRegained;
+
+    // Remove active lines
+    this.activeAbilityLeaderLines.forEach((x) => {
+      x.hide('fade', { duration: 100, timing: 'linear' });
+      setTimeout(() => {
+        x.remove();
+      }, 100);
+    });
+    this.activeAbilityLeaderLines = [];
+
+    await this.timeout(1000);
+    this.healAbility(healAbility);
+
+    setTimeout(() => {
+      this.abilityEnemyTarget = 0;
+    }, 4000);
+  }
+
+  async onSelectTargetAbilityWildSuit(card: CardDto) {
+    // Give wild suit to target card
+    const newCard: CardDto = {
+      ...card,
+      wild: true,
+      wildSuit: true,
+      wildSuits: [1, 1, 1, 1],
+    };
+    this.playerHand = this.playerHand.map((x) => {
+      if (x.id === card.id) {
+        return newCard;
+      }
+
+      return x;
+    });
+
+    this.endAbilityTurn(this.currentAbility, 100);
+  }
+
+  async onSelectTargetAbilityWildRange(card: CardDto) {
+    // Give wild range
+    const newCard: CardDto = {
+      ...card,
+      wild: true,
+      wildRange: this.currentAbility.abilityValue,
+    };
+    this.playerHand = this.playerHand.map((x) => {
+      if (x.id === card.id) {
+        return newCard;
+      }
+
+      return x;
+    });
+
+    this.endAbilityTurn(this.currentAbility, 100);
+  }
+
+  async onSelectTargetAbilityWildSuitRange(card: CardDto) {
+    // Give wild range and suit
+    const newCard: CardDto = {
+      ...card,
+      wild: true,
+      wildRange: this.currentAbility.abilityValue,
+      wildSuit: true,
+      wildSuits: [1, 1, 1, 1],
+    };
+    this.playerHand = this.playerHand.map((x) => {
+      if (x.id === card.id) {
+        return newCard;
+      }
+
+      return x;
+    });
+
+    this.endAbilityTurn(this.currentAbility, 100);
+  }
+
   hoverAbilityEnter(ability: AbilityCard) {
     // If currently running, return
     if (this.currentlyRunning || this.usedAbilityCard) {
+      console.log('hit');
       return;
     }
 
@@ -634,7 +820,7 @@ export class BattleComponent implements OnInit {
       this.playerHand
     );
 
-    if (canUse.length < 1) {
+    if (canUse.length < 1 && ability.cost.length !== 0) {
       return;
     }
 
@@ -655,6 +841,23 @@ export class BattleComponent implements OnInit {
       return true;
     }
 
+    return false;
+  }
+
+  showShieldAnimation(player: PlayerDto) {
+    const foundPlayer = this.shieldOnEnemies.find((x) => x.id === player.id);
+    if (foundPlayer) {
+      return true;
+    }
+
+    return false;
+  }
+
+  showLeachAnimation(player: PlayerDto) {
+    const foundPlayer = this.leachOnEnemies.find((x) => x.id === player.id);
+    if (foundPlayer) {
+      return true;
+    }
     return false;
   }
 
@@ -1119,7 +1322,6 @@ export class BattleComponent implements OnInit {
   }
 
   hoverAbilityPlayerOut(card: PlayerDto) {
-    console.log(this.startedAbilityTurn);
     if (!this.startedAbilityTurn) {
       this.abilityEnemyTarget = 0;
     }
@@ -1133,6 +1335,14 @@ export class BattleComponent implements OnInit {
 
       if (this.currentAbility.abilityFunction === 'damage') {
         this.onSelectTargetAbilityFire();
+      }
+
+      if (this.currentAbility.abilityFunction === 'offense') {
+        this.onSelectTargetAbilityOffense();
+      }
+
+      if (this.currentAbility.abilityFunction === 'leach') {
+        this.onSelectTargetAbilityLeach();
       }
 
       return;
@@ -1158,6 +1368,7 @@ export class BattleComponent implements OnInit {
         image: '',
         name: '',
         baseHealth: 1,
+        baseAttack: 1,
         level: 1,
       }
     );
@@ -1173,6 +1384,8 @@ export class BattleComponent implements OnInit {
         image: '',
         name: '',
         baseHealth: 1,
+        baseAttack: 1,
+        level: 1,
       }
     );
   }
@@ -1189,6 +1402,7 @@ export class BattleComponent implements OnInit {
         image: '',
         name: '',
         baseHealth: 1,
+        baseAttack: 1,
         level: 1,
       }
     );
@@ -1276,6 +1490,21 @@ export class BattleComponent implements OnInit {
   trackById = (index: number, item: CardDto) => item.id;
 
   selectCard(card: CardDto) {
+    if (this.currentAbility.abilityFunction === 'wildSuit') {
+      this.onSelectTargetAbilityWildSuit(card);
+      return;
+    }
+
+    if (this.currentAbility.abilityFunction === 'wildRange') {
+      this.onSelectTargetAbilityWildRange(card);
+      return;
+    }
+
+    if (this.currentAbility.abilityFunction === 'wildSuitRange') {
+      this.onSelectTargetAbilityWildSuitRange(card);
+      return;
+    }
+
     if (this.canSelectCards) {
       const includesCard = this.selectedCards.find(
         (x: CardDto) => x.id === card.id
@@ -1425,39 +1654,58 @@ export class BattleComponent implements OnInit {
     return validAttackHand && this.canSelectCards;
   }
 
-  attack() {
-    const hand: DetermineObject = this.cardService.determineHand(
-      this.selectedCards
-    );
+  async attack() {
+    if (this.selectedCards.length === 0 && this.playerHand.length === 0) {
+      this.newTurn();
+      await this.addCardsToBothHands();
 
-    if (!hand.valid) {
-      this.canSelectCards = true;
-      this.pushError('Invalid Attack Hand!');
-      return;
-    }
+      // Player turn ends
 
-    this.playerHand = this.playerHand.filter((x) => {
-      const includes = this.selectedCards.find((a) => a.id === x.id);
-      if (includes) {
-        return false;
+      // Bot auto discard
+      this.botDiscardPhase();
+
+      if (this.playerHand.length < 6) {
+        this.startBotTurnsLoop();
+        this.pushError('Enemy Turn');
+        this.usedSpecialCardThisTurn = false;
+      } else {
+        // If player needs to discard
+        this.enemyNextTurn = true;
+        this.playerDiscardPhase();
       }
-      return true;
-    });
+    } else {
+      const hand: DetermineObject = this.cardService.determineHand(
+        this.selectedCards
+      );
 
-    this.canSelectCards = false;
-    this.attackStarted = true;
-    this.activeLeaderLines.forEach((x) => {
-      x.hide('fade', { duration: 100, timing: 'linear' });
-      setTimeout(() => {
-        x.remove();
-      }, 100);
-    });
-    // Valid attack hand, commence battle
-    this.playerAttackHand = hand;
-    this.initiateBotDefense(hand);
+      if (!hand.valid) {
+        this.canSelectCards = true;
+        this.pushError('Invalid Attack Hand!');
+        return;
+      }
+
+      this.playerHand = this.playerHand.filter((x) => {
+        const includes = this.selectedCards.find((a) => a.id === x.id);
+        if (includes) {
+          return false;
+        }
+        return true;
+      });
+
+      this.attackStarted = true;
+      this.activeLeaderLines.forEach((x) => {
+        x.hide('fade', { duration: 100, timing: 'linear' });
+        setTimeout(() => {
+          x.remove();
+        }, 100);
+      });
+      // Valid attack hand, commence battle
+      this.playerAttackHand = hand;
+      this.initiateBotDefense(hand);
+    }
   }
 
-  initiateBotDefense(playerHand: DetermineObject) {
+  async initiateBotDefense(playerHand: DetermineObject) {
     const addLengthEnemy =
       this.enemyPlayers.find((x) => x.id === this.currentEnemyTurn.id)
         ?.attack ?? 0;
@@ -1466,34 +1714,59 @@ export class BattleComponent implements OnInit {
       const foundEnemy = this.enemyPlayers.find(
         (x) => x.id === this.enemyTarget
       );
-      this.addBotCardsToHand(foundEnemy?.attack ?? 0);
+      await this.addBotCardsToHand(foundEnemy?.attack ?? 0);
     } else {
-      this.addBotCardsToHand(addLengthEnemy);
+      await this.addBotCardsToHand(addLengthEnemy);
     }
 
+    console.log(this.skippingCombat);
     setTimeout(() => {
-      const botHand: DetermineObject = this.cardService.generateBotDefenseHand(
-        this.enemyHand,
-        this.selectedCards.length
-      );
+      console.log(this.skippingCombat);
+      if (this.enemyHand.length > 0) {
+        const botHand: DetermineObject =
+          this.cardService.generateBotDefenseHand(
+            this.enemyHand,
+            this.selectedCards.length
+          );
 
-      this.enemyHand = this.enemyHand.filter((x) => {
-        const includes = botHand.cards.find((a) => a.id === x.id);
-        if (includes) {
-          return false;
-        }
-        return true;
-      });
+        this.enemyHand = this.enemyHand.filter((x) => {
+          const includes = botHand.cards.find((a) => a.id === x.id);
+          if (includes) {
+            return false;
+          }
+          return true;
+        });
+        console.log(this.skippingCombat);
+        setTimeout(() => {
+          this.enemyAttackHand = botHand;
+          this.enemyDefense = botHand.cards;
 
-      setTimeout(() => {
-        this.enemyAttackHand = botHand;
-        this.enemyDefense = botHand.cards;
+          // Play animations for attacking cards
+          // Determine winner
+          const result = this.cardService.determineWinner(playerHand, botHand);
+          this.setWinner(result, true);
+        }, 500);
+      } else {
+        setTimeout(() => {
+          this.enemyAttackHand = {
+            cards: [],
+            highCard: 0,
+            valid: false,
+            power: 0,
+            name: '',
+            ranking: 0,
+          };
+          this.enemyDefense = [];
 
-        // Play animations for attacking cards
-        // Determine winner
-        const result = this.cardService.determineWinner(playerHand, botHand);
-        this.setWinner(result, true);
-      }, 500);
+          // Play animations for attacking cards
+          // Determine winner
+          const result = this.cardService.determineWinner(
+            playerHand,
+            this.enemyAttackHand
+          );
+          this.setWinner(result, true);
+        }, 500);
+      }
     }, 1500);
   }
 
@@ -1579,7 +1852,9 @@ export class BattleComponent implements OnInit {
   }
 
   async setWinner(result: DetermineWinnerObject, playerTurn: boolean) {
+    console.log(this.skippingCombat);
     setTimeout(() => {
+      console.log(this.skippingCombat);
       if (playerTurn) {
         this.combatFinishPlayer(result);
       } else {
@@ -1590,7 +1865,7 @@ export class BattleComponent implements OnInit {
 
   async combatFinishPlayer(result: DetermineWinnerObject) {
     // Player finishes combat
-
+    console.log(this.skippingCombat);
     // If player won combat, attack selected opponent
     if (result.player1Winner) {
       this.playerWinner = true;
@@ -1608,7 +1883,7 @@ export class BattleComponent implements OnInit {
         }
       }
     }
-
+    console.log(this.skippingCombat);
     // Fail
     if (result.player2Winner) {
       this.enemyWinner = true;
@@ -1651,10 +1926,11 @@ export class BattleComponent implements OnInit {
     }
 
     this.attackEnding = true;
+    console.log(this.skippingCombat);
     await this.timeout(1000);
     this.attackStarted = false;
     this.newTurn();
-    this.addCardsToBothHands();
+    await this.addCardsToBothHands();
 
     // Player turn ends
 
@@ -1976,6 +2252,7 @@ export class BattleComponent implements OnInit {
       highCard: 0,
       cards: [],
     };
+    console.log(this.enemyHand);
     if (this.enemyHand.length > 1) {
       botHand = this.cardService.generateBotOffenseHand(this.enemyHand);
     } else {
@@ -2011,9 +2288,11 @@ export class BattleComponent implements OnInit {
   }
 
   chooseDefensePlayerCards() {
+    // If selectedcards length is equal to player hand length, ignore errors
     if (
       this.selectedCards.length !== this.enemyAttackHand.cards.length &&
-      !this.canDefendWithMultipleCards
+      !this.canDefendWithMultipleCards &&
+      this.selectedCards.length !== this.playerHand.length
     ) {
       this.canSelectCards = true;
       this.pushError(
@@ -2024,7 +2303,8 @@ export class BattleComponent implements OnInit {
 
     if (
       this.canDefendWithMultipleCards &&
-      this.selectedCards.length < this.enemyAttackHand.cards.length
+      this.selectedCards.length < this.enemyAttackHand.cards.length &&
+      this.selectedCards.length !== this.playerHand.length
     ) {
       this.canSelectCards = true;
       this.pushError(
@@ -2069,6 +2349,7 @@ export class BattleComponent implements OnInit {
       image: '',
       name: '',
       baseHealth: 1,
+      baseAttack: 1,
       level: 1,
     };
     this.playerTarget = 0;
@@ -2089,6 +2370,7 @@ export class BattleComponent implements OnInit {
     this.enemyDefense = [];
     this.activeLeaderLines = [];
     this.activeAbilityLeaderLines = [];
+    this.skippingCombat = false;
     this.discardSelectedCards = [];
     this.currentExtraDmg = 0;
     this.playerAttackHand = { cards: [], highCard: 0, valid: false };

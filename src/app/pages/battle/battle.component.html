@@ -14,7 +14,11 @@
     ></div>
   </div>
   <!-- Attack Phase -->
-  <div class="redrawPanel attackPanel" *ngIf="attackStarted">
+  <div
+    class="redrawPanel attackPanel"
+    *ngIf="attackStarted"
+    (click)="skipCombat()"
+  >
     <div class="relativeRedrawPanel">
       <div
         class="panelBackground"
@@ -388,7 +392,11 @@
   </div>
 
   <!-- Attack Phase Bot turn -->
-  <div class="redrawPanel attackPanel" *ngIf="enemyAttackStarted">
+  <div
+    class="redrawPanel attackPanel"
+    *ngIf="enemyAttackStarted"
+    (click)="skipCombat()"
+  >
     <div class="relativeRedrawPanel">
       <div
         class="panelBackground"
@@ -1101,6 +1109,12 @@
   <div class="top">
     <div
       class="topLeft"
+      [ngClass]="{
+        darkenCard:
+          currentAbility.abilityFunction === 'wildSuit' ||
+          currentAbility.abilityFunction === 'wildRange' ||
+          currentAbility.abilityFunction === 'wildSuitRange'
+      }"
       *ngIf="redrawHide"
       [@fadeDownEnter]="{ value: '', params: { delay: 300 } }"
     >
@@ -1167,6 +1181,12 @@
     </div>
     <div
       class="topRight"
+      [ngClass]="{
+        darkenCard:
+          currentAbility.abilityFunction === 'wildSuit' ||
+          currentAbility.abilityFunction === 'wildRange' ||
+          currentAbility.abilityFunction === 'wildSuitRange'
+      }"
       *ngIf="redrawHide"
       [@fadeDownEnter]="{ value: '', params: { delay: 300 } }"
     >
@@ -1311,10 +1331,20 @@
                   }"
                   [ngClass]="{
                     redHealthText: player.health < player.baseHealth,
-                    greenHealthText: healOnPlayer
+                    greenHealthText:
+                      healOnPlayer ||
+                      (currentAbility.abilityFunction === 'leach' &&
+                        currentAbility.targetAll === false &&
+                        abilityEnemyTarget !== 0)
                   }"
                 >
-                  {{ player.health }}
+                  {{
+                    currentAbility.abilityFunction === "leach" &&
+                    currentAbility.targetAll === false &&
+                    abilityEnemyTarget !== 0
+                      ? player.health + currentAbility.abilityValue
+                      : player.health
+                  }}
                 </div>
               </div>
             </div>
@@ -1355,7 +1385,11 @@
             [@fadeUpLeave]
             [ngClass]="{
               leavingFieldCard: item.health < 1,
-              turnIsOverCard: isFinishedWithTurn(item)
+              turnIsOverCard: isFinishedWithTurn(item),
+              darkenCard:
+                currentAbility.abilityFunction === 'wildSuit' ||
+                currentAbility.abilityFunction === 'wildRange' ||
+                currentAbility.abilityFunction === 'wildSuitRange'
             }"
             (click)="setEnemyPlayerHoverTarget(item)"
             (mouseenter)="hoverAbilityPlayerIn(item)"
@@ -1367,7 +1401,9 @@
                 errorEnemyBorder: enemyTarget === item.id && !wrappingTurn,
                 enemyTargetActive: currentEnemyTurn.id === item.id,
                 enemyAbilityTarget:
-                  currentAbility.abilityFunction === 'damage' &&
+                  (currentAbility.abilityFunction === 'damage' ||
+                    currentAbility.abilityFunction === 'offense' ||
+                    currentAbility.abilityFunction === 'leach') &&
                   currentAbility.targetAll === false &&
                   abilityEnemyTarget === item.id
               }"
@@ -1383,10 +1419,22 @@
                 }"
                 [@fadeOutLeave]
               />
+              <img
+                [src]="'./assets/' + gameThemePath + '/offenseShield.png'"
+                class="cardIcon confetti claws protecting"
+                *ngIf="showShieldAnimation(item)"
+              />
+              <img
+                [src]="'./assets/' + gameThemePath + '/playerHealth.png'"
+                class="cardIcon confetti claws leaching"
+                *ngIf="showLeachAnimation(item)"
+              />
               <div
                 class="cardIconValue centerHoverText"
                 *ngIf="
-                  currentAbility.abilityFunction === 'damage' &&
+                  (currentAbility.abilityFunction === 'damage' ||
+                    currentAbility.abilityFunction === 'offense' ||
+                    currentAbility.abilityFunction === 'leach') &&
                   currentAbility.targetAll === false &&
                   abilityEnemyTarget === item.id &&
                   !startedAbilityTurn &&
@@ -1394,6 +1442,9 @@
                 "
                 [ngStyle]="{
                   'font-family': gameThemePath + '-HeaderFont'
+                }"
+                [ngClass]="{
+                  blueOffenseText: currentAbility.abilityFunction === 'offense',
                 }"
                 [@fadeEnter]="{
                   value: '',
@@ -1420,8 +1471,27 @@
                     [ngStyle]="{
                       'font-family': gameThemePath + '-HeaderFont'
                     }"
+                    [ngClass]="{
+                      blueOffenseText:
+                        item.attack < item.baseAttack ||
+                        (currentAbility.abilityFunction === 'offense' &&
+                          currentAbility.targetAll === false &&
+                          abilityEnemyTarget === item.id &&
+                          !startedAbilityTurn &&
+                          !canSelectCards)
+                    }"
                   >
-                    {{ item.attack }}
+                    {{
+                      currentAbility.abilityFunction === "offense" &&
+                      currentAbility.targetAll === false &&
+                      abilityEnemyTarget === item.id &&
+                      !startedAbilityTurn &&
+                      !canSelectCards
+                        ? item.attack - currentAbility.abilityValue < 0
+                          ? "0"
+                          : item.attack - currentAbility.abilityValue
+                        : item.attack
+                    }}
                   </div>
                 </div>
               </div>
@@ -1442,7 +1512,8 @@
                         (enemyTarget === item.id &&
                           selectedCards.length > 0 &&
                           !attackEnding) ||
-                        (currentAbility.abilityFunction === 'damage' &&
+                        ((currentAbility.abilityFunction === 'damage' ||
+                          currentAbility.abilityFunction === 'leach') &&
                           currentAbility.targetAll === false &&
                           abilityEnemyTarget === item.id &&
                           !startedAbilityTurn &&
@@ -1455,7 +1526,8 @@
                         !attackEnding) ||
                       (canSelectCards && enemyTarget === item.id)
                         ? item.health - selectedCards.length - currentExtraDmg
-                        : currentAbility.abilityFunction === "damage" &&
+                        : (currentAbility.abilityFunction === "damage" ||
+                            currentAbility.abilityFunction === "leach") &&
                           currentAbility.targetAll === false &&
                           abilityEnemyTarget === item.id &&
                           !startedAbilityTurn &&
@@ -1496,6 +1568,12 @@
   <div class="bottom">
     <div
       class="bottomLeft"
+      [ngClass]="{
+        darkenCard:
+          currentAbility.abilityFunction === 'wildSuit' ||
+          currentAbility.abilityFunction === 'wildRange' ||
+          currentAbility.abilityFunction === 'wildSuitRange'
+      }"
       *ngIf="redrawHide"
       [@fadeUpEnter]="{ value: '', params: { delay: 300 } }"
     >
@@ -1571,7 +1649,11 @@
           !showBotCards && enemyAttackStarted && canSelectCards,
         disabledCards:
           !canSelectCards ||
-          (showBotCards && !enemyAttackStarted && !canSelectCards)
+          (showBotCards && !enemyAttackStarted && !canSelectCards),
+        enabledCards:
+          currentAbility.abilityFunction === 'wildSuit' ||
+          currentAbility.abilityFunction === 'wildRange' ||
+          currentAbility.abilityFunction === 'wildSuitRange'
       }"
       #myActiveCardsDefending
       [@fadeOutLeave]="{
@@ -1585,7 +1667,12 @@
         #activeAbilityCards
         [ngClass]="{
           abilityIsActive: abilityCardIsSelected(card),
-          abilityIsActiveTarget: currentAbility.id === card.id
+          abilityIsActiveTarget: currentAbility.id === card.id,
+          darkenCard:
+            (currentAbility.abilityFunction === 'wildSuit' ||
+              currentAbility.abilityFunction === 'wildRange' ||
+              currentAbility.abilityFunction === 'wildSuitRange') &&
+            currentAbility.id !== card.id
         }"
         (click)="selectAbilityCard(card)"
         (mouseenter)="hoverAbilityEnter(card)"
@@ -1638,7 +1725,11 @@
         *ngFor="let card of playerHand; index as i; trackBy: trackById"
         [ngClass]="{
           activeCard: cardIsSelected(card),
-          abilityActiveCard: cardIsValidForAbilityCard(card)
+          abilityActiveCard: cardIsValidForAbilityCard(card),
+          chooseCardAbilityActiveCard:
+                currentAbility.abilityFunction === 'wildSuit' ||
+                currentAbility.abilityFunction === 'wildRange' ||
+                currentAbility.abilityFunction === 'wildSuitRange',
         }"
         #myActiveCards
         (click)="selectCard(card)"
@@ -1651,6 +1742,10 @@
         <div
           class="cardBorder"
           [ngClass]="{
+            chooseCardAbilityBorder:
+              currentAbility.abilityFunction === 'wildSuit' ||
+              currentAbility.abilityFunction === 'wildRange' ||
+              currentAbility.abilityFunction === 'wildSuitRange',
             abilityActiveCardBorder: cardIsValidForAbilityCard(card),
             activeCardBorder: cardIsSelected(card),
             validCardBorder: cardIsValid(card),
@@ -1734,6 +1829,12 @@
     </div>
     <div
       class="bottomRight"
+      [ngClass]="{
+        darkenCard:
+          currentAbility.abilityFunction === 'wildSuit' ||
+          currentAbility.abilityFunction === 'wildRange' ||
+          currentAbility.abilityFunction === 'wildSuitRange'
+      }"
       *ngIf="redrawHide"
       [@fadeUpEnter]="{ value: '', params: { delay: 300 } }"
     >
@@ -1741,7 +1842,9 @@
         class="attackButtonBox"
         *ngIf="redrawHide"
         [ngClass]="{
-          disabledButton: !canSelectCards || selectedCards.length < 1
+          disabledButton:
+            (!canSelectCards || selectedCards.length < 1) &&
+            (playerHand.length !== 0 || selectedCards.length !== 0)
         }"
         [@fadeEnter]="{
           value: '',

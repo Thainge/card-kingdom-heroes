@@ -278,6 +278,14 @@
   transform: perspective(900px) translateY(0) rotateX(25deg) translateZ(0);
 }
 
+.chooseCardAbilityActiveCard {
+  bottom: -15% !important;
+}
+
+.chooseCardAbilityActiveCard:hover {
+  bottom: -8% !important;
+}
+
 .cardBorder {
   padding: 3%;
   margin: 1%;
@@ -311,6 +319,11 @@
 .abilityActiveCardBorder {
   background-color: rgba(44, 219, 38, 1);
   box-shadow: 0 0 10px 1px rgba(44, 219, 38, 0.5);
+}
+
+.chooseCardAbilityBorder {
+  background-color: rgba(234, 255, 47, 1);
+  box-shadow: 0 0 3px 3px rgba(234, 255, 47, 0.5);
 }
 
 .floatingText {
@@ -912,18 +925,47 @@
   animation: zoomOutHeal !important;
   animation-duration: 1s !important;
   animation-fill-mode: forwards !important;
+  z-index: 99;
 }
 
 @keyframes zoomOutHeal {
   0% {
+    scale: 0;
     opacity: 0;
-    scale: 1;
   }
-  70% {
+  50% {
     opacity: 1;
-    scale: 2;
   }
   100% {
+    scale: 1;
+    opacity: 0;
+  }
+}
+
+.leaching {
+  animation: zoomOutLeach !important;
+  animation-duration: 2s !important;
+  animation-fill-mode: forwards !important;
+  z-index: 99;
+}
+
+.protecting {
+  animation: zoomOutLeach !important;
+  animation-duration: 1s !important;
+  animation-fill-mode: forwards !important;
+  z-index: 99;
+}
+
+@keyframes zoomOutLeach {
+  0% {
+    scale: 1;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    scale: 0;
     opacity: 0;
   }
 }
@@ -1283,13 +1325,16 @@
 .disabledCards {
   user-select: none;
   pointer-events: none;
-  cursor: default;
   filter: brightness(0.7);
+}
+
+.enabledCards {
+  pointer-events: all;
+  filter: brightness(1);
 }
 
 .veryBottomMiddle {
   transition: all 0.3s;
-  transition: width 1s linear;
 }
 
 // ::ng-deep .leader-line,
@@ -1299,7 +1344,16 @@
 
 .turnIsOverCard {
   transition: all 1s;
+  user-select: none;
+  pointer-events: none;
   rotate: 10deg;
+  filter: brightness(0.7);
+}
+
+.darkenCard {
+  transition: all 1s;
+  user-select: none;
+  pointer-events: none;
   filter: brightness(0.7);
 }
 
@@ -1523,6 +1577,21 @@
 
 .abilitySuit {
   width: 15%;
+}
+
+.blueOffenseText {
+  background: -webkit-linear-gradient(#0066ff, #ffffff);
+  -webkit-text-stroke: 2px #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  // font-family: HeaderFont;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
 }
 
 @media screen and (max-width: 800px) {
