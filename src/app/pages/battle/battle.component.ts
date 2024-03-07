@@ -60,6 +60,12 @@ const defaultAbilityCard: AbilityCard = {
   hitAnimation: 'heal',
 };
 
+type ClickObject = {
+  id: number;
+  x: number;
+  y: number;
+};
+
 @Component({
   selector: 'app-battle',
   templateUrl: './battle.component.html',
@@ -224,7 +230,7 @@ export class BattleComponent implements OnInit {
   topAbilityCardBot: AbilityCard = defaultAbilityCard;
   currentAbilityBot: AbilityCard = defaultAbilityCard;
 
-  skippingCombat: boolean = false;
+  clickAnimationsList: ClickObject[] = [];
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -268,7 +274,7 @@ export class BattleComponent implements OnInit {
           id: 1,
           image: './assets/' + this.gameThemePath + '/' + 'link.png',
           name: 'Link',
-          attack: 0,
+          attack: 3,
           health: 4,
           baseHealth: 7,
           baseAttack: 6,
@@ -278,7 +284,7 @@ export class BattleComponent implements OnInit {
           id: 2,
           image: './assets/' + this.gameThemePath + '/' + 'link.png',
           name: 'Link',
-          attack: 1,
+          attack: 2,
           health: 2,
           baseHealth: 7,
           baseAttack: 1,
@@ -288,7 +294,7 @@ export class BattleComponent implements OnInit {
           id: 3,
           image: './assets/' + this.gameThemePath + '/' + 'link.png',
           name: 'Link',
-          attack: 0,
+          attack: 1,
           health: 3,
           baseHealth: 7,
           baseAttack: 0,
@@ -301,6 +307,16 @@ export class BattleComponent implements OnInit {
         this.gameInit();
       }
     });
+  }
+
+  async clickAnimation(e: any) {
+    const ID = this.clickAnimationsList.length + 1;
+    const clickObject: ClickObject = {
+      id: ID,
+      x: e.clientX,
+      y: e.clientY,
+    };
+    this.clickAnimationsList.push(clickObject);
   }
 
   drawAbilityCard(amount: number) {
@@ -387,14 +403,14 @@ export class BattleComponent implements OnInit {
       }
     }, 400);
 
-    // this.redrawing = false;
-    // this.redrawHide = true;
-    // this.playerHand = [...this.redrawCards];
-    // this.abilityDeck = this.userService.getAbilityCards(this.gameThemePath);
-    // this.drawAbilityCard(2);
-    // this.drawAbilityCardBot(2);
-    // this.newTurn();
-    // this.startBotTurnsLoop();
+    this.redrawing = false;
+    this.redrawHide = true;
+    this.playerHand = [...this.redrawCards];
+    this.abilityDeck = this.userService.getAbilityCards(this.gameThemePath);
+    this.drawAbilityCard(2);
+    this.drawAbilityCardBot(2);
+    this.newTurn();
+    this.startBotTurnsLoop();
     // this.playerDiscardPhase();
   }
 
@@ -409,24 +425,26 @@ export class BattleComponent implements OnInit {
       this.usedAbilityCard = true;
 
       // Remove cards from hand
-      this.hoveringAbilityHand.forEach((x) => {
+      canUse.forEach((x) => {
         this.playerHand = this.playerHand.filter((a) => a.id !== x.id);
       });
 
       // Hide lines
-      for await (const x of this.activeAbilityLeaderLines) {
-        x.hide('fade', { duration: 100, timing: 'linear' });
-        await this.timeout(100);
-        x.remove();
-      }
+      try {
+        for await (const x of this.activeAbilityLeaderLines) {
+          await x.hide('fade', { duration: 100, timing: 'linear' });
+          await this.timeout(100);
+        }
+      } catch (err) {}
       this.activeAbilityLeaderLines = [];
 
       // Use ability card
-      for await (const x of this.activeLeaderLines) {
-        x.hide('fade', { duration: 100, timing: 'linear' });
-        await this.timeout(100);
-        x.remove();
-      }
+      try {
+        for await (const x of this.activeLeaderLines) {
+          await x.hide('fade', { duration: 100, timing: 'linear' });
+          await this.timeout(100);
+        }
+      } catch (err) {}
       this.activeLeaderLines = [];
 
       this.selectedCards = [];
@@ -575,11 +593,12 @@ export class BattleComponent implements OnInit {
       });
 
       // Remove active lines
-      for await (const x of this.activeAbilityLeaderLines) {
-        x.hide('fade', { duration: 100, timing: 'linear' });
-        await this.timeout(100);
-        x.remove();
-      }
+      try {
+        for await (const x of this.activeAbilityLeaderLines) {
+          await x.hide('fade', { duration: 100, timing: 'linear' });
+          await this.timeout(100);
+        }
+      } catch (err) {}
       this.activeAbilityLeaderLines = [];
 
       let healAbility = { ...ability };
@@ -666,11 +685,12 @@ export class BattleComponent implements OnInit {
     );
 
     // Remove active lines
-    for await (const x of this.activeAbilityLeaderLines) {
-      x.hide('fade', { duration: 100, timing: 'linear' });
-      await this.timeout(100);
-      x.remove();
-    }
+    try {
+      for await (const x of this.activeAbilityLeaderLines) {
+        await x.hide('fade', { duration: 100, timing: 'linear' });
+        await this.timeout(100);
+      }
+    } catch (err) {}
     this.activeAbilityLeaderLines = [];
 
     this.displayMessageList.forEach((x) => {
@@ -760,11 +780,12 @@ export class BattleComponent implements OnInit {
     healAbility.abilityValue = totalHealthRegained;
 
     // Remove active lines
-    for await (const x of this.activeAbilityLeaderLines) {
-      x.hide('fade', { duration: 100, timing: 'linear' });
-      await this.timeout(100);
-      x.remove();
-    }
+    try {
+      for await (const x of this.activeAbilityLeaderLines) {
+        await x.hide('fade', { duration: 100, timing: 'linear' });
+        await this.timeout(100);
+      }
+    } catch (err) {}
     this.activeAbilityLeaderLines = [];
 
     await this.timeout(1000);
@@ -835,7 +856,6 @@ export class BattleComponent implements OnInit {
   hoverAbilityEnter(ability: AbilityCard) {
     // If currently running, return
     if (this.currentlyRunning || this.usedAbilityCard) {
-      console.log('hit');
       return;
     }
 
@@ -924,11 +944,12 @@ export class BattleComponent implements OnInit {
       hitAnimation: 'heal',
     };
     this.currentlyRunning = false;
-    for await (const x of this.activeAbilityLeaderLines) {
-      x.hide('fade', { duration: 100, timing: 'linear' });
-      await this.timeout(100);
-      x.remove();
-    }
+    try {
+      for await (const x of this.activeAbilityLeaderLines) {
+        await x.hide('fade', { duration: 100, timing: 'linear' });
+        await this.timeout(100);
+      }
+    } catch (err) {}
     this.activeAbilityLeaderLines = [];
   }
 
@@ -999,9 +1020,12 @@ export class BattleComponent implements OnInit {
         }
       }
       if (foundTarget && foundEnemyTarget) {
-        for await (const x of this.activeAbilityLeaderLines) {
-          x.hide('fade', { duration: 100, timing: 'linear' });
-        }
+        try {
+          for await (const x of this.activeAbilityLeaderLines) {
+            await x.hide('fade', { duration: 100, timing: 'linear' });
+            await this.timeout(100);
+          }
+        } catch (err) {}
         const myNewActiveLines: any[] = [];
         const myLineOptions: any = {
           dash: { animation: true },
@@ -1048,9 +1072,12 @@ export class BattleComponent implements OnInit {
       if (this.currentlyRunning && foundTarget) {
         const myNewActiveLines: any[] = [];
         if (this.myActiveCards) {
-          for await (const x of this.activeAbilityLeaderLines) {
-            x.hide('fade', { duration: 100, timing: 'linear' });
-          }
+          try {
+            for await (const x of this.activeAbilityLeaderLines) {
+              await x.hide('fade', { duration: 100, timing: 'linear' });
+              await this.timeout(100);
+            }
+          } catch (err) {}
           for await (const x of this.myActiveCards) {
             if (x.nativeElement.className.includes('abilityActiveCard')) {
               const myLineOptions: any = {
@@ -1101,9 +1128,12 @@ export class BattleComponent implements OnInit {
       if (foundTarget) {
         const myNewActiveLines: any[] = [];
         if (this.activeEnemyCards) {
-          for await (const x of this.activeAbilityLeaderLines) {
-            x.hide('fade', { duration: 100, timing: 'linear' });
-          }
+          try {
+            for await (const x of this.activeAbilityLeaderLines) {
+              await x.hide('fade', { duration: 100, timing: 'linear' });
+              await this.timeout(100);
+            }
+          } catch (err) {}
           for await (const x of this.activeEnemyCards) {
             if (x.nativeElement.className.includes('activeEnemyCard')) {
               const myLineOptions: any = {
@@ -1649,9 +1679,12 @@ export class BattleComponent implements OnInit {
       if (foundTarget) {
         const myNewActiveLines: any[] = [];
         if (this.myActiveCards) {
-          for await (const x of this.activeLeaderLines) {
-            x.hide('fade', { duration: 100, timing: 'linear' });
-          }
+          try {
+            for await (const x of this.activeLeaderLines) {
+              await x.hide('fade', { duration: 100, timing: 'linear' });
+              await this.timeout(100);
+            }
+          } catch (err) {}
           for await (const x of this.myActiveCards) {
             if (x.nativeElement.className.includes('activeCard')) {
               const myLineOptions: any = {
@@ -1703,9 +1736,12 @@ export class BattleComponent implements OnInit {
       if (foundTarget) {
         const myNewActiveLines: any[] = [];
         if (this.activeEnemyCards) {
-          for await (const x of this.activeLeaderLines) {
-            x.hide('fade', { duration: 100, timing: 'linear' });
-          }
+          try {
+            for await (const x of this.activeLeaderLines) {
+              await x.hide('fade', { duration: 100, timing: 'linear' });
+              await this.timeout(100);
+            }
+          } catch (err) {}
           for await (const x of this.activeEnemyCards) {
             if (x.nativeElement.className.includes('activeEnemyCard')) {
               const myLineOptions: any = {
@@ -1786,11 +1822,12 @@ export class BattleComponent implements OnInit {
       });
 
       this.attackStarted = true;
-      for await (const x of this.activeLeaderLines) {
-        x.hide('fade', { duration: 100, timing: 'linear' });
-        await this.timeout(100);
-        x.remove();
-      }
+      try {
+        for await (const x of this.activeLeaderLines) {
+          await x.hide('fade', { duration: 100, timing: 'linear' });
+          await this.timeout(100);
+        }
+      } catch (err) {}
       // Valid attack hand, commence battle
       this.playerAttackHand = hand;
       this.initiateBotDefense(hand);
@@ -2194,7 +2231,6 @@ export class BattleComponent implements OnInit {
 
       if (this.playerHand.length < 6) {
         this.completedEnemyTurns = [];
-        this.pushMessage('Player Turn');
         this.addCardsToBothHands();
       } else {
         // If player needs to discard
@@ -2348,9 +2384,12 @@ export class BattleComponent implements OnInit {
         });
 
         // Hide lines
-        for await (const x of this.activeAbilityLeaderLines) {
-          x.hide('fade', { duration: 100, timing: 'linear' });
-        }
+        try {
+          for await (const x of this.activeAbilityLeaderLines) {
+            await x.hide('fade', { duration: 100, timing: 'linear' });
+            await this.timeout(100);
+          }
+        } catch (err) {}
         this.activeAbilityLeaderLines = [];
 
         // // Use ability card
@@ -2452,13 +2491,17 @@ export class BattleComponent implements OnInit {
       this.pushDisplayMessage(`Heal All ${ability.abilityValue} Health`);
       await this.timeout(500);
       this.enemyPlayers = this.enemyPlayers.map((x) => {
-        const incomingHeal = ability.abilityValue;
-        let newHealth = x.health + incomingHeal;
-        if (newHealth > x.baseHealth) {
-          newHealth = x.baseHealth;
+        if (x.health < 1) {
+          return x;
+        } else {
+          const incomingHeal = ability.abilityValue;
+          let newHealth = x.health + incomingHeal;
+          if (newHealth > x.baseHealth) {
+            newHealth = x.baseHealth;
+          }
+          this.healOnEnemies.push(x);
+          return { ...x, health: newHealth };
         }
-        this.healOnEnemies.push(x);
-        return { ...x, health: newHealth };
       });
       await this.timeout(800);
       this.botEndAbilityTurn();
@@ -2517,7 +2560,6 @@ export class BattleComponent implements OnInit {
       this.playerDiscardPhaseExtra();
       return;
     }
-
     if (this.abilityCardsHandBot.length > 0) {
       await this.abilityTurnBot();
     }
@@ -2528,9 +2570,12 @@ export class BattleComponent implements OnInit {
       highCard: 0,
       cards: [],
     };
-    if (this.enemyHand.length > 1) {
+    if (this.enemyHand.length > 0) {
       botHand = this.cardService.generateBotOffenseHand(this.enemyHand);
     } else {
+      this.completedEnemyTurns = [];
+      this.pushMessage('Player Turn');
+      this.addCardsToBothHands();
       this.newTurn();
       return;
     }
@@ -2550,11 +2595,12 @@ export class BattleComponent implements OnInit {
     this.abilityCardsHandBot = [];
     this.enemyAttackStarted = true;
     this.canSelectCards = true;
-    for await (const x of this.activeLeaderLines) {
-      x.hide('fade', { duration: 100, timing: 'linear' });
-      await this.timeout(100);
-      x.remove();
-    }
+    try {
+      for await (const x of this.activeLeaderLines) {
+        await x.hide('fade', { duration: 100, timing: 'linear' });
+        await this.timeout(100);
+      }
+    } catch (err) {}
     // Valid attack hand, commence battle
     this.enemyAttackHand = botHand;
     this.enemyDefense = botHand.cards;

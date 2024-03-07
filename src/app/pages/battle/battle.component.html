@@ -1,4 +1,18 @@
-<div class="container">
+<div class="container" (click)="clickAnimation($event)">
+  <div *ngFor="let item of clickAnimationsList">
+    <div
+      class="clickAnimation"
+      [ngStyle]="{
+        top: 'calc(' + item.y + 'px - 2.5em)',
+        left: 'calc(' + item.x + 'px - 2.5em)'
+      }"
+      [@fadeEnter]="{
+        value: '',
+        params: { duration: 500, delay: 0, translate: '300px' }
+      }"
+      [@fadeOutLeave]
+    ></div>
+  </div>
   <div class="bgContainer">
     <div class="bgFilter"></div>
     <div
@@ -14,10 +28,7 @@
     ></div>
   </div>
   <!-- Attack Phase -->
-  <div
-    class="redrawPanel attackPanel"
-    *ngIf="attackStarted"
-  >
+  <div class="redrawPanel attackPanel" *ngIf="attackStarted">
     <div class="relativeRedrawPanel">
       <div
         class="panelBackground"
@@ -391,10 +402,7 @@
   </div>
 
   <!-- Attack Phase Bot turn -->
-  <div
-    class="redrawPanel attackPanel"
-    *ngIf="enemyAttackStarted"
-  >
+  <div class="redrawPanel attackPanel" *ngIf="enemyAttackStarted">
     <div class="relativeRedrawPanel">
       <div
         class="panelBackground"

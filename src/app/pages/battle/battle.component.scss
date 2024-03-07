@@ -13,6 +13,36 @@
   height: 100%;
 }
 
+.clickAnimation {
+  position: absolute;
+  width: 5em;
+  height: 5em;
+  animation: clickAnimationKey;
+  animation-duration: 1000ms;
+  animation-fill-mode: forwards;
+  border-radius: 10em;
+  background-color: rgba(255, 255, 255, 0);
+  z-index: 999;
+  pointer-events: none;
+}
+
+@keyframes clickAnimationKey {
+  0% {
+    scale: 0;
+    box-shadow: 0 0 0.3em 1em rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
+    background-color: rgba(38, 132, 219, 0);
+  }
+  100% {
+    scale: 1;
+    box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
+    background-color: rgba(38, 132, 219, 0);
+  }
+}
+
 .bgContainerImage {
   background-position: center;
   background-repeat: no-repeat;
@@ -140,6 +170,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
+  -webkit-user-drag: none;
   border-radius: 5%;
   filter: drop-shadow(0 0 2px black);
 }
@@ -196,6 +227,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
+  -webkit-user-drag: none;
 }
 
 .deckTopImage {
@@ -205,6 +237,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
+  -webkit-user-drag: none;
   scale: 0.98;
 }
 
@@ -254,6 +287,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
+  -webkit-user-drag: none;
   -webkit-user-drag: none;
   border-radius: 5%;
 }
@@ -1105,6 +1139,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  -webkit-user-drag: none;
 }
 
 .deathSkullAnimation {
