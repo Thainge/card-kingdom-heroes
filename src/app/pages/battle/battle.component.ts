@@ -1,3 +1,4 @@
+import { AbilityCard } from './../../models/abilityCard';
 import { CommonModule } from '@angular/common';
 import {
   Component,
@@ -44,7 +45,6 @@ import {
 declare let LeaderLine: any;
 import { Cards } from 'src/assets/data/cards';
 import { EnviornmentSettings } from 'src/assets/data/environement';
-import { AbilityCard } from 'src/app/models/abilityCard';
 import { AbilityService } from 'src/app/services/ability.service';
 
 const defaultAbilityCard: AbilityCard = {
@@ -207,9 +207,12 @@ export class BattleComponent implements OnInit {
   startedAbilityTurn: boolean = false;
 
   flamesOnEnemies: PlayerDto[] = [];
+  healOnEnemies: PlayerDto[] = [];
   shieldOnEnemies: PlayerDto[] = [];
   leachOnEnemies: PlayerDto[] = [];
   healOnPlayer: boolean = false;
+  fireOnPlayer: boolean = false;
+  shieldOnPlayer: boolean = false;
   abilityEnemyTarget: number = 0;
 
   usedAbilityCardBot: boolean = false;
@@ -267,7 +270,7 @@ export class BattleComponent implements OnInit {
           name: 'Link',
           attack: 0,
           health: 4,
-          baseHealth: 4,
+          baseHealth: 7,
           baseAttack: 6,
           level: 1,
         },
@@ -277,7 +280,7 @@ export class BattleComponent implements OnInit {
           name: 'Link',
           attack: 1,
           health: 2,
-          baseHealth: 2,
+          baseHealth: 7,
           baseAttack: 1,
           level: 1,
         },
@@ -287,7 +290,7 @@ export class BattleComponent implements OnInit {
           name: 'Link',
           attack: 0,
           health: 3,
-          baseHealth: 3,
+          baseHealth: 7,
           baseAttack: 0,
           level: 1,
         },
@@ -883,6 +886,14 @@ export class BattleComponent implements OnInit {
 
   showLeachAnimation(player: PlayerDto) {
     const foundPlayer = this.leachOnEnemies.find((x) => x.id === player.id);
+    if (foundPlayer) {
+      return true;
+    }
+    return false;
+  }
+
+  showHealAnimationBot(player: PlayerDto): boolean {
+    const foundPlayer = this.healOnEnemies.find((x) => x.id === player.id);
     if (foundPlayer) {
       return true;
     }
@@ -2372,7 +2383,6 @@ export class BattleComponent implements OnInit {
           }, 100);
         });
         this.activeAbilityLeaderLines = [];
-        await this.timeout(1000);
 
         // // Use ability card
         this.selectedCards = [];
@@ -2389,28 +2399,150 @@ export class BattleComponent implements OnInit {
   }
 
   async useAbilityCardBot(ability: AbilityCard) {
-    console.log('using ability card');
-
     // damage
+    if (ability.abilityFunction === 'damage') {
+      await this.botUseDamageAbility(ability);
+    }
 
     // -offense
+    if (ability.abilityFunction === 'offense') {
+      await this.botUseOffenseAbility(ability);
+    }
 
     // discard
+    if (ability.abilityFunction === 'discard') {
+      await this.botUseDiscardAbility(ability);
+    }
 
     // draw card
+    if (ability.abilityFunction === 'draw') {
+      await this.botUseDrawAbility(ability);
+    }
 
     // heal 1
+    if (ability.abilityFunction === 'heal') {
+      await this.botUseHealAbility(ability);
+    }
+  }
 
-    // heal all
+  async botUseDamageAbility(ability: AbilityCard) {
+    // Attack player
+    this.pushDisplayMessage('Fire Attack');
+    await this.timeout(500);
 
-    await this.timeout(2000);
+    this.player.health = this.player.health - ability.abilityValue;
+
+    this.fireOnPlayer = true;
+    await this.timeout(800);
+    this.botEndAbilityTurn();
+  }
+
+  async botUseOffenseAbility(ability: AbilityCard) {
+    // -offense on player
+    this.pushDisplayMessage(`-${ability.abilityValue} Defense`);
+    await this.timeout(500);
+
+    this.player.attack = this.player.attack - ability.abilityValue;
+    if (this.player.attack < 0) {
+      this.player.attack = 0;
+    }
+
+    this.shieldOnPlayer = true;
+    await this.timeout(800);
+    this.botEndAbilityTurn();
+  }
+
+  async botUseDiscardAbility(ability: AbilityCard) {
+    // Discard player card at random
+    this.pushDisplayMessage(`Discard ${ability.abilityValue} Cards`);
+    await this.timeout(500);
+    const shuffledArray = this.cardService.shuffle(this.playerHand);
+    let finishedDiscards = 0;
+    for await (const x of shuffledArray) {
+      if (finishedDiscards !== ability.abilityValue) {
+        finishedDiscards++;
+        this.playerHand = this.playerHand.filter((a) => a.id !== x.id);
+      }
+    }
+    await this.timeout(100);
+    this.botEndAbilityTurn();
+  }
+
+  async botUseDrawAbility(ability: AbilityCard) {
+    // Draw cards
+    this.pushDisplayMessage(`Draw ${ability.abilityValue} Cards`);
+    await this.timeout(500);
+    this.addBotCardsToHand(ability.abilityValue);
+    await this.timeout(100);
+    this.botEndAbilityTurn();
+  }
+
+  async botUseHealAbility(ability: AbilityCard) {
+    if (ability.targetAll) {
+      // Heal all
+      this.pushDisplayMessage(`Heal All ${ability.abilityValue} Health`);
+      await this.timeout(500);
+      this.enemyPlayers = this.enemyPlayers.map((x) => {
+        const incomingHeal = ability.abilityValue;
+        let newHealth = x.health + incomingHeal;
+        if (newHealth > x.baseHealth) {
+          newHealth = x.baseHealth;
+        }
+        this.healOnEnemies.push(x);
+        return { ...x, health: newHealth };
+      });
+      await this.timeout(800);
+      this.botEndAbilityTurn();
+    } else {
+      // Heal single
+      this.pushDisplayMessage(`Heal ${ability.abilityValue} Health`);
+      await this.timeout(500);
+      const validPlayer: PlayerDto | undefined = this.enemyPlayers.find(
+        (x) => x.health > 0
+      );
+      const lowHealthAndValid: PlayerDto | undefined = this.enemyPlayers.find(
+        (x) => x.health > 0 && x.health !== x.baseHealth
+      );
+      let foundPlayer: PlayerDto | undefined;
+      if (lowHealthAndValid) {
+        foundPlayer = lowHealthAndValid;
+      } else {
+        foundPlayer = validPlayer ?? undefined;
+      }
+
+      if (foundPlayer) {
+        this.healOnEnemies.push(foundPlayer);
+        this.enemyPlayers = this.enemyPlayers.map((x) => {
+          if (x.id === foundPlayer?.id) {
+            let newHealth = x.health + ability.abilityValue;
+            if (newHealth > x.baseHealth) {
+              newHealth = x.baseHealth;
+            }
+            return { ...x, health: newHealth };
+          }
+
+          return x;
+        });
+      }
+      await this.timeout(800);
+      this.botEndAbilityTurn();
+    }
+  }
+
+  botEndAbilityTurn() {
+    this.fireOnPlayer = false;
+    this.shieldOnPlayer = false;
+    this.healOnEnemies = [];
+    this.displayMessageList.forEach((x) => {
+      this.displayMessageListInactive.push(x.id);
+    });
   }
 
   async startBotTurn() {
     this.abilityCardsHand = [];
     this.showBotCards = true;
     this.canSelectCards = false;
-
+    this.fireOnPlayer = false;
     // Discard any remaining player hand over 5
     if (this.playerHand.length > 5) {
       this.playerDiscardPhaseExtra();
@@ -2432,13 +2564,13 @@ export class BattleComponent implements OnInit {
       return;
     }
 
-    await this.timeout(1500);
+    await this.timeout(500);
 
     this.playerTarget = this.player.id;
     this.selectedEnemyCards = botHand.cards;
     this.setAttackArrowsEnemy();
 
-    await this.timeout(2500);
+    await this.timeout(1000);
     // Attack
     const attackPlayer = this.findEnemyPlayerAttack();
     this.staticEnemyTarget = attackPlayer.id;
@@ -2469,9 +2601,7 @@ export class BattleComponent implements OnInit {
       this.selectedCards.length !== this.playerHand.length
     ) {
       this.canSelectCards = true;
-      this.pushError(
-        'Please Select ' + this.enemyAttackHand.cards.length + ' Cards'
-      );
+      this.pushError('Select ' + this.enemyAttackHand.cards.length + ' Cards');
       return;
     }
 
@@ -2482,7 +2612,7 @@ export class BattleComponent implements OnInit {
     ) {
       this.canSelectCards = true;
       this.pushError(
-        'Please Select At Least ' + this.enemyAttackHand.cards.length + ' Cards'
+        'Select At Least ' + this.enemyAttackHand.cards.length + ' Cards'
       );
       return;
     }

@@ -1198,11 +1198,7 @@
             activeCardBorder: abilityCardIsSelectedBot(card),
           }"
         >
-          <img
-            class="enemyAbilityBackground paperBg"
-            *ngIf="!abilityCardIsSelectedBot(card)"
-            [@fadeOutLeave]
-          />
+          <img class="enemyAbilityBackground paperBg" [@fadeOutLeave] />
           <img
             [src]="'./assets/' + gameThemePath + '/abilitycard.png'"
             class="cardBackgroundImage"
@@ -1345,10 +1341,42 @@
             #playerRef
           >
             <img
+              [src]="'./assets/' + gameThemePath + '/fire.gif'"
+              class="cardIcon confetti claws"
+              *ngIf="fireOnPlayer"
+              [@fadeEnter]="{
+                value: '',
+                params: { duration: 500, delay: 0, translate: '300px' }
+              }"
+              [@fadeOutLeave]
+            />
+            <img
+              [src]="'./assets/' + gameThemePath + '/offenseShield.png'"
+              class="cardIcon confetti claws protecting"
+              *ngIf="shieldOnPlayer"
+            />
+            <img
               [src]="'./assets/' + gameThemePath + '/potion.png'"
               class="cardIcon confetti claws healing"
               *ngIf="healOnPlayer"
             />
+            <div
+              class="cardIconValue centerHoverText"
+              *ngIf="currentAbilityBot.abilityFunction === 'offense'"
+              [ngStyle]="{
+                'font-family': gameThemePath + '-HeaderFont'
+              }"
+              [ngClass]="{
+                  blueOffenseText: currentAbilityBot.abilityFunction === 'offense',
+                }"
+              [@fadeEnter]="{
+                value: '',
+                params: { duration: 500, delay: 0, translate: '300px' }
+              }"
+              [@fadeOutLeave]="{ value: '', params: { duration: 200 } }"
+            >
+              -{{ currentAbilityBot.abilityValue }}
+            </div>
             <div class="cardPlayerBorder">
               <div class="abilityTitle abilityTitlePlayer paperBg"></div>
               <div class="abilityBorder1 paperBg paperBgPlayer1"></div>
@@ -1365,6 +1393,9 @@
                   class="attackDefenseText swordText"
                   [ngStyle]="{
                     'font-family': gameThemePath + '-HeaderFont'
+                  }"
+                  [ngClass]="{
+                    blueOffenseText: currentAbilityBot.abilityFunction === 'offense',
                   }"
                 >
                   {{ player.attack }}
@@ -1481,6 +1512,11 @@
                 [src]="'./assets/' + gameThemePath + '/playerHealth.png'"
                 class="cardIcon confetti claws leaching"
                 *ngIf="showLeachAnimation(item)"
+              />
+              <img
+                [src]="'./assets/' + gameThemePath + '/potion.png'"
+                class="cardIcon confetti claws healing"
+                *ngIf="showHealAnimationBot(item)"
               />
               <div
                 class="cardIconValue centerHoverText"
