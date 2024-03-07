@@ -387,22 +387,18 @@ export class BattleComponent implements OnInit {
       }
     }, 400);
 
-    this.redrawing = false;
-    this.redrawHide = true;
-    this.playerHand = [...this.redrawCards];
+    // this.redrawing = false;
+    // this.redrawHide = true;
+    // this.playerHand = [...this.redrawCards];
     // this.abilityDeck = this.userService.getAbilityCards(this.gameThemePath);
-    this.drawAbilityCard(2);
-    this.drawAbilityCardBot(2);
-    this.newTurn();
-    this.startBotTurnsLoop();
+    // this.drawAbilityCard(2);
+    // this.drawAbilityCardBot(2);
+    // this.newTurn();
+    // this.startBotTurnsLoop();
     // this.playerDiscardPhase();
   }
 
-  skipCombat() {
-    this.skippingCombat = true;
-  }
-
-  selectAbilityCard(ability: AbilityCard) {
+  async selectAbilityCard(ability: AbilityCard) {
     const canUse: CardDto[] = this.abilityService.checkCanUseAbility(
       ability,
       this.playerHand
@@ -418,21 +414,21 @@ export class BattleComponent implements OnInit {
       });
 
       // Hide lines
-      this.activeAbilityLeaderLines.forEach((x) => {
+      for await (const x of this.activeAbilityLeaderLines) {
         x.hide('fade', { duration: 100, timing: 'linear' });
-        setTimeout(() => {
-          x.remove();
-        }, 100);
-      });
+        await this.timeout(100);
+        x.remove();
+      }
       this.activeAbilityLeaderLines = [];
 
       // Use ability card
-      this.activeLeaderLines.forEach((x) => {
+      for await (const x of this.activeLeaderLines) {
         x.hide('fade', { duration: 100, timing: 'linear' });
-        setTimeout(() => {
-          x.remove();
-        }, 100);
-      });
+        await this.timeout(100);
+        x.remove();
+      }
+      this.activeLeaderLines = [];
+
       this.selectedCards = [];
       this.enemyTarget = 0;
       this.useAbilityCard(ability);
@@ -579,12 +575,11 @@ export class BattleComponent implements OnInit {
       });
 
       // Remove active lines
-      this.activeAbilityLeaderLines.forEach((x) => {
+      for await (const x of this.activeAbilityLeaderLines) {
         x.hide('fade', { duration: 100, timing: 'linear' });
-        setTimeout(() => {
-          x.remove();
-        }, 100);
-      });
+        await this.timeout(100);
+        x.remove();
+      }
       this.activeAbilityLeaderLines = [];
 
       let healAbility = { ...ability };
@@ -664,19 +659,18 @@ export class BattleComponent implements OnInit {
     this.endAbilityTurn(ability, 400);
   }
 
-  endAbilityTurn(ability: AbilityCard, timeout: number) {
+  async endAbilityTurn(ability: AbilityCard, timeout: number) {
     // Remove ability card from hand
     this.abilityCardsHand = this.abilityCardsHand.filter(
       (x) => x.id !== ability.id
     );
 
     // Remove active lines
-    this.activeAbilityLeaderLines.forEach((x) => {
+    for await (const x of this.activeAbilityLeaderLines) {
       x.hide('fade', { duration: 100, timing: 'linear' });
-      setTimeout(() => {
-        x.remove();
-      }, 100);
-    });
+      await this.timeout(100);
+      x.remove();
+    }
     this.activeAbilityLeaderLines = [];
 
     this.displayMessageList.forEach((x) => {
@@ -766,12 +760,11 @@ export class BattleComponent implements OnInit {
     healAbility.abilityValue = totalHealthRegained;
 
     // Remove active lines
-    this.activeAbilityLeaderLines.forEach((x) => {
+    for await (const x of this.activeAbilityLeaderLines) {
       x.hide('fade', { duration: 100, timing: 'linear' });
-      setTimeout(() => {
-        x.remove();
-      }, 100);
-    });
+      await this.timeout(100);
+      x.remove();
+    }
     this.activeAbilityLeaderLines = [];
 
     await this.timeout(1000);
@@ -900,7 +893,7 @@ export class BattleComponent implements OnInit {
     return false;
   }
 
-  hoverAbilityOut(ability: AbilityCard) {
+  async hoverAbilityOut(ability: AbilityCard) {
     if (this.usedAbilityCard) {
       return;
     }
@@ -931,12 +924,11 @@ export class BattleComponent implements OnInit {
       hitAnimation: 'heal',
     };
     this.currentlyRunning = false;
-    this.activeAbilityLeaderLines.forEach((x) => {
+    for await (const x of this.activeAbilityLeaderLines) {
       x.hide('fade', { duration: 100, timing: 'linear' });
-      setTimeout(() => {
-        x.remove();
-      }, 100);
-    });
+      await this.timeout(100);
+      x.remove();
+    }
     this.activeAbilityLeaderLines = [];
   }
 
@@ -986,84 +978,80 @@ export class BattleComponent implements OnInit {
     return false;
   }
 
-  setAttackArrowsPlayerAbilityDamage() {
-    // this.hoveringAbilityCard = ability;
-    // this.hoveringAbilityHand = canUse;
-    const abilityCards = this.activeAbilityCards;
-
+  async setAttackArrowsPlayerAbilityDamage() {
     try {
-      setTimeout(() => {
-        let foundTarget: ElementRef | null;
-        abilityCards?.forEach((x) => {
+      const abilityCards = this.activeAbilityCards;
+      await this.timeout(150);
+      let foundTarget: ElementRef | undefined;
+      if (abilityCards) {
+        for await (const x of abilityCards) {
           if (x.nativeElement.className.includes('abilityIsActiveTarget')) {
             foundTarget = x.nativeElement;
           }
-        });
-
-        let foundEnemyTarget: ElementRef | null;
-        this.enemyPlayerRef?.forEach((x) => {
+        }
+      }
+      let foundEnemyTarget: ElementRef | undefined;
+      if (this.enemyPlayerRef) {
+        for await (const x of this.enemyPlayerRef) {
           if (x.nativeElement.className.includes('enemyAbilityTarget')) {
             foundEnemyTarget = x.nativeElement;
           }
-        });
-
-        setTimeout(() => {
-          if (foundTarget && foundEnemyTarget) {
-            const myNewActiveLines: any[] = [];
-            const myLineOptions: any = {
-              dash: { animation: true },
-              endSocket: 'bottom',
-              startSocket: 'top',
-              dropShadow: true,
-              gradient: {
-                startColor: 'rgba(0, 255, 0, 0.281)',
-                endColor: 'rgb(0, 255, 0)',
-              },
-              animOptions: {
-                duration: 30,
-                timing: 'linear',
-              },
-              hide: true,
-              endPlug: 'arrow3',
-              endPlugColor: 'rgb(0, 255, 0)',
-            };
-            let myNewLine: any = new LeaderLine(
-              foundTarget,
-              foundEnemyTarget,
-              myLineOptions
-            );
-            myNewLine.show('draw', { duration: 200, timing: 'linear' });
-            myNewActiveLines.push(myNewLine);
-            this.activeAbilityLeaderLines.forEach((x) => {
-              x.hide('fade', { duration: 100, timing: 'linear' });
-              setTimeout(() => {
-                x.remove();
-              }, 100);
-            });
-            this.activeAbilityLeaderLines = myNewActiveLines;
-          }
-        }, 10);
-      }, 50);
+        }
+      }
+      if (foundTarget && foundEnemyTarget) {
+        for await (const x of this.activeAbilityLeaderLines) {
+          x.hide('fade', { duration: 100, timing: 'linear' });
+        }
+        const myNewActiveLines: any[] = [];
+        const myLineOptions: any = {
+          dash: { animation: true },
+          endSocket: 'bottom',
+          startSocket: 'top',
+          dropShadow: true,
+          gradient: {
+            startColor: 'rgba(0, 255, 0, 0.281)',
+            endColor: 'rgb(0, 255, 0)',
+          },
+          animOptions: {
+            duration: 30,
+            timing: 'linear',
+          },
+          hide: true,
+          endPlug: 'arrow3',
+          endPlugColor: 'rgb(0, 255, 0)',
+        };
+        let myNewLine: any = new LeaderLine(
+          foundTarget,
+          foundEnemyTarget,
+          myLineOptions
+        );
+        myNewLine.show('draw', { duration: 200, timing: 'linear' });
+        myNewActiveLines.push(myNewLine);
+        this.activeAbilityLeaderLines = myNewActiveLines;
+      }
     } catch (err) {}
   }
 
-  setAttackArrowsPlayerAbility() {
-    // this.hoveringAbilityCard = ability;
-    // this.hoveringAbilityHand = canUse;
-    const abilityCards = this.activeAbilityCards;
-
-    setTimeout(() => {
-      let foundTarget: ElementRef | null;
-      abilityCards?.forEach((x) => {
-        if (x.nativeElement.className.includes('abilityIsActive')) {
-          foundTarget = x.nativeElement;
+  async setAttackArrowsPlayerAbility() {
+    try {
+      const abilityCards = this.activeAbilityCards;
+      await this.timeout(150);
+      let foundTarget: ElementRef | undefined;
+      if (abilityCards) {
+        for await (const x of abilityCards) {
+          if (x.nativeElement.className.includes('abilityIsActive')) {
+            foundTarget = x.nativeElement;
+          }
         }
-      });
+      }
 
-      if (this.currentlyRunning) {
-        setTimeout(() => {
-          const myNewActiveLines: any[] = [];
-          this.myActiveCards?.forEach((x) => {
+      if (this.currentlyRunning && foundTarget) {
+        const myNewActiveLines: any[] = [];
+        if (this.myActiveCards) {
+          for await (const x of this.activeAbilityLeaderLines) {
+            x.hide('fade', { duration: 100, timing: 'linear' });
+          }
+          for await (const x of this.myActiveCards) {
             if (x.nativeElement.className.includes('abilityActiveCard')) {
               const myLineOptions: any = {
                 dash: { animation: true },
@@ -1090,70 +1078,64 @@ export class BattleComponent implements OnInit {
               myNewLine.show('draw', { duration: 200, timing: 'linear' });
               myNewActiveLines.push(myNewLine);
             }
-          });
-          this.activeAbilityLeaderLines.forEach((x) => {
-            x.hide('fade', { duration: 100, timing: 'linear' });
-            setTimeout(() => {
-              x.remove();
-            }, 100);
-          });
-          this.activeAbilityLeaderLines = myNewActiveLines;
-        }, 10);
+          }
+        }
+        this.activeAbilityLeaderLines = myNewActiveLines;
       }
-    }, 150);
+    } catch (err) {}
   }
 
-  setAttackArrowsEnemyAbility() {
-    // this.hoveringAbilityCard = ability;
-    // this.hoveringAbilityHand = canUse;
-    const abilityCards = this.activeAbilityCardsBot;
-
-    setTimeout(() => {
-      let foundTarget: ElementRef | null;
-      abilityCards?.forEach((x) => {
-        if (x.nativeElement.className.includes('abilityIsActive')) {
-          foundTarget = x.nativeElement;
-        }
-      });
-      setTimeout(() => {
-        const myNewActiveLines: any[] = [];
-        this.activeEnemyCards?.forEach((x) => {
-          if (x.nativeElement.className.includes('activeEnemyCard')) {
-            const myLineOptions: any = {
-              dash: { animation: true },
-              endSocket: 'bottom',
-              startSocket: 'bottom',
-              dropShadow: true,
-              gradient: {
-                startColor: 'rgba(0, 255, 0, 0.281)',
-                endColor: 'rgb(0, 255, 0)',
-              },
-              animOptions: {
-                duration: 30,
-                timing: 'linear',
-              },
-              hide: true,
-              endPlug: 'arrow3',
-              endPlugColor: 'rgb(0, 255, 0)',
-            };
-            let myNewLine: any = new LeaderLine(
-              foundTarget,
-              x.nativeElement,
-              myLineOptions
-            );
-            myNewLine.show('draw', { duration: 200, timing: 'linear' });
-            myNewActiveLines.push(myNewLine);
+  async setAttackArrowsEnemyAbility() {
+    try {
+      const abilityCards = this.activeAbilityCardsBot;
+      await this.timeout(150);
+      let foundTarget: ElementRef | undefined;
+      if (abilityCards) {
+        for await (const x of abilityCards) {
+          if (x.nativeElement.className.includes('abilityIsActive')) {
+            foundTarget = x.nativeElement;
           }
-        });
-        this.activeAbilityLeaderLines.forEach((x) => {
-          x.hide('fade', { duration: 100, timing: 'linear' });
-          setTimeout(() => {
-            x.remove();
-          }, 100);
-        });
+        }
+      }
+
+      if (foundTarget) {
+        const myNewActiveLines: any[] = [];
+        if (this.activeEnemyCards) {
+          for await (const x of this.activeAbilityLeaderLines) {
+            x.hide('fade', { duration: 100, timing: 'linear' });
+          }
+          for await (const x of this.activeEnemyCards) {
+            if (x.nativeElement.className.includes('activeEnemyCard')) {
+              const myLineOptions: any = {
+                dash: { animation: true },
+                endSocket: 'bottom',
+                startSocket: 'bottom',
+                dropShadow: true,
+                gradient: {
+                  startColor: 'rgba(0, 255, 0, 0.281)',
+                  endColor: 'rgb(0, 255, 0)',
+                },
+                animOptions: {
+                  duration: 30,
+                  timing: 'linear',
+                },
+                hide: true,
+                endPlug: 'arrow3',
+                endPlugColor: 'rgb(0, 255, 0)',
+              };
+              let myNewLine: any = new LeaderLine(
+                foundTarget,
+                x.nativeElement,
+                myLineOptions
+              );
+              myNewLine.show('draw', { duration: 200, timing: 'linear' });
+              myNewActiveLines.push(myNewLine);
+            }
+          }
+        }
         this.activeAbilityLeaderLines = myNewActiveLines;
-      }, 10);
-    }, 150);
+      }
+    } catch (err) {}
   }
 
   updateDeckBasedOnPlayerSkills() {
@@ -1647,108 +1629,116 @@ export class BattleComponent implements OnInit {
     this.determineSubtractValue();
   }
 
-  setAttackArrowsPlayer(valid: boolean) {
-    const foundValidEnemy = this.enemyPlayers.find((x) => x.health > 0);
-    if (this.enemyTarget === 0 && foundValidEnemy) {
-      this.enemyTarget = foundValidEnemy.id;
-      this.staticEnemyTarget = this.enemyTarget;
-    }
+  async setAttackArrowsPlayer(valid: boolean) {
+    try {
+      const foundValidEnemy = this.enemyPlayers.find((x) => x.health > 0);
+      if (this.enemyTarget === 0 && foundValidEnemy) {
+        this.enemyTarget = foundValidEnemy.id;
+        this.staticEnemyTarget = this.enemyTarget;
+      }
+      await this.timeout(150);
+      let foundTarget: ElementRef | undefined;
+      if (this.enemyPlayerRef) {
+        for await (const x of this.enemyPlayerRef) {
+          if (x.nativeElement.className.includes('errorEnemyBorder')) {
+            foundTarget = x.nativeElement;
+          }
+        }
+      }
 
-    setTimeout(() => {
-      let foundTarget: ElementRef | null;
-      this.enemyPlayerRef?.forEach((x) => {
-        if (x.nativeElement.className.includes('errorEnemyBorder')) {
-          foundTarget = x.nativeElement;
+      if (foundTarget) {
+        const myNewActiveLines: any[] = [];
+        if (this.myActiveCards) {
+          for await (const x of this.activeLeaderLines) {
+            x.hide('fade', { duration: 100, timing: 'linear' });
+          }
+          for await (const x of this.myActiveCards) {
+            if (x.nativeElement.className.includes('activeCard')) {
+              const myLineOptions: any = {
+                dash: { animation: true },
+                endSocket: 'bottom',
+                startSocket: 'top',
+                dropShadow: true,
+                gradient: {
+                  startColor: valid
+                    ? 'rgba(0, 255, 0, 0.281)'
+                    : 'rgba(255, 0, 0, 0.281)',
+                  endColor: valid ? 'rgb(0, 255, 0)' : 'rgb(228, 35, 35)',
+                },
+                animOptions: {
+                  duration: 30,
+                  timing: 'linear',
+                },
+                hide: true,
+                endPlug: 'arrow3',
+                endPlugColor: valid ? 'rgb(0, 255, 0)' : 'rgb(228, 35, 35)',
+              };
+              let myNewLine: any = new LeaderLine(
+                x.nativeElement,
+                foundTarget,
+                myLineOptions
+              );
+              myNewLine.show('draw', { duration: 200, timing: 'linear' });
+              myNewActiveLines.push(myNewLine);
+            }
+          }
         }
-      });
-      const myNewActiveLines: any[] = [];
-      this.myActiveCards?.forEach((x) => {
-        if (x.nativeElement.className.includes('activeCard')) {
-          const myLineOptions: any = {
-            dash: { animation: true },
-            endSocket: 'bottom',
-            startSocket: 'top',
-            dropShadow: true,
-            gradient: {
-              startColor: valid
-                ? 'rgba(0, 255, 0, 0.281)'
-                : 'rgba(255, 0, 0, 0.281)',
-              endColor: valid ? 'rgb(0, 255, 0)' : 'rgb(228, 35, 35)',
-            },
-            animOptions: {
-              duration: 30,
-              timing: 'linear',
-            },
-            hide: true,
-            endPlug: 'arrow3',
-            endPlugColor: valid ? 'rgb(0, 255, 0)' : 'rgb(228, 35, 35)',
-          };
-          let myNewLine: any = new LeaderLine(
-            x.nativeElement,
-            foundTarget,
-            myLineOptions
-          );
-          myNewLine.show('draw', { duration: 200, timing: 'linear' });
-          myNewActiveLines.push(myNewLine);
-        }
-      });
-      this.activeLeaderLines.forEach((x) => {
-        x.hide('fade', { duration: 100, timing: 'linear' });
-        setTimeout(() => {
-          x.remove();
-        }, 100);
-      });
-      this.activeLeaderLines = myNewActiveLines;
-    }, 150);
+        this.activeLeaderLines = myNewActiveLines;
+      }
+    } catch (err) {}
   }
 
-  setAttackArrowsEnemy() {
-    this.playerTarget = this.player.id;
+  async setAttackArrowsEnemy() {
+    try {
+      this.playerTarget = this.player.id;
+      await this.timeout(150);
+      let foundTarget: ElementRef | undefined;
+      if (this.playerRef) {
+        for await (const x of this.playerRef) {
+          if (x.nativeElement.className.includes('errorEnemyBorder')) {
+            foundTarget = x.nativeElement;
+          }
+        }
+      }
+      if (foundTarget) {
+        const myNewActiveLines: any[] = [];
+        if (this.activeEnemyCards) {
+          for await (const x of this.activeLeaderLines) {
+            x.hide('fade', { duration: 100, timing: 'linear' });
+          }
+          for await (const x of this.activeEnemyCards) {
+            if (x.nativeElement.className.includes('activeEnemyCard')) {
+              const myLineOptions: any = {
+                dash: { animation: true },
+                endSocket: 'top',
+                startSocket: 'bottom',
+                dropShadow: true,
+                gradient: {
+                  startColor: 'rgba(0, 255, 0, 0.281)',
+                  endColor: 'rgb(0, 255, 0)',
+                },
+                animOptions: {
+                  duration: 30,
+                  timing: 'linear',
+                },
+                hide: true,
+                endPlug: 'arrow3',
+                endPlugColor: 'rgb(0, 255, 0)',
+              };
+              let myNewLine: any = new LeaderLine(
+                x.nativeElement,
+                foundTarget,
+                myLineOptions
+              );
+              myNewLine.show('draw', { duration: 200, timing: 'linear' });
+              myNewActiveLines.push(myNewLine);
+            }
+          }
+        }
 
-    setTimeout(() => {
-      let foundTarget: ElementRef | null;
-      this.playerRef?.forEach((x) => {
-        if (x.nativeElement.className.includes('errorEnemyBorder')) {
-          foundTarget = x.nativeElement;
-        }
-      });
-      const myNewActiveLines: any[] = [];
-      this.activeEnemyCards?.forEach((x) => {
-        if (x.nativeElement.className.includes('activeEnemyCard')) {
-          const myLineOptions: any = {
-            dash: { animation: true },
-            endSocket: 'top',
-            startSocket: 'bottom',
-            dropShadow: true,
-            gradient: {
-              startColor: 'rgba(0, 255, 0, 0.281)',
-              endColor: 'rgb(0, 255, 0)',
-            },
-            animOptions: {
-              duration: 30,
-              timing: 'linear',
-            },
-            hide: true,
-            endPlug: 'arrow3',
-            endPlugColor: 'rgb(0, 255, 0)',
-          };
-          let myNewLine: any = new LeaderLine(
-            x.nativeElement,
-            foundTarget,
-            myLineOptions
-          );
-          myNewLine.show('draw', { duration: 200, timing: 'linear' });
-          myNewActiveLines.push(myNewLine);
-        }
-      });
-      this.activeLeaderLines.forEach((x) => {
-        x.hide('fade', { duration: 100, timing: 'linear' });
-        setTimeout(() => {
-          x.remove();
-        }, 100);
-      });
-      this.activeLeaderLines = myNewActiveLines;
-    }, 150);
+        this.activeLeaderLines = myNewActiveLines;
+      }
+    } catch (err) {}
   }
 
   attackButtonEnabled(): boolean {
@@ -1796,12 +1786,11 @@ export class BattleComponent implements OnInit {
       });
 
       this.attackStarted = true;
-      this.activeLeaderLines.forEach((x) => {
+      for await (const x of this.activeLeaderLines) {
         x.hide('fade', { duration: 100, timing: 'linear' });
-        setTimeout(() => {
-          x.remove();
-        }, 100);
-      });
+        await this.timeout(100);
+        x.remove();
+      }
       // Valid attack hand, commence battle
       this.playerAttackHand = hand;
       this.initiateBotDefense(hand);
@@ -1822,9 +1811,7 @@ export class BattleComponent implements OnInit {
       await this.addBotCardsToHand(addLengthEnemy);
     }
 
-    console.log(this.skippingCombat);
     setTimeout(() => {
-      console.log(this.skippingCombat);
       if (this.enemyHand.length > 0) {
         const botHand: DetermineObject =
           this.cardService.generateBotDefenseHand(
@@ -1839,7 +1826,6 @@ export class BattleComponent implements OnInit {
           }
           return true;
         });
-        console.log(this.skippingCombat);
         setTimeout(() => {
           this.enemyAttackHand = botHand;
           this.enemyDefense = botHand.cards;
@@ -1870,7 +1856,7 @@ export class BattleComponent implements OnInit {
           this.setWinner(result, true);
         }, 500);
       }
-    }, 1500);
+    }, 1000);
   }
 
   async numbersGoUpIncrementallyPlayer(
@@ -1955,20 +1941,17 @@ export class BattleComponent implements OnInit {
   }
 
   async setWinner(result: DetermineWinnerObject, playerTurn: boolean) {
-    console.log(this.skippingCombat);
     setTimeout(() => {
-      console.log(this.skippingCombat);
       if (playerTurn) {
         this.combatFinishPlayer(result);
       } else {
         this.combatFinishBot(result);
       }
-    }, 1500);
+    }, 200);
   }
 
   async combatFinishPlayer(result: DetermineWinnerObject) {
     // Player finishes combat
-    console.log(this.skippingCombat);
     // If player won combat, attack selected opponent
     if (result.player1Winner) {
       this.playerWinner = true;
@@ -1986,7 +1969,6 @@ export class BattleComponent implements OnInit {
         }
       }
     }
-    console.log(this.skippingCombat);
     // Fail
     if (result.player2Winner) {
       this.enemyWinner = true;
@@ -2029,8 +2011,7 @@ export class BattleComponent implements OnInit {
     }
 
     this.attackEnding = true;
-    console.log(this.skippingCombat);
-    await this.timeout(1000);
+    await this.timeout(500);
     this.attackStarted = false;
     this.newTurn();
     await this.addCardsToBothHands();
@@ -2254,13 +2235,6 @@ export class BattleComponent implements OnInit {
         this.playerDeck.push(this.playerDeck[0]);
         this.playerDeck.shift();
       }
-      // console.log(
-      //   (this.playerHand = this.playerHand.filter(
-      //     (value, index, self) =>
-      //       index ===
-      //       self.findIndex((t) => t.id === value.id && t.id === value.id)
-      //   ))
-      // );
       this.topRedrawCard = 0;
       await this.timeout(400);
       if (this.playerDeck[0] && this.playerDeck[0].id) {
@@ -2345,7 +2319,7 @@ export class BattleComponent implements OnInit {
     }
 
     this.attackEnding = true;
-    await this.timeout(1000);
+    await this.timeout(500);
     this.attackStarted = false;
     this.newTurn();
     this.startBotTurnsLoop();
@@ -2357,18 +2331,16 @@ export class BattleComponent implements OnInit {
         ability,
         this.enemyHand
       );
-      console.log(ability);
-      console.log(this.enemyHand);
 
       if (canUse.length > 0 || ability.cost.length === 0) {
         this.usedAbilityCardBot = true;
 
-        await this.timeout(2000);
+        await this.timeout(1000);
         this.selectedEnemyCards = canUse;
         this.hoveringAbilityCardBot = ability;
         this.setAttackArrowsEnemyAbility();
         // Select ability card and show lines to cards it will use
-        await this.timeout(1000);
+        await this.timeout(500);
 
         // Remove cards from hand
         canUse.forEach((x) => {
@@ -2376,12 +2348,9 @@ export class BattleComponent implements OnInit {
         });
 
         // Hide lines
-        this.activeAbilityLeaderLines.forEach((x) => {
+        for await (const x of this.activeAbilityLeaderLines) {
           x.hide('fade', { duration: 100, timing: 'linear' });
-          setTimeout(() => {
-            x.remove();
-          }, 100);
-        });
+        }
         this.activeAbilityLeaderLines = [];
 
         // // Use ability card
@@ -2549,7 +2518,9 @@ export class BattleComponent implements OnInit {
       return;
     }
 
-    await this.abilityTurnBot();
+    if (this.abilityCardsHandBot.length > 0) {
+      await this.abilityTurnBot();
+    }
 
     // Determine attack hand
     let botHand: DetermineObject = {
@@ -2579,12 +2550,11 @@ export class BattleComponent implements OnInit {
     this.abilityCardsHandBot = [];
     this.enemyAttackStarted = true;
     this.canSelectCards = true;
-    this.activeLeaderLines.forEach((x) => {
+    for await (const x of this.activeLeaderLines) {
       x.hide('fade', { duration: 100, timing: 'linear' });
-      setTimeout(() => {
-        x.remove();
-      }, 100);
-    });
+      await this.timeout(100);
+      x.remove();
+    }
     // Valid attack hand, commence battle
     this.enemyAttackHand = botHand;
     this.enemyDefense = botHand.cards;
@@ -2674,7 +2644,6 @@ export class BattleComponent implements OnInit {
     this.enemyDefense = [];
     this.activeLeaderLines = [];
     this.activeAbilityLeaderLines = [];
-    this.skippingCombat = false;
     this.discardSelectedCards = [];
     this.currentExtraDmg = 0;
     this.playerAttackHand = { cards: [], highCard: 0, valid: false };
