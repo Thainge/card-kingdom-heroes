@@ -1178,6 +1178,59 @@
           />
         </div>
       </div>
+      <div
+        class="bottomCard topCard enemyTopCard"
+        *ngFor="let card of abilityCardsHandBot; index as i; trackBy: trackById"
+        #activeAbilityCardsBot
+        [ngClass]="{
+          abilityIsActive: abilityCardIsSelectedBot(card),
+          abilityIsActiveBot: abilityCardIsSelectedBot(card),
+          abilityIsActiveTarget: currentAbilityBot.id === card.id,
+        }"
+        [ngStyle]="{
+          'animation-delay': (i + 6) * 100 + 'ms'
+        }"
+        [@cardLeaving]
+      >
+        <div
+          class="cardBorder"
+          [ngClass]="{
+            activeCardBorder: abilityCardIsSelectedBot(card),
+          }"
+        >
+          <img
+            class="enemyAbilityBackground paperBg"
+            *ngIf="!abilityCardIsSelectedBot(card)"
+            [@fadeOutLeave]
+          />
+          <img
+            [src]="'./assets/' + gameThemePath + '/abilitycard.png'"
+            class="cardBackgroundImage"
+          />
+          <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
+            <div class="abilityTitle paperBg">
+              <div class="abilityTitleText">{{ card.name }}</div>
+              <div class="abilitySuitsBox">
+                <img
+                  *ngFor="let cost of card.cost"
+                  [src]="'./assets/' + gameThemePath + '/' + cost + '.png'"
+                  class="abilitySuit"
+                />
+              </div>
+            </div>
+            <div class="abilityBorder1 paperBg"></div>
+            <div class="abilityBorder2 paperBg"></div>
+            <div class="abilityDescription paperBg">
+              <div class="abilityDescriptionLevel">
+                <div class="levelText paperBg">Level {{ card.level }}</div>
+              </div>
+              <div class="abilityDescriptionText">
+                {{ card.description }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div
       class="topRight"

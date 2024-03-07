@@ -1594,6 +1594,20 @@
   font-weight: bold;
 }
 
+.enemyAbilityBackground {
+  position: absolute;
+  top: 2%;
+  left: 2%;
+  height: 96%;
+  width: 96%;
+  border-radius: 5%;
+  z-index: 5;
+}
+
+.abilityIsActiveBot {
+  bottom: -2em !important;
+}
+
 @media screen and (max-width: 800px) {
   .redrawText {
     font-size: 120%;

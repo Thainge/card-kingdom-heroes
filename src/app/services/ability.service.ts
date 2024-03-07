@@ -104,19 +104,6 @@ export class AbilityService {
     return [];
   }
 
-  private getSuitsCount(array: CardDto[]) {
-    const arrayValues: any[] = array.map((x) => x.suit);
-    const detailedList = arrayValues.reduce((m, k) => {
-      m[k] = m[k] + 1 || 1;
-      return m;
-    }, {});
-    let valuesList: any[] = [];
-    Object.values(detailedList).forEach(function (value) {
-      valuesList.push(value);
-    });
-    return valuesList;
-  }
-
   private getSuitsDetails(array: CardDto[]) {
     const arrayValues: any[] = array.map((x) => x.suit);
     const detailedList = arrayValues.reduce((m, k) => {

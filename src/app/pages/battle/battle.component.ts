@@ -206,12 +206,20 @@ export class BattleComponent implements OnInit {
   currentAbility: AbilityCard = defaultAbilityCard;
   startedAbilityTurn: boolean = false;
 
-  topAbilityCardBot: AbilityCard = defaultAbilityCard;
   flamesOnEnemies: PlayerDto[] = [];
   shieldOnEnemies: PlayerDto[] = [];
   leachOnEnemies: PlayerDto[] = [];
   healOnPlayer: boolean = false;
   abilityEnemyTarget: number = 0;
+
+  usedAbilityCardBot: boolean = false;
+  startedAbilityTurnBot: boolean = false;
+  currentlyRunningBot: boolean = false;
+  abilityCardsHandBot: AbilityCard[] = [];
+  abilityDeckBot: AbilityCard[] = [];
+  hoveringAbilityCardBot: AbilityCard = defaultAbilityCard;
+  topAbilityCardBot: AbilityCard = defaultAbilityCard;
+  currentAbilityBot: AbilityCard = defaultAbilityCard;
 
   skippingCombat: boolean = false;
 
@@ -220,6 +228,8 @@ export class BattleComponent implements OnInit {
 
   @ViewChildren('activeAbilityCards')
   activeAbilityCards: QueryList<ElementRef> | undefined;
+  @ViewChildren('activeAbilityCardsBot')
+  activeAbilityCardsBot: QueryList<ElementRef> | undefined;
 
   @ViewChildren('activeEnemyCards') activeEnemyCards:
     | QueryList<ElementRef>
@@ -246,6 +256,10 @@ export class BattleComponent implements OnInit {
       this.player = this.userService.getPlayer(this.gameThemePath);
       this.abilityDeck = this.userService.getAbilityCards(this.gameThemePath);
       this.abilityDeck = this.cardService.shuffle(this.abilityDeck);
+      this.abilityDeckBot = this.userService.getAbilityCardsBot(
+        this.gameThemePath
+      );
+      this.abilityDeckBot = this.cardService.shuffle(this.abilityDeckBot);
       this.enemyPlayers = [
         {
           id: 1,
@@ -296,6 +310,19 @@ export class BattleComponent implements OnInit {
 
     setTimeout(() => {
       this.topAbilityCard = this.abilityDeck[0];
+    }, 400);
+  }
+
+  drawAbilityCardBot(amount: number) {
+    const abilityCardAddArr = Array.from(Array(amount).keys());
+    for (const x of abilityCardAddArr) {
+      this.abilityCardsHandBot.push(this.abilityDeckBot[0]);
+      this.abilityDeckBot.push(this.abilityDeckBot[0]);
+      this.abilityDeckBot.shift();
+    }
+
+    setTimeout(() => {
+      this.topAbilityCardBot = this.abilityDeckBot[0];
     }, 400);
   }
 
@@ -362,8 +389,9 @@ export class BattleComponent implements OnInit {
     this.playerHand = [...this.redrawCards];
     // this.abilityDeck = this.userService.getAbilityCards(this.gameThemePath);
     this.drawAbilityCard(2);
-    // this.newTurn();
-    // this.startBotTurnsLoop();
+    this.drawAbilityCardBot(2);
+    this.newTurn();
+    this.startBotTurnsLoop();
     // this.playerDiscardPhase();
   }
 
@@ -911,6 +939,16 @@ export class BattleComponent implements OnInit {
     return false;
   }
 
+  abilityCardIsSelectedBot(ability: AbilityCard): boolean {
+    const includesAbility = this.hoveringAbilityCardBot.id === ability.id;
+
+    if (includesAbility) {
+      // Test lines
+      return true;
+    }
+    return false;
+  }
+
   abilityCardIsValid(ability: AbilityCard): boolean {
     return false;
   }
@@ -1051,6 +1089,59 @@ export class BattleComponent implements OnInit {
           this.activeAbilityLeaderLines = myNewActiveLines;
         }, 10);
       }
+    }, 150);
+  }
+
+  setAttackArrowsEnemyAbility() {
+    // this.hoveringAbilityCard = ability;
+    // this.hoveringAbilityHand = canUse;
+    const abilityCards = this.activeAbilityCardsBot;
+
+    setTimeout(() => {
+      let foundTarget: ElementRef | null;
+      abilityCards?.forEach((x) => {
+        if (x.nativeElement.className.includes('abilityIsActive')) {
+          foundTarget = x.nativeElement;
+        }
+      });
+      setTimeout(() => {
+        const myNewActiveLines: any[] = [];
+        this.activeEnemyCards?.forEach((x) => {
+          if (x.nativeElement.className.includes('activeEnemyCard')) {
+            const myLineOptions: any = {
+              dash: { animation: true },
+              endSocket: 'bottom',
+              startSocket: 'bottom',
+              dropShadow: true,
+              gradient: {
+                startColor: 'rgba(0, 255, 0, 0.281)',
+                endColor: 'rgb(0, 255, 0)',
+              },
+              animOptions: {
+                duration: 30,
+                timing: 'linear',
+              },
+              hide: true,
+              endPlug: 'arrow3',
+              endPlugColor: 'rgb(0, 255, 0)',
+            };
+            let myNewLine: any = new LeaderLine(
+              foundTarget,
+              x.nativeElement,
+              myLineOptions
+            );
+            myNewLine.show('draw', { duration: 200, timing: 'linear' });
+            myNewActiveLines.push(myNewLine);
+          }
+        });
+        this.activeAbilityLeaderLines.forEach((x) => {
+          x.hide('fade', { duration: 100, timing: 'linear' });
+          setTimeout(() => {
+            x.remove();
+          }, 100);
+        });
+        this.activeAbilityLeaderLines = myNewActiveLines;
+      }, 10);
     }, 150);
   }
 
@@ -1440,6 +1531,7 @@ export class BattleComponent implements OnInit {
     setTimeout(() => {
       // Remove selected redraw cards
       this.drawAbilityCard(2);
+      this.drawAbilityCardBot(2);
       this.redrawSelectedCards.forEach((x, i) => {
         this.redrawCards.push(this.playerDeck[0]);
         this.playerDeck.push(this.playerDeck[0]);
@@ -2066,9 +2158,8 @@ export class BattleComponent implements OnInit {
   }
 
   startBotTurnsLoop() {
-    // Bot turns that have been finished
-
     // Find next valid attack enemy
+    let foundValidEnemy = false;
     const nextEnemy = this.enemyPlayers.find((x: PlayerDto) => {
       // Turn already done? return
       if (this.completedEnemyTurns.includes(x.id)) {
@@ -2078,6 +2169,20 @@ export class BattleComponent implements OnInit {
       // Health is 0 or lower? return
       if (x.health < 1) {
         return;
+      }
+
+      // If health is greater than 0 and turn length is 0, first enemy, draw ability cards
+      const isValidEnemy = this.enemyPlayers.find((x) => x.health > 0);
+      if (
+        this.completedEnemyTurns.length === 0 &&
+        isValidEnemy &&
+        isValidEnemy.id === x.id &&
+        !foundValidEnemy
+      ) {
+        foundValidEnemy = true;
+        if (this.abilityCardsHandBot.length === 0) {
+          this.drawAbilityCardBot(2);
+        }
       }
 
       if (!this.completedEnemyTurns.includes(x.id)) {
@@ -2235,6 +2340,72 @@ export class BattleComponent implements OnInit {
     this.startBotTurnsLoop();
   }
 
+  async abilityTurnBot() {
+    for await (const ability of this.abilityCardsHandBot) {
+      const canUse: CardDto[] = this.abilityService.checkCanUseAbility(
+        ability,
+        this.enemyHand
+      );
+      console.log(ability);
+      console.log(this.enemyHand);
+
+      if (canUse.length > 0 || ability.cost.length === 0) {
+        this.usedAbilityCardBot = true;
+
+        await this.timeout(2000);
+        this.selectedEnemyCards = canUse;
+        this.hoveringAbilityCardBot = ability;
+        this.setAttackArrowsEnemyAbility();
+        // Select ability card and show lines to cards it will use
+        await this.timeout(1000);
+
+        // Remove cards from hand
+        canUse.forEach((x) => {
+          this.enemyHand = this.enemyHand.filter((a) => a.id !== x.id);
+        });
+
+        // Hide lines
+        this.activeAbilityLeaderLines.forEach((x) => {
+          x.hide('fade', { duration: 100, timing: 'linear' });
+          setTimeout(() => {
+            x.remove();
+          }, 100);
+        });
+        this.activeAbilityLeaderLines = [];
+        await this.timeout(1000);
+
+        // // Use ability card
+        this.selectedCards = [];
+        this.enemyTarget = 0;
+        await this.useAbilityCardBot(ability);
+        // Remove ability card from hand
+        this.abilityCardsHandBot = this.abilityCardsHandBot.filter(
+          (x) => x.id !== ability.id
+        );
+        this.selectedEnemyCards = [];
+        this.hoveringAbilityCardBot = defaultAbilityCard;
+      }
+    }
+  }
+
+  async useAbilityCardBot(ability: AbilityCard) {
+    console.log('using ability card');
+
+    // damage
+
+    // -offense
+
+    // discard
+
+    // draw card
+
+    // heal 1
+
+    // heal all
+
+    await this.timeout(2000);
+  }
+
   async startBotTurn() {
     this.abilityCardsHand = [];
     this.showBotCards = true;
@@ -2246,13 +2417,14 @@ export class BattleComponent implements OnInit {
       return;
     }
 
+    await this.abilityTurnBot();
+
     // Determine attack hand
     let botHand: DetermineObject = {
       valid: false,
       highCard: 0,
       cards: [],
     };
-    console.log(this.enemyHand);
     if (this.enemyHand.length > 1) {
       botHand = this.cardService.generateBotOffenseHand(this.enemyHand);
     } else {
@@ -2271,6 +2443,8 @@ export class BattleComponent implements OnInit {
     const attackPlayer = this.findEnemyPlayerAttack();
     this.staticEnemyTarget = attackPlayer.id;
     this.showBotCards = false;
+
+    this.abilityCardsHandBot = [];
     this.enemyAttackStarted = true;
     this.canSelectCards = true;
     this.activeLeaderLines.forEach((x) => {
