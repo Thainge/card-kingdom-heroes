@@ -1469,7 +1469,8 @@
         <div
           class="middleRightBox"
           [ngClass]="{
-            middleCardHover: currentEnemyTurn.id === item.id
+            middleCardHover:
+              currentEnemyTurn.id === item.id && !finishedChoosingDefensePlayer
           }"
           *ngFor="let item of enemyPlayers; index as i; trackBy: trackById"
         >

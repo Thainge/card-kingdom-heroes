@@ -948,7 +948,7 @@
 .clawsLeftSide {
   top: 10%;
   animation: chopReverse;
-  animation-duration: 1s;
+  animation-duration: 1.3s;
   animation-delay: 2s;
   animation-fill-mode: forwards;
   z-index: 20 !important;
@@ -966,7 +966,7 @@
 }
 
 .attackCardBorderLeft {
-  animation: shake 2s linear;
+  animation: shake 2.7s linear;
   animation-delay: 2.4s;
   animation-fill-mode: forwards;
 }

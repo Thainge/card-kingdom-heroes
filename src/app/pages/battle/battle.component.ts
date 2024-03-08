@@ -275,27 +275,27 @@ export class BattleComponent implements OnInit {
           image: './assets/' + this.gameThemePath + '/' + 'link.png',
           name: 'Link',
           attack: 3,
-          health: 4,
+          health: 1,
           baseHealth: 7,
           baseAttack: 6,
           level: 1,
         },
-        {
-          id: 2,
-          image: './assets/' + this.gameThemePath + '/' + 'link.png',
-          name: 'Link',
-          attack: 2,
-          health: 2,
-          baseHealth: 7,
-          baseAttack: 1,
-          level: 1,
-        },
+        // {
+        //   id: 2,
+        //   image: './assets/' + this.gameThemePath + '/' + 'link.png',
+        //   name: 'Link',
+        //   attack: 2,
+        //   health: 1,
+        //   baseHealth: 7,
+        //   baseAttack: 1,
+        //   level: 1,
+        // },
         {
           id: 3,
           image: './assets/' + this.gameThemePath + '/' + 'link.png',
           name: 'Link',
           attack: 1,
-          health: 3,
+          health: 4,
           baseHealth: 7,
           baseAttack: 0,
           level: 1,
@@ -1818,6 +1818,7 @@ export class BattleComponent implements OnInit {
   async attack() {
     if (this.selectedCards.length === 0 && this.playerHand.length === 0) {
       this.newTurn();
+      console.log('hit1');
       await this.addCardsToBothHands();
 
       // Player turn ends
@@ -2096,6 +2097,7 @@ export class BattleComponent implements OnInit {
     await this.timeout(500);
     this.attackStarted = false;
     this.newTurn();
+    console.log('hit2');
     await this.addCardsToBothHands();
 
     // Player turn ends
@@ -2117,14 +2119,18 @@ export class BattleComponent implements OnInit {
   checkEndGame(): boolean {
     // Check if victory
     if (this.player.health < 1) {
-      this.endGame(false);
+      setTimeout(() => {
+        this.endGame(false);
+      }, 2000);
       return true;
     }
 
     // Check if defeated
     const aliveEnemies = this.enemyPlayers.filter((x) => x.health > 0);
     if (aliveEnemies.length < 1) {
-      this.endGame(true);
+      setTimeout(() => {
+        this.endGame(true);
+      }, 2000);
       return true;
     }
 
@@ -2217,6 +2223,7 @@ export class BattleComponent implements OnInit {
       this.pushMessage('Player Turn');
       this.addCardsToBothHands();
       this.newTurn();
+      console.log('hit3');
     }
   }
 
@@ -2257,6 +2264,11 @@ export class BattleComponent implements OnInit {
   }
 
   startBotTurnsLoop() {
+    const shouldEndGame = this.checkEndGame();
+    if (shouldEndGame) {
+      return;
+    }
+
     // Find next valid attack enemy
     let foundValidEnemy = false;
     const nextEnemy = this.enemyPlayers.find((x: PlayerDto) => {
@@ -2302,6 +2314,8 @@ export class BattleComponent implements OnInit {
         this.completedEnemyTurns = [];
         this.addCardsToBothHands();
         this.newTurn();
+        this.pushDisplayMessage('Player Turn');
+        console.log('hit4');
       } else {
         // If player needs to discard
         this.enemyNextTurn = false;
@@ -2442,6 +2456,7 @@ export class BattleComponent implements OnInit {
     await this.timeout(500);
     this.attackStarted = false;
     this.newTurn();
+    console.log('hit5');
     this.startBotTurnsLoop();
   }
 
@@ -2663,6 +2678,7 @@ export class BattleComponent implements OnInit {
       this.pushMessage('Player Turn');
       this.addCardsToBothHands();
       this.newTurn();
+      console.log('hit6');
       return;
     }
 
