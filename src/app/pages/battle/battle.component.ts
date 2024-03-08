@@ -409,8 +409,9 @@ export class BattleComponent implements OnInit {
     this.abilityDeck = this.userService.getAbilityCards(this.gameThemePath);
     this.drawAbilityCard(2);
     this.drawAbilityCardBot(2);
-    this.newTurn();
-    this.startBotTurnsLoop();
+    // this.newTurn();
+    // this.startBotTurnsLoop();
+    // this.healOnPlayer = true;
     // this.abilityCardsHand = [];
     // this.showBotCards = true;
     // this.canSelectCards = false;
@@ -715,6 +716,10 @@ export class BattleComponent implements OnInit {
       this.enemyTarget = 0;
       this.currentAbility = defaultAbilityCard;
       this.startedAbilityTurn = false;
+      const shouldEndGame = this.checkEndGame();
+      if (shouldEndGame) {
+        return;
+      }
       this.canSelectCards = true;
       this.pushMessage('Player Turn');
     }, timeout);
@@ -2006,31 +2011,33 @@ export class BattleComponent implements OnInit {
   }
 
   async setWinner(result: DetermineWinnerObject, playerTurn: boolean) {
-    setTimeout(() => {
-      if (playerTurn) {
-        this.combatFinishPlayer(result);
-      } else {
-        this.combatFinishBot(result);
-      }
-    }, 200);
+    if (playerTurn) {
+      this.combatFinishPlayer(result);
+    } else {
+      this.combatFinishBot(result);
+    }
   }
 
   async combatFinishPlayer(result: DetermineWinnerObject) {
     // Player finishes combat
     // If player won combat, attack selected opponent
+    let extraTimeout: number = 0;
     if (result.player1Winner) {
       this.playerWinner = true;
       this.enemyLoser = true;
       for await (const x of this.enemyPlayers) {
         if (x.id === this.enemyTarget && result.player1Determine.power) {
           const incomingAttackPower = result.player1Determine.power;
+          extraTimeout = incomingAttackPower;
           const newHealth = x.health - incomingAttackPower;
           console.log(
             'Player Wins Attack: Attacking bot for ' +
               incomingAttackPower +
               ' damage'
           );
-          await this.numbersGoDownIncrementally(x.health, newHealth);
+          setTimeout(() => {
+            this.numbersGoDownIncrementally(x.health, newHealth);
+          }, 400);
         }
       }
     }
@@ -2040,15 +2047,14 @@ export class BattleComponent implements OnInit {
       this.playerLoser = true;
 
       const incomingAttackPower = this.enemyDefense.length;
+      extraTimeout = incomingAttackPower;
       const newHealth = this.player.health - incomingAttackPower;
       console.log(
         'Bot Defended: Attacking player for ' + incomingAttackPower + ' damage'
       );
-      await this.numbersGoDownIncrementally(
-        this.player.health,
-        newHealth,
-        true
-      );
+      setTimeout(() => {
+        this.numbersGoDownIncrementally(this.player.health, newHealth, true);
+      }, 400);
     }
 
     // Tie
@@ -2064,17 +2070,28 @@ export class BattleComponent implements OnInit {
       for await (const x of this.enemyPlayers) {
         if (x.id === this.enemyTarget && result.player1Determine.power) {
           const incomingAttackPower = result.player1Determine.power;
+          extraTimeout = incomingAttackPower;
           const newHealth = x.health - incomingAttackPower;
           console.log(
             'Player Wins Attack: Attacking bot for ' +
               incomingAttackPower +
               ' damage'
           );
-          await this.numbersGoDownIncrementally(x.health, newHealth);
+          setTimeout(() => {
+            this.numbersGoDownIncrementally(x.health, newHealth);
+          }, 400);
         }
       }
     }
 
+    const shouldEndGame = this.checkEndGame();
+    if (shouldEndGame) {
+      return;
+    }
+
+    const extraTime = extraTimeout * 100;
+    const totalWaitTime = 3500 + extraTime;
+    await this.timeout(totalWaitTime);
     this.attackEnding = true;
     await this.timeout(500);
     this.attackStarted = false;
@@ -2094,6 +2111,31 @@ export class BattleComponent implements OnInit {
       // If player needs to discard
       this.enemyNextTurn = true;
       this.playerDiscardPhase();
+    }
+  }
+
+  checkEndGame(): boolean {
+    // Check if victory
+    if (this.player.health < 1) {
+      this.endGame(false);
+      return true;
+    }
+
+    // Check if defeated
+    const aliveEnemies = this.enemyPlayers.filter((x) => x.health > 0);
+    if (aliveEnemies.length < 1) {
+      this.endGame(true);
+      return true;
+    }
+
+    return false;
+  }
+
+  endGame(playerWon: boolean) {
+    if (playerWon) {
+      console.log('Victory');
+    } else {
+      console.log('Defeat');
     }
   }
 
@@ -2243,7 +2285,6 @@ export class BattleComponent implements OnInit {
       }
 
       if (!this.completedEnemyTurns.includes(x.id)) {
-        this.completedEnemyTurns.push(x.id);
         this.currentEnemyTurn = x;
         this.startBotTurn();
         return true;
@@ -2260,6 +2301,7 @@ export class BattleComponent implements OnInit {
       if (this.playerHand.length < 6) {
         this.completedEnemyTurns = [];
         this.addCardsToBothHands();
+        this.newTurn();
       } else {
         // If player needs to discard
         this.enemyNextTurn = false;
@@ -2316,6 +2358,7 @@ export class BattleComponent implements OnInit {
     // Bot finishes combat
 
     // Success, player defended
+    let extraTimeout: number = 0;
     if (result.player1Winner) {
       this.playerWinner = true;
       this.enemyLoser = true;
@@ -2325,13 +2368,16 @@ export class BattleComponent implements OnInit {
       for await (const x of this.enemyPlayers) {
         if (x.id === this.enemyTarget) {
           const incomingAttackPower = this.selectedCards.length;
+          extraTimeout = incomingAttackPower;
           console.log(
             'Player Defended: Attacking bot for ' +
               incomingAttackPower +
               ' damage'
           );
           const newHealth = x.health - incomingAttackPower;
-          await this.numbersGoDownIncrementally(x.health, newHealth);
+          setTimeout(() => {
+            this.numbersGoDownIncrementally(x.health, newHealth);
+          }, 400);
         }
       }
     }
@@ -2342,17 +2388,16 @@ export class BattleComponent implements OnInit {
       this.playerLoser = true;
 
       const incomingAttackPower = result.player2Determine.power;
+      extraTimeout = incomingAttackPower;
       const newHealth = this.player.health - incomingAttackPower;
       console.log(
         'Bot Wins Attack: Attacking player for ' +
           incomingAttackPower +
           ' damage'
       );
-      await this.numbersGoDownIncrementally(
-        this.player.health,
-        newHealth,
-        true
-      );
+      setTimeout(() => {
+        this.numbersGoDownIncrementally(this.player.health, newHealth, true);
+      }, 400);
     }
 
     // Tie
@@ -2371,17 +2416,28 @@ export class BattleComponent implements OnInit {
       for await (const x of this.enemyPlayers) {
         if (x.id === this.enemyTarget) {
           const incomingAttackPower = this.selectedCards.length;
+          extraTimeout = incomingAttackPower;
           console.log(
             'Player Defended: Attacking bot for ' +
               incomingAttackPower +
               ' damage'
           );
           const newHealth = x.health - incomingAttackPower;
-          await this.numbersGoDownIncrementally(x.health, newHealth);
+          setTimeout(() => {
+            this.numbersGoDownIncrementally(x.health, newHealth);
+          }, 400);
         }
       }
     }
 
+    const shouldEndGame = this.checkEndGame();
+    if (shouldEndGame) {
+      return;
+    }
+
+    const extraTime = extraTimeout * 100;
+    const totalWaitTime = 3500 + extraTime;
+    await this.timeout(totalWaitTime);
     this.attackEnding = true;
     await this.timeout(500);
     this.attackStarted = false;
@@ -2577,6 +2633,7 @@ export class BattleComponent implements OnInit {
     this.displayMessageList.forEach((x) => {
       this.displayMessageListInactive.push(x.id);
     });
+    this.checkEndGame();
   }
 
   async startBotTurn() {
@@ -2685,6 +2742,7 @@ export class BattleComponent implements OnInit {
     });
 
     this.finishedChoosingDefensePlayer = true;
+    this.completedEnemyTurns.push(this.staticEnemyTarget);
     const result = this.cardService.determineWinner(hand, this.enemyAttackHand);
     this.setWinner(result, false);
   }
