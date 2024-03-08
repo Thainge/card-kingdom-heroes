@@ -409,8 +409,8 @@ export class BattleComponent implements OnInit {
     this.abilityDeck = this.userService.getAbilityCards(this.gameThemePath);
     this.drawAbilityCard(2);
     this.drawAbilityCardBot(2);
-    this.newTurn();
-    this.startBotTurnsLoop();
+    // this.newTurn();
+    // this.startBotTurnsLoop();
     // this.playerDiscardPhase();
   }
 
@@ -433,18 +433,20 @@ export class BattleComponent implements OnInit {
       try {
         for await (const x of this.activeAbilityLeaderLines) {
           await x.hide('fade', { duration: 100, timing: 'linear' });
-          await this.timeout(100);
         }
-      } catch (err) {}
+      } catch (err) {
+        console.log(err);
+      }
       this.activeAbilityLeaderLines = [];
 
       // Use ability card
       try {
         for await (const x of this.activeLeaderLines) {
           await x.hide('fade', { duration: 100, timing: 'linear' });
-          await this.timeout(100);
         }
-      } catch (err) {}
+      } catch (err) {
+        console.log(err);
+      }
       this.activeLeaderLines = [];
 
       this.selectedCards = [];
@@ -596,9 +598,10 @@ export class BattleComponent implements OnInit {
       try {
         for await (const x of this.activeAbilityLeaderLines) {
           await x.hide('fade', { duration: 100, timing: 'linear' });
-          await this.timeout(100);
         }
-      } catch (err) {}
+      } catch (err) {
+        console.log(err);
+      }
       this.activeAbilityLeaderLines = [];
 
       let healAbility = { ...ability };
@@ -688,9 +691,10 @@ export class BattleComponent implements OnInit {
     try {
       for await (const x of this.activeAbilityLeaderLines) {
         await x.hide('fade', { duration: 100, timing: 'linear' });
-        await this.timeout(100);
       }
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
     this.activeAbilityLeaderLines = [];
 
     this.displayMessageList.forEach((x) => {
@@ -783,9 +787,10 @@ export class BattleComponent implements OnInit {
     try {
       for await (const x of this.activeAbilityLeaderLines) {
         await x.hide('fade', { duration: 100, timing: 'linear' });
-        await this.timeout(100);
       }
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
     this.activeAbilityLeaderLines = [];
 
     await this.timeout(1000);
@@ -947,10 +952,12 @@ export class BattleComponent implements OnInit {
     try {
       for await (const x of this.activeAbilityLeaderLines) {
         await x.hide('fade', { duration: 100, timing: 'linear' });
-        await this.timeout(100);
       }
-    } catch (err) {}
-    this.activeAbilityLeaderLines = [];
+      this.activeAbilityLeaderLines = [];
+    } catch (err) {
+      this.activeAbilityLeaderLines = [];
+      console.log(err);
+    }
   }
 
   abilityCardIsSelected(ability: AbilityCard): boolean {
@@ -1023,9 +1030,10 @@ export class BattleComponent implements OnInit {
         try {
           for await (const x of this.activeAbilityLeaderLines) {
             await x.hide('fade', { duration: 100, timing: 'linear' });
-            await this.timeout(100);
           }
-        } catch (err) {}
+        } catch (err) {
+          console.log(err);
+        }
         const myNewActiveLines: any[] = [];
         const myLineOptions: any = {
           dash: { animation: true },
@@ -1053,7 +1061,9 @@ export class BattleComponent implements OnInit {
         myNewActiveLines.push(myNewLine);
         this.activeAbilityLeaderLines = myNewActiveLines;
       }
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   async setAttackArrowsPlayerAbility() {
@@ -1075,9 +1085,10 @@ export class BattleComponent implements OnInit {
           try {
             for await (const x of this.activeAbilityLeaderLines) {
               await x.hide('fade', { duration: 100, timing: 'linear' });
-              await this.timeout(100);
             }
-          } catch (err) {}
+          } catch (err) {
+            console.log(err);
+          }
           for await (const x of this.myActiveCards) {
             if (x.nativeElement.className.includes('abilityActiveCard')) {
               const myLineOptions: any = {
@@ -1109,7 +1120,9 @@ export class BattleComponent implements OnInit {
         }
         this.activeAbilityLeaderLines = myNewActiveLines;
       }
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   async setAttackArrowsEnemyAbility() {
@@ -1131,9 +1144,10 @@ export class BattleComponent implements OnInit {
           try {
             for await (const x of this.activeAbilityLeaderLines) {
               await x.hide('fade', { duration: 100, timing: 'linear' });
-              await this.timeout(100);
             }
-          } catch (err) {}
+          } catch (err) {
+            console.log(err);
+          }
           for await (const x of this.activeEnemyCards) {
             if (x.nativeElement.className.includes('activeEnemyCard')) {
               const myLineOptions: any = {
@@ -1165,7 +1179,9 @@ export class BattleComponent implements OnInit {
         }
         this.activeAbilityLeaderLines = myNewActiveLines;
       }
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   updateDeckBasedOnPlayerSkills() {
@@ -1682,9 +1698,10 @@ export class BattleComponent implements OnInit {
           try {
             for await (const x of this.activeLeaderLines) {
               await x.hide('fade', { duration: 100, timing: 'linear' });
-              await this.timeout(100);
             }
-          } catch (err) {}
+          } catch (err) {
+            console.log(err);
+          }
           for await (const x of this.myActiveCards) {
             if (x.nativeElement.className.includes('activeCard')) {
               const myLineOptions: any = {
@@ -1718,7 +1735,9 @@ export class BattleComponent implements OnInit {
         }
         this.activeLeaderLines = myNewActiveLines;
       }
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   async setAttackArrowsEnemy() {
@@ -1739,9 +1758,10 @@ export class BattleComponent implements OnInit {
           try {
             for await (const x of this.activeLeaderLines) {
               await x.hide('fade', { duration: 100, timing: 'linear' });
-              await this.timeout(100);
             }
-          } catch (err) {}
+          } catch (err) {
+            console.log(err);
+          }
           for await (const x of this.activeEnemyCards) {
             if (x.nativeElement.className.includes('activeEnemyCard')) {
               const myLineOptions: any = {
@@ -1774,7 +1794,9 @@ export class BattleComponent implements OnInit {
 
         this.activeLeaderLines = myNewActiveLines;
       }
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   attackButtonEnabled(): boolean {
@@ -1825,9 +1847,10 @@ export class BattleComponent implements OnInit {
       try {
         for await (const x of this.activeLeaderLines) {
           await x.hide('fade', { duration: 100, timing: 'linear' });
-          await this.timeout(100);
         }
-      } catch (err) {}
+      } catch (err) {
+        console.log(err);
+      }
       // Valid attack hand, commence battle
       this.playerAttackHand = hand;
       this.initiateBotDefense(hand);
@@ -2387,9 +2410,10 @@ export class BattleComponent implements OnInit {
         try {
           for await (const x of this.activeAbilityLeaderLines) {
             await x.hide('fade', { duration: 100, timing: 'linear' });
-            await this.timeout(100);
           }
-        } catch (err) {}
+        } catch (err) {
+          console.log(err);
+        }
         this.activeAbilityLeaderLines = [];
 
         // // Use ability card
@@ -2598,9 +2622,10 @@ export class BattleComponent implements OnInit {
     try {
       for await (const x of this.activeLeaderLines) {
         await x.hide('fade', { duration: 100, timing: 'linear' });
-        await this.timeout(100);
       }
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
     // Valid attack hand, commence battle
     this.enemyAttackHand = botHand;
     this.enemyDefense = botHand.cards;

@@ -1383,6 +1383,15 @@
             >
               -{{ currentAbilityBot.abilityValue }}
             </div>
+            <div
+              class="cardPlayerBorderRotatingBox"
+              *ngIf="
+                canSelectCards ||
+                (!showBotCards && enemyAttackStarted && canSelectCards)
+              "
+            >
+              <div class="cardPlayerBorderRotatingPlayer"></div>
+            </div>
             <div class="cardPlayerBorder">
               <div class="abilityTitle abilityTitlePlayer paperBg"></div>
               <div class="abilityBorder1 paperBg paperBgPlayer1"></div>
@@ -1548,6 +1557,16 @@
                 [@fadeOutLeave]="{ value: '', params: { duration: 200 } }"
               >
                 -{{ currentAbility.abilityValue }}
+              </div>
+              <div
+                *ngIf="
+                  !canSelectCards ||
+                  (showBotCards && !enemyAttackStarted && !canSelectCards) ||
+                  enemyTarget === item.id
+                "
+                class="cardPlayerBorderRotatingBox"
+              >
+                <div class="cardPlayerBorderRotating"></div>
               </div>
               <div class="cardPlayerBorder">
                 <div class="abilityTitle abilityTitlePlayer paperBgEnemy"></div>

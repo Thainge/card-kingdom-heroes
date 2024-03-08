@@ -625,7 +625,7 @@
 }
 
 .middleCardBorder:hover {
-  box-shadow: 0 0 10px 3px rgba(255, 0, 0, 0.9);
+  box-shadow: 0 0 10px 3px rgba(255, 0, 0, 0.5);
 }
 
 .errorEnemyBorder {
@@ -635,13 +635,13 @@
 
 @keyframes boxShadowRed {
   0% {
-    box-shadow: 0 0 10px 1px rgba(255, 0, 0, 0.9);
+    box-shadow: 0 0 10px 1px rgba(255, 0, 0, 0.7);
   }
   90% {
-    box-shadow: 0 0 10px 50px rgba(255, 0, 0, 0);
+    box-shadow: 0 0 10px 30px rgba(255, 0, 0, 0);
   }
   100% {
-    box-shadow: 0 0 10px 50px rgba(255, 0, 0, 0);
+    box-shadow: 0 0 10px 30px rgba(255, 0, 0, 0);
   }
 }
 
@@ -1641,6 +1641,80 @@
 
 .abilityIsActiveBot {
   bottom: -2em !important;
+}
+
+.cardPlayerBorderRotatingBox {
+  overflow: hidden;
+  position: absolute;
+  top: -1.5%;
+  left: -2.5%;
+  width: 105%;
+  height: 103%;
+  border-radius: 4%;
+}
+
+.cardPlayerBorderRotating {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  clip-path: border-box;
+  // z-index: 55;
+}
+
+.cardPlayerBorderRotating::before {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  top: -25%;
+  left: -25%;
+  scale: 2;
+  background-repeat: no-repeat;
+  background-size: 50% 50%, 50% 50%;
+  background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+  background-image: linear-gradient(
+      #d53e3300 0%,
+      #d53e33 10%,
+      #d53e33 90%,
+      #d53e3300 100%
+    ),
+    linear-gradient(#d53e3300, #d53e3300),
+    linear-gradient(#d53e3300 0%, #d53e33 10%, #d53e33 90%, #d53e3300 100%),
+    linear-gradient(#d53e3300, #d53e3300);
+  animation: rotateBorder 3s linear infinite;
+}
+
+.cardPlayerBorderRotatingPlayer::before {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  top: -25%;
+  left: -25%;
+  scale: 2;
+  background-repeat: no-repeat;
+  background-size: 50% 50%, 50% 50%;
+  background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+  background-image: linear-gradient(
+      #d53e3300 0%,
+      #399953 10%,
+      #399953 90%,
+      #d53e3300 100%
+    ),
+    linear-gradient(#d53e3300, #d53e3300),
+    linear-gradient(#d53e3300 0%, #399953 10%, #399953 90%, #d53e3300 100%),
+    linear-gradient(#d53e3300, #d53e3300);
+  animation: rotateBorder 3s linear infinite;
+}
+
+@keyframes rotateBorder {
+  100% {
+    transform: rotate(1turn);
+  }
 }
 
 @media screen and (max-width: 800px) {
