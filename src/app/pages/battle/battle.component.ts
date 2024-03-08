@@ -409,8 +409,13 @@ export class BattleComponent implements OnInit {
     this.abilityDeck = this.userService.getAbilityCards(this.gameThemePath);
     this.drawAbilityCard(2);
     this.drawAbilityCardBot(2);
-    // this.newTurn();
-    // this.startBotTurnsLoop();
+    this.newTurn();
+    this.startBotTurnsLoop();
+    // this.abilityCardsHand = [];
+    // this.showBotCards = true;
+    // this.canSelectCards = false;
+    // this.fireOnPlayer = false;
+    // this.currentEnemyTurn = this.enemyPlayers[0];
     // this.playerDiscardPhase();
   }
 

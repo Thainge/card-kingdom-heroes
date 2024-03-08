@@ -1560,9 +1560,7 @@
               </div>
               <div
                 *ngIf="
-                  !canSelectCards ||
-                  (showBotCards && !enemyAttackStarted && !canSelectCards) ||
-                  enemyTarget === item.id
+                  currentEnemyTurn.id === item.id || enemyTarget === item.id
                 "
                 class="cardPlayerBorderRotatingBox"
               >
