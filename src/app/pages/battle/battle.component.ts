@@ -4,7 +4,6 @@ import {
   Component,
   ElementRef,
   HostListener,
-  Inject,
   OnInit,
   QueryList,
   ViewChild,
@@ -25,6 +24,7 @@ import {
   fadeInRightOnEnterAnimation,
   fadeOutLeftOnLeaveAnimation,
   fadeOutRightOnLeaveAnimation,
+  zoomOutOnLeaveAnimation,
 } from 'angular-animations';
 import { PlayerDto } from 'src/app/models/player';
 import {
@@ -96,6 +96,7 @@ type ClickObject = {
     fadeOutOnLeaveAnimation({ anchor: 'fadeOutLeave' }),
 
     zoomInOnEnterAnimation({ anchor: 'zoomInEnter' }),
+    zoomOutOnLeaveAnimation({ anchor: 'zoomOutLeave' }),
     flipInYOnEnterAnimation({ anchor: 'flipInYonEnter' }),
   ],
 })
@@ -231,6 +232,13 @@ export class BattleComponent implements OnInit {
   currentAbilityBot: AbilityCard = defaultAbilityCard;
 
   clickAnimationsList: ClickObject[] = [];
+  gameLoserPlayer: boolean = false;
+  gameWinnerPlayer: boolean = false;
+  shownRewardItem: any = {id: 0};
+  rewardItemsClean: any[] = [{id: 1},{id: 2},{id: 3}];
+  rewardItems: any[] = [{id: 1},{id: 2},{id: 3}];
+  canClickNextReward: boolean = false;
+  finishedRewards: boolean = false;
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -255,9 +263,16 @@ export class BattleComponent implements OnInit {
     private cardService: CardService,
     private userService: playerService,
     private abilityService: AbilityService
-  ) {}
+  ) { }
 
   ngOnInit() {
+    setInterval(() => {
+      try {
+        this.clickAnimationsList = this.clickAnimationsList.slice(this.clickAnimationsList.length - 4);
+      } catch (err) {
+
+      }
+    }, 1000 * 30);
     this.importRandomBgImage();
     // Get game theme
     this.userService.gameTheme$.subscribe((x) => {
@@ -290,16 +305,16 @@ export class BattleComponent implements OnInit {
         //   baseAttack: 1,
         //   level: 1,
         // },
-        {
-          id: 3,
-          image: './assets/' + this.gameThemePath + '/' + 'link.png',
-          name: 'Link',
-          attack: 1,
-          health: 4,
-          baseHealth: 7,
-          baseAttack: 0,
-          level: 1,
-        },
+        // {
+        //   id: 3,
+        //   image: './assets/' + this.gameThemePath + '/' + 'link.png',
+        //   name: 'Link',
+        //   attack: 1,
+        //   health: 4,
+        //   baseHealth: 7,
+        //   baseAttack: 0,
+        //   level: 1,
+        // },
       ];
 
       if (this.Cards.length < 1) {
@@ -317,6 +332,29 @@ export class BattleComponent implements OnInit {
       y: e.clientY,
     };
     this.clickAnimationsList.push(clickObject);
+  }
+
+  async nextReward(rewardItem: any) {
+    if (this.canClickNextReward && this.rewardItems.length > 0) {
+      // no more clicks
+      this.canClickNextReward = false;
+      this.rewardItems = this.rewardItems.filter((x) => x.id !== rewardItem.id);
+      // Hide current reward
+      this.shownRewardItem = {id: 0};
+      await this.timeout(750);
+      // show new reward
+      this.shownRewardItem = this.rewardItems[0];
+      if (this.rewardItems.length === 0) {
+        this.finishedRewards = true;
+      }
+      await this.timeout(500);
+      // Can click again
+      this.canClickNextReward = true;
+    }
+  }
+
+  isActiveReward(rewardItem: any) {
+    return this.shownRewardItem.id === rewardItem.id;
   }
 
   drawAbilityCard(amount: number) {
@@ -403,12 +441,16 @@ export class BattleComponent implements OnInit {
       }
     }, 400);
 
+    this.gameWinnerPlayer = true;
     this.redrawing = false;
     this.redrawHide = true;
     this.playerHand = [...this.redrawCards];
     this.abilityDeck = this.userService.getAbilityCards(this.gameThemePath);
     this.drawAbilityCard(2);
     this.drawAbilityCardBot(2);
+    // this.finishedRewards = true;
+    // this.rewardItems = [];
+    this.endGame(true);
     // this.newTurn();
     // this.startBotTurnsLoop();
     // this.healOnPlayer = true;
@@ -418,6 +460,10 @@ export class BattleComponent implements OnInit {
     // this.fireOnPlayer = false;
     // this.currentEnemyTurn = this.enemyPlayers[0];
     // this.playerDiscardPhase();
+  }
+
+  continue() {
+    console.log('leave page')
   }
 
   async selectAbilityCard(ability: AbilityCard) {
@@ -2033,8 +2079,8 @@ export class BattleComponent implements OnInit {
           const newHealth = x.health - incomingAttackPower;
           console.log(
             'Player Wins Attack: Attacking bot for ' +
-              incomingAttackPower +
-              ' damage'
+            incomingAttackPower +
+            ' damage'
           );
           setTimeout(() => {
             this.numbersGoDownIncrementally(x.health, newHealth);
@@ -2075,8 +2121,8 @@ export class BattleComponent implements OnInit {
           const newHealth = x.health - incomingAttackPower;
           console.log(
             'Player Wins Attack: Attacking bot for ' +
-              incomingAttackPower +
-              ' damage'
+            incomingAttackPower +
+            ' damage'
           );
           setTimeout(() => {
             this.numbersGoDownIncrementally(x.health, newHealth);
@@ -2139,9 +2185,22 @@ export class BattleComponent implements OnInit {
 
   endGame(playerWon: boolean) {
     if (playerWon) {
-      console.log('Victory');
+      setTimeout(() => {
+        this.gameWinnerPlayer = true;
+      },1000);
+      setTimeout(() => {
+        this.canClickNextReward = true;
+        this.nextReward({id: 0});
+      }, 2600);
+      
     } else {
-      console.log('Defeat');
+      setTimeout(() => {
+        this.gameLoserPlayer = true;
+      },1000);
+      setTimeout(() => {
+        this.canClickNextReward = true;
+        this.nextReward({id: 0});
+      }, 2600);
     }
   }
 
@@ -2314,7 +2373,7 @@ export class BattleComponent implements OnInit {
         this.completedEnemyTurns = [];
         this.addCardsToBothHands();
         this.newTurn();
-        this.pushDisplayMessage('Player Turn');
+        this.pushMessage('Player Turn');
         console.log('hit4');
       } else {
         // If player needs to discard
@@ -2385,8 +2444,8 @@ export class BattleComponent implements OnInit {
           extraTimeout = incomingAttackPower;
           console.log(
             'Player Defended: Attacking bot for ' +
-              incomingAttackPower +
-              ' damage'
+            incomingAttackPower +
+            ' damage'
           );
           const newHealth = x.health - incomingAttackPower;
           setTimeout(() => {
@@ -2406,8 +2465,8 @@ export class BattleComponent implements OnInit {
       const newHealth = this.player.health - incomingAttackPower;
       console.log(
         'Bot Wins Attack: Attacking player for ' +
-          incomingAttackPower +
-          ' damage'
+        incomingAttackPower +
+        ' damage'
       );
       setTimeout(() => {
         this.numbersGoDownIncrementally(this.player.health, newHealth, true);
@@ -2433,8 +2492,8 @@ export class BattleComponent implements OnInit {
           extraTimeout = incomingAttackPower;
           console.log(
             'Player Defended: Attacking bot for ' +
-              incomingAttackPower +
-              ' damage'
+            incomingAttackPower +
+            ' damage'
           );
           const newHealth = x.health - incomingAttackPower;
           setTimeout(() => {

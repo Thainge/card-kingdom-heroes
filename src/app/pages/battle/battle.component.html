@@ -1,399 +1,321 @@
 <div class="container" (click)="clickAnimation($event)">
   <div *ngFor="let item of clickAnimationsList">
-    <div
-      class="clickAnimation"
-      [ngStyle]="{
+    <div class="clickAnimation" [ngStyle]="{
         top: 'calc(' + item.y + 'px - 2.5em)',
         left: 'calc(' + item.x + 'px - 2.5em)'
-      }"
-      [@fadeEnter]="{
+      }" [@fadeEnter]="{
         value: '',
         params: { duration: 500, delay: 0, translate: '300px' }
-      }"
-      [@fadeOutLeave]
-    ></div>
+      }" [@fadeOutLeave]></div>
+  </div>
+  <div *ngIf="gameWinnerPlayer" class="winnerLoserContainer" >
+    <div *ngIf="gameWinnerPlayer" class="relativeRedrawLoserWinnerBg" [@fadeEnter]="{
+      value: '',
+      params: { duration: 1000, delay: 0, translate: '300px' }
+    }"></div>
+    <div *ngIf="gameWinnerPlayer" class="relativeWinnerLoserContainer" [@fadeEnter]="{
+      value: '',
+      params: { duration: 1000, delay: 0, translate: '300px' }
+    }">
+      <img [src]="'./assets/' + gameThemePath + '/victory.png'" class="victoryDefeatImage" *ngIf="!finishedRewards"/>
+      <ng-container *ngFor="let item of rewardItems">
+        <div class="rayItem" *ngIf="isActiveReward(item)" (click)="nextReward(item)" [@zoomInEnter]="{
+          value: '',
+          params: {
+            duration: 400,
+            translate: '100px'
+          }
+        }" [@zoomOutLeave]>
+          <div class="raysContainer" >
+            <img class="raysMiddle" [src]="'./assets/' + gameThemePath + '/defend.png'"/>
+            <div class="pulseBox"><div class="pulse"></div></div>
+            <div class="rays"></div>
+          </div>
+        </div>
+      </ng-container>
+      <div *ngIf="finishedRewards" class="finishedBox" [@fadeUpEnter]="{
+        value: '',
+        params: { duration: 1000, delay: 0, translate: '100px' }
+      }">
+        <div class="victoryEndImageContainer"><img [src]="'./assets/' + gameThemePath + '/victory.png'" class="victoryEndImage"/></div>
+        <div class="rewardsContainer">
+          <div class="linesTop"></div>
+          <div class="linesLeft"></div>
+          <div class="linesRight"></div>
+          <div class="linesBottom" ></div>
+          <div class="rewardsTitle" [ngStyle]="{
+            'font-family': gameThemePath + '-HeaderFont'
+          }">Rewards</div>
+          <div class="rewardBoxesContainer">
+          <div class="rewardBox" *ngFor="let item of rewardItemsClean; index as i" [@fadeUpEnter]="{
+            value: '',
+            params: { duration: 500, delay: (i + 1) *300, translate: '30px' }
+          }">
+            <img class="rewardImage" [src]="'./assets/' + gameThemePath + '/gold.png'" />
+            <div class="rewardText goldText">100 Gold</div>
+          </div>
+          </div>
+        </div>
+        <div class="buttonsFinish">
+          <div class="finishButtonGo">
+            <img class="finishButton" [src]="'./assets/' + gameThemePath + '/continue.png'"/>
+            <div class="finishButtonText" (click)="continue()">Continue</div>
+            <div class="pulseButton"></div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
   </div>
   <div class="bgContainer">
     <div class="bgFilter"></div>
-    <div
-      class="bgContainerImage"
-      [ngStyle]="{
+    <div class="bgContainerImage" [ngStyle]="{
         'background-image':
           'url(./assets/' +
           gameThemePath +
           '/backgrounds/' +
           randomBgImage +
           '.png)'
-      }"
-    ></div>
+      }"></div>
   </div>
   <!-- Attack Phase -->
   <div class="redrawPanel attackPanel" *ngIf="attackStarted">
     <div class="relativeRedrawPanel">
-      <div
-        class="panelBackground"
-        [ngClass]="{
+      <div class="panelBackground" [ngClass]="{
           fade: attackEnding,
           fadeHide: !attackStarted
-        }"
-        [@fadeEnter]="{
+        }" [@fadeEnter]="{
           value: '',
           params: { duration: 500, delay: 0, translate: '300px' }
-        }"
-      ></div>
+        }"></div>
 
       <div class="middleRightBox specialAttacKBoxPlayer2">
-        <div
-          class="middleCard middleRightCard middleLeftCard specialAttacKBoxPlayerCard2"
-          [@fadeRightEnter]="{
+        <div class="middleCard middleRightCard middleLeftCard specialAttacKBoxPlayerCard2" [@fadeRightEnter]="{
             value: '',
             params: { duration: 800, delay: 0, translate: '200px' }
-          }"
-          [@fadeRightLeave]
-          [ngClass]="{
+          }" [@fadeRightLeave] [ngClass]="{
             fade: attackEnding,
             fadeHide: !attackStarted,
             zoomOutDarken: enemyWinner,
             zoomIn: enemyLoser
-          }"
-        >
+          }">
           <!-- Start of animations -->
-          <div
-            class="playerResultText redrawDetailText"
-            [@zoomInEnter]="{
+          <div class="playerResultText redrawDetailText" [@zoomInEnter]="{
               value: '',
               params: {
                 duration: 400,
                 delay: enemyWinner ? 400 : 2400,
                 translate: '100px'
               }
-            }"
-            [@fadeUpLeave]
-            *ngIf="enemyWinner || playerWinner || tie"
-            [ngClass]="{
+            }" [@fadeUpLeave] *ngIf="enemyWinner || playerWinner || tie" [ngClass]="{
               successText: enemyWinner,
               failText: enemyLoser,
               tieText: tie
-            }"
-          >
+            }">
             {{
-              enemyWinner
-                ? "Winner!"
-                : tie
-                ? "Tie"
-                : "-" + (selectedCards.length + currentExtraDmg)
+            enemyWinner
+            ? "Winner!"
+            : tie
+            ? "Tie"
+            : "-" + (selectedCards.length + currentExtraDmg)
             }}
           </div>
-          <div
-            class="redrawDetailTextInvisible"
-            *ngIf="!playerWinner && !playerLoser && !tie"
-          >
+          <div class="redrawDetailTextInvisible" *ngIf="!playerWinner && !playerLoser && !tie">
             .
           </div>
           <!-- End of animations -->
-          <div
-            class="cardBorder middleCardBorder playerCardBorder"
-            [ngClass]="{
+          <div class="cardBorder middleCardBorder playerCardBorder" [ngClass]="{
               deadEnemy: findEnemyPlayer().health < 1,
               attackCardBorder: enemyLoser
-            }"
-          >
-            <img
-              [src]="'./assets/' + gameThemePath + '/claws.png'"
-              class="cardIcon confetti clawsCombat swordGlow"
-              *ngIf="enemyLoser"
-              [@fadeEnter]="{
+            }">
+            <img [src]="'./assets/' + gameThemePath + '/claws.png'" class="cardIcon confetti clawsCombat swordGlow"
+              *ngIf="enemyLoser" [@fadeEnter]="{
                 value: '',
                 params: { duration: 500, delay: 2000, translate: '300px' }
-              }"
-              [@fadeOutLeave]
-            />
+              }" [@fadeOutLeave] />
             <!-- Start of animations -->
             <div class="cardPlayerBorder">
               <div class="abilityTitle abilityTitlePlayer paperBgEnemy"></div>
               <div class="abilityBorder1 paperBgEnemy paperBgPlayer1"></div>
               <div class="abilityBorder2 paperBgEnemy paperBgPlayer2"></div>
               <div class="abilityBorder3 paperBgEnemy paperBgPlayer3"></div>
-              <img
-                [src]="'./assets/' + gameThemePath + '/confetti.gif'"
-                class="cardIcon confetti"
-                *ngIf="enemyWinner"
+              <img [src]="'./assets/' + gameThemePath + '/confetti.gif'" class="cardIcon confetti" *ngIf="enemyWinner"
                 [@fadeDownEnter]="{
                   value: '',
                   params: { duration: 500, delay: 100, translate: '300px' }
-                }"
-                [@fadeDownLeave]
-              />
+                }" [@fadeDownLeave] />
               <div class="cardIcon darkenCard"></div>
             </div>
             <!-- End of animations -->
             <div class="cardFooterIconBox swordBox">
-              <img
-                [src]="'./assets/' + gameThemePath + '/sword.png'"
-                class="cardIcon"
-              />
+              <img [src]="'./assets/' + gameThemePath + '/sword.png'" class="cardIcon" />
               <div class="cardIconValue">
-                <div
-                  class="attackDefenseText swordText"
-                  [ngStyle]="{
+                <div class="attackDefenseText swordText" [ngStyle]="{
                     'font-family': gameThemePath + '-HeaderFont'
-                  }"
-                >
+                  }">
                   {{ findEnemyPlayer().attack }}
                 </div>
               </div>
             </div>
             <div class="cardFooterIconBox heartBox">
-              <img
-                [src]="'./assets/' + gameThemePath + '/playerHealth.png'"
-                class="cardIcon"
-              />
+              <img [src]="'./assets/' + gameThemePath + '/playerHealth.png'" class="cardIcon" />
               <div class="cardIconValue">
-                <div
-                  class="attackDefenseText"
-                  [ngStyle]="{
+                <div class="attackDefenseText" [ngStyle]="{
                     'font-family': gameThemePath + '-HeaderFont'
-                  }"
-                  [ngClass]="{
+                  }" [ngClass]="{
                     redHealthText:
                       findEnemyPlayer().health < findEnemyPlayer().baseHealth
-                  }"
-                >
+                  }">
                   {{ findEnemyPlayer().health }}
                 </div>
               </div>
             </div>
-            <img
-              [src]="findEnemyPlayer().image"
-              class="cardBackgroundImage playerBackground"
-            />
+            <img [src]="findEnemyPlayer().image" class="cardBackgroundImage playerBackground" />
           </div>
         </div>
       </div>
 
       <div class="middleRightBox specialAttacKBoxPlayer">
-        <div
-          class="middleCard middleRightCard middleLeftCard specialAttacKBoxPlayerCard"
-          [@fadeLeftEnter]="{
+        <div class="middleCard middleRightCard middleLeftCard specialAttacKBoxPlayerCard" [@fadeLeftEnter]="{
             value: '',
             params: { duration: 800, delay: 100, translate: '200px' }
-          }"
-          [@fadeLeftLeave]
-          [ngClass]="{
+          }" [@fadeLeftLeave] [ngClass]="{
             fade: attackEnding,
             fadeHide: !attackStarted,
             zoomOutDarken: playerWinner,
             zoomIn: playerLoser
-          }"
-        >
+          }">
           <!-- Start of animations -->
-          <div
-            class="playerResultText redrawDetailText"
-            [@zoomInEnter]="{
+          <div class="playerResultText redrawDetailText" [@zoomInEnter]="{
               value: '',
               params: {
                 duration: 400,
                 delay: playerWinner ? 400 : 2400,
                 translate: '100px'
               }
-            }"
-            [@fadeUpLeave]
-            *ngIf="enemyWinner || playerWinner || tie"
-            [ngClass]="{
+            }" [@fadeUpLeave] *ngIf="enemyWinner || playerWinner || tie" [ngClass]="{
               successText: playerWinner,
               failText: playerLoser,
               tieText: tie
-            }"
-          >
+            }">
             {{
-              playerWinner ? "Winner!" : tie ? "Tie" : "-" + enemyDefense.length
+            playerWinner ? "Winner!" : tie ? "Tie" : "-" + enemyDefense.length
             }}
           </div>
-          <div
-            class="redrawDetailTextInvisible"
-            *ngIf="!playerWinner && !playerLoser && !tie"
-          >
+          <div class="redrawDetailTextInvisible" *ngIf="!playerWinner && !playerLoser && !tie">
             .
           </div>
           <!-- End of animations -->
-          <div
-            class="cardBorder middleCardBorder playerCardBorder"
-            [ngClass]="{
+          <div class="cardBorder middleCardBorder playerCardBorder" [ngClass]="{
               deadEnemy: player.health < 1,
               attackCardBorderLeft: playerLoser
-            }"
-          >
-            <img
-              [src]="'./assets/' + gameThemePath + '/claws.png'"
-              class="cardIcon confetti clawsCombat swordGlow clawsLeftSide"
-              *ngIf="playerLoser"
-              [@fadeEnter]="{
+            }">
+            <img [src]="'./assets/' + gameThemePath + '/claws.png'"
+              class="cardIcon confetti clawsCombat swordGlow clawsLeftSide" *ngIf="playerLoser" [@fadeEnter]="{
                 value: '',
                 params: { duration: 500, delay: 2000, translate: '300px' }
-              }"
-              [@fadeOutLeave]
-            />
+              }" [@fadeOutLeave] />
             <!-- Start of animations -->
             <div class="cardPlayerBorder">
               <div class="abilityTitle abilityTitlePlayer paperBg"></div>
               <div class="abilityBorder1 paperBg paperBgPlayer1"></div>
               <div class="abilityBorder2 paperBg paperBgPlayer2"></div>
               <div class="abilityBorder3 paperBg paperBgPlayer3"></div>
-              <img
-                [src]="'./assets/' + gameThemePath + '/confetti.gif'"
-                class="cardIcon confetti"
-                *ngIf="playerWinner"
+              <img [src]="'./assets/' + gameThemePath + '/confetti.gif'" class="cardIcon confetti" *ngIf="playerWinner"
                 [@fadeDownEnter]="{
                   value: '',
                   params: { duration: 500, delay: 100, translate: '300px' }
-                }"
-                [@fadeDownLeave]
-              />
+                }" [@fadeDownLeave] />
             </div>
             <!-- End of animations -->
             <div class="cardFooterIconBox swordBox">
-              <img
-                [src]="'./assets/' + gameThemePath + '/sword.png'"
-                class="cardIcon"
-              />
+              <img [src]="'./assets/' + gameThemePath + '/sword.png'" class="cardIcon" />
               <div class="cardIconValue">
-                <div
-                  class="attackDefenseText swordText"
-                  [ngStyle]="{
+                <div class="attackDefenseText swordText" [ngStyle]="{
                     'font-family': gameThemePath + '-HeaderFont'
-                  }"
-                >
+                  }">
                   {{ player.attack }}
                 </div>
               </div>
             </div>
             <div class="cardFooterIconBox heartBox">
-              <img
-                [src]="'./assets/' + gameThemePath + '/playerHealth.png'"
-                class="cardIcon"
-              />
+              <img [src]="'./assets/' + gameThemePath + '/playerHealth.png'" class="cardIcon" />
               <div class="cardIconValue">
-                <div
-                  class="attackDefenseText"
-                  [ngStyle]="{
+                <div class="attackDefenseText" [ngStyle]="{
                     'font-family': gameThemePath + '-HeaderFont'
-                  }"
-                  [ngClass]="{
+                  }" [ngClass]="{
                     redHealthText: player.health < player.baseHealth
-                  }"
-                >
+                  }">
                   {{ player.health }}
                 </div>
               </div>
             </div>
-            <img
-              [src]="player.image"
-              class="cardBackgroundImage playerBackground"
-            />
+            <img [src]="player.image" class="cardBackgroundImage playerBackground" />
           </div>
         </div>
       </div>
 
-      <div
-        class="attackContainer"
-        [ngClass]="{
+      <div class="attackContainer" [ngClass]="{
           fade: attackEnding,
           fadeHide: !attackStarted
-        }"
-      >
+        }">
         <div class="topAttackContainer">
-          <div
-            class="redrawDetailTextInvisible"
-            *ngIf="(enemyAttackHand?.name ?? '').length < 1"
-          >
+          <div class="redrawDetailTextInvisible" *ngIf="(enemyAttackHand?.name ?? '').length < 1">
             .
           </div>
-          <div
-            class="redrawDetailText"
-            [@zoomInEnter]="{
+          <div class="redrawDetailText" [@zoomInEnter]="{
               value: '',
               params: { duration: 400, delay: 1000, translate: '30px' }
-            }"
-            [@fadeUpLeave]
-            *ngIf="(enemyAttackHand?.name ?? '').length > 1"
-            [ngClass]="{
+            }" [@fadeUpLeave] *ngIf="(enemyAttackHand?.name ?? '').length > 1" [ngClass]="{
               specialNameText: enemyAttackHand?.power === 5
-            }"
-            [ngStyle]="
+            }" [ngStyle]="
               enemyAttackHand?.power === 5
                 ? {
                     'font-family': gameThemePath + '-HeaderFont'
                   }
                 : {}
-            "
-          >
+            ">
             {{ enemyAttackHand?.name }}
           </div>
           <div class="attackCardFlexRow">
-            <div
-              *ngFor="let card of enemyDefense; index as i"
-              class="attackCardBox"
-              [@fadeDownEnter]="{
+            <div *ngFor="let card of enemyDefense; index as i" class="attackCardBox" [@fadeDownEnter]="{
                 value: '',
                 params: { duration: 500, delay: 500, translate: '30px' }
-              }"
-              [@fadeDownLeave]
-            >
+              }" [@fadeDownLeave]>
               <div class="attackCard">
                 <div class="cardBorder">
-                  <img
-                    [src]="'./assets/' + gameThemePath + '/cards/' + card.image"
-                    class="cardBackgroundImage"
-                  />
+                  <img [src]="'./assets/' + gameThemePath + '/cards/' + card.image" class="cardBackgroundImage" />
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div class="bottomAttackContainer">
-          <div
-            class="redrawDetailTextInvisible"
-            *ngIf="(playerAttackHand?.name ?? '').length < 1"
-          >
+          <div class="redrawDetailTextInvisible" *ngIf="(playerAttackHand?.name ?? '').length < 1">
             .
           </div>
-          <div
-            class="redrawDetailText"
-            [@zoomInEnter]="{
+          <div class="redrawDetailText" [@zoomInEnter]="{
               value: '',
               params: { duration: 400, delay: 1000, translate: '30px' }
-            }"
-            [@fadeUpLeave]
-            *ngIf="(playerAttackHand?.name ?? '').length > 1"
-            [ngClass]="{
+            }" [@fadeUpLeave] *ngIf="(playerAttackHand?.name ?? '').length > 1" [ngClass]="{
               specialNameText: playerAttackHand?.power === 5
-            }"
-            [ngStyle]="
+            }" [ngStyle]="
               playerAttackHand?.power === 5
                 ? {
                     'font-family': gameThemePath + '-HeaderFont'
                   }
                 : {}
-            "
-          >
+            ">
             {{ playerAttackHand?.name }}
           </div>
           <div class="attackCardFlexRow">
-            <div
-              *ngFor="let card of selectedCards; index as i"
-              class="attackCardBox"
-              [@fadeUpEnter]="{
+            <div *ngFor="let card of selectedCards; index as i" class="attackCardBox" [@fadeUpEnter]="{
                 value: '',
                 params: { duration: 500, delay: 500, translate: '150px' }
-              }"
-              [@fadeUpLeave]
-            >
+              }" [@fadeUpLeave]>
               <div class="attackCard">
                 <div class="cardBorder">
-                  <img
-                    [src]="'./assets/' + gameThemePath + '/cards/' + card.image"
-                    class="cardBackgroundImage"
-                  />
+                  <img [src]="'./assets/' + gameThemePath + '/cards/' + card.image" class="cardBackgroundImage" />
                 </div>
               </div>
             </div>
@@ -406,396 +328,256 @@
   <!-- Attack Phase Bot turn -->
   <div class="redrawPanel attackPanel" *ngIf="enemyAttackStarted">
     <div class="relativeRedrawPanel">
-      <div
-        class="panelBackground"
-        [ngClass]="{
+      <div class="panelBackground" [ngClass]="{
           fade: attackEnding,
           fadeHide: !enemyAttackStarted
-        }"
-        [@fadeEnter]="{
+        }" [@fadeEnter]="{
           value: '',
           params: { duration: 500, delay: 0, translate: '300px' }
-        }"
-      >
+        }">
         <div class="middleRightBox specialAttacKBoxPlayer2">
-          <div
-            class="middleCard middleRightCard middleLeftCard specialAttacKBoxPlayerCard2"
-            [@fadeRightEnter]="{
+          <div class="middleCard middleRightCard middleLeftCard specialAttacKBoxPlayerCard2" [@fadeRightEnter]="{
               value: '',
               params: { duration: 800, delay: 0, translate: '200px' }
-            }"
-            [@fadeRightLeave]
-            [ngClass]="{
+            }" [@fadeRightLeave] [ngClass]="{
               fade: attackEnding,
               fadeHide: !enemyAttackStarted,
               zoomOutDarken: enemyWinner,
               zoomIn: enemyLoser
-            }"
-          >
+            }">
             <!-- Start of animations -->
-            <div
-              class="playerResultText redrawDetailText"
-              [@zoomInEnter]="{
+            <div class="playerResultText redrawDetailText" [@zoomInEnter]="{
                 value: '',
                 params: {
                   duration: 400,
                   delay: enemyWinner ? 400 : 2400,
                   translate: '100px'
                 }
-              }"
-              [@fadeUpLeave]
-              *ngIf="enemyWinner || playerWinner || tie"
-              [ngClass]="{
+              }" [@fadeUpLeave] *ngIf="enemyWinner || playerWinner || tie" [ngClass]="{
                 successText: enemyWinner,
                 failText: enemyLoser,
                 tieText: tie
-              }"
-            >
+              }">
               {{
-                enemyWinner
-                  ? "Winner!"
-                  : tie
-                  ? "Tie"
-                  : "-" + (selectedCards.length + currentExtraDmg)
+              enemyWinner
+              ? "Winner!"
+              : tie
+              ? "Tie"
+              : "-" + (selectedCards.length + currentExtraDmg)
               }}
             </div>
-            <div
-              class="redrawDetailTextInvisible"
-              *ngIf="!playerWinner && !playerLoser && !tie"
-            >
+            <div class="redrawDetailTextInvisible" *ngIf="!playerWinner && !playerLoser && !tie">
               .
             </div>
             <!-- End of animations -->
-            <div
-              class="cardBorder middleCardBorder playerCardBorder"
-              [ngClass]="{
+            <div class="cardBorder middleCardBorder playerCardBorder" [ngClass]="{
                 deadEnemy: findStaticEnemyPlayer().health < 1,
                 attackCardBorder: enemyLoser
-              }"
-            >
-              <img
-                [src]="'./assets/' + gameThemePath + '/claws.png'"
-                class="cardIcon confetti clawsCombat swordGlow"
-                *ngIf="enemyLoser"
-                [@fadeEnter]="{
+              }">
+              <img [src]="'./assets/' + gameThemePath + '/claws.png'" class="cardIcon confetti clawsCombat swordGlow"
+                *ngIf="enemyLoser" [@fadeEnter]="{
                   value: '',
                   params: { duration: 500, delay: 2000, translate: '300px' }
-                }"
-                [@fadeOutLeave]
-              />
+                }" [@fadeOutLeave] />
               <!-- Start of animations -->
               <div class="cardPlayerBorder">
                 <div class="abilityTitle abilityTitlePlayer paperBgEnemy"></div>
                 <div class="abilityBorder1 paperBgEnemy paperBgPlayer1"></div>
                 <div class="abilityBorder2 paperBgEnemy paperBgPlayer2"></div>
                 <div class="abilityBorder3 paperBgEnemy paperBgPlayer3"></div>
-                <img
-                  [src]="'./assets/' + gameThemePath + '/confetti.gif'"
-                  class="cardIcon confetti"
-                  *ngIf="enemyWinner"
+                <img [src]="'./assets/' + gameThemePath + '/confetti.gif'" class="cardIcon confetti" *ngIf="enemyWinner"
                   [@fadeDownEnter]="{
                     value: '',
                     params: { duration: 500, delay: 100, translate: '300px' }
-                  }"
-                  [@fadeDownLeave]
-                />
+                  }" [@fadeDownLeave] />
                 <div class="cardIcon darkenCard"></div>
               </div>
               <!-- End of animations -->
               <div class="cardFooterIconBox swordBox">
-                <img
-                  [src]="'./assets/' + gameThemePath + '/sword.png'"
-                  class="cardIcon"
-                />
+                <img [src]="'./assets/' + gameThemePath + '/sword.png'" class="cardIcon" />
                 <div class="cardIconValue">
-                  <div
-                    class="attackDefenseText swordText"
-                    [ngStyle]="{
+                  <div class="attackDefenseText swordText" [ngStyle]="{
                       'font-family': gameThemePath + '-HeaderFont'
-                    }"
-                  >
+                    }">
                     {{ findStaticEnemyPlayer().attack }}
                   </div>
                 </div>
               </div>
 
               <div class="cardFooterIconBox heartBox">
-                <img
-                  [src]="'./assets/' + gameThemePath + '/playerHealth.png'"
-                  class="cardIcon"
-                />
+                <img [src]="'./assets/' + gameThemePath + '/playerHealth.png'" class="cardIcon" />
                 <div class="cardIconValue">
-                  <div
-                    class="attackDefenseText"
-                    [ngStyle]="{
+                  <div class="attackDefenseText" [ngStyle]="{
                       'font-family': gameThemePath + '-HeaderFont'
-                    }"
-                    [ngClass]="{
+                    }" [ngClass]="{
                       redHealthText:
                         findStaticEnemyPlayer().health <
                         findStaticEnemyPlayer().baseHealth
-                    }"
-                  >
+                    }">
                     {{ findStaticEnemyPlayer().health }}
                   </div>
                 </div>
               </div>
-              <img
-                [src]="findStaticEnemyPlayer().image"
-                class="cardBackgroundImage playerBackground"
-              />
+              <img [src]="findStaticEnemyPlayer().image" class="cardBackgroundImage playerBackground" />
             </div>
           </div>
         </div>
 
         <div class="middleRightBox specialAttacKBoxPlayer">
-          <div
-            class="middleCard middleRightCard middleLeftCard specialAttacKBoxPlayerCard"
-            [@fadeLeftEnter]="{
+          <div class="middleCard middleRightCard middleLeftCard specialAttacKBoxPlayerCard" [@fadeLeftEnter]="{
               value: '',
               params: { duration: 800, delay: 100, translate: '200px' }
-            }"
-            [@fadeLeftLeave]
-            [ngClass]="{
+            }" [@fadeLeftLeave] [ngClass]="{
               fade: attackEnding,
               fadeHide: !enemyAttackStarted,
               zoomOutDarken: playerWinner,
               zoomIn: playerLoser
-            }"
-          >
+            }">
             <!-- Start of animations -->
-            <div
-              class="playerResultText redrawDetailText"
-              [@zoomInEnter]="{
+            <div class="playerResultText redrawDetailText" [@zoomInEnter]="{
                 value: '',
                 params: {
                   duration: 400,
                   delay: playerWinner ? 400 : 2400,
                   translate: '100px'
                 }
-              }"
-              [@fadeUpLeave]
-              *ngIf="enemyWinner || playerWinner || tie"
-              [ngClass]="{
+              }" [@fadeUpLeave] *ngIf="enemyWinner || playerWinner || tie" [ngClass]="{
                 successText: playerWinner,
                 failText: playerLoser,
                 tieText: tie
-              }"
-            >
+              }">
               {{
-                playerWinner
-                  ? "Winner!"
-                  : tie
-                  ? "Tie"
-                  : "-" + enemyDefense.length
+              playerWinner
+              ? "Winner!"
+              : tie
+              ? "Tie"
+              : "-" + enemyDefense.length
               }}
             </div>
-            <div
-              class="redrawDetailTextInvisible"
-              *ngIf="!playerWinner && !playerLoser && !tie"
-            >
+            <div class="redrawDetailTextInvisible" *ngIf="!playerWinner && !playerLoser && !tie">
               .
             </div>
             <!-- End of animations -->
-            <div
-              class="cardBorder middleCardBorder playerCardBorder"
-              [ngClass]="{
+            <div class="cardBorder middleCardBorder playerCardBorder" [ngClass]="{
                 deadEnemy: player.health < 1,
                 attackCardBorderLeft: playerLoser
-              }"
-            >
-              <img
-                [src]="'./assets/' + gameThemePath + '/claws.png'"
-                class="cardIcon confetti clawsCombat swordGlow clawsLeftSide"
-                *ngIf="playerLoser"
-                [@fadeEnter]="{
+              }">
+              <img [src]="'./assets/' + gameThemePath + '/claws.png'"
+                class="cardIcon confetti clawsCombat swordGlow clawsLeftSide" *ngIf="playerLoser" [@fadeEnter]="{
                   value: '',
                   params: { duration: 500, delay: 2000, translate: '300px' }
-                }"
-                [@fadeOutLeave]
-              />
+                }" [@fadeOutLeave] />
               <!-- Start of animations -->
               <div class="cardPlayerBorder">
                 <div class="abilityTitle abilityTitlePlayer paperBg"></div>
                 <div class="abilityBorder1 paperBg paperBgPlayer1"></div>
                 <div class="abilityBorder2 paperBg paperBgPlayer2"></div>
                 <div class="abilityBorder3 paperBg paperBgPlayer3"></div>
-                <img
-                  [src]="'./assets/' + gameThemePath + '/confetti.gif'"
-                  class="cardIcon confetti"
-                  *ngIf="playerWinner"
-                  [@fadeDownEnter]="{
+                <img [src]="'./assets/' + gameThemePath + '/confetti.gif'" class="cardIcon confetti"
+                  *ngIf="playerWinner" [@fadeDownEnter]="{
                     value: '',
                     params: { duration: 500, delay: 100, translate: '300px' }
-                  }"
-                  [@fadeDownLeave]
-                />
+                  }" [@fadeDownLeave] />
               </div>
               <!-- End of animations -->
               <div class="cardFooterIconBox swordBox">
-                <img
-                  [src]="'./assets/' + gameThemePath + '/sword.png'"
-                  class="cardIcon"
-                />
+                <img [src]="'./assets/' + gameThemePath + '/sword.png'" class="cardIcon" />
                 <div class="cardIconValue">
-                  <div
-                    class="attackDefenseText swordText"
-                    [ngStyle]="{
+                  <div class="attackDefenseText swordText" [ngStyle]="{
                       'font-family': gameThemePath + '-HeaderFont'
-                    }"
-                  >
+                    }">
                     {{ player.attack }}
                   </div>
                 </div>
               </div>
               <div class="cardFooterIconBox heartBox">
-                <img
-                  [src]="'./assets/' + gameThemePath + '/playerHealth.png'"
-                  class="cardIcon"
-                />
+                <img [src]="'./assets/' + gameThemePath + '/playerHealth.png'" class="cardIcon" />
                 <div class="cardIconValue">
-                  <div
-                    class="attackDefenseText"
-                    [ngStyle]="{
+                  <div class="attackDefenseText" [ngStyle]="{
                       'font-family': gameThemePath + '-HeaderFont'
-                    }"
-                    [ngClass]="{
+                    }" [ngClass]="{
                       redHealthText: player.health < player.baseHealth
-                    }"
-                  >
+                    }">
                     {{ player.health }}
                   </div>
                 </div>
               </div>
-              <img
-                [src]="player.image"
-                class="cardBackgroundImage playerBackground"
-              />
+              <img [src]="player.image" class="cardBackgroundImage playerBackground" />
             </div>
           </div>
         </div>
 
         <div class="defendBtnContainer">
-          <div
-            class="wildText"
-            [ngStyle]="{
+          <div class="wildText" [ngStyle]="{
               'font-family': gameThemePath + '-HeaderFont'
-            }"
-            *ngIf="canSelectCards"
-          >
+            }" *ngIf="canSelectCards">
             Defend
           </div>
-          <img
-            [src]="'./assets/' + gameThemePath + '/defend.png'"
-            class="goButton"
-            (click)="chooseDefensePlayerCards()"
-            *ngIf="canSelectCards"
-          />
+          <img [src]="'./assets/' + gameThemePath + '/defend.png'" class="goButton" (click)="chooseDefensePlayerCards()"
+            *ngIf="canSelectCards" />
         </div>
       </div>
-      <div
-        class="attackContainer"
-        [ngClass]="{
+      <div class="attackContainer" [ngClass]="{
           fade: attackEnding,
           fadeHide: !enemyAttackStarted
-        }"
-      >
+        }">
         <div class="topAttackContainer">
-          <div
-            class="redrawDetailTextInvisible"
-            *ngIf="(enemyAttackHand?.name ?? '').length < 1"
-          >
+          <div class="redrawDetailTextInvisible" *ngIf="(enemyAttackHand?.name ?? '').length < 1">
             .
           </div>
-          <div
-            class="redrawDetailText"
-            [@zoomInEnter]="{
+          <div class="redrawDetailText" [@zoomInEnter]="{
               value: '',
               params: { duration: 400, delay: 100, translate: '30px' }
-            }"
-            [@fadeUpLeave]
-            *ngIf="(enemyAttackHand?.name ?? '').length > 1"
-            [ngClass]="{
+            }" [@fadeUpLeave] *ngIf="(enemyAttackHand?.name ?? '').length > 1" [ngClass]="{
               specialNameText: enemyAttackHand?.power === 5
-            }"
-            [ngStyle]="
+            }" [ngStyle]="
               enemyAttackHand?.power === 5
                 ? {
                     'font-family': gameThemePath + '-HeaderFont'
                   }
                 : {}
-            "
-          >
+            ">
             {{ enemyAttackHand?.name }}
           </div>
           <div class="attackCardFlexRow" #enemyDefenseRef>
-            <div
-              *ngFor="let card of enemyDefense; index as i"
-              class="attackCardBox"
-              [@fadeUpEnter]="{
+            <div *ngFor="let card of enemyDefense; index as i" class="attackCardBox" [@fadeUpEnter]="{
                 value: '',
                 params: { duration: 400, delay: 400, translate: '30px' }
-              }"
-              [@fadeUpLeave]
-            >
+              }" [@fadeUpLeave]>
               <div class="attackCard">
                 <div class="cardBorder">
-                  <img
-                    [src]="'./assets/' + gameThemePath + '/cards/' + card.image"
-                    class="cardBackgroundImage"
-                  />
+                  <img [src]="'./assets/' + gameThemePath + '/cards/' + card.image" class="cardBackgroundImage" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div
-          class="bottomAttackContainer"
-          *ngIf="finishedChoosingDefensePlayer"
-        >
-          <div
-            class="redrawDetailTextInvisible"
-            *ngIf="(playerAttackHand?.name ?? '').length < 1"
-          >
+        <div class="bottomAttackContainer" *ngIf="finishedChoosingDefensePlayer">
+          <div class="redrawDetailTextInvisible" *ngIf="(playerAttackHand?.name ?? '').length < 1">
             .
           </div>
-          <div
-            class="redrawDetailText"
-            [@zoomInEnter]="{
+          <div class="redrawDetailText" [@zoomInEnter]="{
               value: '',
               params: { duration: 400, delay: 500, translate: '30px' }
-            }"
-            [@fadeUpLeave]
-            *ngIf="(playerAttackHand?.name ?? '').length > 1"
-            [ngClass]="{
+            }" [@fadeUpLeave] *ngIf="(playerAttackHand?.name ?? '').length > 1" [ngClass]="{
               specialNameText: playerAttackHand?.power === 5
-            }"
-            [ngStyle]="
+            }" [ngStyle]="
               playerAttackHand?.power === 5
                 ? {
                     'font-family': gameThemePath + '-HeaderFont'
                   }
                 : {}
-            "
-          >
+            ">
             {{ playerAttackHand?.name }}
           </div>
           <div class="attackCardFlexRow" *ngIf="chooseDefensePlayerCards">
-            <div
-              *ngFor="let card of selectedCards; index as i"
-              class="attackCardBox"
-              [@fadeUpEnter]="{
+            <div *ngFor="let card of selectedCards; index as i" class="attackCardBox" [@fadeUpEnter]="{
                 value: '',
                 params: { duration: 400, delay: 0, translate: '150px' }
-              }"
-              [@fadeUpLeave]
-            >
+              }" [@fadeUpLeave]>
               <div class="attackCard">
                 <div class="cardBorder">
-                  <img
-                    [src]="'./assets/' + gameThemePath + '/cards/' + card.image"
-                    class="cardBackgroundImage"
-                  />
+                  <img [src]="'./assets/' + gameThemePath + '/cards/' + card.image" class="cardBackgroundImage" />
                 </div>
               </div>
             </div>
@@ -808,81 +590,48 @@
   <!-- Discard cards panel -->
   <div class="redrawPanel discardPanel" *ngIf="!discardHide">
     <div class="relativeRedrawPanel">
-      <div
-        class="panelBackground"
-        [ngClass]="{
+      <div class="panelBackground" [ngClass]="{
           fade: !discarding,
           fadeHide: discardHide
-        }"
-        [@fadeEnter]="{
+        }" [@fadeEnter]="{
           value: '',
           params: { duration: 500, delay: 0, translate: '300px' }
-        }"
-      ></div>
-      <div
-        class="redrawBox"
-        [ngClass]="{
+        }"></div>
+      <div class="redrawBox" [ngClass]="{
           fade: !discarding,
           fadeHide: discardHide
-        }"
-      >
+        }">
         <div class="redrawText">Hand Is Full</div>
         <div class="redrawDetailText">
           Discard
           {{ discardCards.length - 5 - discardSelectedCards.length }} cards
         </div>
       </div>
-      <div
-        class="redrawCardsContainer"
-        [ngClass]="{
+      <div class="redrawCardsContainer" [ngClass]="{
           fade: !discarding,
           fadeHide: discardHide
-        }"
-      >
-        <div
-          *ngFor="let card of discardCards; index as i"
-          class="redrawCardBox"
-          [@fadeUpEnter]="{
+        }">
+        <div *ngFor="let card of discardCards; index as i" class="redrawCardBox" [@fadeUpEnter]="{
             value: '',
             params: { duration: 400, delay: (i + 1) * 100, translate: '30px' }
-          }"
-          [@fadeUpLeave]
-        >
-          <div
-            class="discardCard"
-            [ngClass]="{
+          }" [@fadeUpLeave]>
+          <div class="discardCard" [ngClass]="{
               activeDiscardCard: discardCardIsSelected(card)
-            }"
-            (click)="selectDiscardCard(card)"
-          >
-            <div
-              class="cardBorder redrawBorder"
-              [ngClass]="{
+            }" (click)="selectDiscardCard(card)">
+            <div class="cardBorder redrawBorder" [ngClass]="{
                 activeCardBorder: discardCardIsSelected(card)
-              }"
-            >
-              <img
-                [src]="'./assets/' + gameThemePath + '/cards/' + card.image"
-                class="cardBackgroundImage"
-              />
+              }">
+              <img [src]="'./assets/' + gameThemePath + '/cards/' + card.image" class="cardBackgroundImage" />
               <div class="wildCard" *ngIf="card.wild"></div>
-              <div
-                class="wildCardIcon"
-                *ngIf="card.wild && card.wildRange && card.wildRange > 0"
-                [ngClass]="{
+              <div class="wildCardIcon" *ngIf="card.wild && card.wildRange && card.wildRange > 0" [ngClass]="{
                   specialWildRangeIcon: card.wildRange === 14
-                }"
-              >
-                <div
-                  class="wildText wildValueText"
-                  [@fadeEnter]="{
+                }">
+                <div class="wildText wildValueText" [@fadeEnter]="{
                     value: '',
                     params: { duration: 400, delay: 1000, translate: '30px' }
-                  }"
-                  [ngClass]="{
+                  }" [ngClass]="{
                     specialWildRangeIconText: card.wildRange === 14
-                  }"
-                  [ngStyle]="
+                  }" [ngStyle]="
                     card.wildRange === 14
                       ? {
                           'font-family': gameThemePath + '-HeaderFont'
@@ -890,33 +639,22 @@
                       : {
                           'font-family': gameThemePath + '-HeaderFont'
                         }
-                  "
-                >
+                  ">
                   {{ card.wildRange === 14 ? "★" : "+" + card.wildRange }}
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div
-          class="goBtnContainer"
-          [@fadeUpEnter]="{
+        <div class="goBtnContainer" [@fadeUpEnter]="{
             value: '',
             params: { duration: 600, delay: 500, translate: '200px' }
-          }"
-          [@fadeUpLeave]
-        >
-          <img
-            [src]="'./assets/' + gameThemePath + '/attack.png'"
-            class="attackButton"
-            (click)="finishedDiscarding()"
-          />
-          <div
-            class="defendAttackTxt wildText"
-            [ngStyle]="{
+          }" [@fadeUpLeave]>
+          <img [src]="'./assets/' + gameThemePath + '/attack.png'" class="attackButton"
+            (click)="finishedDiscarding()" />
+          <div class="defendAttackTxt wildText" [ngStyle]="{
               'font-family': gameThemePath + '-HeaderFont'
-            }"
-          >
+            }">
             Ok
           </div>
         </div>
@@ -927,77 +665,45 @@
   <!-- Redraw cards panel -->
   <div class="redrawPanel" *ngIf="!redrawHide">
     <div class="relativeRedrawPanel">
-      <div
-        class="panelBackground"
-        [ngClass]="{
+      <div class="panelBackground" [ngClass]="{
           fade: !redrawing,
           fadeHide: redrawHide
-        }"
-      ></div>
-      <div
-        class="redrawBox"
-        [ngClass]="{
+        }"></div>
+      <div class="redrawBox" [ngClass]="{
           fade: !redrawing,
           fadeHide: redrawHide
-        }"
-      >
+        }">
         <div class="redrawText">Redraw Cards</div>
         <div class="redrawDetailText">
           Can select up to {{ 2 - redrawSelectedCards.length }} more cards to
           redraw
         </div>
       </div>
-      <div
-        class="redrawCardsContainer"
-        [ngClass]="{
+      <div class="redrawCardsContainer" [ngClass]="{
           fade: !redrawing,
           fadeHide: redrawHide
-        }"
-      >
-        <div
-          *ngFor="let card of redrawCards; index as i"
-          class="redrawCardBox"
-          [@fadeUpEnter]="{
+        }">
+        <div *ngFor="let card of redrawCards; index as i" class="redrawCardBox" [@fadeUpEnter]="{
             value: '',
             params: { duration: 400, delay: (i + 1) * 100, translate: '30px' }
-          }"
-          [@fadeUpLeave]
-        >
-          <div
-            class="redrawCard"
-            [ngClass]="{
+          }" [@fadeUpLeave]>
+          <div class="redrawCard" [ngClass]="{
               activeRedrawCard: redrawCardIsSelected(card)
-            }"
-            (click)="selectRedrawCard(card)"
-          >
-            <div
-              class="cardBorder redrawBorder"
-              [ngClass]="{
+            }" (click)="selectRedrawCard(card)">
+            <div class="cardBorder redrawBorder" [ngClass]="{
                 activeCardBorder: redrawCardIsSelected(card)
-              }"
-            >
-              <img
-                [src]="'./assets/' + gameThemePath + '/cards/' + card.image"
-                class="cardBackgroundImage"
-              />
+              }">
+              <img [src]="'./assets/' + gameThemePath + '/cards/' + card.image" class="cardBackgroundImage" />
               <div class="wildCard" *ngIf="card.wild"></div>
-              <div
-                class="wildCardIcon"
-                *ngIf="card.wild && card.wildRange && card.wildRange > 0"
-                [ngClass]="{
+              <div class="wildCardIcon" *ngIf="card.wild && card.wildRange && card.wildRange > 0" [ngClass]="{
                   specialWildRangeIcon: card.wildRange === 14
-                }"
-              >
-                <div
-                  class="wildText wildValueText"
-                  [@fadeEnter]="{
+                }">
+                <div class="wildText wildValueText" [@fadeEnter]="{
                     value: '',
                     params: { duration: 400, delay: 1000, translate: '30px' }
-                  }"
-                  [ngClass]="{
+                  }" [ngClass]="{
                     specialWildRangeIconText: card.wildRange === 14
-                  }"
-                  [ngStyle]="
+                  }" [ngStyle]="
                     card.wildRange === 14
                       ? {
                           'font-family': gameThemePath + '-HeaderFont'
@@ -1005,33 +711,21 @@
                       : {
                           'font-family': gameThemePath + '-HeaderFont'
                         }
-                  "
-                >
+                  ">
                   {{ card.wildRange === 14 ? "★" : "+" + card.wildRange }}
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div
-          class="goBtnContainer"
-          [@fadeUpEnter]="{
+        <div class="goBtnContainer" [@fadeUpEnter]="{
             value: '',
             params: { duration: 600, delay: 500, translate: '200px' }
-          }"
-          [@fadeUpLeave]
-        >
-          <img
-            [src]="'./assets/' + gameThemePath + '/attack.png'"
-            class="attackButton"
-            (click)="finishedRedraw()"
-          />
-          <div
-            class="defendAttackTxt wildText"
-            [ngStyle]="{
+          }" [@fadeUpLeave]>
+          <img [src]="'./assets/' + gameThemePath + '/attack.png'" class="attackButton" (click)="finishedRedraw()" />
+          <div class="defendAttackTxt wildText" [ngStyle]="{
               'font-family': gameThemePath + '-HeaderFont'
-            }"
-          >
+            }">
             Ok
           </div>
         </div>
@@ -1042,17 +736,12 @@
   <!-- Floating text -->
   <div class="floatingText">
     <div class="floatingRelative" *ngFor="let item of errorList">
-      <div
-        class="floatingTextMessage"
-        [ngClass]="{
+      <div class="floatingTextMessage" [ngClass]="{
           fade: errorListInactive.includes(item.id)
-        }"
-        [@zoomInEnter]="{
+        }" [@zoomInEnter]="{
           value: '',
           params: { duration: 1000, delay: 0, translate: '30px' }
-        }"
-        [@fadeOutLeave]
-      >
+        }" [@fadeOutLeave]>
         {{ item.message }}
       </div>
     </div>
@@ -1061,17 +750,12 @@
   <!-- Floating Ability Fade -->
   <div class="floatingText">
     <div class="floatingRelative" *ngFor="let item of specialAbilityList">
-      <div
-        class="floatingTextMessage"
-        [ngClass]="{
+      <div class="floatingTextMessage" [ngClass]="{
           fade: specialAbilityListInactive.includes(item.id)
-        }"
-        [@zoomInEnter]="{
+        }" [@zoomInEnter]="{
           value: '',
           params: { duration: 1000, delay: 0, translate: '30px' }
-        }"
-        [@fadeOutLeave]
-      >
+        }" [@fadeOutLeave]>
         {{ item.message }}
       </div>
     </div>
@@ -1080,17 +764,12 @@
   <!-- Floating Message Fade -->
   <div class="floatingText">
     <div class="floatingRelative" *ngFor="let item of messageList">
-      <div
-        class="floatingTextMessage floatingMessageInfo"
-        [ngClass]="{
+      <div class="floatingTextMessage floatingMessageInfo" [ngClass]="{
           fade: messageListInactive.includes(item.id)
-        }"
-        [@zoomInEnter]="{
+        }" [@zoomInEnter]="{
           value: '',
           params: { duration: 1000, delay: 0, translate: '30px' }
-        }"
-        [@fadeOutLeave]
-      >
+        }" [@fadeOutLeave]>
         {{ item.message }}
       </div>
     </div>
@@ -1099,129 +778,75 @@
   <!-- Floating Message Fade -->
   <div class="floatingText floatingTextAbility">
     <div class="floatingRelative" *ngFor="let item of displayMessageList">
-      <div
-        class="floatingTextMessage floatingMessageInfo"
-        [ngClass]="{
+      <div class="floatingTextMessage floatingMessageInfo" [ngClass]="{
           fade: displayMessageListInactive.includes(item.id)
-        }"
-        [@zoomInEnter]="{
+        }" [@zoomInEnter]="{
           value: '',
           params: { duration: 1000, delay: 0, translate: '30px' }
-        }"
-        [@fadeOutLeave]
-      >
+        }" [@fadeOutLeave]>
         {{ item.message }}
       </div>
     </div>
   </div>
 
   <!-- Player 2 -->
-  <div class="top">
-    <div
-      class="topLeft"
-      [ngClass]="{
+  <div class="top" *ngIf="!finishedRewards" [@fadeOutLeave]>
+    <div class="topLeft" [ngClass]="{
         darkenCard:
           currentAbility.abilityFunction === 'wildSuit' ||
           currentAbility.abilityFunction === 'wildRange' ||
           currentAbility.abilityFunction === 'wildSuitRange'
-      }"
-      *ngIf="redrawHide"
-      [@fadeDownEnter]="{ value: '', params: { delay: 300 } }"
-    >
-      <div
-        class="deck deckCard"
-        [ngStyle]="{
+      }" *ngIf="redrawHide" [@fadeDownEnter]="{ value: '', params: { delay: 300 } }">
+      <div class="deck deckCard" [ngStyle]="{
           'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
-        }"
-      ></div>
-      <div
-        class="deck deck1 topdeck1"
-        [ngStyle]="{
+        }"></div>
+      <div class="deck deck1 topdeck1" [ngStyle]="{
           'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
-        }"
-      ></div>
-      <div
-        class="deck deck2 topdeck2"
-        [ngStyle]="{
+        }"></div>
+      <div class="deck deck2 topdeck2" [ngStyle]="{
           'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
-        }"
-      ></div>
-      <div
-        class="deck deck3 topdeck3"
-        [ngStyle]="{
+        }"></div>
+      <div class="deck deck3 topdeck3" [ngStyle]="{
           'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
-        }"
-        *ngIf="!canSeeTopCard"
-      ></div>
-      <div
-        [@flipInYonEnter]="{ value: '', params: { delay: 600 } }"
-        [@fadeDownLeave]
-        [ngStyle]="{
+        }" *ngIf="!canSeeTopCard"></div>
+      <div [@flipInYonEnter]="{ value: '', params: { delay: 600 } }" [@fadeDownLeave] [ngStyle]="{
           'background-image':
             'url(./assets/' +
             gameThemePath +
             '/cards/' +
             enemyDeck[0].image +
             ')'
-        }"
-        *ngIf="canSeeTopCard && topRedrawCardEnemy === enemyDeck[0].id"
-        class="deck deckTopImage"
-      ></div>
+        }" *ngIf="canSeeTopCard && topRedrawCardEnemy === enemyDeck[0].id" class="deck deckTopImage"></div>
     </div>
     <div class="topMiddle" *ngIf="redrawHide">
-      <div
-        class="bottomCard topCard enemyTopCard"
-        *ngFor="let card of enemyHand; index as i"
-        [ngClass]="{
+      <div class="bottomCard topCard enemyTopCard" *ngFor="let card of enemyHand; index as i" [ngClass]="{
           activeEnemyCard: enemyCardIsSelected(card)
-        }"
-        #activeEnemyCards
-        [ngStyle]="{
+        }" #activeEnemyCards [ngStyle]="{
           'animation-delay': (i + 1) * 100 + 'ms'
-        }"
-        [@cardLeaving]
-      >
+        }" [@cardLeaving]>
         <div class="cardBorder">
-          <img
-            [src]="'./assets/' + gameThemePath + '/cardBack.png'"
-            class="cardBackgroundImage"
-          />
+          <img [src]="'./assets/' + gameThemePath + '/cardBack.png'" class="cardBackgroundImage" />
         </div>
       </div>
-      <div
-        class="bottomCard topCard enemyTopCard"
-        *ngFor="let card of abilityCardsHandBot; index as i; trackBy: trackById"
-        #activeAbilityCardsBot
-        [ngClass]="{
+      <div class="bottomCard topCard enemyTopCard"
+        *ngFor="let card of abilityCardsHandBot; index as i; trackBy: trackById" #activeAbilityCardsBot [ngClass]="{
           abilityIsActive: abilityCardIsSelectedBot(card),
           abilityIsActiveBot: abilityCardIsSelectedBot(card),
           abilityIsActiveTarget: currentAbilityBot.id === card.id,
-        }"
-        [ngStyle]="{
+        }" [ngStyle]="{
           'animation-delay': (i + 6) * 100 + 'ms'
-        }"
-        [@cardLeaving]
-      >
-        <div
-          class="cardBorder"
-          [ngClass]="{
+        }" [@cardLeaving]>
+        <div class="cardBorder" [ngClass]="{
             activeCardBorder: abilityCardIsSelectedBot(card),
-          }"
-        >
+          }">
           <img class="enemyAbilityBackground paperBg" [@fadeOutLeave] />
-          <img
-            [src]="'./assets/' + gameThemePath + '/abilitycard.png'"
-            class="cardBackgroundImage"
-          />
+          <img [src]="'./assets/' + gameThemePath + '/abilitycard.png'" class="cardBackgroundImage" />
           <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
             <div class="abilityTitle paperBg">
               <div class="abilityTitleText">{{ card.name }}</div>
               <div class="abilitySuitsBox">
-                <img
-                  *ngFor="let cost of card.cost"
-                  [src]="'./assets/' + gameThemePath + '/' + cost + '.png'"
-                  class="abilitySuit"
-                />
+                <img *ngFor="let cost of card.cost" [src]="'./assets/' + gameThemePath + '/' + cost + '.png'"
+                  class="abilitySuit" />
               </div>
             </div>
             <div class="abilityBorder1 paperBg"></div>
@@ -1238,65 +863,37 @@
         </div>
       </div>
     </div>
-    <div
-      class="topRight"
-      [ngClass]="{
+    <div class="topRight" [ngClass]="{
         darkenCard:
           currentAbility.abilityFunction === 'wildSuit' ||
           currentAbility.abilityFunction === 'wildRange' ||
           currentAbility.abilityFunction === 'wildSuitRange'
-      }"
-      *ngIf="redrawHide"
-      [@fadeDownEnter]="{ value: '', params: { delay: 300 } }"
-    >
-      <div
-        class="deck deckCard"
-        [ngStyle]="{
+      }" *ngIf="redrawHide" [@fadeDownEnter]="{ value: '', params: { delay: 300 } }">
+      <div class="deck deckCard" [ngStyle]="{
           'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
-        }"
-      ></div>
-      <div
-        class="deck deck1 topdeck1"
-        [ngStyle]="{
+        }"></div>
+      <div class="deck deck1 topdeck1" [ngStyle]="{
           'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
-        }"
-      ></div>
-      <div
-        class="deck deck2 topdeck2"
-        [ngStyle]="{
+        }"></div>
+      <div class="deck deck2 topdeck2" [ngStyle]="{
           'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
-        }"
-      ></div>
-      <div
-        class="deck deck3 topdeck3"
-        [ngStyle]="{
+        }"></div>
+      <div class="deck deck3 topdeck3" [ngStyle]="{
           'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
-        }"
-        *ngIf="!canSeeTopCard"
-      ></div>
+        }" *ngIf="!canSeeTopCard"></div>
       <div class="abilityDeckCardBox">
-        <div
-          class="abilityDeckCard"
-          *ngIf="canSeeTopCard"
-          [@flipInYonEnter]="{ value: '', params: { delay: 900 } }"
-          [@fadeDownLeave]
-        >
+        <div class="abilityDeckCard" *ngIf="canSeeTopCard" [@flipInYonEnter]="{ value: '', params: { delay: 900 } }"
+          [@fadeDownLeave]>
           <div class="cardBorder">
-            <img
-              [src]="'./assets/' + gameThemePath + '/abilitycard.png'"
-              class="cardBackgroundImage"
-            />
+            <img [src]="'./assets/' + gameThemePath + '/abilitycard.png'" class="cardBackgroundImage" />
             <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
               <div class="abilityTitle paperBg">
                 <div class="abilityTitleText">
                   {{ topAbilityCardBot.name }}
                 </div>
                 <div class="abilitySuitsBox">
-                  <img
-                    *ngFor="let cost of topAbilityCardBot.cost"
-                    [src]="'./assets/' + gameThemePath + '/' + cost + '.png'"
-                    class="abilitySuit"
-                  />
+                  <img *ngFor="let cost of topAbilityCardBot.cost"
+                    [src]="'./assets/' + gameThemePath + '/' + cost + '.png'" class="abilitySuit" />
                 </div>
               </div>
               <div class="abilityBorder1 paperBg"></div>
@@ -1319,86 +916,47 @@
   </div>
 
   <!-- Middle -->
-  <div class="middle">
+  <div class="middle" *ngIf="!finishedRewards" [@fadeOutLeave]>
     <div class="middleLeft">
-      <div
-        class="middleRightBox"
-        [ngClass]="{
+      <div class="middleRightBox" [ngClass]="{
           middleCardHover: canSelectCards
-        }"
-      >
-        <div
-          *ngIf="player.health < 1"
-          class="deathSkullBox deathSkullAnimation"
-        >
-          <img
-            [src]="'./assets/' + gameThemePath + '/skull.png'"
-            class="deathSkull"
-          />
+        }">
+        <div *ngIf="player.health < 1" class="deathSkullBox deathSkullAnimation">
+          <img [src]="'./assets/' + gameThemePath + '/skull.png'" class="deathSkull" />
         </div>
-        <div
-          class="middleCard middleRightCard middleLeftCard playerMid"
-          *ngIf="redrawHide"
-          [@fadeUpEnter]="{
+        <div class="middleCard middleRightCard middleLeftCard playerMid" *ngIf="redrawHide" [@fadeUpEnter]="{
             value: '',
             params: { duration: 400, delay: 1000, translate: '30px' }
-          }"
-          [@fadeUpLeave]
-          [ngClass]="{
+          }" [@fadeUpLeave] [ngClass]="{
             leavingFieldCard: player.health < 1
-          }"
-        >
-          <div
-            class="cardBorder middleCardBorder playerCardBorder"
-            [ngClass]="{
+          }">
+          <div class="cardBorder middleCardBorder playerCardBorder" [ngClass]="{
               errorEnemyBorder: playerTarget === player.id && !wrappingTurn
-            }"
-            #playerRef
-          >
-            <img
-              [src]="'./assets/' + gameThemePath + '/fire.gif'"
-              class="cardIcon confetti claws"
-              *ngIf="fireOnPlayer"
+            }" #playerRef>
+            <img [src]="'./assets/' + gameThemePath + '/fire.gif'" class="cardIcon confetti claws" *ngIf="fireOnPlayer"
               [@fadeEnter]="{
                 value: '',
                 params: { duration: 500, delay: 0, translate: '300px' }
-              }"
-              [@fadeOutLeave]
-            />
-            <img
-              [src]="'./assets/' + gameThemePath + '/offenseShield.png'"
-              class="cardIcon confetti claws protecting"
-              *ngIf="shieldOnPlayer"
-            />
-            <img
-              [src]="'./assets/' + gameThemePath + '/potion.png'"
-              class="cardIcon confetti claws healing"
-              *ngIf="healOnPlayer"
-            />
-            <div
-              class="cardIconValue centerHoverText"
-              *ngIf="currentAbilityBot.abilityFunction === 'offense'"
+              }" [@fadeOutLeave] />
+            <img [src]="'./assets/' + gameThemePath + '/offenseShield.png'" class="cardIcon confetti claws protecting"
+              *ngIf="shieldOnPlayer" />
+            <img [src]="'./assets/' + gameThemePath + '/potion.png'" class="cardIcon confetti claws healing"
+              *ngIf="healOnPlayer" />
+            <div class="cardIconValue centerHoverText" *ngIf="currentAbilityBot.abilityFunction === 'offense'"
               [ngStyle]="{
                 'font-family': gameThemePath + '-HeaderFont'
-              }"
-              [ngClass]="{
+              }" [ngClass]="{
                   blueOffenseText: currentAbilityBot.abilityFunction === 'offense',
-                }"
-              [@fadeEnter]="{
+                }" [@fadeEnter]="{
                 value: '',
                 params: { duration: 500, delay: 0, translate: '300px' }
-              }"
-              [@fadeOutLeave]="{ value: '', params: { duration: 200 } }"
-            >
+              }" [@fadeOutLeave]="{ value: '', params: { duration: 200 } }">
               -{{ currentAbilityBot.abilityValue }}
             </div>
-            <div
-              class="cardPlayerBorderRotatingBox"
-              *ngIf="
+            <div class="cardPlayerBorderRotatingBox" *ngIf="
                 canSelectCards ||
                 (!showBotCards && enemyAttackStarted && canSelectCards)
-              "
-            >
+              ">
               <div class="cardPlayerBorderRotatingPlayer"></div>
             </div>
             <div class="cardPlayerBorder">
@@ -1408,108 +966,71 @@
               <div class="abilityBorder3 paperBg paperBgPlayer3"></div>
             </div>
             <div class="cardFooterIconBox swordBox">
-              <img
-                [src]="'./assets/' + gameThemePath + '/sword.png'"
-                class="cardIcon"
-              />
+              <img [src]="'./assets/' + gameThemePath + '/sword.png'" class="cardIcon" />
               <div class="cardIconValue">
-                <div
-                  class="attackDefenseText swordText"
-                  [ngStyle]="{
+                <div class="attackDefenseText swordText" [ngStyle]="{
                     'font-family': gameThemePath + '-HeaderFont'
-                  }"
-                  [ngClass]="{
+                  }" [ngClass]="{
                     blueOffenseText: currentAbilityBot.abilityFunction === 'offense',
-                  }"
-                >
+                  }">
                   {{ player.attack }}
                 </div>
               </div>
             </div>
             <div class="cardFooterIconBox heartBox">
-              <img
-                [src]="'./assets/' + gameThemePath + '/playerHealth.png'"
-                class="cardIcon"
-              />
+              <img [src]="'./assets/' + gameThemePath + '/playerHealth.png'" class="cardIcon" />
               <div class="cardIconValue">
-                <div
-                  class="attackDefenseText"
-                  [ngStyle]="{
+                <div class="attackDefenseText" [ngStyle]="{
                     'font-family': gameThemePath + '-HeaderFont'
-                  }"
-                  [ngClass]="{
+                  }" [ngClass]="{
                     redHealthText: player.health < player.baseHealth,
                     greenHealthText:
                       healOnPlayer ||
                       (currentAbility.abilityFunction === 'leach' &&
                         currentAbility.targetAll === false &&
                         abilityEnemyTarget !== 0)
-                  }"
-                >
+                  }">
                   {{
-                    currentAbility.abilityFunction === "leach" &&
-                    currentAbility.targetAll === false &&
-                    abilityEnemyTarget !== 0
-                      ? player.health + currentAbility.abilityValue
-                      : player.health
+                  currentAbility.abilityFunction === "leach" &&
+                  currentAbility.targetAll === false &&
+                  abilityEnemyTarget !== 0
+                  ? player.health + currentAbility.abilityValue
+                  : player.health
                   }}
                 </div>
               </div>
             </div>
-            <img
-              [src]="player.image"
-              class="cardBackgroundImage playerBackground"
-            />
+            <img [src]="player.image" class="cardBackgroundImage playerBackground" />
           </div>
         </div>
       </div>
     </div>
-    <div class="middleRight">
+    <div class="middleRight" *ngIf="!finishedRewards" [@fadeOutLeave]>
       <div class="enemyCardsBox">
-        <div
-          class="middleRightBox"
-          [ngClass]="{
+        <div class="middleRightBox" [ngClass]="{
             middleCardHover:
               currentEnemyTurn.id === item.id && !finishedChoosingDefensePlayer
-          }"
-          *ngFor="let item of enemyPlayers; index as i; trackBy: trackById"
-        >
-          <div
-            *ngIf="item.health < 1"
-            class="deathSkullBox deathSkullAnimation"
-          >
-            <img
-              [src]="'./assets/' + gameThemePath + '/skull.png'"
-              class="deathSkull"
-            />
+          }" *ngFor="let item of enemyPlayers; index as i; trackBy: trackById">
+          <div *ngIf="item.health < 1" class="deathSkullBox deathSkullAnimation">
+            <img [src]="'./assets/' + gameThemePath + '/skull.png'" class="deathSkull" />
           </div>
-          <div
-            class="middleCard middleRightCard"
-            *ngIf="redrawHide"
-            [@fadeUpEnter]="{
+          <div class="middleCard middleRightCard" *ngIf="redrawHide" [@fadeUpEnter]="{
               value: '',
               params: {
                 duration: 400,
                 delay: 1000,
                 translate: '30px'
               }
-            }"
-            [@fadeUpLeave]
-            [ngClass]="{
+            }" [@fadeUpLeave] [ngClass]="{
               leavingFieldCard: item.health < 1,
               turnIsOverCard: isFinishedWithTurn(item),
               darkenCard:
                 currentAbility.abilityFunction === 'wildSuit' ||
                 currentAbility.abilityFunction === 'wildRange' ||
                 currentAbility.abilityFunction === 'wildSuitRange'
-            }"
-            (click)="setEnemyPlayerHoverTarget(item)"
-            (mouseenter)="hoverAbilityPlayerIn(item)"
-            (mouseleave)="hoverAbilityPlayerOut(item)"
-          >
-            <div
-              class="cardBorder middleCardBorder playerCardBorder"
-              [ngClass]="{
+            }" (click)="setEnemyPlayerHoverTarget(item)" (mouseenter)="hoverAbilityPlayerIn(item)"
+            (mouseleave)="hoverAbilityPlayerOut(item)">
+            <div class="cardBorder middleCardBorder playerCardBorder" [ngClass]="{
                 errorEnemyBorder: enemyTarget === item.id && !wrappingTurn,
                 enemyTargetActive: currentEnemyTurn.id === item.id,
                 enemyAbilityTarget:
@@ -1518,37 +1039,19 @@
                     currentAbility.abilityFunction === 'leach') &&
                   currentAbility.targetAll === false &&
                   abilityEnemyTarget === item.id
-              }"
-              #enemyPlayerRef
-            >
-              <img
-                [src]="'./assets/' + gameThemePath + '/fire.gif'"
-                class="cardIcon confetti claws"
-                *ngIf="showFireAnimation(item)"
-                [@fadeEnter]="{
+              }" #enemyPlayerRef>
+              <img [src]="'./assets/' + gameThemePath + '/fire.gif'" class="cardIcon confetti claws"
+                *ngIf="showFireAnimation(item)" [@fadeEnter]="{
                   value: '',
                   params: { duration: 500, delay: 0, translate: '300px' }
-                }"
-                [@fadeOutLeave]
-              />
-              <img
-                [src]="'./assets/' + gameThemePath + '/offenseShield.png'"
-                class="cardIcon confetti claws protecting"
-                *ngIf="showShieldAnimation(item)"
-              />
-              <img
-                [src]="'./assets/' + gameThemePath + '/playerHealth.png'"
-                class="cardIcon confetti claws leaching"
-                *ngIf="showLeachAnimation(item)"
-              />
-              <img
-                [src]="'./assets/' + gameThemePath + '/potion.png'"
-                class="cardIcon confetti claws healing"
-                *ngIf="showHealAnimationBot(item)"
-              />
-              <div
-                class="cardIconValue centerHoverText"
-                *ngIf="
+                }" [@fadeOutLeave] />
+              <img [src]="'./assets/' + gameThemePath + '/offenseShield.png'" class="cardIcon confetti claws protecting"
+                *ngIf="showShieldAnimation(item)" />
+              <img [src]="'./assets/' + gameThemePath + '/playerHealth.png'" class="cardIcon confetti claws leaching"
+                *ngIf="showLeachAnimation(item)" />
+              <img [src]="'./assets/' + gameThemePath + '/potion.png'" class="cardIcon confetti claws healing"
+                *ngIf="showHealAnimationBot(item)" />
+              <div class="cardIconValue centerHoverText" *ngIf="
                   (currentAbility.abilityFunction === 'damage' ||
                     currentAbility.abilityFunction === 'offense' ||
                     currentAbility.abilityFunction === 'leach') &&
@@ -1556,27 +1059,19 @@
                   abilityEnemyTarget === item.id &&
                   !startedAbilityTurn &&
                   !canSelectCards
-                "
-                [ngStyle]="{
+                " [ngStyle]="{
                   'font-family': gameThemePath + '-HeaderFont'
-                }"
-                [ngClass]="{
+                }" [ngClass]="{
                   blueOffenseText: currentAbility.abilityFunction === 'offense',
-                }"
-                [@fadeEnter]="{
+                }" [@fadeEnter]="{
                   value: '',
                   params: { duration: 500, delay: 0, translate: '300px' }
-                }"
-                [@fadeOutLeave]="{ value: '', params: { duration: 200 } }"
-              >
+                }" [@fadeOutLeave]="{ value: '', params: { duration: 200 } }">
                 -{{ currentAbility.abilityValue }}
               </div>
-              <div
-                *ngIf="
+              <div *ngIf="
                   currentEnemyTurn.id === item.id || enemyTarget === item.id
-                "
-                class="cardPlayerBorderRotatingBox"
-              >
+                " class="cardPlayerBorderRotatingBox">
                 <div class="cardPlayerBorderRotating"></div>
               </div>
               <div class="cardPlayerBorder">
@@ -1586,17 +1081,11 @@
                 <div class="abilityBorder3 paperBgEnemy paperBgPlayer3"></div>
               </div>
               <div class="cardFooterIconBox swordBox">
-                <img
-                  [src]="'./assets/' + gameThemePath + '/sword.png'"
-                  class="cardIcon"
-                />
+                <img [src]="'./assets/' + gameThemePath + '/sword.png'" class="cardIcon" />
                 <div class="cardIconValue">
-                  <div
-                    class="attackDefenseText swordText"
-                    [ngStyle]="{
+                  <div class="attackDefenseText swordText" [ngStyle]="{
                       'font-family': gameThemePath + '-HeaderFont'
-                    }"
-                    [ngClass]="{
+                    }" [ngClass]="{
                       blueOffenseText:
                         item.attack < item.baseAttack ||
                         (currentAbility.abilityFunction === 'offense' &&
@@ -1604,34 +1093,23 @@
                           abilityEnemyTarget === item.id &&
                           !startedAbilityTurn &&
                           !canSelectCards)
-                    }"
-                  >
+                    }">
                     {{
-                      currentAbility.abilityFunction === "offense" &&
-                      currentAbility.targetAll === false &&
-                      abilityEnemyTarget === item.id &&
-                      !startedAbilityTurn &&
-                      !canSelectCards
-                        ? item.attack - currentAbility.abilityValue < 0
-                          ? "0"
-                          : item.attack - currentAbility.abilityValue
-                        : item.attack
-                    }}
+                    currentAbility.abilityFunction === "offense" &&
+                    currentAbility.targetAll === false &&
+                    abilityEnemyTarget === item.id &&
+                    !startedAbilityTurn &&
+                    !canSelectCards
+                    ? item.attack - currentAbility.abilityValue < 0 ? "0" : item.attack - currentAbility.abilityValue :
+                      item.attack }} </div>
                   </div>
                 </div>
-              </div>
-              <div class="cardFooterIconBox heartBox">
-                <img
-                  [src]="'./assets/' + gameThemePath + '/playerHealth.png'"
-                  class="cardIcon"
-                />
-                <div class="cardIconValue">
-                  <div
-                    class="attackDefenseText"
-                    [ngStyle]="{
+                <div class="cardFooterIconBox heartBox">
+                  <img [src]="'./assets/' + gameThemePath + '/playerHealth.png'" class="cardIcon" />
+                  <div class="cardIconValue">
+                    <div class="attackDefenseText" [ngStyle]="{
                       'font-family': gameThemePath + '-HeaderFont'
-                    }"
-                    [ngClass]="{
+                    }" [ngClass]="{
                       redHealthText:
                         item.health < item.baseHealth ||
                         (enemyTarget === item.id &&
@@ -1643,133 +1121,95 @@
                           abilityEnemyTarget === item.id &&
                           !startedAbilityTurn &&
                           !canSelectCards)
-                    }"
-                  >
-                    {{
+                    }">
+                      {{
                       (enemyTarget === item.id &&
-                        attackStarted &&
-                        !attackEnding) ||
+                      attackStarted &&
+                      !attackEnding) ||
                       (canSelectCards && enemyTarget === item.id)
-                        ? item.health - selectedCards.length - currentExtraDmg
-                        : (currentAbility.abilityFunction === "damage" ||
-                            currentAbility.abilityFunction === "leach") &&
-                          currentAbility.targetAll === false &&
-                          abilityEnemyTarget === item.id &&
-                          !startedAbilityTurn &&
-                          !canSelectCards
-                        ? item.health - currentAbility.abilityValue
-                        : item.health
-                    }}
-                  </div>
-                  <div
-                    class="centerNumberValue failText"
-                    [ngStyle]="{
+                      ? item.health - selectedCards.length - currentExtraDmg
+                      : (currentAbility.abilityFunction === "damage" ||
+                      currentAbility.abilityFunction === "leach") &&
+                      currentAbility.targetAll === false &&
+                      abilityEnemyTarget === item.id &&
+                      !startedAbilityTurn &&
+                      !canSelectCards
+                      ? item.health - currentAbility.abilityValue
+                      : item.health
+                      }}
+                    </div>
+                    <div class="centerNumberValue failText" [ngStyle]="{
                       'font-family': gameThemePath + '-HeaderFont'
-                    }"
-                    [ngClass]="{
+                    }" [ngClass]="{
                       showHitText: enemyTarget === item.id && canSelectCards
-                    }"
-                  >
-                    {{
+                    }">
+                      {{
                       selectedCards.length > 0
-                        ? "-" + (selectedCards.length + currentExtraDmg)
-                        : ""
-                    }}
+                      ? "-" + (selectedCards.length + currentExtraDmg)
+                      : ""
+                      }}
+                    </div>
                   </div>
                 </div>
+                <img [src]="item.image" class="cardBackgroundImage playerBackground" />
               </div>
-              <img
-                [src]="item.image"
-                class="cardBackgroundImage playerBackground"
-              />
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Player 1 -->
-  <div class="bottom">
-    <div
-      class="bottomLeft"
-      [ngClass]="{
+    <!-- Player 1 -->
+    <div class="bottom" *ngIf="!finishedRewards" [@fadeOutLeave]>
+      <div class="bottomLeft" [ngClass]="{
         darkenCard:
           currentAbility.abilityFunction === 'wildSuit' ||
           currentAbility.abilityFunction === 'wildRange' ||
           currentAbility.abilityFunction === 'wildSuitRange'
-      }"
-      *ngIf="redrawHide"
-      [@fadeUpEnter]="{ value: '', params: { delay: 300 } }"
-    >
-      <div
-        class="deck deckCard"
-        [ngStyle]="{
+      }" *ngIf="redrawHide" [@fadeUpEnter]="{ value: '', params: { delay: 300 } }">
+        <div class="deck deckCard" [ngStyle]="{
           'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
-        }"
-      ></div>
-      <div
-        class="deck deck1"
-        [ngStyle]="{
+        }"></div>
+        <div class="deck deck1" [ngStyle]="{
           'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
-        }"
-      ></div>
-      <div
-        class="deck deck2"
-        [ngStyle]="{
+        }"></div>
+        <div class="deck deck2" [ngStyle]="{
           'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
-        }"
-      ></div>
-      <div
-        class="deck deck3"
-        [ngStyle]="{
+        }"></div>
+        <div class="deck deck3" [ngStyle]="{
           'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
-        }"
-        *ngIf="!canSeeTopCard"
-      ></div>
-      <div class="abilityDeckCardBox">
-        <div
-          class="abilityDeckCard"
-          *ngIf="canSeeTopCard"
-          [@flipInYonEnter]="{ value: '', params: { delay: 900 } }"
-          [@fadeDownLeave]
-        >
-          <div class="cardBorder">
-            <img
-              [src]="'./assets/' + gameThemePath + '/abilitycard.png'"
-              class="cardBackgroundImage"
-            />
-            <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
-              <div class="abilityTitle paperBg">
-                <div class="abilityTitleText">{{ topAbilityCard.name }}</div>
-                <div class="abilitySuitsBox">
-                  <img
-                    *ngFor="let cost of topAbilityCard.cost"
-                    [src]="'./assets/' + gameThemePath + '/' + cost + '.png'"
-                    class="abilitySuit"
-                  />
-                </div>
-              </div>
-              <div class="abilityBorder1 paperBg"></div>
-              <div class="abilityBorder2 paperBg"></div>
-              <div class="abilityDescription paperBg">
-                <div class="abilityDescriptionLevel">
-                  <div class="levelText paperBg">
-                    Level {{ topAbilityCard.level }}
+        }" *ngIf="!canSeeTopCard"></div>
+        <div class="abilityDeckCardBox">
+          <div class="abilityDeckCard" *ngIf="canSeeTopCard" [@flipInYonEnter]="{ value: '', params: { delay: 900 } }"
+            [@fadeDownLeave]>
+            <div class="cardBorder">
+              <img [src]="'./assets/' + gameThemePath + '/abilitycard.png'" class="cardBackgroundImage" />
+              <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
+                <div class="abilityTitle paperBg">
+                  <div class="abilityTitleText">{{ topAbilityCard.name }}</div>
+                  <div class="abilitySuitsBox">
+                    <img *ngFor="let cost of topAbilityCard.cost"
+                      [src]="'./assets/' + gameThemePath + '/' + cost + '.png'" class="abilitySuit" />
                   </div>
                 </div>
-                <div class="abilityDescriptionText">
-                  {{ topAbilityCard.description }}
+                <div class="abilityBorder1 paperBg"></div>
+                <div class="abilityBorder2 paperBg"></div>
+                <div class="abilityDescription paperBg">
+                  <div class="abilityDescriptionLevel">
+                    <div class="levelText paperBg">
+                      Level {{ topAbilityCard.level }}
+                    </div>
+                  </div>
+                  <div class="abilityDescriptionText">
+                    {{ topAbilityCard.description }}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="bottomMiddle veryBottomMiddle"
-      [ngClass]="{
+      <div class="bottomMiddle veryBottomMiddle" [ngClass]="{
         attackingBottomMiddle:
           !showBotCards && enemyAttackStarted && canSelectCards,
         disabledCards:
@@ -1779,18 +1219,12 @@
           currentAbility.abilityFunction === 'wildSuit' ||
           currentAbility.abilityFunction === 'wildRange' ||
           currentAbility.abilityFunction === 'wildSuitRange'
-      }"
-      #myActiveCardsDefending
-      [@fadeOutLeave]="{
+      }" #myActiveCardsDefending [@fadeOutLeave]="{
         value: '',
         params: { duration: 400, delay: 0, translate: '30px' }
-      }"
-    >
-      <div
-        class="bottomCard playerBottomCard"
-        *ngFor="let card of abilityCardsHand; index as i; trackBy: trackById"
-        #activeAbilityCards
-        [ngClass]="{
+      }">
+        <div class="bottomCard playerBottomCard" *ngFor="let card of abilityCardsHand; index as i; trackBy: trackById"
+          #activeAbilityCards [ngClass]="{
           abilityIsActive: abilityCardIsSelected(card),
           abilityIsActiveTarget: currentAbility.id === card.id,
           darkenCard:
@@ -1798,75 +1232,51 @@
               currentAbility.abilityFunction === 'wildRange' ||
               currentAbility.abilityFunction === 'wildSuitRange') &&
             currentAbility.id !== card.id
-        }"
-        (click)="selectAbilityCard(card)"
-        (mouseenter)="hoverAbilityEnter(card)"
-        (mouseleave)="hoverAbilityOut(card)"
-        [ngStyle]="{
+        }" (click)="selectAbilityCard(card)" (mouseenter)="hoverAbilityEnter(card)"
+          (mouseleave)="hoverAbilityOut(card)" [ngStyle]="{
           'animation-delay': (i + 1) * 100 + 'ms'
-        }"
-        [@cardLeaving]
-      >
-        <div
-          class="cardBorder"
-          [ngClass]="{
+        }" [@cardLeaving]>
+          <div class="cardBorder" [ngClass]="{
             hoveringAbilityCard:
               cardIsValidForAbility(card) || currentAbility.id === card.id,
             activeCardBorder: abilityCardIsSelected(card),
             validCardBorder: abilityCardIsValid(card),
             errorCardBorder: errorAbilityCard.id === card.id
-          }"
-        >
-          <img
-            [src]="'./assets/' + gameThemePath + '/abilitycard.png'"
-            class="cardBackgroundImage"
-          />
-          <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
-            <div class="abilityTitle paperBg">
-              <div class="abilityTitleText">{{ card.name }}</div>
-              <div class="abilitySuitsBox">
-                <img
-                  *ngFor="let cost of card.cost"
-                  [src]="'./assets/' + gameThemePath + '/' + cost + '.png'"
-                  class="abilitySuit"
-                />
+          }">
+            <img [src]="'./assets/' + gameThemePath + '/abilitycard.png'" class="cardBackgroundImage" />
+            <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
+              <div class="abilityTitle paperBg">
+                <div class="abilityTitleText">{{ card.name }}</div>
+                <div class="abilitySuitsBox">
+                  <img *ngFor="let cost of card.cost" [src]="'./assets/' + gameThemePath + '/' + cost + '.png'"
+                    class="abilitySuit" />
+                </div>
               </div>
-            </div>
-            <div class="abilityBorder1 paperBg"></div>
-            <div class="abilityBorder2 paperBg"></div>
-            <div class="abilityDescription paperBg">
-              <div class="abilityDescriptionLevel">
-                <div class="levelText paperBg">Level {{ card.level }}</div>
-              </div>
-              <div class="abilityDescriptionText">
-                {{ card.description }}
+              <div class="abilityBorder1 paperBg"></div>
+              <div class="abilityBorder2 paperBg"></div>
+              <div class="abilityDescription paperBg">
+                <div class="abilityDescriptionLevel">
+                  <div class="levelText paperBg">Level {{ card.level }}</div>
+                </div>
+                <div class="abilityDescriptionText">
+                  {{ card.description }}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div
-        class="bottomCard playerBottomCard"
-        *ngFor="let card of playerHand; index as i; trackBy: trackById"
-        [ngClass]="{
+        <div class="bottomCard playerBottomCard" *ngFor="let card of playerHand; index as i; trackBy: trackById"
+          [ngClass]="{
           activeCard: cardIsSelected(card),
           abilityActiveCard: cardIsValidForAbilityCard(card),
           chooseCardAbilityActiveCard:
                 currentAbility.abilityFunction === 'wildSuit' ||
                 currentAbility.abilityFunction === 'wildRange' ||
                 currentAbility.abilityFunction === 'wildSuitRange',
-        }"
-        #myActiveCards
-        (click)="selectCard(card)"
-        (wheel)="wildCardScrollChange($event, card)"
-        [ngStyle]="{
+        }" #myActiveCards (click)="selectCard(card)" (wheel)="wildCardScrollChange($event, card)" [ngStyle]="{
           'animation-delay': (i + 3) * 100 + 'ms'
-        }"
-        [@cardLeaving]
-      >
-        <div
-          class="cardBorder"
-          [ngClass]="{
+        }" [@cardLeaving]>
+          <div class="cardBorder" [ngClass]="{
             chooseCardAbilityBorder:
               currentAbility.abilityFunction === 'wildSuit' ||
               currentAbility.abilityFunction === 'wildRange' ||
@@ -1876,30 +1286,18 @@
             validCardBorder: cardIsValid(card),
             errorCardBorder:
               !cardIsValid(card) && cardIsSelected(card) && !enemyAttackStarted
-          }"
-        >
-          <img
-            [src]="'./assets/' + gameThemePath + '/cards/' + card.image"
-            class="cardBackgroundImage"
-          />
-          <div class="wildCard bottomWildCard" *ngIf="card.wild"></div>
-          <div
-            class="wildCardIcon"
-            *ngIf="card.wild && card.wildRange && card.wildRange > 0"
-            [ngClass]="{
+          }">
+            <img [src]="'./assets/' + gameThemePath + '/cards/' + card.image" class="cardBackgroundImage" />
+            <div class="wildCard bottomWildCard" *ngIf="card.wild"></div>
+            <div class="wildCardIcon" *ngIf="card.wild && card.wildRange && card.wildRange > 0" [ngClass]="{
               specialWildRangeIcon: card.wildRange === 14
-            }"
-          >
-            <div
-              class="wildText wildValueText"
-              [@fadeEnter]="{
+            }">
+              <div class="wildText wildValueText" [@fadeEnter]="{
                 value: '',
                 params: { duration: 400, delay: 1000, translate: '30px' }
-              }"
-              [ngClass]="{
+              }" [ngClass]="{
                 specialWildRangeIconText: card.wildRange === 14
-              }"
-              [ngStyle]="
+              }" [ngStyle]="
                 card.wildRange === 14
                   ? {
                       'font-family': gameThemePath + '-HeaderFont'
@@ -1907,132 +1305,70 @@
                   : {
                       'font-family': gameThemePath + '-HeaderFont'
                     }
-              "
-            >
-              {{ card.wildRange === 14 ? "★" : "+" + card.wildRange }}
+              ">
+                {{ card.wildRange === 14 ? "★" : "+" + card.wildRange }}
+              </div>
             </div>
-          </div>
-          <div
-            class="wildCardSuites bottomWildCard"
-            *ngIf="card.wild && card.wildSuit"
-          >
-            <img
-              [src]="'./assets/' + gameThemePath + '/hearts.png'"
-              class="suit"
-              *ngIf="
+            <div class="wildCardSuites bottomWildCard" *ngIf="card.wild && card.wildSuit">
+              <img [src]="'./assets/' + gameThemePath + '/hearts.png'" class="suit" *ngIf="
                 card.wildSuits && card.wildSuits[0] && card.wildSuits[0] === 1
-              "
-              (click)="chooseWildSuit($event, card, 'hearts')"
-            />
-            <img
-              [src]="'./assets/' + gameThemePath + '/diamonds.png'"
-              class="suit"
-              *ngIf="
+              " (click)="chooseWildSuit($event, card, 'hearts')" />
+              <img [src]="'./assets/' + gameThemePath + '/diamonds.png'" class="suit" *ngIf="
                 card.wildSuits && card.wildSuits[1] && card.wildSuits[1] === 1
-              "
-              (click)="chooseWildSuit($event, card, 'diamonds')"
-            />
-            <img
-              [src]="'./assets/' + gameThemePath + '/spades.png'"
-              class="suit suitLast"
-              *ngIf="
+              " (click)="chooseWildSuit($event, card, 'diamonds')" />
+              <img [src]="'./assets/' + gameThemePath + '/spades.png'" class="suit suitLast" *ngIf="
                 card.wildSuits && card.wildSuits[2] && card.wildSuits[2] === 1
-              "
-              (click)="chooseWildSuit($event, card, 'spades')"
-            />
-            <img
-              [src]="'./assets/' + gameThemePath + '/clubs.png'"
-              class="suit"
-              *ngIf="
+              " (click)="chooseWildSuit($event, card, 'spades')" />
+              <img [src]="'./assets/' + gameThemePath + '/clubs.png'" class="suit" *ngIf="
                 card.wildSuits && card.wildSuits[3] && card.wildSuits[3] === 1
-              "
-              (click)="chooseWildSuit($event, card, 'clubs')"
-            />
+              " (click)="chooseWildSuit($event, card, 'clubs')" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="bottomRight"
-      [ngClass]="{
+      <div class="bottomRight" [ngClass]="{
         darkenCard:
           currentAbility.abilityFunction === 'wildSuit' ||
           currentAbility.abilityFunction === 'wildRange' ||
           currentAbility.abilityFunction === 'wildSuitRange'
-      }"
-      *ngIf="redrawHide"
-      [@fadeUpEnter]="{ value: '', params: { delay: 300 } }"
-    >
-      <div
-        class="attackButtonBox"
-        *ngIf="redrawHide"
-        [ngClass]="{
+      }" *ngIf="redrawHide" [@fadeUpEnter]="{ value: '', params: { delay: 300 } }">
+        <div class="attackButtonBox" *ngIf="redrawHide" [ngClass]="{
           disabledButton:
             (!canSelectCards || selectedCards.length < 1) &&
             (playerHand.length !== 0 || selectedCards.length !== 0)
-        }"
-        [@fadeEnter]="{
+        }" [@fadeEnter]="{
           value: '',
           params: { duration: 400, delay: 1000, translate: '30px' }
-        }"
-        [@fadeUpLeave]
-      >
-        <img
-          [src]="'./assets/' + gameThemePath + '/attack.png'"
-          class="attackButton"
-          [ngClass]="{
+        }" [@fadeUpLeave]>
+          <img [src]="'./assets/' + gameThemePath + '/attack.png'" class="attackButton" [ngClass]="{
             disabledButtonAnimation: !canSelectCards || selectedCards.length < 1
-          }"
-          (click)="attack()"
-        />
-        <div
-          class="defendAttackTxt wildText attackTxt"
-          [ngStyle]="{
+          }" (click)="attack()" />
+          <div class="defendAttackTxt wildText attackTxt" [ngStyle]="{
             'font-family': gameThemePath + '-HeaderFont'
-          }"
-        >
-          Attack
+          }">
+            Attack
+          </div>
         </div>
-      </div>
-      <div
-        class="deck deckCard"
-        [ngStyle]="{
+        <div class="deck deckCard" [ngStyle]="{
           'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
-        }"
-      ></div>
-      <div
-        class="deck deck1"
-        [ngStyle]="{
+        }"></div>
+        <div class="deck deck1" [ngStyle]="{
           'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
-        }"
-      ></div>
-      <div
-        class="deck deck2"
-        [ngStyle]="{
+        }"></div>
+        <div class="deck deck2" [ngStyle]="{
           'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
-        }"
-      ></div>
-      <div
-        class="deck deck3"
-        [ngStyle]="{
+        }"></div>
+        <div class="deck deck3" [ngStyle]="{
           'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
-        }"
-        *ngIf="!canSeeTopCard"
-      ></div>
-      <div
-        [@flipInYonEnter]="{ value: '', params: { delay: 600 } }"
-        [@fadeDownLeave]
-        [ngStyle]="{
+        }" *ngIf="!canSeeTopCard"></div>
+        <div [@flipInYonEnter]="{ value: '', params: { delay: 600 } }" [@fadeDownLeave] [ngStyle]="{
           'background-image':
             'url(./assets/' +
             gameThemePath +
             '/cards/' +
             playerDeck[0].image +
             ')'
-        }"
-        *ngIf="canSeeTopCard && topRedrawCard === playerDeck[0].id"
-        class="deck deckTopImage"
-      ></div>
+        }" *ngIf="canSeeTopCard && topRedrawCard === playerDeck[0].id" class="deck deckTopImage"></div>
+      </div>
     </div>
   </div>
-</div>
