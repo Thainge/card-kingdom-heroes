@@ -2,13 +2,97 @@
   <div class="snowContainer" *ngIf="showSnowEffect">
     <div *ngFor="let item of snowFlakesArray" class="snow"></div>
   </div>
-  <div class="snowContainer" *ngIf="showWinterLightsEffect">
-    <div class="jumbo"></div>
+  <div class="nightContainer" *ngIf="showNightEffect">
+    <div class="nightMode"></div>
+    <div class="nightModeStars"></div>
   </div>
-  <div class="rainBodyContainer" *ngIf="showRainEffect">
-    <div class="rainBody">
-      <div class="rain front-row" #frontRainRow></div>
-      <div class="rain back-row" #backRainRow></div>
+  <div class="snowContainer" *ngIf="showFireEffect">
+    <div class="fireEffect"></div>
+  </div>
+  <div class="snowContainer" *ngIf="showCloudsEffect">
+    <div class="clouds"></div>
+  </div>
+
+  <div class="snowContainer" *ngIf="showSunFlareEffect">
+    <div class="light">
+      <div class="flare one">
+        <div class="flare two">
+          <div class="flare five"></div>
+          <div class="flare six"></div>
+          <div class="flare three">
+            <div class="flare four"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="snowContainer" *ngIf="showBubblesEffect">
+    <div class="ocean">
+      <div class="bubble bubble--1"></div>
+      <div class="bubble bubble--2"></div>
+      <div class="bubble bubble--3"></div>
+      <div class="bubble bubble--4"></div>
+      <div class="bubble bubble--5"></div>
+      <div class="bubble bubble--6"></div>
+      <div class="bubble bubble--7"></div>
+      <div class="bubble bubble--8"></div>
+      <div class="bubble bubble--9"></div>
+      <div class="bubble bubble--10"></div>
+      <div class="bubble bubble--11"></div>
+      <div class="bubble bubble--12"></div>
+    </div>
+  </div>
+  <div *ngIf="showLeavesEffect" class="snowContainer">
+    <div id="leaves">
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+    </div>
+    <div id="leaves" class="leavesOther">
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+    </div>
+    <div id="leaves" class="leavesOther1">
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
     </div>
   </div>
   <div *ngFor="let item of clickAnimationsList">

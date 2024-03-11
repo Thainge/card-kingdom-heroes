@@ -6,6 +6,7 @@ import {
   HostListener,
   OnInit,
   QueryList,
+  Renderer2,
   ViewChild,
   ViewChildren,
 } from '@angular/core';
@@ -247,8 +248,13 @@ export class BattleComponent implements OnInit {
 
   snowFlakesArray: any[] = [];
   showSnowEffect: boolean = false;
-  showWinterLightsEffect: boolean = false;
-  showRainEffect: boolean = true;
+  showBubblesEffect: boolean = false;
+  showLeavesEffect: boolean = false;
+  showSunFlareEffect: boolean = false;
+  showCloudsEffect: boolean = true;
+
+  showNightEffect: boolean = true;
+  showFireEffect: boolean = false;
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -268,9 +274,6 @@ export class BattleComponent implements OnInit {
 
   @ViewChildren('playerRef') playerRef: QueryList<ElementRef> | undefined;
   @ViewChild('enemyDefenseRef') enemyDefenseRef: ElementRef | undefined;
-
-  @ViewChild('frontRainRow') frontRainRow: ElementRef | undefined;
-  @ViewChild('backRainRow') backRainRow: ElementRef | undefined;
 
   constructor(
     private cardService: CardService,
@@ -339,64 +342,6 @@ export class BattleComponent implements OnInit {
 
   ngAfterViewInit() {
     this.snowFlakesArray = Array.from(Array(150).keys());
-    if (this.showRainEffect) {
-      this.makeItRain();
-    }
-  }
-
-  makeItRain() {
-    var increment = 0;
-    var drops = '';
-    var backDrops = '';
-
-    while (increment < 100) {
-      //couple random numbers to use for various randomizations
-      //random number between 98 and 1
-      var randoHundo = Math.floor(Math.random() * (98 - 1 + 1) + 1);
-      //random number between 5 and 2
-      var randoFiver = Math.floor(Math.random() * (5 - 2 + 1) + 2);
-      //increment
-      increment += randoFiver;
-      //add in a new raindrop with various randomizations to certain CSS properties
-      drops +=
-        '<div class="drop" style="left: ' +
-        increment +
-        '%; bottom: ' +
-        (randoFiver + randoFiver - 1 + 100) +
-        '%; animation-delay: 0.' +
-        randoHundo +
-        's; animation-duration: 0.5' +
-        randoHundo +
-        's;"><div class="stem" style="animation-delay: 0.' +
-        randoHundo +
-        's; animation-duration: 0.5' +
-        randoHundo +
-        's;"></div><div class="splat" style="animation-delay: 0.' +
-        randoHundo +
-        's; animation-duration: 0.5' +
-        randoHundo +
-        's;"></div></div>';
-      backDrops +=
-        '<div class="drop" style="right: ' +
-        increment +
-        '%; bottom: ' +
-        (randoFiver + randoFiver - 1 + 100) +
-        '%; animation-delay: 0.' +
-        randoHundo +
-        's; animation-duration: 0.5' +
-        randoHundo +
-        's;"><div class="stem" style="animation-delay: 0.' +
-        randoHundo +
-        's; animation-duration: 0.5' +
-        randoHundo +
-        's;"></div><div class="splat" style="animation-delay: 0.' +
-        randoHundo +
-        's; animation-duration: 0.5' +
-        randoHundo +
-        's;"></div></div>';
-    }
-    this.frontRainRow?.nativeElement?.append(drops);
-    this.backRainRow?.nativeElement?.append(backDrops);
   }
 
   async clickAnimation(e: any) {
