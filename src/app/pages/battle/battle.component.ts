@@ -1,3 +1,4 @@
+import { CardDto } from './../../models/card';
 import { AbilityCard } from './../../models/abilityCard';
 import { CommonModule } from '@angular/common';
 import {
@@ -66,6 +67,11 @@ type ClickObject = {
   x: number;
   y: number;
 };
+
+interface ShuffledAbilityCards {
+  id: number;
+  validCards: any[];
+}
 
 @Component({
   selector: 'app-battle',
@@ -255,6 +261,11 @@ export class BattleComponent implements OnInit {
   showNightEffect: boolean = false;
   showFireEffect: boolean = false;
   showAshesEffect: boolean = false;
+
+  abilityHandMemory: ShuffledAbilityCards = {
+    id: 0,
+    validCards: []
+  }
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -491,10 +502,12 @@ export class BattleComponent implements OnInit {
   }
 
   async selectAbilityCard(ability: AbilityCard) {
-    const canUse: CardDto[] = this.abilityService.checkCanUseAbility(
+    let canUse: CardDto[] = this.abilityService.checkCanUseAbility(
       ability,
       this.playerHand
     );
+
+    canUse = this.addAbilityCardsToList(canUse, ability);
 
     if (canUse.length > 0 || ability.cost.length === 0) {
       this.errorAbilityCard = ability;
@@ -938,6 +951,24 @@ export class BattleComponent implements OnInit {
     this.endAbilityTurn(this.currentAbility, 100);
   }
 
+  addAbilityCardsToList(cards: CardDto[], abilityCard: AbilityCard): CardDto[] {
+    // on hover/click passes in valid array
+    // on scroll passes shuffled array
+    // Passes in either a shuffled array or a valid array
+
+    // 
+
+    this.abilityHandMemory
+
+    const shuffledHand: ShuffledAbilityCards = {
+      id: 0,
+      validCards: [] // list of valid cards found for this ability card
+    };
+
+    // Return if 
+    return cards;
+  }
+
   abilityCardChangeUseCards(ability: AbilityCard) {
     // shuffy array and try again
 
@@ -948,9 +979,13 @@ export class BattleComponent implements OnInit {
     this.currentlyRunning = false;
 
     const shuffledHand = this.cardService.shuffle([...this.playerHand]);
-    const canUse: CardDto[] = this.abilityService.checkCanUseAbility(ability, [
+    
+    // add shuffled array as ability
+    let canUse: CardDto[] = this.abilityService.checkCanUseAbility(ability, [
       ...shuffledHand,
     ]);
+
+    canUse = this.addAbilityCardsToList(canUse, ability);
 
     if (canUse.length < 1 && ability.cost.length !== 0) {
       return;
@@ -973,10 +1008,12 @@ export class BattleComponent implements OnInit {
       return;
     }
 
-    const canUse: CardDto[] = this.abilityService.checkCanUseAbility(
+    let canUse: CardDto[] = this.abilityService.checkCanUseAbility(
       ability,
       this.playerHand
     );
+
+    canUse = this.addAbilityCardsToList(canUse, ability);
 
     if (canUse.length < 1 && ability.cost.length !== 0) {
       return;
