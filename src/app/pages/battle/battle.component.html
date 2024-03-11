@@ -1,4 +1,87 @@
 <div class="container" (click)="clickAnimation($event)">
+  <div class="DevItemsList">
+    <div
+      class="DevItem"
+      [ngClass]="{
+        activeDevItem: showSnowEffect
+      }"
+      title="Snow"
+      (click)="showSnowEffect = !showSnowEffect"
+    >
+      🌙
+    </div>
+
+    <div
+      class="DevItem"
+      [ngClass]="{
+        activeDevItem: showBubblesEffect
+      }"
+      title="Bubbles"
+      (click)="showBubblesEffect = !showBubblesEffect"
+    >
+      🌙
+    </div>
+    <div
+      class="DevItem"
+      [ngClass]="{
+        activeDevItem: showLeavesEffect
+      }"
+      title="Leaves"
+      (click)="showLeavesEffect = !showLeavesEffect"
+    >
+      🌙
+    </div>
+    <div
+      class="DevItem"
+      [ngClass]="{
+        activeDevItem: showSunFlareEffect
+      }"
+      title="Sun Flare"
+      (click)="showSunFlareEffect = !showSunFlareEffect"
+    >
+      🌙
+    </div>
+    <div
+      class="DevItem"
+      [ngClass]="{
+        activeDevItem: showCloudsEffect
+      }"
+      title="Clouds"
+      (click)="showCloudsEffect = !showCloudsEffect"
+    >
+      🌙
+    </div>
+    <div
+      class="DevItem"
+      [ngClass]="{
+        activeDevItem: showNightEffect
+      }"
+      title="Night"
+      (click)="showNightEffect = !showNightEffect"
+    >
+      🌙
+    </div>
+    <div
+      class="DevItem"
+      [ngClass]="{
+        activeDevItem: showFireEffect
+      }"
+      title="Volcanic"
+      (click)="showFireEffect = !showFireEffect"
+    >
+      🌙
+    </div>
+    <div
+      class="DevItem"
+      [ngClass]="{
+        activeDevItem: showAshesEffect
+      }"
+      title="Ashes"
+      (click)="showAshesEffect = !showAshesEffect"
+    >
+      🌙
+    </div>
+  </div>
   <div class="snowContainer" *ngIf="showSnowEffect">
     <div *ngFor="let item of snowFlakesArray" class="snow"></div>
   </div>
@@ -16,7 +99,7 @@
     <div class="clouds"></div>
   </div>
 
-  <div class="snowContainer" *ngIf="showSunFlareEffect">
+  <div class="sunContainer" *ngIf="showSunFlareEffect">
     <div class="light">
       <div class="flare one">
         <div class="flare two">
@@ -29,7 +112,7 @@
       </div>
     </div>
   </div>
-  <div class="snowContainer" *ngIf="showBubblesEffect">
+  <div class="sunContainer" *ngIf="showBubblesEffect">
     <div class="ocean">
       <div class="bubble bubble--1"></div>
       <div class="bubble bubble--2"></div>

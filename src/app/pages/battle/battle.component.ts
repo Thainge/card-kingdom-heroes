@@ -254,7 +254,7 @@ export class BattleComponent implements OnInit {
   showCloudsEffect: boolean = false;
   showNightEffect: boolean = false;
   showFireEffect: boolean = false;
-  showAshesEffect: boolean = true;
+  showAshesEffect: boolean = false;
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
