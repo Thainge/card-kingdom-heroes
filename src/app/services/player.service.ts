@@ -94,8 +94,11 @@ export class playerService implements OnInit {
       health: 5 + playerSkills.extraHealth,
       baseHealth: 9 + playerSkills.extraHealth,
       baseAttack: 4 + playerSkills.extraAttack,
-      level: 1,
+      level: 2,
+      xp: 60,
+      xpLevels: [60, 90, 120],
       skills: playerSkills,
+      isMaxLevel: false,
     };
   }
 
@@ -154,7 +157,7 @@ export class playerService implements OnInit {
         abilityFunction: 'damage',
         targetAll: true,
         abilityValue: 1,
-        cost: ['diamonds'],
+        cost: ['hearts', 'diamonds', 'clubs', 'spades'],
         name: 'Ganon',
         description: 'Deal 1 damage to every enemy',
         image: './assets/' + gameThemePath + '/abilitycard.png',

@@ -7,6 +7,9 @@ export interface PlayerDto {
   baseHealth: number;
   baseAttack: number;
   level: number;
+  xp?: number;
+  xpLevels?: number[];
+  isMaxLevel?: boolean;
   skills?: PlayerUnlockedAbilties;
 }
 

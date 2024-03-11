@@ -234,11 +234,21 @@ export class BattleComponent implements OnInit {
   clickAnimationsList: ClickObject[] = [];
   gameLoserPlayer: boolean = false;
   gameWinnerPlayer: boolean = false;
-  shownRewardItem: any = {id: 0};
-  rewardItemsClean: any[] = [{id: 1},{id: 2},{id: 3}];
-  rewardItems: any[] = [{id: 1},{id: 2},{id: 3}];
+  shownRewardItem: any = { id: 0 };
+  rewardItemsClean: any[] = [{ id: 1 }, { id: 2 }, { id: 3 }];
+  rewardItems: any[] = [{ id: 1 }, { id: 2 }, { id: 3 }];
   canClickNextReward: boolean = false;
   finishedRewards: boolean = false;
+  showHeroLevelUp: boolean = false;
+  canClickToFinishHeroLevelUp: boolean = false;
+
+  battleRewardXp: number = 50;
+  leveledUp: boolean = false;
+
+  snowFlakesArray: any[] = [];
+  showSnowEffect: boolean = false;
+  showWinterLightsEffect: boolean = false;
+  showRainEffect: boolean = true;
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -259,19 +269,22 @@ export class BattleComponent implements OnInit {
   @ViewChildren('playerRef') playerRef: QueryList<ElementRef> | undefined;
   @ViewChild('enemyDefenseRef') enemyDefenseRef: ElementRef | undefined;
 
+  @ViewChild('frontRainRow') frontRainRow: ElementRef | undefined;
+  @ViewChild('backRainRow') backRainRow: ElementRef | undefined;
+
   constructor(
     private cardService: CardService,
     private userService: playerService,
     private abilityService: AbilityService
-  ) { }
+  ) {}
 
   ngOnInit() {
     setInterval(() => {
       try {
-        this.clickAnimationsList = this.clickAnimationsList.slice(this.clickAnimationsList.length - 4);
-      } catch (err) {
-
-      }
+        this.clickAnimationsList = this.clickAnimationsList.slice(
+          this.clickAnimationsList.length - 4
+        );
+      } catch (err) {}
     }, 1000 * 30);
     this.importRandomBgImage();
     // Get game theme
@@ -324,6 +337,68 @@ export class BattleComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    this.snowFlakesArray = Array.from(Array(150).keys());
+    if (this.showRainEffect) {
+      this.makeItRain();
+    }
+  }
+
+  makeItRain() {
+    var increment = 0;
+    var drops = '';
+    var backDrops = '';
+
+    while (increment < 100) {
+      //couple random numbers to use for various randomizations
+      //random number between 98 and 1
+      var randoHundo = Math.floor(Math.random() * (98 - 1 + 1) + 1);
+      //random number between 5 and 2
+      var randoFiver = Math.floor(Math.random() * (5 - 2 + 1) + 2);
+      //increment
+      increment += randoFiver;
+      //add in a new raindrop with various randomizations to certain CSS properties
+      drops +=
+        '<div class="drop" style="left: ' +
+        increment +
+        '%; bottom: ' +
+        (randoFiver + randoFiver - 1 + 100) +
+        '%; animation-delay: 0.' +
+        randoHundo +
+        's; animation-duration: 0.5' +
+        randoHundo +
+        's;"><div class="stem" style="animation-delay: 0.' +
+        randoHundo +
+        's; animation-duration: 0.5' +
+        randoHundo +
+        's;"></div><div class="splat" style="animation-delay: 0.' +
+        randoHundo +
+        's; animation-duration: 0.5' +
+        randoHundo +
+        's;"></div></div>';
+      backDrops +=
+        '<div class="drop" style="right: ' +
+        increment +
+        '%; bottom: ' +
+        (randoFiver + randoFiver - 1 + 100) +
+        '%; animation-delay: 0.' +
+        randoHundo +
+        's; animation-duration: 0.5' +
+        randoHundo +
+        's;"><div class="stem" style="animation-delay: 0.' +
+        randoHundo +
+        's; animation-duration: 0.5' +
+        randoHundo +
+        's;"></div><div class="splat" style="animation-delay: 0.' +
+        randoHundo +
+        's; animation-duration: 0.5' +
+        randoHundo +
+        's;"></div></div>';
+    }
+    this.frontRainRow?.nativeElement?.append(drops);
+    this.backRainRow?.nativeElement?.append(backDrops);
+  }
+
   async clickAnimation(e: any) {
     const ID = this.clickAnimationsList.length + 1;
     const clickObject: ClickObject = {
@@ -340,7 +415,7 @@ export class BattleComponent implements OnInit {
       this.canClickNextReward = false;
       this.rewardItems = this.rewardItems.filter((x) => x.id !== rewardItem.id);
       // Hide current reward
-      this.shownRewardItem = {id: 0};
+      this.shownRewardItem = { id: 0 };
       await this.timeout(750);
       // show new reward
       this.shownRewardItem = this.rewardItems[0];
@@ -441,7 +516,7 @@ export class BattleComponent implements OnInit {
       }
     }, 400);
 
-    this.gameWinnerPlayer = true;
+    // this.gameWinnerPlayer = true;
     this.redrawing = false;
     this.redrawHide = true;
     this.playerHand = [...this.redrawCards];
@@ -450,7 +525,7 @@ export class BattleComponent implements OnInit {
     this.drawAbilityCardBot(2);
     // this.finishedRewards = true;
     // this.rewardItems = [];
-    this.endGame(true);
+    // this.endGame(true);
     // this.newTurn();
     // this.startBotTurnsLoop();
     // this.healOnPlayer = true;
@@ -463,7 +538,11 @@ export class BattleComponent implements OnInit {
   }
 
   continue() {
-    console.log('leave page')
+    console.log('leave page');
+  }
+
+  retry() {
+    window.location.reload();
   }
 
   async selectAbilityCard(ability: AbilityCard) {
@@ -912,6 +991,35 @@ export class BattleComponent implements OnInit {
     });
 
     this.endAbilityTurn(this.currentAbility, 100);
+  }
+
+  abilityCardChangeUseCards(ability: AbilityCard) {
+    // shuffy array and try again
+
+    // If currently running, return
+    if (this.hoveringAbilityHand.length === 0 || this.usedAbilityCard) {
+      return;
+    }
+    this.currentlyRunning = false;
+
+    const shuffledHand = this.cardService.shuffle([...this.playerHand]);
+    const canUse: CardDto[] = this.abilityService.checkCanUseAbility(ability, [
+      ...shuffledHand,
+    ]);
+
+    if (canUse.length < 1 && ability.cost.length !== 0) {
+      return;
+    }
+
+    if (!this.currentlyRunning) {
+      this.currentlyRunning = true;
+      this.hoveringAbilityCard = ability;
+      this.hoveringAbilityHand = canUse;
+
+      if (canUse.length > 0) {
+        this.setAttackArrowsPlayerAbility();
+      }
+    }
   }
 
   hoverAbilityEnter(ability: AbilityCard) {
@@ -1864,7 +1972,6 @@ export class BattleComponent implements OnInit {
   async attack() {
     if (this.selectedCards.length === 0 && this.playerHand.length === 0) {
       this.newTurn();
-      console.log('hit1');
       await this.addCardsToBothHands();
 
       // Player turn ends
@@ -2079,8 +2186,8 @@ export class BattleComponent implements OnInit {
           const newHealth = x.health - incomingAttackPower;
           console.log(
             'Player Wins Attack: Attacking bot for ' +
-            incomingAttackPower +
-            ' damage'
+              incomingAttackPower +
+              ' damage'
           );
           setTimeout(() => {
             this.numbersGoDownIncrementally(x.health, newHealth);
@@ -2121,8 +2228,8 @@ export class BattleComponent implements OnInit {
           const newHealth = x.health - incomingAttackPower;
           console.log(
             'Player Wins Attack: Attacking bot for ' +
-            incomingAttackPower +
-            ' damage'
+              incomingAttackPower +
+              ' damage'
           );
           setTimeout(() => {
             this.numbersGoDownIncrementally(x.health, newHealth);
@@ -2143,7 +2250,6 @@ export class BattleComponent implements OnInit {
     await this.timeout(500);
     this.attackStarted = false;
     this.newTurn();
-    console.log('hit2');
     await this.addCardsToBothHands();
 
     // Player turn ends
@@ -2183,24 +2289,125 @@ export class BattleComponent implements OnInit {
     return false;
   }
 
+  levelUpPlayer() {
+    // Gradually increase xp
+    setTimeout(() => {
+      this.gradualXpIncrease();
+    }, 800);
+  }
+
+  async gradualXpIncrease() {
+    if (this.player.xpLevels && (this.player.xp === 0 || this.player.xp)) {
+      const increaseValue = this.battleRewardXp;
+      const increaseArr = Array.from(Array(increaseValue).keys());
+
+      for await (const x of increaseArr) {
+        this.player.xp = this.player.xp + 1;
+        this.battleRewardXp = this.battleRewardXp - 1;
+
+        if (
+          this.player.xp === this.player.xpLevels[this.player.level - 1] &&
+          !this.player.isMaxLevel
+        ) {
+          // Level up character
+          this.leveledUp = true;
+          this.player.xp = 0;
+          this.player.level = this.player.level + 1;
+
+          // If player
+          if (this.player.level > 3) {
+            this.player.isMaxLevel = true;
+            this.player.level = 3;
+          }
+        }
+        await this.timeout(25);
+      }
+
+      await this.timeout(1700);
+      this.canClickToFinishHeroLevelUp = true;
+    }
+  }
+
+  finishHeroLevelUp() {
+    if (!this.canClickToFinishHeroLevelUp) {
+      return;
+    }
+    if (this.leveledUp) {
+      console.log('level up');
+      const newId = this.rewardItemsClean.length;
+      const heroLevelUpItem = { id: newId + 1 };
+      const heroCardPack = { id: newId + 2 };
+      this.rewardItemsClean.unshift(heroLevelUpItem);
+      this.rewardItemsClean.unshift(heroCardPack);
+      this.rewardItems = this.rewardItemsClean;
+      this.showHeroLevelUp = false;
+      setTimeout(() => {
+        this.canClickNextReward = true;
+        this.nextReward({ id: 0 });
+      }, 399);
+    } else {
+      setTimeout(() => {
+        this.showHeroLevelUp = false;
+        this.canClickNextReward = true;
+        this.nextReward({ id: 0 });
+      }, 399);
+    }
+  }
+
+  determineXpValues(): string {
+    if ((this.player.xp === 0 || this.player.xp) && this.player.xpLevels) {
+      const current = this.player.xp;
+      const total = this.player.xpLevels[this.player.level - 1];
+
+      // Check if max level
+      if (this.player.isMaxLevel) {
+        return 'Max Level';
+      }
+
+      return `${current}/${total}`;
+    }
+
+    return '';
+  }
+
+  determineWidthXp(): string {
+    if (this.player.xpLevels && (this.player.xp === 0 || this.player.xp)) {
+      const currentXp: number = this.player.xp;
+      const totalXp: number = this.player.xpLevels[this.player.level - 1];
+      const percentageXp = (currentXp / totalXp) * 98;
+      if (percentageXp > 98 || this.player.isMaxLevel) {
+        return '98%';
+      }
+      return percentageXp + '%';
+    }
+    return '98%';
+  }
+
   endGame(playerWon: boolean) {
     if (playerWon) {
       setTimeout(() => {
         this.gameWinnerPlayer = true;
-      },1000);
+      }, 1000);
       setTimeout(() => {
-        this.canClickNextReward = true;
-        this.nextReward({id: 0});
-      }, 2600);
-      
+        this.showHeroLevelUp = true;
+      }, 4300);
+      setTimeout(() => {
+        this.levelUpPlayer();
+      }, 4600);
+      // this.gameWinnerPlayer = true;
+      // this.showHeroLevelUp = true;
+      // setTimeout(() => {
+      //   this.levelUpPlayer();
+      // }, 300);
     } else {
       setTimeout(() => {
         this.gameLoserPlayer = true;
-      },1000);
+        this.rewardItems = [];
+        this.rewardItemsClean = [];
+      }, 1000);
       setTimeout(() => {
-        this.canClickNextReward = true;
-        this.nextReward({id: 0});
-      }, 2600);
+        this.finishedRewards = true;
+      }, 4500);
     }
   }
 
@@ -2282,7 +2489,6 @@ export class BattleComponent implements OnInit {
       this.pushMessage('Player Turn');
       this.addCardsToBothHands();
       this.newTurn();
-      console.log('hit3');
     }
   }
 
@@ -2374,7 +2580,6 @@ export class BattleComponent implements OnInit {
         this.addCardsToBothHands();
         this.newTurn();
         this.pushMessage('Player Turn');
-        console.log('hit4');
       } else {
         // If player needs to discard
         this.enemyNextTurn = false;
@@ -2444,8 +2649,8 @@ export class BattleComponent implements OnInit {
           extraTimeout = incomingAttackPower;
           console.log(
             'Player Defended: Attacking bot for ' +
-            incomingAttackPower +
-            ' damage'
+              incomingAttackPower +
+              ' damage'
           );
           const newHealth = x.health - incomingAttackPower;
           setTimeout(() => {
@@ -2465,8 +2670,8 @@ export class BattleComponent implements OnInit {
       const newHealth = this.player.health - incomingAttackPower;
       console.log(
         'Bot Wins Attack: Attacking player for ' +
-        incomingAttackPower +
-        ' damage'
+          incomingAttackPower +
+          ' damage'
       );
       setTimeout(() => {
         this.numbersGoDownIncrementally(this.player.health, newHealth, true);
@@ -2492,8 +2697,8 @@ export class BattleComponent implements OnInit {
           extraTimeout = incomingAttackPower;
           console.log(
             'Player Defended: Attacking bot for ' +
-            incomingAttackPower +
-            ' damage'
+              incomingAttackPower +
+              ' damage'
           );
           const newHealth = x.health - incomingAttackPower;
           setTimeout(() => {
@@ -2515,7 +2720,6 @@ export class BattleComponent implements OnInit {
     await this.timeout(500);
     this.attackStarted = false;
     this.newTurn();
-    console.log('hit5');
     this.startBotTurnsLoop();
   }
 
@@ -2737,7 +2941,6 @@ export class BattleComponent implements OnInit {
       this.pushMessage('Player Turn');
       this.addCardsToBothHands();
       this.newTurn();
-      console.log('hit6');
       return;
     }
 
