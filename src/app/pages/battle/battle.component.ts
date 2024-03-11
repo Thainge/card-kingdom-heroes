@@ -251,10 +251,10 @@ export class BattleComponent implements OnInit {
   showBubblesEffect: boolean = false;
   showLeavesEffect: boolean = false;
   showSunFlareEffect: boolean = false;
-  showCloudsEffect: boolean = true;
-
-  showNightEffect: boolean = true;
+  showCloudsEffect: boolean = false;
+  showNightEffect: boolean = false;
   showFireEffect: boolean = false;
+  showAshesEffect: boolean = true;
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -341,7 +341,7 @@ export class BattleComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.snowFlakesArray = Array.from(Array(150).keys());
+    this.snowFlakesArray = Array.from(Array(50).keys());
   }
 
   async clickAnimation(e: any) {

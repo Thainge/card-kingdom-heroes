@@ -2,6 +2,9 @@
   <div class="snowContainer" *ngIf="showSnowEffect">
     <div *ngFor="let item of snowFlakesArray" class="snow"></div>
   </div>
+  <div class="snowContainer" *ngIf="showAshesEffect">
+    <div *ngFor="let item of snowFlakesArray" class="snow ash"></div>
+  </div>
   <div class="nightContainer" *ngIf="showNightEffect">
     <div class="nightMode"></div>
     <div class="nightModeStars"></div>

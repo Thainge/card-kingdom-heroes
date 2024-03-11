@@ -2413,7 +2413,7 @@
     $fall-delay: random(30) * -1s;
 
     &:nth-child(#{$i}) {
-      opacity: random(10000) * 0.0001;
+      opacity: 1;
       transform: translate($random-x, -10px) scale($random-scale);
       animation: fall-#{$i} $fall-duration $fall-delay linear infinite;
     }
@@ -2428,6 +2428,10 @@
       }
     }
   }
+}
+
+.ash {
+  background: rgb(0, 0, 0);
 }
 
 .snowContainer {
@@ -2524,7 +2528,7 @@
   position: absolute;
   background-color: white;
   bottom: -30px;
-  opacity: 0.6;
+  opacity: 0.2;
   animation: bubble 15s ease-in-out infinite,
     sideWays 4s ease-in-out infinite alternate;
 }
@@ -2532,7 +2536,7 @@
 @keyframes bubble {
   0% {
     transform: translateY(0%);
-    opacity: 0.4;
+    opacity: 0.2;
   }
   100% {
     transform: translateY(-120vh);
@@ -2552,7 +2556,7 @@
   left: 10%;
   animation-delay: 0.5s;
   animation-duration: 16s;
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
 .bubble--2 {
@@ -2561,7 +2565,7 @@
   left: 40%;
   animation-delay: 1s;
   animation-duration: 10s;
-  opacity: 0.4;
+  opacity: 0.2;
 }
 
 .bubble--3 {
@@ -2570,7 +2574,7 @@
   left: 30%;
   animation-delay: 5s;
   animation-duration: 20s;
-  opacity: 0.4;
+  opacity: 0.2;
 }
 
 .bubble--4 {
@@ -2579,7 +2583,7 @@
   left: 40%;
   animation-delay: 8s;
   animation-duration: 17s;
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
 .bubble--5 {
@@ -2588,7 +2592,7 @@
   left: 60%;
   animation-delay: 10s;
   animation-duration: 15s;
-  opacity: 0.4;
+  opacity: 0.3;
 }
 
 .bubble--6 {
@@ -2597,7 +2601,7 @@
   left: 80%;
   animation-delay: 3s;
   animation-duration: 30s;
-  opacity: 0.7;
+  opacity: 0.5;
 }
 
 .bubble--7 {
@@ -2606,7 +2610,7 @@
   left: 90%;
   animation-delay: -7s;
   animation-duration: 25s;
-  opacity: 0.4;
+  opacity: 0.3;
 }
 
 .bubble--9 {
@@ -2616,7 +2620,7 @@
   bottom: 30px;
   animation-delay: -5s;
   animation-duration: 19s;
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
 .bubble--10 {
@@ -2626,7 +2630,7 @@
   bottom: 30px;
   animation-delay: -21s;
   animation-duration: 16s;
-  opacity: 0.4;
+  opacity: 0.2;
 }
 
 .bubble--11 {
@@ -2636,7 +2640,7 @@
   bottom: 30px;
   animation-delay: -13.75s;
   animation-duration: 20s;
-  opacity: 0.4;
+  opacity: 0.2;
 }
 
 .bubble--11 {
@@ -2646,7 +2650,7 @@
   bottom: 30px;
   animation-delay: -10.5s;
   animation-duration: 19s;
-  opacity: 0.4;
+  opacity: 0.2;
 }
 
 // Leaves
