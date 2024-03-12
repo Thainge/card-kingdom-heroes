@@ -281,10 +281,17 @@
                 <div class="cardPlayerBorderRotatingPlayer"></div>
               </div>
               <div class="cardPlayerBorder">
-                <div class="abilityTitle abilityTitlePlayer paperBg"></div>
-                <div class="abilityBorder1 paperBg paperBgPlayer1"></div>
-                <div class="abilityBorder2 paperBg paperBgPlayer2"></div>
-                <div class="abilityBorder3 paperBg paperBgPlayer3"></div>
+                <div class="playerBorderImage"></div>
+                <img
+                  class="playerLevel"
+                  [src]="
+                    './assets/' +
+                    gameThemePath +
+                    '/level' +
+                    player.level +
+                    '.png'
+                  "
+                />
               </div>
               <div class="cardFooterIconBox swordBox">
                 <img
@@ -599,10 +606,17 @@
             />
             <!-- Start of animations -->
             <div class="cardPlayerBorder">
-              <div class="abilityTitle abilityTitlePlayer paperBgEnemy"></div>
-              <div class="abilityBorder1 paperBgEnemy paperBgPlayer1"></div>
-              <div class="abilityBorder2 paperBgEnemy paperBgPlayer2"></div>
-              <div class="abilityBorder3 paperBgEnemy paperBgPlayer3"></div>
+              <div class="playerBorderImageEnemy"></div>
+              <img
+                class="playerLevel"
+                [src]="
+                  './assets/' +
+                  gameThemePath +
+                  '/level' +
+                  findEnemyPlayer().level +
+                  '.png'
+                "
+              />
               <img
                 [src]="'./assets/' + gameThemePath + '/confetti.gif'"
                 class="cardIcon confetti"
@@ -724,10 +738,14 @@
             />
             <!-- Start of animations -->
             <div class="cardPlayerBorder">
-              <div class="abilityTitle abilityTitlePlayer paperBg"></div>
-              <div class="abilityBorder1 paperBg paperBgPlayer1"></div>
-              <div class="abilityBorder2 paperBg paperBgPlayer2"></div>
-              <div class="abilityBorder3 paperBg paperBgPlayer3"></div>
+              <div class="playerBorderImage"></div>
+              <img
+                class="playerLevel"
+                [src]="
+                  './assets/' + gameThemePath + '/level' + player.level + '.png'
+                "
+              />
+
               <img
                 [src]="'./assets/' + gameThemePath + '/confetti.gif'"
                 class="cardIcon confetti"
@@ -974,10 +992,18 @@
               />
               <!-- Start of animations -->
               <div class="cardPlayerBorder">
-                <div class="abilityTitle abilityTitlePlayer paperBgEnemy"></div>
-                <div class="abilityBorder1 paperBgEnemy paperBgPlayer1"></div>
-                <div class="abilityBorder2 paperBgEnemy paperBgPlayer2"></div>
-                <div class="abilityBorder3 paperBgEnemy paperBgPlayer3"></div>
+                <div class="playerBorderImageEnemy"></div>
+                <img
+                  class="playerLevel"
+                  [src]="
+                    './assets/' +
+                    gameThemePath +
+                    '/level' +
+                    findStaticEnemyPlayer().level +
+                    '.png'
+                  "
+                />
+
                 <img
                   [src]="'./assets/' + gameThemePath + '/confetti.gif'"
                   class="cardIcon confetti"
@@ -1105,10 +1131,18 @@
               />
               <!-- Start of animations -->
               <div class="cardPlayerBorder">
-                <div class="abilityTitle abilityTitlePlayer paperBg"></div>
-                <div class="abilityBorder1 paperBg paperBgPlayer1"></div>
-                <div class="abilityBorder2 paperBg paperBgPlayer2"></div>
-                <div class="abilityBorder3 paperBg paperBgPlayer3"></div>
+                <div class="playerBorderImage"></div>
+                <img
+                  class="playerLevel"
+                  [src]="
+                    './assets/' +
+                    gameThemePath +
+                    '/level' +
+                    player.level +
+                    '.png'
+                  "
+                />
+
                 <img
                   [src]="'./assets/' + gameThemePath + '/confetti.gif'"
                   class="cardIcon confetti"
@@ -1891,10 +1925,13 @@
               <div class="cardPlayerBorderRotatingPlayer"></div>
             </div>
             <div class="cardPlayerBorder">
-              <div class="abilityTitle abilityTitlePlayer paperBg"></div>
-              <div class="abilityBorder1 paperBg paperBgPlayer1"></div>
-              <div class="abilityBorder2 paperBg paperBgPlayer2"></div>
-              <div class="abilityBorder3 paperBg paperBgPlayer3"></div>
+              <div class="playerBorderImage"></div>
+              <img
+                class="playerLevel"
+                [src]="
+                  './assets/' + gameThemePath + '/level' + player.level + '.png'
+                "
+              />
             </div>
             <div class="cardFooterIconBox swordBox">
               <img
@@ -2069,10 +2106,13 @@
                 <div class="cardPlayerBorderRotating"></div>
               </div>
               <div class="cardPlayerBorder">
-                <div class="abilityTitle abilityTitlePlayer paperBgEnemy"></div>
-                <div class="abilityBorder1 paperBgEnemy paperBgPlayer1"></div>
-                <div class="abilityBorder2 paperBgEnemy paperBgPlayer2"></div>
-                <div class="abilityBorder3 paperBgEnemy paperBgPlayer3"></div>
+                <div class="playerBorderImageEnemy"></div>
+                <img
+                  class="playerLevel"
+                  [src]="
+                    './assets/' + gameThemePath + '/level' + item.level + '.png'
+                  "
+                />
               </div>
               <div class="cardFooterIconBox swordBox">
                 <img
