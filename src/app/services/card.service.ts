@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { CardDto } from '../models/card';
-import { DetermineObject, DetermineWinnerObject } from '../models/determine';
-import { PlayerDto } from '../models/player';
+import { Injectable } from "@angular/core";
+import { CardDto } from "../models/card";
+import { DetermineObject, DetermineWinnerObject } from "../models/determine";
+import { PlayerDto } from "../models/player";
 
 interface suitValuesDto {
   hearts: number;
@@ -11,7 +11,7 @@ interface suitValuesDto {
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class CardService {
   constructor() {}
@@ -43,7 +43,7 @@ export class CardService {
 
     if (isStraightFlush.valid) {
       return {
-        name: 'Straight Flush',
+        name: "Straight Flush",
         valid: true,
         power: 5,
         ranking: 10,
@@ -52,7 +52,7 @@ export class CardService {
       };
     } else if (isFiveOfAKind.valid) {
       return {
-        name: 'Five of a Kind',
+        name: "Five of a Kind",
         valid: true,
         power: 5,
         ranking: 9,
@@ -61,7 +61,7 @@ export class CardService {
       };
     } else if (isFourOfAKind.valid) {
       return {
-        name: 'Four of a Kind',
+        name: "Four of a Kind",
         valid: true,
         power: 4,
         ranking: 8,
@@ -70,7 +70,7 @@ export class CardService {
       };
     } else if (isFullHouse.valid) {
       return {
-        name: 'Full House',
+        name: "Full House",
         valid: true,
         power: 5,
         ranking: 7,
@@ -79,7 +79,7 @@ export class CardService {
       };
     } else if (isFlush.valid) {
       return {
-        name: 'Flush',
+        name: "Flush",
         valid: true,
         power: 5,
         ranking: 6,
@@ -88,7 +88,7 @@ export class CardService {
       };
     } else if (isStraight.valid) {
       return {
-        name: 'Straight',
+        name: "Straight",
         valid: true,
         power: 5,
         ranking: 5,
@@ -97,7 +97,7 @@ export class CardService {
       };
     } else if (isThreeOfAKind.valid) {
       return {
-        name: 'Three of a Kind',
+        name: "Three of a Kind",
         valid: true,
         power: 3,
         ranking: 4,
@@ -106,7 +106,7 @@ export class CardService {
       };
     } else if (isTwoPair.valid) {
       return {
-        name: 'Two Pair',
+        name: "Two Pair",
         valid: true,
         power: 4,
         ranking: 3,
@@ -115,7 +115,7 @@ export class CardService {
       };
     } else if (isPair.valid) {
       return {
-        name: 'Two of a Kind',
+        name: "Two of a Kind",
         valid: true,
         power: 2,
         ranking: 2,
@@ -124,7 +124,7 @@ export class CardService {
       };
     } else if (array.length === 1) {
       return {
-        name: 'High Card',
+        name: "High Card",
         valid: true,
         power: 1,
         ranking: 1,
@@ -135,7 +135,7 @@ export class CardService {
 
     return {
       valid: false,
-      name: 'High Card',
+      name: "High Card",
       highCard: 0,
       power: 1,
       ranking: 1,
@@ -433,7 +433,7 @@ export class CardService {
 
     if (defenseLength === 5 && straightFlushInfo.valid) {
       return {
-        name: 'Straight Flush',
+        name: "Straight Flush",
         valid: true,
         power: 5,
         ranking: 9,
@@ -442,7 +442,7 @@ export class CardService {
       };
     } else if (defenseLength === 4 && fourOfAKindInfo.valid) {
       return {
-        name: 'Four of a Kind',
+        name: "Four of a Kind",
         valid: true,
         power: 4,
         ranking: 8,
@@ -451,7 +451,7 @@ export class CardService {
       };
     } else if (defenseLength === 5 && fullHouseInfo.valid) {
       return {
-        name: 'Full House',
+        name: "Full House",
         valid: true,
         power: 5,
         ranking: 7,
@@ -460,7 +460,7 @@ export class CardService {
       };
     } else if (defenseLength === 5 && flushInfo.valid) {
       return {
-        name: 'Flush',
+        name: "Flush",
         valid: true,
         power: 5,
         ranking: 6,
@@ -469,7 +469,7 @@ export class CardService {
       };
     } else if (defenseLength === 5 && straightInfo.valid) {
       return {
-        name: 'Straight',
+        name: "Straight",
         valid: true,
         power: 5,
         ranking: 5,
@@ -478,7 +478,7 @@ export class CardService {
       };
     } else if (defenseLength === 3 && threeOfAKindInfo.valid) {
       return {
-        name: 'Three of a Kind',
+        name: "Three of a Kind",
         valid: true,
         power: 3,
         ranking: 4,
@@ -487,7 +487,7 @@ export class CardService {
       };
     } else if (defenseLength === 4 && twoPair.valid) {
       return {
-        name: 'Two Pair',
+        name: "Two Pair",
         valid: true,
         power: 4,
         ranking: 3,
@@ -496,7 +496,7 @@ export class CardService {
       };
     } else if (defenseLength === 2 && pairInfo.valid) {
       return {
-        name: 'Two of a Kind',
+        name: "Two of a Kind",
         valid: true,
         power: 2,
         ranking: 2,
@@ -510,7 +510,7 @@ export class CardService {
           : current;
       });
       return {
-        name: 'High Card',
+        name: "High Card",
         valid: true,
         power: 1,
         ranking: 1,
@@ -532,7 +532,7 @@ export class CardService {
       valid: false,
       power: 0,
       ranking: 0,
-      name: 'High Card',
+      name: "High Card",
       highCard: Number(
         [...defenseCards].reduce(function (prev, current) {
           return prev && Number(prev.value) > Number(current.value)
@@ -557,7 +557,7 @@ export class CardService {
 
     if (straightFlushInfo.valid) {
       return {
-        name: 'Straight Flush',
+        name: "Straight Flush",
         valid: true,
         power: 5,
         ranking: 10,
@@ -566,7 +566,7 @@ export class CardService {
       };
     } else if (fiveOfAKindInfo.valid) {
       return {
-        name: 'Five of a Kind',
+        name: "Five of a Kind",
         valid: true,
         power: 5,
         ranking: 9,
@@ -575,7 +575,7 @@ export class CardService {
       };
     } else if (fourOfAKindInfo.valid) {
       return {
-        name: 'Four of a Kind',
+        name: "Four of a Kind",
         valid: true,
         power: 4,
         ranking: 8,
@@ -584,7 +584,7 @@ export class CardService {
       };
     } else if (fullHouseInfo.valid) {
       return {
-        name: 'Full House',
+        name: "Full House",
         valid: true,
         power: 5,
         ranking: 7,
@@ -593,7 +593,7 @@ export class CardService {
       };
     } else if (flushInfo.valid) {
       return {
-        name: 'Flush',
+        name: "Flush",
         valid: true,
         power: 5,
         ranking: 6,
@@ -602,7 +602,7 @@ export class CardService {
       };
     } else if (straightInfo.valid) {
       return {
-        name: 'Straight',
+        name: "Straight",
         valid: true,
         power: 5,
         ranking: 5,
@@ -611,7 +611,7 @@ export class CardService {
       };
     } else if (threeOfAKindInfo.valid) {
       return {
-        name: 'Three of a Kind',
+        name: "Three of a Kind",
         valid: true,
         power: 3,
         ranking: 4,
@@ -620,7 +620,7 @@ export class CardService {
       };
     } else if (twoPair.valid) {
       return {
-        name: 'Two Pair',
+        name: "Two Pair",
         valid: true,
         power: 4,
         ranking: 3,
@@ -629,7 +629,7 @@ export class CardService {
       };
     } else if (pairInfo.valid) {
       return {
-        name: 'Two of a Kind',
+        name: "Two of a Kind",
         valid: true,
         power: 2,
         ranking: 2,
@@ -646,7 +646,7 @@ export class CardService {
         : current;
     });
     return {
-      name: 'High Card',
+      name: "High Card",
       valid: true,
       power: 1,
       ranking: 1,
@@ -1037,5 +1037,36 @@ export class CardService {
     }
 
     return extraDmg;
+  }
+
+  hasSameSuits(cards1: CardDto[], cards2: CardDto[]): boolean {
+    const suitsDetails1: suitValuesDto = this.getSuitsDetails(cards1);
+    const suitsDetails2: suitValuesDto = this.getSuitsDetails(cards2);
+
+    let heartsSame = false;
+    let diamondsSame = false;
+    let spadesSame = false;
+    let clubsSame = false;
+
+    if (suitsDetails1.hearts === suitsDetails2.hearts) {
+      heartsSame = true;
+    }
+
+    if (suitsDetails1.diamonds === suitsDetails2.diamonds) {
+      diamondsSame = true;
+    }
+
+    if (suitsDetails1.spades === suitsDetails2.spades) {
+      spadesSame = true;
+    }
+
+    if (suitsDetails1.clubs === suitsDetails2.clubs) {
+      clubsSame = true;
+    }
+
+    const isSame =
+      heartsSame && diamondsSame && spadesSame && clubsSame ? true : false;
+
+    return isSame;
   }
 }

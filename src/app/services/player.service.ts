@@ -1,16 +1,16 @@
-import { BehaviorSubject } from 'rxjs';
-import { gameTheme } from './../models/theme';
-import { Injectable, OnInit } from '@angular/core';
-import { CardDto } from '../models/card';
-import { CheatDto } from '../models/cheat';
-import { PlayerDto } from '../models/player';
-import { AbilityCard } from '../models/abilityCard';
+import { BehaviorSubject } from "rxjs";
+import { gameTheme } from "./../models/theme";
+import { Injectable, OnInit } from "@angular/core";
+import { CardDto } from "../models/card";
+import { CheatDto } from "../models/cheat";
+import { PlayerDto } from "../models/player";
+import { AbilityCard } from "../models/abilityCard";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class playerService implements OnInit {
-  readonly gameTheme$ = new BehaviorSubject<gameTheme>('default');
+  readonly gameTheme$ = new BehaviorSubject<gameTheme>("default");
   // heartsWildCard: CardDto = {
   //   id: 53,
   //   wild: true,
@@ -37,10 +37,10 @@ export class playerService implements OnInit {
     wildRange: 14,
     wildSuit: true,
     wildSuits: [1, 1, 1, 1],
-    suit: 'spades',
-    value: '14',
-    wildInitial: '14',
-    image: '14_of_spades.png',
+    suit: "spades",
+    value: "14",
+    wildInitial: "14",
+    image: "14_of_spades.png",
   };
 
   constructor() {
@@ -88,8 +88,8 @@ export class playerService implements OnInit {
     };
     return {
       id: 5,
-      image: './assets/' + gameThemePath + '/' + 'link.png',
-      name: 'Link',
+      image: "./assets/" + gameThemePath + "/" + "link.png",
+      name: "Link",
       attack: 2 + playerSkills.extraAttack,
       health: 5 + playerSkills.extraHealth,
       baseHealth: 9 + playerSkills.extraHealth,
@@ -154,27 +154,27 @@ export class playerService implements OnInit {
       // },
       {
         id: 5,
-        abilityFunction: 'damage',
+        abilityFunction: "damage",
         targetAll: true,
         abilityValue: 1,
-        cost: ['hearts', 'diamonds', 'clubs', 'spades'],
-        name: 'Ganon',
-        description: 'Deal 1 damage to every enemy',
-        image: './assets/' + gameThemePath + '/abilitycard.png',
+        cost: ["hearts", "spades"],
+        name: "Ganon",
+        description: "Deal 1 damage to every enemy",
+        image: "./assets/" + gameThemePath + "/abilitycard.png",
         level: 1,
-        hitAnimation: 'fire',
+        hitAnimation: "fire",
       },
       {
         id: 6,
-        abilityFunction: 'damage',
+        abilityFunction: "damage",
         targetAll: true,
         abilityValue: 1,
-        cost: ['clubs'],
-        name: 'Ganon',
-        description: 'Deal 1 damage to target enemy',
-        image: './assets/' + gameThemePath + '/abilitycard.png',
+        cost: ["clubs", "diamonds"],
+        name: "Ganon",
+        description: "Deal 1 damage to target enemy",
+        image: "./assets/" + gameThemePath + "/abilitycard.png",
         level: 1,
-        hitAnimation: 'fire',
+        hitAnimation: "fire",
       },
       // {
       //   id: 7,
@@ -279,99 +279,99 @@ export class playerService implements OnInit {
     return [
       {
         id: 1,
-        abilityFunction: 'discard',
+        abilityFunction: "discard",
         targetAll: false,
         abilityValue: 1,
-        cost: ['red'],
-        name: 'Ganon',
-        description: 'Apply -1 offense to target enemy',
-        image: './assets/' + gameThemePath + '/abilitycard.png',
+        cost: ["red"],
+        name: "Ganon",
+        description: "Apply -1 offense to target enemy",
+        image: "./assets/" + gameThemePath + "/abilitycard.png",
         level: 1,
-        hitAnimation: 'fire',
+        hitAnimation: "fire",
       },
       {
         id: 2,
-        abilityFunction: 'draw',
+        abilityFunction: "draw",
         targetAll: true,
         abilityValue: 1,
-        cost: ['diamonds'],
-        name: 'Ganon',
-        description: 'Deal 1 damage to target enemy',
-        image: './assets/' + gameThemePath + '/abilitycard.png',
+        cost: ["diamonds"],
+        name: "Ganon",
+        description: "Deal 1 damage to target enemy",
+        image: "./assets/" + gameThemePath + "/abilitycard.png",
         level: 1,
-        hitAnimation: 'fire',
+        hitAnimation: "fire",
       },
       {
         id: 1,
-        abilityFunction: 'heal',
+        abilityFunction: "heal",
         targetAll: false,
         abilityValue: 2,
-        cost: ['red'],
-        name: 'Ganon',
-        description: 'Apply -1 offense to target enemy',
-        image: './assets/' + gameThemePath + '/abilitycard.png',
+        cost: ["red"],
+        name: "Ganon",
+        description: "Apply -1 offense to target enemy",
+        image: "./assets/" + gameThemePath + "/abilitycard.png",
         level: 1,
-        hitAnimation: 'fire',
+        hitAnimation: "fire",
       },
       {
         id: 2,
-        abilityFunction: 'discard',
+        abilityFunction: "discard",
         targetAll: true,
         abilityValue: 2,
-        cost: ['diamonds'],
-        name: 'Ganon',
-        description: 'Deal 1 damage to target enemy',
-        image: './assets/' + gameThemePath + '/abilitycard.png',
+        cost: ["diamonds"],
+        name: "Ganon",
+        description: "Deal 1 damage to target enemy",
+        image: "./assets/" + gameThemePath + "/abilitycard.png",
         level: 1,
-        hitAnimation: 'fire',
+        hitAnimation: "fire",
       },
       {
         id: 3,
-        abilityFunction: 'heal',
+        abilityFunction: "heal",
         targetAll: true,
         abilityValue: 1,
-        cost: ['red'],
-        name: 'Ganon',
-        description: 'Apply -1 offense to target enemy',
-        image: './assets/' + gameThemePath + '/abilitycard.png',
+        cost: ["red"],
+        name: "Ganon",
+        description: "Apply -1 offense to target enemy",
+        image: "./assets/" + gameThemePath + "/abilitycard.png",
         level: 1,
-        hitAnimation: 'fire',
+        hitAnimation: "fire",
       },
       {
         id: 4,
-        abilityFunction: 'heal',
+        abilityFunction: "heal",
         targetAll: true,
         abilityValue: 1,
-        cost: ['diamonds'],
-        name: 'Ganon',
-        description: 'Deal 1 damage to target enemy',
-        image: './assets/' + gameThemePath + '/abilitycard.png',
+        cost: ["diamonds"],
+        name: "Ganon",
+        description: "Deal 1 damage to target enemy",
+        image: "./assets/" + gameThemePath + "/abilitycard.png",
         level: 1,
-        hitAnimation: 'fire',
+        hitAnimation: "fire",
       },
       {
         id: 5,
-        abilityFunction: 'offense',
+        abilityFunction: "offense",
         targetAll: false,
         abilityValue: 1,
-        cost: ['red'],
-        name: 'Ganon',
-        description: 'Apply -1 offense to target enemy',
-        image: './assets/' + gameThemePath + '/abilitycard.png',
+        cost: ["red"],
+        name: "Ganon",
+        description: "Apply -1 offense to target enemy",
+        image: "./assets/" + gameThemePath + "/abilitycard.png",
         level: 1,
-        hitAnimation: 'fire',
+        hitAnimation: "fire",
       },
       {
         id: 6,
-        abilityFunction: 'damage',
+        abilityFunction: "damage",
         targetAll: false,
         abilityValue: 1,
-        cost: ['diamonds'],
-        name: 'Ganon',
-        description: 'Deal 1 damage to target enemy',
-        image: './assets/' + gameThemePath + '/abilitycard.png',
+        cost: ["diamonds"],
+        name: "Ganon",
+        description: "Deal 1 damage to target enemy",
+        image: "./assets/" + gameThemePath + "/abilitycard.png",
         level: 1,
-        hitAnimation: 'fire',
+        hitAnimation: "fire",
       },
     ];
   }
@@ -394,6 +394,6 @@ export class playerService implements OnInit {
 
   private updateThemeStyles(gameTheme: gameTheme) {
     // Update cursor and font app wide
-    document.body.classList.add(gameTheme + '-body');
+    document.body.classList.add(gameTheme + "-body");
   }
 }

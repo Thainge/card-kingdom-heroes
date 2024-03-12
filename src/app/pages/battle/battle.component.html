@@ -8,7 +8,7 @@
       title="Snow"
       (click)="showSnowEffect = !showSnowEffect"
     >
-      🌙
+      ❄️
     </div>
 
     <div
@@ -19,7 +19,7 @@
       title="Bubbles"
       (click)="showBubblesEffect = !showBubblesEffect"
     >
-      🌙
+      💧
     </div>
     <div
       class="DevItem"
@@ -29,7 +29,7 @@
       title="Leaves"
       (click)="showLeavesEffect = !showLeavesEffect"
     >
-      🌙
+      🍃
     </div>
     <div
       class="DevItem"
@@ -39,7 +39,7 @@
       title="Sun Flare"
       (click)="showSunFlareEffect = !showSunFlareEffect"
     >
-      🌙
+      ☀️
     </div>
     <div
       class="DevItem"
@@ -49,7 +49,7 @@
       title="Clouds"
       (click)="showCloudsEffect = !showCloudsEffect"
     >
-      🌙
+      ☁️
     </div>
     <div
       class="DevItem"
@@ -69,7 +69,7 @@
       title="Volcanic"
       (click)="showFireEffect = !showFireEffect"
     >
-      🌙
+      🔥
     </div>
     <div
       class="DevItem"
@@ -79,7 +79,7 @@
       title="Ashes"
       (click)="showAshesEffect = !showAshesEffect"
     >
-      🌙
+      🌋
     </div>
   </div>
   <div class="snowContainer" *ngIf="showSnowEffect">
@@ -221,7 +221,6 @@
       <div
         *ngIf="showHeroLevelUp"
         class="heroLevelUpBox"
-        (click)="finishHeroLevelUp()"
         [@fadeEnter]="{
           value: '',
           params: { duration: 1000, delay: 0 }
@@ -2292,7 +2291,7 @@
         (click)="selectAbilityCard(card)"
         (mouseenter)="hoverAbilityEnter(card)"
         (mouseleave)="hoverAbilityOut(card)"
-        (wheel)="abilityCardChangeUseCards(card)"
+        (wheel)="abilityCardChangeUseCards($event, card)"
         [ngStyle]="{
           'animation-delay': (i + 1) * 100 + 'ms'
         }"
