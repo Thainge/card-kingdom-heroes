@@ -1,1 +1,40 @@
-<router-outlet></router-outlet>
+<div class="container">
+  <div *ngIf="consoleShouldShow">
+    <div
+      class="consoleBg"
+      [ngClass]="{
+        fadeEnter: consoleOpen,
+        fadeLeave: !consoleOpen && consoleHasBeenOpened
+      }"
+    ></div>
+    <div
+      class="consoleContainer"
+      [ngClass]="{
+        fadeEnter: consoleOpen,
+        fadeLeave: !consoleOpen && consoleHasBeenOpened
+      }"
+    >
+      <div class="consoleHeader">
+        <div class="consoleTitle">Console</div>
+        <div class="consoleClose" (click)="closeConsole()">✖</div>
+      </div>
+      <div class="consoleBody">
+        <div class="consoleItem" *ngFor="let item of consoleItems">
+          <div [innerHTML]="'] ' + item"></div>
+        </div>
+      </div>
+      <div class="consoleInputRow">
+        <input
+          type="text"
+          #consoleInput
+          (keydown.enter)="runCommand()"
+          [formControl]="consoleControl"
+          placeholder="Enter a command"
+          class="consoleTextInput"
+        />
+        <div class="consoleSubmitButton" (click)="runCommand()">Submit</div>
+      </div>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</div>
