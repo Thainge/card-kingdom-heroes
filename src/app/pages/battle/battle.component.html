@@ -228,6 +228,10 @@
         [@fadeOutLeave]
       >
         <div class="heroLevelUpXp">
+          <img
+            class="heroLevelUpBorder"
+            [src]="'./assets/' + gameThemePath + '/xpBar.png'"
+          />
           <div
             class="herLevelUpTextTop"
             [@fadeUpEnter]="{
@@ -264,7 +268,8 @@
           class="middleRightBox"
           [ngClass]="{
             middleCardHover: canSelectCards,
-            leveledUpCard: leveledUp
+            leveledUpCard: leveledUp,
+            shakeCardEffect: leveledUp
           }"
         >
           <div class="playerPulseBox">
@@ -282,9 +287,25 @@
               </div>
               <div class="cardPlayerBorder">
                 <div class="playerBorderImage"></div>
-                <div class="playerTitle">{{ player.name }}</div>
+                <div class="playerTitle">
+                  {{ player.name }}
+                </div>
+                <img
+                  class="playerLevel zoomInLevel"
+                  *ngIf="leveledUp"
+                  [@fadeOutLeave]
+                  [src]="
+                    './assets/' +
+                    gameThemePath +
+                    '/level' +
+                    player.level +
+                    '.png'
+                  "
+                />
                 <img
                   class="playerLevel"
+                  [@fadeOutLeave]
+                  *ngIf="!leveledUp"
                   [src]="
                     './assets/' +
                     gameThemePath +
@@ -610,7 +631,7 @@
               <div class="playerBorderImageEnemy"></div>
               <div class="playerTitle">{{ findEnemyPlayer().name }}</div>
               <img
-                class="playerLevel"
+                class="enemyLevel"
                 [src]="
                   './assets/' +
                   gameThemePath +
@@ -1000,7 +1021,7 @@
                   {{ findStaticEnemyPlayer().name }}
                 </div>
                 <img
-                  class="playerLevel"
+                  class="enemyLevel"
                   [src]="
                     './assets/' +
                     gameThemePath +
@@ -1887,7 +1908,7 @@
           >
             <img
               [src]="'./assets/' + gameThemePath + '/fire.gif'"
-              class="cardIcon confetti claws"
+              class="cardIcon confetti claws firing"
               *ngIf="fireOnPlayer"
               [@fadeEnter]="{
                 value: '',
@@ -1933,7 +1954,9 @@
             </div>
             <div class="cardPlayerBorder">
               <div class="playerBorderImage"></div>
-              <div class="playerTitle">{{ player.name }}</div>
+              <div class="playerTitle">
+                {{ player.name }}
+              </div>
               <img
                 class="playerLevel"
                 [src]="
@@ -2057,7 +2080,7 @@
             >
               <img
                 [src]="'./assets/' + gameThemePath + '/fire.gif'"
-                class="cardIcon confetti claws"
+                class="cardIcon confetti claws firing"
                 *ngIf="showFireAnimation(item)"
                 [@fadeEnter]="{
                   value: '',
@@ -2115,9 +2138,11 @@
               </div>
               <div class="cardPlayerBorder">
                 <div class="playerBorderImageEnemy"></div>
-                <div class="playerTitle">{{ item.name }}</div>
+                <div class="playerTitle">
+                  {{ item.name }}
+                </div>
                 <img
-                  class="playerLevel"
+                  class="enemyLevel"
                   [src]="
                     './assets/' + gameThemePath + '/enemy' + item.level + '.png'
                   "

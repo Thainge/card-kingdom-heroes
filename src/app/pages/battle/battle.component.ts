@@ -302,9 +302,12 @@ export class BattleComponent implements OnInit {
     // Get game theme
     this.userService.gameTheme$.subscribe((x) => {
       this.gameThemePath = x;
+      // Get player & shuffled ability cards
       this.player = this.userService.getPlayer(this.gameThemePath);
       this.abilityDeck = this.userService.getAbilityCards(this.gameThemePath);
       this.abilityDeck = this.cardService.shuffle(this.abilityDeck);
+
+      // Get bot & shuffled deck
       this.abilityDeckBot = this.userService.getAbilityCardsBot(
         this.gameThemePath
       );
@@ -474,7 +477,7 @@ export class BattleComponent implements OnInit {
     this.redrawing = false;
     this.redrawHide = true;
     this.playerHand = [...this.redrawCards];
-    this.abilityDeck = this.userService.getAbilityCards(this.gameThemePath);
+    // this.abilityDeck = this.userService.getAbilityCards(this.gameThemePath);
     this.drawAbilityCard(2);
     this.drawAbilityCardBot(2);
     // this.finishedRewards = true;
@@ -801,6 +804,9 @@ export class BattleComponent implements OnInit {
         return;
       }
       this.canSelectCards = true;
+      this.abilityCardsHand.forEach((x) => {
+        this.hoverAbilityOut(x);
+      });
       this.pushMessage('Player Turn');
     }, timeout);
   }
@@ -2424,7 +2430,7 @@ export class BattleComponent implements OnInit {
       }
 
       if (this.leveledUp) {
-        await this.timeout(3000);
+        await this.timeout(2700);
         this.finishHeroLevelUp();
       } else {
         await this.timeout(1700);
