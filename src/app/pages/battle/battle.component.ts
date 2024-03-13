@@ -74,6 +74,15 @@ interface ComboObject {
   currentIndex: number;
 }
 
+interface RewardItem {
+  id: number;
+  text: string;
+  image: string;
+  color: RewardColor;
+}
+
+type RewardColor = 'blue' | 'gold' | 'purple';
+
 @Component({
   selector: 'app-battle',
   templateUrl: './battle.component.html',
@@ -242,9 +251,13 @@ export class BattleComponent implements OnInit {
   clickAnimationsList: ClickObject[] = [];
   gameLoserPlayer: boolean = false;
   gameWinnerPlayer: boolean = false;
-  shownRewardItem: any = { id: 0 };
-  rewardItemsClean: any[] = [{ id: 1 }, { id: 2 }, { id: 3 }];
-  rewardItems: any[] = [{ id: 1 }, { id: 2 }, { id: 3 }];
+  shownRewardItem: RewardItem = { id: 0, color: 'gold', image: '', text: '' };
+  rewardItemsClean: RewardItem[] = [
+    { id: 1, color: 'gold', image: 'gold.png', text: '100x' },
+  ];
+  rewardItems: RewardItem[] = [
+    { id: 1, color: 'gold', image: 'gold.png', text: '100x' },
+  ];
   canClickNextReward: boolean = false;
   finishedRewards: boolean = false;
   showHeroLevelUp: boolean = false;
@@ -372,7 +385,7 @@ export class BattleComponent implements OnInit {
       this.canClickNextReward = false;
       this.rewardItems = this.rewardItems.filter((x) => x.id !== rewardItem.id);
       // Hide current reward
-      this.shownRewardItem = { id: 0 };
+      this.shownRewardItem = { id: 0, color: 'gold', image: '', text: '' };
       await this.timeout(750);
       // show new reward
       this.shownRewardItem = this.rewardItems[0];
@@ -482,7 +495,7 @@ export class BattleComponent implements OnInit {
     this.drawAbilityCardBot(2);
     // this.finishedRewards = true;
     // this.rewardItems = [];
-    // this.endGame(true);
+    this.endGame(true);
     // this.newTurn();
     // this.startBotTurnsLoop();
     // this.healOnPlayer = true;
@@ -2442,8 +2455,18 @@ export class BattleComponent implements OnInit {
   finishHeroLevelUp() {
     if (this.leveledUp) {
       const newId = this.rewardItemsClean.length;
-      const heroLevelUpItem = { id: newId + 1 };
-      const heroCardPack = { id: newId + 2 };
+      const heroLevelUpItem: RewardItem = {
+        id: newId + 1,
+        color: 'purple',
+        image: '',
+        text: '',
+      };
+      const heroCardPack: RewardItem = {
+        id: newId + 2,
+        color: 'purple',
+        image: '',
+        text: '',
+      };
       this.rewardItemsClean.unshift(heroLevelUpItem);
       this.rewardItemsClean.unshift(heroCardPack);
       this.rewardItems = this.rewardItemsClean;
