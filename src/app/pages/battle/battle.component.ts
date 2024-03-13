@@ -1,5 +1,5 @@
-import { AbilityCard } from "./../../models/abilityCard";
-import { CommonModule } from "@angular/common";
+import { AbilityCard } from './../../models/abilityCard';
+import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -9,9 +9,9 @@ import {
   Renderer2,
   ViewChild,
   ViewChildren,
-} from "@angular/core";
-import { CardDto } from "src/app/models/card";
-import { CardService } from "src/app/services/card.service";
+} from '@angular/core';
+import { CardDto } from 'src/app/models/card';
+import { CardService } from 'src/app/services/card.service';
 import {
   fadeInUpOnEnterAnimation,
   fadeOutUpOnLeaveAnimation,
@@ -26,39 +26,39 @@ import {
   fadeOutLeftOnLeaveAnimation,
   fadeOutRightOnLeaveAnimation,
   zoomOutOnLeaveAnimation,
-} from "angular-animations";
-import { PlayerDto } from "src/app/models/player";
+} from 'angular-animations';
+import { PlayerDto } from 'src/app/models/player';
 import {
   DetermineObject,
   DetermineWinnerObject,
-} from "src/app/models/determine";
-import "leader-line";
-import { playerService } from "src/app/services/player.service";
-import { gameTheme } from "src/app/models/theme";
-import { CheatDto } from "src/app/models/cheat";
+} from 'src/app/models/determine';
+import 'leader-line';
+import { playerService } from 'src/app/services/player.service';
+import { gameTheme } from 'src/app/models/theme';
+import { CheatDto } from 'src/app/models/cheat';
 import {
   trigger,
   state,
   style,
   transition,
   animate,
-} from "@angular/animations";
+} from '@angular/animations';
 declare let LeaderLine: any;
-import { Cards } from "src/assets/data/cards";
-import { EnviornmentSettings } from "src/assets/data/environement";
-import { AbilityService } from "src/app/services/ability.service";
+import { Cards } from 'src/assets/data/cards';
+import { EnviornmentSettings } from 'src/assets/data/environement';
+import { AbilityService } from 'src/app/services/ability.service';
 
 const defaultAbilityCard: AbilityCard = {
   id: 0,
-  abilityFunction: "damage",
+  abilityFunction: 'damage',
   targetAll: false,
   abilityValue: 1,
-  cost: ["hearts"],
-  description: "",
-  image: "",
+  cost: ['hearts'],
+  description: '',
+  image: '',
   level: 1,
-  name: "",
-  hitAnimation: "heal",
+  name: '',
+  hitAnimation: 'heal',
 };
 
 type ClickObject = {
@@ -75,37 +75,37 @@ interface ComboObject {
 }
 
 @Component({
-  selector: "app-battle",
-  templateUrl: "./battle.component.html",
-  styleUrls: ["./battle.component.scss"],
+  selector: 'app-battle',
+  templateUrl: './battle.component.html',
+  styleUrls: ['./battle.component.scss'],
   standalone: true,
   imports: [CommonModule],
   animations: [
-    trigger("cardLeaving", [
-      transition(":leave", [
-        style({ width: "12%" }),
-        animate(".5s ease-in", style({ width: "0%" })),
+    trigger('cardLeaving', [
+      transition(':leave', [
+        style({ width: '12%' }),
+        animate('.5s ease-in', style({ width: '0%' })),
       ]),
     ]),
 
-    fadeOutUpOnLeaveAnimation({ anchor: "fadeUpLeave" }),
-    fadeInUpOnEnterAnimation({ anchor: "fadeUpEnter" }),
+    fadeOutUpOnLeaveAnimation({ anchor: 'fadeUpLeave' }),
+    fadeInUpOnEnterAnimation({ anchor: 'fadeUpEnter' }),
 
-    fadeOutLeftOnLeaveAnimation({ anchor: "fadeLeftLeave" }),
-    fadeInLeftOnEnterAnimation({ anchor: "fadeLeftEnter" }),
+    fadeOutLeftOnLeaveAnimation({ anchor: 'fadeLeftLeave' }),
+    fadeInLeftOnEnterAnimation({ anchor: 'fadeLeftEnter' }),
 
-    fadeOutRightOnLeaveAnimation({ anchor: "fadeRightLeave" }),
-    fadeInRightOnEnterAnimation({ anchor: "fadeRightEnter" }),
+    fadeOutRightOnLeaveAnimation({ anchor: 'fadeRightLeave' }),
+    fadeInRightOnEnterAnimation({ anchor: 'fadeRightEnter' }),
 
-    fadeInDownOnEnterAnimation({ anchor: "fadeDownEnter" }),
-    fadeOutDownOnLeaveAnimation({ anchor: "fadeDownLeave" }),
+    fadeInDownOnEnterAnimation({ anchor: 'fadeDownEnter' }),
+    fadeOutDownOnLeaveAnimation({ anchor: 'fadeDownLeave' }),
 
-    fadeInOnEnterAnimation({ anchor: "fadeEnter" }),
-    fadeOutOnLeaveAnimation({ anchor: "fadeOutLeave" }),
+    fadeInOnEnterAnimation({ anchor: 'fadeEnter' }),
+    fadeOutOnLeaveAnimation({ anchor: 'fadeOutLeave' }),
 
-    zoomInOnEnterAnimation({ anchor: "zoomInEnter" }),
-    zoomOutOnLeaveAnimation({ anchor: "zoomOutLeave" }),
-    flipInYOnEnterAnimation({ anchor: "flipInYonEnter" }),
+    zoomInOnEnterAnimation({ anchor: 'zoomInEnter' }),
+    zoomOutOnLeaveAnimation({ anchor: 'zoomOutLeave' }),
+    flipInYOnEnterAnimation({ anchor: 'flipInYonEnter' }),
   ],
 })
 export class BattleComponent implements OnInit {
@@ -116,8 +116,8 @@ export class BattleComponent implements OnInit {
     id: 0,
     health: 1,
     attack: 1,
-    image: "",
-    name: "",
+    image: '',
+    name: '',
     baseHealth: 1,
     baseAttack: 1,
     level: 1,
@@ -185,15 +185,15 @@ export class BattleComponent implements OnInit {
 
   usedSpecialCardThisTurn: boolean = false;
 
-  gameThemePath: gameTheme = "default";
+  gameThemePath: gameTheme = 'default';
   Cards: CardDto[] = [];
   completedEnemyTurns: number[] = [];
   currentEnemyTurn: PlayerDto = {
     id: 0,
     health: 1,
     attack: 1,
-    image: "",
-    name: "",
+    image: '',
+    name: '',
     baseHealth: 1,
     baseAttack: 1,
     level: 1,
@@ -207,7 +207,7 @@ export class BattleComponent implements OnInit {
   duringBotTurnDiscard: boolean = false;
 
   currentExtraDmg: number = 0;
-  randomBgImage: string = "";
+  randomBgImage: string = '';
 
   abilityCardsHand: AbilityCard[] = [];
   abilityDeck: AbilityCard[] = [];
@@ -265,24 +265,24 @@ export class BattleComponent implements OnInit {
   abilityCardCombos: ComboObject[] = [];
   currentlyShuffling: boolean = false;
 
-  @ViewChildren("myActiveCards")
+  @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
 
-  @ViewChildren("activeAbilityCards")
+  @ViewChildren('activeAbilityCards')
   activeAbilityCards: QueryList<ElementRef> | undefined;
-  @ViewChildren("activeAbilityCardsBot")
+  @ViewChildren('activeAbilityCardsBot')
   activeAbilityCardsBot: QueryList<ElementRef> | undefined;
 
-  @ViewChildren("activeEnemyCards") activeEnemyCards:
+  @ViewChildren('activeEnemyCards') activeEnemyCards:
     | QueryList<ElementRef>
     | undefined;
 
-  @ViewChildren("enemyPlayerRef") enemyPlayerRef:
+  @ViewChildren('enemyPlayerRef') enemyPlayerRef:
     | QueryList<ElementRef>
     | undefined;
 
-  @ViewChildren("playerRef") playerRef: QueryList<ElementRef> | undefined;
-  @ViewChild("enemyDefenseRef") enemyDefenseRef: ElementRef | undefined;
+  @ViewChildren('playerRef') playerRef: QueryList<ElementRef> | undefined;
+  @ViewChild('enemyDefenseRef') enemyDefenseRef: ElementRef | undefined;
 
   constructor(
     private cardService: CardService,
@@ -312,24 +312,24 @@ export class BattleComponent implements OnInit {
       this.enemyPlayers = [
         {
           id: 1,
-          image: "./assets/" + this.gameThemePath + "/" + "link.png",
-          name: "Link",
+          image: './assets/' + this.gameThemePath + '/' + 'link.png',
+          name: 'Link',
           attack: 3,
           health: 1,
           baseHealth: 7,
           baseAttack: 6,
           level: 1,
         },
-        // {
-        //   id: 2,
-        //   image: './assets/' + this.gameThemePath + '/' + 'link.png',
-        //   name: 'Link',
-        //   attack: 2,
-        //   health: 1,
-        //   baseHealth: 7,
-        //   baseAttack: 1,
-        //   level: 1,
-        // },
+        {
+          id: 2,
+          image: './assets/' + this.gameThemePath + '/' + 'link.png',
+          name: 'Link',
+          attack: 2,
+          health: 1,
+          baseHealth: 7,
+          baseAttack: 1,
+          level: 2,
+        },
         // {
         //   id: 3,
         //   image: './assets/' + this.gameThemePath + '/' + 'link.png',
@@ -492,7 +492,7 @@ export class BattleComponent implements OnInit {
   }
 
   continue() {
-    console.log("leave page");
+    console.log('leave page');
   }
 
   retry() {
@@ -518,7 +518,7 @@ export class BattleComponent implements OnInit {
       // Hide lines
       try {
         for await (const x of this.activeAbilityLeaderLines) {
-          await x.hide("fade", { duration: 100, timing: "linear" });
+          await x.hide('fade', { duration: 100, timing: 'linear' });
         }
       } catch (err) {
         console.log(err);
@@ -528,7 +528,7 @@ export class BattleComponent implements OnInit {
       // Use ability card
       try {
         for await (const x of this.activeLeaderLines) {
-          await x.hide("fade", { duration: 100, timing: "linear" });
+          await x.hide('fade', { duration: 100, timing: 'linear' });
         }
       } catch (err) {
         console.log(err);
@@ -545,56 +545,56 @@ export class BattleComponent implements OnInit {
 
   useAbilityCard(ability: AbilityCard) {
     this.canSelectCards = false;
-    if (ability.abilityFunction === "damage") {
+    if (ability.abilityFunction === 'damage') {
       this.damageAbility(ability);
     }
 
-    if (ability.abilityFunction === "heal") {
+    if (ability.abilityFunction === 'heal') {
       this.healAbility(ability);
     }
 
     // Draw x cards
-    if (ability.abilityFunction === "draw") {
+    if (ability.abilityFunction === 'draw') {
       this.drawAbility(ability);
     }
 
     // Redraw all number/face cards
-    if (ability.abilityFunction === "redraw") {
+    if (ability.abilityFunction === 'redraw') {
       this.redrawAbility(ability);
     }
 
     // Redraw whole hand including abilities
-    if (ability.abilityFunction === "redrawAll") {
+    if (ability.abilityFunction === 'redrawAll') {
       this.redrawAllAbility(ability);
     }
 
     // Bot discards x
-    if (ability.abilityFunction === "discard") {
+    if (ability.abilityFunction === 'discard') {
       this.discardAbility(ability);
     }
 
     // Bot offense -x
-    if (ability.abilityFunction === "offense") {
+    if (ability.abilityFunction === 'offense') {
       this.offenseAbility(ability);
     }
 
     // Bot offense -x
-    if (ability.abilityFunction === "leach") {
+    if (ability.abilityFunction === 'leach') {
       this.leachAbility(ability);
     }
 
     // Bot offense -x
-    if (ability.abilityFunction === "wildSuit") {
+    if (ability.abilityFunction === 'wildSuit') {
       this.wildSuitAbility(ability);
     }
 
     // Bot offense -x
-    if (ability.abilityFunction === "wildRange") {
+    if (ability.abilityFunction === 'wildRange') {
       this.wildRangeAbility(ability);
     }
 
     // Bot offense -x
-    if (ability.abilityFunction === "wildSuitRange") {
+    if (ability.abilityFunction === 'wildSuitRange') {
       this.wildSuitRangeAbility(ability);
     }
   }
@@ -653,7 +653,7 @@ export class BattleComponent implements OnInit {
         this.shieldOnEnemies.push(x);
         return { ...x, attack: newAttack };
       });
-      this.endAbilityTurn(ability, 800);
+      this.endAbilityTurn(ability, 1800);
     } else {
       const ID = this.pushDisplayMessage(
         `Select An Enemy To Apply -${ability.abilityValue} Offense To`
@@ -683,7 +683,7 @@ export class BattleComponent implements OnInit {
       // Remove active lines
       try {
         for await (const x of this.activeAbilityLeaderLines) {
-          await x.hide("fade", { duration: 100, timing: "linear" });
+          await x.hide('fade', { duration: 100, timing: 'linear' });
         }
       } catch (err) {
         console.log(err);
@@ -691,7 +691,7 @@ export class BattleComponent implements OnInit {
       this.activeAbilityLeaderLines = [];
 
       let healAbility = { ...ability };
-      healAbility.abilityFunction = "heal";
+      healAbility.abilityFunction = 'heal';
       healAbility.abilityValue = totalHealthRegained;
 
       await this.timeout(1000);
@@ -732,13 +732,13 @@ export class BattleComponent implements OnInit {
       for await (const x of this.enemyPlayers) {
         const incomingAttackPower = ability.abilityValue;
         const newHealth = x.health - incomingAttackPower;
-        if (ability.hitAnimation === "fire") {
+        if (ability.hitAnimation === 'fire') {
           this.flamesOnEnemies.push(x);
         }
         this.enemyTarget = x.id;
         await this.numbersGoDownIncrementallyBot(x.health, newHealth);
       }
-      this.endAbilityTurn(ability, 800);
+      this.endAbilityTurn(ability, 1800);
     } else {
       const ID = this.pushDisplayMessage(
         `Select An Enemy To Deal ${ability.abilityValue} Damage To`
@@ -764,7 +764,7 @@ export class BattleComponent implements OnInit {
     await this.timeout(800);
     this.numbersGoUpIncrementallyPlayer(this.player.health, newHealth);
 
-    this.endAbilityTurn(ability, 400);
+    this.endAbilityTurn(ability, 1400);
   }
 
   async endAbilityTurn(ability: AbilityCard, timeout: number) {
@@ -776,7 +776,7 @@ export class BattleComponent implements OnInit {
     // Remove active lines
     try {
       for await (const x of this.activeAbilityLeaderLines) {
-        await x.hide("fade", { duration: 100, timing: "linear" });
+        await x.hide('fade', { duration: 100, timing: 'linear' });
       }
     } catch (err) {
       console.log(err);
@@ -801,7 +801,7 @@ export class BattleComponent implements OnInit {
         return;
       }
       this.canSelectCards = true;
-      this.pushMessage("Player Turn");
+      this.pushMessage('Player Turn');
     }, timeout);
   }
 
@@ -813,14 +813,14 @@ export class BattleComponent implements OnInit {
       if (x.id === this.enemyTarget) {
         const incomingAttackPower = ability.abilityValue;
         const newHealth = x.health - incomingAttackPower;
-        if (ability.hitAnimation === "fire") {
+        if (ability.hitAnimation === 'fire') {
           this.flamesOnEnemies.push(x);
         }
         await this.numbersGoDownIncrementallyBot(x.health, newHealth);
       }
     }
 
-    this.endAbilityTurn(ability, 1000);
+    this.endAbilityTurn(ability, 2000);
     setTimeout(() => {
       this.abilityEnemyTarget = 0;
     }, 4000);
@@ -843,7 +843,7 @@ export class BattleComponent implements OnInit {
       return x;
     });
 
-    this.endAbilityTurn(ability, 800);
+    this.endAbilityTurn(ability, 1800);
     setTimeout(() => {
       this.abilityEnemyTarget = 0;
     }, 4000);
@@ -870,13 +870,13 @@ export class BattleComponent implements OnInit {
     const totalHealthRegained =
       totalEnemyPlayersValid.length * ability.abilityValue;
     let healAbility = ability;
-    healAbility.abilityFunction = "heal";
+    healAbility.abilityFunction = 'heal';
     healAbility.abilityValue = totalHealthRegained;
 
     // Remove active lines
     try {
       for await (const x of this.activeAbilityLeaderLines) {
-        await x.hide("fade", { duration: 100, timing: "linear" });
+        await x.hide('fade', { duration: 100, timing: 'linear' });
       }
     } catch (err) {
       console.log(err);
@@ -1189,33 +1189,33 @@ export class BattleComponent implements OnInit {
 
     this.errorAbilityCard = {
       id: 0,
-      abilityFunction: "damage",
+      abilityFunction: 'damage',
       targetAll: false,
       abilityValue: 1,
-      cost: ["hearts"],
-      description: "",
-      image: "",
+      cost: ['hearts'],
+      description: '',
+      image: '',
       level: 1,
-      name: "",
-      hitAnimation: "heal",
+      name: '',
+      hitAnimation: 'heal',
     };
     this.hoveringAbilityHand = [];
     this.hoveringAbilityCard = {
       id: 0,
-      abilityFunction: "damage",
+      abilityFunction: 'damage',
       targetAll: false,
       abilityValue: 1,
-      cost: ["hearts"],
-      description: "",
-      image: "",
+      cost: ['hearts'],
+      description: '',
+      image: '',
       level: 1,
-      name: "",
-      hitAnimation: "heal",
+      name: '',
+      hitAnimation: 'heal',
     };
     this.currentlyRunning = false;
     try {
       for await (const x of this.activeAbilityLeaderLines) {
-        await x.hide("fade", { duration: 100, timing: "linear" });
+        await x.hide('fade', { duration: 100, timing: 'linear' });
       }
       this.activeAbilityLeaderLines = [];
     } catch (err) {
@@ -1277,7 +1277,7 @@ export class BattleComponent implements OnInit {
       let foundTarget: ElementRef | undefined;
       if (abilityCards) {
         for await (const x of abilityCards) {
-          if (x.nativeElement.className.includes("abilityIsActiveTarget")) {
+          if (x.nativeElement.className.includes('abilityIsActiveTarget')) {
             foundTarget = x.nativeElement;
           }
         }
@@ -1285,7 +1285,7 @@ export class BattleComponent implements OnInit {
       let foundEnemyTarget: ElementRef | undefined;
       if (this.enemyPlayerRef) {
         for await (const x of this.enemyPlayerRef) {
-          if (x.nativeElement.className.includes("enemyAbilityTarget")) {
+          if (x.nativeElement.className.includes('enemyAbilityTarget')) {
             foundEnemyTarget = x.nativeElement;
           }
         }
@@ -1293,7 +1293,7 @@ export class BattleComponent implements OnInit {
       if (foundTarget && foundEnemyTarget) {
         try {
           for await (const x of this.activeAbilityLeaderLines) {
-            await x.hide("fade", { duration: 100, timing: "linear" });
+            await x.hide('fade', { duration: 100, timing: 'linear' });
           }
         } catch (err) {
           console.log(err);
@@ -1301,27 +1301,27 @@ export class BattleComponent implements OnInit {
         const myNewActiveLines: any[] = [];
         const myLineOptions: any = {
           dash: { animation: true },
-          endSocket: "bottom",
-          startSocket: "top",
+          endSocket: 'bottom',
+          startSocket: 'top',
           dropShadow: true,
           gradient: {
-            startColor: "rgba(0, 255, 0, 0.281)",
-            endColor: "rgb(0, 255, 0)",
+            startColor: 'rgba(0, 255, 0, 0.281)',
+            endColor: 'rgb(0, 255, 0)',
           },
           animOptions: {
             duration: 30,
-            timing: "linear",
+            timing: 'linear',
           },
           hide: true,
-          endPlug: "arrow3",
-          endPlugColor: "rgb(0, 255, 0)",
+          endPlug: 'arrow3',
+          endPlugColor: 'rgb(0, 255, 0)',
         };
         let myNewLine: any = new LeaderLine(
           foundTarget,
           foundEnemyTarget,
           myLineOptions
         );
-        myNewLine.show("draw", { duration: 200, timing: "linear" });
+        myNewLine.show('draw', { duration: 200, timing: 'linear' });
         myNewActiveLines.push(myNewLine);
         this.activeAbilityLeaderLines = myNewActiveLines;
       }
@@ -1337,7 +1337,7 @@ export class BattleComponent implements OnInit {
       let foundTarget: ElementRef | undefined;
       if (abilityCards) {
         for await (const x of abilityCards) {
-          if (x.nativeElement.className.includes("abilityIsActive")) {
+          if (x.nativeElement.className.includes('abilityIsActive')) {
             foundTarget = x.nativeElement;
           }
         }
@@ -1348,36 +1348,36 @@ export class BattleComponent implements OnInit {
         if (this.myActiveCards) {
           try {
             for await (const x of this.activeAbilityLeaderLines) {
-              await x.hide("fade", { duration: 100, timing: "linear" });
+              await x.hide('fade', { duration: 100, timing: 'linear' });
             }
           } catch (err) {
             console.log(err);
           }
           for await (const x of this.myActiveCards) {
-            if (x.nativeElement.className.includes("abilityActiveCard")) {
+            if (x.nativeElement.className.includes('abilityActiveCard')) {
               const myLineOptions: any = {
                 dash: { animation: true },
-                endSocket: "top",
-                startSocket: "top",
+                endSocket: 'top',
+                startSocket: 'top',
                 dropShadow: true,
                 gradient: {
-                  startColor: "rgba(0, 255, 0, 0.281)",
-                  endColor: "rgb(0, 255, 0)",
+                  startColor: 'rgba(0, 255, 0, 0.281)',
+                  endColor: 'rgb(0, 255, 0)',
                 },
                 animOptions: {
                   duration: 30,
-                  timing: "linear",
+                  timing: 'linear',
                 },
                 hide: true,
-                endPlug: "arrow3",
-                endPlugColor: "rgb(0, 255, 0)",
+                endPlug: 'arrow3',
+                endPlugColor: 'rgb(0, 255, 0)',
               };
               let myNewLine: any = new LeaderLine(
                 foundTarget,
                 x.nativeElement,
                 myLineOptions
               );
-              myNewLine.show("draw", { duration: 200, timing: "linear" });
+              myNewLine.show('draw', { duration: 200, timing: 'linear' });
               myNewActiveLines.push(myNewLine);
             }
           }
@@ -1396,7 +1396,7 @@ export class BattleComponent implements OnInit {
       let foundTarget: ElementRef | undefined;
       if (abilityCards) {
         for await (const x of abilityCards) {
-          if (x.nativeElement.className.includes("abilityIsActive")) {
+          if (x.nativeElement.className.includes('abilityIsActive')) {
             foundTarget = x.nativeElement;
           }
         }
@@ -1407,36 +1407,36 @@ export class BattleComponent implements OnInit {
         if (this.activeEnemyCards) {
           try {
             for await (const x of this.activeAbilityLeaderLines) {
-              await x.hide("fade", { duration: 100, timing: "linear" });
+              await x.hide('fade', { duration: 100, timing: 'linear' });
             }
           } catch (err) {
             console.log(err);
           }
           for await (const x of this.activeEnemyCards) {
-            if (x.nativeElement.className.includes("activeEnemyCard")) {
+            if (x.nativeElement.className.includes('activeEnemyCard')) {
               const myLineOptions: any = {
                 dash: { animation: true },
-                endSocket: "bottom",
-                startSocket: "bottom",
+                endSocket: 'bottom',
+                startSocket: 'bottom',
                 dropShadow: true,
                 gradient: {
-                  startColor: "rgba(0, 255, 0, 0.281)",
-                  endColor: "rgb(0, 255, 0)",
+                  startColor: 'rgba(0, 255, 0, 0.281)',
+                  endColor: 'rgb(0, 255, 0)',
                 },
                 animOptions: {
                   duration: 30,
-                  timing: "linear",
+                  timing: 'linear',
                 },
                 hide: true,
-                endPlug: "arrow3",
-                endPlugColor: "rgb(0, 255, 0)",
+                endPlug: 'arrow3',
+                endPlugColor: 'rgb(0, 255, 0)',
               };
               let myNewLine: any = new LeaderLine(
                 foundTarget,
                 x.nativeElement,
                 myLineOptions
               );
-              myNewLine.show("draw", { duration: 200, timing: "linear" });
+              myNewLine.show('draw', { duration: 200, timing: 'linear' });
               myNewActiveLines.push(myNewLine);
             }
           }
@@ -1471,7 +1471,7 @@ export class BattleComponent implements OnInit {
       }
 
       // --- Wild Suit Cards --- //
-      if (Player?.wildHearts && x.suit === "hearts") {
+      if (Player?.wildHearts && x.suit === 'hearts') {
         // All Hearts Wild
         alteredCard = {
           ...alteredCard,
@@ -1481,7 +1481,7 @@ export class BattleComponent implements OnInit {
         };
       }
 
-      if (Player?.wildDiamonds && x.suit === "diamonds") {
+      if (Player?.wildDiamonds && x.suit === 'diamonds') {
         // All Diamonds Wild
         alteredCard = {
           ...alteredCard,
@@ -1491,7 +1491,7 @@ export class BattleComponent implements OnInit {
         };
       }
 
-      if (Player?.wildSpades && x.suit === "spades") {
+      if (Player?.wildSpades && x.suit === 'spades') {
         // All Spades Wild
         alteredCard = {
           ...alteredCard,
@@ -1501,7 +1501,7 @@ export class BattleComponent implements OnInit {
         };
       }
 
-      if (Player?.wildClubs && x.suit === "clubs") {
+      if (Player?.wildClubs && x.suit === 'clubs') {
         // All Clubs Wild
         alteredCard = {
           ...alteredCard,
@@ -1515,7 +1515,7 @@ export class BattleComponent implements OnInit {
       if (
         Player?.rangeHearts &&
         Player?.rangeHearts > 0 &&
-        x.suit === "hearts"
+        x.suit === 'hearts'
       ) {
         // All Hearts Wild
         alteredCard = {
@@ -1528,7 +1528,7 @@ export class BattleComponent implements OnInit {
       if (
         Player?.rangeDiamonds &&
         Player?.rangeDiamonds > 0 &&
-        x.suit === "diamonds"
+        x.suit === 'diamonds'
       ) {
         // All Diamonds Wild
         alteredCard = {
@@ -1541,7 +1541,7 @@ export class BattleComponent implements OnInit {
       if (
         Player?.rangeSpades &&
         Player?.rangeSpades > 0 &&
-        x.suit === "spades"
+        x.suit === 'spades'
       ) {
         // All Spades Wild
         alteredCard = {
@@ -1551,7 +1551,7 @@ export class BattleComponent implements OnInit {
         };
       }
 
-      if (Player?.rangeClubs && Player?.rangeClubs > 0 && x.suit === "clubs") {
+      if (Player?.rangeClubs && Player?.rangeClubs > 0 && x.suit === 'clubs') {
         // All Clubs Wild
         alteredCard = {
           ...alteredCard,
@@ -1564,9 +1564,9 @@ export class BattleComponent implements OnInit {
     });
   }
 
-  @HostListener("document:keypress", ["$event"])
+  @HostListener('document:keypress', ['$event'])
   giveHint(event: KeyboardEvent) {
-    if (event.key && event.key.toLowerCase() === "h") {
+    if (event.key && event.key.toLowerCase() === 'h') {
       const playerBestHand: DetermineObject =
         this.cardService.generateBotOffenseHand(this.playerHand);
       this.validCards = playerBestHand.cards;
@@ -1575,7 +1575,7 @@ export class BattleComponent implements OnInit {
 
   useSpecialAbilityCard() {
     this.usedSpecialCardThisTurn = true;
-    this.pushSpecialAbilityImage("Test test test");
+    this.pushSpecialAbilityImage('Test test test');
   }
 
   cardIsSelected(card: CardDto): boolean {
@@ -1598,7 +1598,7 @@ export class BattleComponent implements OnInit {
     const newCard = {
       ...card,
       suit: suit,
-      image: card.value + "_of_" + suit + ".png",
+      image: card.value + '_of_' + suit + '.png',
     };
     this.playerHand = this.playerHand.map((x) => {
       if (x.id === card.id) {
@@ -1727,15 +1727,15 @@ export class BattleComponent implements OnInit {
       this.staticEnemyTarget = this.enemyTarget;
       this.abilityEnemyTarget = this.enemyTarget;
 
-      if (this.currentAbility.abilityFunction === "damage") {
+      if (this.currentAbility.abilityFunction === 'damage') {
         this.onSelectTargetAbilityFire();
       }
 
-      if (this.currentAbility.abilityFunction === "offense") {
+      if (this.currentAbility.abilityFunction === 'offense') {
         this.onSelectTargetAbilityOffense();
       }
 
-      if (this.currentAbility.abilityFunction === "leach") {
+      if (this.currentAbility.abilityFunction === 'leach') {
         this.onSelectTargetAbilityLeach();
       }
 
@@ -1759,8 +1759,8 @@ export class BattleComponent implements OnInit {
         id: 0,
         health: 1,
         attack: 1,
-        image: "",
-        name: "",
+        image: '',
+        name: '',
         baseHealth: 1,
         baseAttack: 1,
         level: 1,
@@ -1775,8 +1775,8 @@ export class BattleComponent implements OnInit {
         id: 0,
         health: 1,
         attack: 1,
-        image: "",
-        name: "",
+        image: '',
+        name: '',
         baseHealth: 1,
         baseAttack: 1,
         level: 1,
@@ -1793,8 +1793,8 @@ export class BattleComponent implements OnInit {
         id: 0,
         health: 1,
         attack: 1,
-        image: "",
-        name: "",
+        image: '',
+        name: '',
         baseHealth: 1,
         baseAttack: 1,
         level: 1,
@@ -1815,7 +1815,7 @@ export class BattleComponent implements OnInit {
   finishedRedraw() {
     this.redrawing = false;
     setTimeout(() => {
-      this.pushMessage("Player Turn");
+      this.pushMessage('Player Turn');
     }, 2500);
 
     setTimeout(() => {
@@ -1885,17 +1885,17 @@ export class BattleComponent implements OnInit {
   trackById = (index: number, item: CardDto) => item.id;
 
   selectCard(card: CardDto) {
-    if (this.currentAbility.abilityFunction === "wildSuit") {
+    if (this.currentAbility.abilityFunction === 'wildSuit') {
       this.onSelectTargetAbilityWildSuit(card);
       return;
     }
 
-    if (this.currentAbility.abilityFunction === "wildRange") {
+    if (this.currentAbility.abilityFunction === 'wildRange') {
       this.onSelectTargetAbilityWildRange(card);
       return;
     }
 
-    if (this.currentAbility.abilityFunction === "wildSuitRange") {
+    if (this.currentAbility.abilityFunction === 'wildSuitRange') {
       this.onSelectTargetAbilityWildSuitRange(card);
       return;
     }
@@ -1908,7 +1908,7 @@ export class BattleComponent implements OnInit {
       // Add card to selectedCards
       if (!includesCard) {
         if (this.selectedCards.length === 5) {
-          this.pushError("Max 5 cards");
+          this.pushError('Max 5 cards');
           return;
         }
         this.selectedCards.push(card);
@@ -1950,7 +1950,7 @@ export class BattleComponent implements OnInit {
       let foundTarget: ElementRef | undefined;
       if (this.enemyPlayerRef) {
         for await (const x of this.enemyPlayerRef) {
-          if (x.nativeElement.className.includes("errorEnemyBorder")) {
+          if (x.nativeElement.className.includes('errorEnemyBorder')) {
             foundTarget = x.nativeElement;
           }
         }
@@ -1961,38 +1961,38 @@ export class BattleComponent implements OnInit {
         if (this.myActiveCards) {
           try {
             for await (const x of this.activeLeaderLines) {
-              await x.hide("fade", { duration: 100, timing: "linear" });
+              await x.hide('fade', { duration: 100, timing: 'linear' });
             }
           } catch (err) {
             console.log(err);
           }
           for await (const x of this.myActiveCards) {
-            if (x.nativeElement.className.includes("activeCard")) {
+            if (x.nativeElement.className.includes('activeCard')) {
               const myLineOptions: any = {
                 dash: { animation: true },
-                endSocket: "bottom",
-                startSocket: "top",
+                endSocket: 'bottom',
+                startSocket: 'top',
                 dropShadow: true,
                 gradient: {
                   startColor: valid
-                    ? "rgba(0, 255, 0, 0.281)"
-                    : "rgba(255, 0, 0, 0.281)",
-                  endColor: valid ? "rgb(0, 255, 0)" : "rgb(228, 35, 35)",
+                    ? 'rgba(0, 255, 0, 0.281)'
+                    : 'rgba(255, 0, 0, 0.281)',
+                  endColor: valid ? 'rgb(0, 255, 0)' : 'rgb(228, 35, 35)',
                 },
                 animOptions: {
                   duration: 30,
-                  timing: "linear",
+                  timing: 'linear',
                 },
                 hide: true,
-                endPlug: "arrow3",
-                endPlugColor: valid ? "rgb(0, 255, 0)" : "rgb(228, 35, 35)",
+                endPlug: 'arrow3',
+                endPlugColor: valid ? 'rgb(0, 255, 0)' : 'rgb(228, 35, 35)',
               };
               let myNewLine: any = new LeaderLine(
                 x.nativeElement,
                 foundTarget,
                 myLineOptions
               );
-              myNewLine.show("draw", { duration: 200, timing: "linear" });
+              myNewLine.show('draw', { duration: 200, timing: 'linear' });
               myNewActiveLines.push(myNewLine);
             }
           }
@@ -2011,7 +2011,7 @@ export class BattleComponent implements OnInit {
       let foundTarget: ElementRef | undefined;
       if (this.playerRef) {
         for await (const x of this.playerRef) {
-          if (x.nativeElement.className.includes("errorEnemyBorder")) {
+          if (x.nativeElement.className.includes('errorEnemyBorder')) {
             foundTarget = x.nativeElement;
           }
         }
@@ -2021,36 +2021,36 @@ export class BattleComponent implements OnInit {
         if (this.activeEnemyCards) {
           try {
             for await (const x of this.activeLeaderLines) {
-              await x.hide("fade", { duration: 100, timing: "linear" });
+              await x.hide('fade', { duration: 100, timing: 'linear' });
             }
           } catch (err) {
             console.log(err);
           }
           for await (const x of this.activeEnemyCards) {
-            if (x.nativeElement.className.includes("activeEnemyCard")) {
+            if (x.nativeElement.className.includes('activeEnemyCard')) {
               const myLineOptions: any = {
                 dash: { animation: true },
-                endSocket: "top",
-                startSocket: "bottom",
+                endSocket: 'top',
+                startSocket: 'bottom',
                 dropShadow: true,
                 gradient: {
-                  startColor: "rgba(0, 255, 0, 0.281)",
-                  endColor: "rgb(0, 255, 0)",
+                  startColor: 'rgba(0, 255, 0, 0.281)',
+                  endColor: 'rgb(0, 255, 0)',
                 },
                 animOptions: {
                   duration: 30,
-                  timing: "linear",
+                  timing: 'linear',
                 },
                 hide: true,
-                endPlug: "arrow3",
-                endPlugColor: "rgb(0, 255, 0)",
+                endPlug: 'arrow3',
+                endPlugColor: 'rgb(0, 255, 0)',
               };
               let myNewLine: any = new LeaderLine(
                 x.nativeElement,
                 foundTarget,
                 myLineOptions
               );
-              myNewLine.show("draw", { duration: 200, timing: "linear" });
+              myNewLine.show('draw', { duration: 200, timing: 'linear' });
               myNewActiveLines.push(myNewLine);
             }
           }
@@ -2081,7 +2081,7 @@ export class BattleComponent implements OnInit {
 
       if (this.playerHand.length < 6) {
         this.startBotTurnsLoop();
-        this.pushError("Enemy Turn");
+        this.pushError('Enemy Turn');
         this.usedSpecialCardThisTurn = false;
       } else {
         // If player needs to discard
@@ -2095,7 +2095,7 @@ export class BattleComponent implements OnInit {
 
       if (!hand.valid) {
         this.canSelectCards = true;
-        this.pushError("Invalid Attack Hand!");
+        this.pushError('Invalid Attack Hand!');
         return;
       }
 
@@ -2110,7 +2110,7 @@ export class BattleComponent implements OnInit {
       this.attackStarted = true;
       try {
         for await (const x of this.activeLeaderLines) {
-          await x.hide("fade", { duration: 100, timing: "linear" });
+          await x.hide('fade', { duration: 100, timing: 'linear' });
         }
       } catch (err) {
         console.log(err);
@@ -2166,7 +2166,7 @@ export class BattleComponent implements OnInit {
             highCard: 0,
             valid: false,
             power: 0,
-            name: "",
+            name: '',
             ranking: 0,
           };
           this.enemyDefense = [];
@@ -2285,9 +2285,9 @@ export class BattleComponent implements OnInit {
           extraTimeout = incomingAttackPower;
           const newHealth = x.health - incomingAttackPower;
           console.log(
-            "Player Wins Attack: Attacking bot for " +
+            'Player Wins Attack: Attacking bot for ' +
               incomingAttackPower +
-              " damage"
+              ' damage'
           );
           setTimeout(() => {
             this.numbersGoDownIncrementally(x.health, newHealth);
@@ -2304,7 +2304,7 @@ export class BattleComponent implements OnInit {
       extraTimeout = incomingAttackPower;
       const newHealth = this.player.health - incomingAttackPower;
       console.log(
-        "Bot Defended: Attacking player for " + incomingAttackPower + " damage"
+        'Bot Defended: Attacking player for ' + incomingAttackPower + ' damage'
       );
       setTimeout(() => {
         this.numbersGoDownIncrementally(this.player.health, newHealth, true);
@@ -2327,9 +2327,9 @@ export class BattleComponent implements OnInit {
           extraTimeout = incomingAttackPower;
           const newHealth = x.health - incomingAttackPower;
           console.log(
-            "Player Wins Attack: Attacking bot for " +
+            'Player Wins Attack: Attacking bot for ' +
               incomingAttackPower +
-              " damage"
+              ' damage'
           );
           setTimeout(() => {
             this.numbersGoDownIncrementally(x.health, newHealth);
@@ -2359,7 +2359,7 @@ export class BattleComponent implements OnInit {
 
     if (this.playerHand.length < 6) {
       this.startBotTurnsLoop();
-      this.pushError("Enemy Turn");
+      this.pushError('Enemy Turn');
       this.usedSpecialCardThisTurn = false;
     } else {
       // If player needs to discard
@@ -2423,8 +2423,13 @@ export class BattleComponent implements OnInit {
         await this.timeout(25);
       }
 
-      await this.timeout(1700);
-      this.finishHeroLevelUp();
+      if (this.leveledUp) {
+        await this.timeout(3000);
+        this.finishHeroLevelUp();
+      } else {
+        await this.timeout(1700);
+        this.finishHeroLevelUp();
+      }
     }
   }
 
@@ -2457,13 +2462,13 @@ export class BattleComponent implements OnInit {
 
       // Check if max level
       if (this.player.isMaxLevel) {
-        return "Max Level";
+        return 'Max Level';
       }
 
       return `${current}/${total}`;
     }
 
-    return "";
+    return '';
   }
 
   determineWidthXp(): string {
@@ -2472,11 +2477,11 @@ export class BattleComponent implements OnInit {
       const totalXp: number = this.player.xpLevels[this.player.level - 1];
       const percentageXp = (currentXp / totalXp) * 98;
       if (percentageXp > 98 || this.player.isMaxLevel) {
-        return "98%";
+        return '98%';
       }
-      return percentageXp + "%";
+      return percentageXp + '%';
     }
-    return "98%";
+    return '98%';
   }
 
   endGame(playerWon: boolean) {
@@ -2549,7 +2554,7 @@ export class BattleComponent implements OnInit {
 
   finishedDiscarding() {
     if (this.discardCards.length - this.discardSelectedCards.length !== 5) {
-      this.errorList.push("test");
+      this.errorList.push('test');
       return;
     }
 
@@ -2577,12 +2582,12 @@ export class BattleComponent implements OnInit {
     if (this.enemyNextTurn) {
       this.completedEnemyTurns = [];
       this.startBotTurnsLoop();
-      this.pushError("Enemy Turn");
+      this.pushError('Enemy Turn');
       this.addCardsToBothHands();
       this.usedSpecialCardThisTurn = false;
     } else {
       this.completedEnemyTurns = [];
-      this.pushMessage("Player Turn");
+      this.pushMessage('Player Turn');
       this.addCardsToBothHands();
       this.newTurn();
     }
@@ -2675,7 +2680,7 @@ export class BattleComponent implements OnInit {
         this.completedEnemyTurns = [];
         this.addCardsToBothHands();
         this.newTurn();
-        this.pushMessage("Player Turn");
+        this.pushMessage('Player Turn');
       } else {
         // If player needs to discard
         this.enemyNextTurn = false;
@@ -2744,9 +2749,9 @@ export class BattleComponent implements OnInit {
           const incomingAttackPower = this.selectedCards.length;
           extraTimeout = incomingAttackPower;
           console.log(
-            "Player Defended: Attacking bot for " +
+            'Player Defended: Attacking bot for ' +
               incomingAttackPower +
-              " damage"
+              ' damage'
           );
           const newHealth = x.health - incomingAttackPower;
           setTimeout(() => {
@@ -2765,9 +2770,9 @@ export class BattleComponent implements OnInit {
       extraTimeout = incomingAttackPower;
       const newHealth = this.player.health - incomingAttackPower;
       console.log(
-        "Bot Wins Attack: Attacking player for " +
+        'Bot Wins Attack: Attacking player for ' +
           incomingAttackPower +
-          " damage"
+          ' damage'
       );
       setTimeout(() => {
         this.numbersGoDownIncrementally(this.player.health, newHealth, true);
@@ -2792,9 +2797,9 @@ export class BattleComponent implements OnInit {
           const incomingAttackPower = this.selectedCards.length;
           extraTimeout = incomingAttackPower;
           console.log(
-            "Player Defended: Attacking bot for " +
+            'Player Defended: Attacking bot for ' +
               incomingAttackPower +
-              " damage"
+              ' damage'
           );
           const newHealth = x.health - incomingAttackPower;
           setTimeout(() => {
@@ -2844,7 +2849,7 @@ export class BattleComponent implements OnInit {
         // Hide lines
         try {
           for await (const x of this.activeAbilityLeaderLines) {
-            await x.hide("fade", { duration: 100, timing: "linear" });
+            await x.hide('fade', { duration: 100, timing: 'linear' });
           }
         } catch (err) {
           console.log(err);
@@ -2867,40 +2872,40 @@ export class BattleComponent implements OnInit {
 
   async useAbilityCardBot(ability: AbilityCard) {
     // damage
-    if (ability.abilityFunction === "damage") {
+    if (ability.abilityFunction === 'damage') {
       await this.botUseDamageAbility(ability);
     }
 
     // -offense
-    if (ability.abilityFunction === "offense") {
+    if (ability.abilityFunction === 'offense') {
       await this.botUseOffenseAbility(ability);
     }
 
     // discard
-    if (ability.abilityFunction === "discard") {
+    if (ability.abilityFunction === 'discard') {
       await this.botUseDiscardAbility(ability);
     }
 
     // draw card
-    if (ability.abilityFunction === "draw") {
+    if (ability.abilityFunction === 'draw') {
       await this.botUseDrawAbility(ability);
     }
 
     // heal 1
-    if (ability.abilityFunction === "heal") {
+    if (ability.abilityFunction === 'heal') {
       await this.botUseHealAbility(ability);
     }
   }
 
   async botUseDamageAbility(ability: AbilityCard) {
     // Attack player
-    this.pushDisplayMessage("Fire Attack");
+    this.pushDisplayMessage('Fire Attack');
     await this.timeout(500);
 
     this.player.health = this.player.health - ability.abilityValue;
 
     this.fireOnPlayer = true;
-    await this.timeout(800);
+    await this.timeout(1800);
     this.botEndAbilityTurn();
   }
 
@@ -2915,7 +2920,7 @@ export class BattleComponent implements OnInit {
     }
 
     this.shieldOnPlayer = true;
-    await this.timeout(800);
+    await this.timeout(1800);
     this.botEndAbilityTurn();
   }
 
@@ -2962,7 +2967,7 @@ export class BattleComponent implements OnInit {
           return { ...x, health: newHealth };
         }
       });
-      await this.timeout(800);
+      await this.timeout(1800);
       this.botEndAbilityTurn();
     } else {
       // Heal single
@@ -2995,7 +3000,7 @@ export class BattleComponent implements OnInit {
           return x;
         });
       }
-      await this.timeout(800);
+      await this.timeout(1800);
       this.botEndAbilityTurn();
     }
   }
@@ -3034,7 +3039,7 @@ export class BattleComponent implements OnInit {
       botHand = this.cardService.generateBotOffenseHand(this.enemyHand);
     } else {
       this.completedEnemyTurns = [];
-      this.pushMessage("Player Turn");
+      this.pushMessage('Player Turn');
       this.addCardsToBothHands();
       this.newTurn();
       return;
@@ -3057,7 +3062,7 @@ export class BattleComponent implements OnInit {
     this.canSelectCards = true;
     try {
       for await (const x of this.activeLeaderLines) {
-        await x.hide("fade", { duration: 100, timing: "linear" });
+        await x.hide('fade', { duration: 100, timing: 'linear' });
       }
     } catch (err) {
       console.log(err);
@@ -3078,7 +3083,7 @@ export class BattleComponent implements OnInit {
       this.selectedCards.length !== this.playerHand.length
     ) {
       this.canSelectCards = true;
-      this.pushError("Select " + this.enemyAttackHand.cards.length + " Cards");
+      this.pushError('Select ' + this.enemyAttackHand.cards.length + ' Cards');
       return;
     }
 
@@ -3089,7 +3094,7 @@ export class BattleComponent implements OnInit {
     ) {
       this.canSelectCards = true;
       this.pushError(
-        "Select At Least " + this.enemyAttackHand.cards.length + " Cards"
+        'Select At Least ' + this.enemyAttackHand.cards.length + ' Cards'
       );
       return;
     }
@@ -3128,8 +3133,8 @@ export class BattleComponent implements OnInit {
       id: 0,
       health: 1,
       attack: 1,
-      image: "",
-      name: "",
+      image: '',
+      name: '',
       baseHealth: 1,
       baseAttack: 1,
       level: 1,

@@ -819,14 +819,16 @@
 
 .playerLevel {
   position: absolute;
-  top: 0;
   width: 100%;
-  transform: scale(0.3);
-  top: -16%;
+  transform: scale(0.2);
+  bottom: -23%;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 12;
+}
+
+.playerTitle {
 }
 
 .cardPlayerBorder {
@@ -1154,8 +1156,8 @@
 .claws {
   top: 10%;
   animation: zoomOutClaws;
-  animation-duration: 1s;
-  animation-delay: 2s;
+  animation-duration: 2s;
+  animation-delay: 3s;
   animation-fill-mode: forwards;
 }
 
@@ -1175,7 +1177,7 @@
 
 .healing {
   animation: zoomOutHeal !important;
-  animation-duration: 1s !important;
+  animation-duration: 2s !important;
   animation-fill-mode: forwards !important;
   z-index: 99;
 }
@@ -1205,7 +1207,7 @@
 
 .protecting {
   animation: zoomOutLeach !important;
-  animation-duration: 1s !important;
+  animation-duration: 2s !important;
   animation-fill-mode: forwards !important;
   z-index: 99;
 }

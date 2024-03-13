@@ -282,6 +282,7 @@
               </div>
               <div class="cardPlayerBorder">
                 <div class="playerBorderImage"></div>
+                <div class="playerTitle">{{ player.name }}</div>
                 <img
                   class="playerLevel"
                   [src]="
@@ -607,12 +608,13 @@
             <!-- Start of animations -->
             <div class="cardPlayerBorder">
               <div class="playerBorderImageEnemy"></div>
+              <div class="playerTitle">{{ findEnemyPlayer().name }}</div>
               <img
                 class="playerLevel"
                 [src]="
                   './assets/' +
                   gameThemePath +
-                  '/level' +
+                  '/enemy' +
                   findEnemyPlayer().level +
                   '.png'
                 "
@@ -739,6 +741,7 @@
             <!-- Start of animations -->
             <div class="cardPlayerBorder">
               <div class="playerBorderImage"></div>
+              <div class="playerTitle">{{ player.name }}</div>
               <img
                 class="playerLevel"
                 [src]="
@@ -993,12 +996,15 @@
               <!-- Start of animations -->
               <div class="cardPlayerBorder">
                 <div class="playerBorderImageEnemy"></div>
+                <div class="playerTitle">
+                  {{ findStaticEnemyPlayer().name }}
+                </div>
                 <img
                   class="playerLevel"
                   [src]="
                     './assets/' +
                     gameThemePath +
-                    '/level' +
+                    '/enemy' +
                     findStaticEnemyPlayer().level +
                     '.png'
                   "
@@ -1132,6 +1138,7 @@
               <!-- Start of animations -->
               <div class="cardPlayerBorder">
                 <div class="playerBorderImage"></div>
+                <div class="playerTitle">{{ player.name }}</div>
                 <img
                   class="playerLevel"
                   [src]="
@@ -1926,6 +1933,7 @@
             </div>
             <div class="cardPlayerBorder">
               <div class="playerBorderImage"></div>
+              <div class="playerTitle">{{ player.name }}</div>
               <img
                 class="playerLevel"
                 [src]="
@@ -2107,10 +2115,11 @@
               </div>
               <div class="cardPlayerBorder">
                 <div class="playerBorderImageEnemy"></div>
+                <div class="playerTitle">{{ item.name }}</div>
                 <img
                   class="playerLevel"
                   [src]="
-                    './assets/' + gameThemePath + '/level' + item.level + '.png'
+                    './assets/' + gameThemePath + '/enemy' + item.level + '.png'
                   "
                 />
               </div>
