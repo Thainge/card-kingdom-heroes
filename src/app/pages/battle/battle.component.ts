@@ -2492,7 +2492,7 @@ export class BattleComponent implements OnInit {
         color: 'purple',
         image: 'boosterPack.png',
         text: 'Booster Pack',
-        textAmount: 'x3',
+        textAmount: 'x1',
       };
       this.rewardItemsClean.unshift(heroLevelUpItem);
       this.rewardItemsClean.unshift(heroCardPack);
