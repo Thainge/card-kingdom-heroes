@@ -77,6 +77,7 @@ interface ComboObject {
 interface RewardItem {
   id: number;
   text: string;
+  textAmount: string;
   image: string;
   color: RewardColor;
 }
@@ -251,12 +252,30 @@ export class BattleComponent implements OnInit {
   clickAnimationsList: ClickObject[] = [];
   gameLoserPlayer: boolean = false;
   gameWinnerPlayer: boolean = false;
-  shownRewardItem: RewardItem = { id: 0, color: 'gold', image: '', text: '' };
+  shownRewardItem: RewardItem = {
+    id: 0,
+    color: 'gold',
+    image: '',
+    text: '',
+    textAmount: '',
+  };
   rewardItemsClean: RewardItem[] = [
-    { id: 1, color: 'gold', image: 'gold.png', text: '100x' },
+    {
+      id: 1,
+      color: 'gold',
+      image: 'goldReward.png',
+      text: 'Gold',
+      textAmount: 'x100',
+    },
   ];
   rewardItems: RewardItem[] = [
-    { id: 1, color: 'gold', image: 'gold.png', text: '100x' },
+    {
+      id: 1,
+      color: 'gold',
+      image: 'goldReward.png',
+      text: 'Gold',
+      textAmount: 'x100',
+    },
   ];
   canClickNextReward: boolean = false;
   finishedRewards: boolean = false;
@@ -385,7 +404,13 @@ export class BattleComponent implements OnInit {
       this.canClickNextReward = false;
       this.rewardItems = this.rewardItems.filter((x) => x.id !== rewardItem.id);
       // Hide current reward
-      this.shownRewardItem = { id: 0, color: 'gold', image: '', text: '' };
+      this.shownRewardItem = {
+        id: 0,
+        color: 'gold',
+        image: '',
+        text: '',
+        textAmount: '',
+      };
       await this.timeout(750);
       // show new reward
       this.shownRewardItem = this.rewardItems[0];
@@ -2457,15 +2482,17 @@ export class BattleComponent implements OnInit {
       const newId = this.rewardItemsClean.length;
       const heroLevelUpItem: RewardItem = {
         id: newId + 1,
-        color: 'purple',
-        image: '',
-        text: '',
+        color: 'blue',
+        image: 'levelUpHero.png',
+        text: 'Upgrade Points!',
+        textAmount: 'x3',
       };
       const heroCardPack: RewardItem = {
         id: newId + 2,
         color: 'purple',
-        image: '',
-        text: '',
+        image: 'boosterPack.png',
+        text: 'Booster Pack',
+        textAmount: 'x3',
       };
       this.rewardItemsClean.unshift(heroLevelUpItem);
       this.rewardItemsClean.unshift(heroCardPack);

@@ -2123,14 +2123,14 @@ text {
 
 .raysMiddle {
   position: absolute;
+  -webkit-user-drag: none;
   display: flex;
   justify-content: center;
-  -webkit-user-drag: none;
   align-items: center;
   z-index: 2;
-  width: 30%;
-  padding-left: 73px;
-  padding-top: 72px;
+  width: 50%;
+  padding-left: 5%;
+  padding-top: 5%;
   transform-origin: center center;
   animation: 2000ms hoveringReward infinite ease-in-out;
   animation-fill-mode: forwards;
@@ -2147,6 +2147,53 @@ text {
   100% {
     transform: scale(1, 1) translate(0px, 0px);
   }
+}
+
+.raysTextTitle {
+  position: absolute;
+  top: -5%;
+  left: 0;
+  width: 50%;
+  padding-left: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  text-transform: uppercase;
+  -webkit-text-stroke: 1px #000;
+  color: whitesmoke;
+}
+
+.raysTextAmount {
+  position: absolute;
+  bottom: 40%;
+  left: 0;
+  width: 50%;
+  padding-left: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  text-transform: uppercase;
+  -webkit-text-stroke: 1px #000;
+  color: whitesmoke;
+}
+
+.raysContinueText {
+  position: absolute;
+  bottom: 10%;
+  left: 0;
+  width: 50%;
+  padding-left: 5%;
+  font-size: 0.7em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  text-transform: uppercase;
+  -webkit-text-stroke: 1px #000;
+  color: #939393;
+  font-style: italic;
 }
 
 .pulseBox {
@@ -2242,10 +2289,8 @@ text {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50%;
+  width: 25%;
   -webkit-user-drag: none;
-  // animation: hoverEffect 5s infinite ease-in-out;
-  // animation-fill-mode: forwards;
   animation: 3s victoryDefeatFadeInOut ease-in-out;
   animation-delay: 400ms;
   animation-fill-mode: forwards;
@@ -2256,7 +2301,7 @@ text {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 70%;
   position: relative;
   top: -15%;
   -webkit-user-drag: none;
@@ -2390,7 +2435,7 @@ text {
 }
 
 .goldText {
-  color: gold;
+  color: rgb(255, 215, 0);
 }
 
 .purpleText {
@@ -2399,6 +2444,33 @@ text {
 
 .blueText {
   color: rgb(0, 140, 255);
+}
+
+.purpleReward {
+  background: linear-gradient(
+    to bottom,
+    rgba(153, 0, 255, 0.5) 0%,
+    rgba(95, 0, 158, 0.5) 100%
+  );
+  border: 0.3em solid rgba(153, 0, 255, 0.7);
+}
+
+.blueReward {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 140, 255, 0.5) 0%,
+    rgba(0, 86, 156, 0.5) 100%
+  );
+  border: 0.3em solid rgba(0, 140, 255, 0.7);
+}
+
+.goldReward {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 217, 0, 0.5) 0%,
+    rgba(155, 132, 0, 0.5) 100%
+  );
+  border: 0.3em solid rgba(255, 215, 0, 0.7);
 }
 
 .finishButtonGo {

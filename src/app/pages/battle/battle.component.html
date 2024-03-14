@@ -371,9 +371,39 @@
           [@zoomOutLeave]
         >
           <div class="raysContainer">
+            <div
+              class="raysTextTitle"
+              [ngStyle]="{
+                'font-family': gameThemePath + '-HeaderFont'
+              }"
+              *ngIf="isActiveReward(item)"
+              [@fadeOutLeave]="{ value: '', params: { duration: 200 } }"
+            >
+              {{ item.text }}
+            </div>
+            <div
+              class="raysTextAmount"
+              [ngStyle]="{
+                'font-family': gameThemePath + '-HeaderFont'
+              }"
+              *ngIf="isActiveReward(item)"
+              [@fadeOutLeave]="{ value: '', params: { duration: 200 } }"
+            >
+              {{ item.textAmount }}
+            </div>
+            <div
+              class="raysContinueText"
+              [ngStyle]="{
+                'font-family': gameThemePath + '-HeaderFont'
+              }"
+              *ngIf="isActiveReward(item)"
+              [@fadeOutLeave]="{ value: '', params: { duration: 200 } }"
+            >
+              Click to continue...
+            </div>
             <img
               class="raysMiddle"
-              [src]="'./assets/' + gameThemePath + '/defend.png'"
+              [src]="'./assets/' + gameThemePath + '/' + item.image"
             />
             <div class="pulseBox"><div class="pulse"></div></div>
             <div class="rays"></div>
@@ -422,9 +452,26 @@
             >
               <img
                 class="rewardImage"
-                [src]="'./assets/' + gameThemePath + '/gold.png'"
+                [ngClass]="{
+                  goldReward: item.color === 'gold',
+                  purpleReward: item.color === 'purple',
+                  blueReward: item.color === 'blue'
+                }"
+                [src]="'./assets/' + gameThemePath + '/' + item.image"
               />
-              <div class="rewardText goldText">100 Gold</div>
+              <div
+                class="rewardText"
+                [ngClass]="{
+                  goldText: item.color === 'gold',
+                  purpleText: item.color === 'purple',
+                  blueText: item.color === 'blue'
+                }"
+                [ngStyle]="{
+                  'font-family': gameThemePath + '-HeaderFont'
+                }"
+              >
+                {{ item.textAmount }}
+              </div>
             </div>
           </div>
         </div>
@@ -476,40 +523,6 @@
             [src]="'./assets/' + gameThemePath + '/defeat.png'"
             class="victoryEndImage"
           />
-        </div>
-        <div class="rewardsContainer" *ngIf="rewardItemsClean.length > 0">
-          <div class="linesTop"></div>
-          <div class="linesLeft"></div>
-          <div class="linesRight"></div>
-          <div class="linesBottom"></div>
-          <div
-            class="rewardsTitle"
-            [ngStyle]="{
-              'font-family': gameThemePath + '-HeaderFont'
-            }"
-          >
-            Rewards
-          </div>
-          <div class="rewardBoxesContainer">
-            <div
-              class="rewardBox"
-              *ngFor="let item of rewardItemsClean; index as i"
-              [@fadeUpEnter]="{
-                value: '',
-                params: {
-                  duration: 500,
-                  delay: (i + 1) * 300,
-                  translate: '30px'
-                }
-              }"
-            >
-              <img
-                class="rewardImage"
-                [src]="'./assets/' + gameThemePath + '/gold.png'"
-              />
-              <div class="rewardText goldText">100 Gold</div>
-            </div>
-          </div>
         </div>
         <div class="buttonsFinish">
           <div class="finishButtonGo" (click)="continue()">
