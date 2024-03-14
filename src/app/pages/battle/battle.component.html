@@ -285,8 +285,20 @@
               <div class="cardPlayerBorderRotatingBox">
                 <div class="cardPlayerBorderRotatingPlayer"></div>
               </div>
+              <div class="playerCardBackgroundBox">
+                <div
+                  class="playerBackgroundBox"
+                  [ngStyle]="{
+                    'background-image': 'url(' + player.image + ')'
+                  }"
+                ></div>
+                <!-- Card Border is img -->
+                <img
+                  [src]="'./assets/' + gameThemePath + '/cardBorder.png'"
+                  class="playerBorderImageBox"
+                />
+              </div>
               <div class="cardPlayerBorder">
-                <div class="playerBorderImage"></div>
                 <div class="playerTitle">
                   {{ player.name }}
                 </div>
@@ -347,10 +359,6 @@
                   </div>
                 </div>
               </div>
-              <img
-                [src]="player.image"
-                class="cardBackgroundImage playerBackground"
-              />
             </div>
           </div>
         </div>
@@ -639,9 +647,21 @@
               }"
               [@fadeOutLeave]
             />
+            <div class="playerCardBackgroundBox">
+              <div
+                class="playerBackgroundBox"
+                [ngStyle]="{
+                  'background-image': 'url(' + findEnemyPlayer().image + ')'
+                }"
+              ></div>
+              <!-- Card Border is img -->
+              <img
+                [src]="'./assets/' + gameThemePath + '/cardBorder.png'"
+                class="playerBorderImageBox"
+              />
+            </div>
             <!-- Start of animations -->
             <div class="cardPlayerBorder">
-              <div class="playerBorderImageEnemy"></div>
               <div class="playerTitle">{{ findEnemyPlayer().name }}</div>
               <img
                 class="enemyLevel"
@@ -702,10 +722,6 @@
                 </div>
               </div>
             </div>
-            <img
-              [src]="findEnemyPlayer().image"
-              class="cardBackgroundImage playerBackground"
-            />
           </div>
         </div>
       </div>
@@ -772,9 +788,21 @@
               }"
               [@fadeOutLeave]
             />
+            <div class="playerCardBackgroundBox">
+              <div
+                class="playerBackgroundBox"
+                [ngStyle]="{
+                  'background-image': 'url(' + player.image + ')'
+                }"
+              ></div>
+              <!-- Card Border is img -->
+              <img
+                [src]="'./assets/' + gameThemePath + '/cardBorder.png'"
+                class="playerBorderImageBox"
+              />
+            </div>
             <!-- Start of animations -->
             <div class="cardPlayerBorder">
-              <div class="playerBorderImage"></div>
               <div class="playerTitle">{{ player.name }}</div>
               <img
                 class="playerLevel"
@@ -830,10 +858,6 @@
                 </div>
               </div>
             </div>
-            <img
-              [src]="player.image"
-              class="cardBackgroundImage playerBackground"
-            />
           </div>
         </div>
       </div>
@@ -1027,9 +1051,22 @@
                 }"
                 [@fadeOutLeave]
               />
+              <div class="playerCardBackgroundBox">
+                <div
+                  class="playerBackgroundBox"
+                  [ngStyle]="{
+                    'background-image':
+                      'url(' + findStaticEnemyPlayer().image + ')'
+                  }"
+                ></div>
+                <!-- Card Border is img -->
+                <img
+                  [src]="'./assets/' + gameThemePath + '/cardBorder.png'"
+                  class="playerBorderImageBox"
+                />
+              </div>
               <!-- Start of animations -->
               <div class="cardPlayerBorder">
-                <div class="playerBorderImageEnemy"></div>
                 <div class="playerTitle">
                   {{ findStaticEnemyPlayer().name }}
                 </div>
@@ -1095,10 +1132,6 @@
                   </div>
                 </div>
               </div>
-              <img
-                [src]="findStaticEnemyPlayer().image"
-                class="cardBackgroundImage playerBackground"
-              />
             </div>
           </div>
         </div>
@@ -1169,9 +1202,21 @@
                 }"
                 [@fadeOutLeave]
               />
+              <div class="playerCardBackgroundBox">
+                <div
+                  class="playerBackgroundBox"
+                  [ngStyle]="{
+                    'background-image': 'url(' + player.image + ')'
+                  }"
+                ></div>
+                <!-- Card Border is img -->
+                <img
+                  [src]="'./assets/' + gameThemePath + '/cardBorder.png'"
+                  class="playerBorderImageBox"
+                />
+              </div>
               <!-- Start of animations -->
               <div class="cardPlayerBorder">
-                <div class="playerBorderImage"></div>
                 <div class="playerTitle">{{ player.name }}</div>
                 <img
                   class="playerLevel"
@@ -1231,10 +1276,6 @@
                   </div>
                 </div>
               </div>
-              <img
-                [src]="player.image"
-                class="cardBackgroundImage playerBackground"
-              />
             </div>
           </div>
         </div>
@@ -1774,7 +1815,7 @@
         >
           <img class="enemyAbilityBackground paperBg" [@fadeOutLeave] />
           <img
-            [src]="'./assets/' + gameThemePath + '/abilitycard.png'"
+            [src]="'./assets/' + gameThemePath + '/' + card.image"
             class="cardBackgroundImage"
           />
           <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
@@ -1847,7 +1888,9 @@
         >
           <div class="cardBorder">
             <img
-              [src]="'./assets/' + gameThemePath + '/abilitycard.png'"
+              [src]="
+                './assets/' + gameThemePath + '/' + topAbilityCardBot.image
+              "
               class="cardBackgroundImage"
             />
             <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
@@ -1960,13 +2003,26 @@
               class="cardPlayerBorderRotatingBox"
               *ngIf="
                 canSelectCards ||
-                (!showBotCards && enemyAttackStarted && canSelectCards)
+                (!showBotCards && enemyAttackStarted && canSelectCards) ||
+                usedAbilityCard
               "
             >
               <div class="cardPlayerBorderRotatingPlayer"></div>
             </div>
+            <div class="playerCardBackgroundBox">
+              <div
+                class="playerBackgroundBox"
+                [ngStyle]="{
+                  'background-image': 'url(' + player.image + ')'
+                }"
+              ></div>
+              <!-- Card Border is img -->
+              <img
+                [src]="'./assets/' + gameThemePath + '/cardBorder.png'"
+                class="playerBorderImageBox"
+              />
+            </div>
             <div class="cardPlayerBorder">
-              <div class="playerBorderImage"></div>
               <div class="playerTitle">
                 {{ player.name }}
               </div>
@@ -2026,10 +2082,6 @@
                 </div>
               </div>
             </div>
-            <img
-              [src]="player.image"
-              class="cardBackgroundImage playerBackground"
-            />
           </div>
         </div>
       </div>
@@ -2149,8 +2201,20 @@
               >
                 <div class="cardPlayerBorderRotating"></div>
               </div>
+              <div class="playerCardBackgroundBox">
+                <div
+                  class="playerBackgroundBox"
+                  [ngStyle]="{
+                    'background-image': 'url(' + item.image + ')'
+                  }"
+                ></div>
+                <!-- Card Border is img -->
+                <img
+                  [src]="'./assets/' + gameThemePath + '/cardBorder.png'"
+                  class="playerBorderImageBox"
+                />
+              </div>
               <div class="cardPlayerBorder">
-                <div class="playerBorderImageEnemy"></div>
                 <div class="playerTitle">
                   {{ item.name }}
                 </div>
@@ -2254,10 +2318,6 @@
                   </div>
                 </div>
               </div>
-              <img
-                [src]="item.image"
-                class="cardBackgroundImage playerBackground"
-              />
             </div>
           </div>
         </div>
@@ -2312,7 +2372,7 @@
         >
           <div class="cardBorder">
             <img
-              [src]="'./assets/' + gameThemePath + '/abilitycard.png'"
+              [src]="'./assets/' + gameThemePath + '/' + topAbilityCard.image"
               class="cardBackgroundImage"
             />
             <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
@@ -2395,7 +2455,7 @@
           }"
         >
           <img
-            [src]="'./assets/' + gameThemePath + '/abilitycard.png'"
+            [src]="'./assets/' + gameThemePath + '/' + card.image"
             class="cardBackgroundImage"
           />
           <div class="wildCardSuites bottomWildCard bottomAbilityStuff">

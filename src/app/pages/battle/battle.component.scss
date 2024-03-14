@@ -632,7 +632,7 @@
 }
 
 .middleRightCard {
-  width: 90%;
+  width: 100%;
   height: 35%;
 
   pointer-events: all;
@@ -694,6 +694,28 @@
   column-gap: 1.1%;
   top: -50%;
   position: relative;
+}
+
+.playerCardBackgroundBox {
+  position: relative;
+  overflow: hidden;
+}
+
+.playerBackgroundBox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-position: center;
+  background-size: cover;
+  height: 95%;
+}
+
+.playerBorderImageBox {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 11;
 }
 
 .topCard {
@@ -777,37 +799,11 @@
   z-index: 6;
 }
 
-.playerBorderImage {
-  position: absolute;
-  top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 11;
-  width: 100%;
-  height: 100%;
-  background-image: url(~src/assets/default/blueBorder.png);
-  background-size: cover;
-  background-position: center;
-}
-
-.playerBorderImageEnemy {
-  position: absolute;
-  top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 11;
-  width: 100%;
-  height: 100%;
-  background-image: url(~src/assets/default/yellowBorder.png);
-  background-size: cover;
-  background-position: center;
-}
-
 .playerCardBorder {
   position: relative;
   width: 100%;
+  padding: 0% !important;
+  margin: 0 !important;
   transition: all 0.1s;
 }
 
@@ -844,7 +840,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  bottom: -20%;
+  bottom: -21%;
   display: flex;
   justify-content: center;
   align-items: center;

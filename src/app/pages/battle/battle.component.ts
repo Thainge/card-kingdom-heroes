@@ -347,22 +347,22 @@ export class BattleComponent implements OnInit {
       this.enemyPlayers = [
         {
           id: 1,
-          image: './assets/' + this.gameThemePath + '/' + 'link.png',
-          name: 'Link',
-          attack: 3,
-          health: 1,
-          baseHealth: 7,
-          baseAttack: 6,
+          image: './assets/' + this.gameThemePath + '/' + 'goblin.png',
+          name: 'Moblin',
+          attack: 1,
+          health: 3,
+          baseHealth: 3,
+          baseAttack: 1,
           level: 1,
         },
         {
           id: 2,
-          image: './assets/' + this.gameThemePath + '/' + 'link.png',
-          name: 'Link',
-          attack: 2,
-          health: 1,
-          baseHealth: 7,
-          baseAttack: 1,
+          image: './assets/' + this.gameThemePath + '/' + 'goblin.png',
+          name: 'Moblin',
+          attack: 3,
+          health: 5,
+          baseHealth: 5,
+          baseAttack: 3,
           level: 2,
         },
         // {
@@ -520,7 +520,7 @@ export class BattleComponent implements OnInit {
     this.drawAbilityCardBot(2);
     // this.finishedRewards = true;
     // this.rewardItems = [];
-    this.endGame(true);
+    // this.endGame(true);
     // this.newTurn();
     // this.startBotTurnsLoop();
     // this.healOnPlayer = true;
