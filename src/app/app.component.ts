@@ -6,13 +6,37 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { AchievementService } from './services/achievement.service';
+import { AchievementObject } from './models/achievement';
+import {
+  fadeOutUpOnLeaveAnimation,
+  fadeInUpOnEnterAnimation,
+  fadeInDownOnEnterAnimation,
+  fadeOutDownOnLeaveAnimation,
+  fadeInOnEnterAnimation,
+  fadeOutOnLeaveAnimation,
+} from 'angular-animations';
 
 type Commands = 'help' | 'setGold';
+
+type ClickObject = {
+  id: number;
+  x: number;
+  y: number;
+};
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  animations: [
+    fadeOutUpOnLeaveAnimation({ anchor: 'fadeUpLeave' }),
+    fadeInUpOnEnterAnimation({ anchor: 'fadeUpEnter' }),
+    fadeInDownOnEnterAnimation({ anchor: 'fadeDownEnter' }),
+    fadeOutDownOnLeaveAnimation({ anchor: 'fadeDownLeave' }),
+    fadeInOnEnterAnimation({ anchor: 'fadeEnter' }),
+    fadeOutOnLeaveAnimation({ anchor: 'fadeOutLeave' }),
+  ],
 })
 export class AppComponent implements OnInit {
   title = 'card-kingdom-heroes';
@@ -23,11 +47,54 @@ export class AppComponent implements OnInit {
   consoleControl = new FormControl('');
   consoleItems: string[] = ['', "Type 'help' for a list of commands"];
 
+  achievementPopupsList: AchievementObject[] = [];
+  clickAnimationsList: ClickObject[] = [];
+
   @ViewChild('consoleInput') consoleInput: ElementRef | undefined;
 
-  constructor() {}
+  constructor(private achievementService: AchievementService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    setInterval(() => {
+      try {
+        this.clickAnimationsList = this.clickAnimationsList.slice(
+          this.clickAnimationsList.length - 4
+        );
+      } catch (err) {}
+    }, 1000 * 30);
+    this.achievementService.achievements$.subscribe((x: AchievementObject) => {
+      if (x.id !== 0) {
+        this.achievementPopup(x);
+      }
+    });
+    this.achievementService.pushNewAchievement({
+      id: 1,
+      description: 'test description',
+      image: 'gold.png',
+      title: 'First Blood',
+    });
+  }
+
+  async clickAnimation(e: any) {
+    const ID = this.clickAnimationsList.length + 1;
+    const clickObject: ClickObject = {
+      id: ID,
+      x: e.clientX,
+      y: e.clientY,
+    };
+    this.clickAnimationsList.push(clickObject);
+  }
+
+  achievementPopup(achievement: AchievementObject) {
+    const ID = achievement.id;
+    this.achievementPopupsList.push(achievement);
+    setTimeout(() => {
+      this.achievementPopupsList = this.achievementPopupsList.filter(
+        (x) => x.id !== ID
+      );
+      console.log(this.achievementPopupsList);
+    }, 5000);
+  }
 
   @HostListener('document:keypress', ['$event'])
   toggleConsoleKeypress(event: KeyboardEvent) {

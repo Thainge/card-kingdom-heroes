@@ -1,4 +1,4 @@
-<div class="container" (click)="clickAnimation($event)">
+<div class="container">
   <div class="DevItemsList">
     <div
       class="DevItem"
@@ -180,20 +180,6 @@
       <i></i>
       <i></i>
     </div>
-  </div>
-  <div *ngFor="let item of clickAnimationsList">
-    <div
-      class="clickAnimation"
-      [ngStyle]="{
-        top: 'calc(' + item.y + 'px - 2.5em)',
-        left: 'calc(' + item.x + 'px - 2.5em)'
-      }"
-      [@fadeEnter]="{
-        value: '',
-        params: { duration: 500, delay: 0, translate: '300px' }
-      }"
-      [@fadeOutLeave]
-    ></div>
   </div>
   <div *ngIf="gameWinnerPlayer" class="winnerLoserContainer">
     <div

@@ -61,12 +61,6 @@ const defaultAbilityCard: AbilityCard = {
   hitAnimation: 'heal',
 };
 
-type ClickObject = {
-  id: number;
-  x: number;
-  y: number;
-};
-
 interface ComboObject {
   id: number;
   cards: any[];
@@ -249,7 +243,6 @@ export class BattleComponent implements OnInit {
   topAbilityCardBot: AbilityCard = defaultAbilityCard;
   currentAbilityBot: AbilityCard = defaultAbilityCard;
 
-  clickAnimationsList: ClickObject[] = [];
   gameLoserPlayer: boolean = false;
   gameWinnerPlayer: boolean = false;
   shownRewardItem: RewardItem = {
@@ -323,13 +316,6 @@ export class BattleComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    setInterval(() => {
-      try {
-        this.clickAnimationsList = this.clickAnimationsList.slice(
-          this.clickAnimationsList.length - 4
-        );
-      } catch (err) {}
-    }, 1000 * 30);
     this.importRandomBgImage();
     // Get game theme
     this.userService.gameTheme$.subscribe((x) => {
@@ -386,16 +372,6 @@ export class BattleComponent implements OnInit {
 
   ngAfterViewInit() {
     this.snowFlakesArray = Array.from(Array(50).keys());
-  }
-
-  async clickAnimation(e: any) {
-    const ID = this.clickAnimationsList.length + 1;
-    const clickObject: ClickObject = {
-      id: ID,
-      x: e.clientX,
-      y: e.clientY,
-    };
-    this.clickAnimationsList.push(clickObject);
   }
 
   async nextReward(rewardItem: any) {
