@@ -633,7 +633,7 @@
             <!-- End of animations -->
             <div class="cardFooterIconBox swordBox">
               <img
-                [src]="'./assets/' + gameThemePath + '/sword.png'"
+                [src]="'./assets/' + gameThemePathEnemy + '/sword.png'"
                 class="cardIcon"
               />
               <div class="cardIconValue">
@@ -649,7 +649,7 @@
             </div>
             <div class="cardFooterIconBox heartBox">
               <img
-                [src]="'./assets/' + gameThemePath + '/playerHealth.png'"
+                [src]="'./assets/' + gameThemePathEnemy + '/playerHealth.png'"
                 class="cardIcon"
               />
               <div class="cardIconValue">
@@ -724,7 +724,7 @@
             }"
           >
             <img
-              [src]="'./assets/' + gameThemePath + '/claws.png'"
+              [src]="'./assets/' + gameThemePathEnemy + '/claws.png'"
               class="cardIcon confetti clawsCombat swordGlow clawsLeftSide"
               *ngIf="playerLoser"
               [@fadeEnter]="{
@@ -854,7 +854,9 @@
               <div class="attackCard">
                 <div class="cardBorder">
                   <img
-                    [src]="'./assets/' + gameThemePath + '/cards/' + card.image"
+                    [src]="
+                      './assets/' + gameThemePathEnemy + '/cards/' + card.image
+                    "
                     class="cardBackgroundImage"
                   />
                 </div>
@@ -1038,7 +1040,7 @@
               <!-- End of animations -->
               <div class="cardFooterIconBox swordBox">
                 <img
-                  [src]="'./assets/' + gameThemePath + '/sword.png'"
+                  [src]="'./assets/' + gameThemePathEnemy + '/sword.png'"
                   class="cardIcon"
                 />
                 <div class="cardIconValue">
@@ -1055,7 +1057,7 @@
 
               <div class="cardFooterIconBox heartBox">
                 <img
-                  [src]="'./assets/' + gameThemePath + '/playerHealth.png'"
+                  [src]="'./assets/' + gameThemePathEnemy + '/playerHealth.png'"
                   class="cardIcon"
                 />
                 <div class="cardIconValue">
@@ -1135,7 +1137,7 @@
               }"
             >
               <img
-                [src]="'./assets/' + gameThemePath + '/claws.png'"
+                [src]="'./assets/' + gameThemePathEnemy + '/claws.png'"
                 class="cardIcon confetti clawsCombat swordGlow clawsLeftSide"
                 *ngIf="playerLoser"
                 [@fadeEnter]="{
@@ -1283,7 +1285,9 @@
               <div class="attackCard">
                 <div class="cardBorder">
                   <img
-                    [src]="'./assets/' + gameThemePath + '/cards/' + card.image"
+                    [src]="
+                      './assets/' + gameThemePathEnemy + '/cards/' + card.image
+                    "
                     class="cardBackgroundImage"
                   />
                 </div>
@@ -1654,25 +1658,29 @@
       <div
         class="deck deckCard"
         [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
+          'background-image':
+            'url(./assets/' + gameThemePathEnemy + '/cardBack.png)'
         }"
       ></div>
       <div
         class="deck deck1 topdeck1"
         [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
+          'background-image':
+            'url(./assets/' + gameThemePathEnemy + '/cardBack.png)'
         }"
       ></div>
       <div
         class="deck deck2 topdeck2"
         [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
+          'background-image':
+            'url(./assets/' + gameThemePathEnemy + '/cardBack.png)'
         }"
       ></div>
       <div
         class="deck deck3 topdeck3"
         [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
+          'background-image':
+            'url(./assets/' + gameThemePathEnemy + '/cardBack.png)'
         }"
         *ngIf="!canSeeTopCard"
       ></div>
@@ -1682,7 +1690,7 @@
         [ngStyle]="{
           'background-image':
             'url(./assets/' +
-            gameThemePath +
+            gameThemePathEnemy +
             '/cards/' +
             enemyDeck[0].image +
             ')'
@@ -1706,7 +1714,7 @@
       >
         <div class="cardBorder">
           <img
-            [src]="'./assets/' + gameThemePath + '/cardBack.png'"
+            [src]="'./assets/' + gameThemePathEnemy + '/cardBack.png'"
             class="cardBackgroundImage"
           />
         </div>
@@ -1887,7 +1895,7 @@
               [@fadeOutLeave]
             />
             <img
-              [src]="'./assets/' + gameThemePath + '/offenseShield.png'"
+              [src]="'./assets/' + gameThemePathEnemy + '/offenseShield.png'"
               class="cardIcon confetti claws protecting"
               *ngIf="shieldOnPlayer"
             />
@@ -2081,17 +2089,17 @@
                 *ngIf="showLeachAnimation(item)"
               />
               <img
-                [src]="'./assets/' + gameThemePath + '/potion.png'"
+                [src]="'./assets/' + gameThemePathEnemy + '/potion.png'"
                 class="cardIcon confetti claws healing"
                 *ngIf="showHealAnimationBot(item)"
               />
               <img
-                [src]="'./assets/' + gameThemePath + '/horn.png'"
+                [src]="'./assets/' + gameThemePathEnemy + '/horn.png'"
                 class="cardIcon confetti claws healing"
                 *ngIf="showSupportAnimationBot(item)"
               />
               <img
-                [src]="'./assets/' + gameThemePath + '/offenseShield.png'"
+                [src]="'./assets/' + gameThemePathEnemy + '/offenseShield.png'"
                 class="cardIcon confetti claws healing"
                 *ngIf="showAddDefenseAnimationBot(item)"
               />
@@ -2153,7 +2161,7 @@
               </div>
               <div class="cardFooterIconBox swordBox">
                 <img
-                  [src]="'./assets/' + gameThemePath + '/sword.png'"
+                  [src]="'./assets/' + gameThemePathEnemy + '/sword.png'"
                   class="cardIcon"
                 />
                 <div class="cardIconValue">
@@ -2191,7 +2199,7 @@
               </div>
               <div class="cardFooterIconBox heartBox">
                 <img
-                  [src]="'./assets/' + gameThemePath + '/playerHealth.png'"
+                  [src]="'./assets/' + gameThemePathEnemy + '/playerHealth.png'"
                   class="cardIcon"
                 />
                 <div class="cardIconValue">

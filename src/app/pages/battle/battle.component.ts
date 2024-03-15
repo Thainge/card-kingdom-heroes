@@ -506,11 +506,11 @@ export class BattleComponent implements OnInit {
     }, 400);
 
     // --- Skip redraw phase --- //
-    this.redrawing = false;
-    this.redrawHide = true;
-    this.playerHand = [...this.redrawCards];
-    this.drawAbilityCard(2);
-    this.drawAbilityCardBot(2);
+    // this.redrawing = false;
+    // this.redrawHide = true;
+    // this.playerHand = [...this.redrawCards];
+    // this.drawAbilityCard(2);
+    // this.drawAbilityCardBot(2);
 
     // this.playerHand = this.playerHand.map((x, i) => {
     //   return {
