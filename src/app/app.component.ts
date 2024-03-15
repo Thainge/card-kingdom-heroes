@@ -16,8 +16,7 @@ import {
   fadeInOnEnterAnimation,
   fadeOutOnLeaveAnimation,
 } from 'angular-animations';
-
-type Commands = 'help' | 'setGold';
+import { CheatsService } from './services/cheats.service';
 
 type ClickObject = {
   id: number;
@@ -49,10 +48,14 @@ export class AppComponent implements OnInit {
 
   achievementPopupsList: AchievementObject[] = [];
   clickAnimationsList: ClickObject[] = [];
+  showGif: boolean = false;
 
   @ViewChild('consoleInput') consoleInput: ElementRef | undefined;
 
-  constructor(private achievementService: AchievementService) {}
+  constructor(
+    private achievementService: AchievementService,
+    private cheatsService: CheatsService
+  ) {}
 
   ngOnInit(): void {
     setInterval(() => {
@@ -67,12 +70,12 @@ export class AppComponent implements OnInit {
         this.achievementPopup(x);
       }
     });
-    this.achievementService.pushNewAchievement({
-      id: 1,
-      description: 'test description',
-      image: 'gold.png',
-      title: 'First Blood',
-    });
+    // this.achievementService.pushNewAchievement({
+    //   id: 1,
+    //   description: 'test description',
+    //   image: 'gold.png',
+    //   title: 'First Blood',
+    // });
   }
 
   async clickAnimation(e: any) {
@@ -88,6 +91,10 @@ export class AppComponent implements OnInit {
   achievementPopup(achievement: AchievementObject) {
     const ID = achievement.id;
     this.achievementPopupsList.push(achievement);
+    this.showGif = true;
+    setTimeout(() => {
+      this.showGif = false;
+    }, 2800);
     setTimeout(() => {
       this.achievementPopupsList = this.achievementPopupsList.filter(
         (x) => x.id !== ID
@@ -98,14 +105,11 @@ export class AppComponent implements OnInit {
 
   @HostListener('document:keypress', ['$event'])
   toggleConsoleKeypress(event: KeyboardEvent) {
-    if (event.key && event.key.toLowerCase() === '`') {
-      if (this.consoleInput) {
-        this.consoleInput.nativeElement.focus();
+    if (event.key.toLowerCase() === '`') {
+      setTimeout(() => {
+        this.consoleInput?.nativeElement.focus();
         this.consoleControl.setValue('');
-        setTimeout(() => {
-          this.consoleControl.setValue('');
-        }, 10);
-      }
+      }, 50);
       this.consoleOpen = !this.consoleOpen;
       if (this.consoleOpen) {
         this.consoleShouldShow = this.consoleOpen;
@@ -119,18 +123,24 @@ export class AppComponent implements OnInit {
   }
 
   runCommand() {
-    const newCommand = this.consoleControl.value ?? '';
+    const newCommand = this.consoleControl.value?.toLowerCase() ?? '';
     this.consoleControl.setValue('');
 
     this.determineCommand(newCommand);
   }
 
   async determineCommand(value: string) {
-    if (value === 'help') {
+    if (value.toLowerCase() === 'help') {
       await this.timeout(500);
       this.consoleItems.unshift('--- Commands List ---');
       this.consoleItems.unshift(
         'Gives player x amount of gold: &nbsp;&nbsp;&nbsp;&nbsp;<b>setGold x</b>'
+      );
+      this.consoleItems.unshift(
+        'All cards in hand turn wild: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>setWildHand</b>'
+      );
+      this.consoleItems.unshift(
+        "Sets the player's health to 99: &nbsp;&nbsp;&nbsp;<b>infiniteHealth</b>"
       );
       this.consoleItems.unshift(
         'Shows list of possible commands: &nbsp; <b>help</b>'
@@ -142,14 +152,28 @@ export class AppComponent implements OnInit {
       return;
     }
 
-    if (value.includes('setGold')) {
+    if (value.includes('clear')) {
+      this.consoleItems = ['', "Type 'help' for a list of commands"];
+      return;
+    }
+
+    if (value.includes('setgold')) {
       this.consoleItems.unshift(value);
       this.consoleItems.unshift('');
       return;
     }
 
-    if (value.includes('clear')) {
-      this.consoleItems = ['', "Type 'help' for a list of commands"];
+    if (value.includes('setwildhand')) {
+      this.consoleItems.unshift(value);
+      this.consoleItems.unshift('');
+      this.cheatsService.cheats$.next('setWildHand');
+      return;
+    }
+
+    if (value.includes('infinitehealth')) {
+      this.consoleItems.unshift(value);
+      this.consoleItems.unshift('');
+      this.cheatsService.cheats$.next('infiniteHealth');
       return;
     }
 

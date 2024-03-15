@@ -1,3 +1,5 @@
+import { PlayerDto } from './player';
+
 export interface AbilityCard {
   id: number;
   name: string;
@@ -9,6 +11,7 @@ export interface AbilityCard {
   targetAll: boolean;
   abilityValue: number;
   hitAnimation: AnimationType;
+  alliesCalled?: PlayerDto[];
 }
 
 type AbilityFunction =
@@ -22,6 +25,8 @@ type AbilityFunction =
   | 'leach'
   | 'wildSuit'
   | 'wildRange'
-  | 'wildSuitRange';
+  | 'wildSuitRange'
+  | 'increaseDefense'
+  | 'callInSupport';
 type CostValue = 'hearts' | 'diamonds' | 'spades' | 'clubs' | 'black' | 'red';
 type AnimationType = 'fire' | 'heal' | 'shield';

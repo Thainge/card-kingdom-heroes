@@ -275,7 +275,8 @@
                 <div
                   class="playerBackgroundBox"
                   [ngStyle]="{
-                    'background-image': 'url(' + player.image + ')'
+                    'background-image':
+                      'url(./assets/default/' + player.image + ')'
                   }"
                 ></div>
                 <!-- Card Border is img -->
@@ -637,7 +638,8 @@
               <div
                 class="playerBackgroundBox"
                 [ngStyle]="{
-                  'background-image': 'url(' + findEnemyPlayer().image + ')'
+                  'background-image':
+                    'url(./assets/default/' + findEnemyPlayer().image + ')'
                 }"
               ></div>
               <!-- Card Border is img -->
@@ -778,7 +780,8 @@
               <div
                 class="playerBackgroundBox"
                 [ngStyle]="{
-                  'background-image': 'url(' + player.image + ')'
+                  'background-image':
+                    'url(./assets/default/' + player.image + ')'
                 }"
               ></div>
               <!-- Card Border is img -->
@@ -1042,7 +1045,9 @@
                   class="playerBackgroundBox"
                   [ngStyle]="{
                     'background-image':
-                      'url(' + findStaticEnemyPlayer().image + ')'
+                      'url(./assets/default/' +
+                      findStaticEnemyPlayer().image +
+                      ')'
                   }"
                 ></div>
                 <!-- Card Border is img -->
@@ -1192,7 +1197,8 @@
                 <div
                   class="playerBackgroundBox"
                   [ngStyle]="{
-                    'background-image': 'url(' + player.image + ')'
+                    'background-image':
+                      'url(./assets/default/' + player.image + ')'
                   }"
                 ></div>
                 <!-- Card Border is img -->
@@ -1964,6 +1970,11 @@
               *ngIf="shieldOnPlayer"
             />
             <img
+              [src]="'./assets/' + gameThemePath + '/offenseShield.png'"
+              class="cardIcon confetti claws healing"
+              *ngIf="increaseOffenseOnPlayer"
+            />
+            <img
               [src]="'./assets/' + gameThemePath + '/potion.png'"
               class="cardIcon confetti claws healing"
               *ngIf="healOnPlayer"
@@ -1975,8 +1986,8 @@
                 'font-family': gameThemePath + '-HeaderFont'
               }"
               [ngClass]="{
-                  blueOffenseText: currentAbilityBot.abilityFunction === 'offense',
-                }"
+                blueOffenseText: currentAbilityBot.abilityFunction === 'offense'
+              }"
               [@fadeEnter]="{
                 value: '',
                 params: { duration: 500, delay: 0, translate: '300px' }
@@ -1999,7 +2010,8 @@
               <div
                 class="playerBackgroundBox"
                 [ngStyle]="{
-                  'background-image': 'url(' + player.image + ')'
+                  'background-image':
+                    'url(./assets/default/' + player.image + ')'
                 }"
               ></div>
               <!-- Card Border is img -->
@@ -2032,6 +2044,7 @@
                   }"
                   [ngClass]="{
                     blueOffenseText: currentAbilityBot.abilityFunction === 'offense',
+                    greenHealthText: player.attack > player.baseAttack,
                   }"
                 >
                   {{ player.attack }}
@@ -2075,7 +2088,7 @@
     <div class="middleRight" *ngIf="!finishedRewards" [@fadeOutLeave]>
       <div class="enemyCardsBox">
         <div
-          class="middleRightBox"
+          class="middleRightBox enemySlideInCard"
           [ngClass]="{
             middleCardHover:
               currentEnemyTurn.id === item.id && !finishedChoosingDefensePlayer
@@ -2154,6 +2167,16 @@
                 class="cardIcon confetti claws healing"
                 *ngIf="showHealAnimationBot(item)"
               />
+              <img
+                [src]="'./assets/' + gameThemePath + '/horn.png'"
+                class="cardIcon confetti claws healing"
+                *ngIf="showSupportAnimationBot(item)"
+              />
+              <img
+                [src]="'./assets/' + gameThemePath + '/offenseShield.png'"
+                class="cardIcon confetti claws healing"
+                *ngIf="showAddDefenseAnimationBot(item)"
+              />
               <div
                 class="cardIconValue centerHoverText"
                 *ngIf="
@@ -2191,7 +2214,8 @@
                 <div
                   class="playerBackgroundBox"
                   [ngStyle]="{
-                    'background-image': 'url(' + item.image + ')'
+                    'background-image':
+                      'url(./assets/default/' + item.image + ')'
                   }"
                 ></div>
                 <!-- Card Border is img -->
@@ -2223,6 +2247,9 @@
                       'font-family': gameThemePath + '-HeaderFont'
                     }"
                     [ngClass]="{
+                      greenHealthText:
+                        item.attack > item.baseAttack ||
+                        showHealAnimationBot(item),
                       blueOffenseText:
                         item.attack < item.baseAttack ||
                         (currentAbility.abilityFunction === 'offense' &&
@@ -2258,6 +2285,7 @@
                       'font-family': gameThemePath + '-HeaderFont'
                     }"
                     [ngClass]="{
+                      greenHealthText: item.health > item.baseHealth,
                       redHealthText:
                         item.health < item.baseHealth ||
                         (enemyTarget === item.id &&

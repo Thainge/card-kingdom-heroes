@@ -634,7 +634,7 @@
 .middleRightCard {
   width: 100%;
   height: 35%;
-
+  transition: all 0.3s;
   pointer-events: all;
 }
 
@@ -648,6 +648,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s;
 }
 
 .enemyCardsBox {
@@ -3401,6 +3402,21 @@ text {
 
 .firing {
   z-index: 99 !important;
+}
+
+.enemySlideInCard {
+  animation: playerFadeUp 800ms;
+  animation-fill-mode: forwards;
+}
+
+@keyframes playerFadeUp {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 17%;
+  }
 }
 
 @media screen and (max-width: 800px) {

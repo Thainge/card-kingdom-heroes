@@ -79,6 +79,17 @@
   -webkit-text-stroke: 0.8px rgba(255, 166, 0, 0.527);
 }
 
+.confettiGif {
+  position: absolute;
+  width: 100%;
+  height: 90%;
+  left: 0%;
+  top: 0%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 // Console
 .consoleContainer {
   position: absolute;

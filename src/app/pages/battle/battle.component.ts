@@ -1,3 +1,4 @@
+import { CheatsService } from './../../services/cheats.service';
 import { AbilityCard } from './../../models/abilityCard';
 import { CommonModule } from '@angular/common';
 import {
@@ -227,11 +228,14 @@ export class BattleComponent implements OnInit {
 
   flamesOnEnemies: PlayerDto[] = [];
   healOnEnemies: PlayerDto[] = [];
+  addDefenseOnEnemies: PlayerDto[] = [];
+  supportOnEnemies: PlayerDto[] = [];
   shieldOnEnemies: PlayerDto[] = [];
   leachOnEnemies: PlayerDto[] = [];
   healOnPlayer: boolean = false;
   fireOnPlayer: boolean = false;
   shieldOnPlayer: boolean = false;
+  increaseOffenseOnPlayer: boolean = false;
   abilityEnemyTarget: number = 0;
 
   usedAbilityCardBot: boolean = false;
@@ -312,7 +316,8 @@ export class BattleComponent implements OnInit {
   constructor(
     private cardService: CardService,
     private userService: playerService,
-    private abilityService: AbilityService
+    private abilityService: AbilityService,
+    private cheatsService: CheatsService
   ) {}
 
   ngOnInit() {
@@ -333,7 +338,7 @@ export class BattleComponent implements OnInit {
       this.enemyPlayers = [
         {
           id: 1,
-          image: './assets/' + this.gameThemePath + '/' + 'goblin.png',
+          image: 'goblin.png',
           name: 'Moblin',
           attack: 1,
           health: 3,
@@ -343,7 +348,7 @@ export class BattleComponent implements OnInit {
         },
         {
           id: 2,
-          image: './assets/' + this.gameThemePath + '/' + 'goblin.png',
+          image: 'goblin.png',
           name: 'Moblin',
           attack: 3,
           health: 5,
@@ -353,7 +358,7 @@ export class BattleComponent implements OnInit {
         },
         // {
         //   id: 3,
-        //   image: './assets/' + this.gameThemePath + '/' + 'link.png',
+        //   image: 'link.png',
         //   name: 'Link',
         //   attack: 1,
         //   health: 4,
@@ -366,6 +371,24 @@ export class BattleComponent implements OnInit {
       if (this.Cards.length < 1) {
         this.Cards = Cards;
         this.gameInit();
+      }
+    });
+    this.cheatsService.cheats$.subscribe((x) => {
+      if (x === 'setWildHand') {
+        this.playerHand = this.playerHand.map((x) => {
+          const newCard: CardDto = {
+            ...x,
+            wild: true,
+            wildRange: 14,
+            wildSuit: true,
+            wildSuits: [1, 1, 1, 1],
+          };
+          return newCard;
+        });
+      }
+
+      if (x === 'infiniteHealth') {
+        this.player.health = 99;
       }
     });
   }
@@ -614,6 +637,28 @@ export class BattleComponent implements OnInit {
     if (ability.abilityFunction === 'wildSuitRange') {
       this.wildSuitRangeAbility(ability);
     }
+
+    // Player offense +x
+    if (ability.abilityFunction === 'increaseDefense') {
+      this.increaseDefenseAbility(ability);
+    }
+  }
+
+  async increaseDefenseAbility(ability: AbilityCard) {
+    // green hp while healing
+    // potion fades on player
+    let newAttack = this.player.attack + ability.abilityValue;
+
+    // Remove ability card from hand
+    this.abilityCardsHand = this.abilityCardsHand.filter(
+      (x) => x.id !== ability.id
+    );
+    await this.timeout(200);
+    this.increaseOffenseOnPlayer = true;
+    await this.timeout(800);
+    this.player.attack = newAttack;
+
+    this.endAbilityTurn(ability, 1400);
   }
 
   async drawAbility(ability: AbilityCard) {
@@ -807,6 +852,7 @@ export class BattleComponent implements OnInit {
     setTimeout(() => {
       this.healOnPlayer = false;
       this.usedAbilityCard = false;
+      this.increaseOffenseOnPlayer = false;
       this.flamesOnEnemies = [];
       this.shieldOnEnemies = [];
       this.leachOnEnemies = [];
@@ -1196,6 +1242,24 @@ export class BattleComponent implements OnInit {
 
   showHealAnimationBot(player: PlayerDto): boolean {
     const foundPlayer = this.healOnEnemies.find((x) => x.id === player.id);
+    if (foundPlayer) {
+      return true;
+    }
+    return false;
+  }
+
+  showAddDefenseAnimationBot(player: PlayerDto): boolean {
+    const foundPlayer = this.addDefenseOnEnemies.find(
+      (x) => x.id === player.id
+    );
+    if (foundPlayer) {
+      return true;
+    }
+    return false;
+  }
+
+  showSupportAnimationBot(player: PlayerDto): boolean {
+    const foundPlayer = this.supportOnEnemies.find((x) => x.id === player.id);
     if (foundPlayer) {
       return true;
     }
@@ -2923,9 +2987,89 @@ export class BattleComponent implements OnInit {
       await this.botUseDrawAbility(ability);
     }
 
-    // heal 1
+    // heal
     if (ability.abilityFunction === 'heal') {
       await this.botUseHealAbility(ability);
+    }
+
+    // Increase Defense
+    if (ability.abilityFunction === 'increaseDefense') {
+      await this.botUseIncreaseDefenseAbility(ability);
+    }
+
+    // Call in enemies
+    if (ability.abilityFunction === 'callInSupport') {
+      await this.botUseSupportAbility(ability);
+    }
+  }
+
+  async botUseSupportAbility(ability: AbilityCard) {
+    // Attack player
+    this.pushDisplayMessage('Rally');
+
+    this.enemyPlayers.forEach((x) => {
+      this.supportOnEnemies.push(x);
+    });
+    await this.timeout(1000);
+    const newAllies = ability.alliesCalled;
+    newAllies?.forEach((x) => {
+      const newId = this.enemyPlayers.length + 1;
+      const newAlly = { ...x, id: newId };
+      this.enemyPlayers.unshift(newAlly);
+      this.completedEnemyTurns.push(newAlly.id);
+    });
+
+    await this.timeout(2300);
+    this.botEndAbilityTurn();
+  }
+
+  async botUseIncreaseDefenseAbility(ability: AbilityCard) {
+    if (ability.targetAll) {
+      // Heal all
+      this.pushDisplayMessage(`All Defense +${ability.abilityValue}`);
+      await this.timeout(500);
+      this.enemyPlayers = this.enemyPlayers.map((x) => {
+        if (x.health < 1) {
+          return x;
+        } else {
+          const incomingHeal = ability.abilityValue;
+          let newDefense = x.attack + incomingHeal;
+          this.addDefenseOnEnemies.push(x);
+          return { ...x, attack: newDefense };
+        }
+      });
+      await this.timeout(1800);
+      this.botEndAbilityTurn();
+    } else {
+      // Heal single
+      this.pushDisplayMessage(`Defense +${ability.abilityValue}`);
+      await this.timeout(500);
+      const validPlayer: PlayerDto | undefined = this.enemyPlayers.find(
+        (x) => x.health > 0
+      );
+      const lowHealthAndValid: PlayerDto | undefined = this.enemyPlayers.find(
+        (x) => x.health > 0 && x.health !== x.baseHealth
+      );
+      let foundPlayer: PlayerDto | undefined;
+      if (lowHealthAndValid) {
+        foundPlayer = lowHealthAndValid;
+      } else {
+        foundPlayer = validPlayer ?? undefined;
+      }
+
+      if (foundPlayer) {
+        this.addDefenseOnEnemies.push(foundPlayer);
+        this.enemyPlayers = this.enemyPlayers.map((x) => {
+          if (x.id === foundPlayer?.id) {
+            let newDefense = x.attack + ability.abilityValue;
+            return { ...x, attack: newDefense };
+          }
+
+          return x;
+        });
+      }
+      await this.timeout(1800);
+      this.botEndAbilityTurn();
     }
   }
 
@@ -3041,6 +3185,8 @@ export class BattleComponent implements OnInit {
     this.fireOnPlayer = false;
     this.shieldOnPlayer = false;
     this.healOnEnemies = [];
+    this.addDefenseOnEnemies = [];
+    this.supportOnEnemies = [];
     this.displayMessageList.forEach((x) => {
       this.displayMessageListInactive.push(x.id);
     });

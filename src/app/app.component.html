@@ -37,6 +37,16 @@
           src="./assets/default/gold.png"
           [src]="'./assets/default/' + item.image"
         />
+        <img 
+        *ngIf="showGif"
+        [@fadeEnter]="{
+          value: '',
+          params: {
+            duration: 500,
+            delay: 1200,
+          }
+        }"
+        [@fadeOutLeave] class="confettiGif" src="./assets/default/confettiAchievements.gif" />
         <div
           class="achievementTitle"
           [ngStyle]="{
