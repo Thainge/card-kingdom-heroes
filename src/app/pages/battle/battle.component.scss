@@ -654,7 +654,7 @@
 .enemyCardsBox {
   display: flex;
   width: 100%;
-  column-gap: 3%;
+  // column-gap: 3%;
   justify-content: space-evenly;
 }
 
@@ -862,8 +862,11 @@ text {
   left: 0;
   width: 100%;
   height: 100%;
-  // overflow: hidden;
   border-radius: 4%;
+}
+
+.cardPlayerBorderCombat {
+  overflow: hidden;
 }
 
 .swordBox {
@@ -1425,26 +1428,45 @@ text {
 .leavingFieldCard {
   animation: flickerAway 2500ms;
   animation-fill-mode: forwards;
+  animation-delay: 1s;
   user-select: none !important;
   pointer-events: none !important;
-
-  animation-delay: 1s;
 }
 
 @keyframes flickerAway {
   0% {
     filter: brightness(1);
     scale: 1;
+    opacity: 1;
   }
 
   70% {
     filter: brightness(0.3);
     scale: 1;
+    opacity: 1;
   }
 
   100% {
-    scale: 0;
     filter: brightness(0);
+    scale: 0;
+    opacity: 0;
+  }
+}
+
+.cardHideAfterDeath {
+  animation: hideCardDeath 500ms !important;
+  animation-fill-mode: forwards !important;
+  animation-delay: 4500ms !important;
+}
+
+@keyframes hideCardDeath {
+  0% {
+    width: 17%;
+  }
+
+  100% {
+    width: 0%;
+    display: none;
   }
 }
 
@@ -1469,7 +1491,7 @@ text {
 .deathSkullAnimation {
   animation: animateSkull;
   animation-duration: 1s;
-  animation-delay: 3500ms;
+  animation-delay: 3400ms;
   animation-fill-mode: forwards;
 }
 

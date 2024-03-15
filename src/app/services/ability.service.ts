@@ -70,32 +70,39 @@ export class AbilityService {
       // Loop through cards array
       // Check what cards we still need
 
-      [...array].forEach((x) => {
+      array.forEach((x) => {
         const alreadyAdded = foundCards.find((a) => a.id === x.id);
+        console.log(foundCards);
+        let spliceIndex = -1;
 
         totalValidCardsArray.forEach((z, i) => {
           if (
             !alreadyAdded &&
             z === 'red' &&
-            (x.suit === 'diamonds' || x.suit === 'hearts')
+            (x.suit === 'diamonds' || x.suit === 'hearts') &&
+            spliceIndex === -1
           ) {
             // Add if red
             foundCards.push(x);
-            totalValidCardsArray.splice(i, 1);
+            spliceIndex = i;
           } else if (
             !alreadyAdded &&
             z === 'black' &&
-            (x.suit === 'spades' || x.suit === 'clubs')
+            (x.suit === 'spades' || x.suit === 'clubs') &&
+            spliceIndex === -1
           ) {
             // Add if black
             foundCards.push(x);
-            totalValidCardsArray.splice(i, 1);
-          } else if (!alreadyAdded && z === x.suit) {
+            spliceIndex = i;
+          } else if (!alreadyAdded && z === x.suit && spliceIndex === -1) {
             // Else add if suit matches
             foundCards.push(x);
-            totalValidCardsArray.splice(i, 1);
+            spliceIndex = i;
           }
         });
+        if (spliceIndex !== -1) {
+          totalValidCardsArray.splice(spliceIndex, 1);
+        }
       });
 
       return foundCards;

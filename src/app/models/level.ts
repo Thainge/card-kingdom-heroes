@@ -1,5 +1,4 @@
 import { AbilityCard } from './abilityCard';
-import { CardDto } from './card';
 import { PlayerDto } from './player';
 
 export interface LevelDto {
@@ -11,4 +10,4 @@ export interface LevelDto {
 }
 
 type CardThemeDto = 'default' | 'mario';
-type LevelBackgroundDto = 'forest';
+type LevelBackgroundDto = 'forest.png';

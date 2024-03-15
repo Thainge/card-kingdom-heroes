@@ -50,7 +50,7 @@ const defaultAbilityCard: AbilityCard = {
   abilityValue: 1,
   cost: ['hearts'],
   description: '',
-  image: '',
+  image: 'sliceAbility.png',
   level: 1,
   name: '',
   hitAnimation: 'heal',
@@ -115,7 +115,7 @@ export class BattleComponent implements OnInit {
     id: 0,
     health: 1,
     attack: 1,
-    image: '',
+    image: 'link.png',
     name: '',
     baseHealth: 1,
     baseAttack: 1,
@@ -160,8 +160,6 @@ export class BattleComponent implements OnInit {
   validCards: CardDto[] = [];
   errorList: any[] = [];
   errorListInactive: any[] = [];
-  specialAbilityList: any[] = [];
-  specialAbilityListInactive: any[] = [];
   messageList: any[] = [];
   messageListInactive: any[] = [];
   displayMessageList: any[] = [];
@@ -190,7 +188,7 @@ export class BattleComponent implements OnInit {
     id: 0,
     health: 1,
     attack: 1,
-    image: '',
+    image: 'goblin.png',
     name: '',
     baseHealth: 1,
     baseAttack: 1,
@@ -288,8 +286,8 @@ export class BattleComponent implements OnInit {
   abilityCardCombos: ComboObject[] = [];
   currentlyShuffling: boolean = false;
 
-  gameThemeUrlPlayer: gameTheme = 'default';
-  gameThemeUrlEnemy: gameTheme = 'default';
+  gameThemePath: gameTheme = 'default';
+  gameThemePathEnemy: gameTheme = 'default';
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -319,60 +317,13 @@ export class BattleComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Player game theme
     this.userService.gameTheme$.subscribe((x) => {
-      this.gameThemeUrlPlayer = x;
+      this.gameThemePath = x;
     });
-    // Level Theme Set
-    const currentLevel: LevelDto = {
-      id: 1,
-      enemyPlayers: [
-        {
-          id: 1,
-          image: 'goblin.png',
-          name: 'Moblin',
-          attack: 1,
-          health: 3,
-          baseHealth: 3,
-          baseAttack: 1,
-          level: 1,
-        },
-        {
-          id: 2,
-          image: 'goblin.png',
-          name: 'Moblin',
-          attack: 3,
-          health: 5,
-          baseHealth: 5,
-          baseAttack: 3,
-          level: 2,
-        },
-      ],
-      enemyAbilityCards: this.cardService.shuffle(
-        this.userService.getAbilityCardsBot()
-      ),
-      enemyCardTheme: 'default',
-      background: 'forest',
-    };
-    this.enemyPlayers = currentLevel.enemyPlayers;
-    this.abilityDeckBot = currentLevel.enemyAbilityCards;
-    let enemyCards: CardDto[] = this.Cards.map((x) => {
-      return { ...x, wildInitial: x.value };
-    });
-    this.enemyDeck = this.cardService.shuffle(enemyCards);
-    this.levelBgImage = currentLevel.background;
-    this.gameThemeUrlEnemy = currentLevel.enemyCardTheme;
-
-    // Player init
-    this.player = this.userService.getPlayer();
-    this.abilityDeck = this.userService.getAbilityCards();
-    this.abilityDeck = this.cardService.shuffle(this.abilityDeck);
-
-    if (this.Cards.length < 1) {
-      this.Cards = Cards;
-      this.gameInit();
-    }
+    // Cheats
     this.cheatsService.cheats$.subscribe((x) => {
-      if (x === 'setWildHand') {
+      if (x === 'wildHand') {
         this.playerHand = this.playerHand.map((x) => {
           const newCard: CardDto = {
             ...x,
@@ -389,6 +340,11 @@ export class BattleComponent implements OnInit {
         this.player.health = 99;
       }
     });
+    // Game init init
+    if (this.Cards.length < 1) {
+      this.Cards = Cards;
+      this.gameInit();
+    }
   }
 
   ngAfterViewInit() {
@@ -450,12 +406,62 @@ export class BattleComponent implements OnInit {
     }, 400);
   }
 
+  botThemeInit() {
+    // Level Theme Set
+    const currentLevel: LevelDto = {
+      id: 1,
+      enemyPlayers: [
+        {
+          id: 1,
+          image: 'goblin.png',
+          name: 'Moblin',
+          attack: 1,
+          health: 3,
+          baseHealth: 3,
+          baseAttack: 1,
+          level: 1,
+        },
+        {
+          id: 2,
+          image: 'goblin.png',
+          name: 'Moblin',
+          attack: 3,
+          health: 5,
+          baseHealth: 5,
+          baseAttack: 3,
+          level: 2,
+        },
+      ],
+      enemyAbilityCards: this.cardService.shuffle(
+        this.userService.getAbilityCardsBot()
+      ),
+      enemyCardTheme: 'mario',
+      background: 'forest.png',
+    };
+
+    this.enemyPlayers = currentLevel.enemyPlayers;
+    this.abilityDeckBot = currentLevel.enemyAbilityCards;
+    const enemyCards: CardDto[] = this.Cards.map((x) => {
+      return { ...x, wildInitial: x.value };
+    });
+    this.enemyDeck = this.cardService.shuffle(enemyCards);
+    this.levelBgImage = currentLevel.background;
+    this.gameThemePathEnemy = currentLevel.enemyCardTheme;
+  }
+
   gameInit() {
+    // Player init
+    this.player = this.userService.getPlayer();
+    this.abilityDeck = this.userService.getAbilityCards();
+    this.abilityDeck = this.cardService.shuffle(this.abilityDeck);
+
     // Cheats
     const cheats: CheatDto = this.userService.getPlayerCheats();
     this.canDefendWithMultipleCards = cheats.canDefendWithMultipleCards;
     this.alwaysWinTies = cheats.alwaysWinTies;
     this.canSeeTopCard = cheats.canSeeTopCard;
+
+    this.botThemeInit();
 
     // Change deck values based on player skills
     this.updateDeckBasedOnPlayerSkills();
@@ -499,25 +505,48 @@ export class BattleComponent implements OnInit {
       }
     }, 400);
 
-    // this.gameWinnerPlayer = true;
-    // this.redrawing = false;
-    // this.redrawHide = true;
-    // this.playerHand = [...this.redrawCards];
-    // this.abilityDeck = this.userService.getAbilityCards();
-    // this.drawAbilityCard(2);
-    // this.drawAbilityCardBot(2);
-    // this.finishedRewards = true;
-    // this.rewardItems = [];
-    // this.endGame(false);
+    // --- Skip redraw phase --- //
+    this.redrawing = false;
+    this.redrawHide = true;
+    this.playerHand = [...this.redrawCards];
+    this.drawAbilityCard(2);
+    this.drawAbilityCardBot(2);
+
+    // this.playerHand = this.playerHand.map((x, i) => {
+    //   return {
+    //     ...x,
+    //     id: i + 1,
+    //     suit: 'hearts',
+    //     image: `${x.value}_of_hearts.png`,
+    //   };
+    // });
+
+    // Give all ability cards //
+    // this.abilityDeckBot = this.abilityDeckBot.map((x) => {
+    //   return { ...x, cost: [] };
+    // });
+    // const hornAbility1 = this.abilityDeckBot.find(
+    //   (x) => x.abilityFunction === 'callInSupport'
+    // );
+    // const hornAbility2 = this.abilityDeckBot.find(
+    //   (x) => x.abilityFunction === 'callInSupport'
+    // );
+    // if (hornAbility1 && hornAbility2) {
+    //   this.abilityCardsHandBot = [
+    //     { ...hornAbility1, id: 1 },
+    //     { ...hornAbility2, id: 2 },
+    //   ];
+    // }
+    // this.abilityCardsHand = this.abilityDeck.map((x) => {
+    //   return { ...x, cost: [] };
+    // });
+
+    // --- Start bot turn --- //
     // this.newTurn();
     // this.startBotTurnsLoop();
-    // this.healOnPlayer = true;
-    // this.abilityCardsHand = [];
-    // this.showBotCards = true;
-    // this.canSelectCards = false;
-    // this.fireOnPlayer = false;
-    // this.currentEnemyTurn = this.enemyPlayers[0];
-    // this.playerDiscardPhase();
+
+    // --- End game --- //
+    // this.endGame(false);
   }
 
   continue() {
@@ -1269,7 +1298,7 @@ export class BattleComponent implements OnInit {
       abilityValue: 1,
       cost: ['hearts'],
       description: '',
-      image: '',
+      image: 'sliceAbility.png',
       level: 1,
       name: '',
       hitAnimation: 'heal',
@@ -1282,7 +1311,7 @@ export class BattleComponent implements OnInit {
       abilityValue: 1,
       cost: ['hearts'],
       description: '',
-      image: '',
+      image: 'sliceAbility.png',
       level: 1,
       name: '',
       hitAnimation: 'heal',
@@ -1467,7 +1496,7 @@ export class BattleComponent implements OnInit {
   async setAttackArrowsEnemyAbility() {
     try {
       const abilityCards = this.activeAbilityCardsBot;
-      await this.timeout(150);
+      await this.timeout(250);
       let foundTarget: ElementRef | undefined;
       if (abilityCards) {
         for await (const x of abilityCards) {
@@ -1545,7 +1574,7 @@ export class BattleComponent implements OnInit {
         shownWildSuits[3] = 1;
       }
 
-      // --- Wild Suit Cards --- //
+      // Wild Suit Cards //
       if (Player?.wildHearts && x.suit === 'hearts') {
         // All Hearts Wild
         alteredCard = {
@@ -1586,7 +1615,7 @@ export class BattleComponent implements OnInit {
         };
       }
 
-      // --- Wild Range Cards --- //
+      // Wild Range Cards //
       if (
         Player?.rangeHearts &&
         Player?.rangeHearts > 0 &&
@@ -1646,11 +1675,6 @@ export class BattleComponent implements OnInit {
         this.cardService.generateBotOffenseHand(this.playerHand);
       this.validCards = playerBestHand.cards;
     }
-  }
-
-  useSpecialAbilityCard() {
-    this.usedSpecialCardThisTurn = true;
-    this.pushSpecialAbilityImage('Test test test');
   }
 
   cardIsSelected(card: CardDto): boolean {
@@ -1834,7 +1858,7 @@ export class BattleComponent implements OnInit {
         id: 0,
         health: 1,
         attack: 1,
-        image: '',
+        image: 'goblin.png',
         name: '',
         baseHealth: 1,
         baseAttack: 1,
@@ -1850,7 +1874,7 @@ export class BattleComponent implements OnInit {
         id: 0,
         health: 1,
         attack: 1,
-        image: '',
+        image: 'goblin.png',
         name: '',
         baseHealth: 1,
         baseAttack: 1,
@@ -1868,7 +1892,7 @@ export class BattleComponent implements OnInit {
         id: 0,
         health: 1,
         attack: 1,
-        image: '',
+        image: 'goblin.png',
         name: '',
         baseHealth: 1,
         baseAttack: 1,
@@ -3011,6 +3035,9 @@ export class BattleComponent implements OnInit {
     });
 
     await this.timeout(2300);
+    this.abilityDeckBot = this.abilityDeckBot.filter(
+      (x) => x.id !== ability.id
+    );
     this.botEndAbilityTurn();
   }
 
@@ -3302,7 +3329,7 @@ export class BattleComponent implements OnInit {
       id: 0,
       health: 1,
       attack: 1,
-      image: '',
+      image: 'goblin.png',
       name: '',
       baseHealth: 1,
       baseAttack: 1,
@@ -3361,14 +3388,5 @@ export class BattleComponent implements OnInit {
     const ID = this.displayMessageList.length + 1;
     this.displayMessageList.push({ id: ID, message: message });
     return ID;
-  }
-
-  pushSpecialAbilityImage(message: string) {
-    const ID = this.specialAbilityList.length + 1;
-    this.specialAbilityList.push({ id: ID, message: message });
-
-    setTimeout(() => {
-      this.specialAbilityListInactive.push(ID);
-    }, 1100);
   }
 }

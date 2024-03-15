@@ -163,7 +163,7 @@ export class AppComponent implements OnInit {
         'Gives player x amount of gold: &nbsp;&nbsp;&nbsp;&nbsp;<b>setGold x</b>'
       );
       this.consoleItems.unshift(
-        'All cards in hand turn wild: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>setWildHand</b>'
+        'All cards in hand turn wild: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>wildHand</b>'
       );
       this.consoleItems.unshift(
         "Sets the player's health to 99: &nbsp;&nbsp;&nbsp;<b>infiniteHealth</b>"
@@ -189,10 +189,10 @@ export class AppComponent implements OnInit {
       return;
     }
 
-    if (value.includes('setwildhand')) {
+    if (value.includes('wildhand')) {
       this.consoleItems.unshift(value);
       this.consoleItems.unshift('');
-      this.cheatsService.cheats$.next('setWildHand');
+      this.cheatsService.cheats$.next('wildHand');
       return;
     }
 

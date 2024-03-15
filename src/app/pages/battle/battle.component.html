@@ -273,7 +273,7 @@
                   class="playerBackgroundBox"
                   [ngStyle]="{
                     'background-image':
-                      'url(./assets/default/' + player.image + ')'
+                      'url(./assets/players/' + player.image + ')'
                   }"
                 ></div>
                 <!-- Card Border is img -->
@@ -282,7 +282,7 @@
                   class="playerBorderImageBox"
                 />
               </div>
-              <div class="cardPlayerBorder">
+              <div class="cardPlayerBorder cardPlayerBorderCombat">
                 <div class="playerTitle">
                   {{ player.name }}
                 </div>
@@ -381,10 +381,7 @@
             >
               Click to continue...
             </div>
-            <img
-              class="raysMiddle"
-              [src]="'./assets/' + gameThemePath + '/' + item.image"
-            />
+            <img class="raysMiddle" [src]="'./assets/rewards/' + item.image" />
             <div class="pulseBox"><div class="pulse"></div></div>
             <div class="rays"></div>
           </div>
@@ -437,7 +434,7 @@
                   purpleReward: item.color === 'purple',
                   blueReward: item.color === 'blue'
                 }"
-                [src]="'./assets/' + gameThemePath + '/' + item.image"
+                [src]="'./assets/rewards/' + item.image"
               />
               <div
                 class="rewardText"
@@ -457,10 +454,7 @@
         </div>
         <div class="buttonsFinish">
           <div class="finishButtonGo" (click)="continue()">
-            <img
-              class="finishButton"
-              [src]="'./assets/' + gameThemePath + '/continue.png'"
-            />
+            <img class="finishButton" [src]="'./assets/continue.png'" />
             <div class="finishButtonText">Continue</div>
           </div>
         </div>
@@ -485,7 +479,7 @@
       }"
     >
       <img
-        [src]="'./assets/' + gameThemePath + '/defeat.png'"
+        [src]="'./assets/defeat.png'"
         class="victoryDefeatImage"
         *ngIf="!finishedRewards"
       />
@@ -498,24 +492,15 @@
         }"
       >
         <div class="victoryEndImageContainer">
-          <img
-            [src]="'./assets/' + gameThemePath + '/defeat.png'"
-            class="victoryEndImage"
-          />
+          <img [src]="'./assets/defeat.png'" class="victoryEndImage" />
         </div>
         <div class="buttonsFinish">
           <div class="finishButtonGo" (click)="continue()">
-            <img
-              class="finishButton"
-              [src]="'./assets/' + gameThemePath + '/cancel.png'"
-            />
+            <img class="finishButton" [src]="'./assets/cancel.png'" />
             <div class="finishButtonText">Exit</div>
           </div>
           <div class="finishButtonGo" (click)="retry()">
-            <img
-              class="finishButton"
-              [src]="'./assets/' + gameThemePath + '/continue.png'"
-            />
+            <img class="finishButton" [src]="'./assets/continue.png'" />
             <div class="finishButtonText">Try Again</div>
           </div>
         </div>
@@ -527,12 +512,7 @@
     <div
       class="bgContainerImage"
       [ngStyle]="{
-        'background-image':
-          'url(./assets/' +
-          gameThemePath +
-          '/backgrounds/' +
-          randomBgImage +
-          '.png)'
+        'background-image': 'url(./assets/backgrounds/' + levelBgImage + ')'
       }"
     ></div>
   </div>
@@ -622,30 +602,24 @@
                 class="playerBackgroundBox"
                 [ngStyle]="{
                   'background-image':
-                    'url(./assets/default/' + findEnemyPlayer().image + ')'
+                    'url(./assets/players/' + findEnemyPlayer().image + ')'
                 }"
               ></div>
               <!-- Card Border is img -->
               <img
-                [src]="'./assets/' + gameThemePath + '/cardBorder.png'"
+                [src]="'./assets/cardBorder.png'"
                 class="playerBorderImageBox"
               />
             </div>
             <!-- Start of animations -->
-            <div class="cardPlayerBorder">
+            <div class="cardPlayerBorder cardPlayerBorderCombat">
               <div class="playerTitle">{{ findEnemyPlayer().name }}</div>
               <img
                 class="enemyLevel"
-                [src]="
-                  './assets/' +
-                  gameThemePath +
-                  '/enemy' +
-                  findEnemyPlayer().level +
-                  '.png'
-                "
+                [src]="'./assets/enemy' + findEnemyPlayer().level + '.png'"
               />
               <img
-                [src]="'./assets/' + gameThemePath + '/confetti.gif'"
+                [src]="'./assets/confetti.gif'"
                 class="cardIcon confetti confettiGif"
                 *ngIf="enemyWinner"
                 [@fadeDownEnter]="{
@@ -764,27 +738,25 @@
                 class="playerBackgroundBox"
                 [ngStyle]="{
                   'background-image':
-                    'url(./assets/default/' + player.image + ')'
+                    'url(./assets/players/' + player.image + ')'
                 }"
               ></div>
               <!-- Card Border is img -->
               <img
-                [src]="'./assets/' + gameThemePath + '/cardBorder.png'"
+                [src]="'./assets/cardBorder.png'"
                 class="playerBorderImageBox"
               />
             </div>
             <!-- Start of animations -->
-            <div class="cardPlayerBorder">
+            <div class="cardPlayerBorder cardPlayerBorderCombat">
               <div class="playerTitle">{{ player.name }}</div>
               <img
                 class="playerLevel"
-                [src]="
-                  './assets/' + gameThemePath + '/level' + player.level + '.png'
-                "
+                [src]="'./assets/level' + player.level + '.png'"
               />
 
               <img
-                [src]="'./assets/' + gameThemePath + '/confetti.gif'"
+                [src]="'./assets/confetti.gif'"
                 class="cardIcon confetti confettiGif"
                 *ngIf="playerWinner"
                 [@fadeDownEnter]="{
@@ -1028,35 +1000,31 @@
                   class="playerBackgroundBox"
                   [ngStyle]="{
                     'background-image':
-                      'url(./assets/default/' +
+                      'url(./assets/players/' +
                       findStaticEnemyPlayer().image +
                       ')'
                   }"
                 ></div>
                 <!-- Card Border is img -->
                 <img
-                  [src]="'./assets/' + gameThemePath + '/cardBorder.png'"
+                  [src]="'./assets/cardBorder.png'"
                   class="playerBorderImageBox"
                 />
               </div>
               <!-- Start of animations -->
-              <div class="cardPlayerBorder">
+              <div class="cardPlayerBorder cardPlayerBorderCombat">
                 <div class="playerTitle">
                   {{ findStaticEnemyPlayer().name }}
                 </div>
                 <img
                   class="enemyLevel"
                   [src]="
-                    './assets/' +
-                    gameThemePath +
-                    '/enemy' +
-                    findStaticEnemyPlayer().level +
-                    '.png'
+                    './assets/enemy' + findStaticEnemyPlayer().level + '.png'
                   "
                 />
 
                 <img
-                  [src]="'./assets/' + gameThemePath + '/confetti.gif'"
+                  [src]="'./assets/confetti.gif'"
                   class="cardIcon confetti confettiGif"
                   *ngIf="enemyWinner"
                   [@fadeDownEnter]="{
@@ -1181,31 +1149,25 @@
                   class="playerBackgroundBox"
                   [ngStyle]="{
                     'background-image':
-                      'url(./assets/default/' + player.image + ')'
+                      'url(./assets/players/' + player.image + ')'
                   }"
                 ></div>
                 <!-- Card Border is img -->
                 <img
-                  [src]="'./assets/' + gameThemePath + '/cardBorder.png'"
+                  [src]="'./assets/cardBorder.png'"
                   class="playerBorderImageBox"
                 />
               </div>
               <!-- Start of animations -->
-              <div class="cardPlayerBorder">
+              <div class="cardPlayerBorder cardPlayerBorderCombat">
                 <div class="playerTitle">{{ player.name }}</div>
                 <img
                   class="playerLevel"
-                  [src]="
-                    './assets/' +
-                    gameThemePath +
-                    '/level' +
-                    player.level +
-                    '.png'
-                  "
+                  [src]="'./assets/level' + player.level + '.png'"
                 />
 
                 <img
-                  [src]="'./assets/' + gameThemePath + '/confetti.gif'"
+                  [src]="'./assets/confetti.gif'"
                   class="cardIcon confetti confettiGif"
                   *ngIf="playerWinner"
                   [@fadeDownEnter]="{
@@ -1266,7 +1228,7 @@
             Defend
           </div>
           <img
-            [src]="'./assets/' + gameThemePath + '/defend.png'"
+            [src]="'./assets/defend.png'"
             class="goButton"
             (click)="chooseDefensePlayerCards()"
             *ngIf="canSelectCards"
@@ -1487,7 +1449,7 @@
           [@fadeUpLeave]
         >
           <img
-            [src]="'./assets/' + gameThemePath + '/attack.png'"
+            [src]="'./assets/attack.png'"
             class="attackButton"
             (click)="finishedDiscarding()"
           />
@@ -1602,7 +1564,7 @@
           [@fadeUpLeave]
         >
           <img
-            [src]="'./assets/' + gameThemePath + '/attack.png'"
+            [src]="'./assets/attack.png'"
             class="attackButton"
             (click)="finishedRedraw()"
           />
@@ -1626,25 +1588,6 @@
         class="floatingTextMessage"
         [ngClass]="{
           fade: errorListInactive.includes(item.id)
-        }"
-        [@zoomInEnter]="{
-          value: '',
-          params: { duration: 1000, delay: 0, translate: '30px' }
-        }"
-        [@fadeOutLeave]
-      >
-        {{ item.message }}
-      </div>
-    </div>
-  </div>
-
-  <!-- Floating Ability Fade -->
-  <div class="floatingText">
-    <div class="floatingRelative" *ngFor="let item of specialAbilityList">
-      <div
-        class="floatingTextMessage"
-        [ngClass]="{
-          fade: specialAbilityListInactive.includes(item.id)
         }"
         [@zoomInEnter]="{
           value: '',
@@ -1790,7 +1733,7 @@
         >
           <img class="enemyAbilityBackground paperBg" [@fadeOutLeave] />
           <img
-            [src]="'./assets/' + gameThemePath + '/' + card.image"
+            [src]="'./assets/abilities/' + card.image"
             class="cardBackgroundImage"
           />
           <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
@@ -1799,7 +1742,7 @@
               <div class="abilitySuitsBox">
                 <img
                   *ngFor="let cost of card.cost"
-                  [src]="'./assets/' + gameThemePath + '/' + cost + '.png'"
+                  [src]="'./assets/' + cost + '.png'"
                   class="abilitySuit"
                 />
               </div>
@@ -1832,25 +1775,25 @@
       <div
         class="deck deckCard"
         [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
+          'background-image': 'url(./assets/back.png)'
         }"
       ></div>
       <div
         class="deck deck1 topdeck1"
         [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
+          'background-image': 'url(./assets/back.png)'
         }"
       ></div>
       <div
         class="deck deck2 topdeck2"
         [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
+          'background-image': 'url(./assets/back.png)'
         }"
       ></div>
       <div
         class="deck deck3 topdeck3"
         [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
+          'background-image': 'url(./assets/back.png)'
         }"
         *ngIf="!canSeeTopCard"
       ></div>
@@ -1863,9 +1806,7 @@
         >
           <div class="cardBorder">
             <img
-              [src]="
-                './assets/' + gameThemePath + '/' + topAbilityCardBot.image
-              "
+              [src]="'./assets/abilities/' + topAbilityCardBot.image"
               class="cardBackgroundImage"
             />
             <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
@@ -1876,7 +1817,7 @@
                 <div class="abilitySuitsBox">
                   <img
                     *ngFor="let cost of topAbilityCardBot.cost"
-                    [src]="'./assets/' + gameThemePath + '/' + cost + '.png'"
+                    [src]="'./assets/' + cost + '.png'"
                     class="abilitySuit"
                   />
                 </div>
@@ -1906,6 +1847,7 @@
       <div
         class="middleRightBox middleCardHover"
         [ngClass]="{
+          cardHideAfterDeath: player.health < 1,
           middleCardHover: canSelectCards || playerUsingAbilityCard
         }"
       >
@@ -1913,10 +1855,7 @@
           *ngIf="player.health < 1"
           class="deathSkullBox deathSkullAnimation"
         >
-          <img
-            [src]="'./assets/' + gameThemePath + '/skull.png'"
-            class="deathSkull"
-          />
+          <img [src]="'./assets/skull.png'" class="deathSkull" />
         </div>
         <div
           class="middleCard middleRightCard middleLeftCard playerMid"
@@ -1938,7 +1877,7 @@
             #playerRef
           >
             <img
-              [src]="'./assets/' + gameThemePath + '/fire.gif'"
+              [src]="'./assets/fire.gif'"
               class="cardIcon confetti claws firing"
               *ngIf="fireOnPlayer"
               [@fadeEnter]="{
@@ -1994,12 +1933,12 @@
                 class="playerBackgroundBox"
                 [ngStyle]="{
                   'background-image':
-                    'url(./assets/default/' + player.image + ')'
+                    'url(./assets/players/' + player.image + ')'
                 }"
               ></div>
               <!-- Card Border is img -->
               <img
-                [src]="'./assets/' + gameThemePath + '/cardBorder.png'"
+                [src]="'./assets/cardBorder.png'"
                 class="playerBorderImageBox"
               />
             </div>
@@ -2009,9 +1948,7 @@
               </div>
               <img
                 class="playerLevel"
-                [src]="
-                  './assets/' + gameThemePath + '/level' + player.level + '.png'
-                "
+                [src]="'./assets/level' + player.level + '.png'"
               />
             </div>
             <div class="cardFooterIconBox swordBox">
@@ -2073,6 +2010,7 @@
         <div
           class="middleRightBox enemySlideInCard"
           [ngClass]="{
+            cardHideAfterDeath: item.health < 1,
             middleCardHover:
               currentEnemyTurn.id === item.id && !finishedChoosingDefensePlayer
           }"
@@ -2082,10 +2020,7 @@
             *ngIf="item.health < 1"
             class="deathSkullBox deathSkullAnimation"
           >
-            <img
-              [src]="'./assets/' + gameThemePath + '/skull.png'"
-              class="deathSkull"
-            />
+            <img [src]="'./assets/skull.png'" class="deathSkull" />
           </div>
           <div
             class="middleCard middleRightCard"
@@ -2126,7 +2061,7 @@
               #enemyPlayerRef
             >
               <img
-                [src]="'./assets/' + gameThemePath + '/fire.gif'"
+                [src]="'./assets/fire.gif'"
                 class="cardIcon confetti claws firing"
                 *ngIf="showFireAnimation(item)"
                 [@fadeEnter]="{
@@ -2198,12 +2133,12 @@
                   class="playerBackgroundBox"
                   [ngStyle]="{
                     'background-image':
-                      'url(./assets/default/' + item.image + ')'
+                      'url(./assets/players/' + item.image + ')'
                   }"
                 ></div>
                 <!-- Card Border is img -->
                 <img
-                  [src]="'./assets/' + gameThemePath + '/cardBorder.png'"
+                  [src]="'./assets/cardBorder.png'"
                   class="playerBorderImageBox"
                 />
               </div>
@@ -2213,9 +2148,7 @@
                 </div>
                 <img
                   class="enemyLevel"
-                  [src]="
-                    './assets/' + gameThemePath + '/enemy' + item.level + '.png'
-                  "
+                  [src]="'./assets/enemy' + item.level + '.png'"
                 />
               </div>
               <div class="cardFooterIconBox swordBox">
@@ -2338,25 +2271,25 @@
       <div
         class="deck deckCard"
         [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
+          'background-image': 'url(./assets/back.png)'
         }"
       ></div>
       <div
         class="deck deck1"
         [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
+          'background-image': 'url(./assets/back.png)'
         }"
       ></div>
       <div
         class="deck deck2"
         [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
+          'background-image': 'url(./assets/back.png)'
         }"
       ></div>
       <div
         class="deck deck3"
         [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/back.png)'
+          'background-image': 'url(./assets/back.png)'
         }"
         *ngIf="!canSeeTopCard"
       ></div>
@@ -2369,7 +2302,7 @@
         >
           <div class="cardBorder">
             <img
-              [src]="'./assets/' + gameThemePath + '/' + topAbilityCard.image"
+              [src]="'./assets/abilities/' + topAbilityCard.image"
               class="cardBackgroundImage"
             />
             <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
@@ -2378,7 +2311,7 @@
                 <div class="abilitySuitsBox">
                   <img
                     *ngFor="let cost of topAbilityCard.cost"
-                    [src]="'./assets/' + gameThemePath + '/' + cost + '.png'"
+                    [src]="'./assets/' + cost + '.png'"
                     class="abilitySuit"
                   />
                 </div>
@@ -2452,7 +2385,7 @@
           }"
         >
           <img
-            [src]="'./assets/' + gameThemePath + '/' + card.image"
+            [src]="'./assets/abilities/' + card.image"
             class="cardBackgroundImage"
           />
           <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
@@ -2461,7 +2394,7 @@
               <div class="abilitySuitsBox">
                 <img
                   *ngFor="let cost of card.cost"
-                  [src]="'./assets/' + gameThemePath + '/' + cost + '.png'"
+                  [src]="'./assets/' + cost + '.png'"
                   class="abilitySuit"
                 />
               </div>
@@ -2551,7 +2484,7 @@
             *ngIf="card.wild && card.wildSuit"
           >
             <img
-              [src]="'./assets/' + gameThemePath + '/hearts.png'"
+              [src]="'./assets/hearts.png'"
               class="suit"
               *ngIf="
                 card.wildSuits && card.wildSuits[0] && card.wildSuits[0] === 1
@@ -2559,7 +2492,7 @@
               (click)="chooseWildSuit($event, card, 'hearts')"
             />
             <img
-              [src]="'./assets/' + gameThemePath + '/diamonds.png'"
+              [src]="'./assets/diamonds.png'"
               class="suit"
               *ngIf="
                 card.wildSuits && card.wildSuits[1] && card.wildSuits[1] === 1
@@ -2567,7 +2500,7 @@
               (click)="chooseWildSuit($event, card, 'diamonds')"
             />
             <img
-              [src]="'./assets/' + gameThemePath + '/spades.png'"
+              [src]="'./assets/spades.png'"
               class="suit suitLast"
               *ngIf="
                 card.wildSuits && card.wildSuits[2] && card.wildSuits[2] === 1
@@ -2575,7 +2508,7 @@
               (click)="chooseWildSuit($event, card, 'spades')"
             />
             <img
-              [src]="'./assets/' + gameThemePath + '/clubs.png'"
+              [src]="'./assets/clubs.png'"
               class="suit"
               *ngIf="
                 card.wildSuits && card.wildSuits[3] && card.wildSuits[3] === 1
@@ -2612,7 +2545,7 @@
         [@fadeUpLeave]
       >
         <img
-          [src]="'./assets/' + gameThemePath + '/attack.png'"
+          [src]="'./assets/attack.png'"
           class="attackButton"
           [ngClass]="{
             disabledButtonAnimation: !canSelectCards || selectedCards.length < 1
