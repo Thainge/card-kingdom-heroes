@@ -1050,14 +1050,27 @@ export class BattleComponent implements OnInit {
       );
     }
     const canNotRun = hasSameSuits;
+    // console.log('hasSameSuits: ', hasSameSuits);
+    // console.log(
+    //   'abilityCombo: ',
+    //   foundAbilityCombo?.shuffledCards[foundAbilityCombo.currentIndex]
+    // );
+    // console.log('playerHand: ', playerHand);
 
     // Check if can even use
     const canUse: CardDto[] = this.abilityService.checkCanUseAbility(ability, [
       ...this.playerHand,
     ]);
 
+    const shouldRun =
+      (canUse.length > 0 || ability.cost.length === 0) && !canNotRun;
     // If can use && haven't already run for this id
-    if ((canUse.length > 0 || ability.cost.length === 0) && !canNotRun) {
+    if (
+      shouldRun
+      // shouldRun ||
+      // !hasSameSuits ||
+      // !foundAbilityCombo?.shuffledCards[foundAbilityCombo.currentIndex]
+    ) {
       // shuffle array 25 times, then get distinct arrays
       const shuffledCardsArray: any[] = [];
       const shuffledShuffledCardsArray: any[] = [];
@@ -1198,9 +1211,22 @@ export class BattleComponent implements OnInit {
   }
 
   useMemorizedCards(ability: AbilityCard): CardDto[] {
+    // Check before running again
+    const foundAbilityCombo = this.abilityCardCombos.find(
+      (x) => x.id === ability.id
+    );
+    const playerHand = this.playerHand;
+    let hasSameSuits = false;
+    if (playerHand && foundAbilityCombo && foundAbilityCombo.shuffledCards) {
+      hasSameSuits = this.cardService.hasSameSuits(
+        foundAbilityCombo?.shuffledCards[foundAbilityCombo.currentIndex],
+        playerHand
+      );
+    }
+
     const foundItem = this.abilityCardCombos.find((x) => x.id === ability.id);
 
-    if (foundItem) {
+    if (foundItem && hasSameSuits) {
       return foundItem.cards[foundItem.currentIndex];
     }
 

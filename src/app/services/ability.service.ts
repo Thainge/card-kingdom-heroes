@@ -72,7 +72,6 @@ export class AbilityService {
 
       array.forEach((x) => {
         const alreadyAdded = foundCards.find((a) => a.id === x.id);
-        console.log(foundCards);
         let spliceIndex = -1;
 
         totalValidCardsArray.forEach((z, i) => {
