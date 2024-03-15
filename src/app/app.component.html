@@ -1,4 +1,26 @@
 <div class="container" (click)="clickAnimation($event)">
+  <div
+    class="loadingContainer"
+    *ngIf="isLoading"
+    [@fadeEnter]="{
+      value: '',
+      params: { duration: initFinished ? 1000 : 0, delay: 0 }
+    }"
+    [@fadeOutLeave]
+  >
+    <div
+      class="loadingBg"
+      [ngStyle]="{
+        'background-image': 'url(./assets/backgrounds/' + loadingBg + ')'
+      }"
+    >
+      <div class="loadingBarBox">
+        <div class="loadingText">Amazing, right?</div>
+        <img class="loadingBar" src="./assets/loadingBar.png" />
+        <img class="loadingBarFill" />
+      </div>
+    </div>
+  </div>
   <div *ngFor="let item of clickAnimationsList">
     <div
       class="clickAnimation"
@@ -28,29 +50,28 @@
       [@fadeUpLeave]
     >
       <div class="achievementItemBox">
-        <img
-          class="achievementBackground"
-          src="./assets/default/achievementBg.png"
-        />
+        <img class="achievementBackground" src="./assets/achievementBg.png" />
         <img
           class="achievementImage"
-          src="./assets/default/gold.png"
-          [src]="'./assets/default/' + item.image"
+          [src]="'./assets/achievements/' + item.image"
         />
-        <img 
-        *ngIf="showGif"
-        [@fadeEnter]="{
+        <img
+          *ngIf="showGif"
+          [@fadeEnter]="{
           value: '',
           params: {
             duration: 500,
             delay: 1200,
           }
         }"
-        [@fadeOutLeave] class="confettiGif" src="./assets/default/confettiAchievements.gif" />
+          [@fadeOutLeave]
+          class="confettiGif"
+          src="./assets/confettiAchievements.gif"
+        />
         <div
           class="achievementTitle"
           [ngStyle]="{
-            'font-family': 'default-HeaderFont'
+            'font-family': 'headerFont'
           }"
         >
           {{ item.title }}
@@ -95,5 +116,12 @@
       </div>
     </div>
   </div>
-  <router-outlet></router-outlet>
+  <div
+    [ngClass]="{
+      fadeIn: !isLoading,
+      fadeLeave: isLoading
+    }"
+  >
+    <router-outlet></router-outlet>
+  </div>
 </div>

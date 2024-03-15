@@ -1,3 +1,5 @@
+import { gameTheme } from './../../models/theme';
+import { LoadingService } from './../../services/loading.service';
 import { CheatsService } from './../../services/cheats.service';
 import { AbilityCard } from './../../models/abilityCard';
 import { CommonModule } from '@angular/common';
@@ -7,7 +9,6 @@ import {
   HostListener,
   OnInit,
   QueryList,
-  Renderer2,
   ViewChild,
   ViewChildren,
 } from '@angular/core';
@@ -35,19 +36,12 @@ import {
 } from 'src/app/models/determine';
 import 'leader-line';
 import { playerService } from 'src/app/services/player.service';
-import { gameTheme } from 'src/app/models/theme';
 import { CheatDto } from 'src/app/models/cheat';
-import {
-  trigger,
-  state,
-  style,
-  transition,
-  animate,
-} from '@angular/animations';
+import { trigger, style, transition, animate } from '@angular/animations';
 declare let LeaderLine: any;
 import { Cards } from 'src/assets/data/cards';
-import { EnviornmentSettings } from 'src/assets/data/environement';
 import { AbilityService } from 'src/app/services/ability.service';
+import { LevelDto } from 'src/app/models/level';
 
 const defaultAbilityCard: AbilityCard = {
   id: 0,
@@ -190,7 +184,6 @@ export class BattleComponent implements OnInit {
 
   usedSpecialCardThisTurn: boolean = false;
 
-  gameThemePath: gameTheme = 'default';
   Cards: CardDto[] = [];
   completedEnemyTurns: number[] = [];
   currentEnemyTurn: PlayerDto = {
@@ -212,7 +205,7 @@ export class BattleComponent implements OnInit {
   duringBotTurnDiscard: boolean = false;
 
   currentExtraDmg: number = 0;
-  randomBgImage: string = '';
+  levelBgImage: string = '';
 
   abilityCardsHand: AbilityCard[] = [];
   abilityDeck: AbilityCard[] = [];
@@ -237,6 +230,7 @@ export class BattleComponent implements OnInit {
   shieldOnPlayer: boolean = false;
   increaseOffenseOnPlayer: boolean = false;
   abilityEnemyTarget: number = 0;
+  playerUsingAbilityCard: boolean = false;
 
   usedAbilityCardBot: boolean = false;
   startedAbilityTurnBot: boolean = false;
@@ -294,6 +288,9 @@ export class BattleComponent implements OnInit {
   abilityCardCombos: ComboObject[] = [];
   currentlyShuffling: boolean = false;
 
+  gameThemeUrlPlayer: gameTheme = 'default';
+  gameThemeUrlEnemy: gameTheme = 'default';
+
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
 
@@ -317,25 +314,18 @@ export class BattleComponent implements OnInit {
     private cardService: CardService,
     private userService: playerService,
     private abilityService: AbilityService,
-    private cheatsService: CheatsService
+    private cheatsService: CheatsService,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit() {
-    this.importRandomBgImage();
-    // Get game theme
     this.userService.gameTheme$.subscribe((x) => {
-      this.gameThemePath = x;
-      // Get player & shuffled ability cards
-      this.player = this.userService.getPlayer(this.gameThemePath);
-      this.abilityDeck = this.userService.getAbilityCards(this.gameThemePath);
-      this.abilityDeck = this.cardService.shuffle(this.abilityDeck);
-
-      // Get bot & shuffled deck
-      this.abilityDeckBot = this.userService.getAbilityCardsBot(
-        this.gameThemePath
-      );
-      this.abilityDeckBot = this.cardService.shuffle(this.abilityDeckBot);
-      this.enemyPlayers = [
+      this.gameThemeUrlPlayer = x;
+    });
+    // Level Theme Set
+    const currentLevel: LevelDto = {
+      id: 1,
+      enemyPlayers: [
         {
           id: 1,
           image: 'goblin.png',
@@ -356,23 +346,31 @@ export class BattleComponent implements OnInit {
           baseAttack: 3,
           level: 2,
         },
-        // {
-        //   id: 3,
-        //   image: 'link.png',
-        //   name: 'Link',
-        //   attack: 1,
-        //   health: 4,
-        //   baseHealth: 7,
-        //   baseAttack: 0,
-        //   level: 1,
-        // },
-      ];
-
-      if (this.Cards.length < 1) {
-        this.Cards = Cards;
-        this.gameInit();
-      }
+      ],
+      enemyAbilityCards: this.cardService.shuffle(
+        this.userService.getAbilityCardsBot()
+      ),
+      enemyCardTheme: 'default',
+      background: 'forest',
+    };
+    this.enemyPlayers = currentLevel.enemyPlayers;
+    this.abilityDeckBot = currentLevel.enemyAbilityCards;
+    let enemyCards: CardDto[] = this.Cards.map((x) => {
+      return { ...x, wildInitial: x.value };
     });
+    this.enemyDeck = this.cardService.shuffle(enemyCards);
+    this.levelBgImage = currentLevel.background;
+    this.gameThemeUrlEnemy = currentLevel.enemyCardTheme;
+
+    // Player init
+    this.player = this.userService.getPlayer();
+    this.abilityDeck = this.userService.getAbilityCards();
+    this.abilityDeck = this.cardService.shuffle(this.abilityDeck);
+
+    if (this.Cards.length < 1) {
+      this.Cards = Cards;
+      this.gameInit();
+    }
     this.cheatsService.cheats$.subscribe((x) => {
       if (x === 'setWildHand') {
         this.playerHand = this.playerHand.map((x) => {
@@ -452,14 +450,6 @@ export class BattleComponent implements OnInit {
     }, 400);
   }
 
-  async importRandomBgImage() {
-    const imagesArray = Array.from(
-      Array(EnviornmentSettings.backgroundCount).keys()
-    );
-    const shuffledArray = this.cardService.shuffle(imagesArray);
-    this.randomBgImage = shuffledArray[0] + 1;
-  }
-
   gameInit() {
     // Cheats
     const cheats: CheatDto = this.userService.getPlayerCheats();
@@ -486,7 +476,6 @@ export class BattleComponent implements OnInit {
 
     // Shuffle player decks
     this.playerDeck = this.cardService.shuffle(playerCards);
-    this.enemyDeck = this.cardService.shuffle(this.Cards);
 
     // Both players draw 5 cards
     for (const num of [0, 1, 2, 3, 4]) {
@@ -511,15 +500,15 @@ export class BattleComponent implements OnInit {
     }, 400);
 
     // this.gameWinnerPlayer = true;
-    this.redrawing = false;
-    this.redrawHide = true;
-    this.playerHand = [...this.redrawCards];
-    // this.abilityDeck = this.userService.getAbilityCards(this.gameThemePath);
-    this.drawAbilityCard(2);
-    this.drawAbilityCardBot(2);
+    // this.redrawing = false;
+    // this.redrawHide = true;
+    // this.playerHand = [...this.redrawCards];
+    // this.abilityDeck = this.userService.getAbilityCards();
+    // this.drawAbilityCard(2);
+    // this.drawAbilityCardBot(2);
     // this.finishedRewards = true;
     // this.rewardItems = [];
-    // this.endGame(true);
+    // this.endGame(false);
     // this.newTurn();
     // this.startBotTurnsLoop();
     // this.healOnPlayer = true;
@@ -536,7 +525,7 @@ export class BattleComponent implements OnInit {
   }
 
   retry() {
-    window.location.reload();
+    this.loadingService.navigate('');
   }
 
   async selectAbilityCard(ability: AbilityCard) {
@@ -585,6 +574,7 @@ export class BattleComponent implements OnInit {
 
   useAbilityCard(ability: AbilityCard) {
     this.canSelectCards = false;
+    this.playerUsingAbilityCard = true;
     if (ability.abilityFunction === 'damage') {
       this.damageAbility(ability);
     }
@@ -853,6 +843,7 @@ export class BattleComponent implements OnInit {
       this.healOnPlayer = false;
       this.usedAbilityCard = false;
       this.increaseOffenseOnPlayer = false;
+      this.playerUsingAbilityCard = false;
       this.flamesOnEnemies = [];
       this.shieldOnEnemies = [];
       this.leachOnEnemies = [];

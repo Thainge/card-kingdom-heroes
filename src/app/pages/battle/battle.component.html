@@ -200,7 +200,7 @@
     >
       <!-- Show victory pop up -->
       <img
-        [src]="'./assets/' + gameThemePath + '/victory.png'"
+        [src]="'./assets/victory.png'"
         class="victoryDefeatImage"
         *ngIf="!finishedRewards"
       />
@@ -214,10 +214,7 @@
         [@fadeOutLeave]
       >
         <div class="heroLevelUpXp">
-          <img
-            class="heroLevelUpBorder"
-            [src]="'./assets/' + gameThemePath + '/xpBar.png'"
-          />
+          <img class="heroLevelUpBorder" [src]="'./assets/xpBar.png'" />
           <div
             class="herLevelUpTextTop"
             [@fadeUpEnter]="{
@@ -281,7 +278,7 @@
                 ></div>
                 <!-- Card Border is img -->
                 <img
-                  [src]="'./assets/' + gameThemePath + '/cardBorder.png'"
+                  [src]="'./assets/cardBorder.png'"
                   class="playerBorderImageBox"
                 />
               </div>
@@ -293,25 +290,13 @@
                   class="playerLevel zoomInLevel"
                   *ngIf="leveledUp"
                   [@fadeOutLeave]
-                  [src]="
-                    './assets/' +
-                    gameThemePath +
-                    '/level' +
-                    player.level +
-                    '.png'
-                  "
+                  [src]="'./assets/level' + player.level + '.png'"
                 />
                 <img
                   class="playerLevel"
                   [@fadeOutLeave]
                   *ngIf="!leveledUp"
-                  [src]="
-                    './assets/' +
-                    gameThemePath +
-                    '/level' +
-                    player.level +
-                    '.png'
-                  "
+                  [src]="'./assets/level' + player.level + '.png'"
                 />
               </div>
               <div class="cardFooterIconBox swordBox">
@@ -323,7 +308,7 @@
                   <div
                     class="attackDefenseText swordText"
                     [ngStyle]="{
-                      'font-family': gameThemePath + '-HeaderFont'
+                      'font-family': 'headerFont'
                     }"
                   >
                     {{ player.attack }}
@@ -339,7 +324,7 @@
                   <div
                     class="attackDefenseText"
                     [ngStyle]="{
-                      'font-family': gameThemePath + '-HeaderFont'
+                      'font-family': 'headerFont'
                     }"
                   >
                     {{ player.health }}
@@ -369,7 +354,7 @@
             <div
               class="raysTextTitle"
               [ngStyle]="{
-                'font-family': gameThemePath + '-HeaderFont'
+                'font-family': 'headerFont'
               }"
               *ngIf="isActiveReward(item)"
               [@fadeOutLeave]="{ value: '', params: { duration: 200 } }"
@@ -379,7 +364,7 @@
             <div
               class="raysTextAmount"
               [ngStyle]="{
-                'font-family': gameThemePath + '-HeaderFont'
+                'font-family': 'headerFont'
               }"
               *ngIf="isActiveReward(item)"
               [@fadeOutLeave]="{ value: '', params: { duration: 200 } }"
@@ -389,7 +374,7 @@
             <div
               class="raysContinueText"
               [ngStyle]="{
-                'font-family': gameThemePath + '-HeaderFont'
+                'font-family': 'headerFont'
               }"
               *ngIf="isActiveReward(item)"
               [@fadeOutLeave]="{ value: '', params: { duration: 200 } }"
@@ -427,7 +412,7 @@
           <div
             class="rewardsTitle"
             [ngStyle]="{
-              'font-family': gameThemePath + '-HeaderFont'
+              'font-family': 'headerFont'
             }"
           >
             Rewards
@@ -462,7 +447,7 @@
                   blueText: item.color === 'blue'
                 }"
                 [ngStyle]="{
-                  'font-family': gameThemePath + '-HeaderFont'
+                  'font-family': 'headerFont'
                 }"
               >
                 {{ item.textAmount }}
@@ -477,7 +462,6 @@
               [src]="'./assets/' + gameThemePath + '/continue.png'"
             />
             <div class="finishButtonText">Continue</div>
-            <div class="pulseButton"></div>
           </div>
         </div>
       </div>
@@ -533,7 +517,6 @@
               [src]="'./assets/' + gameThemePath + '/continue.png'"
             />
             <div class="finishButtonText">Try Again</div>
-            <div class="pulseButton"></div>
           </div>
         </div>
       </div>
@@ -683,7 +666,7 @@
                 <div
                   class="attackDefenseText swordText"
                   [ngStyle]="{
-                    'font-family': gameThemePath + '-HeaderFont'
+                    'font-family': 'headerFont'
                   }"
                 >
                   {{ findEnemyPlayer().attack }}
@@ -699,7 +682,7 @@
                 <div
                   class="attackDefenseText"
                   [ngStyle]="{
-                    'font-family': gameThemePath + '-HeaderFont'
+                    'font-family': 'headerFont'
                   }"
                   [ngClass]="{
                     redHealthText:
@@ -821,7 +804,7 @@
                 <div
                   class="attackDefenseText swordText"
                   [ngStyle]="{
-                    'font-family': gameThemePath + '-HeaderFont'
+                    'font-family': 'headerFont'
                   }"
                 >
                   {{ player.attack }}
@@ -837,7 +820,7 @@
                 <div
                   class="attackDefenseText"
                   [ngStyle]="{
-                    'font-family': gameThemePath + '-HeaderFont'
+                    'font-family': 'headerFont'
                   }"
                   [ngClass]="{
                     redHealthText: player.health < player.baseHealth
@@ -879,7 +862,7 @@
             [ngStyle]="
               enemyAttackHand?.power === 5
                 ? {
-                    'font-family': gameThemePath + '-HeaderFont'
+                    'font-family': 'headerFont'
                   }
                 : {}
             "
@@ -928,7 +911,7 @@
             [ngStyle]="
               playerAttackHand?.power === 5
                 ? {
-                    'font-family': gameThemePath + '-HeaderFont'
+                    'font-family': 'headerFont'
                   }
                 : {}
             "
@@ -1094,7 +1077,7 @@
                   <div
                     class="attackDefenseText swordText"
                     [ngStyle]="{
-                      'font-family': gameThemePath + '-HeaderFont'
+                      'font-family': 'headerFont'
                     }"
                   >
                     {{ findStaticEnemyPlayer().attack }}
@@ -1111,7 +1094,7 @@
                   <div
                     class="attackDefenseText"
                     [ngStyle]="{
-                      'font-family': gameThemePath + '-HeaderFont'
+                      'font-family': 'headerFont'
                     }"
                     [ngClass]="{
                       redHealthText:
@@ -1242,7 +1225,7 @@
                   <div
                     class="attackDefenseText swordText"
                     [ngStyle]="{
-                      'font-family': gameThemePath + '-HeaderFont'
+                      'font-family': 'headerFont'
                     }"
                   >
                     {{ player.attack }}
@@ -1258,7 +1241,7 @@
                   <div
                     class="attackDefenseText"
                     [ngStyle]="{
-                      'font-family': gameThemePath + '-HeaderFont'
+                      'font-family': 'headerFont'
                     }"
                     [ngClass]="{
                       redHealthText: player.health < player.baseHealth
@@ -1276,7 +1259,7 @@
           <div
             class="wildText"
             [ngStyle]="{
-              'font-family': gameThemePath + '-HeaderFont'
+              'font-family': 'headerFont'
             }"
             *ngIf="canSelectCards"
           >
@@ -1318,7 +1301,7 @@
             [ngStyle]="
               enemyAttackHand?.power === 5
                 ? {
-                    'font-family': gameThemePath + '-HeaderFont'
+                    'font-family': 'headerFont'
                   }
                 : {}
             "
@@ -1370,7 +1353,7 @@
             [ngStyle]="
               playerAttackHand?.power === 5
                 ? {
-                    'font-family': gameThemePath + '-HeaderFont'
+                    'font-family': 'headerFont'
                   }
                 : {}
             "
@@ -1482,10 +1465,10 @@
                   [ngStyle]="
                     card.wildRange === 14
                       ? {
-                          'font-family': gameThemePath + '-HeaderFont'
+                          'font-family': 'headerFont'
                         }
                       : {
-                          'font-family': gameThemePath + '-HeaderFont'
+                          'font-family': 'headerFont'
                         }
                   "
                 >
@@ -1511,7 +1494,7 @@
           <div
             class="defendAttackTxt wildText"
             [ngStyle]="{
-              'font-family': gameThemePath + '-HeaderFont'
+              'font-family': 'headerFont'
             }"
           >
             Ok
@@ -1597,10 +1580,10 @@
                   [ngStyle]="
                     card.wildRange === 14
                       ? {
-                          'font-family': gameThemePath + '-HeaderFont'
+                          'font-family': 'headerFont'
                         }
                       : {
-                          'font-family': gameThemePath + '-HeaderFont'
+                          'font-family': 'headerFont'
                         }
                   "
                 >
@@ -1626,7 +1609,7 @@
           <div
             class="defendAttackTxt wildText"
             [ngStyle]="{
-              'font-family': gameThemePath + '-HeaderFont'
+              'font-family': 'headerFont'
             }"
           >
             Ok
@@ -1921,9 +1904,9 @@
   <div class="middle" *ngIf="!finishedRewards" [@fadeOutLeave]>
     <div class="middleLeft">
       <div
-        class="middleRightBox"
+        class="middleRightBox middleCardHover"
         [ngClass]="{
-          middleCardHover: canSelectCards
+          middleCardHover: canSelectCards || playerUsingAbilityCard
         }"
       >
         <div
@@ -1983,7 +1966,7 @@
               class="cardIconValue centerHoverText"
               *ngIf="currentAbilityBot.abilityFunction === 'offense'"
               [ngStyle]="{
-                'font-family': gameThemePath + '-HeaderFont'
+                'font-family': 'headerFont'
               }"
               [ngClass]="{
                 blueOffenseText: currentAbilityBot.abilityFunction === 'offense'
@@ -2040,7 +2023,7 @@
                 <div
                   class="attackDefenseText swordText"
                   [ngStyle]="{
-                    'font-family': gameThemePath + '-HeaderFont'
+                    'font-family': 'headerFont'
                   }"
                   [ngClass]="{
                     blueOffenseText: currentAbilityBot.abilityFunction === 'offense',
@@ -2060,7 +2043,7 @@
                 <div
                   class="attackDefenseText"
                   [ngStyle]="{
-                    'font-family': gameThemePath + '-HeaderFont'
+                    'font-family': 'headerFont'
                   }"
                   [ngClass]="{
                     redHealthText: player.health < player.baseHealth,
@@ -2189,7 +2172,7 @@
                   !canSelectCards
                 "
                 [ngStyle]="{
-                  'font-family': gameThemePath + '-HeaderFont'
+                  'font-family': 'headerFont'
                 }"
                 [ngClass]="{
                   blueOffenseText: currentAbility.abilityFunction === 'offense',
@@ -2244,7 +2227,7 @@
                   <div
                     class="attackDefenseText swordText"
                     [ngStyle]="{
-                      'font-family': gameThemePath + '-HeaderFont'
+                      'font-family': 'headerFont'
                     }"
                     [ngClass]="{
                       greenHealthText:
@@ -2282,7 +2265,7 @@
                   <div
                     class="attackDefenseText"
                     [ngStyle]="{
-                      'font-family': gameThemePath + '-HeaderFont'
+                      'font-family': 'headerFont'
                     }"
                     [ngClass]="{
                       greenHealthText: item.health > item.baseHealth,
@@ -2318,7 +2301,7 @@
                   <div
                     class="centerNumberValue failText"
                     [ngStyle]="{
-                      'font-family': gameThemePath + '-HeaderFont'
+                      'font-family': 'headerFont'
                     }"
                     [ngClass]="{
                       showHitText: enemyTarget === item.id && canSelectCards
@@ -2553,10 +2536,10 @@
               [ngStyle]="
                 card.wildRange === 14
                   ? {
-                      'font-family': gameThemePath + '-HeaderFont'
+                      'font-family': 'headerFont'
                     }
                   : {
-                      'font-family': gameThemePath + '-HeaderFont'
+                      'font-family': 'headerFont'
                     }
               "
             >
@@ -2639,7 +2622,7 @@
         <div
           class="defendAttackTxt wildText attackTxt"
           [ngStyle]="{
-            'font-family': gameThemePath + '-HeaderFont'
+            'font-family': 'headerFont'
           }"
         >
           Attack

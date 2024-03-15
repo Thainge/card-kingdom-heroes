@@ -1746,11 +1746,11 @@ text {
 }
 
 .paperBg {
-  background: url(~src/assets/default/paper.png);
+  background: url(~src/assets/paper.png);
 }
 
 .paperBgEnemy {
-  background: url(~src/assets/default/paperEnemy.png);
+  background: url(~src/assets/paper.png);
   z-index: 11 !important;
 }
 
@@ -2266,7 +2266,7 @@ text {
 
 .rays {
   /* with animation properties */
-  background: url(~src/assets/default/rays.png) 0 0 no-repeat;
+  background: url(~src/assets/rays.png) 0 0 no-repeat;
   -webkit-user-drag: none;
   position: absolute;
   top: -100px;
@@ -2481,19 +2481,6 @@ text {
 .finishButton {
   width: 10em;
   -webkit-user-drag: none;
-}
-
-.pulseButton {
-  position: absolute;
-  width: 3em;
-  height: 0.2em;
-  z-index: -1;
-  animation: pulseEffect infinite;
-  animation-duration: 2000ms;
-  animation-fill-mode: forwards;
-  border-radius: 100%;
-  background-color: rgba(255, 255, 255, 0);
-  pointer-events: none;
 }
 
 .finishButtonGo:hover {
@@ -3353,7 +3340,7 @@ text {
 }
 
 .clouds {
-  background: transparent url(~src/assets/default/clouds.png) repeat top center;
+  background: transparent url(~src/assets/clouds.png) repeat top center;
   z-index: -1;
 
   -moz-animation: move-clouds-back 200s linear infinite;
@@ -3383,7 +3370,7 @@ text {
 }
 
 .nightModeStars {
-  background: url(~src/assets/default/stars.png);
+  background: url(~src/assets/stars.png);
   background-repeat: repeat-x;
   width: 100%;
   height: 100%;

@@ -17,6 +17,8 @@ import {
   fadeOutOnLeaveAnimation,
 } from 'angular-animations';
 import { CheatsService } from './services/cheats.service';
+import { LoadingService } from './services/loading.service';
+import { Router } from '@angular/router';
 
 type ClickObject = {
   id: number;
@@ -50,14 +52,38 @@ export class AppComponent implements OnInit {
   clickAnimationsList: ClickObject[] = [];
   showGif: boolean = false;
 
+  isLoading: boolean = false;
+  initFinished: boolean = false;
+  loadingBg: string = 'loadingBg.png';
+
   @ViewChild('consoleInput') consoleInput: ElementRef | undefined;
 
   constructor(
     private achievementService: AchievementService,
-    private cheatsService: CheatsService
+    private cheatsService: CheatsService,
+    private loadingService: LoadingService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.loadingService.isLoading$.subscribe((x) => {
+      if (x.loading === true && x.url !== 'null') {
+        this.isLoading = true;
+        setTimeout(() => {
+          if (this.isLoading) {
+            this.isLoading = false;
+            this.router.navigate([x.url]);
+          }
+        }, 2500);
+      } else if (x.url !== 'null') {
+        this.isLoading = false;
+      }
+      setTimeout(() => {
+        this.initFinished = true;
+      }, 2500);
+    });
+    const currentRoute = this.router.url;
+    // this.loadingService.navigate(currentRoute);
     setInterval(() => {
       try {
         this.clickAnimationsList = this.clickAnimationsList.slice(
