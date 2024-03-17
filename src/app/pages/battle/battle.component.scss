@@ -493,43 +493,148 @@
   -o-transition: all 0.3s;
   transition: all 0.3s;
   position: relative;
-  background-color: rgba(0, 0, 0, 0.295);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.295), rgba(0, 0, 0, 0.295));
+  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.295), rgba(0, 0, 0, 0.295));
+  z-index: 1;
 }
 
-.activeCardBorder {
-  background-color: rgba(234, 255, 47, 1);
+.cardBorder::before {
+  position: absolute;
+  content: '';
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.295), rgba(0, 0, 0, 0.295));
+  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.295), rgba(0, 0, 0, 0.295));
+  z-index: -1;
+  border-radius: 5%;
+  -webkit-transition: all .3s;
+  -o-transition: all .3s;
+  transition: all .3s;
+  opacity: 0;
+}
+
+.activeCardBorder::before {
+  opacity: 1;
+  background-image: rgba(234, 255, 47, 1);
   -webkit-box-shadow: 0 0 3px 3px rgba(234, 255, 47, 0.5);
           box-shadow: 0 0 3px 3px rgba(234, 255, 47, 0.5);
+          background-image: -o-linear-gradient(
+            #ced117,
+            #959700,
+          );
+          background-image: linear-gradient(
+            #cbce1b,
+            #959700,
+          );
 }
 
-.hoveringAbilityCard {
+.hoveringAbilityCard::before {
+  opacity: 1 !important;
   background-color: rgba(44, 219, 38, 1) !important;
   -webkit-box-shadow: 0 0 10px 1px rgba(44, 219, 38, 0.5) !important;
           box-shadow: 0 0 10px 1px rgba(44, 219, 38, 0.5) !important;
+          background-image: -o-linear-gradient(
+            326deg,
+            #ff2400,
+            #e81d1d,
+            #e8b71d,
+            #e3e81d,
+            #1de840,
+            #1ddde8,
+            #2b1de8,
+            #dd00f3,
+            #dd00f3
+          ) !important;
+          background-image: linear-gradient(
+            124deg,
+            #ff2400,
+            #e81d1d,
+            #e8b71d,
+            #e3e81d,
+            #1de840,
+            #1ddde8,
+            #2b1de8,
+            #dd00f3,
+            #dd00f3
+          ) !important;
 }
 
-.validCardBorder {
-  background-color: rgba(44, 219, 38, 1);
+.validCardBorder::before {
+  opacity: 1;
+  background-color: #2cdb26;
   -webkit-box-shadow: 0 0 10px 1px rgba(44, 219, 38, 0.5);
           box-shadow: 0 0 10px 1px rgba(44, 219, 38, 0.5);
+          background-image: -o-linear-gradient(
+            #2cdb26,
+            #047e00,
+          );
+          background-image: linear-gradient(
+            #2cdb26,
+            #047e00,
+          );
 }
 
-.errorCardBorder {
+.errorCardBorder::before{
+  opacity: 1;
   background-color: rgba(235, 0, 0, 1);
   -webkit-box-shadow: 0 0 3px 3px rgba(235, 0, 0, 0.5);
           box-shadow: 0 0 3px 3px rgba(235, 0, 0, 0.5);
+          background-image: -o-linear-gradient(
+            #ff2400,
+            #9c0000,
+          );
+          background-image: linear-gradient(
+            #ff2400,
+            #9c0000,
+          );
 }
 
-.abilityActiveCardBorder {
+.abilityActiveCardBorder::before {
+  opacity: 1;
   background-color: rgba(44, 219, 38, 1);
   -webkit-box-shadow: 0 0 10px 1px rgba(44, 219, 38, 0.5);
           box-shadow: 0 0 10px 1px rgba(44, 219, 38, 0.5);
+          background-image: -o-linear-gradient(
+            326deg,
+            #ff2400,
+            #e81d1d,
+            #e8b71d,
+            #e3e81d,
+            #1de840,
+            #1ddde8,
+            #2b1de8,
+            #dd00f3,
+            #dd00f3
+          ) ;
+          background-image: linear-gradient(
+            124deg,
+            #ff2400,
+            #e81d1d,
+            #e8b71d,
+            #e3e81d,
+            #1de840,
+            #1ddde8,
+            #2b1de8,
+            #dd00f3,
+            #dd00f3
+          );
 }
 
-.chooseCardAbilityBorder {
+.chooseCardAbilityBorder::before {
+  opacity: 1;
   background-color: rgba(234, 255, 47, 1);
   -webkit-box-shadow: 0 0 3px 3px rgba(234, 255, 47, 0.5);
           box-shadow: 0 0 3px 3px rgba(234, 255, 47, 0.5);
+          background-image: -o-linear-gradient(
+            #e8b71d,
+            #e3e81d,
+          );
+          background-image: linear-gradient(
+            #e8b71d,
+            #e3e81d,
+          );
 }
 
 .floatingText {
@@ -2891,7 +2996,7 @@ text {
   position: absolute;
   top: 2%;
   left: 2%;
-  height: 106%;
+  height: 96%;
   width: 96%;
   border-radius: 5%;
   z-index: 5;
