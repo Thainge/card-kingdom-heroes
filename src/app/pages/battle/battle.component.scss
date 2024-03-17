@@ -311,7 +311,6 @@
   background-repeat: no-repeat;
   background-size: contain;
   -webkit-user-drag: none;
-  border-radius: 5%;
   -webkit-filter: drop-shadow(0 0 2px black);
           filter: drop-shadow(0 0 2px black);
 }
@@ -446,6 +445,7 @@
   background-size: contain;
   -webkit-user-drag: none;
   -webkit-user-drag: none;
+  border-radius: 5%;
 }
 
 .bottomCard:hover {
@@ -2267,7 +2267,7 @@ text {
 
   100% {
     width: 17%;
-    padding-left: 5%;
+    padding-left: 10%;
   }
 }
 
@@ -2279,12 +2279,12 @@ text {
 
   100% {
     width: 17%;
-    padding-left: 5%;
+    padding-left: 10%;
   }
 }
 
 .cardHideAfterDeath {
-  padding-left: 5%;
+  padding-left: 10%;
   -webkit-animation: hideCardDeath 500ms;
   animation: hideCardDeath 500ms;
   -webkit-animation-fill-mode: forwards;
@@ -2296,7 +2296,7 @@ text {
 @-webkit-keyframes hideCardDeath {
   0% {
     width: 17%;
-    padding-left: 5%;
+    padding-left: 10%;
   }
 
   100% {
@@ -2308,6 +2308,7 @@ text {
 @keyframes hideCardDeath {
   0% {
     width: 17%;
+    padding-left: 10%;
   }
 
   100% {
@@ -2992,6 +2993,29 @@ text {
   font-weight: bold;
 }
 
+
+ .veryBottomMiddle, .playerBottomCard {
+  container-type: inline-size;
+}
+
+@container (max-width: 1200px) {
+  .veryBottomMiddle,.playerBottomCard {
+   font-size: .8em;
+ }
+}
+
+@container (max-width: 1000px) {
+  .veryBottomMiddle,.playerBottomCard {
+   font-size: .6em;
+ }
+}
+
+@container (max-width: 800px) {
+  .veryBottomMiddle,.playerBottomCard{
+    font-size: .4em;
+  }
+}
+
 .enemyAbilityBackground {
   position: absolute;
   top: 2%;
@@ -3134,6 +3158,7 @@ text {
 }
 
 .middleCardHover {
+  padding-left: 10%;
   -webkit-animation: hoverEffect 5s infinite ease-in-out;
           animation: hoverEffect 5s infinite ease-in-out;
   -webkit-animation-fill-mode: forwards;

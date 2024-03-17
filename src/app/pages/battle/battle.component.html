@@ -1971,7 +1971,7 @@
                     'font-family': 'headerFont'
                   }"
                   [ngClass]="{
-                    blueOffenseText: currentAbilityBot.abilityFunction === 'offense',
+                    blueOffenseText: currentAbilityBot.abilityFunction === 'offense' || player.attack < player.baseAttack,
                     greenHealthText: player.attack > player.baseAttack,
                   }"
                 >

@@ -83,7 +83,7 @@ export class AppComponent implements OnInit {
       }, 2500);
     });
     const currentRoute = this.router.url;
-    // this.loadingService.navigate(currentRoute);
+    this.loadingService.navigate(currentRoute);
     setInterval(() => {
       try {
         this.clickAnimationsList = this.clickAnimationsList.slice(

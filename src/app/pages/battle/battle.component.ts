@@ -457,8 +457,8 @@ export class BattleComponent implements OnInit {
 
     // Cheats
     const cheats: CheatDto = this.userService.getPlayerCheats();
-    // this.canDefendWithMultipleCards = cheats.canDefendWithMultipleCards;
-    // this.alwaysWinTies = cheats.alwaysWinTies;
+    this.canDefendWithMultipleCards = cheats.canDefendWithMultipleCards;
+    this.alwaysWinTies = cheats.alwaysWinTies;
     this.canSeeTopCard = cheats.canSeeTopCard;
 
     this.botThemeInit();
@@ -506,11 +506,11 @@ export class BattleComponent implements OnInit {
     }, 400);
 
     // --- Skip redraw phase --- //
-    this.redrawing = false;
-    this.redrawHide = true;
-    this.playerHand = [...this.redrawCards];
-    this.drawAbilityCard(2);
-    this.drawAbilityCardBot(2);
+    // this.redrawing = false;
+    // this.redrawHide = true;
+    // this.playerHand = [...this.redrawCards];
+    // this.drawAbilityCard(2);
+    // this.drawAbilityCardBot(2);
 
     // setTimeout(() => {
     //   this.enemyPlayers[1].health = 0;
