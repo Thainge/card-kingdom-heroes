@@ -188,7 +188,7 @@ export class BattleComponent implements OnInit {
     id: 0,
     health: 1,
     attack: 1,
-    image: 'goblin.png',
+    image: 'goomba.png',
     name: '',
     baseHealth: 1,
     baseAttack: 1,
@@ -413,8 +413,8 @@ export class BattleComponent implements OnInit {
       enemyPlayers: [
         {
           id: 1,
-          image: 'goblin.png',
-          name: 'Moblin',
+          image: 'goomba.png',
+          name: 'Goomba',
           attack: 1,
           baseAttack: 1,
           health: 3,
@@ -423,8 +423,8 @@ export class BattleComponent implements OnInit {
         },
         {
           id: 2,
-          image: 'goblin.png',
-          name: 'Moblin',
+          image: 'goomba.png',
+          name: 'Goomba',
           attack: 3,
           baseAttack: 3,
           health: 5,
@@ -435,7 +435,7 @@ export class BattleComponent implements OnInit {
       enemyAbilityCards: this.cardService.shuffle(
         this.userService.getAbilityCardsBot()
       ),
-      enemyCardTheme: 'default',
+      enemyCardTheme: 'mario',
       background: 'forest.png',
     };
 
@@ -1913,7 +1913,7 @@ export class BattleComponent implements OnInit {
         id: 0,
         health: 1,
         attack: 1,
-        image: 'goblin.png',
+        image: 'goomba.png',
         name: '',
         baseHealth: 1,
         baseAttack: 1,
@@ -1929,7 +1929,7 @@ export class BattleComponent implements OnInit {
         id: 0,
         health: 1,
         attack: 1,
-        image: 'goblin.png',
+        image: 'goomba.png',
         name: '',
         baseHealth: 1,
         baseAttack: 1,
@@ -1947,7 +1947,7 @@ export class BattleComponent implements OnInit {
         id: 0,
         health: 1,
         attack: 1,
-        image: 'goblin.png',
+        image: 'goomba.png',
         name: '',
         baseHealth: 1,
         baseAttack: 1,
@@ -3384,7 +3384,7 @@ export class BattleComponent implements OnInit {
       id: 0,
       health: 1,
       attack: 1,
-      image: 'goblin.png',
+      image: 'goomba.png',
       name: '',
       baseHealth: 1,
       baseAttack: 1,

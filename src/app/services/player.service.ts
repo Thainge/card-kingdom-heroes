@@ -68,12 +68,12 @@ export class playerService implements OnInit {
     };
     return {
       id: 5,
-      image: 'link.png',
-      name: 'Link',
+      image: 'mario.png',
+      name: 'Mario',
       attack: 2 + playerSkills.extraAttack,
       baseAttack: 2 + playerSkills.extraAttack,
       health: 5 + playerSkills.extraHealth,
-      baseHealth: 9 + playerSkills.extraHealth,
+      baseHealth: 5 + playerSkills.extraHealth,
       level: 1,
       xp: 10,
       xpLevels: [60, 90, 120],
@@ -319,8 +319,8 @@ export class playerService implements OnInit {
         alliesCalled: [
           {
             id: 0,
-            image: 'goblin.png',
-            name: 'Moblin',
+            image: 'goomba.png',
+            name: 'Goomba',
             attack: 1,
             baseAttack: 1,
             health: 3,
@@ -329,8 +329,8 @@ export class playerService implements OnInit {
           },
           {
             id: 0,
-            image: 'goblin.png',
-            name: 'Moblin',
+            image: 'goomba.png',
+            name: 'Goomba',
             attack: 1,
             baseAttack: 1,
             health: 3,
