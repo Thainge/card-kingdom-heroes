@@ -248,7 +248,7 @@
           ></div>
         </div>
         <div
-          class="middleRightBox"
+          class="middleRightBox levelUpHeroBox"
           [ngClass]="{
             middleCardHover: canSelectCards,
             leveledUpCard: leveledUp,
@@ -1886,7 +1886,7 @@
           >
             <img
               [src]="'./assets/fire.gif'"
-              class="cardIcon confetti claws firing"
+              class="cardIcon confetti firing"
               *ngIf="fireOnPlayer"
               [@fadeEnter]="{
                 value: '',
@@ -1896,18 +1896,33 @@
             />
             <img
               [src]="'./assets/' + gameThemePathEnemy + '/offenseShield.png'"
-              class="cardIcon confetti claws protecting"
+              class="cardIcon confetti protecting"
               *ngIf="shieldOnPlayer"
+              [@fadeEnter]="{
+                value: '',
+                params: { duration: 500, delay: 0, translate: '300px' }
+              }"
+              [@fadeOutLeave]
             />
             <img
               [src]="'./assets/' + gameThemePath + '/defenseShield.png'"
-              class="cardIcon confetti claws healing"
+              class="cardIcon confetti healing"
               *ngIf="increaseOffenseOnPlayer"
+              [@fadeEnter]="{
+                value: '',
+                params: { duration: 500, delay: 0, translate: '300px' }
+              }"
+              [@fadeOutLeave]
             />
             <img
               [src]="'./assets/' + gameThemePath + '/potion.png'"
-              class="cardIcon confetti claws healing"
+              class="cardIcon confetti healing"
               *ngIf="healOnPlayer"
+              [@fadeEnter]="{
+                value: '',
+                params: { duration: 500, delay: 0, translate: '300px' }
+              }"
+              [@fadeOutLeave]
             />
             <div
               class="cardIconValue centerHoverText"
@@ -2070,7 +2085,7 @@
             >
               <img
                 [src]="'./assets/fire.gif'"
-                class="cardIcon confetti claws firing"
+                class="cardIcon confetti firing"
                 *ngIf="showFireAnimation(item)"
                 [@fadeEnter]="{
                   value: '',
@@ -2080,28 +2095,53 @@
               />
               <img
                 [src]="'./assets/' + gameThemePath + '/offenseShield.png'"
-                class="cardIcon confetti claws protecting"
+                class="cardIcon confetti protecting"
                 *ngIf="showShieldAnimation(item)"
+                [@fadeEnter]="{
+                  value: '',
+                  params: { duration: 500, delay: 0, translate: '300px' }
+                }"
+                [@fadeOutLeave]
               />
               <img
                 [src]="'./assets/' + gameThemePath + '/playerHealth.png'"
-                class="cardIcon confetti claws leaching"
+                class="cardIcon confetti leaching"
+                [@fadeEnter]="{
+                  value: '',
+                  params: { duration: 500, delay: 0, translate: '300px' }
+                }"
+                [@fadeOutLeave]
                 *ngIf="showLeachAnimation(item)"
               />
               <img
                 [src]="'./assets/' + gameThemePathEnemy + '/potion.png'"
-                class="cardIcon confetti claws healing"
+                class="cardIcon confetti healing"
                 *ngIf="showHealAnimationBot(item)"
+                [@fadeEnter]="{
+                  value: '',
+                  params: { duration: 500, delay: 0, translate: '300px' }
+                }"
+                [@fadeOutLeave]
               />
               <img
                 [src]="'./assets/' + gameThemePathEnemy + '/horn.png'"
-                class="cardIcon confetti claws healing"
+                class="cardIcon confetti healing"
                 *ngIf="showSupportAnimationBot(item)"
+                [@fadeEnter]="{
+                  value: '',
+                  params: { duration: 500, delay: 0, translate: '300px' }
+                }"
+                [@fadeOutLeave]
               />
               <img
                 [src]="'./assets/' + gameThemePathEnemy + '/defenseShield.png'"
-                class="cardIcon confetti claws healing"
+                class="cardIcon confetti healing"
                 *ngIf="showAddDefenseAnimationBot(item)"
+                [@fadeEnter]="{
+                  value: '',
+                  params: { duration: 500, delay: 0, translate: '300px' }
+                }"
+                [@fadeOutLeave]
               />
               <div
                 class="cardIconValue centerHoverText"
