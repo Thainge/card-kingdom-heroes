@@ -416,9 +416,9 @@ export class BattleComponent implements OnInit {
           image: 'goblin.png',
           name: 'Moblin',
           attack: 1,
+          baseAttack: 1,
           health: 3,
           baseHealth: 3,
-          baseAttack: 1,
           level: 1,
         },
         {
@@ -426,16 +426,16 @@ export class BattleComponent implements OnInit {
           image: 'goblin.png',
           name: 'Moblin',
           attack: 3,
+          baseAttack: 3,
           health: 5,
           baseHealth: 5,
-          baseAttack: 3,
           level: 2,
         },
       ],
       enemyAbilityCards: this.cardService.shuffle(
         this.userService.getAbilityCardsBot()
       ),
-      enemyCardTheme: 'mario',
+      enemyCardTheme: 'default',
       background: 'forest.png',
     };
 
@@ -459,7 +459,7 @@ export class BattleComponent implements OnInit {
     const cheats: CheatDto = this.userService.getPlayerCheats();
     // this.canDefendWithMultipleCards = cheats.canDefendWithMultipleCards;
     // this.alwaysWinTies = cheats.alwaysWinTies;
-    // this.canSeeTopCard = cheats.canSeeTopCard;
+    this.canSeeTopCard = cheats.canSeeTopCard;
 
     this.botThemeInit();
 
@@ -511,6 +511,16 @@ export class BattleComponent implements OnInit {
     this.playerHand = [...this.redrawCards];
     this.drawAbilityCard(2);
     this.drawAbilityCardBot(2);
+
+    // setTimeout(() => {
+    //   this.enemyPlayers[1].health = 0;
+    // }, 1000);
+    // setTimeout(() => {
+    //   this.enemyPlayers[2].health = 0;
+    // }, 5000);
+    // setTimeout(() => {
+    //   this.enemyPlayers[3].health = 0;
+    // }, 7000);
 
     // this.playerHand = this.playerHand.map((x, i) => {
     //   return {
@@ -1760,7 +1770,7 @@ export class BattleComponent implements OnInit {
         value = 2;
       }
 
-      if (value < 15 && Math.abs(currentValue) <= Number(card.wildRange)) {
+      if (value < 15 && (Math.abs(currentValue) <= Number(card.wildRange) || card.wildRange === 14)) {
         let newCurrent = currentValue.toString();
         if (card.wildRange === 14) {
           newCurrent = '0';
@@ -1794,7 +1804,7 @@ export class BattleComponent implements OnInit {
         value = 14;
       }
 
-      if (value > 1 && Math.abs(currentValue) <= Number(card.wildRange)) {
+      if (value > 1 && (Math.abs(currentValue) <= Number(card.wildRange)) || card.wildRange === 14) {
         let newCurrent = currentValue.toString();
         if (card.wildRange === 14) {
           newCurrent = '0';

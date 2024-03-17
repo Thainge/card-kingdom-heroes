@@ -26,3 +26,13 @@ html {
 .default-body:active {
   cursor: url(~src/assets/cursor2.cur), auto;
 }
+
+// Mario styles
+.mario-body {
+  font-family: futureTime;
+  cursor: url(~src/assets/marioCursor1.cur), auto;
+}
+
+.mario-body:active {
+  cursor: url(~src/assets/marioCursor2.cur), auto;
+}

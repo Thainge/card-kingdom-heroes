@@ -899,9 +899,9 @@
   display: -ms-flexbox;
   display: flex;
   width: 100%;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -webkit-box-pack: flex-end;
+      -ms-flex-pack: flex-end;
+          justify-content: flex-end;
 }
 
 .middleCardBorder {
@@ -2147,23 +2147,56 @@ text {
   }
 }
 
+.enemySlideInCard {
+  -webkit-animation: playerFadeUp 800ms;
+          animation: playerFadeUp 800ms;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes playerFadeUp {
+  0% {
+    width: 0%;
+    padding-left: 0%;
+  }
+
+  100% {
+    width: 17%;
+    padding-left: 5%;
+  }
+}
+
+@keyframes playerFadeUp {
+  0% {
+    width: 0%;
+    padding-left: 0%;
+  }
+
+  100% {
+    width: 17%;
+    padding-left: 5%;
+  }
+}
+
 .cardHideAfterDeath {
-  -webkit-animation: hideCardDeath 500ms !important;
-          animation: hideCardDeath 500ms !important;
-  -webkit-animation-fill-mode: forwards !important;
-          animation-fill-mode: forwards !important;
-  -webkit-animation-delay: 4500ms !important;
-          animation-delay: 4500ms !important;
+  padding-left: 5%;
+  -webkit-animation: hideCardDeath 500ms;
+  animation: hideCardDeath 500ms;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  -webkit-animation-delay: 5000ms;
+          animation-delay: 5000ms;
 }
 
 @-webkit-keyframes hideCardDeath {
   0% {
     width: 17%;
+    padding-left: 5%;
   }
 
   100% {
     width: 0%;
-    display: none;
+    padding-left: 0%;
   }
 }
 
@@ -2174,7 +2207,8 @@ text {
 
   100% {
     width: 0%;
-    display: none;
+    padding: 0%;
+    // display: none;
   }
 }
 
@@ -2857,7 +2891,7 @@ text {
   position: absolute;
   top: 2%;
   left: 2%;
-  height: 96%;
+  height: 106%;
   width: 96%;
   border-radius: 5%;
   z-index: 5;
@@ -5032,33 +5066,6 @@ text {
 
 .firing {
   z-index: 99 !important;
-}
-
-.enemySlideInCard {
-  -webkit-animation: playerFadeUp 800ms;
-          animation: playerFadeUp 800ms;
-  -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
-}
-
-@-webkit-keyframes playerFadeUp {
-  0% {
-    width: 0%;
-  }
-
-  100% {
-    width: 17%;
-  }
-}
-
-@keyframes playerFadeUp {
-  0% {
-    width: 0%;
-  }
-
-  100% {
-    width: 17%;
-  }
 }
 
 @media screen and (max-width: 800px) {
