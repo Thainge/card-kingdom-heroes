@@ -17,16 +17,28 @@
   background-size: cover;
   width: 100%;
   height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
 }
 
 .loadingBarBox {
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   bottom: 0;
 }
 
@@ -37,14 +49,27 @@
 }
 
 .loadingBarFill {
-  animation: fillLoadingBar 3s forwards;
-  animation-timing-function: ease;
+  -webkit-animation: fillLoadingBar 3s forwards;
+          animation: fillLoadingBar 3s forwards;
+  -webkit-animation-timing-function: ease;
+          animation-timing-function: ease;
   position: absolute;
   left: 20%;
   z-index: 1;
   top: 30%;
   border-radius: 5em;
   height: 50%;
+  background: -webkit-gradient(
+    linear,
+    left bottom, left top,
+    from(rgba(251, 189, 0, 1)),
+    to(rgba(249, 255, 0, 1))
+  );
+  background: -o-linear-gradient(
+    bottom,
+    rgba(251, 189, 0, 1) 0%,
+    rgba(249, 255, 0, 1) 100%
+  );
   background: linear-gradient(
     to top,
     rgba(251, 189, 0, 1) 0%,
@@ -61,6 +86,23 @@
   height: 3em;
   text-align: center;
   background: rgb(0, 0, 0);
+  background: -webkit-gradient(
+    linear,
+    left top, right top,
+    from(rgba(0, 0, 0, 0)),
+    color-stop(30%, rgba(0, 0, 0, 0.5)),
+    color-stop(50%, rgba(0, 0, 0, 0.9)),
+    color-stop(70%, rgba(0, 0, 0, 0.5)),
+    to(rgba(0, 0, 0, 0))
+  );
+  background: -o-linear-gradient(
+    left,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.5) 30%,
+    rgba(0, 0, 0, 0.9) 50%,
+    rgba(0, 0, 0, 0.5) 70%,
+    rgba(0, 0, 0, 0) 100%
+  );
   background: linear-gradient(
     90deg,
     rgba(0, 0, 0, 0) 0%,
@@ -69,11 +111,26 @@
     rgba(0, 0, 0, 0.5) 70%,
     rgba(0, 0, 0, 0) 100%
   );
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   color: whitesmoke;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+@-webkit-keyframes fillLoadingBar {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 60%;
+  }
 }
 
 @keyframes fillLoadingBar {
@@ -90,30 +147,58 @@
   position: absolute;
   width: 5em;
   height: 5em;
-  animation: clickAnimationKey;
-  animation-duration: 1000ms;
-  animation-fill-mode: forwards;
+  -webkit-animation: clickAnimationKey;
+          animation: clickAnimationKey;
+  -webkit-animation-duration: 1000ms;
+          animation-duration: 1000ms;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
   border-radius: 10em;
   background-color: rgba(255, 255, 255, 0);
   z-index: 10000;
   pointer-events: none;
 }
 
-@keyframes clickAnimationKey {
+@-webkit-keyframes clickAnimationKey {
   0% {
     scale: 0;
-    box-shadow: 0 0 0.3em 1em rgba(255, 255, 255, 0.7);
+    -webkit-box-shadow: 0 0 0.3em 1em rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 0.3em 1em rgba(255, 255, 255, 0.7);
     background-color: rgba(255, 255, 255, 0.7);
   }
 
   70% {
-    box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
+    -webkit-box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
+            box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
     background-color: rgba(38, 132, 219, 0);
   }
 
   100% {
     scale: 1;
-    box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
+    -webkit-box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
+            box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
+    background-color: rgba(38, 132, 219, 0);
+  }
+}
+
+@keyframes clickAnimationKey {
+  0% {
+    scale: 0;
+    -webkit-box-shadow: 0 0 0.3em 1em rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 0.3em 1em rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+
+  70% {
+    -webkit-box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
+            box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
+    background-color: rgba(38, 132, 219, 0);
+  }
+
+  100% {
+    scale: 1;
+    -webkit-box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
+            box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
     background-color: rgba(38, 132, 219, 0);
   }
 }
@@ -124,9 +209,15 @@
   top: 0;
   left: 0;
   width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   z-index: 9999;
   pointer-events: none;
 }
@@ -137,7 +228,8 @@
 
 .achievementBackground {
   width: 20em;
-  filter: brightness(0.9);
+  -webkit-filter: brightness(0.9);
+          filter: brightness(0.9);
 }
 
 .achievementImage {
@@ -145,10 +237,13 @@
   left: 18%;
   bottom: 13%;
   width: 2.5em;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 208, 0)), to(rgb(214, 182, 0)));
+  background: -o-linear-gradient(rgb(255, 208, 0) 0%, rgb(214, 182, 0) 100%);
   background: linear-gradient(rgb(255, 208, 0) 0%, rgb(214, 182, 0) 100%);
   border-radius: 0.5em;
   padding: 0.2em;
-  box-shadow: inset 0 0 0.5em 0.2em rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: inset 0 0 0.5em 0.2em rgba(0, 0, 0, 0.1);
+          box-shadow: inset 0 0 0.5em 0.2em rgba(0, 0, 0, 0.1);
 }
 
 .achievementTitle {
@@ -168,9 +263,15 @@
   height: 90%;
   left: 0%;
   top: 0%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 // Console
@@ -181,8 +282,13 @@
   height: 100%;
   top: 0;
   left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   border: 0.2em solid rgb(50, 50, 50);
   opacity: 0;
 }
@@ -192,13 +298,25 @@
 }
 
 .fadeEnter {
-  animation: fadeIn 0.5s forwards;
+  -webkit-animation: fadeIn 0.5s forwards;
+          animation: fadeIn 0.5s forwards;
   opacity: 1;
 }
 
 .fadeLeave {
-  animation: fadeOut 0.5s forwards;
+  -webkit-animation: fadeOut 0.5s forwards;
+          animation: fadeOut 0.5s forwards;
   opacity: 0;
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeIn {
@@ -208,6 +326,16 @@
 
   100% {
     opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
   }
 }
 
@@ -222,9 +350,15 @@
 }
 
 .consoleHeader {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding-left: 1em;
   padding-right: 1em;
   width: calc(100% - 2em);
@@ -234,7 +368,10 @@
 
 .consoleTitle {
   color: whitesmoke;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .consoleClose {
@@ -242,12 +379,23 @@
   border-radius: 10em;
   height: 1.5em;
   width: 1.5em;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   text-align: center;
   padding: 0.3em;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
   transition: all 0.3s;
 }
 
@@ -256,8 +404,13 @@
 }
 
 .consoleBody {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column-reverse;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
   height: 100%;
   row-gap: 0.5em;
   padding-bottom: 2em;
@@ -286,7 +439,8 @@
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
   z-index: 1000;
   position: absolute;
 }
@@ -299,10 +453,18 @@
 }
 
 .consoleInputRow {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  column-gap: 1em;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-column-gap: 1em;
+     -moz-column-gap: 1em;
+          column-gap: 1em;
   width: 100%;
   padding-top: 0.5em;
   background-color: rgb(50, 50, 50);
@@ -326,24 +488,39 @@
   background-color: rgba(0, 0, 0, 0.5);
   height: 2.1em;
   color: whitesmoke;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   font-size: 1.2em;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding-left: 1em;
   padding-right: 2em;
   padding-bottom: 0.5em;
   margin-right: 1em;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
   transition: all 0.3s;
 }
 
 .consoleSubmitButton:hover {
   background-color: rgba(0, 0, 0, 0.7);
-  transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+          transform: scale(1.1);
 }
 
 .consoleSubmitButton:active {
   background-color: rgba(0, 0, 0, 0.4);
-  transform: scale(0.9);
+  -webkit-transform: scale(0.9);
+      -ms-transform: scale(0.9);
+          transform: scale(0.9);
 }
