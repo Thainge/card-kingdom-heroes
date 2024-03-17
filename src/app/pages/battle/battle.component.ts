@@ -442,7 +442,7 @@ export class BattleComponent implements OnInit {
     this.enemyPlayers = currentLevel.enemyPlayers;
     this.abilityDeckBot = currentLevel.enemyAbilityCards;
     const enemyCards: CardDto[] = this.Cards.map((x) => {
-      return { ...x, wildInitial: x.value };
+      return { ...x, wildInitial: x.value, wildCurrent: '0' };
     });
     this.enemyDeck = this.cardService.shuffle(enemyCards);
     this.levelBgImage = currentLevel.background;
@@ -457,9 +457,9 @@ export class BattleComponent implements OnInit {
 
     // Cheats
     const cheats: CheatDto = this.userService.getPlayerCheats();
-    this.canDefendWithMultipleCards = cheats.canDefendWithMultipleCards;
-    this.alwaysWinTies = cheats.alwaysWinTies;
-    this.canSeeTopCard = cheats.canSeeTopCard;
+    // this.canDefendWithMultipleCards = cheats.canDefendWithMultipleCards;
+    // this.alwaysWinTies = cheats.alwaysWinTies;
+    // this.canSeeTopCard = cheats.canSeeTopCard;
 
     this.botThemeInit();
 
@@ -468,7 +468,7 @@ export class BattleComponent implements OnInit {
 
     // Add wildcards to deck
     let playerCards: CardDto[] = this.Cards.map((x) => {
-      return { ...x, wildInitial: x.value };
+      return { ...x, wildInitial: x.value,wildCurrent: '0' };
     });
     const wildCards = Array.from(
       Array(this.player.skills?.wildCardsCount).keys()
@@ -506,11 +506,11 @@ export class BattleComponent implements OnInit {
     }, 400);
 
     // --- Skip redraw phase --- //
-    // this.redrawing = false;
-    // this.redrawHide = true;
-    // this.playerHand = [...this.redrawCards];
-    // this.drawAbilityCard(2);
-    // this.drawAbilityCardBot(2);
+    this.redrawing = false;
+    this.redrawHide = true;
+    this.playerHand = [...this.redrawCards];
+    this.drawAbilityCard(2);
+    this.drawAbilityCardBot(2);
 
     // this.playerHand = this.playerHand.map((x, i) => {
     //   return {
@@ -1751,17 +1751,27 @@ export class BattleComponent implements OnInit {
 
     // Wild, ability to scroll card with limited range
     this.doingWildCardChange = true;
-    if (scroll.deltaY === -100 && card.wild) {
+    if (scroll.deltaY < 0 && card.wild) {
       // scroll up
-      const value = Number(card.value) + 1;
-      const initialValue = Math.abs(Number(card.wildInitial) - value) - 1;
+      let value = Number(card.value) + 1;
+      const currentValue = Number(card.wildCurrent) + 1 ;
 
-      if (value < 15 && initialValue < Number(card.wildRange)) {
+      if (value > 14) {
+        value = 2;
+      }
+
+      if (value < 15 && Math.abs(currentValue) <= Number(card.wildRange)) {
+        let newCurrent = currentValue.toString();
+        if (card.wildRange === 14) {
+          newCurrent = '0';
+        }
+
         const newCard: CardDto = {
           ...this.Cards.find(
             (a: CardDto) => a.suit === card.suit && a.value === value.toString()
           ),
           wildInitial: card.wildInitial,
+          wildCurrent: newCurrent,
           wildRange: card.wildRange,
           wildSuit: card.wildSuit,
           wildSuits: card.wildSuits,
@@ -1778,15 +1788,24 @@ export class BattleComponent implements OnInit {
       }
     } else if (card.wild) {
       // scroll down
-      const value = Number(card.value) - 1;
-      const initialValue = Math.abs(Number(card.wildInitial) - value) - 1;
+      let value = Number(card.value) - 1;
+      const currentValue = Number(card.wildCurrent)- 1;
+      if (value < 2) {
+        value = 14;
+      }
 
-      if (value > 1 && initialValue < Number(card.wildRange)) {
+      if (value > 1 && Math.abs(currentValue) <= Number(card.wildRange)) {
+        let newCurrent = currentValue.toString();
+        if (card.wildRange === 14) {
+          newCurrent = '0';
+        }
+
         const newCard: CardDto = {
           ...this.Cards.find(
             (a: CardDto) => a.suit === card.suit && a.value === value.toString()
           ),
           wildInitial: card.wildInitial,
+          wildCurrent: newCurrent,
           wildRange: card.wildRange,
           wildSuit: card.wildSuit,
           wildSuits: card.wildSuits,

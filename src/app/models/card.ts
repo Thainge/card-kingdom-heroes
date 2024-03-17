@@ -6,6 +6,7 @@ export interface CardDto {
 
   wild?: boolean;
   wildInitial?: string;
+  wildCurrent?: string;
 
   wildRange?: number;
   wildSuit?: boolean;
