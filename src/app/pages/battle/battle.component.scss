@@ -1433,11 +1433,12 @@
   padding: 1em;
   position: absolute;
   top: 0;
-  left: 0;
+  left: -4em;
   z-index: 998;
 }
 
 .DevItem {
+  color: whitesmoke;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1626,7 +1627,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 80%;
+  width: 70%;
   -webkit-user-drag: none;
 }
 
