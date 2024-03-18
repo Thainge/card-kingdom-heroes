@@ -1,5 +1,149 @@
+:root {
+  --closeOpacity: 0;
+}
+
 .container {
   position: relative;
+}
+
+// Options
+.optionsButtonBox {
+  position: absolute;
+  top:1em;
+  left:1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+}
+
+.optionsButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  filter: drop-shadow(0 0 .3em rgba(0, 0, 0, 0.5));
+  transition: all .3s;
+  width: 80%;
+  -webkit-user-drag: none;
+}
+
+.optionsButton:hover {
+transform: scale(1.1);
+filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
+}
+
+.optionsButton:active {
+  transform: scale(.9);
+}
+
+.optionsMenuOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
+
+.optionsMenu {
+  z-index: 1002;
+}
+
+.optionsMenuBox {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.optionsMenuBackdrop{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1001;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.optionsMenuBg {
+  filter: drop-shadow(0 0 .5em rgba(0, 0, 0, 1));
+  -webkit-user-drag: none;
+}
+
+.closeMenuButtonBox {
+  position: absolute;
+  top: 2.1%;
+  right: 1.3%;
+}
+
+.closeMenuButton {
+  -webkit-user-drag: none;
+  position: relative;
+  z-index: 1;
+  transition: all .2s;
+  --closeOpacity: 0;
+}
+
+.closeMenuButton:hover {
+  --closeOpacity: 1;
+}
+
+.activeBtn {
+  position: absolute;
+  left: 0;
+  opacity: var(--closeOpacity);
+}
+
+
+
+.optionsMenu {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.menuHeader{
+  position: absolute;
+  top: 4.5%;
+  margin-left: -3%;
+  font-size: 2em;
+}
+
+.optionsText {
+  color: white;
+  font-family: 'headerFont';
+  background: -webkit-linear-gradient(#f5f2e6, #a8a075);
+  -webkit-text-stroke: 2px #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.optionsRow {
+  position: absolute;
+}
+
+.optionsItem {
+  
+}
+
+.optionsText {
+
+}
+
+.optionsItemButton {
+ -webkit-user-drag: none;
 }
 
 // Loading

@@ -1,4 +1,26 @@
 <div class="container" (click)="clickAnimation($event)">
+  <div class="optionsButtonBox">
+    <img src="./assets/options.png" class="optionsButton"/>
+  </div>
+  <div class="optionsMenuOverlay">
+    <div class="optionsMenuBox">
+      <div class="optionsMenuBackdrop"></div>
+    <div class="optionsMenu">
+      <img src="./assets/menu.png" class="optionsMenuBg"/>
+      <div class="menuHeader optionsText">Options</div>
+      <div class="closeMenuButtonBox">
+        <img src="./assets/close.png" class="closeMenuButton"/>
+        <img src="./assets/closeActive.png" class="closeMenuButton activeBtn"/>
+      </div>
+      <div class="optionsRow">
+        <div class="optionsItem">
+          <div class="optionsItemTitle optionsText">test</div>
+          <img src="./assets/fullscreen.png" class="optionsItemButton" />
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
   <div
     class="loadingContainer"
     *ngIf="isLoading"
