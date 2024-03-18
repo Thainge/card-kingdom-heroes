@@ -58,9 +58,9 @@ export class AppComponent implements OnInit {
 
   optionsMenuOpened: boolean = false;
   docElement: HTMLElement | undefined;
-isFullScreen: boolean = false;
-soundControl = new FormControl('75');
-musicControl = new FormControl('75');
+  isFullScreen: boolean = false;
+  soundControl = new FormControl('75');
+  musicControl = new FormControl('75');
 
   @ViewChild('consoleInput') consoleInput: ElementRef | undefined;
 
@@ -91,7 +91,7 @@ musicControl = new FormControl('75');
       }, 2500);
     });
     const currentRoute = this.router.url;
-    // this.loadingService.navigate(currentRoute);
+    this.loadingService.navigate(currentRoute);
     setInterval(() => {
       try {
         this.clickAnimationsList = this.clickAnimationsList.slice(
@@ -112,25 +112,24 @@ musicControl = new FormControl('75');
     // });
   }
 
-  muteIconSound():number {
-return Number(this.soundControl.value);
+  muteIconSound(): number {
+    return Number(this.soundControl.value);
   }
 
-  muteIconMusic():number {
+  muteIconMusic(): number {
     return Number(this.musicControl.value);
-      }
+  }
 
   toggleFullScreen() {
     if (this.docElement) {
       if (!this.isFullScreen) {
         this.docElement.requestFullscreen();
-      }
-      else {
+      } else {
         document.exitFullscreen();
       }
       this.isFullScreen = !this.isFullScreen;
     }
-}
+  }
 
   async clickAnimation(e: any) {
     const ID = this.clickAnimationsList.length + 1;
@@ -234,7 +233,8 @@ return Number(this.soundControl.value);
     }
 
     if (value.includes('easymode')) {
-      const easyMode = JSON.parse(localStorage.getItem('easymode') ?? '') ?? false;
+      const easyMode =
+        JSON.parse(localStorage.getItem('easymode') ?? '') ?? false;
       localStorage.setItem('easymode', JSON.stringify(!easyMode));
       window.location.reload();
     }

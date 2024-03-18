@@ -600,11 +600,11 @@ export class BattleComponent implements OnInit {
     }, 400);
 
     // --- Skip redraw phase --- //
-    this.redrawing = false;
-    this.redrawHide = true;
-    this.playerHand = [...this.redrawCards];
-    this.drawAbilityCard(2);
-    this.drawAbilityCardBot(2);
+    // this.redrawing = false;
+    // this.redrawHide = true;
+    // this.playerHand = [...this.redrawCards];
+    // this.drawAbilityCard(2);
+    // this.drawAbilityCardBot(2);
 
     // setTimeout(() => {
     //   this.enemyPlayers[1].health = 0;
@@ -642,6 +642,10 @@ export class BattleComponent implements OnInit {
     //   ];
     // }
     // this.abilityCardsHand = this.abilityDeck.map((x) => {
+    //   return { ...x, cost: [] };
+    // });
+
+    // this.abilityCardsHandBot = this.abilityDeckBot.map((x) => {
     //   return { ...x, cost: [] };
     // });
 
@@ -780,10 +784,10 @@ export class BattleComponent implements OnInit {
     );
     await this.timeout(200);
     this.increaseOffenseOnPlayer = true;
-    await this.timeout(800);
+    await this.timeout(400);
     this.player.attack = newAttack;
 
-    this.endAbilityTurn(ability, 1400);
+    this.endAbilityTurn(ability, 800);
   }
 
   async drawAbility(ability: AbilityCard) {
@@ -840,7 +844,7 @@ export class BattleComponent implements OnInit {
         this.shieldOnEnemies.push(x);
         return { ...x, attack: newAttack };
       });
-      this.endAbilityTurn(ability, 1800);
+      this.endAbilityTurn(ability, 1200);
     } else {
       const ID = this.pushDisplayMessage(
         `Select An Enemy To Apply -${ability.abilityValue} Offense To`
@@ -881,7 +885,7 @@ export class BattleComponent implements OnInit {
       healAbility.abilityFunction = 'heal';
       healAbility.abilityValue = totalHealthRegained;
 
-      await this.timeout(500);
+      await this.timeout(400);
       this.healAbility(healAbility);
     } else {
       const ID = this.pushDisplayMessage(
@@ -925,7 +929,7 @@ export class BattleComponent implements OnInit {
         this.enemyTarget = x.id;
         await this.numbersGoDownIncrementallyBot(x.health, newHealth);
       }
-      this.endAbilityTurn(ability, 1800);
+      this.endAbilityTurn(ability, 1200);
     } else {
       const ID = this.pushDisplayMessage(
         `Select An Enemy To Deal ${ability.abilityValue} Damage To`
@@ -948,10 +952,10 @@ export class BattleComponent implements OnInit {
     );
     await this.timeout(200);
     this.healOnPlayer = true;
-    await this.timeout(500);
+    await this.timeout(400);
     this.numbersGoUpIncrementallyPlayer(this.player.health, newHealth);
 
-    this.endAbilityTurn(ability, 1400);
+    this.endAbilityTurn(ability, 700);
   }
 
   async endAbilityTurn(ability: AbilityCard, timeout: number) {
@@ -3197,7 +3201,7 @@ export class BattleComponent implements OnInit {
       this.completedEnemyTurns.push(newAlly.id);
     });
 
-    await this.timeout(2300);
+    await this.timeout(700);
     this.abilityDeckBot = this.abilityDeckBot.filter(
       (x) => x.id !== ability.id
     );
@@ -3219,7 +3223,7 @@ export class BattleComponent implements OnInit {
           return { ...x, attack: newDefense };
         }
       });
-      await this.timeout(1800);
+      await this.timeout(1200);
       this.botEndAbilityTurn();
     } else {
       // Heal single
@@ -3249,7 +3253,7 @@ export class BattleComponent implements OnInit {
           return x;
         });
       }
-      await this.timeout(1800);
+      await this.timeout(1200);
       this.botEndAbilityTurn();
     }
   }
@@ -3262,7 +3266,7 @@ export class BattleComponent implements OnInit {
     this.player.health = this.player.health - ability.abilityValue;
 
     this.fireOnPlayer = true;
-    await this.timeout(1800);
+    await this.timeout(1200);
     this.botEndAbilityTurn();
   }
 
@@ -3277,7 +3281,7 @@ export class BattleComponent implements OnInit {
     }
 
     this.shieldOnPlayer = true;
-    await this.timeout(1800);
+    await this.timeout(1200);
     this.botEndAbilityTurn();
   }
 
@@ -3324,7 +3328,7 @@ export class BattleComponent implements OnInit {
           return { ...x, health: newHealth };
         }
       });
-      await this.timeout(1800);
+      await this.timeout(1200);
       this.botEndAbilityTurn();
     } else {
       // Heal single
@@ -3357,7 +3361,7 @@ export class BattleComponent implements OnInit {
           return x;
         });
       }
-      await this.timeout(1800);
+      await this.timeout(1200);
       this.botEndAbilityTurn();
     }
   }

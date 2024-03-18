@@ -1557,7 +1557,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 5;
+  z-index: 1005;
 }
 
 .surrenderMenuBackdrop {
@@ -1566,7 +1566,7 @@
   height: 100%;
   z-index: 1001;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1;
+  z-index: 1001;
 }
 
 .checkSurrenderBg {
