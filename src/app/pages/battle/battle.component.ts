@@ -43,6 +43,7 @@ import { Cards } from 'src/assets/data/cards';
 import { AbilityService } from 'src/app/services/ability.service';
 import { LevelDto } from 'src/app/models/level';
 import { DialogComponent } from 'src/app/components/dialogComponent/dialog.component';
+import { DialogDto } from 'src/app/models/dialog';
 
 const defaultAbilityCard: AbilityCard = {
   id: 0,
@@ -293,6 +294,9 @@ export class BattleComponent implements OnInit {
   easyMode: boolean = false;
   checkSurrender: boolean = false;
 
+  dialogArray: DialogDto[] = [];
+  displayDialog: boolean = false;
+
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
 
@@ -321,6 +325,9 @@ export class BattleComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Dialog
+    this.initDialogComponent();
+
     // Player game theme
     this.userService.gameTheme$.subscribe((x) => {
       this.gameThemePath = x;
@@ -357,12 +364,55 @@ export class BattleComponent implements OnInit {
 
   ngAfterContentInit() {
     setTimeout(() => {
-      const showLoading = JSON.parse(localStorage.getItem('showLoading') ?? '') ?? false;
+      const showLoading =
+        JSON.parse(localStorage.getItem('showLoading') ?? '') ?? false;
       if (showLoading) {
         this.loadingService.navigate('/');
         localStorage.setItem('showLoading', JSON.stringify(false));
       }
     }, 50);
+  }
+
+  finishedDialog() {
+    this.displayDialog = false;
+  }
+
+  initDialogComponent() {
+    this.dialogArray = [
+      {
+        id: 1,
+        image: 'avatar.png',
+        player: true,
+        text: 'Hi my name is mario can you please go away bowser or I will have to trail through your goombas',
+        shownText: '',
+        left: true,
+      },
+      {
+        id: 2,
+        image: 'avatar.png',
+        player: true,
+        text: 'Hi my name is mario can you please go away bowser or I will have to trail through your goombas',
+        shownText: '',
+        left: false,
+      },
+      {
+        id: 3,
+        image: 'avatar.png',
+        player: true,
+        text: 'Hi my name is mario can you please go away bowser or I will have to trail through your goombas',
+        shownText: '',
+        left: false,
+      },
+      {
+        id: 4,
+        image: 'avatar.png',
+        player: true,
+        text: 'Hi my name is mario can you please go away bowser or I will have to trail through your goombas',
+        shownText: '',
+        left: true,
+      },
+    ];
+    this.displayDialog = true;
   }
 
   async nextReward(rewardItem: any) {
@@ -397,30 +447,30 @@ export class BattleComponent implements OnInit {
   drawAbilityCard(amount: number) {
     if (!this.easyMode) {
       const abilityCardAddArr = Array.from(Array(amount).keys());
-    for (const x of abilityCardAddArr) {
-      this.abilityCardsHand.push(this.abilityDeck[0]);
-      this.abilityDeck.push(this.abilityDeck[0]);
-      this.abilityDeck.shift();
-    }
+      for (const x of abilityCardAddArr) {
+        this.abilityCardsHand.push(this.abilityDeck[0]);
+        this.abilityDeck.push(this.abilityDeck[0]);
+        this.abilityDeck.shift();
+      }
 
-    setTimeout(() => {
-      this.topAbilityCard = this.abilityDeck[0];
-    }, 400);
+      setTimeout(() => {
+        this.topAbilityCard = this.abilityDeck[0];
+      }, 400);
     }
   }
 
   drawAbilityCardBot(amount: number) {
     if (!this.easyMode) {
       const abilityCardAddArr = Array.from(Array(amount).keys());
-    for (const x of abilityCardAddArr) {
-      this.abilityCardsHandBot.push(this.abilityDeckBot[0]);
-      this.abilityDeckBot.push(this.abilityDeckBot[0]);
-      this.abilityDeckBot.shift();
-    }
+      for (const x of abilityCardAddArr) {
+        this.abilityCardsHandBot.push(this.abilityDeckBot[0]);
+        this.abilityDeckBot.push(this.abilityDeckBot[0]);
+        this.abilityDeckBot.shift();
+      }
 
-    setTimeout(() => {
-      this.topAbilityCardBot = this.abilityDeckBot[0];
-    }, 400);
+      setTimeout(() => {
+        this.topAbilityCardBot = this.abilityDeckBot[0];
+      }, 400);
     }
   }
 
@@ -494,7 +544,7 @@ export class BattleComponent implements OnInit {
 
     // Add wildcards to deck
     let playerCards: CardDto[] = this.Cards.map((x) => {
-      return { ...x, wildInitial: x.value,wildCurrent: '0' };
+      return { ...x, wildInitial: x.value, wildCurrent: '0' };
     });
     const wildCards = Array.from(
       Array(this.player.skills?.wildCardsCount).keys()
@@ -589,7 +639,7 @@ export class BattleComponent implements OnInit {
     localStorage.setItem('showLoading', JSON.stringify(true));
     location.reload();
   }
- 
+
   async retry() {
     localStorage.setItem('showLoading', JSON.stringify(true));
     location.reload();
@@ -1792,13 +1842,17 @@ export class BattleComponent implements OnInit {
     if (scroll.deltaY < 0 && card.wild) {
       // scroll up
       let value = Number(card.value) + 1;
-      const currentValue = Number(card.wildCurrent) + 1 ;
+      const currentValue = Number(card.wildCurrent) + 1;
 
       if (value > 14) {
         value = 2;
       }
 
-      if (value < 15 && (Math.abs(currentValue) <= Number(card.wildRange) || card.wildRange === 14)) {
+      if (
+        value < 15 &&
+        (Math.abs(currentValue) <= Number(card.wildRange) ||
+          card.wildRange === 14)
+      ) {
         let newCurrent = currentValue.toString();
         if (card.wildRange === 14) {
           newCurrent = '0';
@@ -1827,12 +1881,15 @@ export class BattleComponent implements OnInit {
     } else if (card.wild) {
       // scroll down
       let value = Number(card.value) - 1;
-      const currentValue = Number(card.wildCurrent)- 1;
+      const currentValue = Number(card.wildCurrent) - 1;
       if (value < 2) {
         value = 14;
       }
 
-      if (value > 1 && (Math.abs(currentValue) <= Number(card.wildRange)) || card.wildRange === 14) {
+      if (
+        (value > 1 && Math.abs(currentValue) <= Number(card.wildRange)) ||
+        card.wildRange === 14
+      ) {
         let newCurrent = currentValue.toString();
         if (card.wildRange === 14) {
           newCurrent = '0';
@@ -2573,9 +2630,9 @@ export class BattleComponent implements OnInit {
 
   surrender() {
     this.checkSurrender = false;
-      this.gameLoserPlayer = true;
-      this.rewardItems = [];
-      this.rewardItemsClean = [];
+    this.gameLoserPlayer = true;
+    this.rewardItems = [];
+    this.rewardItemsClean = [];
     setTimeout(() => {
       this.finishedRewards = true;
     }, 3500);

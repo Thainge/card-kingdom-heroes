@@ -1,0 +1,63 @@
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2300;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialogBackdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.relativeDialogBox {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  scale: 0.8;
+}
+
+.dialogBoxImage {
+  width: 90%;
+}
+
+.dialogBoxPlayer {
+  position: absolute;
+  bottom: 5%;
+  left: 0;
+  height: 90%;
+  left: 7%;
+  filter: drop-shadow(0 0 0.3em rgba(255, 255, 0, 0.3));
+}
+
+.dialogText {
+  position: absolute;
+  width: 44%;
+  height: 60%;
+  left: 45%;
+  top: 27%;
+  font-size: 1.3em;
+  color: #e9e9b2;
+  -webkit-text-stroke: 0.2px #000;
+  font-family: soho;
+  line-height: 1.7em;
+  font-weight: 500;
+}
+
+.leftSide {
+  margin-right: -30%;
+}
+
+.rightSide {
+  margin-left: -30%;
+}

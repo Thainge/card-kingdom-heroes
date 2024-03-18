@@ -1,8 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   fadeInUpOnEnterAnimation,
   fadeOutUpOnLeaveAnimation,
@@ -48,45 +45,53 @@ import { DialogDto } from 'src/app/models/dialog';
   ],
 })
 export class DialogComponent implements OnInit {
-  dialogArray: DialogDto[] = [
-    {id: 1, image: 'avatar.png', player: true, text: 'Hi my name is mario can you please go away bwoser or I will have to trail through your goombas', shownText: ''},
-    {id: 2, image: 'avatar.png', player: true, text: 'Hi my name is mario can you please go away bwoser or I will have to trail through your goombas', shownText: ''},
-    {id: 3, image: 'avatar.png', player: true, text: 'Hi my name is mario can you please go away bwoser or I will have to trail through your goombas', shownText: ''},
-    {id: 4, image: 'avatar.png', player: true, text: 'Hi my name is mario can you please go away bwoser or I will have to trail through your goombas', shownText: ''}
-  ];
-  activeDialog: DialogDto = {id: 0, image: 'avatar.png', player: true, text: '', shownText: ''};
+  dialogArrayStatic: DialogDto[] = [];
+  activeDialog: DialogDto = {
+    id: 0,
+    image: 'avatar.png',
+    player: true,
+    text: '',
+    shownText: '',
+    left: true,
+  };
 
   currentlyReading: boolean = false;
+  isIterating: boolean = false;
 
-  constructor(
-    
-  ) {}
-
-  ngOnInit() {
-    this.playNextDialog();
-    // setTimeout(() => {
-    //     this.playNextDialog();
-    // }, 1000);
-    // setTimeout(() => {
-    //     this.playNextDialog();
-    // }, 3000);
-    // setTimeout(() => {
-    //     this.playNextDialog();
-    // }, 5000);
-    // setTimeout(() => {
-    //     this.playNextDialog();
-    // }, 7000);
+  @Input('dialogArray') set dialogArray(dialogArray: DialogDto[]) {
+    if (dialogArray.length > 0) {
+      this.dialogArrayStatic = dialogArray;
+      this.currentlyReading = true;
+      this.activeDialog = this.dialogArrayStatic[0];
+      this.iterateLetters();
+    }
   }
+  @Output() finishedDialog = new EventEmitter<boolean>(true);
+
+  constructor() {}
+
+  ngOnInit() {}
 
   async playNextDialog() {
-    this.dialogArray = this.dialogArray.filter((x) => x.id !== this.activeDialog.id);
-    this.currentlyReading = true;
-    this.activeDialog = this.dialogArray[0];
-    await this.iterateLetters();
+    if (this.dialogArrayStatic.length > 0) {
+      this.dialogArrayStatic = this.dialogArrayStatic.filter(
+        (x) => x.id !== this.activeDialog.id
+      );
+      this.currentlyReading = true;
+      this.activeDialog = this.dialogArrayStatic[0];
+
+      await this.iterateLetters();
+    }
   }
 
-  skipReadingCurrentDialog(dialog: DialogDto) {
-    this.currentlyReading = false;
+  skipReadingCurrentDialog() {
+    if (this.isIterating) {
+      this.currentlyReading = false;
+    }
+
+    if (!this.isIterating) {
+      this.playNextDialog();
+    }
   }
 
   timeout(ms: number) {
@@ -94,17 +99,34 @@ export class DialogComponent implements OnInit {
   }
 
   async iterateLetters() {
+    console.log(this.dialogArrayStatic);
+
     // Take away from total text and add to shownText
-    const textArr = this.activeDialog.text.split('');
-    let i = 0;
-    for await (let x of textArr) {
+    if (
+      this.activeDialog &&
+      this.activeDialog.text &&
+      this.activeDialog.text.length > 0
+    ) {
+      const textArr = this.activeDialog.text.split('');
+      let i = 0;
+
+      this.isIterating = true;
+      // Iterate over letters
+      for await (let x of textArr) {
         if (this.currentlyReading) {
-            this.activeDialog.shownText = this.activeDialog.text.slice(0, i);
-            i++;
-            await this.timeout(20);
+          this.activeDialog.shownText = this.activeDialog.text.slice(0, i);
+          i++;
+          await this.timeout(20);
         } else {
-            this.activeDialog.shownText = this.activeDialog.text;
+          // If clicked iterate faster
+          i++;
+          await this.timeout(0.5);
+          this.activeDialog.shownText = this.activeDialog.text.slice(0, i);
         }
+      }
+      this.isIterating = false;
+    } else {
+      this.finishedDialog.emit(true);
     }
   }
 }

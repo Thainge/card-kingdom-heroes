@@ -9,6 +9,11 @@
   src: url(~src/assets/a-fonts/bolder.ttf);
 }
 
+@font-face {
+  font-family: soho;
+  src: url(~src/assets/a-fonts/soHo.ttf);
+}
+
 body,
 html {
   margin: 0 !important;
@@ -27,7 +32,7 @@ html {
   cursor: url(~src/assets/cursor2.cur), auto;
 }
 
-.default-body input[type=range] {
+.default-body input[type="range"] {
   cursor: url(~src/assets/cursor1.cur), auto;
 }
 
@@ -41,20 +46,20 @@ html {
   cursor: url(~src/assets/marioCursor2.cur), auto;
 }
 
-.mario-body input[type=range] {
+.mario-body input[type="range"] {
   cursor: url(~src/assets/marioCursor1.cur), auto;
 }
 
-input[type=range] {
+input[type="range"] {
   -webkit-appearance: none;
   width: 100%;
   margin: 50px 0;
   background-color: transparent;
 }
-input[type=range]:focus {
+input[type="range"]:focus {
   outline: none;
 }
-input[type=range]::-webkit-slider-runnable-track {
+input[type="range"]::-webkit-slider-runnable-track {
   width: 100%;
   height: 18px;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
@@ -64,7 +69,7 @@ input[type=range]::-webkit-slider-runnable-track {
   position: relative;
   z-index: 3;
 }
-input[type=range]::-webkit-slider-thumb {
+input[type="range"]::-webkit-slider-thumb {
   height: 50px;
   width: 50px;
   border-radius: 3px;

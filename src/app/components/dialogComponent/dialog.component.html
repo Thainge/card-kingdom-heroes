@@ -1,6 +1,15 @@
-<div class="container">
-    <div class=""></div>
-    <div class="dialogBox">
-        {{activeDialog.shownText}}
-    </div>
+<div class="container" (click)="skipReadingCurrentDialog()">
+  <div class="dialogBackdrop"></div>
+  <div
+    *ngIf="activeDialog && activeDialog.text && activeDialog.text.length > 0"
+    class="relativeDialogBox"
+    [ngClass]="{
+      leftSide: activeDialog?.left,
+      rightSide: !activeDialog?.left
+    }"
+  >
+    <img src="./assets/dialogBox.png" class="dialogBoxImage" />
+    <img src="./assets/dialogPlayers/avatar.png" class="dialogBoxPlayer" />
+    <div class="dialogText">{{ activeDialog?.shownText }}</div>
+  </div>
 </div>

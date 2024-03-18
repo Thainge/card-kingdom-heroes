@@ -1,46 +1,67 @@
 <div class="container">
-  <app-dialog></app-dialog>
-  <div class="optionsButtonBox" [@fadeEnter]="{
-    value: '',
-    params: { duration: 500, delay: 0 }
-  }"
-  [@fadeOutLeave]="{
-    value: '',
-    params: { duration: 500, delay: 0 }
-  }" *ngIf="!gameWinnerPlayer && !gameLoserPlayer" (click)="checkSurrender = !checkSurrender">
-    <img src="./assets/surrender.png" class="optionsButton hoverButton"/>
+  <app-dialog
+    [dialogArray]="dialogArray"
+    (finishedDialog)="finishedDialog()"
+    *ngIf="displayDialog"
+    [@fadeOutLeave]="{
+      value: '',
+      params: { duration: 500, delay: 0 }
+    }"
+  ></app-dialog>
+  <div
+    class="optionsButtonBox"
+    [@fadeEnter]="{
+      value: '',
+      params: { duration: 500, delay: 0 }
+    }"
+    [@fadeOutLeave]="{
+      value: '',
+      params: { duration: 500, delay: 0 }
+    }"
+    *ngIf="!gameWinnerPlayer && !gameLoserPlayer"
+    (click)="checkSurrender = !checkSurrender"
+  >
+    <img src="./assets/surrender.png" class="optionsButton hoverButton" />
   </div>
   <div class="checkSurrenderOverlay">
-  <div class="surrenderMenuBackdrop" *ngIf="checkSurrender" [@fadeEnter]="{
-    value: '',
-    params: { duration: 500, delay: 0 }
-  }"
-  [@fadeOutLeave]="{
-    value: '',
-    params: { duration: 500, delay: 0 }
-  }"></div>
-  <div class="checkSurrenderBox" *ngIf="checkSurrender" [@fadeEnter]="{
-    value: '',
-    params: { duration: 500, delay: 0 }
-  }"
-  [@fadeOutLeave]="{
-    value: '',
-    params: { duration: 500, delay: 0 }
-  }">
-    <img class="checkSurrenderBg" src="./assets/box.png"/>
-    <div class="surrenderTitle">Are you sure you want to surrender?</div>
-    <div class="surrenderBtns">
-      <div class="finishButtonGo" (click)="checkSurrender = false">
-        <img class="finishButton" [src]="'./assets/cancel.png'" />
-        <div class="finishButtonText surrenderText">Cancel</div>
-      </div>
-      <div class="finishButtonGo" (click)="surrender()">
-        <img class="finishButton" [src]="'./assets/continue.png'" />
-        <div class="finishButtonText surrenderText">Surrender</div>
+    <div
+      class="surrenderMenuBackdrop"
+      *ngIf="checkSurrender"
+      [@fadeEnter]="{
+        value: '',
+        params: { duration: 500, delay: 0 }
+      }"
+      [@fadeOutLeave]="{
+        value: '',
+        params: { duration: 500, delay: 0 }
+      }"
+    ></div>
+    <div
+      class="checkSurrenderBox"
+      *ngIf="checkSurrender"
+      [@fadeEnter]="{
+        value: '',
+        params: { duration: 500, delay: 0 }
+      }"
+      [@fadeOutLeave]="{
+        value: '',
+        params: { duration: 500, delay: 0 }
+      }"
+    >
+      <img class="checkSurrenderBg" src="./assets/box.png" />
+      <div class="surrenderTitle">Are you sure you want to surrender?</div>
+      <div class="surrenderBtns">
+        <div class="finishButtonGo" (click)="checkSurrender = false">
+          <img class="finishButton" [src]="'./assets/cancel.png'" />
+          <div class="finishButtonText surrenderText">Cancel</div>
+        </div>
+        <div class="finishButtonGo" (click)="surrender()">
+          <img class="finishButton" [src]="'./assets/continue.png'" />
+          <div class="finishButtonText surrenderText">Surrender</div>
+        </div>
       </div>
     </div>
   </div>
-</div>
   <div class="DevItemsList">
     <div
       class="DevItem"
@@ -438,10 +459,7 @@
         }"
       >
         <div class="victoryEndImageContainer">
-          <img
-            [src]="'./assets/victory.png'"
-            class="victoryEndImage"
-          />
+          <img [src]="'./assets/victory.png'" class="victoryEndImage" />
         </div>
         <div class="rewardsContainer">
           <div class="linesTop"></div>
@@ -1741,9 +1759,13 @@
         class="deck deckTopImage"
       ></div>
     </div>
-    <div class="topMiddle" *ngIf="redrawHide" [ngClass]="{
+    <div
+      class="topMiddle"
+      *ngIf="redrawHide"
+      [ngClass]="{
       easyMode: easyMode,
-    }">
+    }"
+    >
       <div
         class="bottomCard topCard enemyTopCard"
         *ngFor="let card of enemyHand; index as i"
@@ -2657,44 +2679,48 @@
       </div>
       <div *ngIf="!easyMode">
         <div
-        class="deck deckCard"
-        [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
-        }"
-      ></div>
-      <div
-        class="deck deck1"
-        [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
-        }"
-      ></div>
-      <div
-        class="deck deck2"
-        [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
-        }"
-      ></div>
-      <div
-        class="deck deck3"
-        [ngStyle]="{
-          'background-image': 'url(./assets/' + gameThemePath + '/cardBack.png)'
-        }"
-        *ngIf="!canSeeTopCard"
-      ></div>
-      <div
-        [@flipInYonEnter]="{ value: '', params: { delay: 600 } }"
-        [@fadeDownLeave]
-        [ngStyle]="{
-          'background-image':
-            'url(./assets/' +
-            gameThemePath +
-            '/cards/' +
-            playerDeck[0].image +
-            ')'
-        }"
-        *ngIf="canSeeTopCard && topRedrawCard === playerDeck[0].id"
-        class="deck deckTopImage"
-      ></div>
+          class="deck deckCard"
+          [ngStyle]="{
+            'background-image':
+              'url(./assets/' + gameThemePath + '/cardBack.png)'
+          }"
+        ></div>
+        <div
+          class="deck deck1"
+          [ngStyle]="{
+            'background-image':
+              'url(./assets/' + gameThemePath + '/cardBack.png)'
+          }"
+        ></div>
+        <div
+          class="deck deck2"
+          [ngStyle]="{
+            'background-image':
+              'url(./assets/' + gameThemePath + '/cardBack.png)'
+          }"
+        ></div>
+        <div
+          class="deck deck3"
+          [ngStyle]="{
+            'background-image':
+              'url(./assets/' + gameThemePath + '/cardBack.png)'
+          }"
+          *ngIf="!canSeeTopCard"
+        ></div>
+        <div
+          [@flipInYonEnter]="{ value: '', params: { delay: 600 } }"
+          [@fadeDownLeave]
+          [ngStyle]="{
+            'background-image':
+              'url(./assets/' +
+              gameThemePath +
+              '/cards/' +
+              playerDeck[0].image +
+              ')'
+          }"
+          *ngIf="canSeeTopCard && topRedrawCard === playerDeck[0].id"
+          class="deck deckTopImage"
+        ></div>
       </div>
     </div>
   </div>

@@ -34,20 +34,20 @@
   0% {
     scale: 0;
     -webkit-box-shadow: 0 0 0.3em 1em rgba(255, 255, 255, 0.7);
-            box-shadow: 0 0 0.3em 1em rgba(255, 255, 255, 0.7);
+    box-shadow: 0 0 0.3em 1em rgba(255, 255, 255, 0.7);
     background-color: rgba(255, 255, 255, 0.7);
   }
 
   70% {
     -webkit-box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
-            box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
+    box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
     background-color: rgba(38, 132, 219, 0);
   }
 
   100% {
     scale: 1;
     -webkit-box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
-            box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
+    box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
     background-color: rgba(38, 132, 219, 0);
   }
 }
@@ -56,20 +56,20 @@
   0% {
     scale: 0;
     -webkit-box-shadow: 0 0 0.3em 1em rgba(255, 255, 255, 0.7);
-            box-shadow: 0 0 0.3em 1em rgba(255, 255, 255, 0.7);
+    box-shadow: 0 0 0.3em 1em rgba(255, 255, 255, 0.7);
     background-color: rgba(255, 255, 255, 0.7);
   }
 
   70% {
     -webkit-box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
-            box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
+    box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
     background-color: rgba(38, 132, 219, 0);
   }
 
   100% {
     scale: 1;
     -webkit-box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
-            box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
+    box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
     background-color: rgba(38, 132, 219, 0);
   }
 }
@@ -77,176 +77,176 @@
 @-webkit-keyframes boxShadowRed {
   0% {
     -webkit-box-shadow: 0 0 10px 1px rgba(255, 0, 0, 0.7);
-            box-shadow: 0 0 10px 1px rgba(255, 0, 0, 0.7);
+    box-shadow: 0 0 10px 1px rgba(255, 0, 0, 0.7);
   }
 
   90% {
     -webkit-box-shadow: 0 0 10px 30px rgba(255, 0, 0, 0);
-            box-shadow: 0 0 10px 30px rgba(255, 0, 0, 0);
+    box-shadow: 0 0 10px 30px rgba(255, 0, 0, 0);
   }
 
   100% {
     -webkit-box-shadow: 0 0 10px 30px rgba(255, 0, 0, 0);
-            box-shadow: 0 0 10px 30px rgba(255, 0, 0, 0);
+    box-shadow: 0 0 10px 30px rgba(255, 0, 0, 0);
   }
 }
 
 @keyframes boxShadowRed {
   0% {
     -webkit-box-shadow: 0 0 10px 1px rgba(255, 0, 0, 0.7);
-            box-shadow: 0 0 10px 1px rgba(255, 0, 0, 0.7);
+    box-shadow: 0 0 10px 1px rgba(255, 0, 0, 0.7);
   }
 
   90% {
     -webkit-box-shadow: 0 0 10px 30px rgba(255, 0, 0, 0);
-            box-shadow: 0 0 10px 30px rgba(255, 0, 0, 0);
+    box-shadow: 0 0 10px 30px rgba(255, 0, 0, 0);
   }
 
   100% {
     -webkit-box-shadow: 0 0 10px 30px rgba(255, 0, 0, 0);
-            box-shadow: 0 0 10px 30px rgba(255, 0, 0, 0);
+    box-shadow: 0 0 10px 30px rgba(255, 0, 0, 0);
   }
 }
 
 @-webkit-keyframes shake {
   26% {
     -webkit-transform: translateX(-2%);
-            transform: translateX(-2%);
+    transform: translateX(-2%);
   }
 
   28% {
     -webkit-transform: translateX(2%);
-            transform: translateX(2%);
+    transform: translateX(2%);
   }
 
   29% {
     -webkit-transform: translateX(-3%);
-            transform: translateX(-3%);
+    transform: translateX(-3%);
   }
 
   30% {
     -webkit-transform: translateX(1%);
-            transform: translateX(1%);
+    transform: translateX(1%);
   }
 
   31% {
     -webkit-transform: translateX(0);
-            transform: translateX(0);
+    transform: translateX(0);
   }
 }
 
 @keyframes shake {
   26% {
     -webkit-transform: translateX(-2%);
-            transform: translateX(-2%);
+    transform: translateX(-2%);
   }
 
   28% {
     -webkit-transform: translateX(2%);
-            transform: translateX(2%);
+    transform: translateX(2%);
   }
 
   29% {
     -webkit-transform: translateX(-3%);
-            transform: translateX(-3%);
+    transform: translateX(-3%);
   }
 
   30% {
     -webkit-transform: translateX(1%);
-            transform: translateX(1%);
+    transform: translateX(1%);
   }
 
   31% {
     -webkit-transform: translateX(0);
-            transform: translateX(0);
+    transform: translateX(0);
   }
 }
 
 @-webkit-keyframes shakeReverse {
   26% {
     -webkit-transform: translateX(2%);
-            transform: translateX(2%);
+    transform: translateX(2%);
   }
 
   28% {
     -webkit-transform: translateX(-2%);
-            transform: translateX(-2%);
+    transform: translateX(-2%);
   }
 
   29% {
     -webkit-transform: translateX(3%);
-            transform: translateX(3%);
+    transform: translateX(3%);
   }
 
   30% {
     -webkit-transform: translateX(-1%);
-            transform: translateX(-1%);
+    transform: translateX(-1%);
   }
 
   31% {
     -webkit-transform: translateX(0);
-            transform: translateX(0);
+    transform: translateX(0);
   }
 }
 
 @keyframes shakeReverse {
   26% {
     -webkit-transform: translateX(2%);
-            transform: translateX(2%);
+    transform: translateX(2%);
   }
 
   28% {
     -webkit-transform: translateX(-2%);
-            transform: translateX(-2%);
+    transform: translateX(-2%);
   }
 
   29% {
     -webkit-transform: translateX(3%);
-            transform: translateX(3%);
+    transform: translateX(3%);
   }
 
   30% {
     -webkit-transform: translateX(-1%);
-            transform: translateX(-1%);
+    transform: translateX(-1%);
   }
 
   31% {
     -webkit-transform: translateX(0);
-            transform: translateX(0);
+    transform: translateX(0);
   }
 }
 
 @-webkit-keyframes boxShadow {
   0% {
     -webkit-box-shadow: 0 0 10px 1px rgba(38, 132, 219, 0.8);
-            box-shadow: 0 0 10px 1px rgba(38, 132, 219, 0.8);
+    box-shadow: 0 0 10px 1px rgba(38, 132, 219, 0.8);
   }
 
   70% {
     -webkit-box-shadow: 0 0 10px 50px rgba(38, 132, 219, 0);
-            box-shadow: 0 0 10px 50px rgba(38, 132, 219, 0);
+    box-shadow: 0 0 10px 50px rgba(38, 132, 219, 0);
   }
 
   100% {
     -webkit-box-shadow: 0 0 10px 50px rgba(38, 132, 219, 0);
-            box-shadow: 0 0 10px 50px rgba(38, 132, 219, 0);
+    box-shadow: 0 0 10px 50px rgba(38, 132, 219, 0);
   }
 }
 
 @keyframes boxShadow {
   0% {
     -webkit-box-shadow: 0 0 10px 1px rgba(38, 132, 219, 0.8);
-            box-shadow: 0 0 10px 1px rgba(38, 132, 219, 0.8);
+    box-shadow: 0 0 10px 1px rgba(38, 132, 219, 0.8);
   }
 
   70% {
     -webkit-box-shadow: 0 0 10px 50px rgba(38, 132, 219, 0);
-            box-shadow: 0 0 10px 50px rgba(38, 132, 219, 0);
+    box-shadow: 0 0 10px 50px rgba(38, 132, 219, 0);
   }
 
   100% {
     -webkit-box-shadow: 0 0 10px 50px rgba(38, 132, 219, 0);
-            box-shadow: 0 0 10px 50px rgba(38, 132, 219, 0);
+    box-shadow: 0 0 10px 50px rgba(38, 132, 219, 0);
   }
 }
 
@@ -281,23 +281,23 @@
 @-webkit-keyframes chopReverse {
   0% {
     -webkit-transform: translate(130%, -20%) rotate(15deg);
-            transform: translate(130%, -20%) rotate(15deg);
+    transform: translate(130%, -20%) rotate(15deg);
   }
 
   60% {
     -webkit-transform: translate(70%, -20%) rotate(15deg);
-            transform: translate(70%, -20%) rotate(15deg);
+    transform: translate(70%, -20%) rotate(15deg);
   }
 
   80% {
     -webkit-transform: translate(-5%, 6%) rotate(-120deg);
-            transform: translate(-5%, 6%) rotate(-120deg);
+    transform: translate(-5%, 6%) rotate(-120deg);
     opacity: 0.8;
   }
 
   100% {
     -webkit-transform: translate(-5%, 6%) rotate(-120deg);
-            transform: translate(-5%, 6%) rotate(-120deg);
+    transform: translate(-5%, 6%) rotate(-120deg);
     opacity: 0;
   }
 }
@@ -305,23 +305,23 @@
 @keyframes chopReverse {
   0% {
     -webkit-transform: translate(130%, -20%) rotate(15deg);
-            transform: translate(130%, -20%) rotate(15deg);
+    transform: translate(130%, -20%) rotate(15deg);
   }
 
   60% {
     -webkit-transform: translate(70%, -20%) rotate(15deg);
-            transform: translate(70%, -20%) rotate(15deg);
+    transform: translate(70%, -20%) rotate(15deg);
   }
 
   80% {
     -webkit-transform: translate(-5%, 6%) rotate(-120deg);
-            transform: translate(-5%, 6%) rotate(-120deg);
+    transform: translate(-5%, 6%) rotate(-120deg);
     opacity: 0.8;
   }
 
   100% {
     -webkit-transform: translate(-5%, 6%) rotate(-120deg);
-            transform: translate(-5%, 6%) rotate(-120deg);
+    transform: translate(-5%, 6%) rotate(-120deg);
     opacity: 0;
   }
 }
@@ -329,23 +329,23 @@
 @-webkit-keyframes chop {
   0% {
     -webkit-transform: translate(-130%, -20%) rotate(-15deg);
-            transform: translate(-130%, -20%) rotate(-15deg);
+    transform: translate(-130%, -20%) rotate(-15deg);
   }
 
   60% {
     -webkit-transform: translate(-70%, -20%) rotate(-15deg);
-            transform: translate(-70%, -20%) rotate(-15deg);
+    transform: translate(-70%, -20%) rotate(-15deg);
   }
 
   80% {
     -webkit-transform: translate(5%, 6%) rotate(120deg);
-            transform: translate(5%, 6%) rotate(120deg);
+    transform: translate(5%, 6%) rotate(120deg);
     opacity: 0.8;
   }
 
   100% {
     -webkit-transform: translate(5%, 6%) rotate(120deg);
-            transform: translate(5%, 6%) rotate(120deg);
+    transform: translate(5%, 6%) rotate(120deg);
     opacity: 0;
   }
 }
@@ -353,23 +353,23 @@
 @keyframes chop {
   0% {
     -webkit-transform: translate(-130%, -20%) rotate(-15deg);
-            transform: translate(-130%, -20%) rotate(-15deg);
+    transform: translate(-130%, -20%) rotate(-15deg);
   }
 
   60% {
     -webkit-transform: translate(-70%, -20%) rotate(-15deg);
-            transform: translate(-70%, -20%) rotate(-15deg);
+    transform: translate(-70%, -20%) rotate(-15deg);
   }
 
   80% {
     -webkit-transform: translate(5%, 6%) rotate(120deg);
-            transform: translate(5%, 6%) rotate(120deg);
+    transform: translate(5%, 6%) rotate(120deg);
     opacity: 0.8;
   }
 
   100% {
     -webkit-transform: translate(5%, 6%) rotate(120deg);
-            transform: translate(5%, 6%) rotate(120deg);
+    transform: translate(5%, 6%) rotate(120deg);
     opacity: 0;
   }
 }
@@ -485,13 +485,13 @@
 @-webkit-keyframes zoomInAnim {
   0% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 0;
   }
 
   100% {
     -webkit-transform: scale(0.22);
-            transform: scale(0.22);
+    transform: scale(0.22);
     opacity: 1;
   }
 }
@@ -499,13 +499,13 @@
 @keyframes zoomInAnim {
   0% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 0;
   }
 
   100% {
     -webkit-transform: scale(0.22);
-            transform: scale(0.22);
+    transform: scale(0.22);
     opacity: 1;
   }
 }
@@ -513,94 +513,94 @@
 @-webkit-keyframes shakeCardAnim {
   0% {
     -webkit-transform: translate(1px, 1px) rotate(0deg);
-            transform: translate(1px, 1px) rotate(0deg);
+    transform: translate(1px, 1px) rotate(0deg);
   }
   10% {
     -webkit-transform: translate(-1px, -2px) rotate(-1deg);
-            transform: translate(-1px, -2px) rotate(-1deg);
+    transform: translate(-1px, -2px) rotate(-1deg);
   }
   20% {
     -webkit-transform: translate(-3px, 0px) rotate(1deg);
-            transform: translate(-3px, 0px) rotate(1deg);
+    transform: translate(-3px, 0px) rotate(1deg);
   }
   30% {
     -webkit-transform: translate(3px, 2px) rotate(0deg);
-            transform: translate(3px, 2px) rotate(0deg);
+    transform: translate(3px, 2px) rotate(0deg);
   }
   40% {
     -webkit-transform: translate(1px, -1px) rotate(1deg);
-            transform: translate(1px, -1px) rotate(1deg);
+    transform: translate(1px, -1px) rotate(1deg);
   }
   50% {
     -webkit-transform: translate(-1px, 2px) rotate(-1deg);
-            transform: translate(-1px, 2px) rotate(-1deg);
+    transform: translate(-1px, 2px) rotate(-1deg);
   }
   60% {
     -webkit-transform: translate(-3px, 1px) rotate(0deg);
-            transform: translate(-3px, 1px) rotate(0deg);
+    transform: translate(-3px, 1px) rotate(0deg);
   }
   70% {
     -webkit-transform: translate(3px, 1px) rotate(-1deg);
-            transform: translate(3px, 1px) rotate(-1deg);
+    transform: translate(3px, 1px) rotate(-1deg);
   }
   80% {
     -webkit-transform: translate(-1px, -1px) rotate(1deg);
-            transform: translate(-1px, -1px) rotate(1deg);
+    transform: translate(-1px, -1px) rotate(1deg);
   }
   90% {
     -webkit-transform: translate(1px, 2px) rotate(0deg);
-            transform: translate(1px, 2px) rotate(0deg);
+    transform: translate(1px, 2px) rotate(0deg);
   }
   100% {
     -webkit-transform: translate(1px, -2px) rotate(-1deg);
-            transform: translate(1px, -2px) rotate(-1deg);
+    transform: translate(1px, -2px) rotate(-1deg);
   }
 }
 
 @keyframes shakeCardAnim {
   0% {
     -webkit-transform: translate(1px, 1px) rotate(0deg);
-            transform: translate(1px, 1px) rotate(0deg);
+    transform: translate(1px, 1px) rotate(0deg);
   }
   10% {
     -webkit-transform: translate(-1px, -2px) rotate(-1deg);
-            transform: translate(-1px, -2px) rotate(-1deg);
+    transform: translate(-1px, -2px) rotate(-1deg);
   }
   20% {
     -webkit-transform: translate(-3px, 0px) rotate(1deg);
-            transform: translate(-3px, 0px) rotate(1deg);
+    transform: translate(-3px, 0px) rotate(1deg);
   }
   30% {
     -webkit-transform: translate(3px, 2px) rotate(0deg);
-            transform: translate(3px, 2px) rotate(0deg);
+    transform: translate(3px, 2px) rotate(0deg);
   }
   40% {
     -webkit-transform: translate(1px, -1px) rotate(1deg);
-            transform: translate(1px, -1px) rotate(1deg);
+    transform: translate(1px, -1px) rotate(1deg);
   }
   50% {
     -webkit-transform: translate(-1px, 2px) rotate(-1deg);
-            transform: translate(-1px, 2px) rotate(-1deg);
+    transform: translate(-1px, 2px) rotate(-1deg);
   }
   60% {
     -webkit-transform: translate(-3px, 1px) rotate(0deg);
-            transform: translate(-3px, 1px) rotate(0deg);
+    transform: translate(-3px, 1px) rotate(0deg);
   }
   70% {
     -webkit-transform: translate(3px, 1px) rotate(-1deg);
-            transform: translate(3px, 1px) rotate(-1deg);
+    transform: translate(3px, 1px) rotate(-1deg);
   }
   80% {
     -webkit-transform: translate(-1px, -1px) rotate(1deg);
-            transform: translate(-1px, -1px) rotate(1deg);
+    transform: translate(-1px, -1px) rotate(1deg);
   }
   90% {
     -webkit-transform: translate(1px, 2px) rotate(0deg);
-            transform: translate(1px, 2px) rotate(0deg);
+    transform: translate(1px, 2px) rotate(0deg);
   }
   100% {
     -webkit-transform: translate(1px, -2px) rotate(-1deg);
-            transform: translate(1px, -2px) rotate(-1deg);
+    transform: translate(1px, -2px) rotate(-1deg);
   }
 }
 
@@ -680,21 +680,21 @@
 @keyframes flickerAway {
   0% {
     -webkit-filter: brightness(1);
-            filter: brightness(1);
+    filter: brightness(1);
     scale: 1;
     opacity: 1;
   }
 
   70% {
     -webkit-filter: brightness(0.3);
-            filter: brightness(0.3);
+    filter: brightness(0.3);
     scale: 1;
     opacity: 1;
   }
 
   100% {
     -webkit-filter: brightness(0);
-            filter: brightness(0);
+    filter: brightness(0);
     scale: 0;
     opacity: 0;
   }
@@ -703,24 +703,24 @@
 @-webkit-keyframes disableBurst {
   0% {
     -webkit-filter: drop-shadow(0 0 0.3em yellow);
-            filter: drop-shadow(0 0 0.3em yellow);
+    filter: drop-shadow(0 0 0.3em yellow);
   }
 
   100% {
     -webkit-filter: drop-shadow(0 0 5em rgba(38, 132, 219, 0)) brightness(60%);
-            filter: drop-shadow(0 0 5em rgba(38, 132, 219, 0)) brightness(60%);
+    filter: drop-shadow(0 0 5em rgba(38, 132, 219, 0)) brightness(60%);
   }
 }
 
 @keyframes disableBurst {
   0% {
     -webkit-filter: drop-shadow(0 0 0.3em yellow);
-            filter: drop-shadow(0 0 0.3em yellow);
+    filter: drop-shadow(0 0 0.3em yellow);
   }
 
   100% {
     -webkit-filter: drop-shadow(0 0 5em rgba(38, 132, 219, 0)) brightness(60%);
-            filter: drop-shadow(0 0 5em rgba(38, 132, 219, 0)) brightness(60%);
+    filter: drop-shadow(0 0 5em rgba(38, 132, 219, 0)) brightness(60%);
   }
 }
 
@@ -729,14 +729,14 @@
     opacity: 0;
     width: 0%;
     -webkit-transform: translate(0, -100%);
-            transform: translate(0, -100%);
+    transform: translate(0, -100%);
   }
 
   100% {
     opacity: 1;
     width: 12%;
     -webkit-transform: translate(0, 0%);
-            transform: translate(0, 0%);
+    transform: translate(0, 0%);
   }
 }
 
@@ -745,14 +745,14 @@
     opacity: 0;
     width: 0%;
     -webkit-transform: translate(0, -100%);
-            transform: translate(0, -100%);
+    transform: translate(0, -100%);
   }
 
   100% {
     opacity: 1;
     width: 12%;
     -webkit-transform: translate(0, 0%);
-            transform: translate(0, 0%);
+    transform: translate(0, 0%);
   }
 }
 
@@ -761,14 +761,14 @@
     opacity: 0;
     width: 0%;
     -webkit-transform: translate(0, 100%);
-            transform: translate(0, 100%);
+    transform: translate(0, 100%);
   }
 
   100% {
     opacity: 1;
     width: 12%;
     -webkit-transform: translate(0, 0%);
-            transform: translate(0, 0%);
+    transform: translate(0, 0%);
   }
 }
 
@@ -777,147 +777,145 @@
     opacity: 0;
     width: 0%;
     -webkit-transform: translate(0, 100%);
-            transform: translate(0, 100%);
+    transform: translate(0, 100%);
   }
 
   100% {
     opacity: 1;
     width: 12%;
     -webkit-transform: translate(0, 0%);
-            transform: translate(0, 0%);
+    transform: translate(0, 0%);
   }
 }
 
 @-webkit-keyframes rotateBorder {
-100% {
--webkit-transform: rotate(1turn);
-        transform: rotate(1turn);
-}
+  100% {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
 }
 
 @keyframes rotateBorder {
-100% {
--webkit-transform: rotate(1turn);
-        transform: rotate(1turn);
+  100% {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
 }
-}
-
 
 @-webkit-keyframes hoverEffect {
-0% {
--webkit-transform: translate(0%, 0%);
-        transform: translate(0%, 0%);
-}
+  0% {
+    -webkit-transform: translate(0%, 0%);
+    transform: translate(0%, 0%);
+  }
 
-50% {
--webkit-transform: translate(0%, -6%);
-        transform: translate(0%, -6%);
-}
+  50% {
+    -webkit-transform: translate(0%, -6%);
+    transform: translate(0%, -6%);
+  }
 
-100% {
--webkit-transform: translate(0%, 0%);
-        transform: translate(0%, 0%);
-}
+  100% {
+    -webkit-transform: translate(0%, 0%);
+    transform: translate(0%, 0%);
+  }
 }
 
 @keyframes hoverEffect {
-0% {
--webkit-transform: translate(0%, 0%);
-        transform: translate(0%, 0%);
-}
+  0% {
+    -webkit-transform: translate(0%, 0%);
+    transform: translate(0%, 0%);
+  }
 
-50% {
--webkit-transform: translate(0%, -6%);
-        transform: translate(0%, -6%);
-}
+  50% {
+    -webkit-transform: translate(0%, -6%);
+    transform: translate(0%, -6%);
+  }
 
-100% {
--webkit-transform: translate(0%, 0%);
-        transform: translate(0%, 0%);
+  100% {
+    -webkit-transform: translate(0%, 0%);
+    transform: translate(0%, 0%);
+  }
 }
-}
-
 
 @-webkit-keyframes spin {
-from {
--webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-}
-to {
--webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-}
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes spin {
-from {
--webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-}
-to {
--webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-}
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes hoveringReward {
   0% {
     -webkit-transform: scale(1, 1) translate(0px, 0px);
-            transform: scale(1, 1) translate(0px, 0px);
+    transform: scale(1, 1) translate(0px, 0px);
   }
   50% {
     -webkit-transform: scale(1.1, 1.1) translate(-3px, -3px);
-            transform: scale(1.1, 1.1) translate(-3px, -3px);
+    transform: scale(1.1, 1.1) translate(-3px, -3px);
   }
   100% {
     -webkit-transform: scale(1, 1) translate(0px, 0px);
-            transform: scale(1, 1) translate(0px, 0px);
+    transform: scale(1, 1) translate(0px, 0px);
   }
 }
 
 @-webkit-keyframes levelUpCard {
   0% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
   }
 
   25%,
   30% {
     -webkit-transform: scale(0.8);
-            transform: scale(0.8);
+    transform: scale(0.8);
   }
 
   50% {
     -webkit-transform: scale(1.1);
-            transform: scale(1.1);
+    transform: scale(1.1);
   }
 
   100% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
   }
 }
 
 @keyframes levelUpCard {
   0% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
   }
 
   25%,
   30% {
     -webkit-transform: scale(0.8);
-            transform: scale(0.8);
+    transform: scale(0.8);
   }
 
   50% {
     -webkit-transform: scale(1.1);
-            transform: scale(1.1);
+    transform: scale(1.1);
   }
 
   100% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
   }
 }
 
@@ -925,30 +923,30 @@ to {
   0% {
     opacity: 0;
     -webkit-transform: scale(0);
-            transform: scale(0);
+    transform: scale(0);
   }
 
   25% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 1;
   }
 
   50% {
     -webkit-transform: scale(0.9);
-            transform: scale(0.9);
+    transform: scale(0.9);
   }
 
   85% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 1;
   }
 
   100% {
     opacity: 0;
     -webkit-transform: scale(0);
-            transform: scale(0);
+    transform: scale(0);
   }
 }
 
@@ -956,30 +954,30 @@ to {
   0% {
     opacity: 0;
     -webkit-transform: scale(0);
-            transform: scale(0);
+    transform: scale(0);
   }
 
   25% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 1;
   }
 
   50% {
     -webkit-transform: scale(0.9);
-            transform: scale(0.9);
+    transform: scale(0.9);
   }
 
   85% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 1;
   }
 
   100% {
     opacity: 0;
     -webkit-transform: scale(0);
-            transform: scale(0);
+    transform: scale(0);
   }
 }
 
@@ -987,20 +985,20 @@ to {
   0% {
     scale: 0;
     -webkit-box-shadow: 0 0 0.3em 1em rgba(255, 255, 255, 0.7);
-            box-shadow: 0 0 0.3em 1em rgba(255, 255, 255, 0.7);
+    box-shadow: 0 0 0.3em 1em rgba(255, 255, 255, 0.7);
     background-color: rgba(255, 255, 255, 0.7);
   }
 
   70% {
     -webkit-box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
-            box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
+    box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
     background-color: rgba(38, 132, 219, 0);
   }
 
   100% {
     scale: 3;
     -webkit-box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
-            box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
+    box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
     background-color: rgba(38, 132, 219, 0);
   }
 }
@@ -1009,20 +1007,20 @@ to {
   0% {
     scale: 0;
     -webkit-box-shadow: 0 0 0.3em 1em rgba(255, 255, 255, 0.7);
-            box-shadow: 0 0 0.3em 1em rgba(255, 255, 255, 0.7);
+    box-shadow: 0 0 0.3em 1em rgba(255, 255, 255, 0.7);
     background-color: rgba(255, 255, 255, 0.7);
   }
 
   70% {
     -webkit-box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
-            box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
+    box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
     background-color: rgba(38, 132, 219, 0);
   }
 
   100% {
     scale: 3;
     -webkit-box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
-            box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
+    box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
     background-color: rgba(38, 132, 219, 0);
   }
 }
@@ -1092,57 +1090,45 @@ to {
 @-webkit-keyframes swim {
   0% {
     -webkit-transform: translate(0, 0);
-            transform: translate(0, 0); /* Starting position */
+    transform: translate(0, 0); /* Starting position */
   }
   20% {
-    -webkit-transform: translate(
-      calc(-50vw - 100px),
-      0
-    );
-            transform: translate(
+    -webkit-transform: translate(calc(-50vw - 100px), 0);
+    transform: translate(
       calc(-50vw - 100px),
       0
     ); /* Animate to center of screen */
   }
   25% {
-    -webkit-transform: translate(
-      calc(-50vw - 100px),
-      0
-    );
-            transform: translate(
+    -webkit-transform: translate(calc(-50vw - 100px), 0);
+    transform: translate(
       calc(-50vw - 100px),
       0
     ); /* Stay at the center for 1 second */
   }
   35% {
-    -webkit-transform: translate(
-      calc(-50vw - 100px),
-      -20vh
-    );
-            transform: translate(
+    -webkit-transform: translate(calc(-50vw - 100px), -20vh);
+    transform: translate(
       calc(-50vw - 100px),
       -20vh
     ); /* Animate up for 2 seconds */
   }
   50% {
     -webkit-transform: translate(-25vw, 15vh);
-            transform: translate(-25vw, 15vh); /* Animate bottom right for 3 seconds */
+    transform: translate(-25vw, 15vh); /* Animate bottom right for 3 seconds */
   }
   60% {
     -webkit-transform: translate(-25vw, -20vh);
-            transform: translate(-25vw, -20vh); /* Animate up at right of the screen */
+    transform: translate(-25vw, -20vh); /* Animate up at right of the screen */
   }
   67% {
     -webkit-transform: translate(-25vw, -20vh);
-            transform: translate(-25vw, -20vh);
+    transform: translate(-25vw, -20vh);
   }
 
   100% {
-    -webkit-transform: translate(
-      calc(-100vw - 300px),
-      0
-    );
-            transform: translate(
+    -webkit-transform: translate(calc(-100vw - 300px), 0);
+    transform: translate(
       calc(-100vw - 300px),
       0
     ); /* Animate past left past the screen */
@@ -1152,57 +1138,45 @@ to {
 @keyframes swim {
   0% {
     -webkit-transform: translate(0, 0);
-            transform: translate(0, 0); /* Starting position */
+    transform: translate(0, 0); /* Starting position */
   }
   20% {
-    -webkit-transform: translate(
-      calc(-50vw - 100px),
-      0
-    );
-            transform: translate(
+    -webkit-transform: translate(calc(-50vw - 100px), 0);
+    transform: translate(
       calc(-50vw - 100px),
       0
     ); /* Animate to center of screen */
   }
   25% {
-    -webkit-transform: translate(
-      calc(-50vw - 100px),
-      0
-    );
-            transform: translate(
+    -webkit-transform: translate(calc(-50vw - 100px), 0);
+    transform: translate(
       calc(-50vw - 100px),
       0
     ); /* Stay at the center for 1 second */
   }
   35% {
-    -webkit-transform: translate(
-      calc(-50vw - 100px),
-      -20vh
-    );
-            transform: translate(
+    -webkit-transform: translate(calc(-50vw - 100px), -20vh);
+    transform: translate(
       calc(-50vw - 100px),
       -20vh
     ); /* Animate up for 2 seconds */
   }
   50% {
     -webkit-transform: translate(-25vw, 15vh);
-            transform: translate(-25vw, 15vh); /* Animate bottom right for 3 seconds */
+    transform: translate(-25vw, 15vh); /* Animate bottom right for 3 seconds */
   }
   60% {
     -webkit-transform: translate(-25vw, -20vh);
-            transform: translate(-25vw, -20vh); /* Animate up at right of the screen */
+    transform: translate(-25vw, -20vh); /* Animate up at right of the screen */
   }
   67% {
     -webkit-transform: translate(-25vw, -20vh);
-            transform: translate(-25vw, -20vh);
+    transform: translate(-25vw, -20vh);
   }
 
   100% {
-    -webkit-transform: translate(
-      calc(-100vw - 300px),
-      0
-    );
-            transform: translate(
+    -webkit-transform: translate(calc(-100vw - 300px), 0);
+    transform: translate(
       calc(-100vw - 300px),
       0
     ); /* Animate past left past the screen */
@@ -1212,24 +1186,24 @@ to {
 @-webkit-keyframes bubble {
   0% {
     -webkit-transform: translateY(0%);
-            transform: translateY(0%);
+    transform: translateY(0%);
     opacity: 0.2;
   }
   100% {
     -webkit-transform: translateY(-120vh);
-            transform: translateY(-120vh);
+    transform: translateY(-120vh);
   }
 }
 
 @keyframes bubble {
   0% {
     -webkit-transform: translateY(0%);
-            transform: translateY(0%);
+    transform: translateY(0%);
     opacity: 0.2;
   }
   100% {
     -webkit-transform: translateY(-120vh);
-            transform: translateY(-120vh);
+    transform: translateY(-120vh);
   }
 }
 
@@ -1254,12 +1228,12 @@ to {
 @keyframes falling {
   0% {
     -webkit-transform: translate3d(300, 0, 0) rotate(0deg);
-            transform: translate3d(300, 0, 0) rotate(0deg);
+    transform: translate3d(300, 0, 0) rotate(0deg);
   }
 
   100% {
     -webkit-transform: translate3d(-350px, 700px, 0) rotate(90deg);
-            transform: translate3d(-350px, 700px, 0) rotate(90deg);
+    transform: translate3d(-350px, 700px, 0) rotate(90deg);
     opacity: 0;
   }
 }
@@ -1267,12 +1241,12 @@ to {
 @-webkit-keyframes falling3 {
   0% {
     -webkit-transform: translate3d(0, 0, 0) rotate(-20deg);
-            transform: translate3d(0, 0, 0) rotate(-20deg);
+    transform: translate3d(0, 0, 0) rotate(-20deg);
   }
 
   100% {
     -webkit-transform: translate3d(-230px, 640px, 0) rotate(-70deg);
-            transform: translate3d(-230px, 640px, 0) rotate(-70deg);
+    transform: translate3d(-230px, 640px, 0) rotate(-70deg);
     opacity: 0;
   }
 }
@@ -1280,12 +1254,12 @@ to {
 @keyframes falling3 {
   0% {
     -webkit-transform: translate3d(0, 0, 0) rotate(-20deg);
-            transform: translate3d(0, 0, 0) rotate(-20deg);
+    transform: translate3d(0, 0, 0) rotate(-20deg);
   }
 
   100% {
     -webkit-transform: translate3d(-230px, 640px, 0) rotate(-70deg);
-            transform: translate3d(-230px, 640px, 0) rotate(-70deg);
+    transform: translate3d(-230px, 640px, 0) rotate(-70deg);
     opacity: 0;
   }
 }
@@ -1293,12 +1267,12 @@ to {
 @-webkit-keyframes falling2 {
   0% {
     -webkit-transform: translate3d(0, 0, 0) rotate(90deg);
-            transform: translate3d(0, 0, 0) rotate(90deg);
+    transform: translate3d(0, 0, 0) rotate(90deg);
   }
 
   100% {
     -webkit-transform: translate3d(-400px, 680px, 0) rotate(0deg);
-            transform: translate3d(-400px, 680px, 0) rotate(0deg);
+    transform: translate3d(-400px, 680px, 0) rotate(0deg);
     opacity: 0;
   }
 }
@@ -1306,12 +1280,12 @@ to {
 @keyframes falling2 {
   0% {
     -webkit-transform: translate3d(0, 0, 0) rotate(90deg);
-            transform: translate3d(0, 0, 0) rotate(90deg);
+    transform: translate3d(0, 0, 0) rotate(90deg);
   }
 
   100% {
     -webkit-transform: translate3d(-400px, 680px, 0) rotate(0deg);
-            transform: translate3d(-400px, 680px, 0) rotate(0deg);
+    transform: translate3d(-400px, 680px, 0) rotate(0deg);
     opacity: 0;
   }
 }
@@ -1365,7 +1339,7 @@ to {
       0px 0px 30px 10px rgba(230, 230, 200, 1),
       0px 0px 10px 5px rgba(255, 255, 255, 1)
     );
-            box-shadow: (
+    box-shadow: (
       0px 0px 30px 10px rgba(230, 230, 200, 1),
       0px 0px 10px 5px rgba(255, 255, 255, 1)
     );
@@ -1375,7 +1349,7 @@ to {
       0px 0px 30px 10px rgba(230, 230, 200, 1),
       0px 0px 10px 5px rgba(255, 255, 255, 1)
     );
-            box-shadow: (
+    box-shadow: (
       0px 0px 30px 10px rgba(230, 230, 200, 1),
       0px 0px 10px 5px rgba(255, 255, 255, 1)
     );
@@ -1385,7 +1359,7 @@ to {
       0px 0px 40px 10px rgba(230, 230, 200, 1),
       0px 0px 20px 10px rgba(255, 255, 255, 1)
     );
-            box-shadow: (
+    box-shadow: (
       0px 0px 40px 10px rgba(230, 230, 200, 1),
       0px 0px 20px 10px rgba(255, 255, 255, 1)
     );
@@ -1398,7 +1372,7 @@ to {
       0px 0px 30px 10px rgba(230, 230, 200, 1),
       0px 0px 10px 5px rgba(255, 255, 255, 1)
     );
-            box-shadow: (
+    box-shadow: (
       0px 0px 30px 10px rgba(230, 230, 200, 1),
       0px 0px 10px 5px rgba(255, 255, 255, 1)
     );
@@ -1408,7 +1382,7 @@ to {
       0px 0px 30px 10px rgba(230, 230, 200, 1),
       0px 0px 10px 5px rgba(255, 255, 255, 1)
     );
-            box-shadow: (
+    box-shadow: (
       0px 0px 30px 10px rgba(230, 230, 200, 1),
       0px 0px 10px 5px rgba(255, 255, 255, 1)
     );
@@ -1418,7 +1392,7 @@ to {
       0px 0px 40px 10px rgba(230, 230, 200, 1),
       0px 0px 20px 10px rgba(255, 255, 255, 1)
     );
-            box-shadow: (
+    box-shadow: (
       0px 0px 40px 10px rgba(230, 230, 200, 1),
       0px 0px 20px 10px rgba(255, 255, 255, 1)
     );
@@ -1464,9 +1438,9 @@ to {
   width: 100vw;
   position: relative;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .DevItemsList {
@@ -1474,11 +1448,11 @@ to {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
   -webkit-column-gap: 1em;
-     -moz-column-gap: 1em;
-          column-gap: 1em;
+  -moz-column-gap: 1em;
+  column-gap: 1em;
   width: 97%;
   padding: 1em;
   position: absolute;
@@ -1492,11 +1466,11 @@ to {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   background-color: rgba(0, 0, 0, 0.3);
   padding: 0.5em;
   border-radius: 10em;
@@ -1507,14 +1481,14 @@ to {
 
 .DevItem:hover {
   -webkit-transform: scale(1.1);
-      -ms-transform: scale(1.1);
-          transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 .DevItem:active {
   -webkit-transform: scale(0.9);
-      -ms-transform: scale(0.9);
-          transform: scale(0.9);
+  -ms-transform: scale(0.9);
+  transform: scale(0.9);
 }
 
 .activeDevItem {
@@ -1534,11 +1508,11 @@ to {
   width: 5em;
   height: 5em;
   -webkit-animation: clickAnimationKey;
-          animation: clickAnimationKey;
+  animation: clickAnimationKey;
   -webkit-animation-duration: 1000ms;
-          animation-duration: 1000ms;
+  animation-duration: 1000ms;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
   border-radius: 10em;
   background-color: rgba(255, 255, 255, 0);
   z-index: 999;
@@ -1560,7 +1534,7 @@ to {
   height: 100%;
   background: rgba(0, 0, 0, 0.2);
   -webkit-backdrop-filter: blur(5px);
-          backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
   position: absolute;
   z-index: -1;
 }
@@ -1574,11 +1548,11 @@ to {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .middle {
@@ -1592,7 +1566,7 @@ to {
 
 * {
   -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
+  backface-visibility: hidden;
   -webkit-font-smoothing: subpixel-antialiased;
 }
 
@@ -1616,7 +1590,7 @@ to {
   z-index: 5;
 }
 
-.surrenderMenuBackdrop{
+.surrenderMenuBackdrop {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1633,12 +1607,12 @@ to {
   color: whitesmoke !important;
 }
 
-.surrenderTitle{
+.surrenderTitle {
   position: absolute;
   top: 0;
   text-align: center;
   color: white;
-  font-family: 'headerFont';
+  font-family: "headerFont";
   background: -webkit-linear-gradient(#f5f2e6, #a8a075);
   -webkit-text-stroke: 2px #000;
   background-clip: text;
@@ -1663,15 +1637,15 @@ to {
   align-items: center;
   column-gap: 3em;
   bottom: 2em;
-  z-index:6;
+  z-index: 6;
 }
 
 // Surrender icon top right
 
 .optionsButtonBox {
   position: absolute;
-  top:1em;
-  right:1em;
+  top: 1em;
+  right: 1em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1687,17 +1661,17 @@ to {
 }
 
 .hoverButton {
-  transition: all .3s;
-  filter: drop-shadow(0 0 .3em rgba(0, 0, 0, 0.5));
+  transition: all 0.3s;
+  filter: drop-shadow(0 0 0.3em rgba(0, 0, 0, 0.5));
 }
 
 .hoverButton:hover {
-transform: scale(1.1);
-filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 0.3em rgba(255, 230, 0, 0.5));
 }
 
 .hoverButton:active {
-  transform: scale(.9);
+  transform: scale(0.9);
 }
 
 .middleLeft,
@@ -1706,11 +1680,11 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   width: 50%;
   top: -35%;
   scale: 0.9;
@@ -1731,28 +1705,28 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
 
   -webkit-user-select: none;
 
-     -moz-user-select: none;
+  -moz-user-select: none;
 
-      -ms-user-select: none;
+  -ms-user-select: none;
 
-          user-select: none;
+  user-select: none;
   color: whitesmoke;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   text-align: center;
   -webkit-animation: boxShadow 1500ms infinite;
-          animation: boxShadow 1500ms infinite;
+  animation: boxShadow 1500ms infinite;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
   -webkit-animation-delay: 1s;
-          animation-delay: 1s;
+  animation-delay: 1s;
   -webkit-user-drag: none;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
@@ -1761,27 +1735,27 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
 
 .attackButton:hover {
   -webkit-filter: brightness(130%);
-          filter: brightness(130%);
+  filter: brightness(130%);
   scale: 1.1;
 }
 
 .attackButton:active {
   scale: 0.9;
   -webkit-filter: brightness(60%);
-          filter: brightness(60%);
+  filter: brightness(60%);
 }
 
 .disabledButton {
   -webkit-box-shadow: none !important;
-          box-shadow: none !important;
+  box-shadow: none !important;
   pointer-events: none !important;
   -webkit-filter: brightness(60%);
-          filter: brightness(60%);
+  filter: brightness(60%);
 }
 
 .disabledButtonAnimation {
   -webkit-animation: none !important;
-          animation: none !important;
+  animation: none !important;
 }
 
 .deck {
@@ -1792,7 +1766,7 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   background-size: contain;
   -webkit-user-drag: none;
   -webkit-filter: drop-shadow(0 0 2px black);
-          filter: drop-shadow(0 0 2px black);
+  filter: drop-shadow(0 0 2px black);
 }
 
 .bottomRight,
@@ -1887,16 +1861,16 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: end;
+  -ms-flex-align: end;
+  align-items: end;
   height: 100%;
   width: 70%;
   -webkit-column-gap: 1.1%;
-     -moz-column-gap: 1.1%;
-          column-gap: 1.1%;
+  -moz-column-gap: 1.1%;
+  column-gap: 1.1%;
 }
 
 .easyMode {
@@ -1904,7 +1878,7 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
 }
 
 .easyMode {
-  scale: .8;
+  scale: 0.8;
   bottom: 15%;
 }
 
@@ -1919,11 +1893,11 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
 
   -webkit-user-select: none;
 
-     -moz-user-select: none;
+  -moz-user-select: none;
 
-      -ms-user-select: none;
+  -ms-user-select: none;
 
-          user-select: none;
+  user-select: none;
   -webkit-user-drag: none;
 }
 
@@ -1947,11 +1921,11 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   top: -16% !important;
   left: 3%;
   position: relative;
@@ -1960,8 +1934,9 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
 
 .activeCard {
   bottom: -15% !important;
-  -webkit-transform: perspective(900px) translateY(0) rotateX(25deg) translateZ(0);
-          transform: perspective(900px) translateY(0) rotateX(25deg) translateZ(0);
+  -webkit-transform: perspective(900px) translateY(0) rotateX(25deg)
+    translateZ(0);
+  transform: perspective(900px) translateY(0) rotateX(25deg) translateZ(0);
 }
 
 .chooseCardAbilityActiveCard {
@@ -1983,24 +1958,30 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   transition: all 0.3s;
   position: relative;
   background-image: linear-gradient(rgba(0, 0, 0, 0.295), rgba(0, 0, 0, 0.295));
-  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.295), rgba(0, 0, 0, 0.295));
+  background-image: -o-linear-gradient(
+    rgba(0, 0, 0, 0.295),
+    rgba(0, 0, 0, 0.295)
+  );
   z-index: 1;
 }
 
 .cardBorder::before {
   position: absolute;
-  content: '';
+  content: "";
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   background-image: linear-gradient(rgba(0, 0, 0, 0.295), rgba(0, 0, 0, 0.295));
-  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.295), rgba(0, 0, 0, 0.295));
+  background-image: -o-linear-gradient(
+    rgba(0, 0, 0, 0.295),
+    rgba(0, 0, 0, 0.295)
+  );
   z-index: -1;
   border-radius: 5%;
-  -webkit-transition: all .3s;
-  -o-transition: all .3s;
-  transition: all .3s;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
   opacity: 0;
 }
 
@@ -2008,122 +1989,98 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   opacity: 1;
   background-image: rgba(234, 255, 47, 1);
   -webkit-box-shadow: 0 0 3px 3px rgba(234, 255, 47, 0.5);
-          box-shadow: 0 0 3px 3px rgba(234, 255, 47, 0.5);
-          background-image: -o-linear-gradient(
-            #ced117,
-            #959700,
-          );
-          background-image: linear-gradient(
-            #cbce1b,
-            #959700,
-          );
+  box-shadow: 0 0 3px 3px rgba(234, 255, 47, 0.5);
+  background-image: -o-linear-gradient(#ced117, #959700);
+  background-image: linear-gradient(#cbce1b, #959700);
 }
 
 .hoveringAbilityCard::before {
   opacity: 1 !important;
   background-color: rgba(44, 219, 38, 1) !important;
   -webkit-box-shadow: 0 0 10px 1px rgba(44, 219, 38, 0.5) !important;
-          box-shadow: 0 0 10px 1px rgba(44, 219, 38, 0.5) !important;
-          background-image: -o-linear-gradient(
-            326deg,
-            #ff2400,
-            #e81d1d,
-            #e8b71d,
-            #e3e81d,
-            #1de840,
-            #1ddde8,
-            #2b1de8,
-            #dd00f3,
-            #dd00f3
-          ) !important;
-          background-image: linear-gradient(
-            124deg,
-            #ff2400,
-            #e81d1d,
-            #e8b71d,
-            #e3e81d,
-            #1de840,
-            #1ddde8,
-            #2b1de8,
-            #dd00f3,
-            #dd00f3
-          ) !important;
+  box-shadow: 0 0 10px 1px rgba(44, 219, 38, 0.5) !important;
+  background-image: -o-linear-gradient(
+    326deg,
+    #ff2400,
+    #e81d1d,
+    #e8b71d,
+    #e3e81d,
+    #1de840,
+    #1ddde8,
+    #2b1de8,
+    #dd00f3,
+    #dd00f3
+  ) !important;
+  background-image: linear-gradient(
+    124deg,
+    #ff2400,
+    #e81d1d,
+    #e8b71d,
+    #e3e81d,
+    #1de840,
+    #1ddde8,
+    #2b1de8,
+    #dd00f3,
+    #dd00f3
+  ) !important;
 }
 
 .validCardBorder::before {
   opacity: 1;
   background-color: #2cdb26;
   -webkit-box-shadow: 0 0 10px 1px rgba(44, 219, 38, 0.5);
-          box-shadow: 0 0 10px 1px rgba(44, 219, 38, 0.5);
-          background-image: -o-linear-gradient(
-            #2cdb26,
-            #047e00,
-          );
-          background-image: linear-gradient(
-            #2cdb26,
-            #047e00,
-          );
+  box-shadow: 0 0 10px 1px rgba(44, 219, 38, 0.5);
+  background-image: -o-linear-gradient(#2cdb26, #047e00);
+  background-image: linear-gradient(#2cdb26, #047e00);
 }
 
-.errorCardBorder::before{
+.errorCardBorder::before {
   opacity: 1;
   background-color: rgba(235, 0, 0, 1);
   -webkit-box-shadow: 0 0 3px 3px rgba(235, 0, 0, 0.5);
-          box-shadow: 0 0 3px 3px rgba(235, 0, 0, 0.5);
-          background-image: -o-linear-gradient(
-            #ff2400,
-            #9c0000,
-          );
-          background-image: linear-gradient(
-            #ff2400,
-            #9c0000,
-          );
+  box-shadow: 0 0 3px 3px rgba(235, 0, 0, 0.5);
+  background-image: -o-linear-gradient(#ff2400, #9c0000);
+  background-image: linear-gradient(#ff2400, #9c0000);
 }
 
 .abilityActiveCardBorder::before {
   opacity: 1;
   background-color: rgba(44, 219, 38, 1);
   -webkit-box-shadow: 0 0 10px 1px rgba(44, 219, 38, 0.5);
-          box-shadow: 0 0 10px 1px rgba(44, 219, 38, 0.5);
-          background-image: -o-linear-gradient(
-            326deg,
-            #ff2400,
-            #e81d1d,
-            #e8b71d,
-            #e3e81d,
-            #1de840,
-            #1ddde8,
-            #2b1de8,
-            #dd00f3,
-            #dd00f3
-          ) ;
-          background-image: linear-gradient(
-            124deg,
-            #ff2400,
-            #e81d1d,
-            #e8b71d,
-            #e3e81d,
-            #1de840,
-            #1ddde8,
-            #2b1de8,
-            #dd00f3,
-            #dd00f3
-          );
+  box-shadow: 0 0 10px 1px rgba(44, 219, 38, 0.5);
+  background-image: -o-linear-gradient(
+    326deg,
+    #ff2400,
+    #e81d1d,
+    #e8b71d,
+    #e3e81d,
+    #1de840,
+    #1ddde8,
+    #2b1de8,
+    #dd00f3,
+    #dd00f3
+  );
+  background-image: linear-gradient(
+    124deg,
+    #ff2400,
+    #e81d1d,
+    #e8b71d,
+    #e3e81d,
+    #1de840,
+    #1ddde8,
+    #2b1de8,
+    #dd00f3,
+    #dd00f3
+  );
 }
 
 .chooseCardAbilityBorder::before {
   opacity: 1;
   background-color: rgba(234, 255, 47, 1);
   -webkit-box-shadow: 0 0 3px 3px rgba(234, 255, 47, 0.5);
-          box-shadow: 0 0 3px 3px rgba(234, 255, 47, 0.5);
-          background-image: -o-linear-gradient(
-            #e8b71d,
-            #e3e81d,
-          );
-          background-image: linear-gradient(
-            #e8b71d,
-            #e3e81d,
-          );
+  box-shadow: 0 0 3px 3px rgba(234, 255, 47, 0.5);
+  background-image: -o-linear-gradient(#e8b71d, #e3e81d);
+  background-image: linear-gradient(#e8b71d, #e3e81d);
 }
 
 .floatingText {
@@ -2131,12 +2088,12 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   top: 33%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   width: 50%;
   z-index: 999;
 }
@@ -2144,8 +2101,8 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
 .floatingTextAbility {
   top: 15%;
   -webkit-transform: translate(-50%, 0%);
-      -ms-transform: translate(-50%, 0%);
-          transform: translate(-50%, 0%);
+  -ms-transform: translate(-50%, 0%);
+  transform: translate(-50%, 0%);
   font-size: 70%;
 }
 
@@ -2160,19 +2117,19 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   width: 100%;
   font-size: 3em;
   color: rgba(235, 0, 0, 1);
   text-shadow: 0 0 0.3em black;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   text-align: center;
   z-index: 999;
 }
@@ -2182,8 +2139,8 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   width: 100%;
   height: 100%;
   z-index: 99;
@@ -2195,9 +2152,9 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
 
 .fade {
   -webkit-user-select: none !important;
-     -moz-user-select: none !important;
-      -ms-user-select: none !important;
-          user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
   pointer-events: none !important;
 
   opacity: 0;
@@ -2223,7 +2180,7 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   height: calc(100% + 1px);
   width: calc(100% + 1px);
   -webkit-backdrop-filter: blur(30px);
-          backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
   top: -1px;
   left: -1px;
 }
@@ -2233,15 +2190,15 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
   height: 70%;
   -webkit-column-gap: 1%;
-     -moz-column-gap: 1%;
-          column-gap: 1%;
+  -moz-column-gap: 1%;
+  column-gap: 1%;
   margin-left: 10%;
   margin-right: 10%;
 }
@@ -2252,14 +2209,14 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   text-align: center;
   row-gap: 10%;
   height: 30%;
@@ -2271,11 +2228,11 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   bottom: 8%;
 }
 
@@ -2285,11 +2242,11 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   height: 70%;
   top: -5%;
   right: -5%;
@@ -2301,15 +2258,15 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   row-gap: 2%;
   width: 100%;
   height: 100%;
@@ -2323,44 +2280,44 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
 
   -webkit-user-select: none;
 
-     -moz-user-select: none;
+  -moz-user-select: none;
 
-      -ms-user-select: none;
+  -ms-user-select: none;
 
-          user-select: none;
+  user-select: none;
   -webkit-user-drag: none;
   color: whitesmoke;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   text-align: center;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
   -webkit-animation: boxShadow 1500ms infinite;
-          animation: boxShadow 1500ms infinite;
+  animation: boxShadow 1500ms infinite;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
   -webkit-animation-delay: 1s;
-          animation-delay: 1s;
+  animation-delay: 1s;
 }
 
 .goButton:hover {
   -webkit-filter: brightness(130%);
-          filter: brightness(130%);
+  filter: brightness(130%);
   scale: 1.1;
 }
 
 .goButton:active {
   scale: 0.9;
   -webkit-filter: brightness(60%);
-          filter: brightness(60%);
+  filter: brightness(60%);
 }
 
 .redrawText {
@@ -2392,11 +2349,11 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
 
   -webkit-user-select: none;
 
-     -moz-user-select: none;
+  -moz-user-select: none;
 
-      -ms-user-select: none;
+  -ms-user-select: none;
 
-          user-select: none;
+  user-select: none;
   -webkit-user-drag: none;
 }
 
@@ -2424,11 +2381,11 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
 
   -webkit-user-select: none;
 
-     -moz-user-select: none;
+  -moz-user-select: none;
 
-      -ms-user-select: none;
+  -ms-user-select: none;
 
-          user-select: none;
+  user-select: none;
   -webkit-user-drag: none;
 }
 
@@ -2452,9 +2409,9 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
 
   pointer-events: none;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   -webkit-user-drag: none;
 }
 
@@ -2478,11 +2435,11 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
@@ -2494,8 +2451,8 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   display: flex;
   width: 100%;
   -webkit-box-pack: flex-end;
-      -ms-flex-pack: flex-end;
-          justify-content: flex-end;
+  -ms-flex-pack: flex-end;
+  justify-content: flex-end;
 }
 
 .middleCardBorder {
@@ -2508,32 +2465,30 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
 
 .middleCardBorder:hover {
   -webkit-box-shadow: 0 0 10px 3px rgba(255, 0, 0, 0.5);
-          box-shadow: 0 0 10px 3px rgba(255, 0, 0, 0.5);
+  box-shadow: 0 0 10px 3px rgba(255, 0, 0, 0.5);
 }
 
 .errorEnemyBorder {
   -webkit-animation: boxShadowRed 1500ms infinite;
-          animation: boxShadowRed 1500ms infinite;
+  animation: boxShadowRed 1500ms infinite;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
-
-
 
 .topMiddle {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: start;
+  -ms-flex-align: start;
+  align-items: start;
   width: 70%;
   -webkit-column-gap: 1.1%;
-     -moz-column-gap: 1.1%;
-          column-gap: 1.1%;
+  -moz-column-gap: 1.1%;
+  column-gap: 1.1%;
   top: -50%;
   position: relative;
 }
@@ -2565,11 +2520,11 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
 
   -webkit-user-select: none !important;
 
-     -moz-user-select: none !important;
+  -moz-user-select: none !important;
 
-      -ms-user-select: none !important;
+  -ms-user-select: none !important;
 
-          user-select: none !important;
+  user-select: none !important;
   pointer-events: none !important;
 }
 
@@ -2584,14 +2539,14 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
 }
 
 .bottomAttackContainer {
@@ -2601,14 +2556,14 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
 }
 
 .attackCardBox {
@@ -2621,14 +2576,14 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   width: 100%;
 }
 
@@ -2638,11 +2593,11 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
 
   -webkit-user-select: none;
 
-     -moz-user-select: none;
+  -moz-user-select: none;
 
-      -ms-user-select: none;
+  -ms-user-select: none;
 
-          user-select: none;
+  user-select: none;
   -webkit-user-drag: none;
 }
 
@@ -2699,19 +2654,19 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   position: absolute;
   width: 100%;
   -webkit-transform: scale(0.22);
-      -ms-transform: scale(0.22);
-          transform: scale(0.22);
+  -ms-transform: scale(0.22);
+  transform: scale(0.22);
   bottom: -24%;
   margin-left: 0.3%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   z-index: 12;
 }
 
@@ -2719,18 +2674,18 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   position: absolute;
   width: 100%;
   -webkit-transform: scale(0.2);
-      -ms-transform: scale(0.2);
-          transform: scale(0.2);
+  -ms-transform: scale(0.2);
+  transform: scale(0.2);
   bottom: -23%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   z-index: 12;
 }
 
@@ -2743,11 +2698,11 @@ filter: drop-shadow(0 0 .3em rgba(255, 230, 0, 0.5));
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   z-index: 12;
 }
 
@@ -2825,11 +2780,11 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   width: 100%;
   height: 100%;
   z-index: 12;
@@ -2876,7 +2831,6 @@ text {
   animation: rainbow 5s ease infinite;
 }
 
-
 .specialAttacKBoxPlayer {
   position: absolute;
   top: 0;
@@ -2886,11 +2840,11 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .specialAttacKBoxPlayerCard {
@@ -2906,11 +2860,11 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .specialAttacKBoxPlayerCard2 {
@@ -2923,11 +2877,11 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   text-align: center;
   top: -5%;
 }
@@ -2946,13 +2900,13 @@ text {
 .clawsCombat {
   top: 10%;
   -webkit-animation: chop;
-          animation: chop;
+  animation: chop;
   -webkit-animation-duration: 1.3s;
-          animation-duration: 1.3s;
+  animation-duration: 1.3s;
   -webkit-animation-delay: 2s;
-          animation-delay: 2s;
+  animation-delay: 2s;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
   z-index: 20 !important;
   width: 130% !important;
 }
@@ -2960,83 +2914,83 @@ text {
 .clawsLeftSide {
   top: 10%;
   -webkit-animation: chopReverse;
-          animation: chopReverse;
+  animation: chopReverse;
   -webkit-animation-duration: 1.3s;
-          animation-duration: 1.3s;
+  animation-duration: 1.3s;
   -webkit-animation-delay: 2s;
-          animation-delay: 2s;
+  animation-delay: 2s;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
   z-index: 20 !important;
   width: 130% !important;
   -webkit-transform: scale(-1, -1);
   -ms-transform: scale(-1, -1);
-      transform: scale(-1, -1);
+  transform: scale(-1, -1);
 }
 
 .attackCardBorder {
   -webkit-animation: shakeReverse 2.7s linear;
-          animation: shakeReverse 2.7s linear;
+  animation: shakeReverse 2.7s linear;
   -webkit-animation-delay: 2.4s;
-          animation-delay: 2.4s;
+  animation-delay: 2.4s;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
 
 .attackCardBorderLeft {
   -webkit-animation: shake 2.7s linear;
-          animation: shake 2.7s linear;
+  animation: shake 2.7s linear;
   -webkit-animation-delay: 2.4s;
-          animation-delay: 2.4s;
+  animation-delay: 2.4s;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
 
 .swordGlow {
   -webkit-filter: drop-shadow(0 0 1em white);
-          filter: drop-shadow(0 0 1em white);
+  filter: drop-shadow(0 0 1em white);
 }
 
 .claws {
   top: 10%;
   -webkit-animation: zoomOutClaws;
-          animation: zoomOutClaws;
+  animation: zoomOutClaws;
   -webkit-animation-duration: 2s;
-          animation-duration: 2s;
+  animation-duration: 2s;
   -webkit-animation-delay: 3s;
-          animation-delay: 3s;
+  animation-delay: 3s;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
 
 .healing {
   -webkit-animation: zoomOutHeal;
-          animation: zoomOutHeal;
+  animation: zoomOutHeal;
   -webkit-animation-duration: 2s;
-          animation-duration: 2s;
+  animation-duration: 2s;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
   z-index: 99 !important;
 }
 
 .leaching {
   -webkit-animation: zoomOutLeach;
-          animation: zoomOutLeach;
+  animation: zoomOutLeach;
   -webkit-animation-duration: 2s;
-          animation-duration: 2s;
+  animation-duration: 2s;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
-          z-index: 99 !important;
+  animation-fill-mode: forwards;
+  z-index: 99 !important;
 }
 
 .protecting {
   -webkit-animation: zoomOutLeach;
-          animation: zoomOutLeach;
+  animation: zoomOutLeach;
   -webkit-animation-duration: 2s;
-          animation-duration: 2s;
+  animation-duration: 2s;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
-          z-index: 99 !important;
+  animation-fill-mode: forwards;
+  z-index: 99 !important;
 }
 
 .greenHealthText {
@@ -3056,7 +3010,7 @@ text {
 
 .deadEnemy {
   -webkit-filter: brightness(0.3);
-          filter: brightness(0.3);
+  filter: brightness(0.3);
   -webkit-transition: all 1s;
   -o-transition: all 1s;
   transition: all 1s;
@@ -3064,47 +3018,47 @@ text {
 
 .zoomOutDarken {
   -webkit-animation: darkenZoomOut;
-          animation: darkenZoomOut;
+  animation: darkenZoomOut;
   -webkit-animation-duration: 1s;
-          animation-duration: 1s;
+  animation-duration: 1s;
   -webkit-animation-delay: 1s;
-          animation-delay: 1s;
+  animation-delay: 1s;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
 
 .zoomIn {
   -webkit-animation: zoomIn;
-          animation: zoomIn;
+  animation: zoomIn;
   -webkit-animation-duration: 1s;
-          animation-duration: 1s;
+  animation-duration: 1s;
   -webkit-animation-delay: 1s;
-          animation-delay: 1s;
+  animation-delay: 1s;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
 
 .zoomInLevel {
   -webkit-animation: zoomInAnim forwards;
-          animation: zoomInAnim forwards;
+  animation: zoomInAnim forwards;
   -webkit-animation-duration: 0.5s;
-          animation-duration: 0.5s;
+  animation-duration: 0.5s;
   -webkit-animation-delay: 1s;
-          animation-delay: 1s;
+  animation-delay: 1s;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
   opacity: 0;
 }
 
 .shakeCardEffect {
   -webkit-animation: shakeCardAnim forwards 1s;
-          animation: shakeCardAnim forwards 1s;
+  animation: shakeCardAnim forwards 1s;
   -webkit-animation-duration: 1s;
-          animation-duration: 1s;
+  animation-duration: 1s;
   -webkit-animation-delay: 1s;
-          animation-delay: 1s;
+  animation-delay: 1s;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
 
 .wildCardSuites {
@@ -3118,11 +3072,11 @@ text {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
+  -ms-flex-align: end;
+  align-items: flex-end;
   border-radius: 3%;
   overflow: hidden;
 }
@@ -3158,36 +3112,36 @@ text {
 
 .leavingFieldCard {
   -webkit-animation: flickerAway 2500ms;
-          animation: flickerAway 2500ms;
+  animation: flickerAway 2500ms;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
   -webkit-animation-delay: 1s;
-          animation-delay: 1s;
+  animation-delay: 1s;
   -webkit-user-select: none !important;
-     -moz-user-select: none !important;
-      -ms-user-select: none !important;
-          user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
   pointer-events: none !important;
 }
 
 @-webkit-keyframes flickerAway {
   0% {
     -webkit-filter: brightness(1);
-            filter: brightness(1);
+    filter: brightness(1);
     scale: 1;
     opacity: 1;
   }
 
   70% {
     -webkit-filter: brightness(0.3);
-            filter: brightness(0.3);
+    filter: brightness(0.3);
     scale: 1;
     opacity: 1;
   }
 
   100% {
     -webkit-filter: brightness(0);
-            filter: brightness(0);
+    filter: brightness(0);
     scale: 0;
     opacity: 0;
   }
@@ -3195,9 +3149,9 @@ text {
 
 .enemySlideInCard {
   -webkit-animation: playerFadeUp 800ms;
-          animation: playerFadeUp 800ms;
+  animation: playerFadeUp 800ms;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
 
 .cardHideAfterDeath {
@@ -3205,9 +3159,9 @@ text {
   -webkit-animation: hideCardDeath 500ms;
   animation: hideCardDeath 500ms;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
   -webkit-animation-delay: 5000ms;
-          animation-delay: 5000ms;
+  animation-delay: 5000ms;
 }
 
 .deathSkullBox {
@@ -3218,11 +3172,11 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   opacity: 0;
 }
 
@@ -3232,23 +3186,23 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-user-drag: none;
 }
 
 .deathSkullAnimation {
   -webkit-animation: animateSkull;
-          animation: animateSkull;
+  animation: animateSkull;
   -webkit-animation-duration: 1s;
-          animation-duration: 1s;
+  animation-duration: 1s;
   -webkit-animation-delay: 3400ms;
-          animation-delay: 3400ms;
+  animation-delay: 3400ms;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
 
 .centerNumberValue {
@@ -3264,11 +3218,11 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   font-weight: bold;
   opacity: 0;
 
@@ -3364,8 +3318,8 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
 }
 
 .wildIcon {
@@ -3395,8 +3349,8 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
 }
 
 .specialWildRangeIconText {
@@ -3450,8 +3404,8 @@ text {
 
 .easyModeButtonBox {
   left: -70%;
-    top: 25%;
-    scale: 1.2;
+  top: 25%;
+  scale: 1.2;
 }
 
 .attackTxt {
@@ -3461,30 +3415,30 @@ text {
 
 .disabledAbilityBtn {
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   pointer-events: none;
   -webkit-animation: disableBurst 1500ms;
-          animation: disableBurst 1500ms;
+  animation: disableBurst 1500ms;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
 
 .disabledCards {
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   pointer-events: none;
   -webkit-filter: brightness(0.7);
-          filter: brightness(0.7);
+  filter: brightness(0.7);
 }
 
 .enabledCards {
   pointer-events: all;
   -webkit-filter: brightness(1);
-          filter: brightness(1);
+  filter: brightness(1);
 }
 
 .veryBottomMiddle {
@@ -3493,19 +3447,18 @@ text {
   transition: all 0.3s;
 }
 
-
 .turnIsOverCard {
   -webkit-transition: all 1s;
   -o-transition: all 1s;
   transition: all 1s;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   pointer-events: none;
   rotate: 10deg;
   -webkit-filter: brightness(0.7);
-          filter: brightness(0.7);
+  filter: brightness(0.7);
 }
 
 .darkenCard {
@@ -3513,24 +3466,23 @@ text {
   -o-transition: all 1s;
   transition: all 1s;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   pointer-events: none;
   -webkit-filter: brightness(0.7);
-          filter: brightness(0.7);
+  filter: brightness(0.7);
 }
-
 
 .enemyTopCard {
   width: 0%;
   -webkit-transform: translate(0, 0%);
-      -ms-transform: translate(0, 0%);
-          transform: translate(0, 0%);
+  -ms-transform: translate(0, 0%);
+  transform: translate(0, 0%);
   -webkit-animation: cardFadeDown 800ms;
-          animation: cardFadeDown 800ms;
+  animation: cardFadeDown 800ms;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
@@ -3541,12 +3493,12 @@ text {
 .playerBottomCard {
   width: 0%;
   -webkit-transform: translate(0, 0%);
-      -ms-transform: translate(0, 0%);
-          transform: translate(0, 0%);
+  -ms-transform: translate(0, 0%);
+  transform: translate(0, 0%);
   -webkit-animation: cardFadeUp 800ms;
-          animation: cardFadeUp 800ms;
+  animation: cardFadeUp 800ms;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
 
 .bottomAbilityStuff {
@@ -3554,12 +3506,12 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 
 .paperBg {
@@ -3579,11 +3531,11 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   background-position: center;
   background-position: 50% 12%;
   font-size: 100%;
@@ -3597,11 +3549,11 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   background-position: bottom;
   background-position: 50% 90%;
   font-size: 100%;
@@ -3617,8 +3569,8 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .abilityBorder1 {
@@ -3673,11 +3625,11 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .levelText {
@@ -3685,7 +3637,7 @@ text {
   border-radius: 5%;
   background-position: center;
   -webkit-box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.377);
-          box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.377);
+  box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.377);
   padding: 3%;
 }
 
@@ -3750,14 +3702,14 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-column-gap: 2%;
-     -moz-column-gap: 2%;
-          column-gap: 2%;
+  -moz-column-gap: 2%;
+  column-gap: 2%;
   padding-right: 4%;
 }
 
@@ -3779,26 +3731,29 @@ text {
   font-weight: bold;
 }
 
-
- .veryBottomMiddle, .playerBottomCard {
+.veryBottomMiddle,
+.playerBottomCard {
   container-type: inline-size;
 }
 
 @container (max-width: 1200px) {
-  .veryBottomMiddle,.playerBottomCard {
-   font-size: .8em;
- }
+  .veryBottomMiddle,
+  .playerBottomCard {
+    font-size: 0.8em;
+  }
 }
 
 @container (max-width: 1000px) {
-  .veryBottomMiddle,.playerBottomCard {
-   font-size: .6em;
- }
+  .veryBottomMiddle,
+  .playerBottomCard {
+    font-size: 0.6em;
+  }
 }
 
 @container (max-width: 800px) {
-  .veryBottomMiddle,.playerBottomCard{
-    font-size: .4em;
+  .veryBottomMiddle,
+  .playerBottomCard {
+    font-size: 0.4em;
   }
 }
 
@@ -3836,7 +3791,7 @@ text {
   overflow: hidden;
   aspect-ratio: 1 / 1;
   -webkit-clip-path: border-box;
-          clip-path: border-box;
+  clip-path: border-box;
 }
 
 .cardPlayerBorderRotating::before {
@@ -3853,7 +3808,8 @@ text {
   background-position: 0 0, 100% 0, 100% 100%, 0 100%;
   background-image: -webkit-gradient(
       linear,
-      left top, left bottom,
+      left top,
+      left bottom,
       from(#d53e3300),
       color-stop(10%, #d53e33),
       color-stop(90%, #d53e33),
@@ -3881,7 +3837,7 @@ text {
     linear-gradient(#d53e3300 0%, #d53e33 10%, #d53e33 90%, #d53e3300 100%),
     linear-gradient(#d53e3300, #d53e3300);
   -webkit-animation: rotateBorder 3s linear infinite;
-          animation: rotateBorder 3s linear infinite;
+  animation: rotateBorder 3s linear infinite;
 }
 
 .cardPlayerBorderRotatingPlayer::before {
@@ -3898,7 +3854,8 @@ text {
   background-position: 0 0, 100% 0, 100% 100%, 0 100%;
   background-image: -webkit-gradient(
       linear,
-      left top, left bottom,
+      left top,
+      left bottom,
       from(#d53e3300),
       color-stop(10%, #2684db),
       color-stop(90%, #2684db),
@@ -3921,59 +3878,59 @@ text {
       #2684db 10%,
       #2684db 90%,
       #d53e3300 100%
-      ),
-      linear-gradient(#d53e3300, #d53e3300),
-      linear-gradient(#d53e3300 0%, #2684db 10%, #2684db 90%, #d53e3300 100%),
-      linear-gradient(#d53e3300, #d53e3300);
-      -webkit-animation: rotateBorder 3s linear infinite;
-      animation: rotateBorder 3s linear infinite;
-    }
-    
-    .middleCardHover {
-      padding-left: 10%;
-      -webkit-animation: hoverEffect 5s infinite ease-in-out;
-      animation: hoverEffect 5s infinite ease-in-out;
-      -webkit-animation-fill-mode: forwards;
-      animation-fill-mode: forwards;
-    }
+    ),
+    linear-gradient(#d53e3300, #d53e3300),
+    linear-gradient(#d53e3300 0%, #2684db 10%, #2684db 90%, #d53e3300 100%),
+    linear-gradient(#d53e3300, #d53e3300);
+  -webkit-animation: rotateBorder 3s linear infinite;
+  animation: rotateBorder 3s linear infinite;
+}
 
-    .levelUpHeroBox {
-      padding-left: 0% !important;
-    }
-    
-    .winnerLoserContainer {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 20;
-    }
-    
-    .relativeRedrawLoserWinnerBg {
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      -webkit-backdrop-filter: blur(5px);
-              backdrop-filter: blur(5px);
-      position: absolute;
-    }
-    
-    .relativeWinnerLoserContainer {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-pack: center;
-          -ms-flex-pack: center;
-              justify-content: center;
-      -webkit-box-align: center;
-          -ms-flex-align: center;
-              align-items: center;
-      text-align: center;
-    }
+.middleCardHover {
+  padding-left: 10%;
+  -webkit-animation: hoverEffect 5s infinite ease-in-out;
+  animation: hoverEffect 5s infinite ease-in-out;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+.levelUpHeroBox {
+  padding-left: 0% !important;
+}
+
+.winnerLoserContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+}
+
+.relativeRedrawLoserWinnerBg {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  position: absolute;
+}
+
+.relativeWinnerLoserContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  text-align: center;
+}
 
 .rayItem {
   position: absolute;
@@ -3993,22 +3950,22 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   z-index: 2;
   width: 50%;
   padding-left: 5%;
   padding-top: 5%;
   -webkit-transform-origin: center center;
-      -ms-transform-origin: center center;
-          transform-origin: center center;
+  -ms-transform-origin: center center;
+  transform-origin: center center;
   -webkit-animation: 2000ms hoveringReward infinite ease-in-out;
-          animation: 2000ms hoveringReward infinite ease-in-out;
+  animation: 2000ms hoveringReward infinite ease-in-out;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
@@ -4017,15 +3974,15 @@ text {
 @-webkit-keyframes hoveringReward {
   0% {
     -webkit-transform: scale(1, 1) translate(0px, 0px);
-            transform: scale(1, 1) translate(0px, 0px);
+    transform: scale(1, 1) translate(0px, 0px);
   }
   50% {
     -webkit-transform: scale(1.1, 1.1) translate(-3px, -3px);
-            transform: scale(1.1, 1.1) translate(-3px, -3px);
+    transform: scale(1.1, 1.1) translate(-3px, -3px);
   }
   100% {
     -webkit-transform: scale(1, 1) translate(0px, 0px);
-            transform: scale(1, 1) translate(0px, 0px);
+    transform: scale(1, 1) translate(0px, 0px);
   }
 }
 
@@ -4039,11 +3996,11 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   text-align: center;
   text-transform: uppercase;
   -webkit-text-stroke: 1px #000;
@@ -4060,11 +4017,11 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   text-align: center;
   text-transform: uppercase;
   -webkit-text-stroke: 1px #000;
@@ -4082,11 +4039,11 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   text-align: center;
   text-transform: uppercase;
   -webkit-text-stroke: 1px #000;
@@ -4101,11 +4058,11 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   position: absolute;
   left: -5px;
   top: -10px;
@@ -4116,11 +4073,11 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -4130,18 +4087,18 @@ text {
 
 .leveledUpCard {
   -webkit-animation: levelUpCard 2s forwards;
-          animation: levelUpCard 2s forwards;
+  animation: levelUpCard 2s forwards;
 }
 
 .pulse {
   width: 5em;
   height: 5em;
   -webkit-animation: pulseEffect infinite;
-          animation: pulseEffect infinite;
+  animation: pulseEffect infinite;
   -webkit-animation-duration: 2000ms;
-          animation-duration: 2000ms;
+  animation-duration: 2000ms;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
   border-radius: 10em;
   background-color: rgba(255, 255, 255, 0);
   pointer-events: none;
@@ -4157,13 +4114,13 @@ text {
 
 .playerPulseAnimation {
   -webkit-animation: pulseEffect infinite;
-          animation: pulseEffect infinite;
+  animation: pulseEffect infinite;
   -webkit-animation-duration: 2000ms;
-          animation-duration: 2000ms;
+  animation-duration: 2000ms;
   -webkit-animation-delay: 200ms;
-          animation-delay: 200ms;
+  animation-delay: 200ms;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
 
 .rays {
@@ -4178,13 +4135,13 @@ text {
 
   /* microsoft ie */
   -webkit-animation-name: spin;
-          animation-name: spin;
+  animation-name: spin;
   -webkit-animation-duration: 40000ms;
-          animation-duration: 40000ms; /* 40 seconds */
+  animation-duration: 40000ms; /* 40 seconds */
   -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
   -webkit-animation-timing-function: linear;
-          animation-timing-function: linear;
+  animation-timing-function: linear;
 }
 
 .victoryDefeatImage {
@@ -4193,19 +4150,19 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   width: 25%;
   -webkit-user-drag: none;
   -webkit-animation: 3s victoryDefeatFadeInOut ease-in-out;
-          animation: 3s victoryDefeatFadeInOut ease-in-out;
+  animation: 3s victoryDefeatFadeInOut ease-in-out;
   -webkit-animation-delay: 400ms;
-          animation-delay: 400ms;
+  animation-delay: 400ms;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
   opacity: 0;
 }
 
@@ -4214,19 +4171,19 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   height: 70%;
   position: relative;
   top: -15%;
   -webkit-user-drag: none;
   -webkit-animation: hoverEffect 5s infinite ease-in-out;
-          animation: hoverEffect 5s infinite ease-in-out;
+  animation: hoverEffect 5s infinite ease-in-out;
   -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
 
 .rewardsTitle {
@@ -4234,11 +4191,11 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   text-align: center;
   -webkit-text-stroke: 1px #000;
   font-size: 100%;
@@ -4247,7 +4204,8 @@ text {
   height: 1em;
   background: -webkit-gradient(
     linear,
-    left top, right top,
+    left top,
+    right top,
     from(rgba(0, 0, 0, 0)),
     color-stop(50%, rgba(255, 255, 255, 0.2)),
     to(rgba(0, 0, 0, 0))
@@ -4273,15 +4231,15 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   row-gap: 2em;
   width: 50%;
   padding-top: 1em;
@@ -4303,14 +4261,14 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-column-gap: 3em;
-     -moz-column-gap: 3em;
-          column-gap: 3em;
+  -moz-column-gap: 3em;
+  column-gap: 3em;
 }
 
 .rewardBoxesContainer {
@@ -4318,15 +4276,15 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
 }
 
 .linesTop {
@@ -4336,7 +4294,8 @@ text {
   width: 70%;
   background: -webkit-gradient(
     linear,
-    left top, right top,
+    left top,
+    right top,
     from(rgba(0, 0, 0, 0)),
     color-stop(20%, rgba(0, 0, 0, 1)),
     color-stop(80%, rgba(0, 0, 0, 0.5)),
@@ -4366,7 +4325,8 @@ text {
   width: 70%;
   background: -webkit-gradient(
     linear,
-    left top, right top,
+    left top,
+    right top,
     from(rgba(0, 0, 0, 0)),
     color-stop(20%, rgba(0, 0, 0, 1)),
     color-stop(80%, rgba(0, 0, 0, 0.5)),
@@ -4394,7 +4354,13 @@ text {
   left: -20%;
   width: 20%;
   height: 100%;
-  background: -webkit-gradient(linear, right top, left top, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0)));
+  background: -webkit-gradient(
+    linear,
+    right top,
+    left top,
+    from(rgba(0, 0, 0, 0.5)),
+    to(rgba(0, 0, 0, 0))
+  );
   background: -o-linear-gradient(right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
   background: linear-gradient(to left, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
 }
@@ -4405,7 +4371,13 @@ text {
   right: -20%;
   width: 20%;
   height: 100%;
-  background: -webkit-gradient(linear, right top, left top, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0.5)));
+  background: -webkit-gradient(
+    linear,
+    right top,
+    left top,
+    from(rgba(0, 0, 0, 0)),
+    to(rgba(0, 0, 0, 0.5))
+  );
   background: -o-linear-gradient(right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
   background: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
 }
@@ -4415,15 +4387,15 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   row-gap: 0.7em;
   width: 8em;
   border-radius: 1em;
@@ -4457,7 +4429,8 @@ text {
 .purpleReward {
   background: -webkit-gradient(
     linear,
-    left top, left bottom,
+    left top,
+    left bottom,
     from(rgba(153, 0, 255, 0.4)),
     to(rgba(153, 0, 255, 0.6))
   );
@@ -4477,7 +4450,8 @@ text {
 .blueReward {
   background: -webkit-gradient(
     linear,
-    left top, left bottom,
+    left top,
+    left bottom,
     from(rgba(0, 140, 255, 0.4)),
     to(rgba(0, 140, 255, 0.6))
   );
@@ -4497,7 +4471,8 @@ text {
 .goldReward {
   background: -webkit-gradient(
     linear,
-    left top, left bottom,
+    left top,
+    left bottom,
     from(rgba(255, 215, 0, 0.5)),
     to(rgba(255, 215, 0, 0.7))
   );
@@ -4520,11 +4495,11 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
@@ -4537,14 +4512,14 @@ text {
 
 .finishButtonGo:hover {
   -webkit-transform: scale(1.1);
-      -ms-transform: scale(1.1);
-          transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 .finishButtonGo:active {
   -webkit-transform: scale(0.9);
-      -ms-transform: scale(0.9);
-          transform: scale(0.9);
+  -ms-transform: scale(0.9);
+  transform: scale(0.9);
 }
 
 .finishButtonText {
@@ -4557,15 +4532,15 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   position: absolute;
@@ -4577,27 +4552,33 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   width: 70%;
   position: relative;
   top: -10%;
   -webkit-box-orient: vertical;
   -webkit-box-direction: reverse;
-      -ms-flex-direction: column-reverse;
-          flex-direction: column-reverse;
+  -ms-flex-direction: column-reverse;
+  flex-direction: column-reverse;
 }
 
 .heroLevelUpXp {
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(-10%, #ab4902), to(#983201));
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(-10%, #ab4902),
+    to(#983201)
+  );
   background: -o-linear-gradient(top, #ab4902 -10%, #983201);
   background: linear-gradient(180deg, #ab4902 -10%, #983201);
   border-radius: 2em;
   -webkit-box-shadow: 0 0 0.1em 0.1em #000;
-          box-shadow: 0 0 0.1em 0.1em #000;
+  box-shadow: 0 0 0.1em 0.1em #000;
   height: 2.5em;
   width: 20em;
   position: relative;
@@ -4616,7 +4597,13 @@ text {
 }
 
 .heroLevelUpFill {
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(-10%, #43fcff), to(#0662eb));
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(-10%, #43fcff),
+    to(#0662eb)
+  );
   background: -o-linear-gradient(top, #43fcff -10%, #0662eb);
   background: linear-gradient(180deg, #43fcff -10%, #0662eb);
   border-radius: 1em;
@@ -4629,7 +4616,7 @@ text {
   top: 50%;
   -webkit-transform: translate(0.2em, -50%);
   -ms-transform: translate(0.2em, -50%);
-      transform: translate(0.2em, -50%);
+  transform: translate(0.2em, -50%);
   width: 98%;
 }
 
@@ -4642,11 +4629,11 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   width: 100%;
   height: 100%;
 }
@@ -4658,11 +4645,11 @@ text {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   text-align: center;
   width: 100%;
   height: 100%;
@@ -4750,16 +4737,16 @@ text {
   opacity: 0.2;
   -webkit-animation: bubble 15s ease-in-out infinite,
     sideWays 4s ease-in-out infinite alternate;
-          animation: bubble 15s ease-in-out infinite,
+  animation: bubble 15s ease-in-out infinite,
     sideWays 4s ease-in-out infinite alternate;
 }
 
 .bubble--1 {
   left: 10%;
   -webkit-animation-delay: 0.5s;
-          animation-delay: 0.5s;
+  animation-delay: 0.5s;
   -webkit-animation-duration: 16s;
-          animation-duration: 16s;
+  animation-duration: 16s;
   opacity: 0.3;
 }
 
@@ -4768,9 +4755,9 @@ text {
   height: 15px;
   left: 40%;
   -webkit-animation-delay: 1s;
-          animation-delay: 1s;
+  animation-delay: 1s;
   -webkit-animation-duration: 10s;
-          animation-duration: 10s;
+  animation-duration: 10s;
   opacity: 0.2;
 }
 
@@ -4779,9 +4766,9 @@ text {
   height: 10px;
   left: 30%;
   -webkit-animation-delay: 5s;
-          animation-delay: 5s;
+  animation-delay: 5s;
   -webkit-animation-duration: 20s;
-          animation-duration: 20s;
+  animation-duration: 20s;
   opacity: 0.2;
 }
 
@@ -4790,9 +4777,9 @@ text {
   height: 25px;
   left: 40%;
   -webkit-animation-delay: 8s;
-          animation-delay: 8s;
+  animation-delay: 8s;
   -webkit-animation-duration: 17s;
-          animation-duration: 17s;
+  animation-duration: 17s;
   opacity: 0.3;
 }
 
@@ -4801,9 +4788,9 @@ text {
   height: 30px;
   left: 60%;
   -webkit-animation-delay: 10s;
-          animation-delay: 10s;
+  animation-delay: 10s;
   -webkit-animation-duration: 15s;
-          animation-duration: 15s;
+  animation-duration: 15s;
   opacity: 0.3;
 }
 
@@ -4812,9 +4799,9 @@ text {
   height: 10px;
   left: 80%;
   -webkit-animation-delay: 3s;
-          animation-delay: 3s;
+  animation-delay: 3s;
   -webkit-animation-duration: 30s;
-          animation-duration: 30s;
+  animation-duration: 30s;
   opacity: 0.5;
 }
 
@@ -4823,9 +4810,9 @@ text {
   height: 15px;
   left: 90%;
   -webkit-animation-delay: -7s;
-          animation-delay: -7s;
+  animation-delay: -7s;
   -webkit-animation-duration: 25s;
-          animation-duration: 25s;
+  animation-duration: 25s;
   opacity: 0.3;
 }
 
@@ -4835,9 +4822,9 @@ text {
   left: 50%;
   bottom: 30px;
   -webkit-animation-delay: -5s;
-          animation-delay: -5s;
+  animation-delay: -5s;
   -webkit-animation-duration: 19s;
-          animation-duration: 19s;
+  animation-duration: 19s;
   opacity: 0.3;
 }
 
@@ -4847,9 +4834,9 @@ text {
   left: 30%;
   bottom: 30px;
   -webkit-animation-delay: -21s;
-          animation-delay: -21s;
+  animation-delay: -21s;
   -webkit-animation-duration: 16s;
-          animation-duration: 16s;
+  animation-duration: 16s;
   opacity: 0.2;
 }
 
@@ -4859,9 +4846,9 @@ text {
   left: 60%;
   bottom: 30px;
   -webkit-animation-delay: -13.75s;
-          animation-delay: -13.75s;
+  animation-delay: -13.75s;
   -webkit-animation-duration: 20s;
-          animation-duration: 20s;
+  animation-duration: 20s;
   opacity: 0.2;
 }
 
@@ -4871,9 +4858,9 @@ text {
   left: 90%;
   bottom: 30px;
   -webkit-animation-delay: -10.5s;
-          animation-delay: -10.5s;
+  animation-delay: -10.5s;
   -webkit-animation-duration: 19s;
-          animation-duration: 19s;
+  animation-duration: 19s;
   opacity: 0.2;
 }
 
@@ -4896,28 +4883,34 @@ text {
   display: inline-block;
   width: 200px;
   height: 150px;
-  background: -webkit-gradient(linear, left top, right bottom, from(#309900), to(#005600));
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right bottom,
+    from(#309900),
+    to(#005600)
+  );
   background: -o-linear-gradient(top left, #309900, #005600);
   background: linear-gradient(to bottom right, #309900, #005600);
   -webkit-transform: skew(20deg);
-      -ms-transform: skew(20deg);
-          transform: skew(20deg);
+  -ms-transform: skew(20deg);
+  transform: skew(20deg);
   border-radius: 5% 40% 70%;
   -webkit-box-shadow: inset 0px 0px 1px #222;
-          box-shadow: inset 0px 0px 1px #222;
+  box-shadow: inset 0px 0px 1px #222;
   border: 1px solid #333;
   z-index: -1;
   -webkit-animation: falling 10s 0s infinite;
-          animation: falling 10s 0s infinite;
+  animation: falling 10s 0s infinite;
 }
 
 #leaves i:nth-of-type(2n) {
   -webkit-animation: falling2 10s 0s infinite;
-          animation: falling2 10s 0s infinite;
+  animation: falling2 10s 0s infinite;
 }
 #leaves i:nth-of-type(3n) {
   -webkit-animation: falling3 10s 0s infinite;
-          animation: falling3 10s 0s infinite;
+  animation: falling3 10s 0s infinite;
 }
 
 #leaves i:before {
@@ -4928,14 +4921,20 @@ text {
   height: 27px;
   width: 32px;
   -webkit-transform: rotate(49deg);
-      -ms-transform: rotate(49deg);
-          transform: rotate(49deg);
+  -ms-transform: rotate(49deg);
+  transform: rotate(49deg);
   border-radius: 0% 15% 15% 0%;
   border-top: 1px solid #222;
   border-bottom: 1px solid #222;
   border-left: 0px solid #222;
   border-right: 1px solid #222;
-  background: -webkit-gradient(linear, left top, right top, from(rgba(0, 100, 0, 1)), to(#005600));
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(rgba(0, 100, 0, 1)),
+    to(#005600)
+  );
   background: -o-linear-gradient(left, rgba(0, 100, 0, 1), #005600);
   background: linear-gradient(to right, rgba(0, 100, 0, 1), #005600);
   z-index: -1;
@@ -4945,13 +4944,19 @@ text {
   content: "";
   height: 125px;
   width: 10px;
-  background: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.15)), to(rgba(0, 0, 0, 0)));
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(rgba(0, 0, 0, 0.15)),
+    to(rgba(0, 0, 0, 0))
+  );
   background: -o-linear-gradient(left, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
   background: linear-gradient(to right, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
   display: block;
   -webkit-transform: rotate(125deg);
-      -ms-transform: rotate(125deg);
-          transform: rotate(125deg);
+  -ms-transform: rotate(125deg);
+  transform: rotate(125deg);
   position: absolute;
   left: 85px;
   border-radius: 50%;
@@ -5010,107 +5015,125 @@ text {
 
 #leaves i:nth-of-type(n) {
   -webkit-animation-delay: 1.9s;
-          animation-delay: 1.9s;
+  animation-delay: 1.9s;
   -webkit-animation-delay: 3.8s;
-          animation-delay: 3.8s;
+  animation-delay: 3.8s;
 }
 #leaves i:nth-of-type(2n) {
   -webkit-animation-delay: 3.9s;
-          animation-delay: 3.9s;
+  animation-delay: 3.9s;
   -webkit-animation-delay: 7.8s;
-          animation-delay: 7.8s;
+  animation-delay: 7.8s;
 }
 #leaves i:nth-of-type(3n) {
   -webkit-animation-delay: 2.3s;
-          animation-delay: 2.3s;
+  animation-delay: 2.3s;
   -webkit-animation-delay: 4.6s;
-          animation-delay: 4.6s;
+  animation-delay: 4.6s;
 }
 #leaves i:nth-of-type(4n) {
   -webkit-animation-delay: 4.4s;
-          animation-delay: 4.4s;
+  animation-delay: 4.4s;
   -webkit-animation-delay: 8.8s;
-          animation-delay: 8.8s;
+  animation-delay: 8.8s;
 }
 #leaves i:nth-of-type(5n) {
   -webkit-animation-delay: 5s;
-          animation-delay: 5s;
+  animation-delay: 5s;
   -webkit-animation-delay: 10s;
-          animation-delay: 10s;
+  animation-delay: 10s;
 }
 #leaves i:nth-of-type(6n) {
   -webkit-animation-delay: 3.5s;
-          animation-delay: 3.5s;
+  animation-delay: 3.5s;
   -webkit-animation-delay: 7s;
-          animation-delay: 7s;
+  animation-delay: 7s;
 }
 #leaves i:nth-of-type(7n) {
   -webkit-animation-delay: 2.8s;
-          animation-delay: 2.8s;
+  animation-delay: 2.8s;
   -webkit-animation-delay: 5.6s;
-          animation-delay: 5.6s;
+  animation-delay: 5.6s;
 }
 #leaves i:nth-of-type(8n) {
   -webkit-animation-delay: 1.5s;
-          animation-delay: 1.5s;
+  animation-delay: 1.5s;
   -webkit-animation-delay: 3s;
-          animation-delay: 3s;
+  animation-delay: 3s;
 }
 #leaves i:nth-of-type(9n) {
   -webkit-animation-delay: 3.3s;
-          animation-delay: 3.3s;
+  animation-delay: 3.3s;
   -webkit-animation-delay: 6.6s;
-          animation-delay: 6.6s;
+  animation-delay: 6.6s;
 }
 #leaves i:nth-of-type(10n) {
   -webkit-animation-delay: 2.5s;
-          animation-delay: 2.5s;
+  animation-delay: 2.5s;
   -webkit-animation-delay: 5s;
-          animation-delay: 5s;
+  animation-delay: 5s;
 }
 #leaves i:nth-of-type(11n) {
   -webkit-animation-delay: 1.2s;
-          animation-delay: 1.2s;
+  animation-delay: 1.2s;
   -webkit-animation-delay: 2.4s;
-          animation-delay: 2.4s;
+  animation-delay: 2.4s;
 }
 #leaves i:nth-of-type(12n) {
   -webkit-animation-delay: 4.1s;
-          animation-delay: 4.1s;
+  animation-delay: 4.1s;
   -webkit-animation-delay: 8.2s;
-          animation-delay: 8.2s;
+  animation-delay: 8.2s;
 }
 #leaves i:nth-of-type(13n) {
   -webkit-animation-delay: 1s;
-          animation-delay: 1s;
+  animation-delay: 1s;
   -webkit-animation-delay: 2s;
-          animation-delay: 2s;
+  animation-delay: 2s;
 }
 #leaves i:nth-of-type(14n) {
   -webkit-animation-delay: 4.7s;
-          animation-delay: 4.7s;
+  animation-delay: 4.7s;
   -webkit-animation-delay: 9.6s;
-          animation-delay: 9.6s;
+  animation-delay: 9.6s;
 }
 #leaves i:nth-of-type(15n) {
   -webkit-animation-delay: 3s;
-          animation-delay: 3s;
+  animation-delay: 3s;
   -webkit-animation-delay: 6s;
-          animation-delay: 6s;
+  animation-delay: 6s;
 }
 
 #leaves i:nth-of-type(n) {
-  background: -webkit-gradient(linear, left top, right bottom, from(#309900), to(#005600));
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right bottom,
+    from(#309900),
+    to(#005600)
+  );
   background: -o-linear-gradient(top left, #309900, #005600);
   background: linear-gradient(to bottom right, #309900, #005600);
 }
 #leaves i:nth-of-type(2n + 2) {
-  background: -webkit-gradient(linear, left top, right bottom, from(#5e9900), to(#2b5600));
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right bottom,
+    from(#5e9900),
+    to(#2b5600)
+  );
   background: -o-linear-gradient(top left, #5e9900, #2b5600);
   background: linear-gradient(to bottom right, #5e9900, #2b5600);
 }
 #leaves i:nth-of-type(4n + 1) {
-  background: -webkit-gradient(linear, left top, right bottom, from(#990), to(#564500));
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right bottom,
+    from(#990),
+    to(#564500)
+  );
   background: -o-linear-gradient(top left, #990, #564500);
   background: linear-gradient(to bottom right, #990, #564500);
 }
@@ -5127,24 +5150,24 @@ text {
 
 #leaves i:nth-of-type(n) {
   -webkit-transform: rotate(180deg);
-      -ms-transform: rotate(180deg);
-          transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 #leaves i:nth-of-type(n) {
   -webkit-animation-timing-function: ease-in-out;
-          animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
 }
 
 @-webkit-keyframes falling {
   0% {
     -webkit-transform: translate3d(300, 0, 0) rotate(0deg);
-            transform: translate3d(300, 0, 0) rotate(0deg);
+    transform: translate3d(300, 0, 0) rotate(0deg);
   }
 
   100% {
     -webkit-transform: translate3d(-350px, 700px, 0) rotate(90deg);
-            transform: translate3d(-350px, 700px, 0) rotate(90deg);
+    transform: translate3d(-350px, 700px, 0) rotate(90deg);
     opacity: 0;
   }
 }
@@ -5162,7 +5185,7 @@ text {
     0px 0px 30px 10px rgba(230, 230, 200, 1),
     0px 0px 10px 5px rgba(255, 255, 255, 1)
   );
-          box-shadow: (
+  box-shadow: (
     0px 0px 30px 10px rgba(230, 230, 200, 1),
     0px 0px 10px 5px rgba(255, 255, 255, 1)
   );
@@ -5170,7 +5193,7 @@ text {
     flaremove 60s alternate infinite ease-in-out,
     lightbright 60s alternate infinite linear
   );
-          animation: (
+  animation: (
     flaremove 60s alternate infinite ease-in-out,
     lightbright 60s alternate infinite linear
   );
@@ -5182,7 +5205,7 @@ text {
   top: 80%;
   left: 80%;
   -webkit-animation: (flaremove 60s alternate infinite ease-in-out);
-          animation: (flaremove 60s alternate infinite ease-in-out);
+  animation: (flaremove 60s alternate infinite ease-in-out);
   border-radius: (9999px);
   &.one {
     margin: -50px 0 0 -50px;
@@ -5192,7 +5215,7 @@ text {
       inset 0px 0px 20px 2px rgba(190, 190, 240, 0.125),
       0px 0px 20px 0px rgba(190, 190, 240, 0.125)
     );
-            box-shadow: (
+    box-shadow: (
       inset 0px 0px 20px 2px rgba(190, 190, 240, 0.125),
       0px 0px 20px 0px rgba(190, 190, 240, 0.125)
     );
@@ -5205,7 +5228,7 @@ text {
       inset 0px 0px 100px 2px rgba(200, 230, 200, 0.125),
       0px 0px 13px 2px rgba(200, 230, 200, 0.125)
     );
-            box-shadow: (
+    box-shadow: (
       inset 0px 0px 100px 2px rgba(200, 230, 200, 0.125),
       0px 0px 13px 2px rgba(200, 230, 200, 0.125)
     );
@@ -5218,7 +5241,7 @@ text {
       inset 0px 0px 22px 2px rgba(255, 50, 50, 0.25),
       0px 0px 13px 2px rgba(255, 50, 50, 0.25)
     );
-            box-shadow: (
+    box-shadow: (
       inset 0px 0px 22px 2px rgba(255, 50, 50, 0.25),
       0px 0px 13px 2px rgba(255, 50, 50, 0.25)
     );
@@ -5231,7 +5254,7 @@ text {
       inset 0px 0px 160px 2px rgba(50, 180, 50, 0.125),
       0px 0px 20px 2px rgba(50, 180, 50, 0.125)
     );
-            box-shadow: (
+    box-shadow: (
       inset 0px 0px 160px 2px rgba(50, 180, 50, 0.125),
       0px 0px 20px 2px rgba(50, 180, 50, 0.125)
     );
@@ -5244,7 +5267,7 @@ text {
       inset 0px 0px 160px 2px rgba(200, 220, 80, 0.25),
       0px 0px 20px 2px rgba(200, 220, 80, 0.25)
     );
-            box-shadow: (
+    box-shadow: (
       inset 0px 0px 160px 2px rgba(200, 220, 80, 0.25),
       0px 0px 20px 2px rgba(200, 220, 80, 0.25)
     );
@@ -5257,7 +5280,7 @@ text {
       inset 0px 0px 18px 10px rgba(150, 220, 220, 0.25),
       0px 0px 5px 0px rgba(150, 220, 220, 0.25)
     );
-            box-shadow: (
+    box-shadow: (
       inset 0px 0px 18px 10px rgba(150, 220, 220, 0.25),
       0px 0px 5px 0px rgba(150, 220, 220, 0.25)
     );
