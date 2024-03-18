@@ -1,21 +1,61 @@
 <div class="container" (click)="clickAnimation($event)">
-  <div class="optionsButtonBox">
-    <img src="./assets/options.png" class="optionsButton"/>
+  <div class="optionsButtonBox" [@fadeEnter]="{
+    value: '',
+    params: { duration: 500, delay: 0 }
+  }"
+  [@fadeOutLeave]="{
+    value: '',
+    params: { duration: 500, delay: 0 }
+  }" (click)="optionsMenuOpened = !optionsMenuOpened">
+    <img src="./assets/options.png" class="optionsButton hoverButton"/>
   </div>
-  <div class="optionsMenuOverlay">
-    <div class="optionsMenuBox">
+  <div class="optionsMenuOverlay" >
+    <div class="optionsMenuBox" 
+    *ngIf="optionsMenuOpened"
+    [@fadeEnter]="{
+      value: '',
+      params: { duration: 500, delay: 0 }
+    }"
+    [@fadeOutLeave]="{
+      value: '',
+      params: { duration: 500, delay: 0 }
+    }">
       <div class="optionsMenuBackdrop"></div>
     <div class="optionsMenu">
       <img src="./assets/menu.png" class="optionsMenuBg"/>
       <div class="menuHeader optionsText">Options</div>
-      <div class="closeMenuButtonBox">
+      <div class="closeMenuButtonBox" (click)="optionsMenuOpened = false">
         <img src="./assets/close.png" class="closeMenuButton"/>
         <img src="./assets/closeActive.png" class="closeMenuButton activeBtn"/>
       </div>
       <div class="optionsRow">
         <div class="optionsItem">
-          <div class="optionsItemTitle optionsText">test</div>
-          <img src="./assets/fullscreen.png" class="optionsItemButton" />
+          <div class="optionsItemTitle optionsText">Fullscreen</div>
+          <img src="./assets/fullscreen.png" (click)="toggleFullScreen()" class="optionsItemButton hoverButton" />
+        </div>
+        <div class="musicBox">
+          <div class="optionsItem volumeItem">
+            <div class="optionsItemTitle optionsText">Sound Volume</div>
+            <div class="rangeBox">
+              <input  [ngClass]="{
+                muteRange: muteIconSound() === 0
+              }" type="range" min="0" max="100" [formControl]="soundControl">
+              <div class="rangeWidth" [ngStyle]="{
+                'width': muteIconSound() > 4 ? muteIconSound() + '%' : '0%'
+              }"></div>
+            </div>
+          </div>
+          <div class="optionsItem volumeItem">
+            <div class="optionsItemTitle optionsText">Music Volume</div>
+            <div class="rangeBox">
+              <input  [ngClass]="{
+                muteRange: muteIconMusic() === 0
+              }" type="range" min="0" max="100" [formControl]="musicControl">
+              <div class="rangeWidth" [ngStyle]="{
+                'width': muteIconMusic() > 4 ? muteIconMusic() + '%' : '0%'
+              }"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

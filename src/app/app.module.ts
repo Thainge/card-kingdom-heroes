@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BattleComponent } from './pages/battle/battle.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DialogComponent } from './components/dialogComponent/dialog.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    DialogComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

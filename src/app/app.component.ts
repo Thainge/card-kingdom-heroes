@@ -56,6 +56,12 @@ export class AppComponent implements OnInit {
   initFinished: boolean = false;
   loadingBg: string = 'loadingBg.png';
 
+  optionsMenuOpened: boolean = false;
+  docElement: HTMLElement | undefined;
+isFullScreen: boolean = false;
+soundControl = new FormControl('75');
+musicControl = new FormControl('75');
+
   @ViewChild('consoleInput') consoleInput: ElementRef | undefined;
 
   constructor(
@@ -66,17 +72,15 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.docElement = document.documentElement;
     this.loadingService.isLoading$.subscribe((x) => {
       if (x.loading === true && x.url !== 'null') {
         this.isLoading = true;
+
         setTimeout(() => {
           if (this.isLoading) {
             this.isLoading = false;
-            if (x.url === this.router.url) {
-              location.reload();
-            } else {
-              this.router.navigate([x.url]);
-            }
+            this.router.navigate([x.url]);
           }
         }, 2500);
       } else if (x.url !== 'null') {
@@ -108,6 +112,26 @@ export class AppComponent implements OnInit {
     // });
   }
 
+  muteIconSound():number {
+return Number(this.soundControl.value);
+  }
+
+  muteIconMusic():number {
+    return Number(this.musicControl.value);
+      }
+
+  toggleFullScreen() {
+    if (this.docElement) {
+      if (!this.isFullScreen) {
+        this.docElement.requestFullscreen();
+      }
+      else {
+        document.exitFullscreen();
+      }
+      this.isFullScreen = !this.isFullScreen;
+    }
+}
+
   async clickAnimation(e: any) {
     const ID = this.clickAnimationsList.length + 1;
     const clickObject: ClickObject = {
@@ -129,7 +153,6 @@ export class AppComponent implements OnInit {
       this.achievementPopupsList = this.achievementPopupsList.filter(
         (x) => x.id !== ID
       );
-      console.log(this.achievementPopupsList);
     }, 5000);
   }
 

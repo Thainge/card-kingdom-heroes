@@ -1,4 +1,46 @@
 <div class="container">
+  <app-dialog></app-dialog>
+  <div class="optionsButtonBox" [@fadeEnter]="{
+    value: '',
+    params: { duration: 500, delay: 0 }
+  }"
+  [@fadeOutLeave]="{
+    value: '',
+    params: { duration: 500, delay: 0 }
+  }" *ngIf="!gameWinnerPlayer && !gameLoserPlayer" (click)="checkSurrender = !checkSurrender">
+    <img src="./assets/surrender.png" class="optionsButton hoverButton"/>
+  </div>
+  <div class="checkSurrenderOverlay">
+  <div class="surrenderMenuBackdrop" *ngIf="checkSurrender" [@fadeEnter]="{
+    value: '',
+    params: { duration: 500, delay: 0 }
+  }"
+  [@fadeOutLeave]="{
+    value: '',
+    params: { duration: 500, delay: 0 }
+  }"></div>
+  <div class="checkSurrenderBox" *ngIf="checkSurrender" [@fadeEnter]="{
+    value: '',
+    params: { duration: 500, delay: 0 }
+  }"
+  [@fadeOutLeave]="{
+    value: '',
+    params: { duration: 500, delay: 0 }
+  }">
+    <img class="checkSurrenderBg" src="./assets/box.png"/>
+    <div class="surrenderTitle">Are you sure you want to surrender?</div>
+    <div class="surrenderBtns">
+      <div class="finishButtonGo" (click)="checkSurrender = false">
+        <img class="finishButton" [src]="'./assets/cancel.png'" />
+        <div class="finishButtonText surrenderText">Cancel</div>
+      </div>
+      <div class="finishButtonGo" (click)="surrender()">
+        <img class="finishButton" [src]="'./assets/continue.png'" />
+        <div class="finishButtonText surrenderText">Surrender</div>
+      </div>
+    </div>
+  </div>
+</div>
   <div class="DevItemsList">
     <div
       class="DevItem"

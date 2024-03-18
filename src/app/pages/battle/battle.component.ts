@@ -42,6 +42,7 @@ declare let LeaderLine: any;
 import { Cards } from 'src/assets/data/cards';
 import { AbilityService } from 'src/app/services/ability.service';
 import { LevelDto } from 'src/app/models/level';
+import { DialogComponent } from 'src/app/components/dialogComponent/dialog.component';
 
 const defaultAbilityCard: AbilityCard = {
   id: 0,
@@ -78,7 +79,7 @@ type RewardColor = 'blue' | 'gold' | 'purple';
   templateUrl: './battle.component.html',
   styleUrls: ['./battle.component.scss'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, DialogComponent],
   animations: [
     trigger('cardLeaving', [
       transition(':leave', [
@@ -290,6 +291,7 @@ export class BattleComponent implements OnInit {
   gameThemePath: gameTheme = 'default';
   gameThemePathEnemy: gameTheme = 'default';
   easyMode: boolean = false;
+  checkSurrender: boolean = false;
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -351,6 +353,16 @@ export class BattleComponent implements OnInit {
 
   ngAfterViewInit() {
     this.snowFlakesArray = Array.from(Array(50).keys());
+  }
+
+  ngAfterContentInit() {
+    setTimeout(() => {
+      const showLoading = JSON.parse(localStorage.getItem('showLoading') ?? '') ?? false;
+      if (showLoading) {
+        this.loadingService.navigate('/');
+        localStorage.setItem('showLoading', JSON.stringify(false));
+      }
+    }, 50);
   }
 
   async nextReward(rewardItem: any) {
@@ -573,12 +585,14 @@ export class BattleComponent implements OnInit {
     // this.endGame(false);
   }
 
-  continue() {
-    console.log('leave page');
+  async continue() {
+    localStorage.setItem('showLoading', JSON.stringify(true));
+    location.reload();
   }
-
-  retry() {
-    this.loadingService.navigate('');
+ 
+  async retry() {
+    localStorage.setItem('showLoading', JSON.stringify(true));
+    location.reload();
   }
 
   async selectAbilityCard(ability: AbilityCard) {
@@ -2557,6 +2571,16 @@ export class BattleComponent implements OnInit {
     return false;
   }
 
+  surrender() {
+    this.checkSurrender = false;
+      this.gameLoserPlayer = true;
+      this.rewardItems = [];
+      this.rewardItemsClean = [];
+    setTimeout(() => {
+      this.finishedRewards = true;
+    }, 3500);
+  }
+
   levelUpPlayer() {
     // Gradually increase xp
     setTimeout(() => {
@@ -2675,11 +2699,6 @@ export class BattleComponent implements OnInit {
       setTimeout(() => {
         this.levelUpPlayer();
       }, 4600);
-      // this.gameWinnerPlayer = true;
-      // this.showHeroLevelUp = true;
-      // setTimeout(() => {
-      //   this.levelUpPlayer();
-      // }, 300);
     } else {
       setTimeout(() => {
         this.gameLoserPlayer = true;
