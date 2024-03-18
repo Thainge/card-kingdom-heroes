@@ -1795,6 +1795,15 @@ to {
           column-gap: 1.1%;
 }
 
+.easyMode {
+  width: 100% !important;
+}
+
+.easyMode {
+  scale: .8;
+  bottom: 15%;
+}
+
 .bottomCard {
   position: relative;
   bottom: -50%;
@@ -3333,6 +3342,12 @@ text {
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
+}
+
+.easyModeButtonBox {
+  left: -70%;
+    top: 25%;
+    scale: 1.2;
 }
 
 .attackTxt {

@@ -72,7 +72,11 @@ export class AppComponent implements OnInit {
         setTimeout(() => {
           if (this.isLoading) {
             this.isLoading = false;
-            this.router.navigate([x.url]);
+            if (x.url === this.router.url) {
+              location.reload();
+            } else {
+              this.router.navigate([x.url]);
+            }
           }
         }, 2500);
       } else if (x.url !== 'null') {
@@ -83,7 +87,7 @@ export class AppComponent implements OnInit {
       }, 2500);
     });
     const currentRoute = this.router.url;
-    this.loadingService.navigate(currentRoute);
+    // this.loadingService.navigate(currentRoute);
     setInterval(() => {
       try {
         this.clickAnimationsList = this.clickAnimationsList.slice(
@@ -160,19 +164,22 @@ export class AppComponent implements OnInit {
       await this.timeout(500);
       this.consoleItems.unshift('--- Commands List ---');
       this.consoleItems.unshift(
-        'Gives player x amount of gold: &nbsp;&nbsp;&nbsp;&nbsp;<b>setGold x</b>'
+        'Toggles the difficulty to easy or hard: &nbsp;<b>easyMode</b>'
       );
       this.consoleItems.unshift(
-        'All cards in hand turn wild: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>wildHand</b>'
+        'Gives player x amount of gold:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>setGold x</b>'
       );
       this.consoleItems.unshift(
-        "Sets the player's health to 99: &nbsp;&nbsp;&nbsp;<b>infiniteHealth</b>"
+        'All cards in hand turn wild:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>wildHand</b>'
       );
       this.consoleItems.unshift(
-        'Shows list of possible commands: &nbsp; <b>help</b>'
+        "Sets the player's health to 99:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>infiniteHealth</b>"
       );
       this.consoleItems.unshift(
-        'Clears the console: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <b>clear</b>'
+        'Shows list of possible commands:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>help</b>'
+      );
+      this.consoleItems.unshift(
+        'Clears the console:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <b>clear</b>'
       );
       this.consoleItems.unshift('');
       return;
@@ -201,6 +208,12 @@ export class AppComponent implements OnInit {
       this.consoleItems.unshift('');
       this.cheatsService.cheats$.next('infiniteHealth');
       return;
+    }
+
+    if (value.includes('easymode')) {
+      const easyMode = JSON.parse(localStorage.getItem('easymode') ?? '') ?? false;
+      localStorage.setItem('easymode', JSON.stringify(!easyMode));
+      window.location.reload();
     }
 
     this.consoleItems.unshift('');

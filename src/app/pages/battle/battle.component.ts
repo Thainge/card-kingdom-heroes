@@ -172,6 +172,7 @@ export class BattleComponent implements OnInit {
   wildCards: CardDto[] = [];
   alwaysWinTies: boolean = false;
   canSeeTopCard: boolean = false;
+  canSeeTopCardAbilities: boolean = false;
   topRedrawCard: number = 0;
   topRedrawCardEnemy: number = 0;
 
@@ -288,6 +289,7 @@ export class BattleComponent implements OnInit {
 
   gameThemePath: gameTheme = 'default';
   gameThemePathEnemy: gameTheme = 'default';
+  easyMode: boolean = false;
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -381,7 +383,8 @@ export class BattleComponent implements OnInit {
   }
 
   drawAbilityCard(amount: number) {
-    const abilityCardAddArr = Array.from(Array(amount).keys());
+    if (!this.easyMode) {
+      const abilityCardAddArr = Array.from(Array(amount).keys());
     for (const x of abilityCardAddArr) {
       this.abilityCardsHand.push(this.abilityDeck[0]);
       this.abilityDeck.push(this.abilityDeck[0]);
@@ -391,10 +394,12 @@ export class BattleComponent implements OnInit {
     setTimeout(() => {
       this.topAbilityCard = this.abilityDeck[0];
     }, 400);
+    }
   }
 
   drawAbilityCardBot(amount: number) {
-    const abilityCardAddArr = Array.from(Array(amount).keys());
+    if (!this.easyMode) {
+      const abilityCardAddArr = Array.from(Array(amount).keys());
     for (const x of abilityCardAddArr) {
       this.abilityCardsHandBot.push(this.abilityDeckBot[0]);
       this.abilityDeckBot.push(this.abilityDeckBot[0]);
@@ -404,6 +409,7 @@ export class BattleComponent implements OnInit {
     setTimeout(() => {
       this.topAbilityCardBot = this.abilityDeckBot[0];
     }, 400);
+    }
   }
 
   botThemeInit() {
@@ -440,7 +446,9 @@ export class BattleComponent implements OnInit {
     };
 
     this.enemyPlayers = currentLevel.enemyPlayers;
-    this.abilityDeckBot = currentLevel.enemyAbilityCards;
+    if (!this.easyMode) {
+      this.abilityDeckBot = currentLevel.enemyAbilityCards;
+    }
     const enemyCards: CardDto[] = this.Cards.map((x) => {
       return { ...x, wildInitial: x.value, wildCurrent: '0' };
     });
@@ -450,16 +458,22 @@ export class BattleComponent implements OnInit {
   }
 
   gameInit() {
+    // this.easyMode = true;
+    this.easyMode = JSON.parse(localStorage.getItem('easymode') ?? '') ?? false;
+
     // Player init
     this.player = this.userService.getPlayer();
-    this.abilityDeck = this.userService.getAbilityCards();
-    this.abilityDeck = this.cardService.shuffle(this.abilityDeck);
+    if (!this.easyMode) {
+      this.abilityDeck = this.userService.getAbilityCards();
+      this.abilityDeck = this.cardService.shuffle(this.abilityDeck);
+    }
 
     // Cheats
     const cheats: CheatDto = this.userService.getPlayerCheats();
     this.canDefendWithMultipleCards = cheats.canDefendWithMultipleCards;
     this.alwaysWinTies = cheats.alwaysWinTies;
-    this.canSeeTopCard = cheats.canSeeTopCard;
+    // this.canSeeTopCard = cheats.canSeeTopCard;
+    // this.canSeeTopCardAbilities = cheats.canSeeTopCardAbilities;
 
     this.botThemeInit();
 
@@ -506,11 +520,11 @@ export class BattleComponent implements OnInit {
     }, 400);
 
     // --- Skip redraw phase --- //
-    // this.redrawing = false;
-    // this.redrawHide = true;
-    // this.playerHand = [...this.redrawCards];
-    // this.drawAbilityCard(2);
-    // this.drawAbilityCardBot(2);
+    this.redrawing = false;
+    this.redrawHide = true;
+    this.playerHand = [...this.redrawCards];
+    this.drawAbilityCard(2);
+    this.drawAbilityCardBot(2);
 
     // setTimeout(() => {
     //   this.enemyPlayers[1].health = 0;

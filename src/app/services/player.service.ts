@@ -427,6 +427,7 @@ export class playerService implements OnInit {
       canDefendWithMultipleCards: true,
       alwaysWinTies: true,
       canSeeTopCard: true,
+      canSeeTopCardAbilities: false,
     };
   }
 
