@@ -93,3 +93,11 @@ input[type="range"]::-webkit-slider-thumb {
   position: relative !important;
   z-index: 3 !important;
 }
+
+* {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+}

@@ -1,32 +1,20 @@
 @-webkit-keyframes zoomOutHeal {
   0% {
     scale: 0;
-    opacity: 0;
-  }
-
-  50% {
-    opacity: 1;
   }
 
   100% {
     scale: 1;
-    opacity: 0;
   }
 }
 
 @keyframes zoomOutHeal {
   0% {
     scale: 0;
-    opacity: 0;
-  }
-
-  50% {
-    opacity: 1;
   }
 
   100% {
     scale: 1;
-    opacity: 0;
   }
 }
 
@@ -405,32 +393,20 @@
 @-webkit-keyframes zoomOutLeach {
   0% {
     scale: 1;
-    opacity: 0;
-  }
-
-  50% {
-    opacity: 1;
   }
 
   100% {
     scale: 0;
-    opacity: 0;
   }
 }
 
 @keyframes zoomOutLeach {
   0% {
     scale: 1;
-    opacity: 0;
-  }
-
-  50% {
-    opacity: 1;
   }
 
   100% {
     scale: 0;
-    opacity: 0;
   }
 }
 
@@ -1562,12 +1538,6 @@
 .bottomMiddle,
 .topMiddle {
   scale: 0.9;
-}
-
-* {
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 // Check surrender
@@ -3501,6 +3471,49 @@ text {
   animation-fill-mode: forwards;
 }
 
+.abilityHoverDescriptionBox {
+  position: absolute;
+  top: -10em;
+  left: calc(-25% - 1em);
+  width: 150%;
+  padding: 1em;
+  background-color: rgba(0, 0, 0, 0.473);
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  row-gap: 0.5em;
+  font-size: 1em;
+  padding-top: 0.5em;
+  border-radius: 1em;
+}
+
+.abilityHoverDescriptionBox::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -25px;
+  margin: 0 auto;
+  width: 0;
+  height: 0;
+  border-top: 15px solid rgba(0, 0, 0, 0.473);
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
+}
+
+.abilityHoverTitle {
+  color: whitesmoke;
+  font-family: soho;
+}
+
+.abilityHoverDescription {
+  height: 3rem;
+  font-family: soho;
+  color: #e9e9b2;
+}
+
 .bottomAbilityStuff {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -3711,6 +3724,13 @@ text {
   -moz-column-gap: 2%;
   column-gap: 2%;
   padding-right: 4%;
+}
+
+.abilitySuitsBoxHover {
+  position: absolute;
+  top: 0.5em;
+  right: -1.2em;
+  scale: 0.9;
 }
 
 .abilitySuit {

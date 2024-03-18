@@ -296,6 +296,7 @@ export class BattleComponent implements OnInit {
 
   dialogArray: DialogDto[] = [];
   displayDialog: boolean = false;
+  hoveringAbilityDescription: AbilityCard | undefined;
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -326,7 +327,7 @@ export class BattleComponent implements OnInit {
 
   ngOnInit() {
     // Dialog
-    this.initDialogComponent();
+    // this.initDialogComponent();
 
     // Player game theme
     this.userService.gameTheme$.subscribe((x) => {
@@ -413,6 +414,23 @@ export class BattleComponent implements OnInit {
       },
     ];
     this.displayDialog = true;
+  }
+
+  hoveringAbilityCardCss(abilityCard: AbilityCard) {
+    this.hoveringAbilityDescription = abilityCard;
+  }
+
+  hoveringAbilityCardLeaveCss() {
+    this.hoveringAbilityDescription = undefined;
+  }
+
+  showHoveringAbilityDescription(abilityCard: AbilityCard): boolean {
+    const foundCard = this.hoveringAbilityDescription?.id === abilityCard.id;
+    if (foundCard) {
+      return true;
+    }
+
+    return false;
   }
 
   async nextReward(rewardItem: any) {
@@ -602,7 +620,7 @@ export class BattleComponent implements OnInit {
     //   return {
     //     ...x,
     //     id: i + 1,
-    //     suit: 'hearts',
+    //     suit: '',
     //     image: `${x.value}_of_hearts.png`,
     //   };
     // });
@@ -863,7 +881,7 @@ export class BattleComponent implements OnInit {
       healAbility.abilityFunction = 'heal';
       healAbility.abilityValue = totalHealthRegained;
 
-      await this.timeout(1000);
+      await this.timeout(500);
       this.healAbility(healAbility);
     } else {
       const ID = this.pushDisplayMessage(
@@ -930,7 +948,7 @@ export class BattleComponent implements OnInit {
     );
     await this.timeout(200);
     this.healOnPlayer = true;
-    await this.timeout(800);
+    await this.timeout(500);
     this.numbersGoUpIncrementallyPlayer(this.player.health, newHealth);
 
     this.endAbilityTurn(ability, 1400);

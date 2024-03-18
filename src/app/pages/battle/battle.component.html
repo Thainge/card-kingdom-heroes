@@ -2170,7 +2170,7 @@
                 [@fadeOutLeave]
               />
               <img
-                [src]="'./assets/' + gameThemePath + '/playerHealth.png'"
+                [src]="'./assets/' + gameThemePath + '/offenseShield.png'"
                 class="cardIcon confetti leaching"
                 [@fadeEnter]="{
                   value: '',
@@ -2481,14 +2481,30 @@
             currentAbility.id !== card.id
         }"
         (click)="selectAbilityCard(card)"
-        (mouseenter)="hoverAbilityEnter(card)"
-        (mouseleave)="hoverAbilityOut(card)"
+        (mouseenter)="hoverAbilityEnter(card); hoveringAbilityCardCss(card)"
+        (mouseleave)="hoverAbilityOut(card); hoveringAbilityCardLeaveCss()"
         (wheel)="abilityCardChangeUseCards($event, card)"
         [ngStyle]="{
           'animation-delay': (i + 1) * 100 + 'ms'
         }"
         [@cardLeaving]
       >
+        <div
+          class="abilityHoverDescriptionBox"
+          *ngIf="showHoveringAbilityDescription(card)"
+        >
+          <div class="abilityHoverTitle">{{ card.name }}</div>
+          <div class="abilityHoverDescription">
+            {{ card.description }}
+          </div>
+          <div class="abilitySuitsBox abilitySuitsBoxHover">
+            <img
+              *ngFor="let cost of card.cost"
+              [src]="'./assets/' + cost + '.png'"
+              class="abilitySuit"
+            />
+          </div>
+        </div>
         <div
           class="cardBorder"
           [ngClass]="{
