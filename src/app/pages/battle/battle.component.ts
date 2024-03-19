@@ -383,7 +383,7 @@ export class BattleComponent implements OnInit {
       if (loadingLocal) {
         const showLoading = JSON.parse(loadingLocal);
         if (showLoading) {
-          this.loadingService.navigate('/');
+          this.loadingService.navigate('/', 'forest.png');
           localStorage.setItem('showLoading', JSON.stringify(false));
         }
       }

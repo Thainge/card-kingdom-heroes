@@ -77,6 +77,7 @@ export class AppComponent implements OnInit {
     this.loadingService.isLoading$.subscribe((x) => {
       if (x.loading === true && x.url !== 'null') {
         this.isLoading = true;
+        this.loadingBg = x.image;
 
         setTimeout(() => {
           if (this.isLoading) {
@@ -251,7 +252,7 @@ export class AppComponent implements OnInit {
       }
 
       localStorage.setItem('easymode', JSON.stringify(!easyMode));
-        window.location.reload();
+      window.location.reload();
     }
 
     this.consoleItems.unshift('');
