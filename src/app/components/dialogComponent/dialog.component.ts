@@ -61,10 +61,12 @@ export class DialogComponent implements OnInit {
   @Input('showDialog') showDialog: boolean = false;
   @Input('dialogArray') set dialogArray(dialogArray: DialogDto[]) {
     if (dialogArray.length > 0) {
-      this.dialogArrayStatic = dialogArray;
-      this.currentlyReading = true;
-      this.activeDialog = this.dialogArrayStatic[0];
-      this.iterateLetters();
+      setTimeout(() => {
+        this.dialogArrayStatic = dialogArray;
+        this.currentlyReading = true;
+        this.activeDialog = this.dialogArrayStatic[0];
+        this.iterateLetters();
+      }, 1500);
     }
   }
   @Output() finishedDialog = new EventEmitter<boolean>(true);

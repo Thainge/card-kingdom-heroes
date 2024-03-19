@@ -1502,8 +1502,15 @@
   background-size: cover;
   width: 100%;
   height: 100%;
-  position: relative;
+  position: absolute;
   z-index: -7;
+  opacity: 0;
+  transition: all 1s;
+}
+
+.fadeBgIn {
+  transition: all 1s;
+  opacity: 1;
 }
 
 .bgFilter {

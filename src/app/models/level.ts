@@ -19,6 +19,9 @@ export interface LevelDto {
   canSeeTopCard: boolean;
   canSeeTopCardAbilities: boolean;
   combatPhases: EnemyLevelDto[];
+
+  skipRedrawPhase: boolean;
+  battleRewardXp: number;
 }
 
 export interface EnemyLevelDto {
@@ -27,6 +30,15 @@ export interface EnemyLevelDto {
   enemyAbilityCards: AbilityCard[];
   background: BackgroundDto;
   enemyCardTheme: CardThemeDto;
+
+  showSnowEffect: boolean;
+  showBubblesEffect: boolean;
+  showLeavesEffect: boolean;
+  showSunFlareEffect: boolean;
+  showCloudsEffect: boolean;
+  showNightEffect: boolean;
+  showFireEffect: boolean;
+  showAshesEffect: boolean;
 }
 
 type CardThemeDto = 'default' | 'mario';

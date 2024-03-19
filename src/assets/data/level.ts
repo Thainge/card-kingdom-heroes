@@ -2,6 +2,8 @@ import { LevelDto } from 'src/app/models/level';
 
 export const passedObj: LevelDto = {
   id: 1,
+  skipRedrawPhase: true,
+  battleRewardXp: 50,
 
   dialogList: [
     {
@@ -207,6 +209,14 @@ export const passedObj: LevelDto = {
       ],
       enemyCardTheme: 'mario',
       background: 'forest.png',
+      showSnowEffect: false,
+      showBubblesEffect: false,
+      showLeavesEffect: true,
+      showSunFlareEffect: false,
+      showCloudsEffect: false,
+      showNightEffect: false,
+      showFireEffect: false,
+      showAshesEffect: false,
     },
     {
       id: 2,
@@ -366,6 +376,14 @@ export const passedObj: LevelDto = {
       ],
       enemyCardTheme: 'default',
       background: 'loadingBg.png',
+      showSnowEffect: false,
+      showBubblesEffect: false,
+      showLeavesEffect: false,
+      showSunFlareEffect: false,
+      showCloudsEffect: true,
+      showNightEffect: true,
+      showFireEffect: false,
+      showAshesEffect: false,
     },
   ],
 };

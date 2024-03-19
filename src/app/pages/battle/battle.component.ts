@@ -44,6 +44,7 @@ import { EnemyLevelDto, LevelDto } from 'src/app/models/level';
 import { DialogComponent } from 'src/app/components/dialogComponent/dialog.component';
 import { DialogDto } from 'src/app/models/dialog';
 import { passedObj } from 'src/assets/data/level';
+import { BackgroundDto } from 'src/app/models/backgrounds';
 
 const defaultAbilityCard: AbilityCard = {
   id: 0,
@@ -71,6 +72,12 @@ interface RewardItem {
   textAmount: string;
   image: string;
   color: RewardColor;
+}
+
+interface CombatImages {
+  id: number;
+  image: BackgroundDto;
+  display: boolean;
 }
 
 type RewardColor = 'blue' | 'gold' | 'purple';
@@ -206,7 +213,6 @@ export class BattleComponent implements OnInit {
   duringBotTurnDiscard: boolean = false;
 
   currentExtraDmg: number = 0;
-  levelBgImage: string = '';
 
   abilityCardsHand: AbilityCard[] = [];
   abilityDeck: AbilityCard[] = [];
@@ -302,6 +308,7 @@ export class BattleComponent implements OnInit {
   currentLevel: LevelDto | undefined;
   allCombatPhases: EnemyLevelDto[] | undefined;
   currentCombatPhase: EnemyLevelDto | undefined;
+  combatImages: CombatImages[] = [];
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -478,6 +485,9 @@ export class BattleComponent implements OnInit {
     // Passed object for battle
     this.currentLevel = passedObj;
     this.allCombatPhases = passedObj.combatPhases;
+    this.combatImages = passedObj.combatPhases.map((x) => {
+      return { id: x.id, image: x.background, display: false };
+    });
 
     // Easy mode
     this.easyMode = this.currentLevel.easyMode;
@@ -492,6 +502,7 @@ export class BattleComponent implements OnInit {
     this.alwaysWinTies = this.currentLevel.alwaysWinTies;
     this.canSeeTopCard = this.currentLevel.canSeeTopCard;
     this.canSeeTopCardAbilities = this.currentLevel.canSeeTopCardAbilities;
+    this.battleRewardXp = this.currentLevel.battleRewardXp;
 
     // Start bot phase
     this.nextCombatPhaseBot();
@@ -522,12 +533,18 @@ export class BattleComponent implements OnInit {
     }
     this.playerDeck = this.cardService.shuffle(playerCards);
 
-    // Populate 5 redraw cards
     for (const num of [0, 1, 2, 3, 4]) {
       // Add to player 1 hand and remove player 1 deck
       this.redrawCards.push(this.playerDeck[0]);
       this.playerDeck.push(this.playerDeck[0]);
       this.playerDeck.shift();
+    }
+    // Skip redraw phase
+    if (this.currentLevel.skipRedrawPhase) {
+      this.redrawing = false;
+      this.redrawHide = true;
+      this.playerHand = [...this.redrawCards];
+      this.startDialog();
     }
 
     // --- Skip redraw phase --- //
@@ -588,17 +605,32 @@ export class BattleComponent implements OnInit {
     // this.endGame(false);
   }
 
-  nextCombatPhaseBot() {
+  async nextCombatPhaseBot(extraDelays: boolean = false) {
     if (!this.allCombatPhases || !this.currentLevel) {
       return;
     }
 
-    this.currentCombatPhase = passedObj.combatPhases[0];
+    if (this.allCombatPhases.length === 0) {
+      return;
+    }
+
+    this.currentCombatPhase = this.allCombatPhases[0];
+    this.combatImages = this.combatImages.map((x) => {
+      if (x.id === this.currentCombatPhase?.id) {
+        return { ...x, display: true };
+      }
+      return { ...x, display: false };
+    });
     this.allCombatPhases.shift();
 
+    if (extraDelays) {
+      await this.timeout(1000);
+    }
     this.enemyPlayers = this.currentCombatPhase.enemyPlayers;
     if (!this.easyMode) {
       this.abilityDeckBot = this.currentCombatPhase.enemyAbilityCards;
+      this.abilityCardsHandBot = [];
+      this.abilityCardsHand = [];
       if (this.currentLevel.shuffleAbilityCardsBot) {
         this.abilityDeckBot = this.cardService.shuffle(this.abilityDeckBot);
       }
@@ -611,10 +643,22 @@ export class BattleComponent implements OnInit {
       this.abilityDeckBot = this.cardService.shuffle(enemyCards);
     }
 
-    this.levelBgImage = this.currentCombatPhase.background;
     this.gameThemePathEnemy = this.currentCombatPhase.enemyCardTheme;
-    console.log('currentCombatPhase: ', this.currentCombatPhase);
-    console.log('currentLevel: ', this.currentLevel);
+    this.showSnowEffect = this.currentCombatPhase.showSnowEffect;
+    this.showBubblesEffect = this.currentCombatPhase.showBubblesEffect;
+    this.showLeavesEffect = this.currentCombatPhase.showLeavesEffect;
+    this.showSunFlareEffect = this.currentCombatPhase.showSunFlareEffect;
+    this.showCloudsEffect = this.currentCombatPhase.showCloudsEffect;
+    this.showNightEffect = this.currentCombatPhase.showNightEffect;
+    this.showFireEffect = this.currentCombatPhase.showFireEffect;
+    this.showAshesEffect = this.currentCombatPhase.showAshesEffect;
+
+    if (extraDelays) {
+      await this.addCardsToBothHands();
+      this.drawAbilityCardBot(2);
+      this.drawAbilityCard(2);
+      this.newTurn();
+    }
   }
 
   async continue() {
@@ -880,15 +924,16 @@ export class BattleComponent implements OnInit {
   async damageAbility(ability: AbilityCard) {
     if (ability.targetAll) {
       // Automatically attack all enemies
-      for await (const x of this.enemyPlayers) {
+      for (const x of this.enemyPlayers) {
         const incomingAttackPower = ability.abilityValue;
         const newHealth = x.health - incomingAttackPower;
         if (ability.hitAnimation === 'fire') {
           this.flamesOnEnemies.push(x);
         }
         this.enemyTarget = x.id;
-        await this.numbersGoDownIncrementallyBot(x.health, newHealth);
+        this.numbersGoDownIncrementallyBot(x.health, newHealth);
       }
+      await this.timeout(200 * ability.abilityValue);
       this.endAbilityTurn(ability, 1200);
     } else {
       const ID = this.pushDisplayMessage(
@@ -2630,10 +2675,17 @@ export class BattleComponent implements OnInit {
     // Check if defeated
     const aliveEnemies = this.enemyPlayers.filter((x) => x.health > 0);
     if (aliveEnemies.length < 1) {
-      setTimeout(() => {
-        this.endGame(true);
-      }, 2000);
-      return true;
+      if (this.allCombatPhases && this.allCombatPhases.length !== 0) {
+        setTimeout(() => {
+          this.nextCombatPhaseBot(true);
+        }, 3000);
+        return true;
+      } else {
+        setTimeout(() => {
+          this.endGame(true);
+        }, 2000);
+        return true;
+      }
     }
 
     return false;
