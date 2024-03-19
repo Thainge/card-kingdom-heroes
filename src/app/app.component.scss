@@ -55,6 +55,12 @@
   z-index: 1002;
 }
 
+.optionsButtonsRow {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .optionsMenuBox {
   position: relative;
   width: 100%;
@@ -152,6 +158,10 @@
   font-size: 1.5em;
 }
 
+.optionsButtonsRow .optionsItem {
+  width: 33%;
+}
+
 .musicBox {
   display: flex;
   column-gap: 10%;
@@ -170,7 +180,7 @@
   display: flex;
   align-items: flex-start;
   top: 2.1em;
-  height: 0.8em;
+  height: 15%;
   background: -webkit-linear-gradient(#fdf9ec, #fff3b0);
   border-radius: 1em;
   z-index: 2;

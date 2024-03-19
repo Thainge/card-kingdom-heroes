@@ -9,6 +9,213 @@
     }"
   ></app-dialog>
   <div
+    class="pokerHandsChart"
+    (click)="showPokerHandsChart = false"
+    *ngIf="showPokerHandsChart"
+    [@fadeEnter]="{
+      value: '',
+      params: { duration: 500, delay: 0 }
+    }"
+    [@fadeOutLeave]="{
+      value: '',
+      params: { duration: 500, delay: 0 }
+    }"
+  >
+    <div class="pokerHandsRow">
+      <div class="pokerBox">
+        <div class="pokerTitle rainbowTitle">Straight Flush</div>
+        <div class="pokerHand">
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/10_of_spades.png'"
+          />
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/11_of_spades.png'"
+          />
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/12_of_spades.png'"
+          />
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/13_of_spades.png'"
+          />
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/14_of_spades.png'"
+          />
+        </div>
+      </div>
+      <div class="pokerBox">
+        <div class="pokerTitle rainbowTitle">Four of a Kind</div>
+        <div class="pokerHand">
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/14_of_hearts.png'"
+          />
+          <img
+            class="pokerCard"
+            [src]="
+              './assets/' + gameThemePathEnemy + '/cards/14_of_diamonds.png'
+            "
+          />
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/14_of_spades.png'"
+          />
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/14_of_clubs.png'"
+          />
+        </div>
+      </div>
+      <div class="pokerBox">
+        <div class="pokerTitle rainbowTitle">Full House</div>
+        <div class="pokerHand">
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/10_of_clubs.png'"
+          />
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/10_of_clubs.png'"
+          />
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/10_of_clubs.png'"
+          />
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/13_of_clubs.png'"
+          />
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/13_of_clubs.png'"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="pokerHandsRow">
+      <div class="pokerBox">
+        <div class="pokerTitle rainbowTitle">Flush</div>
+        <div class="pokerHand">
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/10_of_clubs.png'"
+          />
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/5_of_clubs.png'"
+          />
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/8_of_clubs.png'"
+          />
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/3_of_clubs.png'"
+          />
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/9_of_clubs.png'"
+          />
+        </div>
+      </div>
+      <div class="pokerBox">
+        <div class="pokerTitle rainbowTitle">Straight</div>
+        <div class="pokerHand">
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/10_of_hearts.png'"
+          />
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/11_of_hearts.png'"
+          />
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/12_of_clubs.png'"
+          />
+          <img
+            class="pokerCard"
+            [src]="
+              './assets/' + gameThemePathEnemy + '/cards/13_of_diamonds.png'
+            "
+          />
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/14_of_spades.png'"
+          />
+        </div>
+      </div>
+      <div class="pokerBox">
+        <div class="pokerTitle">Three of a Kind</div>
+        <div class="pokerHand">
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/12_of_clubs.png'"
+          />
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/12_of_clubs.png'"
+          />
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/12_of_clubs.png'"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="pokerHandsRow">
+      <div class="pokerBox">
+        <div class="pokerTitle">Two Pair</div>
+        <div class="pokerHand">
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/11_of_hearts.png'"
+          />
+          <img
+            class="pokerCard"
+            [src]="
+              './assets/' + gameThemePathEnemy + '/cards/11_of_diamonds.png'
+            "
+          />
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/12_of_spades.png'"
+          />
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/12_of_clubs.png'"
+          />
+        </div>
+      </div>
+      <div class="pokerBox">
+        <div class="pokerTitle">Pair</div>
+        <div class="pokerHand">
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/13_of_spades.png'"
+          />
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/13_of_clubs.png'"
+          />
+        </div>
+      </div>
+      <div class="pokerBox">
+        <div class="pokerTitle">High Card</div>
+        <div class="pokerHand">
+          <img
+            class="pokerCard"
+            [src]="'./assets/' + gameThemePathEnemy + '/cards/13_of_clubs.png'"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
     class="optionsButtonBox"
     [@fadeEnter]="{
       value: '',
@@ -19,9 +226,12 @@
       params: { duration: 500, delay: 0 }
     }"
     *ngIf="!gameWinnerPlayer && !gameLoserPlayer"
-    (click)="checkSurrender = !checkSurrender"
   >
-    <img src="./assets/surrender.png" class="optionsButton hoverButton" />
+    <img
+      src="./assets/question.png"
+      class="optionsButton hoverButton"
+      (click)="showPokerHandsChart = true"
+    />
   </div>
   <div class="checkSurrenderOverlay">
     <div

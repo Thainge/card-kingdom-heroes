@@ -14,6 +14,8 @@ export class LoadingService {
     loading: true,
     url: 'null',
   });
+  readonly isSurrendering$ = new BehaviorSubject<boolean>(false);
+  readonly isRefreshing$ = new BehaviorSubject<boolean>(false);
 
   constructor() {}
 

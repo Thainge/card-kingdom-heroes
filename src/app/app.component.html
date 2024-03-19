@@ -29,9 +29,19 @@
         <img src="./assets/closeActive.png" class="closeMenuButton activeBtn"/>
       </div>
       <div class="optionsRow">
-        <div class="optionsItem">
-          <div class="optionsItemTitle optionsText">Fullscreen</div>
-          <img src="./assets/fullscreen.png" (click)="toggleFullScreen()" class="optionsItemButton hoverButton" />
+        <div class="optionsButtonsRow">
+          <div class="optionsItem">
+            <div class="optionsItemTitle optionsText">Retry</div>
+            <img src="./assets/reset.png" (click)="refreshCombat()" class="optionsItemButton hoverButton" />
+          </div>
+          <div class="optionsItem">
+            <div class="optionsItemTitle optionsText">Surrender</div>
+            <img src="./assets/surrender.png" (click)="surrenderCombat()" class="optionsItemButton hoverButton" />
+          </div>
+          <div class="optionsItem">
+            <div class="optionsItemTitle optionsText">Fullscreen</div>
+            <img src="./assets/fullscreen.png" (click)="toggleFullScreen()" class="optionsItemButton hoverButton" />
+          </div>
         </div>
         <div class="musicBox">
           <div class="optionsItem volumeItem">

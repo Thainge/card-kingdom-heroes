@@ -1,3 +1,4 @@
+import { playerService } from 'src/app/services/player.service';
 import {
   Component,
   ElementRef,
@@ -91,7 +92,7 @@ export class AppComponent implements OnInit {
       }, 2500);
     });
     const currentRoute = this.router.url;
-    this.loadingService.navigate(currentRoute);
+    // this.loadingService.navigate(currentRoute);
     setInterval(() => {
       try {
         this.clickAnimationsList = this.clickAnimationsList.slice(
@@ -129,6 +130,16 @@ export class AppComponent implements OnInit {
       }
       this.isFullScreen = !this.isFullScreen;
     }
+  }
+
+  refreshCombat() {
+    this.loadingService.isRefreshing$.next(true);
+    this.optionsMenuOpened = false;
+  }
+
+  surrenderCombat() {
+    this.loadingService.isSurrendering$.next(true);
+    this.optionsMenuOpened = false;
   }
 
   async clickAnimation(e: any) {
@@ -233,10 +244,14 @@ export class AppComponent implements OnInit {
     }
 
     if (value.includes('easymode')) {
-      const easyMode =
-        JSON.parse(localStorage.getItem('easymode') ?? '') ?? false;
+      const easyLocal = localStorage.getItem('easymode');
+      let easyMode = false;
+      if (easyLocal) {
+        easyMode = JSON.parse(easyLocal);
+      }
+
       localStorage.setItem('easymode', JSON.stringify(!easyMode));
-      window.location.reload();
+        window.location.reload();
     }
 
     this.consoleItems.unshift('');

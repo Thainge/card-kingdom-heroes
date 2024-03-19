@@ -297,6 +297,7 @@ export class BattleComponent implements OnInit {
   dialogArray: DialogDto[] = [];
   displayDialog: boolean = false;
   hoveringAbilityDescription: AbilityCard | undefined;
+  showPokerHandsChart: boolean = false;
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -357,6 +358,19 @@ export class BattleComponent implements OnInit {
       this.Cards = Cards;
       this.gameInit();
     }
+
+    this.loadingService.isRefreshing$.subscribe((x) => {
+      if (x === true) {
+        this.loadingService.isRefreshing$.next(false);
+        this.retry();
+      }
+    });
+    this.loadingService.isSurrendering$.subscribe((x) => {
+      if (x === true) {
+        this.loadingService.isSurrendering$.next(false);
+        this.checkSurrender = true;
+      }
+    });
   }
 
   ngAfterViewInit() {
@@ -365,11 +379,13 @@ export class BattleComponent implements OnInit {
 
   ngAfterContentInit() {
     setTimeout(() => {
-      const showLoading =
-        JSON.parse(localStorage.getItem('showLoading') ?? '') ?? false;
-      if (showLoading) {
-        this.loadingService.navigate('/');
-        localStorage.setItem('showLoading', JSON.stringify(false));
+      const loadingLocal = localStorage.getItem('showLoading');
+      if (loadingLocal) {
+        const showLoading = JSON.parse(loadingLocal);
+        if (showLoading) {
+          this.loadingService.navigate('/');
+          localStorage.setItem('showLoading', JSON.stringify(false));
+        }
       }
     }, 50);
   }
@@ -539,7 +555,10 @@ export class BattleComponent implements OnInit {
 
   gameInit() {
     // this.easyMode = true;
-    this.easyMode = JSON.parse(localStorage.getItem('easymode') ?? '') ?? false;
+    const localEasyMode = localStorage.getItem('easymode');
+    if (localEasyMode) {
+      this.easyMode = JSON.parse(localEasyMode);
+    }
 
     // Player init
     this.player = this.userService.getPlayer();
@@ -600,11 +619,11 @@ export class BattleComponent implements OnInit {
     }, 400);
 
     // --- Skip redraw phase --- //
-    // this.redrawing = false;
-    // this.redrawHide = true;
-    // this.playerHand = [...this.redrawCards];
-    // this.drawAbilityCard(2);
-    // this.drawAbilityCardBot(2);
+    this.redrawing = false;
+    this.redrawHide = true;
+    this.playerHand = [...this.redrawCards];
+    this.drawAbilityCard(2);
+    this.drawAbilityCardBot(2);
 
     // setTimeout(() => {
     //   this.enemyPlayers[1].health = 0;
@@ -3439,6 +3458,7 @@ export class BattleComponent implements OnInit {
   }
 
   chooseDefensePlayerCards() {
+    this.validCards = [];
     // If selectedcards length is equal to player hand length, ignore errors
     if (
       this.selectedCards.length !== this.enemyAttackHand.cards.length &&
