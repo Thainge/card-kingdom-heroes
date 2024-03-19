@@ -6,8 +6,6 @@ import { PlayerDto } from './player';
 export interface LevelDto {
   id: number;
 
-  dialogList: DialogDto[];
-
   shuffleCards: boolean;
   shuffleAbilityCards: boolean;
   shuffleCardsBot: boolean;
@@ -20,6 +18,7 @@ export interface LevelDto {
   canSeeTopCardAbilities: boolean;
   combatPhases: EnemyLevelDto[];
 
+  playerLevelUpEnabled: boolean;
   skipRedrawPhase: boolean;
   battleRewardXp: number;
 }
@@ -39,6 +38,9 @@ export interface EnemyLevelDto {
   showNightEffect: boolean;
   showFireEffect: boolean;
   showAshesEffect: boolean;
+
+  dialogStart?: DialogDto[];
+  dialogEnd?: DialogDto[];
 }
 
 type CardThemeDto = 'default' | 'mario';

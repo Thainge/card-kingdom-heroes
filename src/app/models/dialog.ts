@@ -4,5 +4,4 @@ export interface DialogDto {
   text: string;
   shownText: string;
   player: boolean;
-  left: boolean;
 }

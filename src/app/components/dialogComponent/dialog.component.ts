@@ -52,7 +52,6 @@ export class DialogComponent implements OnInit {
     player: true,
     text: '',
     shownText: '',
-    left: true,
   };
 
   currentlyReading: boolean = false;
@@ -102,8 +101,6 @@ export class DialogComponent implements OnInit {
   }
 
   async iterateLetters() {
-    console.log(this.dialogArrayStatic);
-
     // Take away from total text and add to shownText
     if (
       this.activeDialog &&

@@ -2,43 +2,9 @@ import { LevelDto } from 'src/app/models/level';
 
 export const passedObj: LevelDto = {
   id: 1,
-  skipRedrawPhase: true,
+  skipRedrawPhase: false,
   battleRewardXp: 50,
-
-  dialogList: [
-    {
-      id: 1,
-      image: 'avatar.png',
-      player: true,
-      text: 'Hi my name is mario can you please go away bowser or I will have to trail through your goombas',
-      shownText: '',
-      left: true,
-    },
-    {
-      id: 2,
-      image: 'avatar.png',
-      player: true,
-      text: 'Hi my name is mario can you please go away bowser or I will have to trail through your goombas',
-      shownText: '',
-      left: false,
-    },
-    {
-      id: 3,
-      image: 'avatar.png',
-      player: true,
-      text: 'Hi my name is mario can you please go away bowser or I will have to trail through your goombas',
-      shownText: '',
-      left: false,
-    },
-    {
-      id: 4,
-      image: 'avatar.png',
-      player: true,
-      text: 'Hi my name is mario can you please go away bowser or I will have to trail through your goombas',
-      shownText: '',
-      left: true,
-    },
-  ],
+  playerLevelUpEnabled: true,
 
   shuffleAbilityCards: false,
   shuffleCards: false,
@@ -217,6 +183,38 @@ export const passedObj: LevelDto = {
       showNightEffect: false,
       showFireEffect: false,
       showAshesEffect: false,
+      dialogStart: [
+        {
+          id: 1,
+          image: 'avatar.png',
+          text: 'Bowser has to be here somewhere...',
+          shownText: '',
+          player: true,
+        },
+        {
+          id: 2,
+          image: 'avatar.png',
+          text: "Who's there!?!",
+          shownText: '',
+          player: false,
+        },
+        {
+          id: 3,
+          image: 'avatar.png',
+          text: "He's seen us, we have no choice... Fight!!",
+          shownText: '',
+          player: true,
+        },
+      ],
+      dialogEnd: [
+        {
+          id: 1,
+          image: 'avatar.png',
+          text: 'Nooooo!!!!',
+          shownText: '',
+          player: false,
+        },
+      ],
     },
     {
       id: 2,
@@ -384,6 +382,15 @@ export const passedObj: LevelDto = {
       showNightEffect: true,
       showFireEffect: false,
       showAshesEffect: false,
+      dialogEnd: [
+        {
+          id: 1,
+          image: 'avatar.png',
+          text: 'Bwaaaaaahhhhgg!!!!',
+          shownText: '',
+          player: false,
+        },
+      ],
     },
   ],
 };

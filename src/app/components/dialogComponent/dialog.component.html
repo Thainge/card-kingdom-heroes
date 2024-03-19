@@ -14,7 +14,7 @@
     }"
     [@fadeOutLeave]="{
       value: '',
-      params: { duration: 500, delay: 0 }
+      params: { duration: 1000, delay: 0 }
     }"
   ></div>
   <div
@@ -34,8 +34,8 @@
     "
     class="relativeDialogBox"
     [ngClass]="{
-      leftSide: activeDialog?.left,
-      rightSide: !activeDialog?.left
+      leftSide: !activeDialog?.player,
+      rightSide: activeDialog?.player
     }"
   >
     <img src="./assets/dialogBox.png" class="dialogBoxImage" />

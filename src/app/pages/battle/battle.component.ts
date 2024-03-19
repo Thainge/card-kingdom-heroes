@@ -302,6 +302,10 @@ export class BattleComponent implements OnInit {
 
   dialogArray: DialogDto[] = [];
   displayDialog: boolean = false;
+  dialogArrayCombat: DialogDto[] = [];
+  displayDialogCombat: boolean = false;
+  dialogArrayGameEnd: DialogDto[] = [];
+  displayDialogGameEnd: boolean = false;
   hoveringAbilityDescription: AbilityCard | undefined;
   showPokerHandsChart: boolean = false;
 
@@ -309,6 +313,7 @@ export class BattleComponent implements OnInit {
   allCombatPhases: EnemyLevelDto[] | undefined;
   currentCombatPhase: EnemyLevelDto | undefined;
   combatImages: CombatImages[] = [];
+  playerLevelUpEnabled: boolean = true;
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -397,12 +402,6 @@ export class BattleComponent implements OnInit {
         }
       }
     }, 50);
-  }
-
-  initDialogComponent() {
-    if (this.currentLevel) {
-      this.dialogArray = this.currentLevel.dialogList;
-    }
   }
 
   hoveringAbilityCardCss(abilityCard: AbilityCard) {
@@ -503,12 +502,10 @@ export class BattleComponent implements OnInit {
     this.canSeeTopCard = this.currentLevel.canSeeTopCard;
     this.canSeeTopCardAbilities = this.currentLevel.canSeeTopCardAbilities;
     this.battleRewardXp = this.currentLevel.battleRewardXp;
+    this.playerLevelUpEnabled = this.currentLevel.playerLevelUpEnabled;
 
     // Start bot phase
     this.nextCombatPhaseBot();
-
-    // Dialog
-    this.initDialogComponent();
 
     // Player init
     this.player = this.userService.getPlayer();
@@ -544,65 +541,10 @@ export class BattleComponent implements OnInit {
       this.redrawing = false;
       this.redrawHide = true;
       this.playerHand = [...this.redrawCards];
-      this.startDialog();
+      this.startDialog(true);
+    } else {
+      this.startDialog(true);
     }
-
-    // --- Skip redraw phase --- //
-    // this.redrawing = false;
-    // this.redrawHide = true;
-    // this.playerHand = [...this.redrawCards];
-    // this.drawAbilityCard(2);
-    // this.drawAbilityCardBot(2);
-
-    // setTimeout(() => {
-    //   this.enemyPlayers[1].health = 0;
-    // }, 1000);
-    // setTimeout(() => {
-    //   this.enemyPlayers[2].health = 0;
-    // }, 5000);
-    // setTimeout(() => {
-    //   this.enemyPlayers[3].health = 0;
-    // }, 7000);
-
-    // this.playerHand = this.playerHand.map((x, i) => {
-    //   return {
-    //     ...x,
-    //     id: i + 1,
-    //     suit: '',
-    //     image: `${x.value}_of_hearts.png`,
-    //   };
-    // });
-
-    // Give all ability cards //
-    // this.abilityDeckBot = this.abilityDeckBot.map((x) => {
-    //   return { ...x, cost: [] };
-    // });
-    // const hornAbility1 = this.abilityDeckBot.find(
-    //   (x) => x.abilityFunction === 'callInSupport'
-    // );
-    // const hornAbility2 = this.abilityDeckBot.find(
-    //   (x) => x.abilityFunction === 'callInSupport'
-    // );
-    // if (hornAbility1 && hornAbility2) {
-    //   this.abilityCardsHandBot = [
-    //     { ...hornAbility1, id: 1 },
-    //     { ...hornAbility2, id: 2 },
-    //   ];
-    // }
-    // this.abilityCardsHand = this.abilityDeck.map((x) => {
-    //   return { ...x, cost: [] };
-    // });
-
-    // this.abilityCardsHandBot = this.abilityDeckBot.map((x) => {
-    //   return { ...x, cost: [] };
-    // });
-
-    // --- Start bot turn --- //
-    // this.newTurn();
-    // this.startBotTurnsLoop();
-
-    // --- End game --- //
-    // this.endGame(false);
   }
 
   async nextCombatPhaseBot(extraDelays: boolean = false) {
@@ -614,14 +556,37 @@ export class BattleComponent implements OnInit {
       return;
     }
 
+    const shouldShowEndDialog =
+      this.currentCombatPhase &&
+      this.currentCombatPhase.dialogEnd &&
+      this.currentCombatPhase.dialogEnd.length > 0 &&
+      extraDelays;
+    if (shouldShowEndDialog) {
+      this.startEndDialogCombat();
+      return;
+    }
+
     this.currentCombatPhase = this.allCombatPhases[0];
+    this.allCombatPhases.shift();
+
     this.combatImages = this.combatImages.map((x) => {
       if (x.id === this.currentCombatPhase?.id) {
         return { ...x, display: true };
       }
       return { ...x, display: false };
     });
-    this.allCombatPhases.shift();
+    if (this.currentCombatPhase.dialogStart) {
+      this.dialogArray = this.currentCombatPhase.dialogStart;
+    }
+    this.gameThemePathEnemy = this.currentCombatPhase.enemyCardTheme;
+    this.showSnowEffect = this.currentCombatPhase.showSnowEffect;
+    this.showBubblesEffect = this.currentCombatPhase.showBubblesEffect;
+    this.showLeavesEffect = this.currentCombatPhase.showLeavesEffect;
+    this.showSunFlareEffect = this.currentCombatPhase.showSunFlareEffect;
+    this.showCloudsEffect = this.currentCombatPhase.showCloudsEffect;
+    this.showNightEffect = this.currentCombatPhase.showNightEffect;
+    this.showFireEffect = this.currentCombatPhase.showFireEffect;
+    this.showAshesEffect = this.currentCombatPhase.showAshesEffect;
 
     if (extraDelays) {
       await this.timeout(1000);
@@ -642,16 +607,6 @@ export class BattleComponent implements OnInit {
     if (this.currentLevel.shuffleCardsBot) {
       this.abilityDeckBot = this.cardService.shuffle(enemyCards);
     }
-
-    this.gameThemePathEnemy = this.currentCombatPhase.enemyCardTheme;
-    this.showSnowEffect = this.currentCombatPhase.showSnowEffect;
-    this.showBubblesEffect = this.currentCombatPhase.showBubblesEffect;
-    this.showLeavesEffect = this.currentCombatPhase.showLeavesEffect;
-    this.showSunFlareEffect = this.currentCombatPhase.showSunFlareEffect;
-    this.showCloudsEffect = this.currentCombatPhase.showCloudsEffect;
-    this.showNightEffect = this.currentCombatPhase.showNightEffect;
-    this.showFireEffect = this.currentCombatPhase.showFireEffect;
-    this.showAshesEffect = this.currentCombatPhase.showAshesEffect;
 
     if (extraDelays) {
       await this.addCardsToBothHands();
@@ -2078,9 +2033,21 @@ export class BattleComponent implements OnInit {
     return false;
   }
 
-  startDialog() {
+  startDialog(redrawFinishStart: boolean = false) {
+    if (redrawFinishStart) {
+      this.redrawing = false;
+      setTimeout(() => {
+        this.displayDialog = true;
+      }, 1000);
+      return;
+    }
+
     // Redrawing finished, show dialog
-    if (this.currentLevel && this.currentLevel.dialogList.length > 0) {
+    if (
+      this.currentLevel &&
+      this.currentLevel?.combatPhases[0].dialogStart &&
+      this.currentLevel?.combatPhases[0].dialogStart.length > 0
+    ) {
       this.redrawing = false;
       setTimeout(() => {
         this.displayDialog = true;
@@ -2095,6 +2062,42 @@ export class BattleComponent implements OnInit {
     // Finished dialog, populate redraw cards
     this.displayDialog = false;
     this.finishedRedraw();
+  }
+
+  startEndDialogCombat() {
+    if (
+      this.currentCombatPhase &&
+      this.currentCombatPhase.dialogEnd &&
+      this.currentCombatPhase.dialogEnd.length > 0
+    ) {
+      this.displayDialogCombat = true;
+      this.dialogArrayCombat = this.currentCombatPhase.dialogEnd;
+      this.currentCombatPhase.dialogEnd = [];
+    }
+  }
+
+  finishedDialogCombat() {
+    this.displayDialogCombat = false;
+    this.nextCombatPhaseBot(true);
+  }
+
+  startEndDialogGameEnd() {
+    if (
+      this.currentCombatPhase &&
+      this.currentCombatPhase.dialogEnd &&
+      this.currentCombatPhase.dialogEnd.length > 0
+    ) {
+      this.displayDialogGameEnd = true;
+      this.dialogArrayGameEnd = this.currentCombatPhase.dialogEnd;
+      this.currentCombatPhase.dialogEnd = [];
+    } else {
+      this.endGame(true);
+    }
+  }
+
+  finishedDialogGameEnd() {
+    this.displayDialogGameEnd = false;
+    this.endGame(true);
   }
 
   finishedRedraw() {
@@ -2678,11 +2681,11 @@ export class BattleComponent implements OnInit {
       if (this.allCombatPhases && this.allCombatPhases.length !== 0) {
         setTimeout(() => {
           this.nextCombatPhaseBot(true);
-        }, 3000);
+        }, 2000);
         return true;
       } else {
         setTimeout(() => {
-          this.endGame(true);
+          this.startEndDialogGameEnd();
         }, 2000);
         return true;
       }
@@ -2813,12 +2816,20 @@ export class BattleComponent implements OnInit {
       setTimeout(() => {
         this.gameWinnerPlayer = true;
       }, 1000);
-      setTimeout(() => {
-        this.showHeroLevelUp = true;
-      }, 4300);
-      setTimeout(() => {
-        this.levelUpPlayer();
-      }, 4600);
+      if (this.playerLevelUpEnabled) {
+        setTimeout(() => {
+          this.showHeroLevelUp = true;
+        }, 4300);
+        setTimeout(() => {
+          this.levelUpPlayer();
+        }, 4600);
+      } else {
+        setTimeout(() => {
+          this.showHeroLevelUp = false;
+          this.canClickNextReward = true;
+          this.nextReward({ id: 0 });
+        }, 3500);
+      }
     } else {
       setTimeout(() => {
         this.gameLoserPlayer = true;

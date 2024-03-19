@@ -4,6 +4,16 @@
     (finishedDialog)="finishedDialog()"
     [showDialog]="displayDialog"
   ></app-dialog>
+  <app-dialog
+    [dialogArray]="dialogArrayCombat"
+    (finishedDialog)="finishedDialogCombat()"
+    [showDialog]="displayDialogCombat"
+  ></app-dialog>
+  <app-dialog
+    [dialogArray]="dialogArrayGameEnd"
+    (finishedDialog)="finishedDialogGameEnd()"
+    [showDialog]="displayDialogGameEnd"
+  ></app-dialog>
   <div
     class="pokerHandsChart"
     (click)="showPokerHandsChart = false"
