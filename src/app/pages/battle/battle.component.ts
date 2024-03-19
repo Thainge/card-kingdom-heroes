@@ -309,6 +309,7 @@ export class BattleComponent implements OnInit {
   hoveringAbilityDescription: AbilityCard | undefined;
   showPokerHandsChart: boolean = false;
 
+  firstLevel: EnemyLevelDto | undefined;
   currentLevel: LevelDto | undefined;
   allCombatPhases: EnemyLevelDto[] | undefined;
   currentCombatPhase: EnemyLevelDto | undefined;
@@ -483,8 +484,9 @@ export class BattleComponent implements OnInit {
   gameInit() {
     // Passed object for battle
     this.currentLevel = passedObj;
-    this.allCombatPhases = passedObj.combatPhases;
-    this.combatImages = passedObj.combatPhases.map((x) => {
+    this.firstLevel = passedObj.combatPhases[0];
+    this.allCombatPhases = this.currentLevel.combatPhases;
+    this.combatImages = this.currentLevel.combatPhases.map((x) => {
       return { id: x.id, image: x.background, display: false };
     });
 
@@ -541,9 +543,7 @@ export class BattleComponent implements OnInit {
       this.redrawing = false;
       this.redrawHide = true;
       this.playerHand = [...this.redrawCards];
-      this.startDialog(true);
-    } else {
-      this.startDialog(true);
+      this.startDialog();
     }
   }
 
@@ -2033,15 +2033,21 @@ export class BattleComponent implements OnInit {
     return false;
   }
 
-  startDialog(redrawFinishStart: boolean = false) {
-    if (redrawFinishStart) {
+  hideRedrawPanel() {
+    if (
+      this.firstLevel &&
+      this.firstLevel.dialogStart &&
+      this.firstLevel.dialogStart.length > 0
+    ) {
       this.redrawing = false;
       setTimeout(() => {
+        this.redrawHide = true;
         this.displayDialog = true;
       }, 1000);
-      return;
     }
+  }
 
+  startDialog() {
     // Redrawing finished, show dialog
     if (
       this.currentLevel &&
@@ -2050,6 +2056,7 @@ export class BattleComponent implements OnInit {
     ) {
       this.redrawing = false;
       setTimeout(() => {
+        this.redrawHide = true;
         this.displayDialog = true;
       }, 1000);
     } else {
