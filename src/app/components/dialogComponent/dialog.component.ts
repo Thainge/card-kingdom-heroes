@@ -58,6 +58,7 @@ export class DialogComponent implements OnInit {
   currentlyReading: boolean = false;
   isIterating: boolean = false;
 
+  @Input('showDialog') showDialog: boolean = false;
   @Input('dialogArray') set dialogArray(dialogArray: DialogDto[]) {
     if (dialogArray.length > 0) {
       this.dialogArrayStatic = dialogArray;

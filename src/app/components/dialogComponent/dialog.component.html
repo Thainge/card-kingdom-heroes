@@ -1,7 +1,37 @@
-<div class="container" (click)="skipReadingCurrentDialog()">
-  <div class="dialogBackdrop"></div>
+<div
+  class="container"
+  [ngClass]="{
+    activeContainer: showDialog
+  }"
+  (click)="skipReadingCurrentDialog()"
+>
   <div
-    *ngIf="activeDialog && activeDialog.text && activeDialog.text.length > 0"
+    class="dialogBackdrop"
+    *ngIf="showDialog"
+    [@fadeEnter]="{
+      value: '',
+      params: { duration: 1000, delay: 0 }
+    }"
+    [@fadeOutLeave]="{
+      value: '',
+      params: { duration: 1000, delay: 0 }
+    }"
+  ></div>
+  <div
+    [@fadeEnter]="{
+      value: '',
+      params: { duration: 1000, delay: 0 }
+    }"
+    [@fadeOutLeave]="{
+      value: '',
+      params: { duration: 1000, delay: 0 }
+    }"
+    *ngIf="
+      activeDialog &&
+      activeDialog.text &&
+      activeDialog.text.length > 0 &&
+      showDialog
+    "
     class="relativeDialogBox"
     [ngClass]="{
       leftSide: activeDialog?.left,

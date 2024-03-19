@@ -4,10 +4,14 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 2300;
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: -1;
+}
+
+.activeContainer {
+  z-index: 3001;
 }
 
 .dialogBackdrop {

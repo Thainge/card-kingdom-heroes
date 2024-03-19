@@ -475,6 +475,27 @@ export class BattleComponent implements OnInit {
   }
 
   gameInit() {
+    // Passed object for battle
+    this.currentLevel = passedObj;
+    this.allCombatPhases = passedObj.combatPhases;
+
+    // Easy mode
+    this.easyMode = this.currentLevel.easyMode;
+    const localEasyMode = localStorage.getItem('easymode');
+    if (localEasyMode) {
+      this.easyMode = JSON.parse(localEasyMode);
+    }
+
+    // Hero abilities
+    this.canDefendWithMultipleCards =
+      this.currentLevel.canDefendWithMultipleCards;
+    this.alwaysWinTies = this.currentLevel.alwaysWinTies;
+    this.canSeeTopCard = this.currentLevel.canSeeTopCard;
+    this.canSeeTopCardAbilities = this.currentLevel.canSeeTopCardAbilities;
+
+    // Start bot phase
+    this.nextCombatPhaseBot();
+
     // Dialog
     this.initDialogComponent();
 
@@ -500,27 +521,6 @@ export class BattleComponent implements OnInit {
       });
     }
     this.playerDeck = this.cardService.shuffle(playerCards);
-
-    // Passed object for battle
-    this.currentLevel = passedObj;
-    this.allCombatPhases = passedObj.combatPhases;
-
-    // Easy mode
-    this.easyMode = this.currentLevel.easyMode;
-    const localEasyMode = localStorage.getItem('easymode');
-    if (localEasyMode) {
-      this.easyMode = JSON.parse(localEasyMode);
-    }
-
-    // Hero abilities
-    this.canDefendWithMultipleCards =
-      this.currentLevel.canDefendWithMultipleCards;
-    this.alwaysWinTies = this.currentLevel.alwaysWinTies;
-    this.canSeeTopCard = this.currentLevel.canSeeTopCard;
-    this.canSeeTopCardAbilities = this.currentLevel.canSeeTopCardAbilities;
-
-    // Start bot phase
-    this.nextCombatPhaseBot();
 
     // Populate 5 redraw cards
     for (const num of [0, 1, 2, 3, 4]) {
@@ -2036,7 +2036,10 @@ export class BattleComponent implements OnInit {
   startDialog() {
     // Redrawing finished, show dialog
     if (this.currentLevel && this.currentLevel.dialogList.length > 0) {
-      this.displayDialog = true;
+      this.redrawing = false;
+      setTimeout(() => {
+        this.displayDialog = true;
+      }, 1000);
     } else {
       // No dialog, populate redraw cards
       this.finishedRedraw();

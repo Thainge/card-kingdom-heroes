@@ -2,11 +2,7 @@
   <app-dialog
     [dialogArray]="dialogArray"
     (finishedDialog)="finishedDialog()"
-    *ngIf="displayDialog"
-    [@fadeOutLeave]="{
-      value: '',
-      params: { duration: 500, delay: 0 }
-    }"
+    [showDialog]="displayDialog"
   ></app-dialog>
   <div
     class="pokerHandsChart"
