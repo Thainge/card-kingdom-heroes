@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { BackgroundDto } from '../models/backgrounds';
 
 interface LoadingObject {
   loading: boolean;
   url: string;
-  image: string;
+  image: BackgroundDto;
 }
 
 @Injectable({
@@ -14,14 +15,14 @@ export class LoadingService {
   readonly isLoading$ = new BehaviorSubject<LoadingObject>({
     loading: true,
     url: 'null',
-    image: '',
+    image: 'forest.png',
   });
   readonly isSurrendering$ = new BehaviorSubject<boolean>(false);
   readonly isRefreshing$ = new BehaviorSubject<boolean>(false);
 
   constructor() {}
 
-  public navigate(url: string, image: string) {
+  public navigate(url: string, image: BackgroundDto) {
     this.isLoading$.next({ loading: true, url: url, image: image });
   }
 }

@@ -36,14 +36,14 @@ import {
 } from 'src/app/models/determine';
 import 'leader-line';
 import { playerService } from 'src/app/services/player.service';
-import { CheatDto } from 'src/app/models/cheat';
 import { trigger, style, transition, animate } from '@angular/animations';
 declare let LeaderLine: any;
 import { Cards } from 'src/assets/data/cards';
 import { AbilityService } from 'src/app/services/ability.service';
-import { LevelDto } from 'src/app/models/level';
+import { EnemyLevelDto, LevelDto } from 'src/app/models/level';
 import { DialogComponent } from 'src/app/components/dialogComponent/dialog.component';
 import { DialogDto } from 'src/app/models/dialog';
+import { passedObj } from 'src/assets/data/level';
 
 const defaultAbilityCard: AbilityCard = {
   id: 0,
@@ -299,6 +299,10 @@ export class BattleComponent implements OnInit {
   hoveringAbilityDescription: AbilityCard | undefined;
   showPokerHandsChart: boolean = false;
 
+  currentLevel: LevelDto | undefined;
+  allCombatPhases: EnemyLevelDto[] | undefined;
+  currentCombatPhase: EnemyLevelDto | undefined;
+
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
 
@@ -327,9 +331,6 @@ export class BattleComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Dialog
-    // this.initDialogComponent();
-
     // Player game theme
     this.userService.gameTheme$.subscribe((x) => {
       this.gameThemePath = x;
@@ -353,7 +354,8 @@ export class BattleComponent implements OnInit {
         this.player.health = 99;
       }
     });
-    // Game init init
+
+    // Game init
     if (this.Cards.length < 1) {
       this.Cards = Cards;
       this.gameInit();
@@ -390,46 +392,10 @@ export class BattleComponent implements OnInit {
     }, 50);
   }
 
-  finishedDialog() {
-    this.displayDialog = false;
-  }
-
   initDialogComponent() {
-    this.dialogArray = [
-      {
-        id: 1,
-        image: 'avatar.png',
-        player: true,
-        text: 'Hi my name is mario can you please go away bowser or I will have to trail through your goombas',
-        shownText: '',
-        left: true,
-      },
-      {
-        id: 2,
-        image: 'avatar.png',
-        player: true,
-        text: 'Hi my name is mario can you please go away bowser or I will have to trail through your goombas',
-        shownText: '',
-        left: false,
-      },
-      {
-        id: 3,
-        image: 'avatar.png',
-        player: true,
-        text: 'Hi my name is mario can you please go away bowser or I will have to trail through your goombas',
-        shownText: '',
-        left: false,
-      },
-      {
-        id: 4,
-        image: 'avatar.png',
-        player: true,
-        text: 'Hi my name is mario can you please go away bowser or I will have to trail through your goombas',
-        shownText: '',
-        left: true,
-      },
-    ];
-    this.displayDialog = true;
+    if (this.currentLevel) {
+      this.dialogArray = this.currentLevel.dialogList;
+    }
   }
 
   hoveringAbilityCardCss(abilityCard: AbilityCard) {
@@ -508,57 +474,9 @@ export class BattleComponent implements OnInit {
     }
   }
 
-  botThemeInit() {
-    // Level Theme Set
-    const currentLevel: LevelDto = {
-      id: 1,
-      enemyPlayers: [
-        {
-          id: 1,
-          image: 'goomba.png',
-          name: 'Goomba',
-          attack: 1,
-          baseAttack: 1,
-          health: 3,
-          baseHealth: 3,
-          level: 1,
-        },
-        {
-          id: 2,
-          image: 'goomba.png',
-          name: 'Goomba',
-          attack: 3,
-          baseAttack: 3,
-          health: 5,
-          baseHealth: 5,
-          level: 2,
-        },
-      ],
-      enemyAbilityCards: this.cardService.shuffle(
-        this.userService.getAbilityCardsBot()
-      ),
-      enemyCardTheme: 'mario',
-      background: 'forest.png',
-    };
-
-    this.enemyPlayers = currentLevel.enemyPlayers;
-    if (!this.easyMode) {
-      this.abilityDeckBot = currentLevel.enemyAbilityCards;
-    }
-    const enemyCards: CardDto[] = this.Cards.map((x) => {
-      return { ...x, wildInitial: x.value, wildCurrent: '0' };
-    });
-    this.enemyDeck = this.cardService.shuffle(enemyCards);
-    this.levelBgImage = currentLevel.background;
-    this.gameThemePathEnemy = currentLevel.enemyCardTheme;
-  }
-
   gameInit() {
-    // this.easyMode = true;
-    const localEasyMode = localStorage.getItem('easymode');
-    if (localEasyMode) {
-      this.easyMode = JSON.parse(localEasyMode);
-    }
+    // Dialog
+    this.initDialogComponent();
 
     // Player init
     this.player = this.userService.getPlayer();
@@ -566,20 +484,9 @@ export class BattleComponent implements OnInit {
       this.abilityDeck = this.userService.getAbilityCards();
       this.abilityDeck = this.cardService.shuffle(this.abilityDeck);
     }
-
-    // Cheats
-    const cheats: CheatDto = this.userService.getPlayerCheats();
-    this.canDefendWithMultipleCards = cheats.canDefendWithMultipleCards;
-    this.alwaysWinTies = cheats.alwaysWinTies;
-    // this.canSeeTopCard = cheats.canSeeTopCard;
-    // this.canSeeTopCardAbilities = cheats.canSeeTopCardAbilities;
-
-    this.botThemeInit();
-
-    // Change deck values based on player skills
     this.updateDeckBasedOnPlayerSkills();
 
-    // Add wildcards to deck
+    // Add wildcards to player deck
     let playerCards: CardDto[] = this.Cards.map((x) => {
       return { ...x, wildInitial: x.value, wildCurrent: '0' };
     });
@@ -592,38 +499,43 @@ export class BattleComponent implements OnInit {
         playerCards.push(newWildCard);
       });
     }
-
-    // Shuffle player decks
     this.playerDeck = this.cardService.shuffle(playerCards);
 
-    // Both players draw 5 cards
+    // Passed object for battle
+    this.currentLevel = passedObj;
+    this.allCombatPhases = passedObj.combatPhases;
+
+    // Easy mode
+    this.easyMode = this.currentLevel.easyMode;
+    const localEasyMode = localStorage.getItem('easymode');
+    if (localEasyMode) {
+      this.easyMode = JSON.parse(localEasyMode);
+    }
+
+    // Hero abilities
+    this.canDefendWithMultipleCards =
+      this.currentLevel.canDefendWithMultipleCards;
+    this.alwaysWinTies = this.currentLevel.alwaysWinTies;
+    this.canSeeTopCard = this.currentLevel.canSeeTopCard;
+    this.canSeeTopCardAbilities = this.currentLevel.canSeeTopCardAbilities;
+
+    // Start bot phase
+    this.nextCombatPhaseBot();
+
+    // Populate 5 redraw cards
     for (const num of [0, 1, 2, 3, 4]) {
       // Add to player 1 hand and remove player 1 deck
       this.redrawCards.push(this.playerDeck[0]);
       this.playerDeck.push(this.playerDeck[0]);
       this.playerDeck.shift();
-
-      // Add to player 2 hand and remove player 2 deck
-      this.enemyHand.push(this.enemyDeck[0]);
-      this.enemyDeck.push(this.enemyDeck[0]);
-      this.enemyDeck.shift();
     }
-    this.topRedrawCard = 0;
-    setTimeout(() => {
-      if (this.playerDeck[0] && this.playerDeck[0].id) {
-        this.topRedrawCard = this.playerDeck[0].id;
-      }
-      if (this.enemyDeck[0] && this.enemyDeck[0].id) {
-        this.topRedrawCardEnemy = this.enemyDeck[0].id;
-      }
-    }, 400);
 
     // --- Skip redraw phase --- //
-    this.redrawing = false;
-    this.redrawHide = true;
-    this.playerHand = [...this.redrawCards];
-    this.drawAbilityCard(2);
-    this.drawAbilityCardBot(2);
+    // this.redrawing = false;
+    // this.redrawHide = true;
+    // this.playerHand = [...this.redrawCards];
+    // this.drawAbilityCard(2);
+    // this.drawAbilityCardBot(2);
 
     // setTimeout(() => {
     //   this.enemyPlayers[1].health = 0;
@@ -674,6 +586,35 @@ export class BattleComponent implements OnInit {
 
     // --- End game --- //
     // this.endGame(false);
+  }
+
+  nextCombatPhaseBot() {
+    if (!this.allCombatPhases || !this.currentLevel) {
+      return;
+    }
+
+    this.currentCombatPhase = passedObj.combatPhases[0];
+    this.allCombatPhases.shift();
+
+    this.enemyPlayers = this.currentCombatPhase.enemyPlayers;
+    if (!this.easyMode) {
+      this.abilityDeckBot = this.currentCombatPhase.enemyAbilityCards;
+      if (this.currentLevel.shuffleAbilityCardsBot) {
+        this.abilityDeckBot = this.cardService.shuffle(this.abilityDeckBot);
+      }
+    }
+    const enemyCards: CardDto[] = this.Cards.map((x) => {
+      return { ...x, wildInitial: x.value, wildCurrent: '0' };
+    });
+    this.enemyDeck = enemyCards;
+    if (this.currentLevel.shuffleCardsBot) {
+      this.abilityDeckBot = this.cardService.shuffle(enemyCards);
+    }
+
+    this.levelBgImage = this.currentCombatPhase.background;
+    this.gameThemePathEnemy = this.currentCombatPhase.enemyCardTheme;
+    console.log('currentCombatPhase: ', this.currentCombatPhase);
+    console.log('currentLevel: ', this.currentLevel);
   }
 
   async continue() {
@@ -2092,6 +2033,22 @@ export class BattleComponent implements OnInit {
     return false;
   }
 
+  startDialog() {
+    // Redrawing finished, show dialog
+    if (this.currentLevel && this.currentLevel.dialogList.length > 0) {
+      this.displayDialog = true;
+    } else {
+      // No dialog, populate redraw cards
+      this.finishedRedraw();
+    }
+  }
+
+  finishedDialog() {
+    // Finished dialog, populate redraw cards
+    this.displayDialog = false;
+    this.finishedRedraw();
+  }
+
   finishedRedraw() {
     this.redrawing = false;
     setTimeout(() => {
@@ -2120,10 +2077,20 @@ export class BattleComponent implements OnInit {
         this.playerDeck.push(this.playerDeck[0]);
         this.playerDeck.shift();
       });
-      this.topRedrawCard = 0;
+
+      // Add cards to bot hand
+      for (const num of [0, 1, 2, 3, 4]) {
+        // Add to player 1 hand and remove player 1 deck
+        this.enemyHand.push(this.enemyDeck[0]);
+        this.enemyDeck.push(this.enemyDeck[0]);
+        this.enemyDeck.shift();
+      }
       setTimeout(() => {
         if (this.playerDeck[0] && this.playerDeck[0].id) {
           this.topRedrawCard = this.playerDeck[0].id;
+        }
+        if (this.enemyDeck[0] && this.enemyDeck[0].id) {
+          this.topRedrawCardEnemy = this.enemyDeck[0].id;
         }
       }, 400);
 
