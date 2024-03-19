@@ -165,6 +165,7 @@ export class BattleComponent implements OnInit {
   redrawSelectedCards: CardDto[] = [];
   redrawing: boolean = true;
   redrawHide: boolean = false;
+  disableAttackBtn: boolean = true;
 
   validCards: CardDto[] = [];
   errorList: any[] = [];
@@ -496,6 +497,7 @@ export class BattleComponent implements OnInit {
     if (localEasyMode) {
       this.easyMode = JSON.parse(localEasyMode);
     }
+    this.easyMode = passedObj.easyMode;
 
     // Hero abilities
     this.canDefendWithMultipleCards =
@@ -513,7 +515,9 @@ export class BattleComponent implements OnInit {
     this.player = this.userService.getPlayer();
     if (!this.easyMode) {
       this.abilityDeck = this.userService.getAbilityCards();
-      this.abilityDeck = this.cardService.shuffle(this.abilityDeck);
+      if (this.currentLevel.shuffleAbilityCards) {
+        this.abilityDeck = this.cardService.shuffle(this.abilityDeck);
+      }
     }
     this.updateDeckBasedOnPlayerSkills();
 
@@ -530,7 +534,10 @@ export class BattleComponent implements OnInit {
         playerCards.push(newWildCard);
       });
     }
-    this.playerDeck = this.cardService.shuffle(playerCards);
+    this.playerDeck = playerCards;
+    if (this.currentLevel.shuffleCards) {
+      this.playerDeck = this.cardService.shuffle(playerCards);
+    }
 
     for (const num of [0, 1, 2, 3, 4]) {
       // Add to player 1 hand and remove player 1 deck
@@ -542,8 +549,7 @@ export class BattleComponent implements OnInit {
     if (this.currentLevel.skipRedrawPhase) {
       this.redrawing = false;
       this.redrawHide = true;
-      this.playerHand = [...this.redrawCards];
-      this.startDialog();
+      this.hideRedrawPanel();
     }
   }
 
@@ -588,6 +594,7 @@ export class BattleComponent implements OnInit {
     this.showFireEffect = this.currentCombatPhase.showFireEffect;
     this.showAshesEffect = this.currentCombatPhase.showAshesEffect;
 
+    this.completedEnemyTurns = [];
     if (extraDelays) {
       await this.timeout(1000);
     }
@@ -605,7 +612,7 @@ export class BattleComponent implements OnInit {
     });
     this.enemyDeck = enemyCards;
     if (this.currentLevel.shuffleCardsBot) {
-      this.abilityDeckBot = this.cardService.shuffle(enemyCards);
+      this.enemyDeck = this.cardService.shuffle(enemyCards);
     }
 
     if (extraDelays) {
@@ -2044,23 +2051,7 @@ export class BattleComponent implements OnInit {
         this.redrawHide = true;
         this.displayDialog = true;
       }, 1000);
-    }
-  }
-
-  startDialog() {
-    // Redrawing finished, show dialog
-    if (
-      this.currentLevel &&
-      this.currentLevel?.combatPhases[0].dialogStart &&
-      this.currentLevel?.combatPhases[0].dialogStart.length > 0
-    ) {
-      this.redrawing = false;
-      setTimeout(() => {
-        this.redrawHide = true;
-        this.displayDialog = true;
-      }, 1000);
     } else {
-      // No dialog, populate redraw cards
       this.finishedRedraw();
     }
   }
@@ -2111,6 +2102,7 @@ export class BattleComponent implements OnInit {
     this.redrawing = false;
     setTimeout(() => {
       this.pushMessage('Player Turn');
+      this.disableAttackBtn = false;
     }, 2500);
 
     setTimeout(() => {
@@ -2375,6 +2367,10 @@ export class BattleComponent implements OnInit {
   }
 
   async attack() {
+    if (this.disableAttackBtn) {
+      return;
+    }
+
     if (this.selectedCards.length === 0 && this.playerHand.length === 0) {
       this.newTurn();
       await this.addCardsToBothHands();

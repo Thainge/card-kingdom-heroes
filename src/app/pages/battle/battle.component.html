@@ -1581,7 +1581,12 @@
           </div>
         </div>
 
-        <div class="defendBtnContainer">
+        <div
+          class="defendBtnContainer"
+          [ngClass]="{
+            defendBtnContainerEasy: easyMode
+          }"
+        >
           <div
             class="wildText"
             [ngStyle]="{
@@ -2955,6 +2960,7 @@
     <div
       class="bottomRight"
       [ngClass]="{
+        absoluteBottomRight: easyMode,
         darkenCard:
           currentAbility.abilityFunction === 'wildSuit' ||
           currentAbility.abilityFunction === 'wildRange' ||
@@ -2982,7 +2988,8 @@
           [src]="'./assets/attack.png'"
           class="attackButton"
           [ngClass]="{
-            disabledButtonAnimation: !canSelectCards || selectedCards.length < 1
+            disabledButtonAnimation:
+              !canSelectCards || selectedCards.length < 1
           }"
           (click)="attack()"
         />
