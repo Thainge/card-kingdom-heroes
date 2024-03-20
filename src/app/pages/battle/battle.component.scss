@@ -744,7 +744,7 @@
 
   100% {
     opacity: 1;
-    width: 12%;
+    width: 100%;
     -webkit-transform: translate(0, 0%);
     transform: translate(0, 0%);
   }
@@ -760,7 +760,7 @@
 
   100% {
     opacity: 1;
-    width: 12%;
+    width: 100%;
     -webkit-transform: translate(0, 0%);
     transform: translate(0, 0%);
   }
@@ -776,7 +776,7 @@
 
   100% {
     opacity: 1;
-    width: 12%;
+    width: 20%;
     -webkit-transform: translate(0, 0%);
     transform: translate(0, 0%);
   }
@@ -792,7 +792,7 @@
 
   100% {
     opacity: 1;
-    width: 12%;
+    width: 20%;
     -webkit-transform: translate(0, 0%);
     transform: translate(0, 0%);
   }
@@ -2268,9 +2268,10 @@
   pointer-events: none !important;
 
   opacity: 0;
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s;
+  filter: brightness(0.2);
+  -webkit-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
 }
 
 .fadeHide {
@@ -5532,7 +5533,12 @@ text {
   z-index: 99 !important;
 }
 
-@media screen and (max-width: 800px) {
+.attackButtonBoxMobile {
+  display: none;
+}
+
+@media screen and (max-width: 1000px) {
+  // Redraw panel
   .redrawText {
     font-size: 120%;
   }
@@ -5546,15 +5552,94 @@ text {
   }
 
   .defendAttackTxt {
-    margin-top: -70%;
+    margin-top: -100%;
   }
 
   .wildText {
-    font-size: 50%;
-    -webkit-text-stroke: 0.5px #000;
+    font-size: 100%;
+    -webkit-text-stroke: 2px #000;
   }
 
   .redrawCardBox {
-    width: 15%;
+    width: 100%;
+  }
+
+  .redrawCardsContainer {
+    margin: 0;
+    width: 100%;
+    height: auto;
+  }
+
+  .goBtnContainer {
+    bottom: 28%;
+  }
+
+  // Combat
+  .topLeft,
+  .topRight,
+  .bottomLeft,
+  .topMiddle,
+  .optionsButtonBox,
+  .bottomRight {
+    display: none;
+  }
+
+  .bottomRight div:nth-child(2) {
+    display: none;
+    pointer-events: none;
+  }
+
+  .veryBottomMiddle {
+    width: 100%;
+  }
+
+  .attackTxt {
+    margin-left: 1%;
+  }
+
+  .attackButtonBoxMobile {
+    display: block;
+    position: absolute;
+    left: 26%;
+    top: 15%;
+    scale: 0.9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .middle {
+    margin-top: -8%;
+    scale: 1.3;
+    font-size: 0.6em;
+  }
+
+  .abilityDescriptionText,
+  .abilityTitle,
+  .abilityDescriptionLevel {
+    font-size: 150%;
+    font-family: soho;
+  }
+
+  .defendBtnContainer {
+    right: -38%;
+    bottom: 36%;
+  }
+
+  .rayItem {
+    scale: 0.6;
+  }
+
+  .rewardsTitle {
+    margin-top: -2em;
+  }
+
+  .rewardBox {
+    width: 5em;
+  }
+
+  .finishButtonGo {
+    scale: 0.8;
   }
 }

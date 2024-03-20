@@ -301,6 +301,7 @@ export class BattleComponent implements OnInit {
   easyMode: boolean = false;
   checkSurrender: boolean = false;
 
+  hideDialog: boolean = false;
   dialogArray: DialogDto[] = [];
   displayDialog: boolean = false;
   dialogArrayCombat: DialogDto[] = [];
@@ -497,6 +498,7 @@ export class BattleComponent implements OnInit {
       this.easyMode = JSON.parse(localEasyMode);
     }
     this.easyMode = passedObj.easyMode ?? this.easyMode;
+    this.hideDialog = passedObj.hideDialog ?? false;
 
     // Hero abilities
     this.canDefendWithMultipleCards =
@@ -550,6 +552,10 @@ export class BattleComponent implements OnInit {
       this.redrawHide = true;
       this.hideRedrawPanel();
     }
+
+    // --- Bot Turn --- //
+    this.canSelectCards = false;
+    this.startBotTurnsLoop();
   }
 
   async nextCombatPhaseBot(extraDelays: boolean = false) {
@@ -565,7 +571,8 @@ export class BattleComponent implements OnInit {
       this.currentCombatPhase &&
       this.currentCombatPhase.dialogEnd &&
       this.currentCombatPhase.dialogEnd.length > 0 &&
-      extraDelays;
+      extraDelays &&
+      !this.hideDialog;
     if (shouldShowEndDialog) {
       this.startEndDialogCombat();
       return;
@@ -580,7 +587,7 @@ export class BattleComponent implements OnInit {
       }
       return { ...x, display: false };
     });
-    if (this.currentCombatPhase.dialogStart) {
+    if (this.currentCombatPhase.dialogStart && !this.hideDialog) {
       this.dialogArray = this.currentCombatPhase.dialogStart;
     }
     this.gameThemePathEnemy = this.currentCombatPhase.enemyCardTheme;
@@ -2043,7 +2050,8 @@ export class BattleComponent implements OnInit {
     if (
       this.firstLevel &&
       this.firstLevel.dialogStart &&
-      this.firstLevel.dialogStart.length > 0
+      this.firstLevel.dialogStart.length > 0 &&
+      !this.hideDialog
     ) {
       this.redrawing = false;
       setTimeout(() => {
@@ -2065,7 +2073,8 @@ export class BattleComponent implements OnInit {
     if (
       this.currentCombatPhase &&
       this.currentCombatPhase.dialogEnd &&
-      this.currentCombatPhase.dialogEnd.length > 0
+      this.currentCombatPhase.dialogEnd.length > 0 &&
+      !this.hideDialog
     ) {
       this.displayDialogCombat = true;
       this.dialogArrayCombat = this.currentCombatPhase.dialogEnd;
@@ -2082,7 +2091,8 @@ export class BattleComponent implements OnInit {
     if (
       this.currentCombatPhase &&
       this.currentCombatPhase.dialogEnd &&
-      this.currentCombatPhase.dialogEnd.length > 0
+      this.currentCombatPhase.dialogEnd.length > 0 &&
+      !this.hideDialog
     ) {
       this.displayDialogGameEnd = true;
       this.dialogArrayGameEnd = this.currentCombatPhase.dialogEnd;
@@ -2687,7 +2697,12 @@ export class BattleComponent implements OnInit {
         return true;
       } else {
         setTimeout(() => {
-          this.startEndDialogGameEnd();
+          if (!this.hideDialog) {
+            this.startEndDialogGameEnd();
+          } else {
+            this.displayDialogGameEnd = false;
+            this.endGame(true);
+          }
         }, 2000);
         return true;
       }

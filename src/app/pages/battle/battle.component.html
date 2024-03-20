@@ -1939,7 +1939,9 @@
             value: '',
             params: { duration: 600, delay: 500, translate: '200px' }
           }"
-          [@fadeUpLeave]
+          [ngClass]="{
+            fadeFast: !redrawing,
+          }"
         >
           <img
             [src]="'./assets/' + gameThemePath + '/attack.png'"
@@ -2967,6 +2969,37 @@
         </div>
       </div>
     </div>
+    <div
+        class="attackButtonBoxMobile"
+        *ngIf="redrawHide"
+        [ngClass]="{
+          easyModeButtonBox: easyMode,
+          disabledButton: !canSelectCards
+        }"
+        [@fadeEnter]="{
+          value: '',
+          params: { duration: 400, delay: 1000, translate: '30px' }
+        }"
+        [@fadeUpLeave]
+      >
+        <img
+          [src]="'./assets/' + gameThemePath + '/attack.png'"
+          class="attackButton"
+          [ngClass]="{
+            goButtonRed: gameThemePath === 'mario',
+            disabledButtonAnimation: !canSelectCards,
+          }"
+          (click)="attack()"
+        />
+        <div
+          class="defendAttackTxt wildText attackTxt"
+          [ngStyle]="{
+            'font-family': 'headerFont'
+          }"
+        >
+          Attack
+        </div>
+      </div>
     <div
       class="bottomRight"
       [ngClass]="{

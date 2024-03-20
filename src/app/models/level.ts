@@ -11,6 +11,7 @@ export interface LevelDto {
   shuffleCardsBot: boolean;
   shuffleAbilityCardsBot: boolean;
 
+  hideDialog?: boolean;
   easyMode?: boolean;
   canDefendWithMultipleCards: boolean;
   alwaysWinTies: boolean;

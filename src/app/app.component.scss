@@ -216,11 +216,11 @@
 // Loading
 .loadingContainer {
   position: absolute;
-  width: calc(100% + 1px);
-  height: calc(100% + 1px);
+  width: calc(100% + 3px);
+  height: calc(100% + 3px);
   z-index: 10000;
-  top: -1px;
-  left: -1px;
+  top: -2px;
+  left: -2px;
   pointer-events: none;
 }
 
@@ -239,8 +239,8 @@
   -webkit-box-align: end;
   -ms-flex-align: end;
   align-items: flex-end;
-  animation: fadeOutBg 1.5s;
-  animation-delay: 2s;
+  animation: fadeOutBg 1s;
+  animation-delay: 2.5s;
   animation-fill-mode: forwards;
 }
 
@@ -250,7 +250,7 @@
   }
 
   100% {
-    filter: blur(1px) brightness(0.2);
+    filter: blur(2px) brightness(0.7);
   }
 }
 
@@ -773,4 +773,14 @@
   -webkit-transform: scale(0.9);
   -ms-transform: scale(0.9);
   transform: scale(0.9);
+}
+
+@media screen and (max-width: 1000px) {
+  .optionsButton {
+    scale: 0.7;
+  }
+
+  .optionsMenuBox {
+    scale: 0.5;
+  }
 }
