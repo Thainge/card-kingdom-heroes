@@ -1778,7 +1778,7 @@
                 [src]="'./assets/' + gameThemePath + '/cards/' + card.image"
                 class="cardBackgroundImage"
               />
-              <div class="wildCard" *ngIf="card.wild"></div>
+              <div class="wildCard wildCardRedraw" *ngIf="card.wild"></div>
               <div
                 class="wildCardIcon"
                 *ngIf="card.wild && card.wildRange && card.wildRange > 0"
@@ -2988,8 +2988,7 @@
           [src]="'./assets/attack.png'"
           class="attackButton"
           [ngClass]="{
-            disabledButtonAnimation:
-              !canSelectCards || selectedCards.length < 1
+            disabledButtonAnimation: !canSelectCards || selectedCards.length < 1
           }"
           (click)="attack()"
         />

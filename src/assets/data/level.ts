@@ -11,7 +11,6 @@ export const passedObj: LevelDto = {
   shuffleAbilityCardsBot: true,
   shuffleCardsBot: true,
 
-  easyMode: false,
   canDefendWithMultipleCards: true,
   alwaysWinTies: true,
   canSeeTopCard: false,

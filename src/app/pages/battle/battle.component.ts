@@ -492,12 +492,11 @@ export class BattleComponent implements OnInit {
     });
 
     // Easy mode
-    this.easyMode = this.currentLevel.easyMode;
     const localEasyMode = localStorage.getItem('easymode');
     if (localEasyMode) {
       this.easyMode = JSON.parse(localEasyMode);
     }
-    this.easyMode = passedObj.easyMode;
+    this.easyMode = passedObj.easyMode ?? this.easyMode;
 
     // Hero abilities
     this.canDefendWithMultipleCards =

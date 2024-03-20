@@ -1712,15 +1712,11 @@
 }
 
 .attackButton:hover {
-  -webkit-filter: brightness(130%);
-  filter: brightness(130%);
   scale: 1.1;
 }
 
 .attackButton:active {
   scale: 0.9;
-  -webkit-filter: brightness(60%);
-  filter: brightness(60%);
 }
 
 .disabledButton {
@@ -2346,7 +2342,7 @@
 }
 
 .goButton {
-  border-radius: 20%;
+  border-radius: 100%;
   width: 6%;
 
   -webkit-user-select: none;
@@ -2863,7 +2859,7 @@ text {
 }
 
 .wildCard {
-  width: 96%;
+  width: 94%;
   height: 96%;
   border-radius: 5%;
   position: absolute;
@@ -2900,6 +2896,10 @@ text {
   -webkit-animation: rainbow 5s ease infinite;
   -z-animation: rainbow 5s ease infinite;
   animation: rainbow 5s ease infinite;
+}
+
+.wildCardRedraw {
+  width: 96%;
 }
 
 .specialAttacKBoxPlayer {
