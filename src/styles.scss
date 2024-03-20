@@ -14,6 +14,16 @@
   src: url(~src/assets/a-fonts/soHo.ttf);
 }
 
+@font-face {
+  font-family: zeldaFont;
+  src: url(~src/assets/a-fonts/zelda.ttf);
+}
+
+@font-face {
+  font-family: marioFont;
+  src: url(~src/assets/a-fonts/mario.ttf);
+}
+
 body,
 html {
   margin: 0 !important;

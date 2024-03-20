@@ -1745,15 +1745,6 @@
   transition: all 0.3s;
 }
 
-.goButtonRed {
-  -webkit-animation: boxShadowRedBtn 1500ms infinite;
-  animation: boxShadowRedBtn 1500ms infinite;
-  -webkit-animation-fill-mode: forwards;
-  animation-fill-mode: forwards;
-  -webkit-animation-delay: 1s;
-  animation-delay: 1s;
-}
-
 .attackButton:hover {
   scale: 1.1;
 }
@@ -2161,6 +2152,7 @@
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.8);
+  font-family: "headerFont";
 }
 
 .pokerHandsRow {
@@ -2192,7 +2184,6 @@
   font-size: 1.5em;
   text-align: center;
   color: white;
-  font-family: "headerFont";
   background: -webkit-linear-gradient(#f5f2e6, #a8a075);
   -webkit-text-stroke: 2px #000;
   background-clip: text;
@@ -2204,6 +2195,19 @@
   -moz-text-fill-color: transparent;
   font-weight: bold;
 }
+
+.marioFont {
+  font-family: "marioFont" !important;
+}
+
+.zeldaFont {
+  font-family: "zeldaFont" !important;
+}
+
+.zeldaFont .pokerTitle {
+  -webkit-text-stroke: 0 #000 !important;
+}
+
 .pokerHand {
   display: flex;
   column-gap: 1%;
@@ -2426,6 +2430,15 @@
   transition: all 0.3s;
   -webkit-animation: boxShadow 1500ms infinite;
   animation: boxShadow 1500ms infinite;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-delay: 1s;
+  animation-delay: 1s;
+}
+
+.goButtonRed {
+  -webkit-animation: boxShadowRedBtn 1500ms infinite;
+  animation: boxShadowRedBtn 1500ms infinite;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
   -webkit-animation-delay: 1s;

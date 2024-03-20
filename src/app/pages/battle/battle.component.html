@@ -1,4 +1,5 @@
 <div class="container">
+  <div class="guide"></div>
   <app-dialog
     [dialogArray]="dialogArray"
     (finishedDialog)="finishedDialog()"
@@ -16,6 +17,10 @@
   ></app-dialog>
   <div
     class="pokerHandsChart"
+    [ngClass]="{
+      marioFont: gameThemePath === 'mario',
+      zeldaFont: gameThemePath === 'default'
+    }"
     (click)="showPokerHandsChart = false"
     *ngIf="showPokerHandsChart"
     [@fadeEnter]="{
@@ -2970,36 +2975,36 @@
       </div>
     </div>
     <div
-        class="attackButtonBoxMobile"
-        *ngIf="redrawHide"
+      class="attackButtonBoxMobile"
+      *ngIf="redrawHide"
+      [ngClass]="{
+        easyModeButtonBox: easyMode,
+        disabledButton: !canSelectCards
+      }"
+      [@fadeEnter]="{
+        value: '',
+        params: { duration: 400, delay: 1000, translate: '30px' }
+      }"
+      [@fadeUpLeave]
+    >
+      <img
+        [src]="'./assets/' + gameThemePath + '/attack.png'"
+        class="attackButton"
         [ngClass]="{
-          easyModeButtonBox: easyMode,
-          disabledButton: !canSelectCards
-        }"
-        [@fadeEnter]="{
-          value: '',
-          params: { duration: 400, delay: 1000, translate: '30px' }
-        }"
-        [@fadeUpLeave]
-      >
-        <img
-          [src]="'./assets/' + gameThemePath + '/attack.png'"
-          class="attackButton"
-          [ngClass]="{
             goButtonRed: gameThemePath === 'mario',
             disabledButtonAnimation: !canSelectCards,
           }"
-          (click)="attack()"
-        />
-        <div
-          class="defendAttackTxt wildText attackTxt"
-          [ngStyle]="{
-            'font-family': 'headerFont'
-          }"
-        >
-          Attack
-        </div>
+        (click)="attack()"
+      />
+      <div
+        class="defendAttackTxt wildText attackTxt"
+        [ngStyle]="{
+          'font-family': 'headerFont'
+        }"
+      >
+        Attack
       </div>
+    </div>
     <div
       class="bottomRight"
       [ngClass]="{
