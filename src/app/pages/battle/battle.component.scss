@@ -204,6 +204,40 @@
   }
 }
 
+@-webkit-keyframes boxShadowRedBtn {
+  0% {
+    -webkit-box-shadow: 0 0 10px 1px rgba(219, 38, 38, 0.8);
+    box-shadow: 0 0 10px 1px rgba(219, 38, 38, 0.8);
+  }
+
+  70% {
+    -webkit-box-shadow: 0 0 10px 50px rgba(219, 38, 38, 0);
+    box-shadow: 0 0 10px 50px rgba(219, 38, 38, 0);
+  }
+
+  100% {
+    -webkit-box-shadow: 0 0 10px 50px rgba(219, 38, 38, 0);
+    box-shadow: 0 0 10px 50px rgba(219, 38, 38, 0);
+  }
+}
+
+@keyframes boxShadowRedBtn {
+  0% {
+    -webkit-box-shadow: 0 0 10px 1px rgba(219, 38, 38, 0.8);
+    box-shadow: 0 0 10px 1px rgba(219, 38, 38, 0.8);
+  }
+
+  70% {
+    -webkit-box-shadow: 0 0 10px 50px rgba(219, 38, 38, 0);
+    box-shadow: 0 0 10px 50px rgba(219, 38, 38, 0);
+  }
+
+  100% {
+    -webkit-box-shadow: 0 0 10px 50px rgba(219, 38, 38, 0);
+    box-shadow: 0 0 10px 50px rgba(219, 38, 38, 0);
+  }
+}
+
 @-webkit-keyframes boxShadow {
   0% {
     -webkit-box-shadow: 0 0 10px 1px rgba(38, 132, 219, 0.8);
@@ -1711,6 +1745,15 @@
   transition: all 0.3s;
 }
 
+.goButtonRed {
+  -webkit-animation: boxShadowRedBtn 1500ms infinite;
+  animation: boxShadowRedBtn 1500ms infinite;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-delay: 1s;
+  animation-delay: 1s;
+}
+
 .attackButton:hover {
   scale: 1.1;
 }
@@ -2215,6 +2258,19 @@
   -webkit-transition: all 0.5s;
   -o-transition: all 0.5s;
   transition: all 0.5s;
+}
+
+.fadeFast {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  pointer-events: none !important;
+
+  opacity: 0;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
 }
 
 .fadeHide {

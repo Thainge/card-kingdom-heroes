@@ -1600,7 +1600,8 @@
             [src]="'./assets/' + gameThemePath + '/defend.png'"
             class="goButton"
             [ngClass]="{
-              goButtonBox: gameThemePath === 'default'
+              goButtonBox: gameThemePath === 'default',
+              goButtonRed: gameThemePath === 'mario',
             }"
             (click)="chooseDefensePlayerCards()"
             *ngIf="canSelectCards"
@@ -1825,6 +1826,9 @@
           <img
             [src]="'./assets/' + gameThemePath + '/attack.png'"
             class="attackButton"
+            [ngClass]="{
+              goButtonRed: gameThemePath === 'mario',
+            }"
             (click)="finishedDiscarding()"
           />
           <div
@@ -1853,7 +1857,7 @@
       <div
         class="redrawBox"
         [ngClass]="{
-          fade: !redrawing,
+          fadeFast: !redrawing,
           fadeHide: redrawHide
         }"
       >
@@ -1866,7 +1870,7 @@
       <div
         class="redrawCardsContainer"
         [ngClass]="{
-          fade: !redrawing,
+          fadeFast: !redrawing,
           fadeHide: redrawHide
         }"
       >
@@ -1940,6 +1944,9 @@
           <img
             [src]="'./assets/' + gameThemePath + '/attack.png'"
             class="attackButton"
+            [ngClass]="{
+              goButtonRed: gameThemePath === 'mario',
+            }"
             (click)="hideRedrawPanel()"
           />
           <div
@@ -2977,9 +2984,7 @@
         *ngIf="redrawHide"
         [ngClass]="{
           easyModeButtonBox: easyMode,
-          disabledButton:
-            (!canSelectCards || selectedCards.length < 1) &&
-            (playerHand.length !== 0 || selectedCards.length !== 0)
+          disabledButton: !canSelectCards
         }"
         [@fadeEnter]="{
           value: '',
@@ -2991,7 +2996,8 @@
           [src]="'./assets/' + gameThemePath + '/attack.png'"
           class="attackButton"
           [ngClass]="{
-            disabledButtonAnimation: !canSelectCards || selectedCards.length < 1
+            goButtonRed: gameThemePath === 'mario',
+            disabledButtonAnimation: !canSelectCards,
           }"
           (click)="attack()"
         />

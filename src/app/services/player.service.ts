@@ -10,7 +10,7 @@ import { AbilityCard } from '../models/abilityCard';
   providedIn: 'root',
 })
 export class playerService implements OnInit {
-  readonly gameTheme$ = new BehaviorSubject<gameTheme>('default');
+  readonly gameTheme$ = new BehaviorSubject<gameTheme>('mario');
   readonly wildCard: CardDto = {
     id: 55,
     wild: true,
