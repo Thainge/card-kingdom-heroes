@@ -1597,8 +1597,11 @@
             Defend
           </div>
           <img
-            [src]="'./assets/defend.png'"
+            [src]="'./assets/' + gameThemePath + '/defend.png'"
             class="goButton"
+            [ngClass]="{
+              goButtonBox: gameThemePath === 'default'
+            }"
             (click)="chooseDefensePlayerCards()"
             *ngIf="canSelectCards"
           />
@@ -1820,7 +1823,7 @@
           [@fadeUpLeave]
         >
           <img
-            [src]="'./assets/attack.png'"
+            [src]="'./assets/' + gameThemePath + '/attack.png'"
             class="attackButton"
             (click)="finishedDiscarding()"
           />
@@ -1935,7 +1938,7 @@
           [@fadeUpLeave]
         >
           <img
-            [src]="'./assets/attack.png'"
+            [src]="'./assets/' + gameThemePath + '/attack.png'"
             class="attackButton"
             (click)="hideRedrawPanel()"
           />
@@ -2985,7 +2988,7 @@
         [@fadeUpLeave]
       >
         <img
-          [src]="'./assets/attack.png'"
+          [src]="'./assets/' + gameThemePath + '/attack.png'"
           class="attackButton"
           [ngClass]="{
             disabledButtonAnimation: !canSelectCards || selectedCards.length < 1
