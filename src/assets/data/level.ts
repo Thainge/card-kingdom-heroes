@@ -3,7 +3,7 @@ import { LevelDto } from 'src/app/models/level';
 export const passedObj: LevelDto = {
   id: 1,
   skipRedrawPhase: false,
-  battleRewardXp: 50,
+  battleRewardXp: 61,
   playerLevelUpEnabled: true,
   hideDialog: false,
 
