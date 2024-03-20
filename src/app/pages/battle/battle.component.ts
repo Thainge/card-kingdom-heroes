@@ -554,8 +554,8 @@ export class BattleComponent implements OnInit {
     }
 
     // --- Bot Turn --- //
-    this.canSelectCards = false;
-    this.startBotTurnsLoop();
+    // this.canSelectCards = false;
+    // this.startBotTurnsLoop();
   }
 
   async nextCombatPhaseBot(extraDelays: boolean = false) {

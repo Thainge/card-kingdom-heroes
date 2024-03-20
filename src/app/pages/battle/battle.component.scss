@@ -744,7 +744,7 @@
 
   100% {
     opacity: 1;
-    width: 100%;
+    width: 15%;
     -webkit-transform: translate(0, 0%);
     transform: translate(0, 0%);
   }
@@ -760,7 +760,7 @@
 
   100% {
     opacity: 1;
-    width: 100%;
+    width: 15%;
     -webkit-transform: translate(0, 0%);
     transform: translate(0, 0%);
   }
@@ -776,7 +776,7 @@
 
   100% {
     opacity: 1;
-    width: 20%;
+    width: 15%;
     -webkit-transform: translate(0, 0%);
     transform: translate(0, 0%);
   }
@@ -792,7 +792,7 @@
 
   100% {
     opacity: 1;
-    width: 20%;
+    width: 15%;
     -webkit-transform: translate(0, 0%);
     transform: translate(0, 0%);
   }
@@ -5538,6 +5538,70 @@ text {
 }
 
 @media screen and (max-width: 1000px) {
+  @-webkit-keyframes cardFadeDown {
+    0% {
+      opacity: 0;
+      width: 0%;
+      -webkit-transform: translate(0, -100%);
+      transform: translate(0, -100%);
+    }
+
+    100% {
+      opacity: 1;
+      width: 100%;
+      -webkit-transform: translate(0, 0%);
+      transform: translate(0, 0%);
+    }
+  }
+
+  @keyframes cardFadeDown {
+    0% {
+      opacity: 0;
+      width: 0%;
+      -webkit-transform: translate(0, -100%);
+      transform: translate(0, -100%);
+    }
+
+    100% {
+      opacity: 1;
+      width: 100%;
+      -webkit-transform: translate(0, 0%);
+      transform: translate(0, 0%);
+    }
+  }
+
+  @-webkit-keyframes cardFadeUp {
+    0% {
+      opacity: 0;
+      width: 0%;
+      -webkit-transform: translate(0, 100%);
+      transform: translate(0, 100%);
+    }
+
+    100% {
+      opacity: 1;
+      width: 100%;
+      -webkit-transform: translate(0, 0%);
+      transform: translate(0, 0%);
+    }
+  }
+
+  @keyframes cardFadeUp {
+    0% {
+      opacity: 0;
+      width: 0%;
+      -webkit-transform: translate(0, 100%);
+      transform: translate(0, 100%);
+    }
+
+    100% {
+      opacity: 1;
+      width: 100%;
+      -webkit-transform: translate(0, 0%);
+      transform: translate(0, 0%);
+    }
+  }
+
   // Redraw panel
   .redrawText {
     font-size: 120%;
