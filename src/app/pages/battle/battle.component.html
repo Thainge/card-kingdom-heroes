@@ -1884,7 +1884,11 @@
           class="redrawCardBox"
           [@fadeUpEnter]="{
             value: '',
-            params: { duration: 400, delay: (i + 1) * 100, translate: '30px' }
+            params: {
+              duration: 400,
+              delay: (i + 1) * 100 + 2500,
+              translate: '30px'
+            }
           }"
           [@fadeUpLeave]
         >
@@ -1917,7 +1921,7 @@
                   class="wildText wildValueText"
                   [@fadeEnter]="{
                     value: '',
-                    params: { duration: 400, delay: 1000, translate: '30px' }
+                    params: { duration: 400, delay: 3500, translate: '30px' }
                   }"
                   [ngClass]="{
                     specialWildRangeIconText: card.wildRange === 14
@@ -1942,11 +1946,9 @@
           class="goBtnContainer"
           [@fadeUpEnter]="{
             value: '',
-            params: { duration: 600, delay: 500, translate: '200px' }
+            params: { duration: 600, delay: 3000, translate: '200px' }
           }"
-          [ngClass]="{
-            fadeFast: !redrawing,
-          }"
+          *ngIf="redrawing"
         >
           <img
             [src]="'./assets/' + gameThemePath + '/attack.png'"
@@ -2935,7 +2937,7 @@
             </div>
           </div>
           <div
-            class="wildCardSuites bottomWildCard"
+            class="wildCardSuites bottomWildCard veryBottomWildCard"
             *ngIf="card.wild && card.wildSuit"
           >
             <img
@@ -2956,7 +2958,7 @@
             />
             <img
               [src]="'./assets/spades.png'"
-              class="suit suitLast"
+              class="suit"
               *ngIf="
                 card.wildSuits && card.wildSuits[2] && card.wildSuits[2] === 1
               "
@@ -2964,11 +2966,23 @@
             />
             <img
               [src]="'./assets/clubs.png'"
-              class="suit"
+              class="suit suitLast"
               *ngIf="
                 card.wildSuits && card.wildSuits[3] && card.wildSuits[3] === 1
               "
               (click)="chooseWildSuit($event, card, 'clubs')"
+            />
+            <img
+              [src]="'./assets/add.png'"
+              class="suit addMinusSuits"
+              *ngIf="card.wild && card.wildRange && card.wildRange > 0"
+              (click)="MobileValueScrollDown($event, card)"
+            />
+            <img
+              [src]="'./assets/subtract.png'"
+              class="suit suitLastAdd addMinusSuits"
+              *ngIf="card.wild && card.wildRange && card.wildRange > 0"
+              (click)="MobileValueScrollDown($event, card)"
             />
           </div>
         </div>

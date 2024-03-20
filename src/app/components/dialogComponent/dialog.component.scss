@@ -65,3 +65,9 @@
 .rightSide {
   margin-left: -30%;
 }
+
+@media screen and (max-width: 1000px) {
+  .relativeDialogBox {
+    scale: 0.6;
+  }
+}

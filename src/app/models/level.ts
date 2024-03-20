@@ -10,6 +10,7 @@ export interface LevelDto {
   shuffleAbilityCards: boolean;
   shuffleCardsBot: boolean;
   shuffleAbilityCardsBot: boolean;
+  allCardsWild?: boolean;
 
   hideDialog?: boolean;
   easyMode?: boolean;

@@ -1807,6 +1807,10 @@
   scale: 0.99;
 }
 
+.addMinusSuits {
+  display: none;
+}
+
 .topdeck1 {
   left: 12%;
   top: -1%;
@@ -5615,6 +5619,27 @@ text {
     }
   }
 
+  .suit {
+    width: 21%;
+  }
+
+  .addMinusSuits {
+    display: block;
+    width: 21%;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+  }
+
+  .wildValueText {
+    -webkit-text-stroke: 0.5px #000 !important;
+  }
+
+  .suitLastAdd {
+    border-bottom-left-radius: 20%;
+    top: 17%;
+  }
+
   // Redraw panel
   .redrawText {
     font-size: 120%;
@@ -5638,7 +5663,7 @@ text {
   }
 
   .redrawCardBox {
-    width: 100%;
+    width: 13%;
   }
 
   .redrawCardsContainer {
@@ -5648,7 +5673,7 @@ text {
   }
 
   .goBtnContainer {
-    bottom: 28%;
+    bottom: 8%;
   }
 
   // Combat
@@ -5695,7 +5720,7 @@ text {
   .abilityDescriptionText,
   .abilityTitle,
   .abilityDescriptionLevel {
-    font-size: 140%;
+    font-size: 120%;
     font-family: soho;
   }
 

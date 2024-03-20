@@ -316,6 +316,7 @@ export class BattleComponent implements OnInit {
   currentCombatPhase: EnemyLevelDto | undefined;
   combatImages: CombatImages[] = [];
   playerLevelUpEnabled: boolean = true;
+  allCardsWild: boolean = false;
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -501,6 +502,7 @@ export class BattleComponent implements OnInit {
     }
     this.easyMode = passedObj.easyMode ?? this.easyMode;
     this.hideDialog = passedObj.hideDialog ?? false;
+    this.allCardsWild = this.currentLevel.allCardsWild ?? false;
 
     // Hero abilities
     this.canDefendWithMultipleCards =
@@ -1475,6 +1477,20 @@ export class BattleComponent implements OnInit {
     return [];
   }
 
+  MobileValueScrollUp(event: any, card: CardDto) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    this.wildCardScrollChange(-100, card);
+  }
+
+  MobileValueScrollDown(event: any, card: CardDto) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    this.wildCardScrollChange(100, card);
+  }
+
   abilityCardChangeUseCards(scroll: any, ability: AbilityCard) {
     let scrollUp = false;
     if (scroll.deltaY === -100) {
@@ -1990,6 +2006,18 @@ export class BattleComponent implements OnInit {
 
       return alteredCard;
     });
+
+    if (this.allCardsWild) {
+      this.Cards = this.Cards.map((x) => {
+        return {
+          ...x,
+          wild: true,
+          wildRange: 14,
+          wildSuit: true,
+          wildSuits: [1, 1, 1, 1],
+        };
+      });
+    }
   }
 
   @HostListener('document:keypress', ['$event'])
