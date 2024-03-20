@@ -159,6 +159,8 @@ export class BattleComponent implements OnInit {
   attackEnding: boolean = false;
   selectedCards: CardDto[] = [];
   canSelectCards: boolean = true;
+  canClickGuide: boolean = false;
+  currentGuideStep: number = 0;
 
   redrawCards: CardDto[] = [];
   redrawSelectedCards: CardDto[] = [];
@@ -173,6 +175,8 @@ export class BattleComponent implements OnInit {
   messageListInactive: any[] = [];
   displayMessageList: any[] = [];
   displayMessageListInactive: any[] = [];
+  drawOutMessageList: any[] = [];
+  drawOutMessageListInactive: any[] = [];
 
   attackStarted: boolean = false;
 
@@ -298,8 +302,10 @@ export class BattleComponent implements OnInit {
   gameThemePath: gameTheme = 'default';
   gameThemePathEnemy: gameTheme = 'default';
   easyMode: boolean = false;
-  checkSurrender: boolean = false;
+  showGuide: boolean = false;
+  showAbilityGuide: boolean = false;
 
+  checkSurrender: boolean = false;
   hideDialog: boolean = false;
   dialogArray: DialogDto[] = [];
   displayDialog: boolean = false;
@@ -557,9 +563,60 @@ export class BattleComponent implements OnInit {
       this.hideRedrawPanel();
     }
 
+    this.showGuide = currentLevel.showGuide ?? false;
+    this.showAbilityGuide = currentLevel.showAbilityGuide ?? false;
+    if (this.showGuide) {
+      this.canSelectCards = false;
+      this.easyMode = true;
+      await this.timeout(4500);
+      // Show Text
+      this.canClickGuide = true;
+      this.nextGuideStep();
+    } else if (this.showAbilityGuide) {
+      this.canSelectCards = false;
+      this.easyMode = true;
+      // Show text
+    }
+
     // --- Bot Turn --- //
     // this.canSelectCards = false;
     // this.startBotTurnsLoop();
+  }
+
+  checkGuideActive(event: any) {
+    if (this.showGuide || this.showAbilityGuide) {
+      event.stopPropagation();
+      event.preventDefault();
+      this.nextGuideStep();
+    }
+  }
+
+  async nextGuideStep() {
+    if (!this.canClickGuide) {
+      return;
+    }
+
+    const step = this.currentGuideStep;
+    this.canClickGuide = false;
+
+    if (step === 0) {
+      await this.pushDrawOutTextMessage(
+        'Welcome to Card Kingdom Combat!',
+        3000
+      );
+    } else if (step === 1) {
+    } else if (step === 2) {
+    } else if (step === 3) {
+    } else if (step === 4) {
+    } else if (step === 5) {
+    } else if (step === 6) {
+    } else if (step === 7) {
+    } else if (step === 8) {
+    } else if (step === 9) {
+    } else if (step === 10) {
+    } else if (step === 11) {
+    } else if (step === 12) {
+    }
   }
 
   async nextCombatPhaseBot(extraDelays: boolean = false) {
@@ -3866,5 +3923,12 @@ export class BattleComponent implements OnInit {
     const ID = this.displayMessageList.length + 1;
     this.displayMessageList.push({ id: ID, message: message });
     return ID;
+  }
+
+  async pushDrawOutTextMessage(message: string, time: number) {
+    const ID = this.drawOutMessageList.length + 1;
+    this.drawOutMessageList.push({ id: ID, message: message, width: 0 });
+    await this.timeout(time);
+    this.drawOutMessageListInactive.push(ID);
   }
 }

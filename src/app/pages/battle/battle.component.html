@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" (click)="checkGuideActive($event)">
   <div class="guide"></div>
   <app-dialog
     [dialogArray]="dialogArray"
@@ -2010,6 +2010,28 @@
   </div>
 
   <!-- Floating Message Fade -->
+  <div class="floatingText floatingTextGuide">
+    <div
+      class="floatingRelative"
+      *ngFor="let item of drawOutMessageList; trackBy: trackById"
+    >
+      <div
+        class="floatingTextMessage floatingMessageInfo"
+        [ngClass]="{
+          fade: drawOutMessageListInactive.includes(item.id)
+        }"
+        [@fadeEnter]="{
+          value: '',
+          params: { duration: 500, delay: 0, translate: '30px' }
+        }"
+        [@fadeOutLeave]
+      >
+        {{ item.message }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Message Fade -->
   <div class="floatingText floatingTextAbility">
     <div class="floatingRelative" *ngFor="let item of displayMessageList">
       <div
@@ -2798,6 +2820,7 @@
         *ngFor="let card of abilityCardsHand; index as i; trackBy: trackById"
         #activeAbilityCards
         [ngClass]="{
+          easyCardSize: easyMode,
           abilityIsActive: abilityCardIsSelected(card),
           abilityIsActiveTarget: currentAbility.id === card.id,
           darkenCard:
@@ -2873,6 +2896,7 @@
         class="bottomCard playerBottomCard"
         *ngFor="let card of playerHand; index as i; trackBy: trackById"
         [ngClass]="{
+          easyCardSize: easyMode,
           activeCard: cardIsSelected(card),
           abilityActiveCard: cardIsValidForAbilityCard(card),
           chooseCardAbilityActiveCard:

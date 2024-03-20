@@ -6,7 +6,9 @@ export const passedObj: LevelDto = {
   battleRewardXp: 61,
   playerLevelUpEnabled: true,
   hideDialog: true,
-  allCardsWild: true,
+  allCardsWild: false,
+  showGuide: true,
+  showAbilityGuide: false,
 
   shuffleAbilityCards: true,
   shuffleCards: true,

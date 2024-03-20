@@ -798,6 +798,38 @@
   }
 }
 
+@-webkit-keyframes cardFadeUpSmaller {
+  0% {
+    opacity: 0;
+    width: 0%;
+    -webkit-transform: translate(0, 100%);
+    transform: translate(0, 100%);
+  }
+
+  100% {
+    opacity: 1;
+    width: 13%;
+    -webkit-transform: translate(0, 0%);
+    transform: translate(0, 0%);
+  }
+}
+
+@keyframes cardFadeUpSmaller {
+  0% {
+    opacity: 0;
+    width: 0%;
+    -webkit-transform: translate(0, 100%);
+    transform: translate(0, 100%);
+  }
+
+  100% {
+    opacity: 1;
+    width: 13%;
+    -webkit-transform: translate(0, 0%);
+    transform: translate(0, 0%);
+  }
+}
+
 @-webkit-keyframes rotateBorder {
   100% {
     -webkit-transform: rotate(1turn);
@@ -2109,6 +2141,11 @@
   user-select: none;
   width: 50%;
   z-index: 999;
+}
+
+.floatingTextGuide {
+  width: 100%;
+  z-index: 5050;
 }
 
 .floatingTextAbility {
@@ -3648,6 +3685,11 @@ text {
   animation: cardFadeUp 800ms;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
+}
+
+.easyCardSize {
+  -webkit-animation: cardFadeUpSmaller 800ms;
+  animation: cardFadeUpSmaller 800ms;
 }
 
 .abilityHoverDescriptionBox {
