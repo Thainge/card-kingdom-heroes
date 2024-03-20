@@ -303,6 +303,7 @@ export class BattleComponent implements OnInit {
   gameThemePathEnemy: gameTheme = 'default';
   easyMode: boolean = false;
   showGuide: boolean = false;
+  hideGuideNow: boolean = false;
   showAbilityGuide: boolean = false;
 
   checkSurrender: boolean = false;
@@ -552,31 +553,84 @@ export class BattleComponent implements OnInit {
 
     this.showGuide = currentLevel.showGuide ?? false;
     this.showAbilityGuide = currentLevel.showAbilityGuide ?? false;
-    if (this.showGuide) {
-      this.easyMode = true;
-      this.redrawing = false;
-      await this.timeout(1000);
-      this.redrawHide = true;
-      // Wait for player turn message to fade
-      await this.timeout(3500);
-      // Push welcome message
-      await this.pushDrawOutTextMessage('Welcome to Card Kingdom Combat!');
-      this.canClickGuide = true;
-      this.nextGuideStep();
+
+    // Guide is initially false, hide guide
+    if (this.showGuide === false) {
+      this.hideGuideNow = true;
+      for (const num of [0, 1, 2, 3, 4]) {
+        // Add to player 1 hand and remove player 1 deck
+        this.redrawCards.push(this.playerDeck[0]);
+        this.playerDeck.push(this.playerDeck[0]);
+        this.playerDeck.shift();
+      }
+      // Skip redraw phase
+      if (this.currentLevel.skipRedrawPhase) {
+        this.redrawing = false;
+        this.redrawHide = true;
+        this.hideRedrawPanel();
+      }
       return;
     }
 
-    for (const num of [0, 1, 2, 3, 4]) {
-      // Add to player 1 hand and remove player 1 deck
-      this.redrawCards.push(this.playerDeck[0]);
-      this.playerDeck.push(this.playerDeck[0]);
-      this.playerDeck.shift();
+    if (this.showGuide === true && this.hideGuideNow) {
+      this.showGuide = false;
+      for (const num of [0, 1, 2, 3, 4]) {
+        // Add to player 1 hand and remove player 1 deck
+        this.redrawCards.push(this.playerDeck[0]);
+        this.playerDeck.push(this.playerDeck[0]);
+        this.playerDeck.shift();
+      }
+      // Skip redraw phase
+      if (this.currentLevel.skipRedrawPhase) {
+        this.redrawing = false;
+        this.redrawHide = true;
+        this.hideRedrawPanel();
+      }
+      return;
     }
-    // Skip redraw phase
-    if (this.currentLevel.skipRedrawPhase) {
+
+    if (this.showGuide === true) {
+      this.combatImages = [{ id: 99, image: 'loadingBg.png', display: true }];
+      this.easyMode = true;
       this.redrawing = false;
+      this.currentLevel.battleRewardXp = 0;
+      this.enemyPlayers = [
+        {
+          id: 1,
+          image: 'dummy.png',
+          name: 'Dummy',
+          attack: 1,
+          baseAttack: 1,
+          health: 2,
+          baseHealth: 2,
+          level: 1,
+        },
+        {
+          id: 2,
+          image: 'dummy.png',
+          name: 'Dummy',
+          attack: 3,
+          baseAttack: 3,
+          health: 5,
+          baseHealth: 5,
+          level: 2,
+        },
+      ];
+      this.gameThemePathEnemy = 'mario';
+      this.showSnowEffect = false;
+      this.showBubblesEffect = false;
+      this.showLeavesEffect = false;
+      this.showSunFlareEffect = false;
+      this.showCloudsEffect = true;
+      this.showNightEffect = true;
+      this.showFireEffect = false;
+      this.showAshesEffect = false;
+      await this.timeout(1000);
       this.redrawHide = true;
-      this.hideRedrawPanel();
+      await this.timeout(2500);
+      await this.pushDrawOutTextMessage('Welcome to Card Kingdom Combat!');
+      this.nextGuideStep();
+      return;
     }
 
     // --- Bot Turn --- //
@@ -592,45 +646,258 @@ export class BattleComponent implements OnInit {
   }
 
   checkGuideActive(event: any) {
-    if ((this.showGuide || this.showAbilityGuide) && this.canClickGuide) {
-      event.stopPropagation();
-      event.preventDefault();
-      this.nextGuideStep();
-    }
+    // if ((this.showGuide || this.showAbilityGuide) && this.canClickGuide) {
+    //   event.stopPropagation();
+    //   event.preventDefault();
+    //   this.nextGuideStep();
+    // }
   }
 
   async nextGuideStep() {
-    if (!this.canClickGuide) {
-      return;
-    }
-
     this.currentGuideStep = this.currentGuideStep + 1;
     const step = this.currentGuideStep;
-    this.canClickGuide = false;
 
     if (step === 1) {
-      // Hide welcome message
-      await this.timeout(2000);
+      await this.timeout(3000);
       await this.hidePreviousGuideMessages();
-      await this.pushDrawOutTextMessage(
-        'Both players draw cards until they have 5 cards'
-      );
-      this.addCardsToBothHands();
-      await this.timeout(2000);
-      await this.hidePreviousGuideMessages();
-      this.canClickGuide = true;
+      await this.pushDrawOutTextMessage('Lets go over the basics of combat');
       this.nextGuideStep();
     } else if (step === 2) {
+      // Draw cards
+      await this.timeout(3000);
+      await this.hidePreviousGuideMessages();
+      await this.pushDrawOutTextMessage(
+        'Both players draw until they have 5 cards'
+      );
+      this.playerDeck = this.playerDeck.map((x) => {
+        return { ...x, wild: false, wildSuit: false };
+      });
+      this.playerHand[0] = {
+        ...this.playerDeck[0],
+        value: '5',
+        image: '5_of_hearts.png',
+        suit: 'hearts',
+      };
+      this.playerHand[1] = {
+        ...this.playerDeck[1],
+        value: '7',
+        image: '7_of_hearts.png',
+        suit: 'diamonds',
+      };
+      this.playerHand[2] = {
+        ...this.playerDeck[2],
+        value: '9',
+        image: '9_of_hearts.png',
+        suit: 'clubs',
+      };
+      this.playerHand[3] = {
+        ...this.playerDeck[3],
+        value: '12',
+        image: '12_of_hearts.png',
+        suit: 'spades',
+      };
+      this.playerHand[4] = {
+        ...this.playerDeck[4],
+        value: '12',
+        image: '12_of_hearts.png',
+        suit: 'diamonds',
+      };
+      // Player deck fill
+      this.playerDeck[0] = {
+        ...this.playerDeck[5],
+        image: '3_of_hearts.png',
+        value: '3',
+        suit: 'diamonds',
+      };
+      this.playerDeck[1] = {
+        ...this.playerDeck[6],
+        image: '6_of_hearts.png',
+        value: '6',
+        suit: 'diamonds',
+      };
+      this.playerDeck[2] = {
+        ...this.playerDeck[7],
+        image: '11_of_diamonds.png',
+        value: '11',
+        suit: 'diamonds',
+      };
+      this.playerDeck[3] = {
+        ...this.playerDeck[8],
+        image: '7_of_clubs.png',
+        value: '7',
+        suit: 'diamonds',
+      };
+      this.playerDeck[4] = {
+        ...this.playerDeck[9],
+        image: '12_of_spades.png',
+        value: '12',
+        suit: 'diamonds',
+      };
+
+      // Enemy hand fill
+      this.enemyHand[0] = {
+        ...this.enemyDeck[0],
+        value: '4',
+        image: '4_of_hearts.png',
+        suit: 'hearts',
+      };
+      this.enemyHand[1] = {
+        ...this.enemyDeck[1],
+        value: '5',
+        image: '5_of_hearts.png',
+        suit: 'diamonds',
+      };
+      this.enemyHand[2] = {
+        ...this.enemyDeck[2],
+        value: '8',
+        image: '8_of_hearts.png',
+        suit: 'clubs',
+      };
+      this.enemyHand[3] = {
+        ...this.enemyDeck[3],
+        value: '9',
+        image: '9_of_hearts.png',
+        suit: 'spades',
+      };
+      this.enemyHand[4] = {
+        ...this.enemyDeck[4],
+        image: '2_of_hearts.png',
+        value: '2',
+        suit: 'diamonds',
+      };
+      this.enemyDeck[0] = {
+        ...this.enemyDeck[5],
+        image: '3_of_hearts.png',
+        value: '3',
+        suit: 'diamonds',
+      };
+      this.enemyDeck[1] = {
+        ...this.enemyDeck[6],
+        image: '6_of_spades.png',
+        value: '6',
+        suit: 'diamonds',
+      };
+      this.enemyDeck[2] = {
+        ...this.enemyDeck[7],
+        image: '11_of_diamonds.png',
+        value: '11',
+        suit: 'diamonds',
+      };
+      this.enemyDeck[3] = {
+        ...this.enemyDeck[8],
+        image: '7_of_clubs.png',
+        value: '7',
+        suit: 'diamonds',
+      };
+      this.enemyDeck[4] = {
+        ...this.enemyDeck[9],
+        image: '12_of_hearts.png',
+        value: '12',
+        suit: 'diamonds',
+      };
+      this.nextGuideStep();
     } else if (step === 3) {
+      // Select cards
+      await this.timeout(3000);
+      await this.hidePreviousGuideMessages();
+      await this.pushDrawOutTextMessage('Find the best hand to attack with');
+      this.nextGuideStep();
     } else if (step === 4) {
+      await this.timeout(3000);
+      await this.hidePreviousGuideMessages();
+      await this.pushDrawOutTextMessage('Click cards to select them');
+      this.selectCard(this.playerHand[3]);
+      this.selectCard(this.playerHand[4]);
+      this.nextGuideStep();
     } else if (step === 5) {
+      await this.timeout(3000);
+      await this.hidePreviousGuideMessages();
+      await this.pushDrawOutTextMessage(
+        'Select enemy target by clicking enemies'
+      );
+      this.setEnemyPlayerHoverTarget(this.enemyPlayers[1]);
+      this.nextGuideStep();
     } else if (step === 6) {
+      await this.timeout(3000);
+      await this.hidePreviousGuideMessages();
+      await this.pushDrawOutTextMessage(
+        'When your attack hand is ready, click attack'
+      );
+      await this.timeout(1000);
+      this.disableAttackBtn = false;
+      await this.attack(true);
+      this.nextGuideStep();
     } else if (step === 7) {
+      await this.timeout(1500);
+      await this.hidePreviousGuideMessages();
+      await this.pushDrawOutTextMessage(
+        'Attack damage is equal to the number of cards used'
+      );
+      this.nextGuideStep();
     } else if (step === 8) {
+      await this.timeout(3000);
+      await this.hidePreviousGuideMessages();
+      await this.pushDrawOutTextMessage(
+        'Defenders counter attack if they win the hand'
+      );
+      this.nextGuideStep();
     } else if (step === 9) {
+      await this.timeout(3000);
+      await this.hidePreviousGuideMessages();
+      await this.pushDrawOutTextMessage(
+        'Defenders draw cards based on their defense'
+      );
+      this.initiateBotDefense(this.playerAttackHand);
+      await this.timeout(2000);
+      await this.hidePreviousGuideMessages();
+      this.nextGuideStep();
     } else if (step === 10) {
+      this.validCards = [];
+      await this.timeout(4000);
+      await this.pushDrawOutTextMessage('The enemy is attacking');
+      this.nextGuideStep();
     } else if (step === 11) {
+      await this.timeout(3000);
+      await this.hidePreviousGuideMessages();
+      await this.pushDrawOutTextMessage(
+        'Select cards to defend with and click defend'
+      );
+      this.selectedCards = [];
+      this.selectCard(this.playerHand[5]);
+      this.nextGuideStep();
     } else if (step === 12) {
+      await this.timeout(3000);
+      await this.hidePreviousGuideMessages();
+      await this.pushDrawOutTextMessage(
+        'Defense hand length must match offense hand length'
+      );
+      this.selectedCards = [];
+      this.selectCard(this.playerHand[5]);
+      this.nextGuideStep();
+    } else if (step === 13) {
+      await this.timeout(3000);
+      this.chooseDefensePlayerCards();
+      this.nextGuideStep();
+    } else if (step === 14) {
+      await this.timeout(4000);
+      await this.hidePreviousGuideMessages();
+      await this.pushDrawOutTextMessage(
+        "That's it for now! Good luck soldier."
+      );
+      await this.timeout(3000);
+      await this.hidePreviousGuideMessages();
+      await this.timeout(1000);
+      this.nextGuideStep();
+    } else if (step > 14) {
+      this.hideGuideNow = true;
+      this.loadingService.navigate('', 'forest.png');
+      this.resetGame();
+      this.Cards = Cards;
+      setTimeout(() => {
+        this.resetGame();
+        this.Cards = Cards;
+        this.gameInit();
+      }, 2000);
     }
   }
 
@@ -2690,7 +2957,7 @@ export class BattleComponent implements OnInit {
     return validAttackHand && this.canSelectCards;
   }
 
-  async attack() {
+  async attack(isGuide: boolean = false) {
     if (this.disableAttackBtn) {
       return;
     }
@@ -2708,7 +2975,7 @@ export class BattleComponent implements OnInit {
         this.startBotTurnsLoop();
         this.pushError('Enemy Turn');
         this.usedSpecialCardThisTurn = false;
-      } else {
+      } else if (!this.showGuide) {
         // If player needs to discard
         this.enemyNextTurn = true;
         this.playerDiscardPhase();
@@ -2742,7 +3009,9 @@ export class BattleComponent implements OnInit {
       }
       // Valid attack hand, commence battle
       this.playerAttackHand = hand;
-      this.initiateBotDefense(hand);
+      if (!isGuide) {
+        this.initiateBotDefense(hand);
+      }
     }
   }
 
@@ -2986,7 +3255,7 @@ export class BattleComponent implements OnInit {
       this.startBotTurnsLoop();
       this.pushError('Enemy Turn');
       this.usedSpecialCardThisTurn = false;
-    } else {
+    } else if (!this.showGuide) {
       // If player needs to discard
       this.enemyNextTurn = true;
       this.playerDiscardPhase();
@@ -3341,7 +3610,7 @@ export class BattleComponent implements OnInit {
         this.addCardsToBothHands();
         this.newTurn();
         this.pushMessage('Player Turn');
-      } else {
+      } else if (!this.showGuide) {
         // If player needs to discard
         this.enemyNextTurn = false;
         this.playerDiscardPhase();
@@ -3766,7 +4035,7 @@ export class BattleComponent implements OnInit {
     this.canSelectCards = false;
     this.fireOnPlayer = false;
     // Discard any remaining player hand over 5
-    if (this.playerHand.length > 5) {
+    if (this.playerHand.length > 5 && !this.showGuide) {
       this.playerDiscardPhaseExtra();
       return;
     }
@@ -3846,6 +4115,11 @@ export class BattleComponent implements OnInit {
     }
 
     this.canSelectCards = false;
+    if (this.showGuide) {
+      this.selectedCards = [this.playerHand[5]];
+    }
+    console.log(this.selectedCards);
+    console.log(this.playerHand);
     const hand: DetermineObject = this.cardService.determineHand(
       this.selectedCards
     );
@@ -3868,6 +4142,9 @@ export class BattleComponent implements OnInit {
 
     this.finishedChoosingDefensePlayer = true;
     this.completedEnemyTurns.push(this.staticEnemyTarget);
+    if (this.showGuide) {
+      this.completedEnemyTurns = this.enemyPlayers.map((x) => x.id);
+    }
     const result = this.cardService.determineWinner(hand, this.enemyAttackHand);
     this.setWinner(result, false);
   }

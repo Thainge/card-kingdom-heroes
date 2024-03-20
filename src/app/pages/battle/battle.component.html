@@ -1,5 +1,9 @@
 <div class="container">
-  <div class="guide" (click)="checkGuideActive($event)" *ngIf="this.showGuide || this.showAbilityGuide"></div>
+  <div
+    class="guide"
+    (click)="checkGuideActive($event)"
+    *ngIf="this.showGuide || this.showAbilityGuide"
+  ></div>
   <app-dialog
     [dialogArray]="dialogArray"
     (finishedDialog)="finishedDialog()"
@@ -84,7 +88,7 @@
         <div class="pokerHand">
           <img
             class="pokerCard"
-            [src]="'./assets/' + gameThemePath + '/cards/10_of_clubs.png'"
+            [src]="'./assets/' + gameThemePath + '/cards/10_of_hearts.png'"
           />
           <img
             class="pokerCard"
@@ -92,7 +96,7 @@
           />
           <img
             class="pokerCard"
-            [src]="'./assets/' + gameThemePath + '/cards/10_of_clubs.png'"
+            [src]="'./assets/' + gameThemePath + '/cards/10_of_spades.png'"
           />
           <img
             class="pokerCard"
@@ -100,7 +104,7 @@
           />
           <img
             class="pokerCard"
-            [src]="'./assets/' + gameThemePath + '/cards/13_of_clubs.png'"
+            [src]="'./assets/' + gameThemePath + '/cards/13_of_diamonds.png'"
           />
         </div>
       </div>
@@ -2016,7 +2020,7 @@
       *ngFor="let item of drawOutMessageList; trackBy: trackById"
     >
       <div
-        class="floatingTextMessage floatingMessageInfo"
+        class="floatingTextMessage floatingMessageInfo guideText"
         [ngClass]="{
           fade: drawOutMessageListInactive.includes(item.id)
         }"

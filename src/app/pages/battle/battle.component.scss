@@ -2225,6 +2225,23 @@
   z-index: 999;
 }
 
+.guideText {
+  margin-top: -8%;
+  scale: 0.6;
+  background: -webkit-linear-gradient(#e3e81d, rgb(230, 230, 200));
+  -webkit-text-stroke: 3px #000;
+  text-shadow: none;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+  font-family: "headerFont";
+}
+
 // Guide
 .pokerHandsChart {
   z-index: 3000;
