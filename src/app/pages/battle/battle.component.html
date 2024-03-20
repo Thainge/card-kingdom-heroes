@@ -1,5 +1,5 @@
-<div class="container" (click)="checkGuideActive($event)">
-  <div class="guide"></div>
+<div class="container">
+  <div class="guide" (click)="checkGuideActive($event)" *ngIf="this.showGuide || this.showAbilityGuide"></div>
   <app-dialog
     [dialogArray]="dialogArray"
     (finishedDialog)="finishedDialog()"
@@ -2118,6 +2118,7 @@
         class="bottomCard topCard enemyTopCard"
         *ngFor="let card of enemyHand; index as i"
         [ngClass]="{
+          easyCardSizeUp: easyMode,
           activeEnemyCard: enemyCardIsSelected(card)
         }"
         #activeEnemyCards
@@ -2138,6 +2139,7 @@
         *ngFor="let card of abilityCardsHandBot; index as i; trackBy: trackById"
         #activeAbilityCardsBot
         [ngClass]="{
+          easyCardSizeUp: easyMode,
           abilityIsActive: abilityCardIsSelectedBot(card),
           abilityIsActiveBot: abilityCardIsSelectedBot(card),
           abilityIsActiveTarget: currentAbilityBot.id === card?.id,

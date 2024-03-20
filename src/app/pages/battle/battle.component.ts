@@ -550,6 +550,22 @@ export class BattleComponent implements OnInit {
       this.playerDeck = this.cardService.shuffle(playerCards);
     }
 
+    this.showGuide = currentLevel.showGuide ?? false;
+    this.showAbilityGuide = currentLevel.showAbilityGuide ?? false;
+    if (this.showGuide) {
+      this.easyMode = true;
+      this.redrawing = false;
+      await this.timeout(1000);
+      this.redrawHide = true;
+      // Wait for player turn message to fade
+      await this.timeout(3500);
+      // Push welcome message
+      await this.pushDrawOutTextMessage('Welcome to Card Kingdom Combat!');
+      this.canClickGuide = true;
+      this.nextGuideStep();
+      return;
+    }
+
     for (const num of [0, 1, 2, 3, 4]) {
       // Add to player 1 hand and remove player 1 deck
       this.redrawCards.push(this.playerDeck[0]);
@@ -563,28 +579,20 @@ export class BattleComponent implements OnInit {
       this.hideRedrawPanel();
     }
 
-    this.showGuide = currentLevel.showGuide ?? false;
-    this.showAbilityGuide = currentLevel.showAbilityGuide ?? false;
-    if (this.showGuide) {
-      this.canSelectCards = false;
-      this.easyMode = true;
-      await this.timeout(4500);
-      // Show Text
-      this.canClickGuide = true;
-      this.nextGuideStep();
-    } else if (this.showAbilityGuide) {
-      this.canSelectCards = false;
-      this.easyMode = true;
-      // Show text
-    }
-
     // --- Bot Turn --- //
     // this.canSelectCards = false;
     // this.startBotTurnsLoop();
   }
 
+  async hidePreviousGuideMessages() {
+    this.drawOutMessageList.forEach((x) => {
+      this.drawOutMessageListInactive.push(x.id);
+    });
+    await this.timeout(500);
+  }
+
   checkGuideActive(event: any) {
-    if (this.showGuide || this.showAbilityGuide) {
+    if ((this.showGuide || this.showAbilityGuide) && this.canClickGuide) {
       event.stopPropagation();
       event.preventDefault();
       this.nextGuideStep();
@@ -596,15 +604,22 @@ export class BattleComponent implements OnInit {
       return;
     }
 
+    this.currentGuideStep = this.currentGuideStep + 1;
     const step = this.currentGuideStep;
     this.canClickGuide = false;
 
-    if (step === 0) {
+    if (step === 1) {
+      // Hide welcome message
+      await this.timeout(2000);
+      await this.hidePreviousGuideMessages();
       await this.pushDrawOutTextMessage(
-        'Welcome to Card Kingdom Combat!',
-        3000
+        'Both players draw cards until they have 5 cards'
       );
-    } else if (step === 1) {
+      this.addCardsToBothHands();
+      await this.timeout(2000);
+      await this.hidePreviousGuideMessages();
+      this.canClickGuide = true;
+      this.nextGuideStep();
     } else if (step === 2) {
     } else if (step === 3) {
     } else if (step === 4) {
@@ -3925,10 +3940,9 @@ export class BattleComponent implements OnInit {
     return ID;
   }
 
-  async pushDrawOutTextMessage(message: string, time: number) {
+  async pushDrawOutTextMessage(message: string) {
     const ID = this.drawOutMessageList.length + 1;
     this.drawOutMessageList.push({ id: ID, message: message, width: 0 });
-    await this.timeout(time);
-    this.drawOutMessageListInactive.push(ID);
+    await this.timeout(500);
   }
 }
