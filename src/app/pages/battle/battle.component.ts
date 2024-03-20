@@ -43,7 +43,6 @@ import { AbilityService } from 'src/app/services/ability.service';
 import { EnemyLevelDto, LevelDto } from 'src/app/models/level';
 import { DialogComponent } from 'src/app/components/dialogComponent/dialog.component';
 import { DialogDto } from 'src/app/models/dialog';
-import { passedObj } from 'src/assets/data/level';
 import { BackgroundDto } from 'src/app/models/backgrounds';
 
 const defaultAbilityCard: AbilityCard = {
@@ -483,9 +482,12 @@ export class BattleComponent implements OnInit {
     }
   }
 
-  gameInit() {
+  async gameInit() {
+    const passedObj: LevelDto = (await import('src/assets/data/level'))
+      .passedObj;
     // Passed object for battle
-    this.currentLevel = passedObj;
+    const currentLevel: LevelDto = JSON.parse(JSON.stringify(passedObj));
+    this.currentLevel = currentLevel;
     this.firstLevel = passedObj.combatPhases[0];
     this.allCombatPhases = this.currentLevel.combatPhases;
     this.combatImages = this.currentLevel.combatPhases.map((x) => {
@@ -630,13 +632,226 @@ export class BattleComponent implements OnInit {
   }
 
   async continue() {
-    localStorage.setItem('showLoading', JSON.stringify(true));
-    location.reload();
+    // localStorage.setItem('showLoading', JSON.stringify(true));
+    // window.location.reload();
+    this.loadingService.navigate('', 'forest.png');
+    setTimeout(() => {
+      this.resetGame();
+      this.Cards = Cards;
+      this.gameInit();
+    }, 2000);
   }
 
   async retry() {
-    localStorage.setItem('showLoading', JSON.stringify(true));
-    location.reload();
+    // localStorage.setItem('showLoading', JSON.stringify(true));
+    // window.location.reload();
+    this.loadingService.navigate('', 'forest.png');
+    setTimeout(() => {
+      this.resetGame();
+      this.Cards = Cards;
+      this.gameInit();
+    }, 2000);
+  }
+
+  resetGame() {
+    this.playerDeck = [];
+    this.playerHand = [];
+    this.playerDefense = [];
+    this.player = {
+      id: 0,
+      health: 1,
+      attack: 1,
+      image: 'link.png',
+      name: '',
+      baseHealth: 1,
+      baseAttack: 1,
+      level: 1,
+    };
+    this.playerTarget = 0;
+    this.playerAttackHand = {
+      valid: false,
+      highCard: 0,
+      cards: [],
+    };
+    this.playerWinner = false;
+    this.playerLoser = false;
+    this.finishedChoosingDefensePlayer = false;
+
+    this.selectedEnemyCards = [];
+    this.enemyDeck = [];
+    this.enemyHand = [];
+    this.enemyDefense = [];
+    this.enemyPlayers = [];
+    this.enemyTarget = 0;
+    this.enemyAttackHand = {
+      valid: false,
+      highCard: 0,
+      cards: [],
+    };
+    this.enemyWinner = false;
+    this.enemyLoser = false;
+    this.enemyAttackStarted = false;
+    this.showBotCards = false;
+    this.tie = false;
+
+    this.attackEnding = false;
+    this.selectedCards = [];
+    this.canSelectCards = true;
+
+    this.redrawCards = [];
+    this.redrawSelectedCards = [];
+    this.redrawing = true;
+    this.redrawHide = false;
+    this.disableAttackBtn = true;
+
+    this.validCards = [];
+    this.errorList = [];
+    this.errorListInactive = [];
+    this.messageList = [];
+    this.messageListInactive = [];
+    this.displayMessageList = [];
+    this.displayMessageListInactive = [];
+
+    this.attackStarted = false;
+
+    this.canDefendWithMultipleCards = false;
+    this.hasWildCards = true;
+    this.wildCards = [];
+    this.alwaysWinTies = false;
+    this.canSeeTopCard = false;
+    this.canSeeTopCardAbilities = false;
+    this.topRedrawCard = 0;
+    this.topRedrawCardEnemy = 0;
+
+    this.activeLeaderLines = [];
+    this.staticEnemyTarget = 0;
+    this.wrappingTurn = false;
+    this.doingWildCardChange = false;
+
+    this.usedSpecialCardThisTurn = false;
+
+    this.completedEnemyTurns = [];
+    this.currentEnemyTurn = {
+      id: 0,
+      health: 1,
+      attack: 1,
+      image: 'goomba.png',
+      name: '',
+      baseHealth: 1,
+      baseAttack: 1,
+      level: 1,
+    };
+
+    this.discardCards = [];
+    this.discardSelectedCards = [];
+    this.discarding = false;
+    this.discardHide = true;
+    this.enemyNextTurn = false;
+    this.duringBotTurnDiscard = false;
+
+    this.currentExtraDmg = 0;
+
+    this.abilityCardsHand = [];
+    this.abilityDeck = [];
+    this.hoveringAbilityCard = defaultAbilityCard;
+    this.hoveringAbilityHand = [];
+    this.activeAbilityLeaderLines = [];
+    this.currentlyRunning = false;
+    this.usedAbilityCard = false;
+    this.errorAbilityCard = defaultAbilityCard;
+    this.topAbilityCard = defaultAbilityCard;
+    this.currentAbility = defaultAbilityCard;
+    this.startedAbilityTurn = false;
+
+    this.flamesOnEnemies = [];
+    this.healOnEnemies = [];
+    this.addDefenseOnEnemies = [];
+    this.supportOnEnemies = [];
+    this.shieldOnEnemies = [];
+    this.leachOnEnemies = [];
+    this.healOnPlayer = false;
+    this.fireOnPlayer = false;
+    this.shieldOnPlayer = false;
+    this.increaseOffenseOnPlayer = false;
+    this.abilityEnemyTarget = 0;
+    this.playerUsingAbilityCard = false;
+
+    this.usedAbilityCardBot = false;
+    this.startedAbilityTurnBot = false;
+    this.currentlyRunningBot = false;
+    this.abilityCardsHandBot = [];
+    this.abilityDeckBot = [];
+    this.hoveringAbilityCardBot = defaultAbilityCard;
+    this.topAbilityCardBot = defaultAbilityCard;
+    this.currentAbilityBot = defaultAbilityCard;
+
+    this.gameLoserPlayer = false;
+    this.gameWinnerPlayer = false;
+    this.shownRewardItem = {
+      id: 0,
+      color: 'gold',
+      image: '',
+      text: '',
+      textAmount: '',
+    };
+    this.rewardItemsClean = [
+      {
+        id: 1,
+        color: 'gold',
+        image: 'goldReward.png',
+        text: 'Gold',
+        textAmount: 'x100',
+      },
+    ];
+    this.rewardItems = [
+      {
+        id: 1,
+        color: 'gold',
+        image: 'goldReward.png',
+        text: 'Gold',
+        textAmount: 'x100',
+      },
+    ];
+    this.canClickNextReward = false;
+    this.finishedRewards = false;
+    this.showHeroLevelUp = false;
+
+    this.battleRewardXp = 50;
+    this.leveledUp = false;
+
+    this.snowFlakesArray = [];
+    this.showSnowEffect = false;
+    this.showBubblesEffect = false;
+    this.showLeavesEffect = false;
+    this.showSunFlareEffect = false;
+    this.showCloudsEffect = false;
+    this.showNightEffect = false;
+    this.showFireEffect = false;
+    this.showAshesEffect = false;
+
+    this.abilityCardCombos = [];
+    this.currentlyShuffling = false;
+
+    this.gameThemePathEnemy = 'default';
+    this.easyMode = false;
+    this.checkSurrender = false;
+
+    this.hideDialog = false;
+    this.dialogArray = [];
+    this.displayDialog = false;
+    this.dialogArrayCombat = [];
+    this.displayDialogCombat = false;
+    this.dialogArrayGameEnd = [];
+    this.displayDialogGameEnd = false;
+    this.hoveringAbilityDescription = undefined;
+    this.showPokerHandsChart = false;
+
+    this.firstLevel = undefined;
+    this.currentLevel = undefined;
+    this.allCombatPhases = undefined;
+    this.currentCombatPhase = undefined;
+    this.combatImages = [];
+    this.playerLevelUpEnabled = true;
   }
 
   async selectAbilityCard(ability: AbilityCard) {
@@ -2691,9 +2906,7 @@ export class BattleComponent implements OnInit {
     const aliveEnemies = this.enemyPlayers.filter((x) => x.health > 0);
     if (aliveEnemies.length < 1) {
       if (this.allCombatPhases && this.allCombatPhases.length !== 0) {
-        setTimeout(() => {
-          this.nextCombatPhaseBot(true);
-        }, 2000);
+        this.nextCombatPhaseBot(true);
         return true;
       } else {
         setTimeout(() => {
