@@ -16,8 +16,8 @@
 
 .testBox {
   position: absolute;
-  left: 1633px;
-  top: 1179px;
+  left: 1920px;
+  top: 1385px;
   display: block;
 }
 
@@ -29,8 +29,12 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 10em;
-  height: 10em;
-  z-index: 932499234;
+  width: 4em;
+  height: 4em;
+  z-index: 9999;
   background-color: red;
+}
+
+.test:hover {
+  background-color: rgba(255, 0, 0, 0.5);
 }

@@ -1,16 +1,21 @@
 <div class="container">
   <div class="f-panzoom" id="myPanzoom">
-    <img class="f-panzoom__content" src="./assets/map.png" class="mapImage" />
-    <div data-panzoom-pin data-x="10%" data-y="10%" class="testBox">
+    <img
+      class="f-panzoom__content"
+      (contextmenu)="test($event)"
+      src="./assets/map.png"
+      class="mapImage"
+    />
+    <!-- <div data-panzoom-pin data-x="0%" data-y="0%" class="testBox">
       <div
         class="extratest"
         [ngStyle]="{
-        'margin-left': '500px',
-        'margin-top': '1700px',
+        'margin-left': '563px',
+        'margin-top': '1863px',
         }"
       >
-        <div class="test" (click)="test()">test</div>
+        <div class="test" (click)="test($event)">test</div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
