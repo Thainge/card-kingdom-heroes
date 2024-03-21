@@ -13,7 +13,7 @@ import { DialogComponent } from './components/dialogComponent/dialog.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BattleComponent,
+    // BattleComponent,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,

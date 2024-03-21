@@ -93,7 +93,7 @@ export class AppComponent implements OnInit {
       }, 2500);
     });
     const currentRoute = this.router.url;
-    this.loadingService.navigate(currentRoute, 'forest.png');
+    // this.loadingService.navigate(currentRoute, 'forest.png');
     setInterval(() => {
       try {
         this.clickAnimationsList = this.clickAnimationsList.slice(
@@ -112,6 +112,10 @@ export class AppComponent implements OnInit {
     //   image: 'gold.png',
     //   title: 'First Blood',
     // });
+  }
+
+  isBattle(): boolean {
+    return this.router.url.includes('battle');
   }
 
   muteIconSound(): number {

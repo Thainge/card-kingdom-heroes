@@ -39,7 +39,7 @@
         </div>
         <div class="optionsRow">
           <div class="optionsButtonsRow">
-            <div class="optionsItem">
+            <div class="optionsItem" *ngIf="isBattle()">
               <div class="optionsItemTitle optionsText">Retry</div>
               <img
                 src="./assets/reset.png"
@@ -47,7 +47,7 @@
                 class="optionsItemButton hoverButton"
               />
             </div>
-            <div class="optionsItem">
+            <div class="optionsItem" *ngIf="isBattle()">
               <div class="optionsItemTitle optionsText">Surrender</div>
               <img
                 src="./assets/surrender.png"
