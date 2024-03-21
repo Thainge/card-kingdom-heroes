@@ -572,6 +572,7 @@ export class BattleComponent implements OnInit {
       return;
     }
 
+    // Guide is true, show guide
     if (this.showGuide === true && this.hideGuideNow) {
       this.showGuide = false;
       for (const num of [0, 1, 2, 3, 4]) {
@@ -625,11 +626,23 @@ export class BattleComponent implements OnInit {
       this.showNightEffect = true;
       this.showFireEffect = false;
       this.showAshesEffect = false;
+
+      if (this.currentLevel.showAbilityGuide) {
+        this.easyMode = false;
+      }
+
       await this.timeout(1000);
       this.redrawHide = true;
       await this.timeout(2500);
-      await this.pushDrawOutTextMessage('Welcome to Card Kingdom Combat!');
-      this.nextGuideStep();
+      if (this.currentLevel.showAbilityGuide) {
+        await this.pushDrawOutTextMessage(
+          'Welcome to Card Kingdom Ability Card Combat!'
+        );
+        this.nextGuideStepAbility();
+      } else {
+        await this.pushDrawOutTextMessage('Welcome to Card Kingdom Combat!');
+        this.nextGuideStep();
+      }
       return;
     }
 
@@ -645,12 +658,244 @@ export class BattleComponent implements OnInit {
     await this.timeout(500);
   }
 
-  checkGuideActive(event: any) {
-    // if ((this.showGuide || this.showAbilityGuide) && this.canClickGuide) {
-    //   event.stopPropagation();
-    //   event.preventDefault();
-    //   this.nextGuideStep();
-    // }
+  async nextGuideStepAbility() {
+    this.currentGuideStep = this.currentGuideStep + 1;
+    const step = this.currentGuideStep;
+
+    if (step === 1) {
+      await this.timeout(3000);
+      await this.hidePreviousGuideMessages();
+      await this.pushDrawOutTextMessage(
+        'Lets go over the basics of ability card combat'
+      );
+      this.nextGuideStepAbility();
+    } else if (step === 2) {
+      await this.timeout(3000);
+      await this.hidePreviousGuideMessages();
+      await this.pushDrawOutTextMessage(
+        'Draw 2 ability cards at the start of your turn'
+      );
+      this.abilityDeck[0] = {
+        id: 98,
+        abilityFunction: 'damage',
+        abilityValue: 1,
+        cost: ['diamonds', 'hearts'],
+        description: 'Deal 1 damage to every enemy',
+        hitAnimation: 'fire',
+        image: 'sliceAbility.png',
+        level: 1,
+        name: 'Burn',
+        targetAll: true,
+      };
+      this.abilityDeck[1] = {
+        id: 99,
+        abilityFunction: 'wildSuitRange',
+        targetAll: false,
+        abilityValue: 14,
+        cost: [],
+        name: 'Wild',
+        description: 'Wild a card In Hand',
+        image: 'sliceAbility.png',
+        level: 3,
+        hitAnimation: 'fire',
+      };
+      this.drawAbilityCard(2);
+      this.setGuideHands();
+      this.nextGuideStepAbility();
+    } else if (step === 3) {
+      await this.timeout(3000);
+      await this.hidePreviousGuideMessages();
+      await this.pushDrawOutTextMessage(
+        'Ability cards use up cards in your hand to play them'
+      );
+      this.hoverAbilityEnter(this.abilityCardsHand[0]);
+      this.nextGuideStepAbility();
+    } else if (step === 4) {
+      await this.timeout(3000);
+      await this.hidePreviousGuideMessages();
+      await this.pushDrawOutTextMessage(
+        'Arrows are drawn to the cards it will use'
+      );
+      this.nextGuideStepAbility();
+    } else if (step === 5) {
+      await this.timeout(3000);
+      await this.hidePreviousGuideMessages();
+      await this.pushDrawOutTextMessage(
+        'Scroll on the ability card to change the cards it will use'
+      );
+      this.abilityCardChangeUseCards(
+        { deltaY: -100 },
+        this.abilityCardsHand[0]
+      );
+      await this.timeout(1000);
+      this.abilityCardChangeUseCards(
+        { deltaY: -100 },
+        this.abilityCardsHand[0]
+      );
+      await this.timeout(1000);
+      this.abilityCardChangeUseCards(
+        { deltaY: -100 },
+        this.abilityCardsHand[0]
+      );
+      await this.timeout(1000);
+      this.nextGuideStepAbility();
+    } else if (step === 6) {
+      await this.timeout(2000);
+      await this.hidePreviousGuideMessages();
+      await this.pushDrawOutTextMessage('Click the ability card to use it');
+      await this.timeout(2000);
+      this.selectAbilityCard(this.abilityCardsHand[0]);
+      this.nextGuideStepAbility();
+    } else if (step === 7) {
+      await this.timeout(4000);
+      await this.hidePreviousGuideMessages();
+      await this.pushDrawOutTextMessage(
+        "That's it for now! Good luck soldier."
+      );
+      await this.timeout(2000);
+      await this.hidePreviousGuideMessages();
+      await this.timeout(1000);
+      this.nextGuideStepAbility();
+    } else if (step > 7) {
+      this.hideGuideNow = true;
+      this.loadingService.navigate('', 'forest.png');
+      this.resetGame();
+      this.Cards = Cards;
+      setTimeout(() => {
+        this.resetGame();
+        this.Cards = Cards;
+        this.gameInit();
+      }, 500);
+    }
+  }
+
+  async setGuideHands() {
+    this.playerDeck = this.playerDeck.map((x) => {
+      return { ...x, wild: false, wildSuit: false };
+    });
+    this.playerHand[0] = {
+      ...this.playerDeck[0],
+      value: '5',
+      image: '5_of_hearts.png',
+      suit: 'hearts',
+    };
+    this.playerHand[1] = {
+      ...this.playerDeck[1],
+      value: '7',
+      image: '7_of_hearts.png',
+      suit: 'diamonds',
+    };
+    this.playerHand[2] = {
+      ...this.playerDeck[2],
+      value: '9',
+      image: '9_of_hearts.png',
+      suit: 'clubs',
+    };
+    this.playerHand[3] = {
+      ...this.playerDeck[3],
+      value: '12',
+      image: '12_of_hearts.png',
+      suit: 'spades',
+    };
+    this.playerHand[4] = {
+      ...this.playerDeck[4],
+      value: '12',
+      image: '12_of_hearts.png',
+      suit: 'diamonds',
+    };
+    // Player deck fill
+    this.playerDeck[0] = {
+      ...this.playerDeck[5],
+      image: '3_of_hearts.png',
+      value: '3',
+      suit: 'diamonds',
+    };
+    this.playerDeck[1] = {
+      ...this.playerDeck[6],
+      image: '6_of_hearts.png',
+      value: '6',
+      suit: 'diamonds',
+    };
+    this.playerDeck[2] = {
+      ...this.playerDeck[7],
+      image: '11_of_diamonds.png',
+      value: '11',
+      suit: 'diamonds',
+    };
+    this.playerDeck[3] = {
+      ...this.playerDeck[8],
+      image: '7_of_clubs.png',
+      value: '7',
+      suit: 'diamonds',
+    };
+    this.playerDeck[4] = {
+      ...this.playerDeck[9],
+      image: '12_of_spades.png',
+      value: '12',
+      suit: 'diamonds',
+    };
+
+    // Enemy hand fill
+    this.enemyHand[0] = {
+      ...this.enemyDeck[0],
+      value: '4',
+      image: '4_of_hearts.png',
+      suit: 'hearts',
+    };
+    this.enemyHand[1] = {
+      ...this.enemyDeck[1],
+      value: '5',
+      image: '5_of_hearts.png',
+      suit: 'diamonds',
+    };
+    this.enemyHand[2] = {
+      ...this.enemyDeck[2],
+      value: '8',
+      image: '8_of_hearts.png',
+      suit: 'clubs',
+    };
+    this.enemyHand[3] = {
+      ...this.enemyDeck[3],
+      value: '9',
+      image: '9_of_hearts.png',
+      suit: 'spades',
+    };
+    this.enemyHand[4] = {
+      ...this.enemyDeck[4],
+      image: '2_of_hearts.png',
+      value: '2',
+      suit: 'diamonds',
+    };
+    this.enemyDeck[0] = {
+      ...this.enemyDeck[5],
+      image: '3_of_hearts.png',
+      value: '3',
+      suit: 'diamonds',
+    };
+    this.enemyDeck[1] = {
+      ...this.enemyDeck[6],
+      image: '6_of_spades.png',
+      value: '6',
+      suit: 'diamonds',
+    };
+    this.enemyDeck[2] = {
+      ...this.enemyDeck[7],
+      image: '11_of_diamonds.png',
+      value: '11',
+      suit: 'diamonds',
+    };
+    this.enemyDeck[3] = {
+      ...this.enemyDeck[8],
+      image: '7_of_clubs.png',
+      value: '7',
+      suit: 'diamonds',
+    };
+    this.enemyDeck[4] = {
+      ...this.enemyDeck[9],
+      image: '12_of_hearts.png',
+      value: '12',
+      suit: 'diamonds',
+    };
   }
 
   async nextGuideStep() {
@@ -669,132 +914,7 @@ export class BattleComponent implements OnInit {
       await this.pushDrawOutTextMessage(
         'Both players draw until they have 5 cards'
       );
-      this.playerDeck = this.playerDeck.map((x) => {
-        return { ...x, wild: false, wildSuit: false };
-      });
-      this.playerHand[0] = {
-        ...this.playerDeck[0],
-        value: '5',
-        image: '5_of_hearts.png',
-        suit: 'hearts',
-      };
-      this.playerHand[1] = {
-        ...this.playerDeck[1],
-        value: '7',
-        image: '7_of_hearts.png',
-        suit: 'diamonds',
-      };
-      this.playerHand[2] = {
-        ...this.playerDeck[2],
-        value: '9',
-        image: '9_of_hearts.png',
-        suit: 'clubs',
-      };
-      this.playerHand[3] = {
-        ...this.playerDeck[3],
-        value: '12',
-        image: '12_of_hearts.png',
-        suit: 'spades',
-      };
-      this.playerHand[4] = {
-        ...this.playerDeck[4],
-        value: '12',
-        image: '12_of_hearts.png',
-        suit: 'diamonds',
-      };
-      // Player deck fill
-      this.playerDeck[0] = {
-        ...this.playerDeck[5],
-        image: '3_of_hearts.png',
-        value: '3',
-        suit: 'diamonds',
-      };
-      this.playerDeck[1] = {
-        ...this.playerDeck[6],
-        image: '6_of_hearts.png',
-        value: '6',
-        suit: 'diamonds',
-      };
-      this.playerDeck[2] = {
-        ...this.playerDeck[7],
-        image: '11_of_diamonds.png',
-        value: '11',
-        suit: 'diamonds',
-      };
-      this.playerDeck[3] = {
-        ...this.playerDeck[8],
-        image: '7_of_clubs.png',
-        value: '7',
-        suit: 'diamonds',
-      };
-      this.playerDeck[4] = {
-        ...this.playerDeck[9],
-        image: '12_of_spades.png',
-        value: '12',
-        suit: 'diamonds',
-      };
-
-      // Enemy hand fill
-      this.enemyHand[0] = {
-        ...this.enemyDeck[0],
-        value: '4',
-        image: '4_of_hearts.png',
-        suit: 'hearts',
-      };
-      this.enemyHand[1] = {
-        ...this.enemyDeck[1],
-        value: '5',
-        image: '5_of_hearts.png',
-        suit: 'diamonds',
-      };
-      this.enemyHand[2] = {
-        ...this.enemyDeck[2],
-        value: '8',
-        image: '8_of_hearts.png',
-        suit: 'clubs',
-      };
-      this.enemyHand[3] = {
-        ...this.enemyDeck[3],
-        value: '9',
-        image: '9_of_hearts.png',
-        suit: 'spades',
-      };
-      this.enemyHand[4] = {
-        ...this.enemyDeck[4],
-        image: '2_of_hearts.png',
-        value: '2',
-        suit: 'diamonds',
-      };
-      this.enemyDeck[0] = {
-        ...this.enemyDeck[5],
-        image: '3_of_hearts.png',
-        value: '3',
-        suit: 'diamonds',
-      };
-      this.enemyDeck[1] = {
-        ...this.enemyDeck[6],
-        image: '6_of_spades.png',
-        value: '6',
-        suit: 'diamonds',
-      };
-      this.enemyDeck[2] = {
-        ...this.enemyDeck[7],
-        image: '11_of_diamonds.png',
-        value: '11',
-        suit: 'diamonds',
-      };
-      this.enemyDeck[3] = {
-        ...this.enemyDeck[8],
-        image: '7_of_clubs.png',
-        value: '7',
-        suit: 'diamonds',
-      };
-      this.enemyDeck[4] = {
-        ...this.enemyDeck[9],
-        image: '12_of_hearts.png',
-        value: '12',
-        suit: 'diamonds',
-      };
+      await this.setGuideHands();
       this.nextGuideStep();
     } else if (step === 3) {
       // Select cards

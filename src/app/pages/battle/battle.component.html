@@ -1,9 +1,5 @@
 <div class="container">
-  <div
-    class="guide"
-    (click)="checkGuideActive($event)"
-    *ngIf="this.showGuide || this.showAbilityGuide"
-  ></div>
+  <div class="guide" *ngIf="this.showGuide"></div>
   <app-dialog
     [dialogArray]="dialogArray"
     (finishedDialog)="finishedDialog()"
@@ -2826,6 +2822,7 @@
         *ngFor="let card of abilityCardsHand; index as i; trackBy: trackById"
         #activeAbilityCards
         [ngClass]="{
+          guidePutCardUp: currentLevel?.showAbilityGuide && !hideGuideNow,
           easyCardSize: easyMode,
           abilityIsActive: abilityCardIsSelected(card),
           abilityIsActiveTarget: currentAbility.id === card.id,

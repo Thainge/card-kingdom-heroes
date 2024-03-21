@@ -1,15 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CardDto } from '../models/card';
-import { DetermineObject, DetermineWinnerObject } from '../models/determine';
-import { PlayerDto } from '../models/player';
 import { AbilityCard } from '../models/abilityCard';
-
-interface suitValuesDto {
-  hearts: number;
-  diamonds: number;
-  spades: number;
-  clubs: number;
-}
 
 @Injectable({
   providedIn: 'root',
