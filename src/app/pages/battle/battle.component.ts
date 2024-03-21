@@ -324,6 +324,7 @@ export class BattleComponent implements OnInit {
   combatImages: CombatImages[] = [];
   playerLevelUpEnabled: boolean = true;
   allCardsWild: boolean = false;
+  skippingGuide: boolean = false;
 
   @ViewChildren('myActiveCards')
   myActiveCards: QueryList<ElementRef> | undefined;
@@ -659,11 +660,18 @@ export class BattleComponent implements OnInit {
   }
 
   async nextGuideStepAbility() {
+    if (this.skippingGuide) {
+      return;
+    }
+
     this.currentGuideStep = this.currentGuideStep + 1;
     const step = this.currentGuideStep;
 
     if (step === 1) {
       await this.timeout(3000);
+      if (this.skippingGuide) {
+        return;
+      }
       await this.hidePreviousGuideMessages();
       await this.pushDrawOutTextMessage(
         'Lets go over the basics of ability card combat'
@@ -671,10 +679,16 @@ export class BattleComponent implements OnInit {
       this.nextGuideStepAbility();
     } else if (step === 2) {
       await this.timeout(3000);
+      if (this.skippingGuide) {
+        return;
+      }
       await this.hidePreviousGuideMessages();
       await this.pushDrawOutTextMessage(
         'Draw 2 ability cards at the start of your turn'
       );
+      if (this.skippingGuide) {
+        return;
+      }
       this.abilityDeck[0] = {
         id: 98,
         abilityFunction: 'damage',
@@ -704,6 +718,9 @@ export class BattleComponent implements OnInit {
       this.nextGuideStepAbility();
     } else if (step === 3) {
       await this.timeout(3000);
+      if (this.skippingGuide) {
+        return;
+      }
       await this.hidePreviousGuideMessages();
       await this.pushDrawOutTextMessage(
         'Ability cards use up cards in your hand to play them'
@@ -712,6 +729,9 @@ export class BattleComponent implements OnInit {
       this.nextGuideStepAbility();
     } else if (step === 4) {
       await this.timeout(3000);
+      if (this.skippingGuide) {
+        return;
+      }
       await this.hidePreviousGuideMessages();
       await this.pushDrawOutTextMessage(
         'Arrows are drawn to the cards it will use'
@@ -719,20 +739,32 @@ export class BattleComponent implements OnInit {
       this.nextGuideStepAbility();
     } else if (step === 5) {
       await this.timeout(3000);
+      if (this.skippingGuide) {
+        return;
+      }
       await this.hidePreviousGuideMessages();
       await this.pushDrawOutTextMessage(
         'Scroll on the ability card to change the cards it will use'
       );
+      if (this.skippingGuide) {
+        return;
+      }
       this.abilityCardChangeUseCards(
         { deltaY: -100 },
         this.abilityCardsHand[0]
       );
       await this.timeout(1000);
+      if (this.skippingGuide) {
+        return;
+      }
       this.abilityCardChangeUseCards(
         { deltaY: -100 },
         this.abilityCardsHand[0]
       );
       await this.timeout(1000);
+      if (this.skippingGuide) {
+        return;
+      }
       this.abilityCardChangeUseCards(
         { deltaY: -100 },
         this.abilityCardsHand[0]
@@ -741,13 +773,22 @@ export class BattleComponent implements OnInit {
       this.nextGuideStepAbility();
     } else if (step === 6) {
       await this.timeout(2000);
+      if (this.skippingGuide) {
+        return;
+      }
       await this.hidePreviousGuideMessages();
       await this.pushDrawOutTextMessage('Click the ability card to use it');
       await this.timeout(2000);
+      if (this.skippingGuide) {
+        return;
+      }
       this.selectAbilityCard(this.abilityCardsHand[0]);
       this.nextGuideStepAbility();
     } else if (step === 7) {
       await this.timeout(4000);
+      if (this.skippingGuide) {
+        return;
+      }
       await this.hidePreviousGuideMessages();
       await this.pushDrawOutTextMessage(
         "That's it for now! Good luck soldier."
@@ -757,14 +798,19 @@ export class BattleComponent implements OnInit {
       await this.timeout(1000);
       this.nextGuideStepAbility();
     } else if (step > 7) {
+      if (this.skippingGuide) {
+        return;
+      }
       this.hideGuideNow = true;
       this.loadingService.navigate('', 'forest.png');
       this.resetGame();
       this.Cards = Cards;
       setTimeout(() => {
-        this.resetGame();
-        this.Cards = Cards;
-        this.gameInit();
+        if (!this.skippingGuide) {
+          this.resetGame();
+          this.Cards = Cards;
+          this.gameInit();
+        }
       }, 500);
     }
   }
@@ -898,18 +944,47 @@ export class BattleComponent implements OnInit {
     };
   }
 
+  async skipGuide() {
+    if (!this.skippingGuide) {
+      this.skippingGuide = true;
+
+      await this.hidePreviousGuideMessages();
+      await this.pushDrawOutTextMessage(
+        "That's it for now! Good luck soldier."
+      );
+      await this.timeout(2000);
+      await this.hidePreviousGuideMessages();
+      await this.timeout(1000);
+      this.hideGuideNow = true;
+      this.loadingService.navigate('', 'forest.png');
+      this.resetGame();
+      this.Cards = Cards;
+      this.gameInit();
+    }
+  }
+
   async nextGuideStep() {
+    if (this.skippingGuide) {
+      return;
+    }
+
     this.currentGuideStep = this.currentGuideStep + 1;
     const step = this.currentGuideStep;
 
     if (step === 1) {
       await this.timeout(3000);
+      if (this.skippingGuide) {
+        return;
+      }
       await this.hidePreviousGuideMessages();
       await this.pushDrawOutTextMessage('Lets go over the basics of combat');
       this.nextGuideStep();
     } else if (step === 2) {
       // Draw cards
       await this.timeout(3000);
+      if (this.skippingGuide) {
+        return;
+      }
       await this.hidePreviousGuideMessages();
       await this.pushDrawOutTextMessage(
         'Both players draw until they have 5 cards'
@@ -919,11 +994,17 @@ export class BattleComponent implements OnInit {
     } else if (step === 3) {
       // Select cards
       await this.timeout(3000);
+      if (this.skippingGuide) {
+        return;
+      }
       await this.hidePreviousGuideMessages();
       await this.pushDrawOutTextMessage('Find the best hand to attack with');
       this.nextGuideStep();
     } else if (step === 4) {
       await this.timeout(3000);
+      if (this.skippingGuide) {
+        return;
+      }
       await this.hidePreviousGuideMessages();
       await this.pushDrawOutTextMessage('Click cards to select them');
       this.selectCard(this.playerHand[3]);
@@ -931,6 +1012,9 @@ export class BattleComponent implements OnInit {
       this.nextGuideStep();
     } else if (step === 5) {
       await this.timeout(3000);
+      if (this.skippingGuide) {
+        return;
+      }
       await this.hidePreviousGuideMessages();
       await this.pushDrawOutTextMessage(
         'Select enemy target by clicking enemies'
@@ -939,6 +1023,9 @@ export class BattleComponent implements OnInit {
       this.nextGuideStep();
     } else if (step === 6) {
       await this.timeout(3000);
+      if (this.skippingGuide) {
+        return;
+      }
       await this.hidePreviousGuideMessages();
       await this.pushDrawOutTextMessage(
         'When your attack hand is ready, click attack'
@@ -949,6 +1036,9 @@ export class BattleComponent implements OnInit {
       this.nextGuideStep();
     } else if (step === 7) {
       await this.timeout(1500);
+      if (this.skippingGuide) {
+        return;
+      }
       await this.hidePreviousGuideMessages();
       await this.pushDrawOutTextMessage(
         'Attack damage is equal to the number of cards used'
@@ -956,6 +1046,9 @@ export class BattleComponent implements OnInit {
       this.nextGuideStep();
     } else if (step === 8) {
       await this.timeout(3000);
+      if (this.skippingGuide) {
+        return;
+      }
       await this.hidePreviousGuideMessages();
       await this.pushDrawOutTextMessage(
         'Defenders counter attack if they win the hand'
@@ -963,6 +1056,9 @@ export class BattleComponent implements OnInit {
       this.nextGuideStep();
     } else if (step === 9) {
       await this.timeout(3000);
+      if (this.skippingGuide) {
+        return;
+      }
       await this.hidePreviousGuideMessages();
       await this.pushDrawOutTextMessage(
         'Defenders draw cards based on their defense'
@@ -974,10 +1070,16 @@ export class BattleComponent implements OnInit {
     } else if (step === 10) {
       this.validCards = [];
       await this.timeout(4000);
+      if (this.skippingGuide) {
+        return;
+      }
       await this.pushDrawOutTextMessage('The enemy is attacking');
       this.nextGuideStep();
     } else if (step === 11) {
       await this.timeout(3000);
+      if (this.skippingGuide) {
+        return;
+      }
       await this.hidePreviousGuideMessages();
       await this.pushDrawOutTextMessage(
         'Select cards to defend with and click defend'
@@ -987,6 +1089,9 @@ export class BattleComponent implements OnInit {
       this.nextGuideStep();
     } else if (step === 12) {
       await this.timeout(3000);
+      if (this.skippingGuide) {
+        return;
+      }
       await this.hidePreviousGuideMessages();
       await this.pushDrawOutTextMessage(
         'Defense hand length must match offense hand length'
@@ -996,28 +1101,42 @@ export class BattleComponent implements OnInit {
       this.nextGuideStep();
     } else if (step === 13) {
       await this.timeout(3000);
+      if (this.skippingGuide) {
+        return;
+      }
       this.chooseDefensePlayerCards();
       this.nextGuideStep();
     } else if (step === 14) {
       await this.timeout(4000);
+      if (this.skippingGuide) {
+        return;
+      }
       await this.hidePreviousGuideMessages();
       await this.pushDrawOutTextMessage(
         "That's it for now! Good luck soldier."
       );
       await this.timeout(3000);
+      if (this.skippingGuide) {
+        return;
+      }
       await this.hidePreviousGuideMessages();
       await this.timeout(1000);
       this.nextGuideStep();
     } else if (step > 14) {
+      if (this.skippingGuide) {
+        return;
+      }
       this.hideGuideNow = true;
       this.loadingService.navigate('', 'forest.png');
       this.resetGame();
       this.Cards = Cards;
       setTimeout(() => {
-        this.resetGame();
-        this.Cards = Cards;
-        this.gameInit();
-      }, 2000);
+        if (!this.skippingGuide) {
+          this.resetGame();
+          this.Cards = Cards;
+          this.gameInit();
+        }
+      }, 500);
     }
   }
 

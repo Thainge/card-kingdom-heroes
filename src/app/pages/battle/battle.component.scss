@@ -1736,6 +1736,16 @@
   -webkit-user-drag: none;
 }
 
+.skipGuideButtonBox {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  display: flex;
+  justify-content: flex-end;
+  align-self: center;
+  z-index: 10000;
+}
+
 .hoverButton {
   transition: all 0.3s;
   filter: drop-shadow(0 0 0.3em rgba(0, 0, 0, 0.5));

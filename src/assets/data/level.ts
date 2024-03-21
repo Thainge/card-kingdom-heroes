@@ -7,8 +7,8 @@ export const passedObj: LevelDto = {
   playerLevelUpEnabled: true,
   hideDialog: true,
   allCardsWild: false,
-  showGuide: true,
-  showAbilityGuide: true,
+  showGuide: false,
+  showAbilityGuide: false,
 
   shuffleAbilityCards: true,
   shuffleCards: true,

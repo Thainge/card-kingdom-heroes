@@ -1,5 +1,11 @@
 <div class="container">
   <div class="guide" *ngIf="this.showGuide"></div>
+  <div class="skipGuideButtonBox" *ngIf="this.showGuide">
+    <div class="finishButtonGo" (click)="skipGuide()">
+      <img class="finishButton" [src]="'./assets/continue.png'" />
+      <div class="finishButtonText surrenderText">Skip Guide</div>
+    </div>
+  </div>
   <app-dialog
     [dialogArray]="dialogArray"
     (finishedDialog)="finishedDialog()"
