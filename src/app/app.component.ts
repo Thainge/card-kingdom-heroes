@@ -69,6 +69,7 @@ export class AppComponent implements OnInit {
     private achievementService: AchievementService,
     private cheatsService: CheatsService,
     private loadingService: LoadingService,
+    private playerService: playerService,
     private router: Router
   ) {}
 
