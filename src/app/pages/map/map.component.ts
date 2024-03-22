@@ -83,6 +83,10 @@ export class MapComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit() {
+    this.initPanZoom();
+  }
+
+  async initPanZoom() {
     const container = document.getElementById('myPanzoom');
     const options = {
       maxScale: 0.8,
@@ -104,25 +108,28 @@ export class MapComponent implements AfterViewInit, OnInit {
     const currentLevel = this.flagsList.find(
       (x) => x.levelStatus === 'nextLevel'
     );
-    setTimeout(() => {
-      if (currentLevel) {
-        // Pan to center initially
-        pz.panTo({
-          x: -1000,
-          y: -600,
-          friction: 0,
-          ignoreBounds: false,
-        });
-        // Then pan to next level
-        setTimeout(() => {
-          pz.panTo({
-            x: 500 - currentLevel.x,
-            y: 200 - currentLevel.y,
-            friction: 0.04,
-          });
-        }, 50);
-      }
-    }, 10);
+
+    const initArr = Array.from(Array(10).keys());
+    for await (let x of initArr) {
+      await pz.panTo({
+        x: -1000,
+        y: -600,
+        friction: 0,
+        ignoreBounds: false,
+      });
+      await this.timeout(10);
+    }
+    if (currentLevel) {
+      pz.panTo({
+        x: 500 - currentLevel.x,
+        y: 200 - currentLevel.y,
+        friction: 0.04,
+      });
+    }
+  }
+
+  timeout(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   determineDelayFlag(): number {
