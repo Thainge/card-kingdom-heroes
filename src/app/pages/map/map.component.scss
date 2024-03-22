@@ -14,27 +14,40 @@
   height: 100%;
 }
 
-.testBox {
+.overlayContainer {
   position: absolute;
   left: 1920px;
   top: 1385px;
   display: block;
 }
 
-.extratest {
+.flagContainer {
   position: relative;
 }
 
-.test {
+.flagBox {
   position: absolute;
   top: 0;
   left: 0;
-  width: 4em;
-  height: 4em;
   z-index: 9999;
-  background-color: red;
 }
 
-.test:hover {
-  background-color: rgba(255, 0, 0, 0.5);
+.flagLevelBox {
+  position: relative;
+}
+
+.flag {
+  transition: all 0.3s;
+  opacity: 1;
+}
+
+.hoverFlag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.hoverFlag:hover {
+  opacity: 1;
 }

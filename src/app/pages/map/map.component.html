@@ -2,20 +2,61 @@
   <div class="f-panzoom" id="myPanzoom">
     <img
       class="f-panzoom__content"
-      (contextmenu)="test($event)"
+      (contextmenu)="addNormalLevel($event)"
       src="./assets/map.png"
       class="mapImage"
     />
-    <!-- <div data-panzoom-pin data-x="0%" data-y="0%" class="testBox">
+    <div data-panzoom-pin data-x="0%" data-y="0%" class="overlayContainer">
       <div
-        class="extratest"
+        *ngFor="let item of flagsList"
+        class="flagContainer"
         [ngStyle]="{
-        'margin-left': '563px',
-        'margin-top': '1863px',
+        'left': item.x + 'px',
+        'top': item.y + 'px',
         }"
       >
-        <div class="test" (click)="test($event)">test</div>
+        <!-- <div *ngFor="let dot of item.dots"></div> -->
+        <div class="flagBox" (click)="remove(item)">
+          <!-- Next Level -->
+          <div
+            class="flagLevelBox"
+            *ngIf="
+              item.levelType === 'normal' && item.levelStatus === 'nextLevel'
+            "
+          >
+            <img src="./assets/flag.png" class="flag" />
+            <img src="./assets/flagActive.png" class="flag hoverFlag" />
+          </div>
+          <!-- Finished Level -->
+          <div
+            class="flagLevelBox"
+            *ngIf="
+              item.levelType === 'normal' && item.levelStatus === 'finished'
+            "
+          >
+            <img src="./assets/finishedFlag.png" class="flag" />
+            <img src="./assets/finishedFlagActive.png" class="flag hoverFlag" />
+          </div>
+          <!-- Boss level -->
+          <div
+            class="flagLevelBox"
+            *ngIf="
+              item.levelType === 'boss' && item.levelStatus === 'nextLevel'
+            "
+          >
+            <img src="./assets/finishedFlagActive.png" class="flag" />
+            <img src="./assets/finishedFlag.png" class="flag hoverFlag" />
+          </div>
+          <!-- Finished Boss level -->
+          <div
+            class="flagLevelBox"
+            *ngIf="item.levelType === 'boss' && item.levelStatus === 'finished'"
+          >
+            <img src="./assets/finishedFlagActive.png" class="flag" />
+            <img src="./assets/finishedFlag.png" class="flag hoverFlag" />
+          </div>
+        </div>
       </div>
-    </div> -->
+    </div>
   </div>
 </div>
