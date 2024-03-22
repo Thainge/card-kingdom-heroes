@@ -9,7 +9,8 @@ import {
 } from '@angular/core';
 import { Panzoom } from '@fancyapps/ui/dist/panzoom/panzoom.esm.js';
 import { DialogComponent } from 'src/app/components/dialogComponent/dialog.component';
-import { FlagDto } from 'src/app/models/flag';
+import { DotDto, FlagDto } from 'src/app/models/flag';
+import { flagsData } from 'src/assets/data/flags';
 const { Pins } = require('@fancyapps/ui/dist/panzoom/panzoom.pins.esm.js');
 
 @Component({
@@ -22,12 +23,19 @@ const { Pins } = require('@fancyapps/ui/dist/panzoom/panzoom.pins.esm.js');
 export class MapComponent implements AfterViewInit, OnInit {
   @ViewChild('panZoom', { static: false }) scene: ElementRef | undefined;
   flagsList: FlagDto[] = [];
+  previousFlagsList: any[] = [];
   currentFlagHover: FlagDto | undefined;
-  isDoingLevelDots: boolean = false;
+  placingFlag = true;
+  placingCurrentFlag: FlagDto | undefined;
+  mouseX: number = 0;
+  mouseY: number = 0;
+  devMode: boolean = false;
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.flagsList = flagsData;
+  }
 
   ngAfterViewInit() {
     const container = document.getElementById('myPanzoom');
@@ -49,58 +57,153 @@ export class MapComponent implements AfterViewInit, OnInit {
     });
   }
 
-  addNormalLevel(e: any) {
+  @HostListener('mousemove', ['$event']) onMouseMove(e: any) {
+    if (!this.devMode) {
+      return;
+    }
+
+    this.mouseX = e.clientX + 10;
+    this.mouseY = e.clientY + 10;
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  onKeyPress($event: KeyboardEvent) {
+    if (!this.devMode) {
+      return;
+    }
+
+    if (($event.ctrlKey || $event.metaKey) && $event.keyCode == 90) {
+      this.removeLastStep();
+    }
+  }
+
+  removeLastStep() {
+    if (!this.devMode) {
+      return;
+    }
+
+    if (this.previousFlagsList.length < 1 && this.flagsList.length > 0) {
+      return;
+    }
+
+    if (this.flagsList.length > 0) {
+      const previousItem = this.flagsList[this.flagsList.length - 1];
+
+      // Set current to previous
+      // Remove from previous array
+      this.flagsList = this.previousFlagsList.pop();
+
+      const currItem = this.flagsList[this.flagsList.length - 1];
+      if (previousItem.id !== currItem.id) {
+        this.currentFlagHover = undefined;
+        this.placingCurrentFlag = undefined;
+        this.placingFlag = true;
+      }
+
+      if (this.previousFlagsList.length < 1) {
+        this.flagsList = [];
+        this.previousFlagsList = [];
+        this.currentFlagHover = undefined;
+        this.placingCurrentFlag = undefined;
+        this.placingFlag = true;
+      }
+    }
+  }
+
+  trackById = (index: number, item: any) => item.id;
+
+  addLevel(e: any) {
     e.preventDefault();
-    const ID = this.flagsList.length + 1;
+    if (!this.devMode) {
+      return;
+    }
+
+    let ID = 0;
+    if (this.placingCurrentFlag && this.placingCurrentFlag.id) {
+      ID = this.placingCurrentFlag.id;
+    } else {
+      ID = this.flagsList.length + 1;
+    }
+
     var rect = e.target.getBoundingClientRect();
-    var x = e.clientX - rect.left;
-    var y = e.clientY - rect.top;
-    const clickObject: FlagDto = {
+    var x = Math.round(e.clientX - rect.left) - 43;
+    var y = Math.round(e.clientY - rect.top) - 70;
+    const FlagObject: FlagDto = {
       id: ID,
-      x: Math.round(x) - 32,
-      y: Math.round(y) - 80,
+      x,
+      y,
       levelStatus: 'nextLevel',
       levelType: 'normal',
       dots: [],
     };
-    this.flagsList.push(clickObject as FlagDto);
+    this.previousFlagsList.push(this.flagsList);
+    if (this.placingFlag) {
+      // Place flag
+      this.placingCurrentFlag = FlagObject;
+      this.placingFlag = false;
+      this.flagsList.push(FlagObject);
+      this.flagsList = this.flagsList.map((x) => {
+        if (x.id === FlagObject.id) {
+          return x;
+        }
+
+        return { ...x, levelStatus: 'finished' };
+      });
+    } else {
+      // place dots
+      const foundFlag = this.flagsList.find(
+        (x) => x.id === this.placingCurrentFlag?.id
+      );
+      if (foundFlag) {
+        const dotId = foundFlag.dots.length + 1;
+        const newDots: DotDto = {
+          id: dotId,
+          x: FlagObject.x + 34,
+          y: FlagObject.y + 62,
+        };
+        this.flagsList = this.flagsList.map((x) => {
+          if (
+            this.placingCurrentFlag &&
+            this.placingCurrentFlag.id &&
+            x.id === this.placingCurrentFlag.id
+          ) {
+            return { ...x, dots: [...x.dots, newDots] };
+          }
+
+          return x;
+        });
+      }
+    }
+
+    if (this.previousFlagsList.length > 10) {
+      this.previousFlagsList.shift();
+    }
+
     console.log(this.flagsList);
   }
 
-  @HostListener('document:keypress', ['$event'])
-  giveHint(event: KeyboardEvent) {
-    if (event.key && event.key.toLowerCase() === 'q') {
-      this.isDoingLevelDots = true;
+  @HostListener('mouseup', ['$event'])
+  middleclickEvent(e: any) {
+    if (!this.devMode) {
+      return;
+    }
+
+    if (e.which === 2) {
+      this.finishDots();
     }
   }
 
-  @HostListener('mouseup', ['$event']) onClick(e: any) {
-    if (e.which === 2) this.addBossLevel(e);
-  }
+  finishDots() {
+    if (!this.devMode) {
+      return;
+    }
 
-  addBossLevel(e: any) {
-    e.preventDefault();
-    const ID = this.flagsList.length + 1;
-    var rect = e.target.getBoundingClientRect();
-    var x = e.clientX - rect.left;
-    var y = e.clientY - rect.top;
-    const clickObject: FlagDto = {
-      id: ID,
-      x: Math.round(x),
-      y: Math.round(y),
-      levelStatus: 'nextLevel',
-      levelType: 'boss',
-      dots: [],
-    };
-    this.flagsList.push(clickObject as FlagDto);
-    console.log(this.flagsList);
-  }
-
-  remove(item: FlagDto) {
-    const newPoints = this.flagsList.filter((x) => x.id !== item.id);
-    this.flagsList = newPoints.map((x, i) => {
-      return { ...x, id: i + 1 };
-    });
-    console.log(this.flagsList);
+    if (!this.placingFlag) {
+      this.placingCurrentFlag = undefined;
+      this.placingFlag = true;
+    } else {
+      this.placingFlag = false;
+      this.placingCurrentFlag = this.flagsList[this.flagsList.length - 1];
+    }
   }
 }

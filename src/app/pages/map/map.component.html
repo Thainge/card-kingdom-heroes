@@ -1,62 +1,93 @@
 <div class="container">
+  <div
+    class="devCurrentStepBox"
+    [ngStyle]="{
+    'left': mouseX + 'px',
+    'top': mouseY + 'px',
+    }"
+    *ngIf="devMode"
+  >
+    <img src="./assets/flag.png" *ngIf="placingFlag" />
+    <img src="./assets/dot.png" *ngIf="!placingFlag" />
+  </div>
   <div class="f-panzoom" id="myPanzoom">
     <img
       class="f-panzoom__content"
-      (contextmenu)="addNormalLevel($event)"
+      (contextmenu)="addLevel($event)"
       src="./assets/map.png"
       class="mapImage"
     />
     <div data-panzoom-pin data-x="0%" data-y="0%" class="overlayContainer">
-      <div
-        *ngFor="let item of flagsList"
-        class="flagContainer"
-        [ngStyle]="{
-        'left': item.x + 'px',
-        'top': item.y + 'px',
+      <ng-container *ngFor="let item of flagsList; trackBy: trackById">
+        <div
+          class="dotContainer"
+          *ngFor="let dot of item.dots; trackBy: trackById"
+          [ngStyle]="{
+          'left': dot.x + 'px',
+          'top': dot.y + 'px',
         }"
-      >
-        <!-- <div *ngFor="let dot of item.dots"></div> -->
-        <div class="flagBox" (click)="remove(item)">
-          <!-- Next Level -->
-          <div
-            class="flagLevelBox"
-            *ngIf="
-              item.levelType === 'normal' && item.levelStatus === 'nextLevel'
-            "
-          >
-            <img src="./assets/flag.png" class="flag" />
-            <img src="./assets/flagActive.png" class="flag hoverFlag" />
-          </div>
-          <!-- Finished Level -->
-          <div
-            class="flagLevelBox"
-            *ngIf="
-              item.levelType === 'normal' && item.levelStatus === 'finished'
-            "
-          >
-            <img src="./assets/finishedFlag.png" class="flag" />
-            <img src="./assets/finishedFlagActive.png" class="flag hoverFlag" />
-          </div>
-          <!-- Boss level -->
-          <div
-            class="flagLevelBox"
-            *ngIf="
-              item.levelType === 'boss' && item.levelStatus === 'nextLevel'
-            "
-          >
-            <img src="./assets/finishedFlagActive.png" class="flag" />
-            <img src="./assets/finishedFlag.png" class="flag hoverFlag" />
-          </div>
-          <!-- Finished Boss level -->
-          <div
-            class="flagLevelBox"
-            *ngIf="item.levelType === 'boss' && item.levelStatus === 'finished'"
-          >
-            <img src="./assets/finishedFlagActive.png" class="flag" />
-            <img src="./assets/finishedFlag.png" class="flag hoverFlag" />
+        >
+          <div class="dotBox">
+            <div class="dotLevelBox">
+              <img src="./assets/dot.png" class="dot" />
+            </div>
           </div>
         </div>
-      </div>
+        <div
+          class="flagContainer"
+          class="flagContainer"
+          [ngStyle]="{
+        'left': item.x + 'px',
+        'top': item.y + 'px',
+      }"
+        >
+          <div class="flagBox">
+            <!-- Next Level -->
+            <div
+              class="flagLevelBox currentLevelAnimation"
+              *ngIf="
+                item.levelType === 'normal' && item.levelStatus === 'nextLevel'
+              "
+            >
+              <img src="./assets/flag.png" class="flag" />
+              <img src="./assets/flagActive.png" class="flag hoverFlag" />
+            </div>
+            <!-- Finished Level -->
+            <div
+              class="flagLevelBox"
+              *ngIf="
+                item.levelType === 'normal' && item.levelStatus === 'finished'
+              "
+            >
+              <img src="./assets/finishedFlag.png" class="flag" />
+              <img
+                src="./assets/finishedFlagActive.png"
+                class="flag hoverFlag"
+              />
+            </div>
+            <!-- Boss level -->
+            <div
+              class="flagLevelBox"
+              *ngIf="
+                item.levelType === 'boss' && item.levelStatus === 'nextLevel'
+              "
+            >
+              <img src="./assets/finishedFlagActive.png" class="flag" />
+              <img src="./assets/finishedFlag.png" class="flag hoverFlag" />
+            </div>
+            <!-- Finished Boss level -->
+            <div
+              class="flagLevelBox"
+              *ngIf="
+                item.levelType === 'boss' && item.levelStatus === 'finished'
+              "
+            >
+              <img src="./assets/finishedFlagActive.png" class="flag" />
+              <img src="./assets/finishedFlag.png" class="flag hoverFlag" />
+            </div>
+          </div>
+        </div>
+      </ng-container>
     </div>
   </div>
 </div>

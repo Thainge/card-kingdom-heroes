@@ -21,18 +21,21 @@
   display: block;
 }
 
-.flagContainer {
+.flagContainer,
+.dotContainer {
   position: relative;
 }
 
-.flagBox {
+.flagBox,
+.dotBox {
   position: absolute;
   top: 0;
   left: 0;
   z-index: 9999;
 }
 
-.flagLevelBox {
+.flagLevelBox,
+.dotLevelBox {
   position: relative;
 }
 
@@ -46,8 +49,35 @@
   top: 0;
   left: 0;
   opacity: 0;
+  filter: drop-shadow(0 0 0.5em rgb(255, 238, 0));
+}
+
+.currentLevelAnimation {
+  animation: flagAnimation 2s infinite ease-in-out;
+  transition: all 0.3s;
+}
+
+@keyframes flagAnimation {
+  0% {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  50% {
+    -webkit-transform: scale(1.2, 1.2);
+    transform: scale(1.2, 1.2);
+  }
+  100% {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
 }
 
 .hoverFlag:hover {
   opacity: 1;
+}
+
+.devCurrentStepBox {
+  position: absolute;
+  z-index: 9999;
+  scale: 0.8;
 }
