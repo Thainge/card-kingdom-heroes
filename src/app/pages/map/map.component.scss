@@ -64,6 +64,7 @@
 
 .currentLevelAnimation {
   animation: flagAnimation 2s infinite ease-in-out;
+  animation-delay: 2s;
   transition: all 0.3s;
 }
 

@@ -8,6 +8,21 @@ import {
   HostListener,
 } from '@angular/core';
 import { Panzoom } from '@fancyapps/ui/dist/panzoom/panzoom.esm.js';
+import {
+  fadeOutUpOnLeaveAnimation,
+  fadeInUpOnEnterAnimation,
+  fadeOutLeftOnLeaveAnimation,
+  fadeInLeftOnEnterAnimation,
+  fadeOutRightOnLeaveAnimation,
+  fadeInRightOnEnterAnimation,
+  fadeInDownOnEnterAnimation,
+  fadeOutDownOnLeaveAnimation,
+  fadeInOnEnterAnimation,
+  fadeOutOnLeaveAnimation,
+  zoomInOnEnterAnimation,
+  zoomOutOnLeaveAnimation,
+  flipInYOnEnterAnimation,
+} from 'angular-animations';
 import { DialogComponent } from 'src/app/components/dialogComponent/dialog.component';
 import { DotDto, FlagDto } from 'src/app/models/flag';
 import { flagsData } from 'src/assets/data/flags';
@@ -19,12 +34,34 @@ const { Pins } = require('@fancyapps/ui/dist/panzoom/panzoom.pins.esm.js');
   styleUrls: ['./map.component.scss'],
   standalone: true,
   imports: [CommonModule, DialogComponent],
+  animations: [
+    fadeOutUpOnLeaveAnimation({ anchor: 'fadeUpLeave' }),
+    fadeInUpOnEnterAnimation({ anchor: 'fadeUpEnter' }),
+
+    fadeOutLeftOnLeaveAnimation({ anchor: 'fadeLeftLeave' }),
+    fadeInLeftOnEnterAnimation({ anchor: 'fadeLeftEnter' }),
+
+    fadeOutRightOnLeaveAnimation({ anchor: 'fadeRightLeave' }),
+    fadeInRightOnEnterAnimation({ anchor: 'fadeRightEnter' }),
+
+    fadeInDownOnEnterAnimation({ anchor: 'fadeDownEnter' }),
+    fadeOutDownOnLeaveAnimation({ anchor: 'fadeDownLeave' }),
+
+    fadeInOnEnterAnimation({ anchor: 'fadeEnter' }),
+    fadeOutOnLeaveAnimation({ anchor: 'fadeOutLeave' }),
+
+    zoomInOnEnterAnimation({ anchor: 'zoomInEnter' }),
+    zoomOutOnLeaveAnimation({ anchor: 'zoomOutLeave' }),
+    flipInYOnEnterAnimation({ anchor: 'flipInYonEnter' }),
+  ],
 })
 export class MapComponent implements AfterViewInit, OnInit {
   @ViewChild('panZoom', { static: false }) scene: ElementRef | undefined;
   flagsList: FlagDto[] = [];
   previousFlagsList: any[] = [];
   currentFlagHover: FlagDto | undefined;
+  currentLevel: FlagDto | undefined;
+  startLevel: FlagDto | undefined;
   placingFlag = true;
   placingCurrentFlag: FlagDto | undefined;
   mouseX: number = 0;
@@ -34,11 +71,15 @@ export class MapComponent implements AfterViewInit, OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.flagsList = flagsData.map((x) => {
+    this.flagsList = flagsData.map((x, i) => {
       return { ...x, levelStatus: 'hidden' };
     });
-    this.flagsList[0].levelStatus = 'finished';
-    this.flagsList[1].levelStatus = 'nextLevel';
+    this.flagsList[0].levelStatus = 'nextLevel';
+    const currentLevel = this.flagsList.find(
+      (x) => x.levelStatus === 'nextLevel'
+    );
+    this.currentLevel = currentLevel;
+    this.startLevel = currentLevel;
   }
 
   ngAfterViewInit() {
@@ -56,8 +97,62 @@ export class MapComponent implements AfterViewInit, OnInit {
       zoom: true,
     };
 
-    new Panzoom(container, options, {
+    const pz = new Panzoom(container, options, {
       Pins,
+    });
+
+    const currentLevel = this.flagsList.find(
+      (x) => x.levelStatus === 'nextLevel'
+    );
+    setTimeout(() => {
+      if (currentLevel) {
+        // Pan to center initially
+        pz.panTo({
+          x: -1000,
+          y: -600,
+          friction: 0,
+          ignoreBounds: false,
+        });
+        // Then pan to next level
+        setTimeout(() => {
+          pz.panTo({
+            x: 500 - currentLevel.x,
+            y: 200 - currentLevel.y,
+            friction: 0.04,
+          });
+        }, 50);
+      }
+    }, 10);
+  }
+
+  determineDelayFlag(): number {
+    if (this.startLevel) {
+      const delay = this.startLevel?.dots.length * 200;
+      return delay + 500;
+    }
+    return 2000;
+  }
+
+  determineDelayDot(index: number): number {
+    const delay = (index + 1) * 200;
+    return delay + 200;
+  }
+
+  finishLevel(flag: FlagDto) {
+    let foundIndex = -10;
+    this.flagsList = this.flagsList.map((x, i) => {
+      if (x.id === flag.id) {
+        foundIndex = i + 1;
+        this.currentLevel = x;
+        return { ...x, levelStatus: 'finished' };
+      }
+
+      if (foundIndex === i) {
+        foundIndex = -10;
+        return { ...x, levelStatus: 'nextLevel' };
+      }
+
+      return x;
     });
   }
 
@@ -136,7 +231,7 @@ export class MapComponent implements AfterViewInit, OnInit {
       id: ID,
       x,
       y,
-      levelStatus: 'nextLevel',
+      levelStatus: 'finished',
       levelType: 'normal',
       dots: [],
     };

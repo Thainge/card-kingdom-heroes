@@ -19,14 +19,25 @@
     />
     <div data-panzoom-pin data-x="0%" data-y="0%" class="overlayContainer">
       <ng-container *ngFor="let item of flagsList; trackBy: trackById">
-        <ng-container *ngIf="item.levelStatus === 'finished'">
-          <div
-            class="dotContainer"
-            *ngFor="let dot of item.dots; trackBy: trackById"
-            [ngStyle]="{
+        <div
+          class="dotContainer"
+          *ngFor="let dot of item.dots; index as i; trackBy: trackById"
+          [ngStyle]="{
           'left': dot.x + 'px',
           'top': dot.y + 'px',
         }"
+        >
+          <div
+            *ngIf="item.levelStatus === 'finished'"
+            [@.disabled]="currentLevel?.id !== item.id"
+            [@zoomInEnter]="{
+              value: '',
+              params: {
+                duration: 400,
+                delay: determineDelayDot(i),
+                translate: '100px'
+              }
+            }"
           >
             <div class="dotBox">
               <div class="dotLevelBox">
@@ -34,7 +45,7 @@
               </div>
             </div>
           </div>
-        </ng-container>
+        </div>
         <div
           class="flagContainer"
           class="flagContainer"
@@ -43,13 +54,22 @@
         'top': item.y + 'px',
       }"
         >
-          <div class="flagBox">
+          <div class="flagBox" (click)="finishLevel(item)">
             <!-- Next Level -->
             <div
               class="flagLevelBox currentLevelAnimation"
               *ngIf="
                 item.levelType === 'normal' && item.levelStatus === 'nextLevel'
               "
+              [@.disabled]="startLevel?.id === item.id"
+              [@zoomInEnter]="{
+                value: '',
+                params: {
+                  duration: 400,
+                  delay: determineDelayFlag(),
+                  translate: '100px'
+                }
+              }"
             >
               <img src="./assets/flag.png" class="flag" />
               <img src="./assets/flagActive.png" class="flag hoverFlag" />
