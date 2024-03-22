@@ -19,20 +19,22 @@
     />
     <div data-panzoom-pin data-x="0%" data-y="0%" class="overlayContainer">
       <ng-container *ngFor="let item of flagsList; trackBy: trackById">
-        <div
-          class="dotContainer"
-          *ngFor="let dot of item.dots; trackBy: trackById"
-          [ngStyle]="{
+        <ng-container *ngIf="item.levelStatus === 'finished'">
+          <div
+            class="dotContainer"
+            *ngFor="let dot of item.dots; trackBy: trackById"
+            [ngStyle]="{
           'left': dot.x + 'px',
           'top': dot.y + 'px',
         }"
-        >
-          <div class="dotBox">
-            <div class="dotLevelBox">
-              <img src="./assets/dot.png" class="dot" />
+          >
+            <div class="dotBox">
+              <div class="dotLevelBox">
+                <img src="./assets/dot.png" class="dot" />
+              </div>
             </div>
           </div>
-        </div>
+        </ng-container>
         <div
           class="flagContainer"
           class="flagContainer"

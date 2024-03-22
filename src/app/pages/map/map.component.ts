@@ -34,7 +34,11 @@ export class MapComponent implements AfterViewInit, OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.flagsList = flagsData;
+    this.flagsList = flagsData.map((x) => {
+      return { ...x, levelStatus: 'hidden' };
+    });
+    this.flagsList[0].levelStatus = 'finished';
+    this.flagsList[1].levelStatus = 'nextLevel';
   }
 
   ngAfterViewInit() {
