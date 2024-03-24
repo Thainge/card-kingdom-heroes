@@ -7,7 +7,7 @@ export interface FlagDto {
   dots: DotDto[];
 }
 
-type levelStatus = 'nextLevel' | 'finished' | 'hidden';
+type levelStatus = 'nextLevel' | 'finished' | 'justFinished' | 'hidden';
 type levelType = 'normal' | 'boss';
 
 export interface DotDto {

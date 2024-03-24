@@ -61,7 +61,6 @@ export class MapComponent implements AfterViewInit, OnInit {
   previousFlagsList: any[] = [];
   currentFlagHover: FlagDto | undefined;
   currentLevel: FlagDto | undefined;
-  startLevel: FlagDto | undefined;
   placingFlag = true;
   placingCurrentFlag: FlagDto | undefined;
   mouseX: number = 0;
@@ -74,12 +73,22 @@ export class MapComponent implements AfterViewInit, OnInit {
     this.flagsList = flagsData.map((x, i) => {
       return { ...x, levelStatus: 'hidden' };
     });
-    this.flagsList[0].levelStatus = 'nextLevel';
+    this.flagsList[0].levelStatus = 'justFinished';
+    this.flagsList[1].levelStatus = 'nextLevel';
     const currentLevel = this.flagsList.find(
-      (x) => x.levelStatus === 'nextLevel'
+      (x) => x.levelStatus === 'justFinished'
     );
+
+    setTimeout(() => {
+      this.flagsList = this.flagsList.map((x, i) => {
+        if (x.id === currentLevel?.id) {
+          return { ...x, levelStatus: 'finished' };
+        }
+        return x;
+      });
+    }, 1500);
+
     this.currentLevel = currentLevel;
-    this.startLevel = currentLevel;
   }
 
   ngAfterViewInit() {
@@ -133,8 +142,8 @@ export class MapComponent implements AfterViewInit, OnInit {
   }
 
   determineDelayFlag(): number {
-    if (this.startLevel) {
-      const delay = this.startLevel?.dots.length * 200;
+    if (this.currentLevel) {
+      const delay = this.currentLevel?.dots.length * 200;
       return delay + 500;
     }
     return 2000;

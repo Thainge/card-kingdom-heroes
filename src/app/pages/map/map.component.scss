@@ -44,12 +44,30 @@
   opacity: 1;
 }
 
-.hoverFlag {
+.hoverFlag,
+.fadeFlag {
   position: absolute;
   top: 0;
   left: 0;
   opacity: 0;
   filter: drop-shadow(0 0 0.5em rgb(255, 238, 0));
+}
+
+.zoomInFlag {
+  animation: zoomInAnim forwards;
+  animation-duration: 0.7s;
+}
+
+@keyframes zoomInAnim {
+  0% {
+    transform: scale(3);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .currentLevelAnimation {
@@ -81,4 +99,49 @@
   position: absolute;
   z-index: 9999;
   scale: 0.8;
+}
+
+.flyingShipBox {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.flyingShipContainer {
+  position: relative;
+  animation: shipFlying 120s forwards infinite linear;
+}
+
+@keyframes shipFlying {
+  0% {
+    transform: translate(0, 0) scaleX(-1);
+  }
+  1% {
+    transform: translate(0, 0) scaleX(-1);
+  }
+  25% {
+    transform: translate(2776px, 0px) scaleX(-1);
+  }
+  26% {
+    transform: translate(2776px, 0px) scaleX(1);
+  }
+  50% {
+    transform: translate(2772px, 1870px) scaleX(1);
+  }
+  51% {
+    transform: translate(2772px, 1870px) scaleX(1);
+  }
+  75% {
+    transform: translate(0px, 1870px) scaleX(1);
+  }
+  76% {
+    transform: translate(0px, 1870px) scaleX(-1);
+  }
+  100% {
+    transform: translate(0, 0) scaleX(-1);
+  }
+}
+
+.flyingShipImage {
+  width: 300px;
 }

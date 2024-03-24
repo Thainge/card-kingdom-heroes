@@ -18,6 +18,11 @@
       class="mapImage"
     />
     <div data-panzoom-pin data-x="0%" data-y="0%" class="overlayContainer">
+      <div class="flyingShipBox">
+        <div class="flyingShipContainer">
+          <img src="./assets/flyingShip.gif" class="flyingShipImage" />
+        </div>
+      </div>
       <ng-container *ngFor="let item of flagsList; trackBy: trackById">
         <div
           class="dotContainer"
@@ -28,13 +33,16 @@
         }"
         >
           <div
-            *ngIf="item.levelStatus === 'finished'"
+            *ngIf="
+              item.levelStatus === 'finished' ||
+              item.levelStatus === 'justFinished'
+            "
             [@.disabled]="currentLevel?.id !== item.id"
             [@zoomInEnter]="{
               value: '',
               params: {
                 duration: 400,
-                delay: determineDelayDot(i),
+                delay: determineDelayDot(i) + 2000,
                 translate: '100px'
               }
             }"
@@ -61,12 +69,12 @@
               *ngIf="
                 item.levelType === 'normal' && item.levelStatus === 'nextLevel'
               "
-              [@.disabled]="startLevel?.id === item.id"
+              [@.disabled]="currentLevel?.id === item.id"
               [@zoomInEnter]="{
                 value: '',
                 params: {
                   duration: 400,
-                  delay: determineDelayFlag(),
+                  delay: determineDelayFlag() + 2000,
                   translate: '100px'
                 }
               }"
@@ -78,10 +86,26 @@
             <div
               class="flagLevelBox"
               *ngIf="
-                item.levelType === 'normal' && item.levelStatus === 'finished'
+                item.levelType === 'normal' &&
+                (item.levelStatus === 'finished' ||
+                  item.levelStatus === 'justFinished')
               "
             >
-              <img src="./assets/finishedFlag.png" class="flag" />
+              <img
+                src="./assets/flag.png"
+                class="flag"
+                *ngIf="item.levelStatus === 'justFinished'"
+              />
+              <img
+                src="./assets/finishedFlag.png"
+                class="flag"
+                *ngIf="item.levelStatus === 'finished'"
+                [ngClass]="{
+                  zoomInFlag:
+                    currentLevel?.id === item.id &&
+                    item.levelStatus === 'finished'
+                }"
+              />
               <img
                 src="./assets/finishedFlagActive.png"
                 class="flag hoverFlag"
