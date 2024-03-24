@@ -102,7 +102,8 @@
 }
 
 .flyingShipBox,
-.sailingShipBox {
+.sailingShipBox,
+.birds1Box {
   position: absolute;
   top: 0;
   left: 0;
@@ -186,4 +187,43 @@
 .flyingShipImage,
 .sailingShipImage {
   width: 200px;
+}
+
+.birdsImage {
+  width: 100px;
+}
+
+.birds2Container {
+  position: relative;
+}
+
+.birds2Box {
+  position: absolute;
+  top: 1350px;
+  left: 1260px;
+}
+
+.birds1Container {
+  position: relative;
+  animation: birdsFlying 45s forwards infinite linear;
+}
+
+@keyframes birdsFlying {
+  // Go to right
+  0% {
+    transform: translate(-400px, 600px) scaleX(-1);
+  }
+
+  // to right
+  50% {
+    transform: translate(1800px, 2200px) scaleX(-1);
+  }
+  51% {
+    transform: translate(3200px, 800px) scaleX(1);
+  }
+
+  // to left
+  100% {
+    transform: translate(-400px, 1000px) scaleX(1);
+  }
 }
