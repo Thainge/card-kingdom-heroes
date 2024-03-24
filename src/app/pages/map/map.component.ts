@@ -228,6 +228,10 @@ export class MapComponent implements AfterViewInit, OnInit {
   trackById = (index: number, item: any) => item.id;
 
   addLevel(e: any) {
+    var rect = e.target.getBoundingClientRect();
+    var x = Math.round(e.clientX - rect.left) - 43;
+    var y = Math.round(e.clientY - rect.top) - 70;
+    console.log({ x, y });
     e.preventDefault();
     if (!this.devMode) {
       return;
@@ -240,9 +244,6 @@ export class MapComponent implements AfterViewInit, OnInit {
       ID = this.flagsList.length + 1;
     }
 
-    var rect = e.target.getBoundingClientRect();
-    var x = Math.round(e.clientX - rect.left) - 43;
-    var y = Math.round(e.clientY - rect.top) - 70;
     const FlagObject: FlagDto = {
       id: ID,
       x,

@@ -136,7 +136,7 @@
 
 .flyingShipContainer {
   position: relative;
-  animation: shipFlying 60s forwards infinite linear;
+  animation: shipFlying 90s forwards infinite linear;
 }
 
 @keyframes shipFlying {
@@ -161,7 +161,7 @@
 
 .flyingShipContainerShadow {
   position: relative;
-  animation: shipFlyingShadow 60s forwards infinite linear;
+  animation: shipFlyingShadow 90s forwards infinite linear;
 }
 
 @keyframes shipFlyingShadow {
@@ -189,20 +189,6 @@
   width: 200px;
 }
 
-.birdsImage {
-  width: 100px;
-}
-
-.birds2Container {
-  position: relative;
-}
-
-.birds2Box {
-  position: absolute;
-  top: 1350px;
-  left: 1260px;
-}
-
 .birds1Container {
   position: relative;
   animation: birdsFlying 45s forwards infinite linear;
@@ -212,18 +198,232 @@
   // Go to right
   0% {
     transform: translate(-400px, 600px) scaleX(-1);
+    opacity: 1;
   }
 
   // to right
-  50% {
-    transform: translate(1800px, 2200px) scaleX(-1);
+  47% {
+    opacity: 1;
+    transform: translate(1900px, 2600px) scaleX(-1);
   }
+  48% {
+    opacity: 0;
+    transform: translate(1900px, 2600px) scaleX(-1);
+  }
+  49% {
+    opacity: 0;
+    transform: translate(3200px, 1000px) scaleX(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(3200px, 1000px) scaleX(1);
+  }
+
   51% {
-    transform: translate(3200px, 800px) scaleX(1);
+    opacity: 1;
+    transform: translate(3200px, 1000px) scaleX(1);
   }
 
   // to left
   100% {
-    transform: translate(-400px, 1000px) scaleX(1);
+    opacity: 1;
+    transform: translate(-400px, 1400px) scaleX(1);
   }
+}
+
+.birdsImage,
+.cycloneImage,
+.steamImage {
+  width: 100px;
+}
+
+.birds2Container,
+.cycloneContainer,
+.tumbleweedContainer,
+.steamContainer,
+.birds3Container {
+  position: relative;
+}
+
+.birds2Box {
+  position: absolute;
+  top: 1350px;
+  left: 1260px;
+}
+
+.birds3Box {
+  position: absolute;
+  top: 481px;
+  left: 776px;
+}
+
+.cycloneBox {
+  position: absolute;
+  top: 350px;
+  left: 1860px;
+  animation: cycloneMove 15s forwards infinite ease-in-out;
+}
+
+@keyframes cycloneMove {
+  0% {
+    opacity: 0;
+    transform: translate(-100px, 100px);
+  }
+  10% {
+    transform: translate(-100px, 100px);
+    opacity: 1;
+  }
+
+  30% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  60% {
+    opacity: 1;
+    transform: translate(100px, 0);
+  }
+  90% {
+    opacity: 1;
+    transform: translate(150px, 100px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(150px, 150px);
+  }
+}
+
+.cycloneImage {
+  filter: sepia(1) blur(1px);
+  width: 60px;
+}
+
+.steamContainer {
+  opacity: 0.3;
+}
+
+.steamBox1 {
+  position: absolute;
+  top: 1607px;
+  left: 1643px;
+}
+
+.steamBox2 {
+  position: absolute;
+  top: 1672px;
+  left: 1775px;
+}
+
+.steamBox3 {
+  position: absolute;
+  top: 1724px;
+  left: 1650px;
+}
+
+.steamBox4 {
+  position: absolute;
+  top: 1770px;
+  left: 1907px;
+}
+
+.steamBox5 {
+  position: absolute;
+  top: 1738px;
+  left: 2192px;
+}
+
+.steamBox6 {
+  position: absolute;
+  top: 1302px;
+  left: 2554px;
+}
+
+.steamBox7 {
+  position: absolute;
+  top: 1272px;
+  left: 2644px;
+}
+
+.steamBox8 {
+  position: absolute;
+  top: 1757px;
+  left: 2084px;
+}
+
+.tumbleweedBox {
+  position: absolute;
+  top: 463px;
+  left: 2205px;
+  animation: tumbleweedAnimation 10s forwards infinite linear;
+  animation-delay: 5s;
+}
+
+.tumbleweedBox2 {
+  position: absolute;
+  top: 863px;
+  left: 2200px;
+  animation: tumbleweedAnimation 10s forwards infinite linear;
+}
+
+.tumbleweedImage {
+  width: 20px;
+  animation: rotateTumbleweed 1s forwards infinite linear;
+}
+
+@keyframes rotateTumbleweed {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes tumbleweedAnimation {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+
+  10% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+
+  60% {
+    transform: translate(300px, 0);
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0;
+  }
+
+  80% {
+    transform: translate(300px, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+}
+
+.whirlpoolBox {
+  position: absolute;
+  top: 676px;
+  left: 1404px;
+}
+
+.whirlpoolContainer {
+  position: relative;
+}
+
+.whirlpoolImage {
+  width: 300px;
+  opacity: 0.4;
+  animation: rotateTumbleweed 10s forwards infinite linear;
 }
