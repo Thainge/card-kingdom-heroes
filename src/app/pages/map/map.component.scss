@@ -109,36 +109,26 @@
 
 .flyingShipContainer {
   position: relative;
-  animation: shipFlying 120s forwards infinite linear;
+  animation: shipFlying 60s forwards infinite linear;
 }
 
 @keyframes shipFlying {
+  // Go to right
   0% {
-    transform: translate(0, 0) scaleX(-1);
+    transform: translate(-400px, 400px) scaleX(-1);
   }
-  1% {
-    transform: translate(0, 0) scaleX(-1);
-  }
-  25% {
-    transform: translate(2776px, 0px) scaleX(-1);
-  }
-  26% {
-    transform: translate(2776px, 0px) scaleX(1);
-  }
+
+  // to right
   50% {
-    transform: translate(2772px, 1870px) scaleX(1);
+    transform: translate(3200px, 400px) scaleX(-1);
   }
   51% {
-    transform: translate(2772px, 1870px) scaleX(1);
+    transform: translate(3200px, 800px) scaleX(1);
   }
-  75% {
-    transform: translate(0px, 1870px) scaleX(1);
-  }
-  76% {
-    transform: translate(0px, 1870px) scaleX(-1);
-  }
+
+  // to left
   100% {
-    transform: translate(0, 0) scaleX(-1);
+    transform: translate(-400px, 800px) scaleX(1);
   }
 }
 

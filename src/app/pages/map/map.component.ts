@@ -118,23 +118,23 @@ export class MapComponent implements AfterViewInit, OnInit {
       (x) => x.levelStatus === 'nextLevel'
     );
 
-    const initArr = Array.from(Array(10).keys());
-    for await (let x of initArr) {
-      await pz.panTo({
-        x: -1000,
-        y: -600,
-        friction: 0,
-        ignoreBounds: false,
-      });
-      await this.timeout(10);
-    }
-    if (currentLevel) {
-      pz.panTo({
-        x: 500 - currentLevel.x,
-        y: 200 - currentLevel.y,
-        friction: 0.04,
-      });
-    }
+    // const initArr = Array.from(Array(10).keys());
+    // for await (let x of initArr) {
+    //   await pz.panTo({
+    //     x: -1000,
+    //     y: -600,
+    //     friction: 0,
+    //     ignoreBounds: false,
+    //   });
+    //   await this.timeout(10);
+    // }
+    // if (currentLevel) {
+    //   pz.panTo({
+    //     x: 500 - currentLevel.x,
+    //     y: 200 - currentLevel.y,
+    //     friction: 0.04,
+    //   });
+    // }
   }
 
   timeout(ms: number) {
