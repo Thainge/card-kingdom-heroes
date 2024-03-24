@@ -427,3 +427,34 @@
   opacity: 0.4;
   animation: rotateTumbleweed 10s forwards infinite linear;
 }
+
+.overlayImageContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  pointer-events: none;
+}
+
+.overlayImageBox {
+  position: relative;
+}
+
+.overlayBgGradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3840px;
+  height: 2770px;
+  z-index: 1;
+  background-color: #32005e73;
+}
+
+.overlayStars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3840px;
+  height: 2770px;
+  z-index: 2;
+}
