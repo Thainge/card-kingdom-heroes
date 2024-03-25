@@ -458,3 +458,127 @@
   height: 2770px;
   z-index: 2;
 }
+
+.snowfallBox1 {
+  position: absolute;
+  top: 0px;
+  left: 300px;
+}
+
+.snowfallBox2 {
+  position: absolute;
+  top: 0px;
+  left: 800px;
+}
+
+.snowfallBox3 {
+  position: absolute;
+  top: 450px;
+  left: 300px;
+}
+
+.snowfallBox4 {
+  position: absolute;
+  top: 450px;
+  left: 800px;
+}
+
+.snowfallContainer {
+  position: relative;
+  opacity: 0.7;
+}
+
+.snowfallImage {
+  width: 500px;
+}
+
+.fireworksBox {
+  position: absolute;
+  top: 1376px;
+  left: 665px;
+}
+
+.fireworksContainer {
+  position: relative;
+}
+
+.fireworksImage {
+  width: 150px;
+}
+
+.castleflagBox {
+  position: absolute;
+  top: 951px;
+  left: 578px;
+}
+
+.castleflagContainer {
+  position: relative;
+}
+
+.castleflagImage {
+  width: 43px;
+  filter: invert(0.8);
+}
+
+.fireballBox1 {
+  position: absolute;
+  top: 1100px;
+  left: 2150px;
+}
+
+.fireballBox2 {
+  position: absolute;
+  top: 1100px;
+  left: 2300px;
+}
+
+.fireballBox3 {
+  position: absolute;
+  top: 1100px;
+  left: 2475px;
+}
+
+.fireballContainer1 {
+  position: relative;
+  animation: fireballFalling 5s forwards infinite linear;
+  opacity: 0;
+}
+
+.fireballContainer2 {
+  position: relative;
+  animation: fireballFalling 5s forwards infinite linear;
+  animation-delay: 4s;
+  opacity: 0;
+}
+
+.fireballContainer3 {
+  position: relative;
+  animation: fireballFalling 5s forwards infinite linear;
+  animation-delay: 2s;
+  opacity: 0;
+}
+
+@keyframes fireballFalling {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.5;
+  }
+
+  80% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(200px, 500px);
+  }
+}
+
+.fireballImage {
+  transform: rotate(30deg);
+  width: 100px;
+}
