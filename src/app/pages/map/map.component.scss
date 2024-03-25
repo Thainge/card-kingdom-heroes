@@ -189,6 +189,24 @@
   width: 200px;
 }
 
+.flyingShipImage {
+  animation: shipHover 2s forwards infinite ease-in-out;
+}
+
+@keyframes shipHover {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(0, 10px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
 .birds1Container {
   position: relative;
   animation: birdsFlying 45s forwards infinite linear;
@@ -424,7 +442,6 @@
 
 .whirlpoolImage {
   width: 300px;
-  opacity: 0.4;
   animation: rotateTumbleweed 10s forwards infinite linear;
 }
 
@@ -581,4 +598,55 @@
 .fireballImage {
   transform: rotate(30deg);
   width: 100px;
+}
+
+.heroiconBox {
+  position: absolute;
+  top: 1060px;
+  left: 1318px;
+  z-index: 99;
+}
+
+.heroiconContainer {
+  position: relative;
+  transition: all 0.3s;
+}
+
+.heroiconContainer:hover {
+  transform: scale(1.2);
+}
+
+.heroiconBorderImage {
+  width: 70px;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 0 0.3em rgba(0, 0, 0, 0.527));
+}
+
+.checkmarkImage {
+  position: absolute;
+  top: 0;
+  left: 1%;
+  width: 98%;
+  border-radius: 100%;
+  z-index: 3;
+  scale: 0.7;
+}
+
+.heroiconImage {
+  position: absolute;
+  top: 0;
+  left: 1%;
+  width: 98%;
+  border-radius: 100%;
+  z-index: 1;
+}
+
+.disabledBox {
+  pointer-events: none;
+  user-select: none;
+}
+
+.heroIconImageDisabled {
+  filter: brightness(0.6);
 }

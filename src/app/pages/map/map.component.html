@@ -18,6 +18,28 @@
       class="mapImage"
     />
     <div data-panzoom-pin data-x="0%" data-y="0%" class="overlayContainer">
+      <div
+        class="heroiconBox"
+        [ngClass]="{
+          disabledBox: true
+        }"
+      >
+        <div class="heroiconContainer">
+          <img
+            src="./assets/playerIcons/levelBorder1.png"
+            class="heroiconBorderImage"
+          />
+          <!-- <img class="checkmarkImage" src="./assets/checkmark.png" /> -->
+          <img
+            class="heroiconImage"
+            [ngClass]="{
+              heroIconImageDisabled: true
+            }"
+            src="./assets/playerIcons/link.png"
+          />
+        </div>
+      </div>
+
       <div class="snowfallBox1">
         <div class="snowfallContainer">
           <img src="./assets/snowfall.gif" class="snowfallImage" />
@@ -54,9 +76,20 @@
           <img src="./assets/stars.png" class="overlayStars" />
         </div>
       </div> -->
-      <div class="whirlpoolBox">
+      <div
+        class="whirlpoolBox"
+        [style]="{
+          transform: 'scale(' + currentWhirlpoolScale + ')'
+        }"
+      >
         <div class="whirlpoolContainer">
-          <img src="./assets/whirlpool.png" class="whirlpoolImage" />
+          <img
+            src="./assets/whirlpool.png"
+            [style]="{
+              opacity: currentWhirlpoolOpacity
+            }"
+            class="whirlpoolImage"
+          />
         </div>
       </div>
       <div class="tumbleweedBox2">

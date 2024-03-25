@@ -28,6 +28,9 @@ import { DotDto, FlagDto } from 'src/app/models/flag';
 import { flagsData } from 'src/assets/data/flags';
 const { Pins } = require('@fancyapps/ui/dist/panzoom/panzoom.pins.esm.js');
 
+type WhirlpoolSize = 0.5 | 0.75 | 1 | 1.25;
+type WhirlpoolOpacity = 0.4 | 0.6 | 0.8 | 1;
+
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -66,6 +69,8 @@ export class MapComponent implements AfterViewInit, OnInit {
   mouseX: number = 0;
   mouseY: number = 0;
   devMode: boolean = false;
+  currentWhirlpoolScale: WhirlpoolSize = 0.5;
+  currentWhirlpoolOpacity: WhirlpoolOpacity = 0.4;
 
   constructor() {}
 
