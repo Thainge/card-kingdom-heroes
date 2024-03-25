@@ -20,250 +20,334 @@
     <div data-panzoom-pin data-x="0%" data-y="0%" class="overlayContainer">
       <!-- fire -->
       <div
-        class="firelandheroBox1"
+        class="firelandheroBox1 shownIcon"
         [ngClass]="{
-          disabledBox: false
+          disabledBox: !specialLevelsData.hero4Show,
+          showHoverIcon: !specialLevelsData.hero4Finished
         }"
       >
         <div class="heroiconContainer">
+          <img
+            src="./assets/playerIcons/levelBorder1.png"
+            class="heroiconBorderImage"
+          />
           <img
             src="./assets/playerIcons/levelBorder2.png"
-            class="heroiconBorderImage"
-          />
-          <img class="checkmarkImage" src="./assets/checkmark.png" />
-          <img
-            class="heroiconImage"
-            [ngClass]="{
-              heroIconImageDisabled: false
+            *ngIf="specialLevelsData.hero4Finished"
+            class="heroiconBorderImage heroiconBorderImageFinished"
+            [@fadeEnter]="{
+              value: '',
+              params: { duration: 500, delay: 0 }
             }"
-            src="./assets/playerIcons/link.png"
+          />
+          <img
+            class="checkmarkImage"
+            src="./assets/checkmark.png"
+            *ngIf="specialLevelsData.hero4Finished"
+            [@fadeEnter]="{
+              value: '',
+              params: { duration: 500, delay: 0 }
+            }"
+          />
+          <img class="heroiconImage" src="./assets/playerIcons/link.png" />
+        </div>
+      </div>
+      <div
+        class="firelandtownIconBox shownIcon"
+        [ngClass]="{
+          disabledBox: !specialLevelsData.town4GameShow,
+          showHoverIcon: !specialLevelsData.town4GameFinished
+        }"
+      >
+        <div class="heroiconContainer">
+          <img class="heroiconBorderImage" src="./assets/town3.png" />
+          <img
+            class="checkmarkImageFull"
+            src="./assets/checkmark.png"
+            *ngIf="specialLevelsData.town4GameFinished"
+            [@fadeEnter]="{
+              value: '',
+              params: { duration: 500, delay: 0 }
+            }"
           />
         </div>
       </div>
       <div
-        class="firelandtownIconBox"
+        class="firelandtownIconBox2 shownIcon"
         [ngClass]="{
-          disabledBox: true
+          disabledBox: !specialLevelsData.town4FightShow,
+          showHoverIcon: !specialLevelsData.town4FightFinished
         }"
       >
         <div class="heroiconContainer">
           <img
-            class="heroiconBorderImage"
-            [ngClass]="{
-              heroIconImageDisabled: true
+            class="checkmarkImageFull"
+            src="./assets/checkmark.png"
+            *ngIf="specialLevelsData.town4FightFinished"
+            [@fadeEnter]="{
+              value: '',
+              params: { duration: 500, delay: 0 }
             }"
-            src="./assets/town3.png"
           />
-          <img class="checkmarkImageFull" src="./assets/checkmark.png" />
-        </div>
-      </div>
-      <div
-        class="firelandtownIconBox2"
-        [ngClass]="{
-          disabledBox: true
-        }"
-      >
-        <div class="heroiconContainer">
-          <img class="checkmarkImageFull" src="./assets/checkmark.png" />
-          <img
-            class="heroiconBorderImage"
-            [ngClass]="{
-              heroIconImageDisabled: true
-            }"
-            src="./assets/battle3.png"
-          />
+          <img class="heroiconBorderImage" src="./assets/battle3.png" />
         </div>
       </div>
 
       <!-- Desert -->
       <div
-        class="desertheroBox1"
+        class="desertheroBox1 shownIcon"
         [ngClass]="{
-          disabledBox: false
+          disabledBox: !specialLevelsData.hero3Show,
+          showHoverIcon: !specialLevelsData.hero3Finished
         }"
       >
         <div class="heroiconContainer">
+          <img
+            src="./assets/playerIcons/levelBorder1.png"
+            class="heroiconBorderImage"
+          />
           <img
             src="./assets/playerIcons/levelBorder2.png"
-            class="heroiconBorderImage"
-          />
-          <img class="checkmarkImage" src="./assets/checkmark.png" />
-          <img
-            class="heroiconImage"
-            [ngClass]="{
-              heroIconImageDisabled: false
+            *ngIf="specialLevelsData.hero3Finished"
+            class="heroiconBorderImage heroiconBorderImageFinished"
+            [@fadeEnter]="{
+              value: '',
+              params: { duration: 500, delay: 0 }
             }"
-            src="./assets/playerIcons/link.png"
+          />
+          <img
+            class="checkmarkImage"
+            src="./assets/checkmark.png"
+            *ngIf="specialLevelsData.hero3Finished"
+            [@fadeEnter]="{
+              value: '',
+              params: { duration: 500, delay: 0 }
+            }"
+          />
+          <img class="heroiconImage" src="./assets/playerIcons/link.png" />
+        </div>
+      </div>
+      <div
+        class="deserttownIconBox shownIcon"
+        [ngClass]="{
+          disabledBox: !specialLevelsData.town3GameShow,
+          showHoverIcon: !specialLevelsData.town3GameFinished
+        }"
+      >
+        <div class="heroiconContainer">
+          <img class="heroiconBorderImage" src="./assets/town3.png" />
+          <img
+            class="checkmarkImageFull"
+            src="./assets/checkmark.png"
+            *ngIf="specialLevelsData.town3GameFinished"
+            [@fadeEnter]="{
+              value: '',
+              params: { duration: 500, delay: 0 }
+            }"
           />
         </div>
       </div>
       <div
-        class="deserttownIconBox"
+        class="deserttownIconBox2 shownIcon"
         [ngClass]="{
-          disabledBox: true
+          disabledBox: !specialLevelsData.town3FightShow,
+          showHoverIcon: !specialLevelsData.town3FightFinished
         }"
       >
         <div class="heroiconContainer">
           <img
-            class="heroiconBorderImage"
-            [ngClass]="{
-              heroIconImageDisabled: true
+            class="checkmarkImageFull"
+            src="./assets/checkmark.png"
+            *ngIf="specialLevelsData.town3FightFinished"
+            [@fadeEnter]="{
+              value: '',
+              params: { duration: 500, delay: 0 }
             }"
-            src="./assets/town3.png"
           />
-          <img class="checkmarkImageFull" src="./assets/checkmark.png" />
-        </div>
-      </div>
-      <div
-        class="deserttownIconBox2"
-        [ngClass]="{
-          disabledBox: true
-        }"
-      >
-        <div class="heroiconContainer">
-          <img class="checkmarkImageFull" src="./assets/checkmark.png" />
-          <img
-            class="heroiconBorderImage"
-            [ngClass]="{
-              heroIconImageDisabled: true
-            }"
-            src="./assets/battle3.png"
-          />
+          <img class="heroiconBorderImage" src="./assets/battle3.png" />
         </div>
       </div>
 
       <!-- Winter -->
       <div
-        class="snowheroBox1"
+        class="snowheroBox1 shownIcon"
         [ngClass]="{
-          disabledBox: false
+          disabledBox: !specialLevelsData.hero2Show,
+          showHoverIcon: !specialLevelsData.hero2Finished
         }"
       >
         <div class="heroiconContainer">
+          <img
+            src="./assets/playerIcons/levelBorder1.png"
+            class="heroiconBorderImage"
+          />
           <img
             src="./assets/playerIcons/levelBorder2.png"
-            class="heroiconBorderImage"
-          />
-          <img class="checkmarkImage" src="./assets/checkmark.png" />
-          <img
-            class="heroiconImage"
-            [ngClass]="{
-              heroIconImageDisabled: false
+            *ngIf="specialLevelsData.hero2Finished"
+            class="heroiconBorderImage heroiconBorderImageFinished"
+            [@fadeEnter]="{
+              value: '',
+              params: { duration: 500, delay: 0 }
             }"
-            src="./assets/playerIcons/link.png"
+          />
+          <img
+            class="checkmarkImage"
+            src="./assets/checkmark.png"
+            *ngIf="specialLevelsData.hero2Finished"
+            [@fadeEnter]="{
+              value: '',
+              params: { duration: 500, delay: 0 }
+            }"
+          />
+          <img class="heroiconImage" src="./assets/playerIcons/link.png" />
+        </div>
+      </div>
+      <div
+        class="snowtownIconBox shownIcon"
+        [ngClass]="{
+          disabledBox: !specialLevelsData.town2GameShow,
+          showHoverIcon: !specialLevelsData.town2GameFinished
+        }"
+      >
+        <div class="heroiconContainer">
+          <img class="heroiconBorderImage" src="./assets/town2.png" />
+          <img
+            class="checkmarkImageFull"
+            src="./assets/checkmark.png"
+            *ngIf="specialLevelsData.town2GameFinished"
+            [@fadeEnter]="{
+              value: '',
+              params: { duration: 500, delay: 0 }
+            }"
           />
         </div>
       </div>
       <div
-        class="snowtownIconBox"
+        class="snowtownIconBox2 shownIcon"
         [ngClass]="{
-          disabledBox: true
+          disabledBox: !specialLevelsData.town2FightShow,
+          showHoverIcon: !specialLevelsData.town2FightFinished
         }"
       >
         <div class="heroiconContainer">
           <img
-            class="heroiconBorderImage"
-            [ngClass]="{
-              heroIconImageDisabled: true
+            class="checkmarkImageFull"
+            src="./assets/checkmark.png"
+            *ngIf="specialLevelsData.town2FightFinished"
+            [@fadeEnter]="{
+              value: '',
+              params: { duration: 500, delay: 0 }
             }"
-            src="./assets/town2.png"
           />
-          <img class="checkmarkImageFull" src="./assets/checkmark.png" />
-        </div>
-      </div>
-      <div
-        class="snowtownIconBox2"
-        [ngClass]="{
-          disabledBox: true
-        }"
-      >
-        <div class="heroiconContainer">
-          <img class="checkmarkImageFull" src="./assets/checkmark.png" />
-          <img
-            class="heroiconBorderImage"
-            [ngClass]="{
-              heroIconImageDisabled: true
-            }"
-            src="./assets/battle2.png"
-          />
+          <img class="heroiconBorderImage" src="./assets/battle2.png" />
         </div>
       </div>
 
       <!-- Forest -->
       <div
-        class="heroiconBox"
+        class="heroiconBox shownIcon"
         [ngClass]="{
-          disabledBox: false
+          disabledBox: !specialLevelsData.hero1Show,
+          showHoverIcon: !specialLevelsData.hero1Finished
         }"
       >
         <div class="heroiconContainer">
+          <img
+            src="./assets/playerIcons/levelBorder1.png"
+            class="heroiconBorderImage"
+          />
           <img
             src="./assets/playerIcons/levelBorder2.png"
-            class="heroiconBorderImage"
-          />
-          <img class="checkmarkImage" src="./assets/checkmark.png" />
-          <img
-            class="heroiconImage"
-            [ngClass]="{
-              heroIconImageDisabled: false
+            *ngIf="specialLevelsData.hero1Finished"
+            class="heroiconBorderImage heroiconBorderImageFinished"
+            [@fadeEnter]="{
+              value: '',
+              params: { duration: 500, delay: 0 }
             }"
-            src="./assets/playerIcons/link.png"
+          />
+          <img
+            class="checkmarkImage"
+            src="./assets/checkmark.png"
+            *ngIf="specialLevelsData.hero1Finished"
+            [@fadeEnter]="{
+              value: '',
+              params: { duration: 500, delay: 0 }
+            }"
+          />
+          <img class="heroiconImage" src="./assets/playerIcons/link.png" />
+        </div>
+      </div>
+      <div
+        class="castleIconBox shownIcon"
+        [ngClass]="{
+          disabledBox: !specialLevelsData.town1GameShow,
+          showHoverIcon: !specialLevelsData.town1GameFinished
+        }"
+      >
+        <div class="heroiconContainer">
+          <img class="heroiconBorderImage" src="./assets/town1.png" />
+          <img
+            class="checkmarkImageFull"
+            src="./assets/checkmark.png"
+            *ngIf="specialLevelsData.town1GameFinished"
+            [@fadeEnter]="{
+              value: '',
+              params: { duration: 500, delay: 0 }
+            }"
           />
         </div>
       </div>
       <div
-        class="castleIconBox"
+        class="castleIconBox2 shownIcon"
         [ngClass]="{
-          disabledBox: true
+          disabledBox: !specialLevelsData.town1FightShow,
+          showHoverIcon: !specialLevelsData.town1FightFinished
         }"
       >
         <div class="heroiconContainer">
           <img
-            class="heroiconBorderImage"
-            [ngClass]="{
-              heroIconImageDisabled: true
+            class="checkmarkImageFull"
+            src="./assets/checkmark.png"
+            *ngIf="specialLevelsData.town1FightFinished"
+            [@fadeEnter]="{
+              value: '',
+              params: { duration: 500, delay: 0 }
             }"
-            src="./assets/town1.png"
           />
-          <img class="checkmarkImageFull" src="./assets/checkmark.png" />
+          <img class="heroiconBorderImage" src="./assets/battle1.png" />
         </div>
       </div>
       <div
-        class="castleIconBox2"
+        class="wheelspinBox shownIcon"
         [ngClass]="{
-          disabledBox: true
+          disabledBox: !specialLevelsData.wheelShow,
+          showHoverIcon: !specialLevelsData.wheelFinished
         }"
       >
         <div class="heroiconContainer">
-          <img class="checkmarkImageFull" src="./assets/checkmark.png" />
           <img
-            class="heroiconBorderImage"
-            [ngClass]="{
-              heroIconImageDisabled: true
+            class="checkmarkImage"
+            src="./assets/checkmark.png"
+            *ngIf="specialLevelsData.wheelFinished"
+            [@fadeEnter]="{
+              value: '',
+              params: { duration: 500, delay: 0 }
             }"
-            src="./assets/battle1.png"
           />
-        </div>
-      </div>
-      <div
-        class="wheelspinBox"
-        [ngClass]="{
-          disabledBox: false
-        }"
-      >
-        <div class="heroiconContainer">
-          <img class="checkmarkImage" src="./assets/checkmark.png" />
+          <img
+            src="./assets/playerIcons/levelBorder1.png"
+            class="heroiconBorderImage"
+          />
           <img
             src="./assets/playerIcons/levelBorder2.png"
-            class="heroiconBorderImage"
-          />
-          <img
-            class="heroiconImage"
-            [ngClass]="{
-              heroIconImageDisabled: false
+            *ngIf="specialLevelsData.wheelFinished"
+            class="heroiconBorderImage heroiconBorderImageFinished"
+            [@fadeEnter]="{
+              value: '',
+              params: { duration: 500, delay: 0 }
             }"
-            src="./assets/wheel.png"
           />
+          <img class="heroiconImage" src="./assets/wheel.png" />
         </div>
       </div>
 
@@ -407,6 +491,39 @@
       </div>
       <div class="flyingShipBox">
         <div class="flyingShipContainer">
+          <div class="absoluteHeroIcon">
+            <div
+              class="heroiconContainer shownIcon"
+              [ngClass]="{
+                disabledBox: !specialLevelsData.flyingShipShow,
+                showHoverIcon: !specialLevelsData.flyingShipFinished
+              }"
+            >
+              <img
+                src="./assets/playerIcons/levelBorder1.png"
+                class="heroiconBorderImage"
+              />
+              <img
+                src="./assets/playerIcons/levelBorder2.png"
+                *ngIf="specialLevelsData.flyingShipFinished"
+                class="heroiconBorderImage heroiconBorderImageFinished"
+                [@fadeEnter]="{
+                  value: '',
+                  params: { duration: 500, delay: 0 }
+                }"
+              />
+              <img
+                class="checkmarkImage"
+                src="./assets/checkmark.png"
+                *ngIf="specialLevelsData.flyingShipFinished"
+                [@fadeEnter]="{
+                  value: '',
+                  params: { duration: 500, delay: 0 }
+                }"
+              />
+              <img class="heroiconImage" src="./assets/playerIcons/link.png" />
+            </div>
+          </div>
           <img src="./assets/flyingShip.gif" class="flyingShipImage" />
         </div>
       </div>
@@ -417,6 +534,39 @@
       </div>
       <div class="sailingShipBox">
         <div class="sailingShipContainer">
+          <div class="sailingShipHeroIcon">
+            <div
+              class="heroiconContainer shownIcon"
+              [ngClass]="{
+                disabledBox: !specialLevelsData.sailingBoatShowShow,
+                showHoverIcon: !specialLevelsData.sailingBoatShowFinished
+              }"
+            >
+              <img
+                src="./assets/playerIcons/levelBorder1.png"
+                class="heroiconBorderImage"
+              />
+              <img
+                src="./assets/playerIcons/levelBorder2.png"
+                *ngIf="specialLevelsData.sailingBoatShowFinished"
+                class="heroiconBorderImage heroiconBorderImageFinished"
+                [@fadeEnter]="{
+                  value: '',
+                  params: { duration: 500, delay: 0 }
+                }"
+              />
+              <img
+                class="checkmarkImage"
+                src="./assets/checkmark.png"
+                *ngIf="specialLevelsData.sailingBoatShowFinished"
+                [@fadeEnter]="{
+                  value: '',
+                  params: { duration: 500, delay: 0 }
+                }"
+              />
+              <img class="heroiconImage" src="./assets/playerIcons/link.png" />
+            </div>
+          </div>
           <img src="./assets/ship.gif" class="sailingShipImage" />
         </div>
       </div>

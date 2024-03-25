@@ -76,6 +76,11 @@
   transition: all 0.3s;
 }
 
+.showHoverIcon {
+  animation: flagAnimation 2s infinite ease-in-out;
+  transition: all 0.3s;
+}
+
 @keyframes flagAnimation {
   0% {
     -webkit-transform: scale(1, 1);
@@ -663,9 +668,21 @@
   z-index: 1;
 }
 
+.heroiconBorderImageFinished {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.shownIcon {
+  opacity: 1;
+  transition: all 0.3s;
+}
+
 .disabledBox {
   pointer-events: none;
   user-select: none;
+  opacity: 0;
 }
 
 .heroIconImageDisabled {
@@ -763,4 +780,23 @@
   left: 2050px;
   z-index: 99;
   scale: 0.8;
+}
+
+.absoluteHeroIcon {
+  position: absolute;
+  top: 28px;
+  left: 40px;
+  justify-content: center;
+  display: flex;
+  animation: shipHover 2s forwards infinite ease-in-out;
+  z-index: 10001;
+}
+
+.sailingShipHeroIcon {
+  position: absolute;
+  top: 55px;
+  left: 50px;
+  justify-content: center;
+  display: flex;
+  z-index: 10001;
 }

@@ -31,6 +31,43 @@ const { Pins } = require('@fancyapps/ui/dist/panzoom/panzoom.pins.esm.js');
 type WhirlpoolSize = 1 | 1.25 | 1.5 | 2;
 type WhirlpoolOpacity = 0.4 | 0.6 | 0.8 | 1;
 
+interface SpecialLevels {
+  wheelShow: boolean;
+  wheelFinished: boolean;
+  flyingShipShow: boolean;
+  flyingShipFinished: boolean;
+  sailingBoatShowShow: boolean;
+  sailingBoatShowFinished: boolean;
+
+  hero1Show: boolean;
+  hero1Finished: boolean;
+  town1GameShow: boolean;
+  town1GameFinished: boolean;
+  town1FightShow: boolean;
+  town1FightFinished: boolean;
+
+  hero2Show: boolean;
+  hero2Finished: boolean;
+  town2GameShow: boolean;
+  town2GameFinished: boolean;
+  town2FightShow: boolean;
+  town2FightFinished: boolean;
+
+  hero3Show: boolean;
+  hero3Finished: boolean;
+  town3GameShow: boolean;
+  town3GameFinished: boolean;
+  town3FightShow: boolean;
+  town3FightFinished: boolean;
+
+  hero4Show: boolean;
+  hero4Finished: boolean;
+  town4GameShow: boolean;
+  town4GameFinished: boolean;
+  town4FightShow: boolean;
+  town4FightFinished: boolean;
+}
+
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -71,28 +108,64 @@ export class MapComponent implements AfterViewInit, OnInit {
   devMode: boolean = false;
   currentWhirlpoolScale: WhirlpoolSize = 1;
   currentWhirlpoolOpacity: WhirlpoolOpacity = 0.4;
+  specialLevelsData: SpecialLevels = {
+    wheelShow: true,
+    wheelFinished: false,
+    flyingShipShow: true,
+    flyingShipFinished: false,
+    sailingBoatShowShow: true,
+    sailingBoatShowFinished: false,
+
+    hero1Show: true,
+    hero1Finished: false,
+    town1GameShow: true,
+    town1GameFinished: false,
+    town1FightShow: true,
+    town1FightFinished: false,
+
+    hero2Show: true,
+    hero2Finished: false,
+    town2GameShow: true,
+    town2GameFinished: false,
+    town2FightShow: true,
+    town2FightFinished: false,
+
+    hero3Show: true,
+    hero3Finished: false,
+    town3GameShow: true,
+    town3GameFinished: false,
+    town3FightShow: true,
+    town3FightFinished: false,
+
+    hero4Show: true,
+    hero4Finished: false,
+    town4GameShow: true,
+    town4GameFinished: false,
+    town4FightShow: true,
+    town4FightFinished: false,
+  };
 
   constructor() {}
 
   ngOnInit() {
     this.flagsList = flagsData;
-    // this.flagsList = flagsData.map((x, i) => {
-    //   return { ...x, levelStatus: 'hidden' };
-    // });
-    // this.flagsList[0].levelStatus = 'justFinished';
-    // this.flagsList[1].levelStatus = 'nextLevel';
-    // const currentLevel = this.flagsList.find(
-    //   (x) => x.levelStatus === 'justFinished'
-    // );
-    // setTimeout(() => {
-    //   this.flagsList = this.flagsList.map((x, i) => {
-    //     if (x.id === currentLevel?.id) {
-    //       return { ...x, levelStatus: 'finished' };
-    //     }
-    //     return x;
-    //   });
-    // }, 1500);
-    // this.currentLevel = currentLevel;
+    this.flagsList = flagsData.map((x, i) => {
+      return { ...x, levelStatus: 'hidden' };
+    });
+    this.flagsList[0].levelStatus = 'justFinished';
+    this.flagsList[1].levelStatus = 'nextLevel';
+    const currentLevel = this.flagsList.find(
+      (x) => x.levelStatus === 'justFinished'
+    );
+    setTimeout(() => {
+      this.flagsList = this.flagsList.map((x, i) => {
+        if (x.id === currentLevel?.id) {
+          return { ...x, levelStatus: 'finished' };
+        }
+        return x;
+      });
+    }, 1500);
+    this.currentLevel = currentLevel;
   }
 
   ngAfterViewInit() {
