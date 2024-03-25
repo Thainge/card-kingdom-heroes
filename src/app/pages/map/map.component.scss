@@ -109,6 +109,15 @@
   left: 0;
 }
 
+.flyingShipBox {
+  z-index: 10000;
+}
+
+.birds1Box,
+.birds2Box {
+  z-index: 10000;
+}
+
 .sailingShipContainer {
   position: relative;
   animation: shipSailing 60s forwards infinite linear;
@@ -280,6 +289,7 @@
   top: 350px;
   left: 1860px;
   animation: cycloneMove 15s forwards infinite ease-in-out;
+  z-index: 10000;
 }
 
 @keyframes cycloneMove {
@@ -373,6 +383,7 @@
   left: 2205px;
   animation: tumbleweedAnimation 10s forwards infinite linear;
   animation-delay: 5s;
+  z-index: 10000;
 }
 
 .tumbleweedBox2 {
@@ -380,6 +391,7 @@
   top: 863px;
   left: 2200px;
   animation: tumbleweedAnimation 10s forwards infinite linear;
+  z-index: 10000;
 }
 
 .tumbleweedImage {
@@ -633,6 +645,15 @@
   scale: 0.7;
 }
 
+.checkmarkImageFull {
+  position: absolute;
+  top: 0;
+  left: 1%;
+  width: 98%;
+  border-radius: 100%;
+  z-index: 3;
+}
+
 .heroiconImage {
   position: absolute;
   top: 0;
@@ -656,11 +677,90 @@
   top: 1450px;
   left: 625px;
   scale: 0.8;
+  z-index: 99;
 }
 
 .castleIconBox {
   position: absolute;
+  top: 1113px;
+  left: 462px;
+  scale: 0.8;
+  z-index: 99;
+}
+
+.castleIconBox2 {
+  position: absolute;
   top: 1090px;
-  left: 382px;
+  left: 689px;
+  scale: 0.8;
+  z-index: 99;
+}
+
+.snowheroBox1 {
+  position: absolute;
+  top: 815px;
+  left: 936px;
+  z-index: 99;
+}
+
+.snowtownIconBox {
+  position: absolute;
+  top: 517px;
+  left: 669px;
+  z-index: 99;
+  scale: 0.8;
+}
+
+.snowtownIconBox2 {
+  position: absolute;
+  top: 450px;
+  left: 943px;
+  z-index: 99;
+  scale: 0.8;
+}
+
+.desertheroBox1 {
+  position: absolute;
+  top: 276px;
+  left: 2176px;
+  z-index: 99;
+}
+
+.deserttownIconBox {
+  position: absolute;
+  top: 597px;
+  left: 2411px;
+  z-index: 99;
+  scale: 0.8;
+}
+
+.deserttownIconBox2 {
+  position: absolute;
+  top: 576px;
+  left: 2613px;
+  z-index: 99;
+  scale: 0.8;
+}
+
+.firelandheroBox1 {
+  position: absolute;
+  top: 1017px;
+  left: 2232px;
+  z-index: 99;
+}
+
+.firelandtownIconBox {
+  position: absolute;
+  top: 1743px;
+  left: 1736px;
+  z-index: 99;
+  scale: 0.8;
+}
+
+.firelandtownIconBox2 {
+  position: absolute;
+  top: 1650px;
+  left: 2050px;
+  z-index: 99;
   scale: 0.8;
 }

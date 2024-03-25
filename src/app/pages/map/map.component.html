@@ -18,22 +18,194 @@
       class="mapImage"
     />
     <div data-panzoom-pin data-x="0%" data-y="0%" class="overlayContainer">
+      <!-- fire -->
       <div
-        class="heroiconBox"
+        class="firelandheroBox1"
+        [ngClass]="{
+          disabledBox: false
+        }"
+      >
+        <div class="heroiconContainer">
+          <img
+            src="./assets/playerIcons/levelBorder2.png"
+            class="heroiconBorderImage"
+          />
+          <img class="checkmarkImage" src="./assets/checkmark.png" />
+          <img
+            class="heroiconImage"
+            [ngClass]="{
+              heroIconImageDisabled: false
+            }"
+            src="./assets/playerIcons/link.png"
+          />
+        </div>
+      </div>
+      <div
+        class="firelandtownIconBox"
         [ngClass]="{
           disabledBox: true
         }"
       >
         <div class="heroiconContainer">
           <img
-            src="./assets/playerIcons/levelBorder1.png"
+            class="heroiconBorderImage"
+            [ngClass]="{
+              heroIconImageDisabled: true
+            }"
+            src="./assets/town3.png"
+          />
+          <img class="checkmarkImageFull" src="./assets/checkmark.png" />
+        </div>
+      </div>
+      <div
+        class="firelandtownIconBox2"
+        [ngClass]="{
+          disabledBox: true
+        }"
+      >
+        <div class="heroiconContainer">
+          <img class="checkmarkImageFull" src="./assets/checkmark.png" />
+          <img
+            class="heroiconBorderImage"
+            [ngClass]="{
+              heroIconImageDisabled: true
+            }"
+            src="./assets/battle3.png"
+          />
+        </div>
+      </div>
+
+      <!-- Desert -->
+      <div
+        class="desertheroBox1"
+        [ngClass]="{
+          disabledBox: false
+        }"
+      >
+        <div class="heroiconContainer">
+          <img
+            src="./assets/playerIcons/levelBorder2.png"
             class="heroiconBorderImage"
           />
-          <!-- <img class="checkmarkImage" src="./assets/checkmark.png" /> -->
+          <img class="checkmarkImage" src="./assets/checkmark.png" />
           <img
             class="heroiconImage"
             [ngClass]="{
+              heroIconImageDisabled: false
+            }"
+            src="./assets/playerIcons/link.png"
+          />
+        </div>
+      </div>
+      <div
+        class="deserttownIconBox"
+        [ngClass]="{
+          disabledBox: true
+        }"
+      >
+        <div class="heroiconContainer">
+          <img
+            class="heroiconBorderImage"
+            [ngClass]="{
               heroIconImageDisabled: true
+            }"
+            src="./assets/town3.png"
+          />
+          <img class="checkmarkImageFull" src="./assets/checkmark.png" />
+        </div>
+      </div>
+      <div
+        class="deserttownIconBox2"
+        [ngClass]="{
+          disabledBox: true
+        }"
+      >
+        <div class="heroiconContainer">
+          <img class="checkmarkImageFull" src="./assets/checkmark.png" />
+          <img
+            class="heroiconBorderImage"
+            [ngClass]="{
+              heroIconImageDisabled: true
+            }"
+            src="./assets/battle3.png"
+          />
+        </div>
+      </div>
+
+      <!-- Winter -->
+      <div
+        class="snowheroBox1"
+        [ngClass]="{
+          disabledBox: false
+        }"
+      >
+        <div class="heroiconContainer">
+          <img
+            src="./assets/playerIcons/levelBorder2.png"
+            class="heroiconBorderImage"
+          />
+          <img class="checkmarkImage" src="./assets/checkmark.png" />
+          <img
+            class="heroiconImage"
+            [ngClass]="{
+              heroIconImageDisabled: false
+            }"
+            src="./assets/playerIcons/link.png"
+          />
+        </div>
+      </div>
+      <div
+        class="snowtownIconBox"
+        [ngClass]="{
+          disabledBox: true
+        }"
+      >
+        <div class="heroiconContainer">
+          <img
+            class="heroiconBorderImage"
+            [ngClass]="{
+              heroIconImageDisabled: true
+            }"
+            src="./assets/town2.png"
+          />
+          <img class="checkmarkImageFull" src="./assets/checkmark.png" />
+        </div>
+      </div>
+      <div
+        class="snowtownIconBox2"
+        [ngClass]="{
+          disabledBox: true
+        }"
+      >
+        <div class="heroiconContainer">
+          <img class="checkmarkImageFull" src="./assets/checkmark.png" />
+          <img
+            class="heroiconBorderImage"
+            [ngClass]="{
+              heroIconImageDisabled: true
+            }"
+            src="./assets/battle2.png"
+          />
+        </div>
+      </div>
+
+      <!-- Forest -->
+      <div
+        class="heroiconBox"
+        [ngClass]="{
+          disabledBox: false
+        }"
+      >
+        <div class="heroiconContainer">
+          <img
+            src="./assets/playerIcons/levelBorder2.png"
+            class="heroiconBorderImage"
+          />
+          <img class="checkmarkImage" src="./assets/checkmark.png" />
+          <img
+            class="heroiconImage"
+            [ngClass]="{
+              heroIconImageDisabled: false
             }"
             src="./assets/playerIcons/link.png"
           />
@@ -47,35 +219,48 @@
       >
         <div class="heroiconContainer">
           <img
-            src="./assets/playerIcons/levelBorder1.png"
             class="heroiconBorderImage"
-          />
-          <!-- <img class="checkmarkImage" src="./assets/checkmark.png" /> -->
-          <img
-            class="heroiconImage"
             [ngClass]="{
               heroIconImageDisabled: true
             }"
-            src="./assets/playerIcons/link.png"
+            src="./assets/town1.png"
+          />
+          <img class="checkmarkImageFull" src="./assets/checkmark.png" />
+        </div>
+      </div>
+      <div
+        class="castleIconBox2"
+        [ngClass]="{
+          disabledBox: true
+        }"
+      >
+        <div class="heroiconContainer">
+          <img class="checkmarkImageFull" src="./assets/checkmark.png" />
+          <img
+            class="heroiconBorderImage"
+            [ngClass]="{
+              heroIconImageDisabled: true
+            }"
+            src="./assets/battle1.png"
           />
         </div>
       </div>
       <div
         class="wheelspinBox"
         [ngClass]="{
-          disabledBox: true
+          disabledBox: false
         }"
       >
         <div class="heroiconContainer">
+          <img class="checkmarkImage" src="./assets/checkmark.png" />
           <img
-            src="./assets/playerIcons/levelBorder1.png"
+            src="./assets/playerIcons/levelBorder2.png"
             class="heroiconBorderImage"
           />
-          <!-- <img class="checkmarkImage" src="./assets/checkmark.png" /> -->
           <img
             class="heroiconImage"
             [ngClass]="{
-              heroIconImageDisabled: true
+              heroIconImageDisabled: false
             }"
             src="./assets/wheel.png"
           />

@@ -28,7 +28,7 @@ import { DotDto, FlagDto } from 'src/app/models/flag';
 import { flagsData } from 'src/assets/data/flags';
 const { Pins } = require('@fancyapps/ui/dist/panzoom/panzoom.pins.esm.js');
 
-type WhirlpoolSize = 0.5 | 0.75 | 1 | 1.25;
+type WhirlpoolSize = 1 | 1.25 | 1.5 | 2;
 type WhirlpoolOpacity = 0.4 | 0.6 | 0.8 | 1;
 
 @Component({
@@ -69,31 +69,30 @@ export class MapComponent implements AfterViewInit, OnInit {
   mouseX: number = 0;
   mouseY: number = 0;
   devMode: boolean = false;
-  currentWhirlpoolScale: WhirlpoolSize = 0.5;
+  currentWhirlpoolScale: WhirlpoolSize = 1;
   currentWhirlpoolOpacity: WhirlpoolOpacity = 0.4;
 
   constructor() {}
 
   ngOnInit() {
-    this.flagsList = flagsData.map((x, i) => {
-      return { ...x, levelStatus: 'hidden' };
-    });
-    this.flagsList[0].levelStatus = 'justFinished';
-    this.flagsList[1].levelStatus = 'nextLevel';
-    const currentLevel = this.flagsList.find(
-      (x) => x.levelStatus === 'justFinished'
-    );
-
-    setTimeout(() => {
-      this.flagsList = this.flagsList.map((x, i) => {
-        if (x.id === currentLevel?.id) {
-          return { ...x, levelStatus: 'finished' };
-        }
-        return x;
-      });
-    }, 1500);
-
-    this.currentLevel = currentLevel;
+    this.flagsList = flagsData;
+    // this.flagsList = flagsData.map((x, i) => {
+    //   return { ...x, levelStatus: 'hidden' };
+    // });
+    // this.flagsList[0].levelStatus = 'justFinished';
+    // this.flagsList[1].levelStatus = 'nextLevel';
+    // const currentLevel = this.flagsList.find(
+    //   (x) => x.levelStatus === 'justFinished'
+    // );
+    // setTimeout(() => {
+    //   this.flagsList = this.flagsList.map((x, i) => {
+    //     if (x.id === currentLevel?.id) {
+    //       return { ...x, levelStatus: 'finished' };
+    //     }
+    //     return x;
+    //   });
+    // }, 1500);
+    // this.currentLevel = currentLevel;
   }
 
   ngAfterViewInit() {
@@ -123,23 +122,23 @@ export class MapComponent implements AfterViewInit, OnInit {
       (x) => x.levelStatus === 'nextLevel'
     );
 
-    const initArr = Array.from(Array(10).keys());
-    for await (let x of initArr) {
-      await pz.panTo({
-        x: -1000,
-        y: -600,
-        friction: 0,
-        ignoreBounds: false,
-      });
-      await this.timeout(10);
-    }
-    if (currentLevel) {
-      pz.panTo({
-        x: 500 - currentLevel.x,
-        y: 200 - currentLevel.y,
-        friction: 0.04,
-      });
-    }
+    // const initArr = Array.from(Array(10).keys());
+    // for await (let x of initArr) {
+    //   await pz.panTo({
+    //     x: -1000,
+    //     y: -600,
+    //     friction: 0,
+    //     ignoreBounds: false,
+    //   });
+    //   await this.timeout(10);
+    // }
+    // if (currentLevel) {
+    //   pz.panTo({
+    //     x: 500 - currentLevel.x,
+    //     y: 200 - currentLevel.y,
+    //     friction: 0.04,
+    //   });
+    // }
   }
 
   timeout(ms: number) {
