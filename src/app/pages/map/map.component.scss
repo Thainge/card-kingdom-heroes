@@ -1,3 +1,8 @@
+:root {
+  --currentSailingScaleX: 1,
+  --currentFlyingScaleX: 1,
+}
+
 .container {
   background-color: black;
   height: 100vh;
@@ -112,6 +117,7 @@
   position: absolute;
   top: 0;
   left: 0;
+  animation: shipHover 2s forwards infinite ease-in-out;
 }
 
 .flyingShipBox {
@@ -128,23 +134,35 @@
   animation: shipSailing 60s forwards infinite linear;
 }
 
+.flipIconAnimationFlying {
+  transform: scaleX(var(--currentFlyingScaleX));
+}
+
+.flipIconAnimationSailing {
+  transform: scaleX(var(--currentSailingScaleX));
+}
+
 @keyframes shipSailing {
   // Go to right
   0% {
     transform: translate(1400px, 0px) scaleX(1);
+    --currentSailingScaleX: 1;
   }
 
   // to right
   50% {
     transform: translate(1800px, 0px) scaleX(1);
+    --currentSailingScaleX: 1;
   }
   51% {
     transform: translate(1800px, 0px) scaleX(-1);
+    --currentSailingScaleX: -1;
   }
 
   // to left
   100% {
     transform: translate(1400px, 0px) scaleX(-1);
+    --currentSailingScaleX: -1;
   }
 }
 
@@ -157,19 +175,23 @@
   // Go to right
   0% {
     transform: translate(-400px, 400px) scaleX(-1);
+    --currentFlyingScaleX: -1;
   }
 
   // to right
   50% {
     transform: translate(3200px, 400px) scaleX(-1);
+    --currentFlyingScaleX: -1;
   }
   51% {
     transform: translate(3200px, 800px) scaleX(1);
+    --currentFlyingScaleX: 1;
   }
 
   // to left
   100% {
     transform: translate(-400px, 800px) scaleX(1);
+    --currentFlyingScaleX: 1;
   }
 }
 
@@ -201,10 +223,6 @@
 .flyingShipImage,
 .sailingShipImage {
   width: 200px;
-}
-
-.flyingShipImage {
-  animation: shipHover 2s forwards infinite ease-in-out;
 }
 
 @keyframes shipHover {
@@ -629,10 +647,6 @@
   transition: all 0.3s;
 }
 
-.heroiconContainer:hover {
-  transform: scale(1.2);
-}
-
 .heroiconBorderImage {
   width: 70px;
   position: relative;
@@ -788,7 +802,6 @@
   left: 40px;
   justify-content: center;
   display: flex;
-  animation: shipHover 2s forwards infinite ease-in-out;
   z-index: 10001;
 }
 
@@ -799,4 +812,17 @@
   justify-content: center;
   display: flex;
   z-index: 10001;
+}
+
+.absoluteHeroIcon,
+.sailingShipHeroIcon {
+  transition: all 0.3s;
+}
+
+.heroiconContainer:hover {
+  transform: scale(1.1);
+}
+
+.hoverShip:hover {
+  transform: scale(1.1);
 }

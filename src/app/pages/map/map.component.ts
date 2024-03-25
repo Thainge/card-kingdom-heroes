@@ -9,21 +9,13 @@ import {
 } from '@angular/core';
 import { Panzoom } from '@fancyapps/ui/dist/panzoom/panzoom.esm.js';
 import {
-  fadeOutUpOnLeaveAnimation,
-  fadeInUpOnEnterAnimation,
-  fadeOutLeftOnLeaveAnimation,
-  fadeInLeftOnEnterAnimation,
-  fadeOutRightOnLeaveAnimation,
-  fadeInRightOnEnterAnimation,
-  fadeInDownOnEnterAnimation,
-  fadeOutDownOnLeaveAnimation,
   fadeInOnEnterAnimation,
   fadeOutOnLeaveAnimation,
   zoomInOnEnterAnimation,
   zoomOutOnLeaveAnimation,
-  flipInYOnEnterAnimation,
 } from 'angular-animations';
 import { DialogComponent } from 'src/app/components/dialogComponent/dialog.component';
+import { MapOverlayComponent } from 'src/app/components/map-overlay/map-overlay.component';
 import { DotDto, FlagDto } from 'src/app/models/flag';
 import { flagsData } from 'src/assets/data/flags';
 const { Pins } = require('@fancyapps/ui/dist/panzoom/panzoom.pins.esm.js');
@@ -73,26 +65,13 @@ interface SpecialLevels {
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
   standalone: true,
-  imports: [CommonModule, DialogComponent],
+  imports: [CommonModule, DialogComponent, MapOverlayComponent],
   animations: [
-    fadeOutUpOnLeaveAnimation({ anchor: 'fadeUpLeave' }),
-    fadeInUpOnEnterAnimation({ anchor: 'fadeUpEnter' }),
-
-    fadeOutLeftOnLeaveAnimation({ anchor: 'fadeLeftLeave' }),
-    fadeInLeftOnEnterAnimation({ anchor: 'fadeLeftEnter' }),
-
-    fadeOutRightOnLeaveAnimation({ anchor: 'fadeRightLeave' }),
-    fadeInRightOnEnterAnimation({ anchor: 'fadeRightEnter' }),
-
-    fadeInDownOnEnterAnimation({ anchor: 'fadeDownEnter' }),
-    fadeOutDownOnLeaveAnimation({ anchor: 'fadeDownLeave' }),
-
     fadeInOnEnterAnimation({ anchor: 'fadeEnter' }),
     fadeOutOnLeaveAnimation({ anchor: 'fadeOutLeave' }),
 
     zoomInOnEnterAnimation({ anchor: 'zoomInEnter' }),
     zoomOutOnLeaveAnimation({ anchor: 'zoomOutLeave' }),
-    flipInYOnEnterAnimation({ anchor: 'flipInYonEnter' }),
   ],
 })
 export class MapComponent implements AfterViewInit, OnInit {

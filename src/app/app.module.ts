@@ -7,6 +7,7 @@ import { BattleComponent } from './pages/battle/battle.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogComponent } from './components/dialogComponent/dialog.component';
+import { MapOverlayComponent } from './components/map-overlay/map-overlay.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,6 +15,7 @@ import { DialogComponent } from './components/dialogComponent/dialog.component';
     BrowserModule,
     AppRoutingModule,
     // BattleComponent,
+    MapOverlayComponent,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
