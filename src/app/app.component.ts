@@ -112,6 +112,7 @@ export class AppComponent implements OnInit {
     //   description: 'test description',
     //   image: 'gold.png',
     //   title: 'First Blood',
+    //   unlocked: true,
     // });
   }
 
@@ -165,11 +166,11 @@ export class AppComponent implements OnInit {
     setTimeout(() => {
       this.showGif = false;
     }, 2800);
-    setTimeout(() => {
-      this.achievementPopupsList = this.achievementPopupsList.filter(
-        (x) => x.id !== ID
-      );
-    }, 5000);
+    // setTimeout(() => {
+    //   this.achievementPopupsList = this.achievementPopupsList.filter(
+    //     (x) => x.id !== ID
+    //   );
+    // }, 5000);
   }
 
   @HostListener('document:keypress', ['$event'])

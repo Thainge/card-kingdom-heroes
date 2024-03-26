@@ -3,11 +3,11 @@
   *ngIf="open"
   [@fadeEnter]="{
     value: '',
-    params: { duration: 500, delay: 0 }
+    params: { duration: 300, delay: 0 }
   }"
   [@fadeOutLeave]="{
     value: '',
-    params: { duration: 500, delay: 0 }
+    params: { duration: 300, delay: 0 }
   }"
 >
   <div class="optionsMenuBackdrop"></div>
@@ -19,21 +19,30 @@
       <img src="./assets/closeActive.png" class="closeMenuButton activeBtn" />
     </div>
     <div class="achievementsList">
-      <div class="achievement">test</div>
-      <div class="achievement">test</div>
-      <div class="achievement">test</div>
-      <div class="achievement">test</div>
-      <div class="achievement">test</div>
-      <div class="achievement">test</div>
-      <div class="achievement">test</div>
-      <div class="achievement">test</div>
-      <div class="achievement">test</div>
-      <div class="achievement">test</div>
+      <div
+        class="achievement"
+        *ngFor="let item of achievementsList"
+        [ngClass]="{
+          disabled: !item.unlocked
+        }"
+      >
+        <img src="./assets/achievementBox.png" class="achievementBackground" />
+        <img src="./assets/achievements/gold.png" class="achievementIcon" />
+        <div class="achievementTitle">First Blood</div>
+        <div class="achievementText">Beat your first enemy in the game!</div>
+      </div>
     </div>
     <div class="achievementNumbersList">
-      <div class="achievementNumberItem">1</div>
-      <div class="achievementNumberItem">2</div>
-      <div class="achievementNumberItem">3</div>
+      <div
+        *ngFor="let item of pageNumbers"
+        class="achievementNumberItem"
+        [ngClass]="{
+          activePageBtn: currentpage === item
+        }"
+        (click)="pageAchievements(item)"
+      >
+        {{ item }}
+      </div>
     </div>
   </div>
 </div>

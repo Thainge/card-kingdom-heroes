@@ -19,11 +19,11 @@
       *ngIf="optionsMenuOpened"
       [@fadeEnter]="{
         value: '',
-        params: { duration: 500, delay: 0 }
+        params: { duration: 300, delay: 0 }
       }"
       [@fadeOutLeave]="{
         value: '',
-        params: { duration: 500, delay: 0 }
+        params: { duration: 300, delay: 0 }
       }"
     >
       <div class="optionsMenuBackdrop"></div>
@@ -184,12 +184,7 @@
           class="confettiGif"
           src="./assets/confettiAchievements.gif"
         />
-        <div
-          class="achievementTitle"
-          [ngStyle]="{
-            'font-family': 'headerFont'
-          }"
-        >
+        <div class="achievementTitle">
           {{ item.title }}
         </div>
       </div>

@@ -101,6 +101,10 @@
   transform: scale(1);
 }
 
+.overlayHeroBox:active {
+  --heroScale: 0.5;
+}
+
 .bottomRightContainer {
   position: relative;
   display: flex;

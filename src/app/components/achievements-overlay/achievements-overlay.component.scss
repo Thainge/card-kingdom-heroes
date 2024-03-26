@@ -98,6 +98,8 @@
   border-radius: 0.3em;
   box-shadow: 0 0 0.5em black;
   background: url(~src/assets/square.png);
+  background-position: center;
+  background-size: cover;
 }
 
 .achievementNumberItem:hover {
@@ -106,6 +108,10 @@
 
 .achievementNumberItem:active {
   scale: 0.9;
+}
+
+.activePageBtn {
+  filter: brightness(0.7);
 }
 
 .achievementsList {
@@ -123,5 +129,51 @@
 .achievement {
   width: 45%;
   height: 19%;
-  background-color: grey;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.achievementBackground {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.achievementIcon {
+  position: absolute;
+  z-index: 2;
+  left: 5%;
+  width: 15%;
+}
+
+.achievementTitle {
+  position: absolute;
+  z-index: 2;
+  top: 24%;
+  left: 29%;
+  color: #e3d9b6;
+  font-size: 0.65em;
+  font-family: headerFont;
+  letter-spacing: 0.01em;
+  -webkit-text-stroke: 0.8px rgba(0, 0, 0, 0.8);
+}
+
+.achievementText {
+  position: absolute;
+  z-index: 2;
+  top: 44%;
+  left: 29%;
+  font-size: 0.6em;
+  width: 65%;
+  height: 30%;
+  font-weight: 100;
+  color: #dbd1acc9;
+  font-family: soho;
+  font-style: italic;
+}
+
+.disabled {
+  filter: grayscale(1) brightness(0.5);
 }

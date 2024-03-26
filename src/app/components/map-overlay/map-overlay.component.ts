@@ -23,7 +23,7 @@ import { AchievementsOverlayComponent } from '../achievements-overlay/achievemen
   ],
 })
 export class MapOverlayComponent implements OnInit {
-  achievementsOpen: boolean = true;
+  achievementsOpen: boolean = false;
   shopOpen: boolean = false;
   heroRoomOpen: boolean = false;
   deckOpen: boolean = false;

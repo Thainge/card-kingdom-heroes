@@ -128,8 +128,11 @@ export class MapComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {
     this.flagsList = flagsData;
-    this.flagsList = flagsData.map((x, i) => {
-      return { ...x, levelStatus: 'hidden' };
+    this.flagsList = flagsData.map((item, i) => {
+      return {
+        ...item,
+        levelStatus: 'hidden',
+      };
     });
     this.flagsList[0].levelStatus = 'justFinished';
     this.flagsList[1].levelStatus = 'nextLevel';
@@ -174,23 +177,23 @@ export class MapComponent implements AfterViewInit, OnInit {
       (x) => x.levelStatus === 'nextLevel'
     );
 
-    // const initArr = Array.from(Array(10).keys());
-    // for await (let x of initArr) {
-    //   await pz.panTo({
-    //     x: -1000,
-    //     y: -600,
-    //     friction: 0,
-    //     ignoreBounds: false,
-    //   });
-    //   await this.timeout(10);
-    // }
-    // if (currentLevel) {
-    //   pz.panTo({
-    //     x: 500 - currentLevel.x,
-    //     y: 200 - currentLevel.y,
-    //     friction: 0.04,
-    //   });
-    // }
+    const initArr = Array.from(Array(10).keys());
+    for await (let x of initArr) {
+      await pz.panTo({
+        x: -1000,
+        y: -600,
+        friction: 0,
+        ignoreBounds: false,
+      });
+      await this.timeout(10);
+    }
+    if (currentLevel) {
+      pz.panTo({
+        x: 500 - currentLevel.x,
+        y: 200 - currentLevel.y,
+        friction: 0.04,
+      });
+    }
   }
 
   timeout(ms: number) {

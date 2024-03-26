@@ -11,6 +11,7 @@ export class AchievementService {
     description: '',
     image: '',
     title: '',
+    unlocked: false,
   });
 
   constructor() {}

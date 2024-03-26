@@ -3,4 +3,5 @@ export interface AchievementObject {
   title: string;
   description: string;
   image: string;
+  unlocked: boolean;
 }
