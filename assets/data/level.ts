@@ -5,7 +5,10 @@ export const passedObj: LevelDto = {
   skipRedrawPhase: false,
   battleRewardXp: 61,
   playerLevelUpEnabled: true,
-  hideDialog: false,
+  hideDialog: true,
+  allCardsWild: false,
+  showGuide: false,
+  showAbilityGuide: false,
 
   shuffleAbilityCards: true,
   shuffleCards: true,
