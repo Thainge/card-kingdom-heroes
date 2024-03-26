@@ -26,7 +26,7 @@
 }
 
 .hoverButton {
-  transition: all 0.3s;
+  transition: transform 0.3s;
   filter: drop-shadow(0 0 0.3em rgba(0, 0, 0, 0.9));
 }
 
@@ -51,10 +51,6 @@
   user-select: none;
 }
 
-.optionsMenu {
-  z-index: 1002;
-}
-
 .optionsButtonsRow {
   display: flex;
   justify-content: space-around;
@@ -68,14 +64,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1001;
+  z-index: 5002;
 }
 
 .optionsMenuBackdrop {
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: 1001;
+  z-index: 5001;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;
 }
@@ -114,7 +110,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 10000;
 }
 
 .menuHeader {

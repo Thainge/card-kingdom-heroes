@@ -1,9 +1,4 @@
 <div class="container">
-  <app-achievements-overlay-overlay
-    [open]="achievementsOpen"
-    (onCloseMenu)="achievementsOpen = false"
-  ></app-achievements-overlay-overlay>
-
   <!-- Top -->
   <div class="progressBarBox">
     <div class="progressBarContainer">
@@ -23,25 +18,13 @@
   <!-- Bottom right -->
   <div class="bottomRightBox">
     <div class="bottomRightContainer">
-      <img
-        src="./assets/shop.png"
-        class="overlayIcon"
-        (click)="shopOpen = true"
-      />
-      <div class="overlayHeroBox" (click)="heroRoomOpen = true">
+      <img src="./assets/shop.png" class="overlayIcon" />
+      <div class="overlayHeroBox">
         <img src="./assets/playerIcons/link.png" class="heroIcon" />
         <img src="./assets/hero.png" class="overlayIcon" />
       </div>
-      <img
-        src="./assets/deck.png"
-        class="overlayIcon"
-        (click)="deckOpen = true"
-      />
-      <img
-        src="./assets/gallery.png"
-        class="overlayIcon"
-        (click)="galleryOpen = true"
-      />
+      <img src="./assets/deck.png" class="overlayIcon" />
+      <img src="./assets/gallery.png" class="overlayIcon" />
     </div>
   </div>
 
@@ -50,7 +33,6 @@
     <img
       src="./assets/achievements.png"
       class="overlayIcon achievementButton"
-      (click)="achievementsOpen = true"
     />
   </div>
 </div>

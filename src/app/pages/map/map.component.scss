@@ -36,7 +36,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 9999;
+  z-index: 150;
 }
 
 .flagLevelBox,
@@ -121,12 +121,12 @@
 }
 
 .flyingShipBox {
-  z-index: 10000;
+  z-index: 152;
 }
 
 .birds1Box,
 .birds2Box {
-  z-index: 10000;
+  z-index: 153;
 }
 
 .sailingShipContainer {
@@ -312,7 +312,7 @@
   top: 350px;
   left: 1860px;
   animation: cycloneMove 15s forwards infinite ease-in-out;
-  z-index: 10000;
+  z-index: 153;
 }
 
 @keyframes cycloneMove {
@@ -406,7 +406,7 @@
   left: 2205px;
   animation: tumbleweedAnimation 10s forwards infinite linear;
   animation-delay: 5s;
-  z-index: 10000;
+  z-index: 153;
 }
 
 .tumbleweedBox2 {
@@ -414,7 +414,7 @@
   top: 863px;
   left: 2200px;
   animation: tumbleweedAnimation 10s forwards infinite linear;
-  z-index: 10000;
+  z-index: 153;
 }
 
 .tumbleweedImage {
@@ -484,7 +484,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 99999;
+  z-index: 999;
   pointer-events: none;
 }
 
@@ -802,7 +802,7 @@
   left: 40px;
   justify-content: center;
   display: flex;
-  z-index: 10001;
+  z-index: 151;
 }
 
 .sailingShipHeroIcon {
@@ -811,7 +811,7 @@
   left: 50px;
   justify-content: center;
   display: flex;
-  z-index: 10001;
+  z-index: 151;
 }
 
 .absoluteHeroIcon,

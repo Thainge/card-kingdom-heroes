@@ -1,0 +1,39 @@
+<div
+  class="container"
+  *ngIf="open"
+  [@fadeEnter]="{
+    value: '',
+    params: { duration: 500, delay: 0 }
+  }"
+  [@fadeOutLeave]="{
+    value: '',
+    params: { duration: 500, delay: 0 }
+  }"
+>
+  <div class="optionsMenuBackdrop"></div>
+  <div class="overlayBox">
+    <img class="overlayPanelBg" src="./assets/menu.png" />
+    <div class="overlalPanelTitle">Achievements</div>
+    <div class="closeMenuButtonBox" (click)="closeMenu()">
+      <img src="./assets/close.png" class="closeMenuButton" />
+      <img src="./assets/closeActive.png" class="closeMenuButton activeBtn" />
+    </div>
+    <div class="achievementsList">
+      <div class="achievement">test</div>
+      <div class="achievement">test</div>
+      <div class="achievement">test</div>
+      <div class="achievement">test</div>
+      <div class="achievement">test</div>
+      <div class="achievement">test</div>
+      <div class="achievement">test</div>
+      <div class="achievement">test</div>
+      <div class="achievement">test</div>
+      <div class="achievement">test</div>
+    </div>
+    <div class="achievementNumbersList">
+      <div class="achievementNumberItem">1</div>
+      <div class="achievementNumberItem">2</div>
+      <div class="achievementNumberItem">3</div>
+    </div>
+  </div>
+</div>

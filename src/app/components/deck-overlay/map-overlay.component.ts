@@ -6,14 +6,13 @@ import {
   fadeInOnEnterAnimation,
   zoomOutOnLeaveAnimation,
 } from 'angular-animations';
-import { AchievementsOverlayComponent } from '../achievements-overlay/achievements-overlay.component';
 
 @Component({
   selector: 'app-map-overlay',
   templateUrl: './map-overlay.component.html',
   styleUrls: ['./map-overlay.component.scss'],
   standalone: true,
-  imports: [CommonModule, AchievementsOverlayComponent],
+  imports: [CommonModule],
   animations: [
     fadeInOnEnterAnimation({ anchor: 'fadeEnter' }),
     fadeOutOnLeaveAnimation({ anchor: 'fadeOutLeave' }),
@@ -23,12 +22,6 @@ import { AchievementsOverlayComponent } from '../achievements-overlay/achievemen
   ],
 })
 export class MapOverlayComponent implements OnInit {
-  achievementsOpen: boolean = true;
-  shopOpen: boolean = false;
-  heroRoomOpen: boolean = false;
-  deckOpen: boolean = false;
-  galleryOpen: boolean = false;
-
   constructor() {}
 
   ngOnInit() {}
