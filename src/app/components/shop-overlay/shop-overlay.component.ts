@@ -1,16 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   zoomInOnEnterAnimation,
   fadeOutOnLeaveAnimation,
   fadeInOnEnterAnimation,
   zoomOutOnLeaveAnimation,
 } from 'angular-animations';
+import { AchievementObject } from 'src/app/models/achievement';
 
 @Component({
-  selector: 'app-map-overlay',
-  templateUrl: './map-overlay.component.html',
-  styleUrls: ['./map-overlay.component.scss'],
+  selector: 'app-shop-overlay-overlay',
+  templateUrl: './shop-overlay.component.html',
+  styleUrls: ['./shop-overlay.component.scss'],
   standalone: true,
   imports: [CommonModule],
   animations: [
@@ -21,8 +22,16 @@ import {
     zoomOutOnLeaveAnimation({ anchor: 'zoomOutLeave' }),
   ],
 })
-export class MapOverlayComponent implements OnInit {
+export class ShopOverlayComponent implements OnInit {
+  @Input('open') open: boolean = false;
+
+  @Output() onCloseMenu = new EventEmitter<boolean>(false);
+
   constructor() {}
 
   ngOnInit() {}
+
+  closeMenu() {
+    this.onCloseMenu.emit(false);
+  }
 }
