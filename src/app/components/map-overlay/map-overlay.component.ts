@@ -8,13 +8,23 @@ import {
 } from 'angular-animations';
 import { AchievementsOverlayComponent } from '../achievements-overlay/achievements-overlay.component';
 import { ShopOverlayComponent } from '../shop-overlay/shop-overlay.component';
+import { HeroOverlayComponent } from '../hero-overlay/hero-overlay.component';
+import { DeckOverlayComponent } from '../deck-overlay/deck-overlay.component';
+import { GalleryOverlayComponent } from '../gallery-overlay/gallery-overlay.component';
 
 @Component({
   selector: 'app-map-overlay',
   templateUrl: './map-overlay.component.html',
   styleUrls: ['./map-overlay.component.scss'],
   standalone: true,
-  imports: [CommonModule, AchievementsOverlayComponent, ShopOverlayComponent],
+  imports: [
+    CommonModule,
+    AchievementsOverlayComponent,
+    ShopOverlayComponent,
+    HeroOverlayComponent,
+    DeckOverlayComponent,
+    GalleryOverlayComponent,
+  ],
   animations: [
     fadeInOnEnterAnimation({ anchor: 'fadeEnter' }),
     fadeOutOnLeaveAnimation({ anchor: 'fadeOutLeave' }),

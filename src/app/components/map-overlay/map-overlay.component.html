@@ -1,5 +1,17 @@
 <div class="container">
   <app-achievements-overlay-overlay
+    [open]="heroRoomOpen"
+    (onCloseMenu)="heroRoomOpen = false"
+  ></app-achievements-overlay-overlay>
+  <app-achievements-overlay-overlay
+    [open]="deckOpen"
+    (onCloseMenu)="deckOpen = false"
+  ></app-achievements-overlay-overlay>
+  <app-achievements-overlay-overlay
+    [open]="galleryOpen"
+    (onCloseMenu)="galleryOpen = false"
+  ></app-achievements-overlay-overlay>
+  <app-achievements-overlay-overlay
     [open]="achievementsOpen"
     (onCloseMenu)="achievementsOpen = false"
   ></app-achievements-overlay-overlay>

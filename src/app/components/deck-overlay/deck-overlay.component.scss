@@ -1,0 +1,79 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  z-index: 5001;
+}
+
+.optionsMenuBackdrop {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.overlayBox {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlayPanelBg {
+  filter: drop-shadow(0 0 0.5em rgba(0, 0, 0, 1));
+  -webkit-user-drag: none;
+}
+
+.overlalPanelTitle {
+  position: absolute;
+  top: 5.5%;
+  margin-left: -3%;
+  font-size: 1.4em;
+
+  text-align: center;
+  color: white;
+  font-family: "headerFont";
+  background: -webkit-linear-gradient(#f5f2e6, #a8a075);
+  -webkit-text-stroke: 2px #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.closeMenuButtonBox {
+  position: absolute;
+  top: 2.1%;
+  right: 1.3%;
+}
+
+.closeMenuButton {
+  -webkit-user-drag: none;
+  position: relative;
+  z-index: 1;
+  transition: all 0.2s;
+  --closeOpacity: 0;
+}
+
+.closeMenuButton:hover {
+  --closeOpacity: 1;
+}
+
+.activeBtn {
+  position: absolute;
+  left: 0;
+  opacity: var(--closeOpacity);
+}
