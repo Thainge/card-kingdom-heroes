@@ -5,8 +5,14 @@ import {
   fadeOutOnLeaveAnimation,
   fadeInOnEnterAnimation,
   zoomOutOnLeaveAnimation,
+  fadeInLeftOnEnterAnimation,
+  fadeInRightOnEnterAnimation,
+  fadeOutLeftOnLeaveAnimation,
+  fadeOutRightOnLeaveAnimation,
 } from 'angular-animations';
 import { AchievementObject } from 'src/app/models/achievement';
+
+type ShopStep = 'picking' | 'shopping' | 'opening';
 
 @Component({
   selector: 'app-shop-overlay-overlay',
@@ -20,10 +26,17 @@ import { AchievementObject } from 'src/app/models/achievement';
 
     zoomInOnEnterAnimation({ anchor: 'zoomInEnter' }),
     zoomOutOnLeaveAnimation({ anchor: 'zoomOutLeave' }),
+
+    fadeOutLeftOnLeaveAnimation({ anchor: 'fadeLeftLeave' }),
+    fadeInLeftOnEnterAnimation({ anchor: 'fadeLeftEnter' }),
+
+    fadeOutRightOnLeaveAnimation({ anchor: 'fadeRightLeave' }),
+    fadeInRightOnEnterAnimation({ anchor: 'fadeRightEnter' }),
   ],
 })
 export class ShopOverlayComponent implements OnInit {
   @Input('open') open: boolean = false;
+  currentStep: ShopStep = 'shopping';
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 

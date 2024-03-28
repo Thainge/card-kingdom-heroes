@@ -13,26 +13,42 @@
   <div class="optionsMenuBackdrop"></div>
   <div class="overlayBox">
     <img class="overlayPanelBg" src="./assets/menu.png" />
-    <div class="overlalPanelTitle">Gallery</div>
+    <div class="overlalPanelTitle">Shop</div>
     <div class="closeMenuButtonBox" (click)="closeMenu()">
       <img src="./assets/close.png" class="closeMenuButton" />
       <img src="./assets/closeActive.png" class="closeMenuButton activeBtn" />
     </div>
-    <div class="innerOptionsBox">
+    <div class="innerOptionsBox" *ngIf="currentStep === 'picking'">
       <div class="innerOptionsRelative">
-        <div class="relativeBox">
+        <div class="relativeBox" (click)="currentStep = 'shopping'">
           <img src="./assets/shopBox.png" class="box" />
           <div class="iconTextBox">
-            <img src="./assets/battle2.png" class="boxImage" />
+            <img src="./assets/bag.png" class="boxImage shopBoxImage" />
             <div class="boxText">Shop</div>
           </div>
         </div>
-        <div class="relativeBox">
+        <div class="relativeBox" (click)="currentStep = 'opening'">
           <img src="./assets/shopBox.png" class="box" />
           <div class="iconTextBox">
-            <img src="./assets/battle4.png" class="boxImage" />
+            <img src="./assets/bookIcon.png" class="boxImage" />
             <div class="boxText">Open Packs</div>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="innerOptionsBoxShopping" *ngIf="currentStep === 'shopping'">
+      <div class="innerOptionsRelativeShopping">
+        <!-- Swipe list of all card packs -->
+        <div class="swipeTitle">
+          1<b class="extraSmall">x</b> Mario Booster Pack
+        </div>
+        <div class="centerCard">
+          <img src="./assets/rewards/boosterPack.png" class="cardBoxInner" />
+        </div>
+        <div class="swipeCost">
+          <img src="./assets/button.png" class="swipeBtn" />
+          <img src="./assets/gold.png" class="swipeBtnInnerImage" />
+          <div class="swipeBtnText">125</div>
         </div>
       </div>
     </div>
