@@ -37,20 +37,39 @@
       </div>
     </div>
     <div class="innerOptionsBoxShopping" *ngIf="currentStep === 'shopping'">
-      <div class="innerOptionsRelativeShopping">
-        <!-- Swipe list of all card packs -->
+      <div class="glide">
+        <div data-glide-el="track" class="glide__track">
+          <ul class="glide__slides">
+            <li class="glide__slide">
+              <img src="./assets/rewards/boosterPack.png" class="innerImage" />
+            </li>
+            <li class="glide__slide">
+              <img src="./assets/rewards/boosterPack.png" class="innerImage" />
+            </li>
+            <li class="glide__slide">
+              <img src="./assets/rewards/boosterPack.png" class="innerImage" />
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- <div class="innerOptionsRelativeShopping">
         <div class="swipeTitle">
           1<b class="extraSmall">x</b> Mario Booster Pack
         </div>
         <div class="centerCard">
-          <img src="./assets/rewards/boosterPack.png" class="cardBoxInner" />
+          <ngx-glide [showArrows]="true" [showBullets]="false">
+            <div>2</div>
+            <div>2</div>
+            <div>2</div>
+            <div>2</div>
+          </ngx-glide>
         </div>
         <div class="swipeCost">
           <img src="./assets/button.png" class="swipeBtn" />
           <img src="./assets/gold.png" class="swipeBtnInnerImage" />
           <div class="swipeBtnText">125</div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

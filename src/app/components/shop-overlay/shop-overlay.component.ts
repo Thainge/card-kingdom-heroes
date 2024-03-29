@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   zoomInOnEnterAnimation,
   fadeOutOnLeaveAnimation,
@@ -10,7 +17,7 @@ import {
   fadeOutLeftOnLeaveAnimation,
   fadeOutRightOnLeaveAnimation,
 } from 'angular-animations';
-import { AchievementObject } from 'src/app/models/achievement';
+import Glide from '@glidejs/glide';
 
 type ShopStep = 'picking' | 'shopping' | 'opening';
 
@@ -35,14 +42,28 @@ type ShopStep = 'picking' | 'shopping' | 'opening';
   ],
 })
 export class ShopOverlayComponent implements OnInit {
-  @Input('open') open: boolean = false;
+  open: boolean = false;
+
+  @Input('open') set openChanged(x: boolean) {
+    this.open = x;
+    if (x) {
+      new Glide('.glide').mount();
+      this.cdRef.detectChanges();
+    }
+  }
   currentStep: ShopStep = 'shopping';
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
-  constructor() {}
+  constructor(private cdRef: ChangeDetectorRef) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.cdRef.detectChanges();
+  }
+
+  ngAfterViewChecked() {
+    this.cdRef.detectChanges();
+  }
 
   closeMenu() {
     this.onCloseMenu.emit(false);

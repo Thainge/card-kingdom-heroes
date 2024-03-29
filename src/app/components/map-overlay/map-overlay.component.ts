@@ -1,16 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   zoomInOnEnterAnimation,
   fadeOutOnLeaveAnimation,
   fadeInOnEnterAnimation,
   zoomOutOnLeaveAnimation,
+  fadeInDownOnEnterAnimation,
+  fadeInUpOnEnterAnimation,
+  fadeOutDownOnLeaveAnimation,
+  fadeOutUpOnLeaveAnimation,
 } from 'angular-animations';
 import { AchievementsOverlayComponent } from '../achievements-overlay/achievements-overlay.component';
 import { ShopOverlayComponent } from '../shop-overlay/shop-overlay.component';
 import { HeroOverlayComponent } from '../hero-overlay/hero-overlay.component';
 import { DeckOverlayComponent } from '../deck-overlay/deck-overlay.component';
 import { GalleryOverlayComponent } from '../gallery-overlay/gallery-overlay.component';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-map-overlay',
@@ -31,16 +36,28 @@ import { GalleryOverlayComponent } from '../gallery-overlay/gallery-overlay.comp
 
     zoomInOnEnterAnimation({ anchor: 'zoomInEnter' }),
     zoomOutOnLeaveAnimation({ anchor: 'zoomOutLeave' }),
+
+    fadeInUpOnEnterAnimation({ anchor: 'fadeUpEnter' }),
+    fadeOutUpOnLeaveAnimation({ anchor: 'fadeUpLeave' }),
+
+    fadeInDownOnEnterAnimation({ anchor: 'fadeDownEnter' }),
+    fadeOutDownOnLeaveAnimation({ anchor: 'fadeDownLeave' }),
   ],
 })
 export class MapOverlayComponent implements OnInit {
   achievementsOpen: boolean = false;
-  shopOpen: boolean = true;
+  shopOpen: boolean = false;
   heroRoomOpen: boolean = false;
   deckOpen: boolean = false;
   galleryOpen: boolean = false;
 
-  constructor() {}
+  display: boolean = false;
 
-  ngOnInit() {}
+  constructor(private loadingService: LoadingService) {}
+
+  ngOnInit() {
+    this.loadingService.displayOptions$.subscribe((x) => {
+      this.display = x;
+    });
+  }
 }

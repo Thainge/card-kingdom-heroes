@@ -63,13 +63,14 @@ export class AppComponent implements OnInit {
   soundControl = new FormControl('75');
   musicControl = new FormControl('75');
 
+  display!: boolean;
+
   @ViewChild('consoleInput') consoleInput: ElementRef | undefined;
 
   constructor(
     private achievementService: AchievementService,
     private cheatsService: CheatsService,
     private loadingService: LoadingService,
-    private playerService: playerService,
     private router: Router
   ) {}
 
@@ -114,6 +115,9 @@ export class AppComponent implements OnInit {
     //   title: 'First Blood',
     //   unlocked: true,
     // });
+    this.loadingService.displayOptions$.subscribe((x) => {
+      this.display = x;
+    });
   }
 
   isBattle(): boolean {

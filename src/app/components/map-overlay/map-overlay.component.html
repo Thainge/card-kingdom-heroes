@@ -21,14 +21,22 @@
   ></app-shop-overlay-overlay>
 
   <!-- Top -->
-  <div class="progressBarBox">
+  <div
+    class="progressBarBox"
+    *ngIf="display"
+    [@fadeUpEnter]="{ value: '', params: { duration: 500, delay: 0 } }"
+  >
     <div class="progressBarContainer">
       <img src="./assets/progressBar.png" class="progressBarImage" />
       <img src="./assets/progressStar.png" class="progressStarImage" />
       <div class="progressText">0/80</div>
     </div>
   </div>
-  <div class="progressBarGold">
+  <div
+    class="progressBarGold"
+    *ngIf="display"
+    [@fadeUpEnter]="{ value: '', params: { duration: 500, delay: 0 } }"
+  >
     <div class="progressBarContainer">
       <img src="./assets/progressBar.png" class="progressBarImage" />
       <img src="./assets/gold.png" class="progressGoldImage" />
@@ -37,7 +45,11 @@
     </div>
   </div>
   <!-- Bottom right -->
-  <div class="bottomRightBox">
+  <div
+    class="bottomRightBox"
+    *ngIf="display"
+    [@fadeUpEnter]="{ value: '', params: { duration: 500, delay: 0 } }"
+  >
     <div class="bottomRightContainer">
       <img
         src="./assets/shop.png"
@@ -62,7 +74,11 @@
   </div>
 
   <!-- achievemenets -->
-  <div class="bottomLeft">
+  <div
+    class="bottomLeft"
+    *ngIf="display"
+    [@fadeUpEnter]="{ value: '', params: { duration: 500, delay: 0 } }"
+  >
     <img
       src="./assets/achievements.png"
       class="overlayIcon achievementButton"

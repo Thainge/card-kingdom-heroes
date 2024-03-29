@@ -17,6 +17,7 @@ import {
 import { DialogComponent } from 'src/app/components/dialogComponent/dialog.component';
 import { MapOverlayComponent } from 'src/app/components/map-overlay/map-overlay.component';
 import { DotDto, FlagDto } from 'src/app/models/flag';
+import { LoadingService } from 'src/app/services/loading.service';
 import { flagsData } from 'src/assets/data/flags';
 const { Pins } = require('@fancyapps/ui/dist/panzoom/panzoom.pins.esm.js');
 
@@ -124,7 +125,7 @@ export class MapComponent implements AfterViewInit, OnInit {
     town4FightFinished: false,
   };
 
-  constructor() {}
+  constructor(private loadingService: LoadingService) {}
 
   ngOnInit() {
     this.flagsList = flagsData;
@@ -155,6 +156,9 @@ export class MapComponent implements AfterViewInit, OnInit {
   }
 
   async initPanZoom() {
+    setTimeout(() => {
+      this.loadingService.displayOptions$.next(false);
+    }, 1);
     const container = document.getElementById('myPanzoom');
     const options = {
       maxScale: 0.8,
@@ -194,6 +198,8 @@ export class MapComponent implements AfterViewInit, OnInit {
         friction: 0.04,
       });
     }
+    await this.timeout(3000);
+    this.loadingService.displayOptions$.next(true);
   }
 
   timeout(ms: number) {

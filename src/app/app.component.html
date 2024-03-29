@@ -1,14 +1,11 @@
 <div class="container" (click)="clickAnimation($event)">
   <div
     class="optionsButtonBox"
-    [@fadeEnter]="{
+    [@fadeUpEnter]="{
       value: '',
       params: { duration: 500, delay: 0 }
     }"
-    [@fadeOutLeave]="{
-      value: '',
-      params: { duration: 500, delay: 0 }
-    }"
+    *ngIf="display"
     (click)="optionsMenuOpened = !optionsMenuOpened"
   >
     <img src="./assets/options.png" class="optionsButton hoverButton" />
