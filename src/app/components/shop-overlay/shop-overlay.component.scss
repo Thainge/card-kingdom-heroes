@@ -154,7 +154,7 @@
 .innerOptionsBoxShopping {
   position: absolute;
   top: 17%;
-  width: 75%;
+  width: 100%;
 }
 
 .extraSmall {
@@ -185,14 +185,15 @@
   -moz-background-clip: text;
   -moz-text-fill-color: transparent;
   font-weight: bold;
-  font-size: 1.6em;
+  font-size: 1.4em;
+  padding-top: 1em;
 }
 
 .swipeCost {
   position: relative;
   display: flex;
   align-items: center;
-  transition: all 0.3s;
+  padding-bottom: 1em;
 }
 
 .swipeBtn {
@@ -202,7 +203,6 @@
 }
 
 .swipeCost:hover {
-  transform: scale(1.05);
   filter: drop-shadow(0 0 0.5em rgb(0, 255, 0));
 }
 
@@ -246,7 +246,64 @@
   align-items: center;
 }
 
-.innerImage {
-  width: 500px;
-  height: 800px;
+.swiperBox {
+  position: relative;
+  top: -10%;
+}
+
+.boosterContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.boosterImg {
+  width: 100%;
+}
+
+.absoluteBottomRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 2%;
+}
+
+.currentGoldBox {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.currentGoldBgImg {
+  position: relative;
+  z-index: 1;
+}
+
+.currentGoldImg {
+  position: absolute;
+  width: 20%;
+  z-index: 2;
+  left: 10%;
+}
+.currentGoldTxt {
+  position: absolute;
+  font-size: 1.1em;
+  left: 38%;
+  z-index: 2;
+}
+
+.backBtnBox {
+}
+
+.backBtn {
+  filter: drop-shadow(0 0 0.5em black);
+  transition: all 0.3s;
+}
+
+.backBtn:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 1em black);
 }

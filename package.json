@@ -19,12 +19,12 @@
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
     "@fancyapps/ui": "^5.0.35",
-    "@glidejs/glide": "^3.6.0",
     "angular-animations": "^0.11.0",
     "leader-line": "^1.0.7",
     "ngx-glide": "^15.0.0",
     "node-sass": "^9.0.0",
     "rxjs": "~7.5.0",
+    "swiper": "^11.1.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"
   },
@@ -40,6 +40,6 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
-    "typescript": "~4.8.2"
+    "typescript": "^4.9.5"
   }
 }

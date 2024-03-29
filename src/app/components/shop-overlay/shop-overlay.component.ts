@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectorRef,
+  CUSTOM_ELEMENTS_SCHEMA,
   Component,
   EventEmitter,
   Input,
@@ -17,7 +17,6 @@ import {
   fadeOutLeftOnLeaveAnimation,
   fadeOutRightOnLeaveAnimation,
 } from 'angular-animations';
-import Glide from '@glidejs/glide';
 
 type ShopStep = 'picking' | 'shopping' | 'opening';
 
@@ -26,6 +25,7 @@ type ShopStep = 'picking' | 'shopping' | 'opening';
   templateUrl: './shop-overlay.component.html',
   styleUrls: ['./shop-overlay.component.scss'],
   standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [CommonModule],
   animations: [
     fadeInOnEnterAnimation({ anchor: 'fadeEnter' }),
@@ -43,26 +43,23 @@ type ShopStep = 'picking' | 'shopping' | 'opening';
 })
 export class ShopOverlayComponent implements OnInit {
   open: boolean = false;
-
   @Input('open') set openChanged(x: boolean) {
+    this.currentStep = 'shopping';
     this.open = x;
-    if (x) {
-      new Glide('.glide').mount();
-      this.cdRef.detectChanges();
-    }
   }
   currentStep: ShopStep = 'shopping';
-
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
-  constructor(private cdRef: ChangeDetectorRef) {}
+  boosterPacks: any[] = [1, 2, 3, 4, 5, 6, 7];
 
-  ngOnInit() {
-    this.cdRef.detectChanges();
-  }
+  constructor() {}
 
-  ngAfterViewChecked() {
-    this.cdRef.detectChanges();
+  ngOnInit() {}
+
+  ngAfterViewChecked() {}
+
+  buyBoosterPack(item: any) {
+    console.log(item);
   }
 
   closeMenu() {
