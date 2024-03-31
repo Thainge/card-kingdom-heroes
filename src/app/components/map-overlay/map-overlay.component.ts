@@ -46,18 +46,18 @@ import { LoadingService } from 'src/app/services/loading.service';
 })
 export class MapOverlayComponent implements OnInit {
   achievementsOpen: boolean = false;
-  shopOpen: boolean = true;
+  shopOpen: boolean = false;
   heroRoomOpen: boolean = false;
   deckOpen: boolean = false;
   galleryOpen: boolean = false;
 
-  display: boolean = false;
+  display: boolean = true;
 
   constructor(private loadingService: LoadingService) {}
 
   ngOnInit() {
     this.loadingService.displayOptions$.subscribe((x) => {
-      this.display = x;
+      // this.display = x;
     });
   }
 }

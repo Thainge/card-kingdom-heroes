@@ -73,11 +73,11 @@
 }
 
 .progressPlusImage:hover {
-  transform: scale(1.3);
+  scale: 1.3;
 }
 
 .progressPlusImage:active {
-  transform: scale(1);
+  scale: 1;
 }
 
 .bottomRightBox {
@@ -90,26 +90,26 @@
   position: relative;
   z-index: 2;
   filter: drop-shadow(0 0 0.3em rgba(0, 0, 0, 0.9));
-  transition: transform 0.3s;
+  transition: scale 0.3s;
 }
 
 .overlayIcon:hover {
-  transform: scale(1.1);
+  scale: 1.1;
   filter: drop-shadow(0 0 0.3em rgba(255, 251, 0, 0.9));
 }
 
 .overlayIcon:active {
-  transform: scale(0.9);
+  scale: 0.9;
 }
 
 .overlayHeroBox {
-  transition: transform 0.3s;
+  transition: scale 0.3s;
   --heroScale: 0.55;
 }
 
 .overlayHeroBox:hover {
   --heroScale: 0.65;
-  transform: scale(1);
+  scale: 1;
 }
 
 .overlayHeroBox:active {
@@ -134,8 +134,8 @@
   left: 0;
   z-index: 1;
   width: 100%;
-  transition: transform 0.3s;
-  transform: scale(var(--heroScale));
+  transition: scale 0.3s;
+  scale: var(--heroScale);
   border-radius: 100%;
 }
 
@@ -147,4 +147,32 @@
 
 .achievementButton {
   width: 4.7em;
+}
+
+.relativeIcon {
+  position: relative;
+}
+
+.alertIcon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  pointer-events: none;
+  scale: 0.8;
+  animation: zoomInOut 1s linear infinite;
+}
+
+@keyframes zoomInOut {
+  0% {
+    scale: 0.8;
+  }
+
+  50% {
+    scale: 0.95;
+  }
+
+  100% {
+    scale: 0.8;
+  }
 }

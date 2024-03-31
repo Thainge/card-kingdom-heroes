@@ -66,12 +66,12 @@
 
 @keyframes zoomInAnim {
   0% {
-    transform: scale(3);
+    scale: 3;
     opacity: 0;
   }
 
   100% {
-    transform: scale(1);
+    scale: 1;
     opacity: 1;
   }
 }
@@ -89,16 +89,16 @@
 
 @keyframes flagAnimation {
   0% {
-    -webkit-transform: scale(1, 1);
-    transform: scale(1, 1);
+    -webkit-scale: 1, 1;
+    scale: 1, 1;
   }
   50% {
-    -webkit-transform: scale(1.2, 1.2);
-    transform: scale(1.2, 1.2);
+    -webkit-scale: 1.2, 1.2;
+    scale: 1.2, 1.2;
   }
   100% {
-    -webkit-transform: scale(1, 1);
-    transform: scale(1, 1);
+    -webkit-scale: 1, 1;
+    scale: 1, 1;
   }
 }
 
@@ -821,9 +821,9 @@
 }
 
 .heroiconContainer:hover {
-  transform: scale(1.1);
+  scale: 1.1;
 }
 
 .hoverShip:hover {
-  transform: scale(1.1);
+  scale: 1.1;
 }

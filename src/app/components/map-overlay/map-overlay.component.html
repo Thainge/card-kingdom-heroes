@@ -51,25 +51,34 @@
     [@fadeUpEnter]="{ value: '', params: { duration: 500, delay: 0 } }"
   >
     <div class="bottomRightContainer">
-      <img
-        src="./assets/shop.png"
-        class="overlayIcon"
-        (click)="shopOpen = true"
-      />
+      <div class="relativeIcon">
+        <img src="./assets/notification.png" class="alertIcon" *ngIf="false" />
+        <img
+          src="./assets/shop.png"
+          class="overlayIcon"
+          (click)="shopOpen = true"
+        />
+      </div>
       <div class="overlayHeroBox" (click)="heroRoomOpen = true">
         <img src="./assets/playerIcons/link.png" class="heroIcon" />
         <img src="./assets/hero.png" class="overlayIcon" />
       </div>
-      <img
-        src="./assets/deck.png"
-        class="overlayIcon"
-        (click)="deckOpen = true"
-      />
-      <img
-        src="./assets/gallery.png"
-        class="overlayIcon"
-        (click)="galleryOpen = true"
-      />
+      <div class="relativeIcon">
+        <img src="./assets/notification.png" class="alertIcon" *ngIf="false" />
+        <img
+          src="./assets/deck.png"
+          class="overlayIcon"
+          (click)="deckOpen = true"
+        />
+      </div>
+      <div class="relativeIcon">
+        <img src="./assets/notification.png" class="alertIcon" *ngIf="false" />
+        <img
+          src="./assets/gallery.png"
+          class="overlayIcon"
+          (click)="galleryOpen = true"
+        />
+      </div>
     </div>
   </div>
 

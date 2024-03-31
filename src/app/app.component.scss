@@ -26,17 +26,17 @@
 }
 
 .hoverButton {
-  transition: transform 0.3s;
+  transition: scale 0.3s;
   filter: drop-shadow(0 0 0.3em rgba(0, 0, 0, 0.9));
 }
 
 .hoverButton:hover {
-  transform: scale(1.1);
+  scale: 1.1;
   filter: drop-shadow(0 0 0.3em rgba(255, 251, 0, 0.9));
 }
 
 .hoverButton:active {
-  transform: scale(0.9);
+  scale: 0.9;
 }
 
 .optionsMenuOverlay {
@@ -749,16 +749,12 @@
 
 .consoleSubmitButton:hover {
   background-color: rgba(0, 0, 0, 0.7);
-  -webkit-transform: scale(1.1);
-  -ms-transform: scale(1.1);
-  transform: scale(1.1);
+  scale: 1.1;
 }
 
 .consoleSubmitButton:active {
   background-color: rgba(0, 0, 0, 0.4);
-  -webkit-transform: scale(0.9);
-  -ms-transform: scale(0.9);
-  transform: scale(0.9);
+  scale: 0.9;
 }
 
 // @media screen and (max-width: 1000px) {

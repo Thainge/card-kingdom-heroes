@@ -109,7 +109,7 @@
 
 .relativeBox:hover {
   filter: brightness(0.8);
-  transform: scale(1.05);
+  scale: 1.05;
 }
 
 .iconTextBox {
@@ -187,6 +187,8 @@
   font-weight: bold;
   font-size: 1.4em;
   padding-top: 1em;
+  transition: all 0.3s;
+  opacity: 1;
 }
 
 .swipeCost {
@@ -194,6 +196,12 @@
   display: flex;
   align-items: center;
   padding-bottom: 1em;
+  transition: all 0.3s;
+  opacity: 1;
+}
+
+.isInactiveTextBtn {
+  opacity: 0;
 }
 
 .swipeBtn {
@@ -207,7 +215,7 @@
 }
 
 .swipeCost:active {
-  transform: scale(0.9);
+  scale: 0.9;
 }
 
 .swipeBtnInnerImage {
@@ -239,6 +247,14 @@
   font-size: 1.1em;
 }
 
+.btnTextCenter {
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .centerCard {
   width: 100%;
   display: flex;
@@ -256,6 +272,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s;
+}
+
+.disabledBooster {
+  filter: brightness(0.5);
 }
 
 .boosterImg {
@@ -295,15 +316,107 @@
   z-index: 2;
 }
 
-.backBtnBox {
-}
-
 .backBtn {
   filter: drop-shadow(0 0 0.5em black);
   transition: all 0.3s;
 }
 
 .backBtn:hover {
-  transform: scale(1.1);
+  scale: 1.1;
   filter: drop-shadow(0 0 1em black);
+}
+
+.disabledText {
+  filter: brightness(0.5);
+  pointer-events: none;
+}
+
+.disabledBtn {
+  filter: brightness(0.5);
+  filter: drop-shadow(0) !important;
+  pointer-events: none;
+}
+
+.absoluteCountBox {
+  position: absolute;
+  z-index: 2;
+  bottom: 18%;
+}
+
+.absoluteCountText {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-family: "headerFont";
+  background: -webkit-linear-gradient(#f5f2e6, #a8a075);
+  -webkit-text-stroke: 1px #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+  font-size: 0.6em;
+  transition: all 0.3s;
+}
+
+.alertIcon {
+  position: absolute;
+  top: 0;
+  right: 5%;
+  z-index: 3;
+  pointer-events: none;
+  scale: 0.8;
+  animation: zoomInOut 1s linear infinite;
+}
+
+.newIcon {
+  position: absolute;
+  top: 0%;
+  right: -35%;
+  width: 80%;
+  z-index: 3;
+  pointer-events: none;
+  scale: 0.7;
+  animation: zoomInOut 1s linear infinite;
+}
+
+@keyframes zoomInOut {
+  0% {
+    scale: 0.8;
+  }
+
+  50% {
+    scale: 0.95;
+  }
+
+  100% {
+    scale: 0.8;
+  }
+}
+
+.newIconCenter {
+  position: absolute;
+  top: 41%;
+  right: 33%;
+  width: 30%;
+  z-index: 4;
+  pointer-events: none;
+  scale: 0.7;
+  animation: zoomInOut 1s linear infinite;
+}
+
+.notificationCenter {
+  position: absolute;
+  top: 20%;
+  right: 15%;
+  z-index: 4;
+  pointer-events: none;
+  scale: 0.8;
+  animation: zoomInOut 1s linear infinite;
 }

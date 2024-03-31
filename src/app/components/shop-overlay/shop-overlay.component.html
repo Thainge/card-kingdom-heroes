@@ -25,7 +25,7 @@
       *ngIf="currentStep === 'picking'"
       [@fadeEnter]="{
         value: '',
-        params: { duration: 300, delay: 300 }
+        params: { duration: 300, delay: currentStep === 'picking' ? 0 : 300 }
       }"
       [@fadeOutLeave]="{
         value: '',
@@ -33,16 +33,22 @@
       }"
     >
       <div class="innerOptionsRelative">
-        <div class="relativeBox" (click)="currentStep = 'shopping'">
+        <div class="relativeBox" (click)="setCurrentStep('shopping')">
           <img src="./assets/shopBox.png" class="box" />
           <div class="iconTextBox">
+            <img src="./assets/new.png" class="newIcon" *ngIf="showNewIcon()" />
             <img src="./assets/bag.png" class="boxImage shopBoxImage" />
             <div class="boxText">Shop</div>
           </div>
         </div>
-        <div class="relativeBox" (click)="currentStep = 'opening'">
+        <div class="relativeBox" (click)="setCurrentStep('opening')">
           <img src="./assets/shopBox.png" class="box" />
           <div class="iconTextBox">
+            <img
+              src="./assets/notification.png"
+              class="alertIcon"
+              *ngIf="showNotificationIcon()"
+            />
             <img src="./assets/bookIcon.png" class="boxImage" />
             <div class="boxText">Open Packs</div>
           </div>
@@ -62,27 +68,68 @@
       }"
     >
       <swiper-container
+        #swiper1
         class="swiperBox"
         effect="coverflow"
         [grab-cursor]="true"
         centered-slides="true"
         slides-per-view="3"
-        [coverflow-effect-rotate]="50"
-        [coverflow-effect-stretch]="10"
-        [coverflow-effect-depth]="100"
-        [coverflow-effect-modifier]="0"
-        coverflow-effect-slide-shadows="true"
+        coverflow-effect-slide-shadows="false"
+        (swiperactiveindexchange)="onActiveIndexChange()"
       >
-        <swiper-slide *ngFor="let item of boosterPacks">
-          <div class="boosterContainer">
-            <div class="swipeTitle">
-              1<b class="extraSmall">x</b> Mario Booster Pack
+        <swiper-slide
+          *ngFor="let item of boosterPacks; index as i; trackBy: trackById"
+        >
+          <div
+            class="boosterContainer"
+            [ngClass]="{
+              disabledBooster: currentIndex !== i
+            }"
+          >
+            <div
+              class="swipeTitle"
+              [ngClass]="{
+                isInactiveTextBtn: currentIndex !== i,
+                disabledText: !item.unlocked || item.count === 0
+              }"
+            >
+              {{ item.title }}
             </div>
-            <img src="./assets/rewards/boosterPack.png" class="boosterImg" />
-            <div class="swipeCost" (click)="buyBoosterPack(item)">
+            <img
+              [src]="'./assets/rewards/' + item.image"
+              [ngClass]="{
+                disabledBtn: !item.unlocked || item.count === 0
+              }"
+              class="boosterImg"
+              (mouseenter)="hideNew(item)"
+            />
+            <div
+              class="swipeCost"
+              [ngClass]="{
+                isInactiveTextBtn: currentIndex !== i,
+                disabledBtn: !item.unlocked || item.count === 0
+              }"
+              (click)="buyBoosterPack(item)"
+            >
               <img src="./assets/button.png" class="swipeBtn" />
               <img src="./assets/gold.png" class="swipeBtnInnerImage" />
-              <div class="swipeBtnText">125</div>
+              <div class="swipeBtnText">{{ item.cost }}</div>
+            </div>
+            <img
+              src="./assets/new.png"
+              class="newIconCenter"
+              *ngIf="item.showNew"
+            />
+            <div class="absoluteCountBox">
+              <div
+                class="absoluteCountText"
+                [ngClass]="{
+                  isInactiveTextBtn: currentIndex !== i,
+                  disabledText: !item.unlocked || item.count === 0
+                }"
+              >
+                Owned: {{ boosterPacks[currentIndex].count }}
+              </div>
             </div>
           </div>
         </swiper-slide>
@@ -93,7 +140,7 @@
           <img src="./assets/gold.png" class="currentGoldImg" />
           <div class="currentGoldTxt swipeBtnText">532</div>
         </div>
-        <div class="backBtnBox" (click)="currentStep = 'picking'">
+        <div class="backBtnBox" (click)="setCurrentStep('picking')">
           <img src="./assets/backButton.png" class="backBtn" />
         </div>
       </div>
@@ -111,38 +158,73 @@
       }"
     >
       <swiper-container
+        #swiper2
         class="swiperBox"
         effect="coverflow"
         [grab-cursor]="true"
         centered-slides="true"
         slides-per-view="3"
-        [coverflow-effect-rotate]="50"
-        [coverflow-effect-stretch]="10"
-        [coverflow-effect-depth]="100"
-        [coverflow-effect-modifier]="0"
-        coverflow-effect-slide-shadows="true"
+        coverflow-effect-slide-shadows="false"
+        (swiperactiveindexchange)="onActiveIndexChange()"
       >
-        <swiper-slide *ngFor="let item of boosterPacks">
-          <div class="boosterContainer">
-            <div class="swipeTitle">
-              1<b class="extraSmall">x</b> Mario Booster Pack
+        <swiper-slide
+          *ngFor="let item of boosterPacks; index as i; trackBy: trackById"
+        >
+          <div
+            class="boosterContainer"
+            [ngClass]="{
+              disabledBooster: currentIndex !== i
+            }"
+          >
+            <div
+              class="swipeTitle"
+              [ngClass]="{
+                isInactiveTextBtn: currentIndex !== i,
+                disabledText: !item.unlocked || item.count === 0
+              }"
+            >
+              {{ item.title }}
             </div>
-            <img src="./assets/rewards/boosterPack.png" class="boosterImg" />
-            <div class="swipeCost" (click)="buyBoosterPack(item)">
+            <img
+              [src]="'./assets/rewards/' + item.image"
+              [ngClass]="{
+                disabledBtn: !item.unlocked || item.count === 0
+              }"
+              class="boosterImg"
+            />
+            <div
+              class="swipeCost"
+              [ngClass]="{
+                isInactiveTextBtn: currentIndex !== i,
+                disabledBtn: !item.unlocked || item.count === 0
+              }"
+              (click)="openBoosterPack(item)"
+            >
               <img src="./assets/button.png" class="swipeBtn" />
-              <img src="./assets/gold.png" class="swipeBtnInnerImage" />
-              <div class="swipeBtnText">125</div>
+              <div class="swipeBtnText btnTextCenter">Open</div>
+            </div>
+            <img
+              src="./assets/notification.png"
+              class="notificationCenter"
+              *ngIf="item.count > 0"
+            />
+            <div class="absoluteCountBox">
+              <div
+                class="absoluteCountText"
+                [ngClass]="{
+                  isInactiveTextBtn: currentIndex !== i,
+                  disabledText: !item.unlocked || item.count === 0
+                }"
+              >
+                Owned: {{ boosterPacks[currentIndex].count }}
+              </div>
             </div>
           </div>
         </swiper-slide>
       </swiper-container>
       <div class="absoluteBottomRow">
-        <div class="currentGoldBox">
-          <img src="./assets/shopBtnBg.png" class="currentGoldBgImg" />
-          <img src="./assets/gold.png" class="currentGoldImg" />
-          <div class="currentGoldTxt swipeBtnText">532</div>
-        </div>
-        <div class="backBtnBox" (click)="currentStep = 'picking'">
+        <div class="isInactiveTextBtn">.</div>
+        <div class="backBtnBox" (click)="setCurrentStep('picking')">
           <img src="./assets/backButton.png" class="backBtn" />
         </div>
       </div>
