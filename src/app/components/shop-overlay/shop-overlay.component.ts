@@ -18,11 +18,16 @@ import {
   fadeInRightOnEnterAnimation,
   fadeOutLeftOnLeaveAnimation,
   fadeOutRightOnLeaveAnimation,
+  tadaOnEnterAnimation,
+  fadeInUpOnEnterAnimation,
+  fadeOutUpOnLeaveAnimation,
+  flipOnEnterAnimation,
 } from 'angular-animations';
 import { BoosterPack } from 'src/app/models/boosterPack';
 import Swiper from 'swiper';
 
 type ShopStep = 'picking' | 'shopping' | 'opening';
+type OpeningCardsStep = 'initial' | 'openingCards';
 
 @Component({
   selector: 'app-shop-overlay-overlay',
@@ -32,11 +37,17 @@ type ShopStep = 'picking' | 'shopping' | 'opening';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [CommonModule],
   animations: [
+    tadaOnEnterAnimation({ anchor: 'tadaOnEnter' }),
+    flipOnEnterAnimation({ anchor: 'flipOnEnter' }),
+
     fadeInOnEnterAnimation({ anchor: 'fadeEnter' }),
     fadeOutOnLeaveAnimation({ anchor: 'fadeOutLeave' }),
 
     zoomInOnEnterAnimation({ anchor: 'zoomInEnter' }),
     zoomOutOnLeaveAnimation({ anchor: 'zoomOutLeave' }),
+
+    fadeInUpOnEnterAnimation({ anchor: 'fadeUpEnter' }),
+    fadeOutUpOnLeaveAnimation({ anchor: 'fadeUpLeave' }),
 
     fadeOutLeftOnLeaveAnimation({ anchor: 'fadeLeftLeave' }),
     fadeInLeftOnEnterAnimation({ anchor: 'fadeLeftEnter' }),
@@ -107,11 +118,101 @@ export class ShopOverlayComponent implements OnInit {
   swiper2?: Swiper;
   currentIndex: number = 0;
 
+  openingCards: boolean = false;
+  openStep: OpeningCardsStep = 'initial';
+  openCards: any[] = [];
+  showCardsList: any[] = [];
+  showCardAnimation: boolean = false;
+  canClickFinish: boolean = false;
+  specialList: number[] = [];
+  canClickNext: boolean = false;
+
   constructor() {}
 
   ngOnInit() {}
 
   ngAfterViewInit() {}
+
+  startPhase() {
+    this.openingCards = true;
+    this.openCards = [
+      { id: 1, special: false },
+      { id: 2, special: false },
+      { id: 3, special: true },
+    ];
+
+    setTimeout(() => {
+      this.canClickNext = true;
+    }, 800);
+  }
+
+  nextPhase() {
+    if (!this.canClickNext) {
+      return;
+    }
+
+    this.canClickNext = false;
+
+    this.openStep = 'openingCards';
+    setTimeout(() => {
+      this.showCardsList = this.openCards;
+      this.showCardAnimation = true;
+    }, 800);
+    setTimeout(() => {
+      this.canClickFinish = true;
+    }, 2500);
+  }
+
+  async finishPhase() {
+    if (!this.canClickFinish) {
+      return;
+    }
+
+    this.canClickFinish = false;
+
+    let i = 0;
+    for await (let x of this.showCardsList) {
+      this.showCardsList = this.showCardsList.filter((a) => x.id !== a.id);
+      i++;
+      await this.timeout(200);
+    }
+    this.openingCards = false;
+    this.openStep = 'initial';
+    this.showCardsList = [];
+    this.showCardAnimation = false;
+    this.canClickFinish = false;
+    this.specialList = [];
+  }
+
+  timeout(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  showCardsIncludes(item: any): boolean {
+    if (this.showCardsList.find((x) => x.id === item.id)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  determineDelayCard(i: number): number {
+    return (i + 1) * 300;
+  }
+
+  showCardSpecialAnimation(item: any): boolean {
+    const foundSpecial = this.specialList.includes(item.id);
+    setTimeout(() => {
+      if (!foundSpecial) {
+        this.specialList.push(item.id);
+      }
+    }, 500);
+    if (item.special && foundSpecial) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   showNotificationIcon(): boolean {
     return this.boosterPacks.find((x) => x.count > 0) ? true : false;
@@ -161,6 +262,7 @@ export class ShopOverlayComponent implements OnInit {
   }
 
   openBoosterPack(item: BoosterPack) {
+    this.startPhase();
     this.boosterPacks = this.boosterPacks.map((x) => {
       if (x.id === item.id) {
         return { ...x, count: item.count - 1 };

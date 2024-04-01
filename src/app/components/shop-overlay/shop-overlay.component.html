@@ -11,6 +11,93 @@
   }"
 >
   <div class="optionsMenuBackdrop"></div>
+  <div
+    class="openCardsContainer"
+    *ngIf="openingCards"
+    [@fadeEnter]="{
+      value: '',
+      params: { duration: 300, delay: 0 }
+    }"
+    [@fadeOutLeave]="{
+      value: '',
+      params: { duration: 300, delay: 0 }
+    }"
+  >
+    <div class="optionsMenuBackdrop"></div>
+    <div class="openCardsBox">
+      <div
+        (click)="nextPhase()"
+        [@fadeUpEnter]="{
+          value: '',
+          params: { duration: 500, delay: 200, translate: '50px' }
+        }"
+        [ngClass]="{
+          hideBooster: openStep === 'openingCards'
+        }"
+        class="flexDisplay"
+      >
+        <img
+          src="./assets/rewards/boosterPack.png"
+          class="boosterPackImgOpen showBooster"
+        />
+      </div>
+      <div
+        *ngIf="openStep === 'openingCards'"
+        class="cardsListRow"
+        (click)="finishPhase()"
+      >
+        <div
+          *ngFor="let item of openCards; index as i; trackBy: trackById"
+          class="hoverImage"
+          [ngStyle]="{
+            'animation-delay': determineDelayCard(i) + 'ms'
+          }"
+        >
+          <div
+            [@fadeEnter]="{
+              value: '',
+              params: { delay: determineDelayCard(i) }
+            }"
+            [@zoomOutLeave]
+            *ngIf="showCardAnimation && showCardsIncludes(item)"
+          >
+            <div
+              [@flipOnEnter]="{
+                value: '',
+                params: { delay: determineDelayCard(i) }
+              }"
+            >
+              <div
+                class="relativeImage"
+                [ngStyle]="{
+                  'animation-delay': 800 + determineDelayCard(i) + 'ms',
+                }"
+                [ngClass]="{
+                  tadaAnimation: item.special
+                }"
+              >
+                <img
+                  src="./assets/rewards/boosterPack.png"
+                  class="boosterPackImgOpen"
+                />
+                <img
+                  src="./assets/rare.png"
+                  class="newLogoPopup"
+                  [@zoomInEnter]="{
+                    value: '',
+                    params: {
+                      duration: 500,
+                      delay: 800 + determineDelayCard(i)
+                    }
+                  }"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="overlayBox">
     <img class="overlayPanelBg" src="./assets/menu.png" />
     <div class="overlalPanelTitle">
@@ -21,7 +108,7 @@
       <img src="./assets/closeActive.png" class="closeMenuButton activeBtn" />
     </div>
     <div
-      class="innerOptionsBox"
+      class="innerOptionsBox innerBoxStart"
       *ngIf="currentStep === 'picking'"
       [@fadeEnter]="{
         value: '',
@@ -83,7 +170,8 @@
           <div
             class="boosterContainer"
             [ngClass]="{
-              disabledBooster: currentIndex !== i
+              disabledBooster: currentIndex !== i,
+              scaleDownBooster: currentIndex !== i
             }"
           >
             <div
@@ -134,15 +222,15 @@
           </div>
         </swiper-slide>
       </swiper-container>
-      <div class="absoluteBottomRow">
+      <div class="goldBoxAbsolute">
         <div class="currentGoldBox">
           <img src="./assets/shopBtnBg.png" class="currentGoldBgImg" />
           <img src="./assets/gold.png" class="currentGoldImg" />
           <div class="currentGoldTxt swipeBtnText">532</div>
         </div>
-        <div class="backBtnBox" (click)="setCurrentStep('picking')">
-          <img src="./assets/backButton.png" class="backBtn" />
-        </div>
+      </div>
+      <div class="backBoxAbsolute" (click)="setCurrentStep('picking')">
+        <img src="./assets/backButton.png" class="backBtn" />
       </div>
     </div>
     <div
@@ -173,7 +261,8 @@
           <div
             class="boosterContainer"
             [ngClass]="{
-              disabledBooster: currentIndex !== i
+              disabledBooster: currentIndex !== i,
+              scaleDownBooster: currentIndex !== i
             }"
           >
             <div
@@ -190,7 +279,8 @@
               [ngClass]="{
                 disabledBtn: !item.unlocked || item.count === 0
               }"
-              class="boosterImg"
+              (click)="openBoosterPack(item)"
+              class="boosterImg hoverBoosterImg"
             />
             <div
               class="swipeCost"
@@ -222,11 +312,8 @@
           </div>
         </swiper-slide>
       </swiper-container>
-      <div class="absoluteBottomRow">
-        <div class="isInactiveTextBtn">.</div>
-        <div class="backBtnBox" (click)="setCurrentStep('picking')">
-          <img src="./assets/backButton.png" class="backBtn" />
-        </div>
+      <div class="backBoxAbsolute" (click)="setCurrentStep('picking')">
+        <img src="./assets/backButton.png" class="backBtn" />
       </div>
     </div>
   </div>

@@ -80,8 +80,12 @@
 
 .innerOptionsBox {
   position: absolute;
-  top: 17%;
   width: 75%;
+  top: 13%;
+}
+
+.innerBoxStart {
+  top: 17%;
 }
 
 .innerOptionsRelative {
@@ -153,7 +157,7 @@
 
 .innerOptionsBoxShopping {
   position: absolute;
-  top: 17%;
+  top: 13%;
   width: 100%;
 }
 
@@ -265,6 +269,7 @@
 .swiperBox {
   position: relative;
   top: -10%;
+  width: 90%;
 }
 
 .boosterContainer {
@@ -279,17 +284,18 @@
   filter: brightness(0.5);
 }
 
-.boosterImg {
-  width: 100%;
+.scaleDownBooster {
+  scale: 0.8 !important;
 }
 
-.absoluteBottomRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 80%;
-  margin-left: 10%;
-  margin-top: 2%;
+.boosterImg {
+  width: 150%;
+  transition: all 0.3s;
+  filter: drop-shadow(0 0 0.5em black);
+}
+
+.hoverBoosterImg:hover {
+  filter: drop-shadow(0 0 0.5em yellow);
 }
 
 .currentGoldBox {
@@ -301,6 +307,20 @@
 .currentGoldBgImg {
   position: relative;
   z-index: 1;
+}
+
+.backBoxAbsolute {
+  position: absolute;
+  bottom: -5%;
+  right: 10%;
+  z-index: 50;
+}
+
+.goldBoxAbsolute {
+  position: absolute;
+  bottom: -4%;
+  left: 10%;
+  z-index: 50;
 }
 
 .currentGoldImg {
@@ -340,7 +360,8 @@
 .absoluteCountBox {
   position: absolute;
   z-index: 2;
-  bottom: 18%;
+  bottom: 16%;
+  font-size: 1.3em;
 }
 
 .absoluteCountText {
@@ -411,12 +432,149 @@
   animation: zoomInOut 1s linear infinite;
 }
 
+.flexDisplay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .notificationCenter {
   position: absolute;
   top: 20%;
-  right: 15%;
+  right: 3%;
   z-index: 4;
   pointer-events: none;
   scale: 0.8;
   animation: zoomInOut 1s linear infinite;
+}
+
+.openCardsContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+}
+
+.openCardsBox {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  color: white;
+}
+
+.boosterPackImgOpen {
+  width: 90%;
+}
+
+.showBooster {
+  animation: hoverEffect ease-in-out 2s infinite forwards;
+  transition: all 0.3s;
+}
+
+.showBooster:hover {
+  scale: 1.1;
+}
+
+.hideBooster {
+  animation: hideEffect linear 800ms forwards;
+  transform-origin: 50% 50%;
+}
+
+@keyframes hideEffect {
+  0% {
+    opacity: 1;
+    scale: 1;
+    rotate: 0deg;
+  }
+
+  100% {
+    opacity: 0.5;
+    scale: 0;
+    rotate: 720deg;
+  }
+}
+
+@keyframes hoverEffect {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(20px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.hoverImage {
+  animation: hoverEffect2 ease-in-out 4s infinite forwards;
+}
+
+@keyframes hoverEffect2 {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(30px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.cardsListRow {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  align-items: center;
+  position: absolute;
+}
+
+.relativeImage {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.newLogoPopup {
+  position: absolute;
+}
+
+.tadaAnimation {
+  animation: tada 1s both;
+}
+
+@keyframes tada {
+  0% {
+    transform: scale(1);
+  }
+  10%,
+  20% {
+    transform: scale(0.9) rotate(-3deg);
+  }
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: scale(1.1) rotate(3deg);
+  }
+  40%,
+  60%,
+  80% {
+    transform: scale(1.1) rotate(-3deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
 }
