@@ -90,7 +90,7 @@
               class="swipeTitle"
               [ngClass]="{
                 isInactiveTextBtn: currentIndex !== i,
-                disabledText: !item.unlocked || item.count === 0
+                disabledText: !item.unlocked
               }"
             >
               {{ item.title }}
@@ -98,7 +98,7 @@
             <img
               [src]="'./assets/rewards/' + item.image"
               [ngClass]="{
-                disabledBtn: !item.unlocked || item.count === 0
+                disabledBtn: !item.unlocked
               }"
               class="boosterImg"
               (mouseenter)="hideNew(item)"
@@ -107,7 +107,7 @@
               class="swipeCost"
               [ngClass]="{
                 isInactiveTextBtn: currentIndex !== i,
-                disabledBtn: !item.unlocked || item.count === 0
+                disabledBtn: !item.unlocked
               }"
               (click)="buyBoosterPack(item)"
             >
@@ -125,7 +125,7 @@
                 class="absoluteCountText"
                 [ngClass]="{
                   isInactiveTextBtn: currentIndex !== i,
-                  disabledText: !item.unlocked || item.count === 0
+                  disabledText: !item.unlocked
                 }"
               >
                 Owned: {{ boosterPacks[currentIndex].count }}
