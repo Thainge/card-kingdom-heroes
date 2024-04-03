@@ -47,8 +47,8 @@ import { LoadingService } from 'src/app/services/loading.service';
 export class MapOverlayComponent implements OnInit {
   achievementsOpen: boolean = false;
   shopOpen: boolean = false;
-  heroRoomOpen: boolean = true;
-  deckOpen: boolean = false;
+  heroRoomOpen: boolean = false;
+  deckOpen: boolean = true;
   galleryOpen: boolean = false;
 
   display: boolean = true;

@@ -136,9 +136,9 @@ export class ShopOverlayComponent implements OnInit {
   startPhase() {
     this.openingCards = true;
     this.openCards = [
-      { id: 1, special: false },
-      { id: 2, special: false },
-      { id: 3, special: true },
+      { id: 1, special: false, rarityImage: 'rare.png' },
+      { id: 2, special: false, rarityImage: 'epic.png' },
+      { id: 3, special: true, rarityImage: 'legendary.png' },
     ];
 
     setTimeout(() => {
