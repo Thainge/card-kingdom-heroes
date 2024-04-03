@@ -85,6 +85,273 @@
 }
 .upgradeDetails {
   position: absolute;
+  left: 8.7%;
+  bottom: 20%;
+  z-index: 1;
+}
+.heroBorder {
+  position: absolute;
+  left: 22%;
+  bottom: 14%;
+  z-index: 2;
+  background-size: 81%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.menuBtnbOX {
+  position: absolute;
+  bottom: 0.7%;
+  right: 12%;
+  z-index: 3;
+}
+
+.menuBtnRelative {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.1s;
+}
+
+.menuBtnRelative:hover {
+  scale: 1.1;
+}
+
+.menuBtnRelative:active {
+  scale: 0.9;
+}
+
+.doneText {
+  position: absolute;
+  margin-left: 4%;
+  text-align: center;
+  color: white;
+  font-family: "headerFont";
+  background: -webkit-linear-gradient(#f5f2e6, #a8a075);
+  -webkit-text-stroke: 2px #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.levelBox {
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+.displayLevelBox {
+  opacity: 1;
+}
+
+.upgradeMenuBox {
+  position: absolute;
+  left: 47%;
+  bottom: 20%;
+  z-index: 1;
+  scale: 1.1;
+}
+
+.upgradeMenuRelative {
+  position: relative;
+}
+
+.upgradeMenu {
+}
+
+.levelsList {
+  position: absolute;
+  bottom: 41.5%;
+  left: 11.3%;
+  z-index: 4;
+  display: flex;
+  column-gap: 23%;
+}
+
+.levelsColumn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  row-gap: 0.6em;
+}
+
+.upgradeIconBox {
+  position: absolute;
+  bottom: -107%;
+}
+
+.relativeIconBox {
+  position: relative;
+}
+
+.relativeIconBox:hover {
+  filter: drop-shadow(0 0 0.2em gold);
+}
+
+.relativeIconBox:active {
+  scale: 0.95;
+}
+
+.upgradeOrb {
+  position: absolute;
+  top: 15%;
+  left: 11%;
+  filter: drop-shadow(0 0 0.2em gold);
+}
+
+.upgradeAmountText {
+  position: absolute;
+  top: 13.8%;
+  left: 18%;
+  font-family: soho;
+  font-style: italic;
+  color: #e9e9b2;
+  font-size: 1.3em;
+}
+
+.resetBtnBox {
+  position: absolute;
+  top: 11%;
+  right: 5.5%;
+}
+
+.resetBtnRelative {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  scale: 0.8;
+  transition: all 0.1s;
+}
+
+.resetBtnRelative:hover {
+  scale: 0.85;
+}
+
+.resetBtnRelative:active {
+  transition: none;
+  scale: 0.75;
+}
+
+.heroBtnBox {
+  position: absolute;
+  bottom: 10%;
+  left: 30.5%;
+  z-index: 5;
+}
+
+.heroBtnRelative {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  scale: 1.1;
+  transition: all 0.1s;
+}
+
+.heroBtnRelative:hover {
+  scale: 0.85;
+}
+
+.heroBtnRelative:active {
+  transition: none;
+  scale: 0.75;
+}
+
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  z-index: 5001;
+}
+
+.optionsMenuBackdrop {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.overlayBox {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlayPanelBg {
+  filter: drop-shadow(0 0 0.5em rgba(0, 0, 0, 1));
+  -webkit-user-drag: none;
+}
+
+.overlalPanelTitle {
+  position: absolute;
+  top: 5.5%;
+  margin-left: -3%;
+  font-size: 1.4em;
+
+  text-align: center;
+  color: white;
+  font-family: "headerFont";
+  background: -webkit-linear-gradient(#f5f2e6, #a8a075);
+  -webkit-text-stroke: 2px #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.closeMenuButtonBox {
+  position: absolute;
+  top: 2.1%;
+  right: 0.7%;
+}
+
+.closeMenuButton {
+  -webkit-user-drag: none;
+  position: relative;
+  z-index: 1;
+  transition: all 0.2s;
+  --closeOpacity: 0;
+}
+
+.closeMenuButton:hover {
+  --closeOpacity: 1;
+}
+
+.activeBtn {
+  position: absolute;
+  left: 0;
+  opacity: var(--closeOpacity);
+}
+
+.heroList {
+  position: absolute;
+  top: 15%;
+  width: 85%;
+}
+.upgradeDetails {
+  position: absolute;
   left: 10.7%;
   bottom: 20%;
   z-index: 1;
@@ -241,28 +508,4 @@
 
 .greyBox {
   filter: grayscale(1);
-}
-.heroBtnBox {
-  position: absolute;
-  bottom: 10%;
-  left: 30.5%;
-  z-index: 5;
-}
-
-.heroBtnRelative {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  scale: 1.1;
-  transition: all 0.1s;
-}
-
-.heroBtnRelative:hover {
-  scale: 0.85;
-}
-
-.heroBtnRelative:active {
-  transition: none;
-  scale: 0.75;
 }
