@@ -69,11 +69,62 @@
   left: 0;
   opacity: var(--closeOpacity);
 }
-.heroList {
+
+// Hero lsit
+.heroListBox {
   position: absolute;
   top: 15%;
+}
+
+.heroListBoxRelative {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heroList {
   width: 85%;
 }
+
+.heroListRow {
+  display: flex;
+  column-gap: 1%;
+  position: absolute;
+  left: 4%;
+  top: 4%;
+  scale: 0.89;
+}
+
+.heroItemBox {
+  position: relative;
+  transition: all 0.3s;
+  -webkit-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+.heroItemBox:hover {
+  scale: 1.1;
+}
+
+.heroItemBox:active {
+  transition: 0.1s;
+  scale: 1;
+}
+
+.heroListItem {
+  position: relative;
+  z-index: 1;
+}
+
+.heroSelectedBox {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 0;
+}
+
+// Upgrades
 .upgradeDetails {
   position: absolute;
   left: 8.7%;
@@ -101,6 +152,7 @@
   justify-content: center;
   align-items: center;
   transition: all 0.1s;
+  -webkit-transform-style: preserve-3d;
 }
 .menuBtnRelative:hover {
   scale: 1.1;
@@ -189,6 +241,7 @@
   align-items: center;
   scale: 0.8;
   transition: all 0.1s;
+  -webkit-transform-style: preserve-3d;
 }
 .resetBtnRelative:hover {
   scale: 0.85;
@@ -210,6 +263,7 @@
   align-items: center;
   scale: 1.1;
   transition: all 0.1s;
+  -webkit-transform-style: preserve-3d;
 }
 .heroBtnRelative:hover {
   scale: 1.2;
@@ -280,6 +334,61 @@
   font-family: "headerFont";
   font-size: 3em;
 }
+
+.redText {
+  background: -webkit-linear-gradient(
+    rgb(238, 101, 101) 45%,
+    rgb(190, 0, 0) 50%
+  );
+  -webkit-text-stroke: 0.12em rgb(71, 0, 0);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.orangeText {
+  background: -webkit-linear-gradient(
+    rgb(238, 174, 101) 45%,
+    rgb(190, 114, 0) 50%
+  );
+  -webkit-text-stroke: 0.12em rgb(71, 43, 0);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.yellowText {
+  background: -webkit-linear-gradient(
+    rgb(238, 224, 101) 45%,
+    rgb(187, 190, 0) 50%
+  );
+  -webkit-text-stroke: 0.12em rgb(71, 64, 0);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+}
+
 .greenText {
   background: -webkit-linear-gradient(
     rgb(106, 238, 101) 45%,
@@ -297,6 +406,43 @@
   -moz-text-fill-color: transparent;
   font-weight: bold;
 }
+
+.blueText {
+  background: -webkit-linear-gradient(
+    rgb(101, 211, 238) 45%,
+    rgb(0, 130, 190) 50%
+  );
+  -webkit-text-stroke: 0.12em rgb(0, 51, 71);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.purpleText {
+  background: -webkit-linear-gradient(
+    rgb(195, 101, 238) 45%,
+    rgb(152, 0, 190) 50%
+  );
+  -webkit-text-stroke: 0.12em rgb(51, 0, 71);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+}
+
 .miniBox {
   position: absolute;
   bottom: 0;
@@ -399,4 +545,9 @@
   font-style: italic;
   font-family: soho;
   font-size: 0.9em;
+}
+
+.lockedTxt {
+  margin-right: -22%;
+  font-size: 0.65em;
 }

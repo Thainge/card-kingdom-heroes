@@ -19,7 +19,29 @@
       <img src="./assets/closeActive.png" class="closeMenuButton activeBtn" />
     </div>
     <!-- Hero Room -->
-    <img src="./assets/heroList.png" class="heroList" />
+
+    <div class="heroListBox">
+      <div class="heroListBoxRelative">
+        <img src="./assets/heroList.png" class="heroList" />
+        <div class="heroListRow">
+          <div
+            *ngFor="let hero of heroes; index as i"
+            class="heroItemBox"
+            (click)="currentHero = hero"
+          >
+            <img
+              [src]="'./assets/hero' + (i + 1) + '.png'"
+              class="heroListItem"
+            />
+            <img
+              src="./assets/selectedHero.png"
+              class="heroSelectedBox"
+              *ngIf="currentHero?.id === hero.id"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
     <img src="./assets/upgradeDetails.png" class="upgradeDetails" />
     <div class="upgradeDetailsLevel">{{ currentHero?.level }}</div>
     <div class="upgradeDetailsHealth">{{ currentHero?.health }}</div>
@@ -28,11 +50,23 @@
       src="./assets/heroBorder.png"
       class="heroBorder"
       [ngStyle]="{
-      'background-image': 'url(./assets/players/link.png)',
+      'background-image': 'url(./assets/heroImages/' + currentHero?.image + ')',
     }"
     />
     <div class="heroTitleBox">
-      <div class="heroTitleText greenText">Link</div>
+      <div
+        class="heroTitleText"
+        [ngClass]="{
+        redText: currentHero?.color === 'red',
+        orangeText: currentHero?.color === 'orange',
+        yellowText: currentHero?.color === 'yellow',
+        greenText: currentHero?.color === 'green',
+        blueText: currentHero?.color === 'blue',
+        purpleText: currentHero?.color === 'purple',
+      }"
+      >
+        {{ currentHero?.name }}
+      </div>
     </div>
     <div class="heroBtnBox">
       <div class="heroBtnRelative" (click)="selectHero()">
@@ -45,7 +79,12 @@
           *ngIf="currentHero?.unlocked && !currentHero?.selected"
         />
         <img src="./assets/locked.png" *ngIf="!currentHero?.unlocked" />
-        <div class="doneText smallerTxt">
+        <div
+          class="doneText smallerTxt"
+          [ngClass]="{
+            lockedTxt: !currentHero?.unlocked
+          }"
+        >
           {{
             currentHero?.unlocked && currentHero?.selected
               ? "Selected"
@@ -101,7 +140,9 @@
                   [src]="'./assets/upgrades/' + item.image"
                   [ngClass]="{
                     greyBox:
-                      currentHero && currentHero.points < item.cost[item.level],
+                      (currentHero &&
+                        currentHero.points < item.cost[item.level]) ||
+                      !currentHero?.unlocked,
                     relativeIconBoxHover:
                       isCurrentlyHovering(item) &&
                       currentHero &&
@@ -131,7 +172,9 @@
                   *ngIf="item.level !== 3"
                   [ngClass]="{
                     greyBox:
-                      currentHero && currentHero.points < item.cost[item.level]
+                      (currentHero &&
+                        currentHero.points < item.cost[item.level]) ||
+                      !currentHero?.unlocked
                   }"
                 >
                   <div class="miniRelative">

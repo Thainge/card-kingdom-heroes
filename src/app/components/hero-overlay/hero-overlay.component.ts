@@ -17,9 +17,13 @@ interface HeroUpgrade {
 }
 
 type HeroUpgradeLevel = 0 | 1 | 2 | 3;
+type HeroColor = 'red' | 'orange' | 'yellow' | 'green' | 'blue' | 'purple';
 
 interface Hero {
   id: number;
+  color: HeroColor;
+  image: string;
+  name: string;
   level: number;
   points: number;
   health: number;
@@ -120,6 +124,9 @@ export class HeroOverlayComponent implements OnInit {
     ];
     const newHero: Hero = {
       id: 1,
+      name: 'Mario',
+      image: 'mario.png',
+      color: 'red',
       level: 1,
       health: 3,
       defense: 1,
@@ -137,19 +144,43 @@ export class HeroOverlayComponent implements OnInit {
     this.heroes.push({ ...newHero, id: 6 });
     this.heroes.push({ ...newHero, id: 7 });
     this.heroes.push({ ...newHero, id: 8 });
+
     this.heroes[0].selected = true;
     this.heroes[0].unlocked = true;
-    this.currentHero = this.heroes[0];
+    this.heroes[0].name = 'Link';
+    this.heroes[0].color = 'green';
+    this.heroes[0].image = 'link.png';
+
+    this.heroes[1].unlocked = true;
+    this.heroes[1].name = 'Mario';
+    this.heroes[1].image = 'mario.png';
+
+    this.heroes[2].color = 'orange';
+    this.heroes[2].image = 'koopa.png';
+
+    this.heroes[3].color = 'yellow';
+    this.heroes[3].image = 'goomba.png';
+
+    this.heroes[4].color = 'blue';
+    this.heroes[4].image = 'moblin.png';
+
+    this.heroes[5].color = 'purple';
+    this.heroes[5].image = 'dummy.png';
+
+    this.currentHero = this.heroes.find((x) => x.selected);
   }
 
   trackById = (index: number, item: HeroUpgrade) => item.id;
 
   selectHero() {
-    if (!this.currentHero) {
+    if (!this.currentHero || !this.currentHero.unlocked) {
       return;
     }
 
     this.heroes = this.heroes.map((x) => {
+      if (x.id === this.currentHero?.id) {
+        return { ...x, selected: true };
+      }
       return { ...x, selected: false };
     });
 
@@ -157,6 +188,10 @@ export class HeroOverlayComponent implements OnInit {
   }
 
   upgradeHero(item: HeroUpgrade) {
+    if (!this.currentHero?.unlocked) {
+      return;
+    }
+
     if (
       this.currentHero &&
       this.currentHero.upgrades &&
