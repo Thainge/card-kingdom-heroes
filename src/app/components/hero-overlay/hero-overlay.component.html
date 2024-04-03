@@ -28,6 +28,14 @@
       'background-image': 'url(./assets/players/link.png)',
     }"
     />
+    <div class="heroBtnBox">
+      <div class="heroBtnRelative" (click)="selectHero()">
+        <img src="./assets/button.png" />
+        <div class="doneText">
+          {{ currentHero?.selected ? "Selected" : "Select" }}
+        </div>
+      </div>
+    </div>
     <div class="upgradeMenuBox">
       <div class="upgradeMenuRelative">
         <img src="./assets/upgradeMenu.png" class="upgradeMenu" />
