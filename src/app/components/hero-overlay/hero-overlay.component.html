@@ -28,11 +28,26 @@
       'background-image': 'url(./assets/players/link.png)',
     }"
     />
+    <div class="heroTitleText">Link</div>
     <div class="heroBtnBox">
       <div class="heroBtnRelative" (click)="selectHero()">
-        <img src="./assets/button.png" />
-        <div class="doneText">
-          {{ currentHero?.selected ? "Selected" : "Select" }}
+        <img
+          src="./assets/selected.png"
+          *ngIf="currentHero?.unlocked && currentHero?.selected"
+        />
+        <img
+          src="./assets/select.png"
+          *ngIf="currentHero?.unlocked && !currentHero?.selected"
+        />
+        <img src="./assets/locked.png" *ngIf="!currentHero?.unlocked" />
+        <div class="doneText smallerTxt">
+          {{
+            currentHero?.unlocked && currentHero?.selected
+              ? "Selected"
+              : currentHero?.unlocked && !currentHero?.selected
+              ? "Select"
+              : "Locked"
+          }}
         </div>
       </div>
     </div>

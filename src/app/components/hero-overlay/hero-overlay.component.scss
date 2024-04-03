@@ -155,7 +155,6 @@
   left: 47%;
   bottom: 20%;
   z-index: 1;
-  scale: 1.1;
 }
 
 .upgradeMenuRelative {
@@ -242,8 +241,8 @@
 
 .heroBtnBox {
   position: absolute;
-  bottom: 10%;
-  left: 30.5%;
+  bottom: 15%;
+  left: 32.5%;
   z-index: 5;
 }
 
@@ -257,12 +256,17 @@
 }
 
 .heroBtnRelative:hover {
-  scale: 0.85;
+  scale: 1.2;
 }
 
 .heroBtnRelative:active {
   transition: none;
-  scale: 0.75;
+  scale: 1.1;
+}
+
+.smallerTxt {
+  font-size: 0.7em;
+  margin-right: 3%;
 }
 
 .container {
@@ -508,4 +512,21 @@
 
 .greyBox {
   filter: grayscale(1);
+}
+
+.heroTitleText {
+  text-align: center;
+  color: white;
+  font-family: "headerFont";
+  background: -webkit-linear-gradient(#f5f2e6, #a8a075);
+  -webkit-text-stroke: 1px #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
 }

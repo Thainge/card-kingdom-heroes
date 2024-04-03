@@ -20,6 +20,7 @@ interface Hero {
   points: number;
   usedPoints: number;
   selected: boolean;
+  unlocked: boolean;
   upgrades: HeroUpgrade[];
 }
 
@@ -81,6 +82,7 @@ export class HeroOverlayComponent implements OnInit {
       upgrades: upgrades,
       points: 5,
       selected: false,
+      unlocked: false,
       usedPoints: 0,
     };
     this.heroes.push({ ...newHero, id: 1 });
@@ -92,6 +94,7 @@ export class HeroOverlayComponent implements OnInit {
     this.heroes.push({ ...newHero, id: 7 });
     this.heroes.push({ ...newHero, id: 8 });
     this.heroes[0].selected = true;
+    this.heroes[0].unlocked = true;
     this.currentHero = this.heroes[0];
   }
 
