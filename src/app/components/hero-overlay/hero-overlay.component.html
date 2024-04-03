@@ -21,8 +21,47 @@
     <!-- Hero Room -->
     <img src="./assets/heroList.png" class="heroList" />
     <img src="./assets/upgradeDetails.png" class="upgradeDetails" />
-    <img src="./assets/heroBorder.png" class="heroBorder" />
+    <img
+      src="./assets/heroBorder.png"
+      class="heroBorder"
+      [ngStyle]="{
+      'background-image': 'url(./assets/players/link.png)',
+    }"
+    />
     <img src="./assets/upgradeMenu.png" class="upgradeMenu" />
-    <img src="./assets/menuBtn.png" class="menuBtn" />
+    <div class="menuBtnbOX">
+      <div class="menuBtnRelative" (click)="closeMenu()">
+        <img src="./assets/menuBtn.png" class="menuBtn" />
+        <div class="doneText">Done</div>
+      </div>
+    </div>
+    <div class="levelsList">
+      <div
+        class="levelsColumn"
+        *ngFor="let item of currentHero?.upgrades; trackBy: trackById"
+      >
+        <img
+          src="./assets/upgradeBox.png"
+          class="levelBox"
+          [ngClass]="{
+            displayLevelBox: item.level > 2
+          }"
+        />
+        <img
+          src="./assets/upgradeBox.png"
+          class="levelBox"
+          [ngClass]="{
+            displayLevelBox: item.level > 1
+          }"
+        />
+        <img
+          src="./assets/upgradeBox.png"
+          class="levelBox"
+          [ngClass]="{
+            displayLevelBox: item.level > 0 || true
+          }"
+        />
+      </div>
+    </div>
   </div>
 </div>
