@@ -19,6 +19,7 @@ interface Hero {
   id: number;
   points: number;
   usedPoints: number;
+  selected: boolean;
   upgrades: HeroUpgrade[];
 }
 
@@ -78,6 +79,7 @@ export class HeroOverlayComponent implements OnInit {
       id: 1,
       upgrades: upgrades,
       points: 5,
+      selected: false,
       usedPoints: 0,
     };
     this.heroes.push({ ...newHero, id: 1 });
@@ -88,10 +90,23 @@ export class HeroOverlayComponent implements OnInit {
     this.heroes.push({ ...newHero, id: 6 });
     this.heroes.push({ ...newHero, id: 7 });
     this.heroes.push({ ...newHero, id: 8 });
+    this.heroes[0].selected = true;
     this.currentHero = this.heroes[0];
   }
 
   trackById = (index: number, item: HeroUpgrade) => item.id;
+
+  selectHero() {
+    if (!this.currentHero) {
+      return;
+    }
+
+    this.heroes = this.heroes.map((x) => {
+      return { ...x, selected: false };
+    });
+
+    this.currentHero.selected = true;
+  }
 
   upgradeHero(item: HeroUpgrade) {
     if (
