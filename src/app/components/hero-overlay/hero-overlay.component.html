@@ -65,10 +65,22 @@
                 displayLevelBox: item.level > 0
               }"
             />
-            <div class="upgradeIconBox">
+            <div
+              class="upgradeIconBox"
+              (mouseenter)="currentHoveringUpgrade = item"
+              (mouseleave)="currentHoveringUpgrade = undefined"
+            >
               <div class="relativeIconBox" (click)="upgradeHero(item)">
-                <img [src]="'./assets/upgrades/' + item.image" />
-                <div class="hoveringDescriptionBox"></div>
+                <img
+                  [src]="'./assets/upgrades/' + item.image"
+                  [ngClass]="{
+                    greyBox: item.level === 0
+                  }"
+                />
+                <div
+                  class="hoveringDescriptionBox"
+                  *ngIf="isCurrentlyHovering(item)"
+                ></div>
               </div>
             </div>
           </div>

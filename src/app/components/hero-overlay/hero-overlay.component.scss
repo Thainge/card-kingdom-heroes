@@ -85,13 +85,13 @@
 }
 .upgradeDetails {
   position: absolute;
-  left: 8.7%;
+  left: 10.7%;
   bottom: 20%;
   z-index: 1;
 }
 .heroBorder {
   position: absolute;
-  left: 22%;
+  left: 24%;
   bottom: 14%;
   z-index: 2;
   background-size: 81%;
@@ -129,7 +129,7 @@
   color: white;
   font-family: "headerFont";
   background: -webkit-linear-gradient(#f5f2e6, #a8a075);
-  -webkit-text-stroke: 2px #000;
+  -webkit-text-stroke: 1px #000;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -155,7 +155,6 @@
   left: 47%;
   bottom: 20%;
   z-index: 1;
-  scale: 1.1;
 }
 
 .upgradeMenuRelative {
@@ -192,7 +191,7 @@
 }
 
 .relativeIconBox:hover {
-  filter: drop-shadow(0 0 0.2em gold);
+  filter: drop-shadow(1px -1px 0.3em gold);
 }
 
 .relativeIconBox:active {
@@ -238,4 +237,8 @@
 .resetBtnRelative:active {
   transition: none;
   scale: 0.75;
+}
+
+.greyBox {
+  filter: grayscale(1);
 }

@@ -40,7 +40,8 @@ export class HeroOverlayComponent implements OnInit {
   @Input('open') open: boolean = false;
 
   heroes: Hero[] = [];
-  currentHero?: Hero;
+  currentHero: Hero | undefined;
+  currentHoveringUpgrade: HeroUpgrade | undefined;
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
@@ -135,6 +136,17 @@ export class HeroOverlayComponent implements OnInit {
       this.currentHero.points = this.currentHero.points - 1;
       this.currentHero.usedPoints++;
     }
+  }
+
+  isCurrentlyHovering(item: HeroUpgrade) {
+    if (
+      this.currentHoveringUpgrade &&
+      this.currentHoveringUpgrade.id === item.id
+    ) {
+      return true;
+    }
+
+    return false;
   }
 
   closeMenu() {
