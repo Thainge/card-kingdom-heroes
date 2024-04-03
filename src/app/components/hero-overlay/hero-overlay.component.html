@@ -21,6 +21,9 @@
     <!-- Hero Room -->
     <img src="./assets/heroList.png" class="heroList" />
     <img src="./assets/upgradeDetails.png" class="upgradeDetails" />
+    <div class="upgradeDetailsLevel">{{ currentHero?.level }}</div>
+    <div class="upgradeDetailsHealth">{{ currentHero?.health }}</div>
+    <div class="upgradeDetailsDefense">{{ currentHero?.defense }}</div>
     <img
       src="./assets/heroBorder.png"
       class="heroBorder"
@@ -90,20 +93,40 @@
                 displayLevelBox: item.level > 0
               }"
             />
-            <div
-              class="upgradeIconBox"
-              (mouseenter)="currentHoveringUpgrade = item"
-              (mouseleave)="currentHoveringUpgrade = undefined"
-            >
+            <div class="upgradeIconBox">
               <div class="relativeIconBox" (click)="upgradeHero(item)">
                 <img
+                  (mouseenter)="currentHoveringUpgrade = item"
+                  (mouseleave)="currentHoveringUpgrade = undefined"
                   [src]="'./assets/upgrades/' + item.image"
                   [ngClass]="{
                     greyBox:
-                      currentHero && currentHero.points < item.cost[item.level]
+                      currentHero && currentHero.points < item.cost[item.level],
+                    relativeIconBoxHover:
+                      isCurrentlyHovering(item) &&
+                      currentHero &&
+                      currentHero.points >= item.cost[item.level]
                   }"
                 />
                 <div
+                  class="hoveringDescriptionBox"
+                  [ngClass]="{
+                    showHoveringBox:
+                      isCurrentlyHovering(item) &&
+                      currentHero &&
+                      currentHero.points >= item.cost[item.level]
+                  }"
+                >
+                  <div class="hoveringTitle">{{ item.title[item.level] }}</div>
+                  <div class="hoveringDescription">
+                    {{ item.description[item.level] }}
+                  </div>
+                  <img src="./assets/orb.png" class="hoveringOrb" />
+                  <div class="hoveringCost">{{ item.cost[item.level] }}</div>
+                </div>
+                <div
+                  (mouseenter)="currentHoveringUpgrade = item"
+                  (mouseleave)="currentHoveringUpgrade = undefined"
                   class="miniBox"
                   *ngIf="item.level !== 3"
                   [ngClass]="{
@@ -118,10 +141,6 @@
                     </div>
                   </div>
                 </div>
-                <div
-                  class="hoveringDescriptionBox"
-                  *ngIf="isCurrentlyHovering(item)"
-                ></div>
               </div>
             </div>
           </div>

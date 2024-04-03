@@ -10,7 +10,6 @@
   user-select: none;
   z-index: 5001;
 }
-
 .optionsMenuBackdrop {
   position: absolute;
   width: 100%;
@@ -18,7 +17,6 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;
 }
-
 .overlayBox {
   position: relative;
   z-index: 2;
@@ -26,12 +24,10 @@
   justify-content: center;
   align-items: center;
 }
-
 .overlayPanelBg {
   filter: drop-shadow(0 0 0.5em rgba(0, 0, 0, 1));
   -webkit-user-drag: none;
 }
-
 .overlalPanelTitle {
   position: absolute;
   top: 5.5%;
@@ -53,13 +49,11 @@
   -moz-text-fill-color: transparent;
   font-weight: bold;
 }
-
 .closeMenuButtonBox {
   position: absolute;
   top: 2.1%;
   right: 0.7%;
 }
-
 .closeMenuButton {
   -webkit-user-drag: none;
   position: relative;
@@ -67,17 +61,14 @@
   transition: all 0.2s;
   --closeOpacity: 0;
 }
-
 .closeMenuButton:hover {
   --closeOpacity: 1;
 }
-
 .activeBtn {
   position: absolute;
   left: 0;
   opacity: var(--closeOpacity);
 }
-
 .heroList {
   position: absolute;
   top: 15%;
@@ -98,14 +89,12 @@
   background-repeat: no-repeat;
   background-position: center;
 }
-
 .menuBtnbOX {
   position: absolute;
   bottom: 0.7%;
   right: 12%;
   z-index: 3;
 }
-
 .menuBtnRelative {
   position: relative;
   display: flex;
@@ -113,15 +102,12 @@
   align-items: center;
   transition: all 0.1s;
 }
-
 .menuBtnRelative:hover {
   scale: 1.1;
 }
-
 .menuBtnRelative:active {
   scale: 0.9;
 }
-
 .doneText {
   position: absolute;
   margin-left: 4%;
@@ -140,30 +126,23 @@
   -moz-text-fill-color: transparent;
   font-weight: bold;
 }
-
 .levelBox {
   opacity: 0;
   transition: all 0.3s;
 }
-
 .displayLevelBox {
   opacity: 1;
 }
-
 .upgradeMenuBox {
   position: absolute;
   left: 47%;
   bottom: 20%;
-  z-index: 1;
 }
-
 .upgradeMenuRelative {
   position: relative;
 }
-
 .upgradeMenu {
 }
-
 .levelsList {
   position: absolute;
   bottom: 41.5%;
@@ -172,7 +151,6 @@
   display: flex;
   column-gap: 23%;
 }
-
 .levelsColumn {
   display: flex;
   justify-content: center;
@@ -180,31 +158,16 @@
   flex-direction: column;
   row-gap: 0.6em;
 }
-
 .upgradeIconBox {
   position: absolute;
   bottom: -107%;
 }
-
-.relativeIconBox {
-  position: relative;
-}
-
-.relativeIconBox:hover {
-  filter: drop-shadow(0 0 0.2em gold);
-}
-
-.relativeIconBox:active {
-  scale: 0.95;
-}
-
 .upgradeOrb {
   position: absolute;
   top: 15%;
   left: 11%;
   filter: drop-shadow(0 0 0.2em gold);
 }
-
 .upgradeAmountText {
   position: absolute;
   top: 13.8%;
@@ -214,13 +177,11 @@
   color: #e9e9b2;
   font-size: 1.3em;
 }
-
 .resetBtnBox {
   position: absolute;
   top: 11%;
   right: 5.5%;
 }
-
 .resetBtnRelative {
   position: relative;
   display: flex;
@@ -229,23 +190,19 @@
   scale: 0.8;
   transition: all 0.1s;
 }
-
 .resetBtnRelative:hover {
   scale: 0.85;
 }
-
 .resetBtnRelative:active {
   transition: none;
   scale: 0.75;
 }
-
 .heroBtnBox {
   position: absolute;
   bottom: 15%;
   left: 32.2%;
   z-index: 5;
 }
-
 .heroBtnRelative {
   position: relative;
   display: flex;
@@ -254,105 +211,16 @@
   scale: 1.1;
   transition: all 0.1s;
 }
-
 .heroBtnRelative:hover {
   scale: 1.2;
 }
-
 .heroBtnRelative:active {
   transition: none;
   scale: 1.1;
 }
-
 .smallerTxt {
   font-size: 0.7em;
   margin-right: 3%;
-}
-
-.container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  user-select: none;
-  z-index: 5001;
-}
-
-.optionsMenuBackdrop {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1;
-}
-
-.overlayBox {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.overlayPanelBg {
-  filter: drop-shadow(0 0 0.5em rgba(0, 0, 0, 1));
-  -webkit-user-drag: none;
-}
-
-.overlalPanelTitle {
-  position: absolute;
-  top: 5.5%;
-  margin-left: -3%;
-  font-size: 1.4em;
-
-  text-align: center;
-  color: white;
-  font-family: "headerFont";
-  background: -webkit-linear-gradient(#f5f2e6, #a8a075);
-  -webkit-text-stroke: 2px #000;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-background-clip: text;
-  -moz-text-fill-color: transparent;
-  font-weight: bold;
-}
-
-.closeMenuButtonBox {
-  position: absolute;
-  top: 2.1%;
-  right: 0.7%;
-}
-
-.closeMenuButton {
-  -webkit-user-drag: none;
-  position: relative;
-  z-index: 1;
-  transition: all 0.2s;
-  --closeOpacity: 0;
-}
-
-.closeMenuButton:hover {
-  --closeOpacity: 1;
-}
-
-.activeBtn {
-  position: absolute;
-  left: 0;
-  opacity: var(--closeOpacity);
-}
-
-.heroList {
-  position: absolute;
-  top: 15%;
-  width: 85%;
 }
 .upgradeDetails {
   position: absolute;
@@ -369,30 +237,6 @@
   background-repeat: no-repeat;
   background-position: center;
 }
-
-.menuBtnbOX {
-  position: absolute;
-  bottom: 0.7%;
-  right: 12%;
-  z-index: 3;
-}
-
-.menuBtnRelative {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.1s;
-}
-
-.menuBtnRelative:hover {
-  scale: 1.1;
-}
-
-.menuBtnRelative:active {
-  scale: 0.9;
-}
-
 .doneText {
   position: absolute;
   margin-left: 4%;
@@ -411,109 +255,18 @@
   -moz-text-fill-color: transparent;
   font-weight: bold;
 }
-
-.levelBox {
-  opacity: 0;
-  transition: all 0.3s;
-}
-
-.displayLevelBox {
-  opacity: 1;
-}
-
-.upgradeMenuBox {
-  position: absolute;
-  left: 47%;
-  bottom: 20%;
-  z-index: 1;
-}
-
-.upgradeMenuRelative {
-  position: relative;
-}
-
-.upgradeMenu {
-}
-
-.levelsList {
-  position: absolute;
-  bottom: 41.5%;
-  left: 11.3%;
-  z-index: 4;
-  display: flex;
-  column-gap: 23%;
-}
-
-.levelsColumn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  row-gap: 0.6em;
-}
-
-.upgradeIconBox {
-  position: absolute;
-  bottom: -107%;
-}
-
 .relativeIconBox {
   position: relative;
-}
-
-.relativeIconBox:hover {
-  filter: drop-shadow(1px -1px 0.3em gold);
-}
-
-.relativeIconBox:active {
-  scale: 0.95;
-}
-
-.upgradeOrb {
-  position: absolute;
-  top: 15%;
-  left: 11%;
-  filter: drop-shadow(0 0 0.2em gold);
-}
-
-.upgradeAmountText {
-  position: absolute;
-  top: 13.8%;
-  left: 18%;
-  font-family: soho;
-  font-style: italic;
-  color: #e9e9b2;
-  font-size: 1.3em;
-}
-
-.resetBtnBox {
-  position: absolute;
-  top: 11%;
-  right: 5.5%;
-}
-
-.resetBtnRelative {
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  scale: 0.8;
-  transition: all 0.1s;
 }
-
-.resetBtnRelative:hover {
-  scale: 0.85;
+.relativeIconBoxHover {
+  filter: drop-shadow(1px -1px 0.3em gold);
 }
-
-.resetBtnRelative:active {
-  transition: none;
-  scale: 0.75;
-}
-
 .greyBox {
   filter: grayscale(1);
 }
-
 .heroTitleBox {
   position: absolute;
   left: 26.8%;
@@ -521,14 +274,12 @@
   width: 21.2%;
   z-index: 4;
 }
-
 .heroTitleText {
   text-align: center;
   color: white;
   font-family: "headerFont";
   font-size: 3em;
 }
-
 .greenText {
   background: -webkit-linear-gradient(
     rgb(106, 238, 101) 45%,
@@ -546,20 +297,17 @@
   -moz-text-fill-color: transparent;
   font-weight: bold;
 }
-
 .miniBox {
   position: absolute;
   bottom: 0;
   right: -5%;
 }
-
 .miniRelative {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 .miniTextPoints {
   position: absolute;
   color: gold;
@@ -568,4 +316,87 @@
   bottom: 15%;
   font-family: soho;
   font-style: italic;
+}
+.upgradeDetailsLevel {
+  position: absolute;
+  left: 18.85%;
+  bottom: 50.5%;
+  font-family: soho;
+  z-index: 4;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+.upgradeDetailsHealth {
+  position: absolute;
+  left: 18%;
+  bottom: 35.8%;
+  font-size: 1.1em;
+  color: whitesmoke;
+  font-style: italic;
+  font-family: soho;
+  z-index: 4;
+}
+.upgradeDetailsDefense {
+  position: absolute;
+  left: 18%;
+  bottom: 28.5%;
+  font-size: 1.1em;
+  color: whitesmoke;
+  font-style: italic;
+  font-family: soho;
+  z-index: 4;
+}
+.hoveringDescriptionBox {
+  position: absolute;
+  width: 17em;
+  height: 6em;
+  top: -6em;
+  right: -15em;
+  background-color: rgba(0, 0, 0, 0.9);
+  border-radius: 0.5em;
+  z-index: 63;
+  overflow: none;
+  scale: 0.8;
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+.showHoveringBox {
+  opacity: 1;
+}
+
+.hoveringTitle {
+  padding-top: 1em;
+  padding-left: 1em;
+  color: whitesmoke;
+  font-size: 0.8em;
+  font-family: soho;
+  font-style: italic;
+}
+
+.hoveringDescription {
+  padding-top: 0.25em;
+  padding-left: 1em;
+  height: 80%;
+  font-size: 0.8em;
+  color: gold;
+  font-family: soho;
+  font-style: italic;
+}
+
+.hoveringOrb {
+  position: absolute;
+  top: 0.5em;
+  right: 1.45em;
+  scale: 0.8;
+}
+
+.hoveringCost {
+  position: absolute;
+  top: 0.5em;
+  right: 0.75em;
+  color: whitesmoke;
+  font-style: italic;
+  font-family: soho;
+  font-size: 0.9em;
 }

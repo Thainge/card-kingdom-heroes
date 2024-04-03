@@ -11,6 +11,8 @@ interface HeroUpgrade {
   id: number;
   level: HeroUpgradeLevel;
   image: string;
+  title: string[];
+  description: string[];
   cost: number[];
 }
 
@@ -18,7 +20,10 @@ type HeroUpgradeLevel = 0 | 1 | 2 | 3;
 
 interface Hero {
   id: number;
+  level: number;
   points: number;
+  health: number;
+  defense: number;
   usedPoints: number;
   selected: boolean;
   unlocked: boolean;
@@ -57,34 +62,67 @@ export class HeroOverlayComponent implements OnInit {
         level: 0,
         image: 'greenUpgrade1.png',
         cost: [1, 2, 3],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
       },
       {
         id: 2,
         level: 0,
         image: 'greenUpgrade2.png',
         cost: [1, 2, 3],
+        title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
+        description: [
+          'Increases health by 1',
+          'Increases health by 2',
+          'Increases health by 3',
+        ],
       },
       {
         id: 3,
         level: 0,
         image: 'greenUpgrade3.png',
         cost: [1, 1, 1],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
       },
       {
         id: 4,
         level: 0,
         image: 'greenUpgrade4.png',
         cost: [2, 4, 6],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
       },
       {
         id: 5,
         level: 0,
         image: 'greenUpgrade5.png',
         cost: [2, 4, 6],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
       },
     ];
     const newHero: Hero = {
       id: 1,
+      level: 1,
+      health: 3,
+      defense: 1,
       upgrades: upgrades,
       points: 5,
       selected: false,
