@@ -99,13 +99,6 @@
   background-position: center;
 }
 
-.upgradeMenu {
-  position: absolute;
-  left: 47%;
-  bottom: 20%;
-  z-index: 1;
-  scale: 1.1;
-}
 .menuBtnbOX {
   position: absolute;
   bottom: 0.7%;
@@ -129,15 +122,6 @@
   scale: 0.9;
 }
 
-.levelBox {
-  opacity: 0;
-  scale: 1.1;
-}
-
-.displayLevelBox {
-  opacity: 1;
-}
-
 .doneText {
   position: absolute;
   margin-left: 4%;
@@ -157,13 +141,37 @@
   font-weight: bold;
 }
 
+.levelBox {
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+.displayLevelBox {
+  opacity: 1;
+}
+
+.upgradeMenuBox {
+  position: absolute;
+  left: 47%;
+  bottom: 20%;
+  z-index: 1;
+  scale: 1.1;
+}
+
+.upgradeMenuRelative {
+  position: relative;
+}
+
+.upgradeMenu {
+}
+
 .levelsList {
   position: absolute;
-  bottom: 36.5%;
-  left: 50.5%;
+  bottom: 41.5%;
+  left: 11.3%;
   z-index: 4;
   display: flex;
-  column-gap: 27.2%;
+  column-gap: 23%;
 }
 
 .levelsColumn {
@@ -171,5 +179,63 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  row-gap: 0.7em;
+  row-gap: 0.6em;
+}
+
+.upgradeIconBox {
+  position: absolute;
+  bottom: -107%;
+}
+
+.relativeIconBox {
+  position: relative;
+}
+
+.relativeIconBox:hover {
+  filter: drop-shadow(0 0 0.2em gold);
+}
+
+.relativeIconBox:active {
+  scale: 0.95;
+}
+
+.upgradeOrb {
+  position: absolute;
+  top: 15%;
+  left: 11%;
+  filter: drop-shadow(0 0 0.2em gold);
+}
+
+.upgradeAmountText {
+  position: absolute;
+  top: 13.8%;
+  left: 18%;
+  font-family: soho;
+  font-style: italic;
+  color: #e9e9b2;
+  font-size: 1.3em;
+}
+
+.resetBtnBox {
+  position: absolute;
+  top: 11%;
+  right: 5.5%;
+}
+
+.resetBtnRelative {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  scale: 0.8;
+  transition: all 0.1s;
+}
+
+.resetBtnRelative:hover {
+  scale: 0.85;
+}
+
+.resetBtnRelative:active {
+  transition: none;
+  scale: 0.75;
 }

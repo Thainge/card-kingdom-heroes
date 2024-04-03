@@ -28,39 +28,57 @@
       'background-image': 'url(./assets/players/link.png)',
     }"
     />
-    <img src="./assets/upgradeMenu.png" class="upgradeMenu" />
+    <div class="upgradeMenuBox">
+      <div class="upgradeMenuRelative">
+        <img src="./assets/upgradeMenu.png" class="upgradeMenu" />
+        <div class="resetBtnBox">
+          <div class="resetBtnRelative" (click)="resetUpgrades()">
+            <img src="./assets/button.png" />
+            <div class="doneText">Reset</div>
+          </div>
+        </div>
+        <img src="./assets/orb.png" class="upgradeOrb" />
+        <div class="upgradeAmountText">{{ currentHero?.points }}</div>
+        <div class="levelsList">
+          <div
+            class="levelsColumn"
+            *ngFor="let item of currentHero?.upgrades; trackBy: trackById"
+          >
+            <img
+              src="./assets/upgradeBox.png"
+              class="levelBox"
+              [ngClass]="{
+                displayLevelBox: item.level > 2
+              }"
+            />
+            <img
+              src="./assets/upgradeBox.png"
+              class="levelBox"
+              [ngClass]="{
+                displayLevelBox: item.level > 1
+              }"
+            />
+            <img
+              src="./assets/upgradeBox.png"
+              class="levelBox"
+              [ngClass]="{
+                displayLevelBox: item.level > 0
+              }"
+            />
+            <div class="upgradeIconBox">
+              <div class="relativeIconBox" (click)="upgradeHero(item)">
+                <img [src]="'./assets/upgrades/' + item.image" />
+                <div class="hoveringDescriptionBox"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="menuBtnbOX">
       <div class="menuBtnRelative" (click)="closeMenu()">
         <img src="./assets/menuBtn.png" class="menuBtn" />
         <div class="doneText">Done</div>
-      </div>
-    </div>
-    <div class="levelsList">
-      <div
-        class="levelsColumn"
-        *ngFor="let item of currentHero?.upgrades; trackBy: trackById"
-      >
-        <img
-          src="./assets/upgradeBox.png"
-          class="levelBox"
-          [ngClass]="{
-            displayLevelBox: item.level > 2
-          }"
-        />
-        <img
-          src="./assets/upgradeBox.png"
-          class="levelBox"
-          [ngClass]="{
-            displayLevelBox: item.level > 1
-          }"
-        />
-        <img
-          src="./assets/upgradeBox.png"
-          class="levelBox"
-          [ngClass]="{
-            displayLevelBox: item.level > 0 || true
-          }"
-        />
       </div>
     </div>
   </div>
