@@ -11,6 +11,7 @@ interface HeroUpgrade {
   id: number;
   level: HeroUpgradeLevel;
   image: string;
+  cost: number[];
 }
 
 type HeroUpgradeLevel = 0 | 1 | 2 | 3;
@@ -55,26 +56,31 @@ export class HeroOverlayComponent implements OnInit {
         id: 1,
         level: 0,
         image: 'greenUpgrade1.png',
+        cost: [1, 2, 3],
       },
       {
         id: 2,
         level: 0,
         image: 'greenUpgrade2.png',
+        cost: [1, 2, 3],
       },
       {
         id: 3,
         level: 0,
         image: 'greenUpgrade3.png',
+        cost: [1, 1, 1],
       },
       {
         id: 4,
         level: 0,
         image: 'greenUpgrade4.png',
+        cost: [2, 4, 6],
       },
       {
         id: 5,
         level: 0,
         image: 'greenUpgrade5.png',
+        cost: [2, 4, 6],
       },
     ];
     const newHero: Hero = {
@@ -121,16 +127,16 @@ export class HeroOverlayComponent implements OnInit {
       this.currentHero.upgrades = this.currentHero.upgrades.map((x) => {
         if (item.id === x.id) {
           if (x.level === 0) {
-            this.subtractUpgradePoints();
-            return { ...x, level: 1 };
+            const canLevelUp = this.subtractUpgradePoints(item);
+            return canLevelUp ? { ...x, level: 1 } : x;
           }
           if (x.level === 1) {
-            this.subtractUpgradePoints();
-            return { ...x, level: 2 };
+            const canLevelUp = this.subtractUpgradePoints(item);
+            return canLevelUp ? { ...x, level: 2 } : x;
           }
           if (x.level === 2) {
-            this.subtractUpgradePoints();
-            return { ...x, level: 3 };
+            const canLevelUp = this.subtractUpgradePoints(item);
+            return canLevelUp ? { ...x, level: 3 } : x;
           }
         }
         return x;
@@ -149,11 +155,18 @@ export class HeroOverlayComponent implements OnInit {
     }
   }
 
-  subtractUpgradePoints() {
-    if (this.currentHero) {
-      this.currentHero.points = this.currentHero.points - 1;
-      this.currentHero.usedPoints++;
+  subtractUpgradePoints(item: HeroUpgrade): boolean {
+    if (!this.currentHero) {
+      return false;
     }
+    const newPoints = this.currentHero.points - item.cost[item.level];
+
+    if (newPoints >= 0) {
+      this.currentHero.points = newPoints;
+      this.currentHero.usedPoints += item.cost[item.level];
+      return true;
+    }
+    return false;
   }
 
   isCurrentlyHovering(item: HeroUpgrade) {

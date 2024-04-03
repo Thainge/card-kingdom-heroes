@@ -28,7 +28,9 @@
       'background-image': 'url(./assets/players/link.png)',
     }"
     />
-    <div class="heroTitleText">Link</div>
+    <div class="heroTitleBox">
+      <div class="heroTitleText greenText">Link</div>
+    </div>
     <div class="heroBtnBox">
       <div class="heroBtnRelative" (click)="selectHero()">
         <img
@@ -97,9 +99,25 @@
                 <img
                   [src]="'./assets/upgrades/' + item.image"
                   [ngClass]="{
-                    greyBox: item.level === 0
+                    greyBox:
+                      currentHero && currentHero.points < item.cost[item.level]
                   }"
                 />
+                <div
+                  class="miniBox"
+                  *ngIf="item.level !== 3"
+                  [ngClass]="{
+                    greyBox:
+                      currentHero && currentHero.points < item.cost[item.level]
+                  }"
+                >
+                  <div class="miniRelative">
+                    <img src="./assets/upgradePointsMini.png" />
+                    <div class="miniTextPoints">
+                      {{ item.cost[item.level] }}
+                    </div>
+                  </div>
+                </div>
                 <div
                   class="hoveringDescriptionBox"
                   *ngIf="isCurrentlyHovering(item)"
