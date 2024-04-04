@@ -107,9 +107,9 @@
   animation: cardFadeUp 800ms;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
-  -webkit-transition: filter 0.5s;
-  -o-transition: filter 0.5s;
-  transition: filter 0.5s;
+  -webkit-transition: filter 0.2s;
+  -o-transition: filter 0.2s;
+  transition: filter 0.2s;
 }
 
 .cardBorder {
