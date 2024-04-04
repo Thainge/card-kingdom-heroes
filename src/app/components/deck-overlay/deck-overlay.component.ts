@@ -6,6 +6,13 @@ import {
   fadeInOnEnterAnimation,
   zoomOutOnLeaveAnimation,
 } from 'angular-animations';
+import { AbilityCard } from 'src/app/models/abilityCard';
+import { playerService } from 'src/app/services/player.service';
+
+interface AbilityDeckCard extends AbilityCard {
+  owned: boolean;
+  inHand: boolean;
+}
 
 @Component({
   selector: 'app-deck-overlay-overlay',
@@ -23,14 +30,59 @@ import {
 })
 export class DeckOverlayComponent implements OnInit {
   @Input('open') open: boolean = false;
+  abilityCards: AbilityDeckCard[] = [];
+  abilityHand: AbilityDeckCard[] = [];
+  currentHoveringCard: AbilityDeckCard | undefined;
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
-  constructor() {}
+  constructor(private userService: playerService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.abilityCards = this.userService.getAbilityCards().map((x, i) => {
+      if (i < 16) {
+        return { ...x, owned: true, inHand: false };
+      }
+      return { ...x, owned: false, inHand: false };
+    });
+  }
+
+  addCardToHand(card: AbilityDeckCard) {
+    if (this.abilityHand.length === 16) {
+      return;
+    }
+
+    this.abilityHand.push(card);
+    this.abilityCards = this.abilityCards.map((x) => {
+      if (x.id === card.id) {
+        return { ...x, inHand: true };
+      }
+
+      return x;
+    });
+  }
+
+  removeCardFromHand(card: AbilityDeckCard) {
+    this.abilityHand = this.abilityHand.filter((x) => x.id !== card.id);
+    this.abilityCards = this.abilityCards.map((x) => {
+      if (x.id === card.id) {
+        return { ...x, inHand: false };
+      }
+
+      return x;
+    });
+  }
+
+  resetDeck() {
+    this.abilityHand = [];
+    this.abilityCards = this.abilityCards.map((x) => {
+      return { ...x, inHand: false };
+    });
+  }
 
   closeMenu() {
     this.onCloseMenu.emit(false);
   }
+
+  trackById = (index: number, item: AbilityCard) => item.id;
 }

@@ -14,21 +14,187 @@
   <div class="overlayBox">
     <img class="overlayPanelBg" src="./assets/wideMenu.png" />
     <div class="overlalPanelTitle">Deck</div>
+    <div class="absoluteLeftSide">
+      <div class="boxRelativeSide">
+        <img src="./assets/leftBox.png" />
+        <div class="absoluteCardsSortBtn">
+          <div class="relativeBoxContainer relativeBoxContainerHover">
+            <img src="./assets/button.png" />
+            <div class="btnText">Sort By</div>
+          </div>
+        </div>
+        <div class="absoluteCardsSortText">
+          <div class="relativeBoxContainer">
+            <img src="./assets/shopBtnBg.png" />
+            <div class="displayText">Level</div>
+          </div>
+        </div>
+        <div class="cardsListBox">
+          <div class="cardsList fancyScrollBar">
+            <div
+              class="bottomCard playerBottomCard"
+              *ngFor="let card of abilityCards; index as i; trackBy: trackById"
+              #activeAbilityCards
+              (dblclick)="addCardToHand(card)"
+              [ngClass]="{
+                darkenCard: !card.owned || (card.inHand && card.owned)
+              }"
+            >
+              <div class="cardBorder">
+                <img
+                  [src]="'./assets/abilities/' + card.image"
+                  class="cardBackgroundImage"
+                />
+                <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
+                  <div class="abilityTitle paperBg">
+                    <div class="abilityTitleText">{{ card.name }}</div>
+                    <div class="abilitySuitsBox">
+                      <img
+                        *ngFor="let cost of card.cost"
+                        [src]="'./assets/' + cost + '.png'"
+                        class="abilitySuit"
+                      />
+                    </div>
+                  </div>
+                  <div class="abilityBorder1 paperBg"></div>
+                  <div class="abilityBorder2 paperBg"></div>
+                  <div class="abilityDescription paperBg">
+                    <div class="abilityDescriptionLevel">
+                      <div class="levelText paperBg">
+                        Level {{ card.level }}
+                      </div>
+                    </div>
+                    <div class="abilityDescriptionText">
+                      {{ card.description }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="absoluteRightSide">
+      <div class="boxRelativeSide">
+        <img src="./assets/rightBox.png" />
+        <div class="absoluteCardsSortBtn">
+          <div
+            class="relativeBoxContainer relativeBoxContainerHover smallerSide"
+            (click)="resetDeck()"
+          >
+            <img src="./assets/button.png" />
+            <div class="btnText">Reset</div>
+          </div>
+        </div>
+        <div class="absoluteCardsCountText">
+          <div class="relativeBoxContainer smallerSide">
+            <img src="./assets/shopBtnBg.png" />
+            <div class="displayCountText">{{ abilityHand.length }}/16</div>
+          </div>
+        </div>
+        <div class="cardsListBoxRight">
+          <div class="cardsListRight">
+            <div
+              class="rightCard"
+              *ngFor="let card of abilityHand; index as i; trackBy: trackById"
+            >
+              <div class="cardRelative">
+                <div
+                  class="bottomCard playerBottomCard rightCard absoluteRightCard"
+                  [ngClass]="{
+                    darkenCard: !card.owned || (card.inHand && card.owned)
+                  }"
+                  *ngIf="currentHoveringCard?.id === card.id || true"
+                >
+                  <div class="cardBorder">
+                    <img
+                      [src]="'./assets/abilities/' + card.image"
+                      class="cardBackgroundImage"
+                    />
+                    <div
+                      class="wildCardSuites bottomWildCard bottomAbilityStuff"
+                    >
+                      <div class="abilityTitle paperBg">
+                        <div class="abilityTitleText">{{ card.name }}</div>
+                        <div class="abilitySuitsBox">
+                          <img
+                            *ngFor="let cost of card.cost"
+                            [src]="'./assets/' + cost + '.png'"
+                            class="abilitySuit"
+                          />
+                        </div>
+                      </div>
+                      <div class="abilityBorder1 paperBg"></div>
+                      <div class="abilityBorder2 paperBg"></div>
+                      <div class="abilityDescription paperBg">
+                        <div class="abilityDescriptionLevel">
+                          <div class="levelText paperBg">
+                            Level {{ card.level }}
+                          </div>
+                        </div>
+                        <div class="abilityDescriptionText">
+                          {{ card.description }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="bottomCard playerBottomCard rightCard"
+                  (dblclick)="removeCardFromHand(card)"
+                  (mouseenter)="currentHoveringCard = card"
+                  (mouseleave)="currentHoveringCard = undefined"
+                  [ngClass]="{
+                    darkenCard:
+                      !card.owned ||
+                      (card.inHand && card.owned) ||
+                      currentHoveringCard?.id === card.id
+                  }"
+                >
+                  <div class="cardBorder">
+                    <img
+                      [src]="'./assets/abilities/' + card.image"
+                      class="cardBackgroundImage"
+                    />
+                    <div
+                      class="wildCardSuites bottomWildCard bottomAbilityStuff"
+                    >
+                      <div class="abilityTitle paperBg">
+                        <div class="abilityTitleText">{{ card.name }}</div>
+                        <div class="abilitySuitsBox">
+                          <img
+                            *ngFor="let cost of card.cost"
+                            [src]="'./assets/' + cost + '.png'"
+                            class="abilitySuit"
+                          />
+                        </div>
+                      </div>
+                      <div class="abilityBorder1 paperBg"></div>
+                      <div class="abilityBorder2 paperBg"></div>
+                      <div class="abilityDescription paperBg">
+                        <div class="abilityDescriptionLevel">
+                          <div class="levelText paperBg">
+                            Level {{ card.level }}
+                          </div>
+                        </div>
+                        <div class="abilityDescriptionText">
+                          {{ card.description }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="closeMenuButtonBox" (click)="closeMenu()">
       <img src="./assets/close.png" class="closeMenuButton" />
       <img src="./assets/closeActive.png" class="closeMenuButton activeBtn" />
-
-      <div class="absoluteLeftSide">
-        <div class="boxRelativeSide">
-          <img src="./assets/deckBox.png" />
-        </div>
-      </div>
-
-      <div class="absoluteRightSide">
-        <div class="boxRelativeSide">
-          <img src="./assets/deckBox.png" />
-        </div>
-      </div>
     </div>
   </div>
 </div>

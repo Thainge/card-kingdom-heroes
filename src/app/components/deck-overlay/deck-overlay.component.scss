@@ -80,14 +80,14 @@
 
 .absoluteLeftSide {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 13%;
+  left: 4.5%;
 }
 
 .absoluteRightSide {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 13%;
+  right: 5%;
 }
 
 .boxRelativeSide {
@@ -95,4 +95,504 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+// Ability cards
+.playerBottomCard {
+  width: 0%;
+  -webkit-transform: translate(0, 0%);
+  -ms-transform: translate(0, 0%);
+  transform: translate(0, 0%);
+  -webkit-animation: cardFadeUp 800ms;
+  animation: cardFadeUp 800ms;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-transition: filter 0.5s;
+  -o-transition: filter 0.5s;
+  transition: filter 0.5s;
+}
+
+.cardBorder {
+  padding: 3%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 5%;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  position: relative;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.295), rgba(0, 0, 0, 0.295));
+  background-image: -o-linear-gradient(
+    rgba(0, 0, 0, 0.295),
+    rgba(0, 0, 0, 0.295)
+  );
+  z-index: 1;
+}
+
+.cardBorder::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.295), rgba(0, 0, 0, 0.295));
+  background-image: -o-linear-gradient(
+    rgba(0, 0, 0, 0.295),
+    rgba(0, 0, 0, 0.295)
+  );
+  z-index: -1;
+  border-radius: 5%;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  opacity: 0;
+}
+
+.darkenCard {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  -webkit-filter: brightness(0.5);
+  filter: brightness(0.5);
+}
+
+.cardBackgroundImage {
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  -webkit-user-drag: none;
+  -webkit-user-drag: none;
+  border-radius: 5%;
+}
+
+.wildCardSuites {
+  width: 96%;
+  height: 96%;
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: flex-end;
+  border-radius: 3%;
+  overflow: hidden;
+}
+
+.bottomWildCard {
+  width: 94%;
+  height: 96%;
+  left: 3%;
+  right: 3%;
+  top: 2%;
+}
+
+.bottomAbilityStuff {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.abilitySuitsBox {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-column-gap: 2%;
+  -moz-column-gap: 2%;
+  column-gap: 2%;
+  padding-right: 4%;
+}
+
+.abilitySuitsBoxHover {
+  position: absolute;
+  top: 0.5em;
+  right: -1.2em;
+  scale: 0.9;
+}
+
+.abilitySuit {
+  width: 10%;
+}
+
+.paperBg {
+  background: url(~src/assets/paper.png);
+}
+
+.paperBgEnemy {
+  background: url(~src/assets/paper.png);
+  z-index: 11 !important;
+}
+
+.abilityTitle {
+  position: relative;
+  width: 100%;
+  height: 10%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-position: center;
+  background-position: 50% 12%;
+  font-size: 100%;
+  z-index: 2;
+}
+
+.abilityDescription {
+  width: 100%;
+  height: 35%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-position: bottom;
+  background-position: 50% 90%;
+  font-size: 100%;
+  z-index: 2;
+}
+
+.abilityTitleText {
+  position: absolute;
+  top: -1%;
+  padding-left: 4%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.abilityBorder1 {
+  position: absolute;
+  background-position: top;
+  background-position: 50% 90%;
+  width: 3%;
+  top: 0;
+  right: 0;
+  height: 100%;
+}
+
+.abilityBorder2 {
+  position: absolute;
+  background-position: top;
+  background-position: 50% 90%;
+  width: 3%;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+
+.abilityBorder3 {
+  position: absolute;
+  background-position: top;
+  background-position: 50% 30%;
+  height: 3%;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.abilityBorder4 {
+  position: absolute;
+  background-position: top;
+  background-position: 50% 30%;
+  height: 3%;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.abilityDescription {
+  position: relative;
+}
+
+.abilityDescriptionLevel {
+  position: absolute;
+  top: -25%;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.levelText {
+  font-size: 100%;
+  border-radius: 5%;
+  background-position: center;
+  -webkit-box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.377);
+  box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.377);
+  padding: 3%;
+}
+
+.abilityDescriptionText {
+  width: 100%;
+  text-align: start;
+  padding-left: 4%;
+  padding-right: 4%;
+}
+
+.abilityTitlePlayer {
+  position: relative;
+  z-index: 12 !important;
+  background-position: 50% 5%;
+  height: 3%;
+  font-size: 90%;
+}
+
+.paperBgPlayer1 {
+  background-position: 50% 25%;
+  background-size: cover;
+  z-index: 11 !important;
+}
+
+.paperBgPlayer2 {
+  background-position: 50% 25%;
+  background-size: cover;
+  z-index: 11 !important;
+}
+
+.paperBgPlayer3 {
+  background-position: 50% 9%;
+  z-index: 11 !important;
+}
+
+// Cards container
+.cardsListBox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  height: 98.5%;
+}
+
+.cardsList {
+  width: 90%;
+  height: 82%;
+  padding-top: 9%;
+  padding-bottom: 3%;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1%;
+  row-gap: 1%;
+}
+
+.bottomCard {
+  position: relative;
+  width: 23%;
+  font-size: 0.8em;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.bottomCard:active {
+  scale: 0.95;
+}
+
+.rightCard:hover {
+  // padding-right: 130%;
+}
+
+.rightCard:active {
+  scale: 0.95;
+}
+
+.rightCard .cardBorder {
+  background-image: none !important;
+}
+
+.rightCard .bottomAbilityStuff {
+  box-shadow: 0 0 0.2em 0.2em rgba(0, 0, 0, 0.514);
+}
+
+.fancyScrollBar {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+.fancyScrollBar::-webkit-scrollbar {
+  border-radius: 1em;
+  width: 20px;
+}
+
+.fancyScrollBar::-webkit-scrollbar-track {
+  border-radius: 1em;
+}
+
+.fancyScrollBar::-webkit-scrollbar-thumb {
+  background-color: #e4e4e4;
+  border-radius: 1em;
+  // box-shadow: inset 2px 2px 0.6em 2px #000, 0 0 0.2em 2px #000;
+  box-shadow: inset 2px 2px 0.6em 2px #000, inset 2px 2px 0.6em 2px #0000008c;
+}
+
+.absoluteCardsSortBtn {
+  position: absolute;
+  top: 3.5%;
+  left: 5%;
+  z-index: 5;
+}
+
+.btnText {
+  position: absolute;
+  text-align: center;
+  color: white;
+  font-family: "headerFont";
+  background: -webkit-linear-gradient(#f5f2e6, #a8a075);
+  -webkit-text-stroke: 1px #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+  font-size: 0.8em;
+}
+
+.absoluteCardsSortText {
+  position: absolute;
+  top: 2.5%;
+  left: 22%;
+  z-index: 5;
+  scale: 0.8;
+}
+
+.absoluteCardsCountText {
+  position: absolute;
+  top: 2.5%;
+  right: -1%;
+  z-index: 5;
+  scale: 0.8;
+}
+
+.relativeBoxContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  filter: drop-shadow(0 0.3em 0.3em black);
+  transition: all 0.1s;
+  -webkit-transform-style: preserve-3d;
+}
+
+.relativeBoxContainerHover:hover {
+  scale: 1.1;
+}
+.relativeBoxContainerHover:active {
+  transition: none;
+  scale: 1;
+}
+
+.displayText {
+  font-family: soho;
+  font-style: italic;
+  color: #e9e9b2;
+  font-size: 1.7em;
+  margin-bottom: 0.2em;
+  position: absolute;
+}
+
+.displayCountText {
+  font-family: soho;
+  font-style: italic;
+  color: #e9e9b2;
+  font-size: 1.7em;
+  margin-bottom: 0.2em;
+  position: absolute;
+}
+
+.smallerSide {
+  scale: 0.9;
+}
+
+.cardsListBoxRight {
+  position: absolute;
+  top: 29%;
+  left: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  height: 98.5%;
+}
+
+.cardsListRight {
+  width: 100%;
+  height: 82%;
+  padding-top: 9%;
+  padding-bottom: 3%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  column-gap: 1%;
+  row-gap: 1%;
+}
+
+.rightCard {
+  width: 75.8%;
+  position: relative;
+  margin-top: -42%;
+  display: flex;
+  justify-content: center;
+  z-index: 3;
+}
+
+.cardRelative {
+  display: flex;
+  justify-content: center;
+}
+
+.absoluteRightCard {
+  position: absolute;
+  left: -75%;
+  z-index: 4;
 }
