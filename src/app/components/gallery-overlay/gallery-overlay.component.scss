@@ -109,14 +109,10 @@
   align-items: center;
   position: absolute;
   width: 30%;
-  top: 18%;
-  height: 63%;
+  top: 20%;
+  height: 62%;
   left: 17.5%;
   z-index: 2;
-}
-
-.heroImage {
-  width: 2%;
 }
 
 .list {
@@ -125,6 +121,7 @@
   display: flex;
   flex-wrap: wrap;
   height: 100%;
+  padding-right: 1em;
 }
 
 .list::-webkit-scrollbar {
@@ -140,6 +137,37 @@
 .list::-webkit-scrollbar-thumb {
   color: #b29b58;
   background-color: #b29b58;
+}
+
+.miniGrid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  row-gap: 1em;
+  column-gap: 0.1em;
+}
+
+.relativeCardBox {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 31.3%;
+}
+
+.relativeCardBox:active {
+  scale: 0.97;
+}
+
+.heroImage {
+  width: 87%;
+  border-radius: 0.5em;
+}
+
+.absoluteHeroBorder {
+  position: absolute;
+  width: 90%;
+  height: 100%;
 }
 
 // right side
@@ -159,4 +187,27 @@
   flex-direction: column;
   height: 100%;
   scale: 0.3;
+}
+
+.splitTitle {
+  font-size: 1.1em;
+  text-align: center;
+  color: white;
+  font-family: "headerFont";
+  background: -webkit-linear-gradient(#f5f2e6, #a8a075);
+  -webkit-text-stroke: 1.5px #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+  width: 100%;
+}
+
+.extraSplitTitle {
+  margin-top: 4em;
 }

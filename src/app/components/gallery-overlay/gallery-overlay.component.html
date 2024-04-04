@@ -19,29 +19,44 @@
     <div class="leftBox">
       <div class="relativeBox">
         <div class="list">
-          <h1>Heroes</h1>
-          <div
-            class="relativeCardBox"
-            *ngFor="let item of [0, 1, 2, 3, 4, 5, 6, 7]"
-          >
-            <img src="./assets/players/link.png" class="heroImage" />
-            <img src="./assets/heroBorder.png" class="absoluteHeroBorder" />
+          <h1 class="splitTitle">Heroes</h1>
+          <div class="miniGrid">
+            <div
+              class="relativeCardBox"
+              *ngFor="let item of [0, 1, 2, 3, 4, 5, 6, 7]"
+            >
+              <img src="./assets/players/link.png" class="heroImage" />
+              <img
+                src="./assets/galleryBorder.png"
+                class="absoluteHeroBorder"
+              />
+            </div>
           </div>
-          <h1>Enemies</h1>
-          <div
-            class="relativeCardBox"
-            *ngFor="let item of [0, 1, 2, 3, 4, 5, 6, 7]"
-          >
-            <img src="./assets/players/link.png" class="heroImage" />
-            <img src="./assets/heroBorder.png" class="absoluteHeroBorder" />
+          <h1 class="splitTitle extraSplitTitle">Enemies</h1>
+          <div class="miniGrid">
+            <div
+              class="relativeCardBox"
+              *ngFor="let item of [0, 1, 2, 3, 4, 5, 6, 7]"
+            >
+              <img src="./assets/players/dummy.png" class="heroImage" />
+              <img
+                src="./assets/galleryBorder.png"
+                class="absoluteHeroBorder"
+              />
+            </div>
           </div>
-          <h1>Bosses</h1>
-          <div
-            class="relativeCardBox"
-            *ngFor="let item of [0, 1, 2, 3, 4, 5, 6, 7]"
-          >
-            <img src="./assets/players/link.png" class="heroImage" />
-            <img src="./assets/heroBorder.png" class="absoluteHeroBorder" />
+          <h1 class="splitTitle extraSplitTitle">Bosses</h1>
+          <div class="miniGrid">
+            <div
+              class="relativeCardBox"
+              *ngFor="let item of [0, 1, 2, 3, 4, 5, 6, 7]"
+            >
+              <img src="./assets/players/moblin.png" class="heroImage" />
+              <img
+                src="./assets/galleryBorder.png"
+                class="absoluteHeroBorder"
+              />
+            </div>
           </div>
         </div>
       </div>
