@@ -13,41 +13,51 @@
   <div class="optionsMenuBackdrop"></div>
   <div class="overlayBox">
     <img class="overlayPanelBg" src="./assets/book.png" />
-    <div class="overlalPanelTitleLeft">Gallery</div>
-    <div class="overlalPanelTitleRight">Details</div>
+    <div class="overlalPanelTitle overlalPanelTitleLeft">Gallery</div>
+    <div class="overlalPanelTitle overlalPanelTitleRight">Details</div>
     <!-- Left side -->
     <div class="leftBox">
-      <div class="list">
-        <h1>Heroes</h1>
-        <img
-          *ngFor="let item of [0, 1, 2, 3, 4, 5, 6, 7]"
-          src="./assets/players/link.png"
-          class="heroImage"
-        />
-        <h1>Enemies</h1>
-        <img
-          *ngFor="let item of [0, 1, 2, 3, 4, 5, 6, 7]"
-          src="./assets/players/link.png"
-          class="heroImage"
-        />
-        <h1>Bosses</h1>
-        <img
-          *ngFor="let item of [0, 1, 2, 3, 4, 5, 6, 7]"
-          src="./assets/players/link.png"
-          class="heroImage"
-        />
+      <div class="relativeBox">
+        <div class="list">
+          <h1>Heroes</h1>
+          <div
+            class="relativeCardBox"
+            *ngFor="let item of [0, 1, 2, 3, 4, 5, 6, 7]"
+          >
+            <img src="./assets/players/link.png" class="heroImage" />
+            <img src="./assets/heroBorder.png" class="absoluteHeroBorder" />
+          </div>
+          <h1>Enemies</h1>
+          <div
+            class="relativeCardBox"
+            *ngFor="let item of [0, 1, 2, 3, 4, 5, 6, 7]"
+          >
+            <img src="./assets/players/link.png" class="heroImage" />
+            <img src="./assets/heroBorder.png" class="absoluteHeroBorder" />
+          </div>
+          <h1>Bosses</h1>
+          <div
+            class="relativeCardBox"
+            *ngFor="let item of [0, 1, 2, 3, 4, 5, 6, 7]"
+          >
+            <img src="./assets/players/link.png" class="heroImage" />
+            <img src="./assets/heroBorder.png" class="absoluteHeroBorder" />
+          </div>
+        </div>
       </div>
     </div>
     <!-- Right side -->
     <div class="rightBox">
-      <img src="./assets/players/link.png" class="detailImage" />
-      <div class="healthBoxRight">
-        <img src="./assets/default/sword.png" class="iconImg" />
-        <div class="iconTextRight">5</div>
-      </div>
-      <div class="attackBoxRight">
-        <img src="./assets/default/playerHealth.png" class="iconImg" />
-        <div class="iconTextRight">1</div>
+      <div class="relativeBoxRight">
+        <img src="./assets/players/link.png" class="detailImage" />
+        <div class="healthBoxRight">
+          <img src="./assets/default/sword.png" class="iconImg" />
+          <div class="iconTextRight">5</div>
+        </div>
+        <div class="attackBoxRight">
+          <img src="./assets/default/playerHealth.png" class="iconImg" />
+          <div class="iconTextRight">1</div>
+        </div>
       </div>
     </div>
     <div class="closeMenuButtonBox" (click)="closeMenu()">
