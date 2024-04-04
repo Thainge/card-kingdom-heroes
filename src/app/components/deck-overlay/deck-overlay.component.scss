@@ -57,7 +57,7 @@
 .closeMenuButtonBox {
   position: absolute;
   top: 2.1%;
-  right: 1.3%;
+  right: 0.8%;
 }
 
 .closeMenuButton {
@@ -76,4 +76,23 @@
   position: absolute;
   left: 0;
   opacity: var(--closeOpacity);
+}
+
+.absoluteLeftSide {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.absoluteRightSide {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.boxRelativeSide {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
