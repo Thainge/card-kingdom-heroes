@@ -91,9 +91,9 @@ export class MapComponent implements AfterViewInit, OnInit {
   specialLevelsData: SpecialLevels = {
     wheelShow: false,
     wheelFinished: false,
-    flyingShipShow: true,
+    flyingShipShow: false,
     flyingShipFinished: false,
-    sailingBoatShowShow: true,
+    sailingBoatShowShow: false,
     sailingBoatShowFinished: false,
 
     hero1Show: false,
