@@ -14,6 +14,8 @@ interface AbilityDeckCard extends AbilityCard {
   inHand: boolean;
 }
 
+type SortValue = 'Level' | 'Cost' | 'Color';
+
 @Component({
   selector: 'app-deck-overlay-overlay',
   templateUrl: './deck-overlay.component.html',
@@ -33,6 +35,7 @@ export class DeckOverlayComponent implements OnInit {
   abilityCards: AbilityDeckCard[] = [];
   abilityHand: AbilityDeckCard[] = [];
   currentHoveringCard: AbilityDeckCard | undefined;
+  currentSort: SortValue = 'Color';
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
@@ -78,6 +81,10 @@ export class DeckOverlayComponent implements OnInit {
     this.abilityCards = this.abilityCards.map((x) => {
       return { ...x, inHand: false };
     });
+  }
+
+  sortBy() {
+    // this.currentSort
   }
 
   closeMenu() {

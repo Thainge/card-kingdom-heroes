@@ -434,14 +434,6 @@
   scale: 0.95;
 }
 
-.rightCard:hover {
-  // padding-right: 130%;
-}
-
-.rightCard:active {
-  scale: 0.95;
-}
-
 .rightCard .cardBorder {
   background-image: none !important;
 }
@@ -583,7 +575,6 @@
   margin-top: -42%;
   display: flex;
   justify-content: center;
-  z-index: 3;
 }
 
 .cardRelative {
@@ -594,5 +585,23 @@
 .absoluteRightCard {
   position: absolute;
   left: -75%;
-  z-index: 4;
+}
+
+.absoluteHoverBox {
+  position: absolute;
+  top: -62%;
+  left: 15%;
+  width: 70%;
+  height: 159%;
+  z-index: 9999;
+  border-radius: 1%;
+  transition: all 0.3s;
+}
+
+.absoluteHoverBox:hover {
+  background: #00000025;
+}
+
+.absoluteHoverBox:active {
+  background: #00000087;
 }

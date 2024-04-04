@@ -18,7 +18,10 @@
       <div class="boxRelativeSide">
         <img src="./assets/leftBox.png" />
         <div class="absoluteCardsSortBtn">
-          <div class="relativeBoxContainer relativeBoxContainerHover">
+          <div
+            class="relativeBoxContainer relativeBoxContainerHover"
+            (click)="sortBy()"
+          >
             <img src="./assets/button.png" />
             <div class="btnText">Sort By</div>
           </div>
@@ -26,7 +29,7 @@
         <div class="absoluteCardsSortText">
           <div class="relativeBoxContainer">
             <img src="./assets/shopBtnBg.png" />
-            <div class="displayText">Level</div>
+            <div class="displayText">{{ currentSort }}</div>
           </div>
         </div>
         <div class="cardsListBox">
@@ -100,13 +103,18 @@
               class="rightCard"
               *ngFor="let card of abilityHand; index as i; trackBy: trackById"
             >
-              <div class="cardRelative">
+              <div
+                class="cardRelative"
+                [ngStyle]="{
+                  'z-index':5 +i,
+                }"
+              >
                 <div
                   class="bottomCard playerBottomCard rightCard absoluteRightCard"
                   [ngClass]="{
                     darkenCard: !card.owned || (card.inHand && card.owned)
                   }"
-                  *ngIf="currentHoveringCard?.id === card.id || true"
+                  *ngIf="currentHoveringCard?.id === card.id"
                 >
                   <div class="cardBorder">
                     <img
@@ -142,15 +150,15 @@
                   </div>
                 </div>
                 <div
-                  class="bottomCard playerBottomCard rightCard"
-                  (dblclick)="removeCardFromHand(card)"
+                  class="absoluteHoverBox"
                   (mouseenter)="currentHoveringCard = card"
                   (mouseleave)="currentHoveringCard = undefined"
+                  (dblclick)="removeCardFromHand(card)"
+                ></div>
+                <div
+                  class="bottomCard playerBottomCard rightCard"
                   [ngClass]="{
-                    darkenCard:
-                      !card.owned ||
-                      (card.inHand && card.owned) ||
-                      currentHoveringCard?.id === card.id
+                    darkenCard: !card.owned || (card.inHand && card.owned)
                   }"
                 >
                   <div class="cardBorder">
