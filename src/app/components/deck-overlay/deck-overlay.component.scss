@@ -371,6 +371,7 @@
   text-align: start;
   padding-left: 4%;
   padding-right: 4%;
+  font-size: 1.3em;
 }
 
 .abilityTitlePlayer {
@@ -417,13 +418,13 @@
   padding-bottom: 3%;
   display: flex;
   flex-wrap: wrap;
-  column-gap: 1%;
-  row-gap: 1%;
+  column-gap: 2%;
+  row-gap: 2%;
 }
 
 .bottomCard {
   position: relative;
-  width: 23%;
+  width: 30.5%;
   font-size: 0.8em;
   -webkit-user-select: none;
   user-select: none;
@@ -440,6 +441,14 @@
 
 .rightCard .bottomAbilityStuff {
   box-shadow: 0 0 0.2em 0.2em rgba(0, 0, 0, 0.514);
+}
+
+.rightCard .abilityDescriptionText {
+  font-size: 1em;
+}
+
+.rightCard .bottomCard:active {
+  scale: 1;
 }
 
 .fancyScrollBar {
@@ -546,6 +555,14 @@
   scale: 0.9;
 }
 
+.smallerSideBtn:hover {
+  scale: 1 !important;
+}
+
+.smallerSideBtn:active {
+  scale: 0.9 !important;
+}
+
 .cardsListBoxRight {
   position: absolute;
   top: 29%;
@@ -589,10 +606,10 @@
 
 .absoluteHoverBox {
   position: absolute;
-  top: -62%;
+  top: -65%;
   left: 15%;
   width: 70%;
-  height: 159%;
+  height: 164%;
   z-index: 9999;
   border-radius: 1%;
   transition: all 0.3s;
@@ -604,4 +621,217 @@
 
 .absoluteHoverBox:active {
   background: #00000087;
+}
+
+.menuBtnBox {
+  position: absolute;
+  bottom: 0.7%;
+  right: 8.5%;
+  z-index: 3;
+}
+.menuBtnRelative {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.1s;
+  -webkit-transform-style: preserve-3d;
+}
+.menuBtnRelative:hover {
+  scale: 1.1;
+}
+.menuBtnRelative:active {
+  scale: 0.9;
+}
+.doneText {
+  position: absolute;
+  margin-left: 4%;
+  text-align: center;
+  color: white;
+  font-family: "headerFont";
+  background: -webkit-linear-gradient(#f5f2e6, #a8a075);
+  -webkit-text-stroke: 2px #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.floatingText {
+  position: absolute;
+  bottom: 12%;
+  right: -4%;
+  z-index: 99;
+}
+
+.floatingRelative {
+  position: relative;
+}
+
+.floatingTextMessage {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3em;
+  width: 15em;
+  left: -12.3em;
+  top: -1.5em;
+  color: rgb(223, 0, 0);
+  text-shadow: 0 0 0.1em black;
+  -webkit-user-select: none;
+  user-select: none;
+  text-align: center;
+}
+
+.fade {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  pointer-events: none !important;
+
+  opacity: 0;
+  -webkit-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+// Check Save
+
+.checkSurrenderOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkSurrenderBox {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1005;
+}
+
+.surrenderMenuBackdrop {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1001;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1001;
+}
+
+.checkSurrenderBg {
+  width: 70%;
+}
+
+.surrenderText {
+  color: whitesmoke !important;
+}
+
+.surrenderTitle {
+  position: absolute;
+  top: 0;
+  text-align: center;
+  color: white;
+  font-family: "headerFont";
+  background: -webkit-linear-gradient(#f5f2e6, #c1b98e);
+  -webkit-text-stroke: 1px #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+  font-size: 0.9em;
+  margin-top: 3em;
+  height: 5em;
+  width: 60%;
+}
+
+.surrenderBtns {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 3em;
+  bottom: 2em;
+  z-index: 6;
+}
+
+.finishButtonGo {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  scale: 0.9;
+}
+
+.finishButton {
+  width: 10em;
+  -webkit-user-drag: none;
+}
+
+.finishButtonGo:hover {
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.finishButtonGo:active {
+  -webkit-transform: scale(0.9);
+  -ms-transform: scale(0.9);
+  transform: scale(0.9);
+}
+
+.finishButtonText {
+  position: absolute;
+  margin-bottom: 2px;
+}
+
+.finishedBox {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  color: white;
+}
+
+.biggerText {
+  font-size: 1.1em;
 }

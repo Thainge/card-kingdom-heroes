@@ -14,7 +14,7 @@ interface AbilityDeckCard extends AbilityCard {
   inHand: boolean;
 }
 
-type SortValue = 'Level' | 'Cost' | 'Color';
+type SortValue = 'Color' | 'Level' | 'Cost';
 
 @Component({
   selector: 'app-deck-overlay-overlay',
@@ -31,24 +31,32 @@ type SortValue = 'Level' | 'Cost' | 'Color';
   ],
 })
 export class DeckOverlayComponent implements OnInit {
-  @Input('open') open: boolean = false;
-  abilityCards: AbilityDeckCard[] = [];
-  abilityHand: AbilityDeckCard[] = [];
-  currentHoveringCard: AbilityDeckCard | undefined;
-  currentSort: SortValue = 'Color';
-
-  @Output() onCloseMenu = new EventEmitter<boolean>(false);
-
-  constructor(private userService: playerService) {}
-
-  ngOnInit() {
+  open: boolean = false;
+  @Input('open') set openChanged(x: boolean) {
+    this.open = x;
     this.abilityCards = this.userService.getAbilityCards().map((x, i) => {
       if (i < 16) {
         return { ...x, owned: true, inHand: false };
       }
       return { ...x, owned: false, inHand: false };
     });
+    this.initialAbilityHand = JSON.parse(JSON.stringify(this.abilityHand));
+    this.sortCards();
   }
+  abilityCards: AbilityDeckCard[] = [];
+  abilityHand: AbilityDeckCard[] = [];
+  initialAbilityHand: AbilityDeckCard[] = [];
+  currentHoveringCard: AbilityDeckCard | undefined;
+  currentSort: SortValue = 'Color';
+  errorList: any[] = [];
+  errorListInactive: any[] = [];
+  areYouSurePopup: boolean = false;
+
+  @Output() onCloseMenu = new EventEmitter<boolean>(false);
+
+  constructor(private userService: playerService) {}
+
+  ngOnInit() {}
 
   addCardToHand(card: AbilityDeckCard) {
     if (this.abilityHand.length === 16) {
@@ -63,6 +71,15 @@ export class DeckOverlayComponent implements OnInit {
 
       return x;
     });
+  }
+
+  pushError(message: string) {
+    const ID = this.errorList.length + 1;
+    this.errorList.push({ id: ID, message: message });
+
+    setTimeout(() => {
+      this.errorListInactive.push(ID);
+    }, 1100);
   }
 
   removeCardFromHand(card: AbilityDeckCard) {
@@ -83,11 +100,139 @@ export class DeckOverlayComponent implements OnInit {
     });
   }
 
-  sortBy() {
-    // this.currentSort
+  nextSort() {
+    if (this.currentSort === 'Color') {
+      this.currentSort = 'Cost';
+    } else if (this.currentSort === 'Cost') {
+      this.currentSort = 'Level';
+    } else if (this.currentSort === 'Level') {
+      this.currentSort = 'Color';
+    }
+
+    this.sortCards();
+  }
+
+  sortCards() {
+    // Sort by cost
+    if (this.currentSort === 'Color') {
+      let onlyRedArray: AbilityDeckCard[] = [];
+      let onlyBlackArray: AbilityDeckCard[] = [];
+      let bothArray: AbilityDeckCard[] = [];
+
+      // First sort by cost
+      this.abilityCards = this.abilityCards.sort((a, b) => {
+        if (a.cost.length < b.cost.length) {
+          return -1;
+        }
+        if (a.cost.length > b.cost.length) {
+          return 1;
+        }
+        return 0;
+      });
+
+      // Manually sort
+      this.abilityCards.forEach((x) => {
+        const includesHearts = x.cost.includes('hearts');
+        const includesDiamonds = x.cost.includes('diamonds');
+        const includesRed = x.cost.includes('red');
+        const includesSpades = x.cost.includes('spades');
+        const includesClubs = x.cost.includes('clubs');
+        const includesBlack = x.cost.includes('black');
+        const onlyRed =
+          (includesHearts || includesDiamonds || includesRed) &&
+          !includesSpades &&
+          !includesClubs &&
+          !includesBlack;
+        const onlyBlack =
+          (includesSpades || includesClubs || includesBlack) &&
+          !includesHearts &&
+          !includesDiamonds &&
+          !includesRed;
+
+        if (onlyRed || x.cost.length === 0) {
+          onlyRedArray.push(x);
+        } else if (onlyBlack) {
+          onlyBlackArray.push(x);
+        } else {
+          bothArray.push(x);
+        }
+      });
+
+      // Combine arrays
+      this.abilityCards = [...onlyRedArray, ...onlyBlackArray, ...bothArray];
+    }
+
+    // Sort by cost
+    if (this.currentSort === 'Cost') {
+      this.abilityCards = this.abilityCards.sort((a, b) => {
+        if (a.cost.length < b.cost.length) {
+          return -1;
+        }
+        if (a.cost.length > b.cost.length) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+
+    // Sort by Level
+    if (this.currentSort === 'Level') {
+      this.abilityCards = this.abilityCards.sort((a, b) => {
+        if (a.level < b.level) {
+          return -1;
+        }
+        if (a.level > b.level) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+  }
+
+  checkCloseMenu() {
+    const deckIsSame = this.deckIsSame();
+    if (!deckIsSame) {
+      this.areYouSurePopup = true;
+    } else {
+      this.onCloseMenu.emit(false);
+    }
+  }
+
+  deckIsSame(): boolean {
+    const initialHand = this.initialAbilityHand;
+    const currentHand = this.abilityHand;
+
+    let isSame = true;
+    currentHand.forEach((x) => {
+      const found = currentHand.find((a) => a.id === x.id);
+      if (!found) {
+        isSame = false;
+      }
+    });
+
+    if (initialHand.length !== currentHand.length) {
+      isSame = false;
+    }
+
+    return isSame;
+  }
+
+  saveDeck() {
+    const maxHandSize = 1;
+    if (
+      this.abilityHand.length < maxHandSize &&
+      this.abilityCards.length >= maxHandSize
+    ) {
+      this.pushError('Invalid deck length');
+      return;
+    } else {
+      this.closeMenu();
+    }
   }
 
   closeMenu() {
+    this.initialAbilityHand = [];
+    this.areYouSurePopup = false;
     this.onCloseMenu.emit(false);
   }
 

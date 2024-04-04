@@ -14,13 +14,37 @@
   <div class="overlayBox">
     <img class="overlayPanelBg" src="./assets/wideMenu.png" />
     <div class="overlalPanelTitle">Deck</div>
+    <div class="menuBtnBox">
+      <div class="menuBtnRelative" (click)="saveDeck()">
+        <img src="./assets/menuBtn.png" class="menuBtn" />
+        <div class="doneText">Save</div>
+      </div>
+    </div>
+    <!-- Floating text -->
+    <div class="floatingText">
+      <div class="floatingRelative" *ngFor="let item of errorList">
+        <div
+          class="floatingTextMessage"
+          [ngClass]="{
+            fade: errorListInactive.includes(item.id)
+          }"
+          [@zoomInEnter]="{
+            value: '',
+            params: { duration: 1000, delay: 0, translate: '30px' }
+          }"
+          [@fadeOutLeave]
+        >
+          {{ item.message }}
+        </div>
+      </div>
+    </div>
     <div class="absoluteLeftSide">
       <div class="boxRelativeSide">
         <img src="./assets/leftBox.png" />
         <div class="absoluteCardsSortBtn">
           <div
             class="relativeBoxContainer relativeBoxContainerHover"
-            (click)="sortBy()"
+            (click)="nextSort()"
           >
             <img src="./assets/button.png" />
             <div class="btnText">Sort By</div>
@@ -84,7 +108,7 @@
         <img src="./assets/rightBox.png" />
         <div class="absoluteCardsSortBtn">
           <div
-            class="relativeBoxContainer relativeBoxContainerHover smallerSide"
+            class="relativeBoxContainer relativeBoxContainerHover smallerSide smallerSideBtn"
             (click)="resetDeck()"
           >
             <img src="./assets/button.png" />
@@ -114,7 +138,10 @@
                   [ngClass]="{
                     darkenCard: !card.owned || (card.inHand && card.owned)
                   }"
-                  *ngIf="currentHoveringCard?.id === card.id"
+                  *ngIf="
+                    currentHoveringCard?.id === card.id &&
+                    abilityHand.length > 1
+                  "
                 >
                   <div class="cardBorder">
                     <img
@@ -200,9 +227,51 @@
         </div>
       </div>
     </div>
-    <div class="closeMenuButtonBox" (click)="closeMenu()">
+    <div class="closeMenuButtonBox" (click)="checkCloseMenu()">
       <img src="./assets/close.png" class="closeMenuButton" />
       <img src="./assets/closeActive.png" class="closeMenuButton activeBtn" />
+    </div>
+  </div>
+
+  <div class="checkSurrenderOverlay">
+    <div
+      class="surrenderMenuBackdrop"
+      *ngIf="areYouSurePopup"
+      [@fadeEnter]="{
+        value: '',
+        params: { duration: 500, delay: 0 }
+      }"
+      [@fadeOutLeave]="{
+        value: '',
+        params: { duration: 500, delay: 0 }
+      }"
+    ></div>
+    <div
+      class="checkSurrenderBox"
+      *ngIf="areYouSurePopup"
+      [@fadeEnter]="{
+        value: '',
+        params: { duration: 500, delay: 0 }
+      }"
+      [@fadeOutLeave]="{
+        value: '',
+        params: { duration: 500, delay: 0 }
+      }"
+    >
+      <img class="checkSurrenderBg" src="./assets/box.png" />
+      <div class="surrenderTitle">
+        Are you sure you sure? All unsaved changes will be lost.
+      </div>
+      <div class="surrenderBtns">
+        <div class="finishButtonGo" (click)="areYouSurePopup = false">
+          <img class="finishButton" [src]="'./assets/button.png'" />
+          <div class="finishButtonText btnText biggerText">Cancel</div>
+        </div>
+        <div class="finishButtonGo" (click)="closeMenu()">
+          <img class="finishButton" [src]="'./assets/button.png'" />
+          <div class="finishButtonText btnText biggerText">Continue</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
