@@ -6,17 +6,16 @@ import {
   fadeInOnEnterAnimation,
   zoomOutOnLeaveAnimation,
 } from 'angular-animations';
-import { gameTheme } from 'src/app/models/theme';
 
-interface GalleryImage {
+interface MissionDetails {
   image: string;
-  theme: gameTheme;
+  title: string;
 }
 
 @Component({
-  selector: 'app-gallery-overlay-overlay',
-  templateUrl: './gallery-overlay.component.html',
-  styleUrls: ['./gallery-overlay.component.scss'],
+  selector: 'app-battle-start-overlay-overlay',
+  templateUrl: './battle-start-overlay.component.html',
+  styleUrls: ['./battle-start-overlay.component.scss'],
   standalone: true,
   imports: [CommonModule],
   animations: [
@@ -27,53 +26,19 @@ interface GalleryImage {
     zoomOutOnLeaveAnimation({ anchor: 'zoomOutLeave' }),
   ],
 })
-export class GalleryOverlayComponent implements OnInit {
+export class BattleStartOverlayComponent implements OnInit {
   @Input('open') open: boolean = false;
 
-  heroes: GalleryImage[] = [];
-  bosses: GalleryImage[] = [];
-  enemies: GalleryImage[] = [];
-  currentImage: GalleryImage | undefined;
+  missionDetails: MissionDetails = {
+    image: 'forest.png',
+    title: 'Skyloft',
+  };
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
   constructor() {}
 
-  ngOnInit() {
-    const hero: GalleryImage = {
-      image: 'mario.png',
-      theme: 'mario',
-    };
-    const boss: GalleryImage = {
-      image: 'moblin.png',
-      theme: 'default',
-    };
-    const enemy: GalleryImage = {
-      image: 'dummy.png',
-      theme: 'default',
-    };
-    this.currentImage = hero;
-    this.heroes = [hero, hero, hero, hero, hero, hero, hero, hero];
-    this.bosses = [boss, boss, boss, boss, boss, boss, boss];
-    this.enemies = [
-      enemy,
-      enemy,
-      enemy,
-      enemy,
-      enemy,
-      enemy,
-      enemy,
-      enemy,
-      enemy,
-      enemy,
-      enemy,
-      enemy,
-      enemy,
-      enemy,
-      enemy,
-      enemy,
-    ];
-  }
+  ngOnInit() {}
 
   closeMenu() {
     this.onCloseMenu.emit(false);

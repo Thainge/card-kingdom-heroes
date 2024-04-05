@@ -835,3 +835,40 @@
 .biggerText {
   font-size: 1.1em;
 }
+
+.newImageBox {
+  position: absolute;
+  width: 100%;
+  top: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s;
+}
+
+.newImage {
+  width: 50%;
+  animation: newHoverAnimation 1.5s infinite forwards linear;
+}
+
+@keyframes newHoverAnimation {
+  0% {
+    scale: 0.9;
+  }
+
+  50% {
+    scale: 1;
+  }
+
+  100% {
+    scale: 0.9;
+  }
+}
+
+.fadeInNew {
+  opacity: 1;
+}
+
+.fadeOutNew {
+  opacity: 0;
+}

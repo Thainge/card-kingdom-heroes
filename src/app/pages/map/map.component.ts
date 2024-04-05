@@ -14,6 +14,7 @@ import {
   zoomInOnEnterAnimation,
   zoomOutOnLeaveAnimation,
 } from 'angular-animations';
+import { BattleStartOverlayComponent } from 'src/app/components/battle-start-overlay/battle-start-overlay.component';
 import { DialogComponent } from 'src/app/components/dialogComponent/dialog.component';
 import { MapOverlayComponent } from 'src/app/components/map-overlay/map-overlay.component';
 import { DotDto, FlagDto } from 'src/app/models/flag';
@@ -66,7 +67,12 @@ interface SpecialLevels {
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
   standalone: true,
-  imports: [CommonModule, DialogComponent, MapOverlayComponent],
+  imports: [
+    CommonModule,
+    DialogComponent,
+    MapOverlayComponent,
+    BattleStartOverlayComponent,
+  ],
   animations: [
     fadeInOnEnterAnimation({ anchor: 'fadeEnter' }),
     fadeOutOnLeaveAnimation({ anchor: 'fadeOutLeave' }),
@@ -124,6 +130,7 @@ export class MapComponent implements AfterViewInit, OnInit {
     town4FightShow: false,
     town4FightFinished: false,
   };
+  battleStartOpen: boolean = true;
 
   constructor(private loadingService: LoadingService) {}
 
@@ -198,7 +205,7 @@ export class MapComponent implements AfterViewInit, OnInit {
         friction: 0.04,
       });
     }
-    await this.timeout(3000);
+    await this.timeout(4000);
     this.loadingService.displayOptions$.next(true);
   }
 
@@ -217,6 +224,10 @@ export class MapComponent implements AfterViewInit, OnInit {
   determineDelayDot(index: number): number {
     const delay = (index + 1) * 200;
     return delay + 200;
+  }
+
+  showBattleStartOverlay() {
+    this.battleStartOpen = true;
   }
 
   finishLevel(flag: FlagDto) {

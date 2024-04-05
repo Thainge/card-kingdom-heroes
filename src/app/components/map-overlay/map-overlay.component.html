@@ -28,7 +28,7 @@
   >
     <div class="progressBarContainer">
       <img src="./assets/progressBar.png" class="progressBarImage" />
-      <img src="./assets/progressStar.png" class="progressStarImage" />
+      <img src="./assets/battleStar.png" class="progressStarImage" />
       <div class="progressText">0/80</div>
     </div>
   </div>
@@ -51,7 +51,12 @@
     [@fadeUpEnter]="{ value: '', params: { duration: 500, delay: 0 } }"
   >
     <div class="bottomRightContainer">
-      <div class="relativeIcon">
+      <div class="relativeIcon shopHover">
+        <img
+          src="./assets/shopPoints.png"
+          class="alertIcon shopIcon"
+          *ngIf="true"
+        />
         <img src="./assets/notification.png" class="alertIcon" *ngIf="false" />
         <img
           src="./assets/shop.png"
@@ -60,11 +65,16 @@
         />
       </div>
       <div class="overlayHeroBox" (click)="heroRoomOpen = true">
+        <div class="iconContainer" *ngIf="true">
+          <div class="iconBox">
+            <img src="./assets/heroPoints.png" class="smallerIcon" />
+            <div class="iconText">3</div>
+          </div>
+        </div>
         <img src="./assets/playerIcons/link.png" class="heroIcon" />
         <img src="./assets/hero.png" class="overlayIcon" />
       </div>
       <div class="relativeIcon">
-        <img src="./assets/notification.png" class="alertIcon" *ngIf="false" />
         <img
           src="./assets/deck.png"
           class="overlayIcon"
@@ -72,7 +82,6 @@
         />
       </div>
       <div class="relativeIcon">
-        <img src="./assets/notification.png" class="alertIcon" *ngIf="false" />
         <img
           src="./assets/gallery.png"
           class="overlayIcon"

@@ -1,5 +1,9 @@
 :root {
   --heroScale: 0.55;
+  --heroMargin1: 0;
+  --heroMargin2: 0;
+  --shopTransform1: 0;
+  --shopTransform2: 0;
 }
 
 .container {
@@ -107,15 +111,21 @@
 .overlayHeroBox {
   transition: scale 0.3s;
   --heroScale: 0.55;
+  --heroMargin1: 0;
+  --heroMargin2: 0;
 }
 
 .overlayHeroBox:hover {
   --heroScale: 0.65;
+  --heroMargin1: 0.3em;
+  --heroMargin2: -0.3em;
   scale: 1;
 }
 
 .overlayHeroBox:active {
   --heroScale: 0.5;
+  --heroMargin1: 0;
+  --heroMargin2: 0;
 }
 
 .bottomRightContainer {
@@ -161,20 +171,78 @@
   right: 0;
   z-index: 3;
   pointer-events: none;
-  scale: 0.8;
-  animation: zoomInOut 1s linear infinite;
+  scale: 0.6;
+  animation: zoomInOut 1.5s linear infinite;
+}
+
+.iconContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(var(--heroMargin1), var(--heroMargin2));
+  transition: all 0.3s;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.iconBox {
+  position: relative;
+  transition: all 0.3s;
+  scale: var(--heroScale);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.iconText {
+  position: absolute;
+  font-size: 2em;
+  font-family: soho;
+  margin-bottom: 0.1em;
+  margin-left: -0.1em;
+  color: rgba(0, 0, 0, 0.6);
+  font-style: italic;
+}
+
+@keyframes zoomInOutSmaller {
+  0% {
+    scale: 0.5;
+  }
+
+  50% {
+    scale: 0.65;
+  }
+
+  100% {
+    scale: 0.5;
+  }
 }
 
 @keyframes zoomInOut {
   0% {
-    scale: 0.8;
+    scale: 0.6;
   }
 
   50% {
-    scale: 0.95;
+    scale: 0.75;
   }
 
   100% {
-    scale: 0.8;
+    scale: 0.6;
   }
+}
+
+.shopHover {
+  --shopTransform1: 0;
+  --shopTransform2: 0;
+}
+
+.shopHover:hover {
+  --shopTransform1: 0.3em;
+  --shopTransform2: -0.3em;
+}
+
+.shopIcon {
+  transition: all 0.3s;
+  transform: translate(var(--shopTransform1), var(--shopTransform2));
 }

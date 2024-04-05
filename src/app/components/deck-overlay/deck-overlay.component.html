@@ -63,6 +63,7 @@
               *ngFor="let card of abilityCards; index as i; trackBy: trackById"
               #activeAbilityCards
               (dblclick)="addCardToHand(card)"
+              (mouseenter)="setIsNewFalseCard(card)"
               [ngClass]="{
                 darkenCard: !card.owned || (card.inHand && card.owned)
               }"
@@ -73,6 +74,15 @@
                   class="cardBackgroundImage"
                 />
                 <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
+                  <div
+                    class="newImageBox"
+                    [ngClass]="{
+                      fadeInNew: card.isNew,
+                      fadeOutNew: !card.isNew,
+                    }"
+                  >
+                    <img src="./assets/new.png" class="newImage" />
+                  </div>
                   <div class="abilityTitle paperBg">
                     <div class="abilityTitleText">{{ card.name }}</div>
                     <div class="abilitySuitsBox">

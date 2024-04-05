@@ -11,6 +11,20 @@
   z-index: 5001;
 }
 
+.fadeBox {
+  transition: all 0.2s;
+}
+
+.fadeInBox {
+  opacity: 1;
+  z-index: 1;
+}
+
+.fadeOutBox {
+  opacity: 0;
+  z-index: 0;
+}
+
 .optionsMenuBackdrop {
   position: absolute;
   width: 100%;
@@ -393,7 +407,7 @@
   z-index: 3;
   pointer-events: none;
   scale: 0.8;
-  animation: zoomInOut 1s linear infinite;
+  animation: zoomInOut 1.5s linear infinite;
 }
 
 .newIcon {
@@ -404,20 +418,34 @@
   z-index: 3;
   pointer-events: none;
   scale: 0.7;
-  animation: zoomInOut 1s linear infinite;
+  animation: zoomInOutSmaller 1.5s linear infinite;
 }
 
 @keyframes zoomInOut {
   0% {
-    scale: 0.8;
+    scale: 0.7;
   }
 
   50% {
-    scale: 0.95;
+    scale: 0.85;
   }
 
   100% {
-    scale: 0.8;
+    scale: 0.7;
+  }
+}
+
+@keyframes zoomInOutSmaller {
+  0% {
+    scale: 0.6;
+  }
+
+  50% {
+    scale: 0.75;
+  }
+
+  100% {
+    scale: 0.6;
   }
 }
 
@@ -429,7 +457,7 @@
   z-index: 4;
   pointer-events: none;
   scale: 0.7;
-  animation: zoomInOut 1s linear infinite;
+  animation: zoomInOut 1.5s linear infinite;
 }
 
 .flexDisplay {
@@ -445,7 +473,7 @@
   z-index: 4;
   pointer-events: none;
   scale: 0.8;
-  animation: zoomInOut 1s linear infinite;
+  animation: zoomInOut 1.5s linear infinite;
 }
 
 .openCardsContainer {

@@ -12,61 +12,42 @@
 >
   <div class="optionsMenuBackdrop"></div>
   <div class="overlayBox">
-    <img class="overlayPanelBg" src="./assets/book.png" />
-    <div class="overlalPanelTitle overlalPanelTitleLeft">Gallery</div>
-    <div class="overlalPanelTitle overlalPanelTitleRight">Details</div>
+    <img
+      [ngStyle]="{
+        'background-image':
+          'url(./assets/backgrounds/' + missionDetails.image + ')'
+      }"
+      class="missionImage"
+    />
+    <img class="overlayPanelBg" src="./assets/mission.png" />
+    <div class="overlalPanelTitle overlalPanelTitleLeft">
+      {{ missionDetails.title }}
+    </div>
+    <div class="overlalPanelTitle overlalPanelTitleRight">Objective</div>
     <!-- Left side -->
     <div class="leftBox">
       <div class="relativeBox">
-        <div class="list">
-          <h1 class="splitTitle">Heroes</h1>
-          <div class="miniGrid">
-            <div
-              class="relativeCardBox"
-              *ngFor="let item of heroes"
-              (click)="currentImage = item"
-            >
+        <div class="rewardBox">
+          <div class="rewardRelativeBox">
+            <img src="./assets/battleBox.png" />
+            <div class="battleBoxImages">
               <img
-                [src]="'./assets/heroImages/' + item.image"
-                class="heroImage"
+                src="./assets/battleStar.png"
+                [ngClass]="{
+                  dimStar: true
+                }"
               />
               <img
-                src="./assets/galleryBorder.png"
-                class="absoluteHeroBorder"
-              />
-            </div>
-          </div>
-          <h1 class="splitTitle extraSplitTitle">Bosses</h1>
-          <div class="miniGrid">
-            <div
-              class="relativeCardBox"
-              *ngFor="let item of bosses"
-              (click)="currentImage = item"
-            >
-              <img
-                [src]="'./assets/heroImages/' + item.image"
-                class="heroImage"
+                src="./assets/battleStar.png"
+                [ngClass]="{
+                  dimStar: true
+                }"
               />
               <img
-                src="./assets/galleryBorder.png"
-                class="absoluteHeroBorder"
-              />
-            </div>
-          </div>
-          <h1 class="splitTitle extraSplitTitle">Enemies</h1>
-          <div class="miniGrid">
-            <div
-              class="relativeCardBox"
-              *ngFor="let item of enemies"
-              (click)="currentImage = item"
-            >
-              <img
-                [src]="'./assets/heroImages/' + item.image"
-                class="heroImage"
-              />
-              <img
-                src="./assets/galleryBorder.png"
-                class="absoluteHeroBorder"
+                src="./assets/battleStar.png"
+                [ngClass]="{
+                  dimStar: true
+                }"
               />
             </div>
           </div>
@@ -76,23 +57,19 @@
     <!-- Right side -->
     <div class="rightBox">
       <div class="relativeBoxRight">
-        <img
-          src="./assets/players/link.png"
-          [src]="'./assets/heroImages/' + currentImage?.image"
-          class="detailImage"
-        />
-        <div class="attackBoxRight">
-          <img
-            [src]="'./assets/' + currentImage?.theme + '/sword.png'"
-            class="iconImgDefense"
-          />
+        <div class="textContainer">
+          <div class="textRelativeBox">
+            <img src="./assets/castle.png" class="castleImage" />
+            <div class="firstLetter">G</div>
+            <p class="battleText">
+              eneral, a band of gnolls approaches! They are beasts who only
+              think about looting and burning everything their wake, but they
+              will be sorry they ever left their arid hills... For the queen!
+            </p>
+          </div>
         </div>
-        <div class="healthBoxRight">
-          <img
-            [src]="'./assets/' + currentImage?.theme + '/playerHealth.png'"
-            class="iconImgHealth"
-          />
-        </div>
+
+        <img src="./assets/startBattle.png" class="startBattleImage" />
       </div>
     </div>
     <div class="closeMenuButtonBox" (click)="closeMenu()">

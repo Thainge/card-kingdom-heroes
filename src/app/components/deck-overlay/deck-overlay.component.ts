@@ -12,6 +12,7 @@ import { playerService } from 'src/app/services/player.service';
 interface AbilityDeckCard extends AbilityCard {
   owned: boolean;
   inHand: boolean;
+  isNew: boolean;
 }
 
 type SortValue = 'Color' | 'Level' | 'Cost';
@@ -35,10 +36,13 @@ export class DeckOverlayComponent implements OnInit {
   @Input('open') set openChanged(x: boolean) {
     this.open = x;
     this.abilityCards = this.userService.getAbilityCards().map((x, i) => {
-      if (i < 16) {
-        return { ...x, owned: true, inHand: false };
+      if (i < 5) {
+        return { ...x, owned: true, inHand: false, isNew: true };
       }
-      return { ...x, owned: false, inHand: false };
+      if (i < 16) {
+        return { ...x, owned: true, inHand: false, isNew: false };
+      }
+      return { ...x, owned: false, inHand: false, isNew: false };
     });
     this.initialAbilityHand = JSON.parse(JSON.stringify(this.abilityHand));
     this.sortCards();
@@ -76,10 +80,27 @@ export class DeckOverlayComponent implements OnInit {
   pushError(message: string) {
     const ID = this.errorList.length + 1;
     this.errorList.push({ id: ID, message: message });
+    const currentListLength = this.errorList.length;
 
     setTimeout(() => {
       this.errorListInactive.push(ID);
     }, 1100);
+
+    setTimeout(() => {
+      if (currentListLength === this.errorList.length) {
+        this.errorList = [];
+        this.errorListInactive = [];
+      }
+    }, 2500);
+  }
+
+  setIsNewFalseCard(card: AbilityDeckCard) {
+    this.abilityCards = this.abilityCards.map((x) => {
+      if (x.id === card.id) {
+        return { ...x, isNew: false };
+      }
+      return x;
+    });
   }
 
   removeCardFromHand(card: AbilityDeckCard) {

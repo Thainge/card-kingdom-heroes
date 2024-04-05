@@ -108,22 +108,21 @@
       <img src="./assets/closeActive.png" class="closeMenuButton activeBtn" />
     </div>
     <div
-      class="innerOptionsBox innerBoxStart"
-      *ngIf="currentStep === 'picking'"
-      [@fadeEnter]="{
-        value: '',
-        params: { duration: 300, delay: currentStep === 'picking' ? 0 : 300 }
-      }"
-      [@fadeOutLeave]="{
-        value: '',
-        params: { duration: 300, delay: 0 }
+      class="innerOptionsBox innerBoxStart fadeBox"
+      [ngClass]="{
+        fadeInBox: currentStep === 'picking',
+        fadeOutBox: currentStep !== 'picking',
       }"
     >
       <div class="innerOptionsRelative">
         <div class="relativeBox" (click)="setCurrentStep('shopping')">
           <img src="./assets/shopBox.png" class="box" />
           <div class="iconTextBox">
-            <img src="./assets/new.png" class="newIcon" *ngIf="showNewIcon()" />
+            <img
+              src="./assets/shopPoints.png"
+              class="newIcon"
+              *ngIf="showNewIcon()"
+            />
             <img src="./assets/bag.png" class="boxImage shopBoxImage" />
             <div class="boxText">Shop</div>
           </div>
@@ -143,15 +142,10 @@
       </div>
     </div>
     <div
-      class="innerOptionsBoxShopping"
-      *ngIf="currentStep === 'shopping'"
-      [@fadeEnter]="{
-        value: '',
-        params: { duration: 300, delay: 300 }
-      }"
-      [@fadeOutLeave]="{
-        value: '',
-        params: { duration: 300, delay: 0 }
+      class="innerOptionsBoxShopping fadeBox"
+      [ngClass]="{
+        fadeInBox: currentStep === 'shopping',
+        fadeOutBox: currentStep !== 'shopping',
       }"
     >
       <swiper-container
@@ -203,11 +197,6 @@
               <img src="./assets/gold.png" class="swipeBtnInnerImage" />
               <div class="swipeBtnText">{{ item.cost }}</div>
             </div>
-            <img
-              src="./assets/new.png"
-              class="newIconCenter"
-              *ngIf="item.showNew"
-            />
             <div class="absoluteCountBox">
               <div
                 class="absoluteCountText"
@@ -234,15 +223,10 @@
       </div>
     </div>
     <div
-      class="innerOptionsBoxShopping"
-      *ngIf="currentStep === 'opening'"
-      [@fadeEnter]="{
-        value: '',
-        params: { duration: 300, delay: 300 }
-      }"
-      [@fadeOutLeave]="{
-        value: '',
-        params: { duration: 300, delay: 0 }
+      class="innerOptionsBoxShopping fadeBox"
+      [ngClass]="{
+        fadeInBox: currentStep === 'opening',
+        fadeOutBox: currentStep !== 'opening',
       }"
     >
       <swiper-container
