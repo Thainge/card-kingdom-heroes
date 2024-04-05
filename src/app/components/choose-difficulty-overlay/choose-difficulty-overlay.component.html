@@ -1,0 +1,320 @@
+<div
+  class="container"
+  *ngIf="open"
+  [@fadeEnter]="{
+    value: '',
+    params: { duration: 300, delay: 0 }
+  }"
+  [@fadeOutLeave]="{
+    value: '',
+    params: { duration: 300, delay: 0 }
+  }"
+>
+  <div class="optionsMenuBackdrop"></div>
+  <div
+    class="openCardsContainer"
+    *ngIf="openingCards"
+    [@fadeEnter]="{
+      value: '',
+      params: { duration: 300, delay: 0 }
+    }"
+    [@fadeOutLeave]="{
+      value: '',
+      params: { duration: 300, delay: 0 }
+    }"
+  >
+    <div class="optionsMenuBackdrop"></div>
+    <div class="openCardsBox">
+      <div
+        (click)="nextPhase()"
+        [@fadeUpEnter]="{
+          value: '',
+          params: { duration: 500, delay: 200, translate: '50px' }
+        }"
+        [ngClass]="{
+          hideBooster: openStep === 'openingCards'
+        }"
+        class="flexDisplay"
+      >
+        <img
+          src="./assets/rewards/boosterPack.png"
+          class="boosterPackImgOpen showBooster"
+        />
+      </div>
+      <div
+        *ngIf="openStep === 'openingCards'"
+        class="cardsListRow"
+        (click)="finishPhase()"
+      >
+        <div
+          *ngFor="let item of openCards; index as i; trackBy: trackById"
+          class="hoverImage"
+          [ngStyle]="{
+            'animation-delay': determineDelayCard(i) + 'ms'
+          }"
+        >
+          <div
+            [@fadeEnter]="{
+              value: '',
+              params: { delay: determineDelayCard(i) }
+            }"
+            [@zoomOutLeave]
+            *ngIf="showCardAnimation && showCardsIncludes(item)"
+          >
+            <div
+              [@flipOnEnter]="{
+                value: '',
+                params: { delay: determineDelayCard(i) }
+              }"
+            >
+              <div
+                class="relativeImage"
+                [ngStyle]="{
+                  'animation-delay': 800 + determineDelayCard(i) + 'ms',
+                }"
+                [ngClass]="{
+                  tadaAnimation: item.special
+                }"
+              >
+                <img
+                  src="./assets/rewards/boosterPack.png"
+                  class="boosterPackImgOpen"
+                />
+                <img
+                  [src]="'./assets/' + item.rarityImage"
+                  class="newLogoPopup"
+                  [@zoomInEnter]="{
+                    value: '',
+                    params: {
+                      duration: 500,
+                      delay: 800 + determineDelayCard(i)
+                    }
+                  }"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="overlayBox">
+    <img class="overlayPanelBg" src="./assets/menu.png" />
+    <div class="overlalPanelTitle">
+      {{ currentStep === "opening" ? "Open Packs" : "Shop" }}
+    </div>
+    <div class="closeMenuButtonBox" (click)="closeMenu()">
+      <img src="./assets/close.png" class="closeMenuButton" />
+      <img src="./assets/closeActive.png" class="closeMenuButton activeBtn" />
+    </div>
+    <div
+      class="innerOptionsBox innerBoxStart"
+      *ngIf="currentStep === 'picking'"
+      [@fadeEnter]="{
+        value: '',
+        params: { duration: 300, delay: currentStep === 'picking' ? 0 : 300 }
+      }"
+      [@fadeOutLeave]="{
+        value: '',
+        params: { duration: 300, delay: 0 }
+      }"
+    >
+      <div class="innerOptionsRelative">
+        <div class="relativeBox" (click)="setCurrentStep('shopping')">
+          <img src="./assets/shopBox.png" class="box" />
+          <div class="iconTextBox">
+            <img src="./assets/new.png" class="newIcon" *ngIf="showNewIcon()" />
+            <img src="./assets/bag.png" class="boxImage shopBoxImage" />
+            <div class="boxText">Shop</div>
+          </div>
+        </div>
+        <div class="relativeBox" (click)="setCurrentStep('opening')">
+          <img src="./assets/shopBox.png" class="box" />
+          <div class="iconTextBox">
+            <img
+              src="./assets/notification.png"
+              class="alertIcon"
+              *ngIf="showNotificationIcon()"
+            />
+            <img src="./assets/bookIcon.png" class="boxImage" />
+            <div class="boxText">Open Packs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="innerOptionsBoxShopping"
+      *ngIf="currentStep === 'shopping'"
+      [@fadeEnter]="{
+        value: '',
+        params: { duration: 300, delay: 300 }
+      }"
+      [@fadeOutLeave]="{
+        value: '',
+        params: { duration: 300, delay: 0 }
+      }"
+    >
+      <swiper-container
+        #swiper1
+        class="swiperBox"
+        effect="coverflow"
+        [grab-cursor]="true"
+        centered-slides="true"
+        slides-per-view="3"
+        coverflow-effect-slide-shadows="false"
+        (swiperactiveindexchange)="onActiveIndexChange()"
+      >
+        <swiper-slide
+          *ngFor="let item of boosterPacks; index as i; trackBy: trackById"
+        >
+          <div
+            class="boosterContainer"
+            [ngClass]="{
+              disabledBooster: currentIndex !== i,
+              scaleDownBooster: currentIndex !== i
+            }"
+          >
+            <div
+              class="swipeTitle"
+              [ngClass]="{
+                isInactiveTextBtn: currentIndex !== i,
+                disabledText: !item.unlocked
+              }"
+            >
+              {{ item.title }}
+            </div>
+            <img
+              [src]="'./assets/rewards/' + item.image"
+              [ngClass]="{
+                disabledBtn: !item.unlocked
+              }"
+              class="boosterImg"
+              (mouseenter)="hideNew(item)"
+            />
+            <div
+              class="swipeCost"
+              [ngClass]="{
+                isInactiveTextBtn: currentIndex !== i,
+                disabledBtn: !item.unlocked
+              }"
+              (click)="buyBoosterPack(item)"
+            >
+              <img src="./assets/button.png" class="swipeBtn" />
+              <img src="./assets/gold.png" class="swipeBtnInnerImage" />
+              <div class="swipeBtnText">{{ item.cost }}</div>
+            </div>
+            <img
+              src="./assets/new.png"
+              class="newIconCenter"
+              *ngIf="item.showNew"
+            />
+            <div class="absoluteCountBox">
+              <div
+                class="absoluteCountText"
+                [ngClass]="{
+                  isInactiveTextBtn: currentIndex !== i,
+                  disabledText: !item.unlocked
+                }"
+              >
+                Owned: {{ boosterPacks[currentIndex].count }}
+              </div>
+            </div>
+          </div>
+        </swiper-slide>
+      </swiper-container>
+      <div class="goldBoxAbsolute">
+        <div class="currentGoldBox">
+          <img src="./assets/shopBtnBg.png" class="currentGoldBgImg" />
+          <img src="./assets/gold.png" class="currentGoldImg" />
+          <div class="currentGoldTxt swipeBtnText">532</div>
+        </div>
+      </div>
+      <div class="backBoxAbsolute" (click)="setCurrentStep('picking')">
+        <img src="./assets/backButton.png" class="backBtn" />
+      </div>
+    </div>
+    <div
+      class="innerOptionsBoxShopping"
+      *ngIf="currentStep === 'opening'"
+      [@fadeEnter]="{
+        value: '',
+        params: { duration: 300, delay: 300 }
+      }"
+      [@fadeOutLeave]="{
+        value: '',
+        params: { duration: 300, delay: 0 }
+      }"
+    >
+      <swiper-container
+        #swiper2
+        class="swiperBox"
+        effect="coverflow"
+        [grab-cursor]="true"
+        centered-slides="true"
+        slides-per-view="3"
+        coverflow-effect-slide-shadows="false"
+        (swiperactiveindexchange)="onActiveIndexChange()"
+      >
+        <swiper-slide
+          *ngFor="let item of boosterPacks; index as i; trackBy: trackById"
+        >
+          <div
+            class="boosterContainer"
+            [ngClass]="{
+              disabledBooster: currentIndex !== i,
+              scaleDownBooster: currentIndex !== i
+            }"
+          >
+            <div
+              class="swipeTitle"
+              [ngClass]="{
+                isInactiveTextBtn: currentIndex !== i,
+                disabledText: !item.unlocked || item.count === 0
+              }"
+            >
+              {{ item.title }}
+            </div>
+            <img
+              [src]="'./assets/rewards/' + item.image"
+              [ngClass]="{
+                disabledBtn: !item.unlocked || item.count === 0
+              }"
+              (click)="openBoosterPack(item)"
+              class="boosterImg hoverBoosterImg"
+            />
+            <div
+              class="swipeCost"
+              [ngClass]="{
+                isInactiveTextBtn: currentIndex !== i,
+                disabledBtn: !item.unlocked || item.count === 0
+              }"
+              (click)="openBoosterPack(item)"
+            >
+              <img src="./assets/button.png" class="swipeBtn" />
+              <div class="swipeBtnText btnTextCenter">Open</div>
+            </div>
+            <img
+              src="./assets/notification.png"
+              class="notificationCenter"
+              *ngIf="item.count > 0"
+            />
+            <div class="absoluteCountBox">
+              <div
+                class="absoluteCountText"
+                [ngClass]="{
+                  isInactiveTextBtn: currentIndex !== i,
+                  disabledText: !item.unlocked || item.count === 0
+                }"
+              >
+                Owned: {{ boosterPacks[currentIndex].count }}
+              </div>
+            </div>
+          </div>
+        </swiper-slide>
+      </swiper-container>
+      <div class="backBoxAbsolute" (click)="setCurrentStep('picking')">
+        <img src="./assets/backButton.png" class="backBtn" />
+      </div>
+    </div>
+  </div>
+</div>
