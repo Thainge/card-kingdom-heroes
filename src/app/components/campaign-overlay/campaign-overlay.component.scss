@@ -135,3 +135,31 @@
   pointer-events: none;
   scale: 0.7 !important;
 }
+
+.leftArrow {
+  position: absolute;
+  z-index: 50;
+  left: 17%;
+  color: wheat;
+}
+
+.rightArrow {
+  position: absolute;
+  z-index: 50;
+  right: 17%;
+  color: wheat;
+}
+
+.leftRightarrow {
+  -webkit-transform-style: preserve-3d;
+  transition: all 0.1s;
+}
+
+.leftRightarrow:hover {
+  scale: 1.1;
+  filter: drop-shadow(0 0 0.2em black);
+}
+
+.leftRightarrow:active {
+  scale: 1;
+}

@@ -92,5 +92,13 @@ export class CampaignOverlayComponent implements OnInit {
     this.currentIndex = this.swiper?.activeIndex ?? 0;
   }
 
+  changeIndexLeft() {
+    this.swiper?.slidePrev();
+  }
+
+  changeIndexRight() {
+    this.swiper?.slideNext();
+  }
+
   trackById = (index: number, item: any) => item.id;
 }

@@ -31,6 +31,34 @@
         (click)="closeMenu()"
       />
     </div> -->
+    <img
+      src="./assets/leftArrow.png"
+      class="leftArrow leftRightarrow"
+      (click)="changeIndexLeft()"
+      *ngIf="currentIndex > 0"
+      [@fadeEnter]="{
+        value: '',
+        params: { duration: 300, delay: 0 }
+      }"
+      [@fadeOutLeave]="{
+        value: '',
+        params: { duration: 300, delay: 0 }
+      }"
+    />
+    <img
+      src="./assets/rightArrow.png"
+      class="rightArrow leftRightarrow"
+      (click)="changeIndexRight()"
+      *ngIf="currentIndex < campaigns.length - 1"
+      [@fadeEnter]="{
+        value: '',
+        params: { duration: 300, delay: 0 }
+      }"
+      [@fadeOutLeave]="{
+        value: '',
+        params: { duration: 300, delay: 0 }
+      }"
+    />
     <div class="innerOptionsBoxShopping">
       <swiper-container
         #swiper
