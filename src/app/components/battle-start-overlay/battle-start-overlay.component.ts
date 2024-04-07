@@ -10,6 +10,9 @@ import {
 interface MissionDetails {
   image: string;
   title: string;
+  description: string;
+  rewardMin: number;
+  rewardMax: number;
 }
 
 @Component({
@@ -32,6 +35,11 @@ export class BattleStartOverlayComponent implements OnInit {
   missionDetails: MissionDetails = {
     image: 'forest.png',
     title: 'Skyloft',
+    description: `General, a band of gnolls approaches! They are beasts who only
+    think about looting and burning everything their wake, but they
+    will be sorry they ever left their arid hills... For the queen!`,
+    rewardMin: 100,
+    rewardMax: 150,
   };
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);

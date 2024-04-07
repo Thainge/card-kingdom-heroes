@@ -116,7 +116,8 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 100%;
+  height: 90%;
+  top: 10%;
 }
 
 .missionImage {
@@ -127,4 +128,106 @@
   height: 29%;
   background-position: center;
   background-size: cover;
+}
+
+.startBattleImage {
+  position: relative;
+  margin-right: 10.3%;
+  top: 2%;
+  transition: all 0.3s;
+  z-index: 1;
+}
+
+.startBattleImage:hover {
+  scale: 1.1;
+}
+
+.startBattleImage:active {
+  scale: 1;
+}
+
+.textContainer {
+  height: 100%;
+}
+
+.textRelativeBox {
+  position: relative;
+}
+
+.firstLetter {
+  position: absolute;
+  top: 0.65em;
+  left: 0.37em;
+  font-size: 3em;
+  color: #f6eaba;
+  font-style: italic;
+}
+
+.battleText {
+  font-style: italic;
+  padding-top: 2em;
+  padding-left: 0.7em;
+}
+
+.castleImage {
+  float: left;
+}
+
+.relativeBoxRewards {
+  position: relative;
+  height: 78%;
+}
+
+.rewardBox {
+  position: absolute;
+  bottom: 0;
+  left: -2em;
+}
+
+.rewardBoxOther {
+  position: absolute;
+  bottom: 0;
+  right: -1.5em;
+}
+
+.rewardRelativeBox {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  scale: 0.7;
+}
+
+.battleBoxImages {
+  position: absolute;
+  margin-bottom: 3%;
+  width: 100%;
+}
+
+.goldImg {
+  position: absolute;
+  left: 1.5em;
+  width: 2em;
+}
+
+.goldEstimateText {
+  font-family: soho;
+  color: #655836;
+  font-size: 1.3em;
+  position: relative;
+  left: 3.5em;
+}
+
+.starExtra {
+  margin-left: 3.8em;
+}
+
+.starBattle {
+  width: 1.8em;
+  margin-top: 0.2em;
+  margin-left: 1em;
+}
+
+.darkImage {
+  filter: grayscale(1) brightness(0.5);
 }

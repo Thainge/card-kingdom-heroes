@@ -26,27 +26,41 @@
     <div class="overlalPanelTitle overlalPanelTitleRight">Objective</div>
     <!-- Left side -->
     <div class="leftBox">
-      <div class="relativeBox">
+      <div class="relativeBoxRewards">
         <div class="rewardBox">
           <div class="rewardRelativeBox">
             <img src="./assets/battleBox.png" />
             <div class="battleBoxImages">
+              <img src="./assets/gold.png" class="goldImg" />
+              <div class="goldEstimateText">
+                {{ missionDetails.rewardMin }} - {{ missionDetails.rewardMax }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rewardBoxOther">
+          <div class="rewardRelativeBox">
+            <img src="./assets/battleBox.png" />
+            <div class="battleBoxImages starExtra">
               <img
                 src="./assets/battleStar.png"
+                class="starBattle"
                 [ngClass]="{
-                  dimStar: true
+                  darkImage: true
                 }"
               />
               <img
                 src="./assets/battleStar.png"
+                class="starBattle"
                 [ngClass]="{
-                  dimStar: true
+                  darkImage: true
                 }"
               />
               <img
                 src="./assets/battleStar.png"
+                class="starBattle"
                 [ngClass]="{
-                  dimStar: true
+                  darkImage: true
                 }"
               />
             </div>
@@ -60,12 +74,12 @@
         <div class="textContainer">
           <div class="textRelativeBox">
             <img src="./assets/castle.png" class="castleImage" />
-            <div class="firstLetter">G</div>
-            <p class="battleText">
-              eneral, a band of gnolls approaches! They are beasts who only
-              think about looting and burning everything their wake, but they
-              will be sorry they ever left their arid hills... For the queen!
-            </p>
+            <div class="firstLetter">
+              {{ missionDetails.description.substring(0, 1) }}
+            </div>
+            <div class="battleText">
+              {{ missionDetails.description.substring(1) }}
+            </div>
           </div>
         </div>
 
