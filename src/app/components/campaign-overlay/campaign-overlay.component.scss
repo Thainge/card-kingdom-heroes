@@ -151,15 +151,16 @@
 }
 
 .leftRightarrow {
+  scale: 0.7;
   -webkit-transform-style: preserve-3d;
   transition: all 0.1s;
 }
 
 .leftRightarrow:hover {
-  scale: 1.1;
+  scale: 0.8;
   filter: drop-shadow(0 0 0.2em black);
 }
 
 .leftRightarrow:active {
-  scale: 1;
+  scale: 0.7;
 }
