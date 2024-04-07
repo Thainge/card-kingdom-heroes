@@ -88,7 +88,7 @@
 }
 
 .overlayImage {
-  width: 100%;
+  width: 120%;
   -webkit-transform-style: preserve-3d;
   transition: all 0.3s;
   filter: drop-shadow(0 0 0.3em black);
@@ -101,4 +101,37 @@
 
 .overlayImage:active {
   scale: 1;
+}
+
+// Campaigns
+
+.innerOptionsBoxShopping {
+  position: absolute;
+  top: 24%;
+  width: 100%;
+}
+
+.swiperBox {
+  position: relative;
+  top: -10%;
+  width: 90%;
+}
+
+.boosterContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  padding: 10%;
+}
+
+.disabledBooster {
+  filter: brightness(0.5);
+}
+
+.scaleDownBooster {
+  user-select: none;
+  pointer-events: none;
+  scale: 0.7 !important;
 }

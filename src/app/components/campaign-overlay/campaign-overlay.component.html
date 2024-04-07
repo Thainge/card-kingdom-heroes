@@ -14,7 +14,7 @@
   <div class="overlayBox">
     <img class="overlayPanelBg" src="./assets/wideNoClose.png" />
     <div class="overlalPanelTitle">Campaign</div>
-    <div class="optionsBox">
+    <!-- <div class="optionsBox">
       <img
         class="overlayImage"
         src="./assets/normalCampaign.png"
@@ -30,6 +30,40 @@
         src="./assets/linkCampaign.png"
         (click)="closeMenu()"
       />
+    </div> -->
+    <div class="innerOptionsBoxShopping">
+      <swiper-container
+        #swiper
+        class="swiperBox"
+        effect="coverflow"
+        [grab-cursor]="true"
+        centered-slides="true"
+        slides-per-view="3"
+        coverflow-effect-rotate="10"
+        coverflow-effect-stretch="0"
+        coverflow-effect-depth="20"
+        coverflow-effect-modifier=".2"
+        coverflow-effect-slide-shadows="false"
+        (swiperactiveindexchange)="onActiveIndexChange()"
+      >
+        <swiper-slide
+          *ngFor="let item of campaigns; index as i; trackBy: trackById"
+        >
+          <div
+            class="boosterContainer"
+            [ngClass]="{
+              disabledBooster: currentIndex !== i,
+              scaleDownBooster: currentIndex !== i
+            }"
+          >
+            <img
+              class="overlayImage"
+              src="./assets/linkCampaign.png"
+              (click)="closeMenu()"
+            />
+          </div>
+        </swiper-slide>
+      </swiper-container>
     </div>
   </div>
 </div>
