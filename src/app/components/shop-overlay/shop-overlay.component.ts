@@ -61,6 +61,7 @@ export class ShopOverlayComponent implements OnInit {
   @Input('open') set openChanged(x: boolean) {
     this.open = x;
     this.currentIndex = 0;
+    this.currentStep = 'picking';
   }
   currentStep: ShopStep = 'picking';
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
@@ -229,6 +230,24 @@ export class ShopOverlayComponent implements OnInit {
       }
       return x;
     });
+  }
+
+  changeIndexLeft() {
+    if (this.currentStep === 'shopping') {
+      this.swiper1?.slidePrev();
+    }
+    if (this.currentStep === 'opening') {
+      this.swiper2?.slidePrev();
+    }
+  }
+
+  changeIndexRight() {
+    if (this.currentStep === 'shopping') {
+      this.swiper1?.slideNext();
+    }
+    if (this.currentStep === 'opening') {
+      this.swiper2?.slideNext();
+    }
   }
 
   setCurrentStep(step: ShopStep) {

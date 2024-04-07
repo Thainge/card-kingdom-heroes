@@ -141,6 +141,40 @@
         </div>
       </div>
     </div>
+    <img
+      src="./assets/leftArrow.png"
+      class="leftArrow leftRightarrow"
+      (click)="changeIndexLeft()"
+      *ngIf="
+        currentIndex > 0 &&
+        (currentStep === 'shopping' || currentStep === 'opening')
+      "
+      [@fadeEnter]="{
+        value: '',
+        params: { duration: 300, delay: 0 }
+      }"
+      [@fadeOutLeave]="{
+        value: '',
+        params: { duration: 300, delay: 0 }
+      }"
+    />
+    <img
+      src="./assets/rightArrow.png"
+      class="rightArrow leftRightarrow"
+      (click)="changeIndexRight()"
+      *ngIf="
+        currentIndex < boosterPacks.length - 1 &&
+        (currentStep === 'shopping' || currentStep === 'opening')
+      "
+      [@fadeEnter]="{
+        value: '',
+        params: { duration: 300, delay: 0 }
+      }"
+      [@fadeOutLeave]="{
+        value: '',
+        params: { duration: 300, delay: 0 }
+      }"
+    />
     <div
       class="innerOptionsBoxShopping fadeBox"
       [ngClass]="{

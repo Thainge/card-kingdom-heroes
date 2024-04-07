@@ -139,26 +139,29 @@
 .leftArrow {
   position: absolute;
   z-index: 50;
-  left: 17%;
+  left: 15%;
   color: wheat;
 }
 
 .rightArrow {
   position: absolute;
   z-index: 50;
-  right: 17%;
+  right: 15%;
   color: wheat;
 }
 
 .leftRightarrow {
+  filter: brightness(0.8);
+  opacity: 0.8;
   scale: 0.7;
   -webkit-transform-style: preserve-3d;
   transition: all 0.1s;
 }
 
 .leftRightarrow:hover {
+  opacity: 1;
   scale: 0.8;
-  filter: drop-shadow(0 0 0.2em black);
+  filter: drop-shadow(0 0 0.2em black) brightness(1);
 }
 
 .leftRightarrow:active {
