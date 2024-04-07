@@ -16,6 +16,8 @@ import { HeroOverlayComponent } from '../hero-overlay/hero-overlay.component';
 import { DeckOverlayComponent } from '../deck-overlay/deck-overlay.component';
 import { GalleryOverlayComponent } from '../gallery-overlay/gallery-overlay.component';
 import { LoadingService } from 'src/app/services/loading.service';
+import { DifficultyOverlayComponent } from '../choose-difficulty-overlay/choose-difficulty-overlay.component';
+import { CampaignOverlayComponent } from '../campaign-overlay/campaign-overlay.component';
 
 @Component({
   selector: 'app-map-overlay',
@@ -29,6 +31,8 @@ import { LoadingService } from 'src/app/services/loading.service';
     HeroOverlayComponent,
     DeckOverlayComponent,
     GalleryOverlayComponent,
+    DifficultyOverlayComponent,
+    CampaignOverlayComponent,
   ],
   animations: [
     fadeInOnEnterAnimation({ anchor: 'fadeEnter' }),
@@ -50,6 +54,8 @@ export class MapOverlayComponent implements OnInit {
   heroRoomOpen: boolean = false;
   deckOpen: boolean = false;
   galleryOpen: boolean = false;
+  chooseDifficultyOpen: boolean = false;
+  chooseCampaignOpen: boolean = true;
 
   display: boolean = true;
 

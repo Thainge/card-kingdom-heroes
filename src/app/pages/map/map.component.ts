@@ -130,7 +130,7 @@ export class MapComponent implements AfterViewInit, OnInit {
     town4FightShow: false,
     town4FightFinished: false,
   };
-  battleStartOpen: boolean = true;
+  battleStartOpen: boolean = false;
 
   constructor(private loadingService: LoadingService) {}
 

@@ -15,9 +15,9 @@ import {
 } from 'angular-animations';
 
 @Component({
-  selector: 'app-choose-difficulty-overlay-overlay',
-  templateUrl: './choose-difficulty-overlay.component.html',
-  styleUrls: ['./choose-difficulty-overlay.component.scss'],
+  selector: 'app-campaign-overlay-overlay',
+  templateUrl: './campaign-overlay.component.html',
+  styleUrls: ['./campaign-overlay.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [CommonModule],
@@ -29,7 +29,7 @@ import {
     fadeOutUpOnLeaveAnimation({ anchor: 'fadeUpLeave' }),
   ],
 })
-export class DifficultyOverlayComponent implements OnInit {
+export class CampaignOverlayComponent implements OnInit {
   open: boolean = false;
   @Input('open') set openChanged(x: boolean) {
     this.open = x;
