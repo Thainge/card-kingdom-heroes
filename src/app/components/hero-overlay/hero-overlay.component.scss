@@ -551,3 +551,7 @@
   margin-right: -22%;
   font-size: 0.65em;
 }
+
+.disabledBox {
+  filter: grayscale(1) brightness(0.5) !important;
+}

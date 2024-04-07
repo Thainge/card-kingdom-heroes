@@ -27,6 +27,9 @@
           <div
             *ngFor="let hero of heroes; index as i"
             class="heroItemBox"
+            [ngClass]="{
+              disabledBox: i > 2
+            }"
             (click)="currentHero = hero"
           >
             <img
