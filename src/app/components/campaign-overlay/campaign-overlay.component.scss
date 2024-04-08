@@ -167,3 +167,47 @@
 .leftRightarrow:active {
   scale: 0.7;
 }
+
+.absoluteLock {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 120%;
+  filter: brightness(0.8);
+}
+
+.relativeBox {
+  position: relative;
+}
+
+.dimImage {
+  filter: brightness(0.5);
+}
+
+.headerBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  column-gap: 3%;
+  width: 110%;
+  transition: all 0.3s;
+}
+
+.headerStar {
+  width: 9%;
+}
+
+.headerText {
+  font-family: soho;
+  color: #e9e9b2;
+  font-size: 1.3em;
+  font-style: italic;
+}
+
+.disabledText {
+  filter: brightness(0.5);
+  font-size: 0.7em;
+  transform: translate(0, 4em);
+}
