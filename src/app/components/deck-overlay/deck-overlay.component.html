@@ -91,7 +91,10 @@
                         paperBgLegendary: card.level === 3,
                   }"
                   >
-                    <div class="abilityTitleText">{{ card.name }}</div>
+                    <div class="abilityTitleText">
+                      {{ card.name }}
+                      {{ card.level > 1 ? "+" + (card.level - 1) : "" }}
+                    </div>
                     <div class="abilitySuitsBox">
                       <img
                         *ngFor="let cost of card.cost"
@@ -127,18 +130,6 @@ paperBg: card.level === 1,
                         paperBgLegendary: card.level === 3,
                   }"
                   >
-                    <div class="abilityDescriptionLevel">
-                      <div
-                        class="levelText"
-                        [ngClass]="{
-paperBg: card.level === 1,
-                        paperBgRare: card.level === 2,
-                        paperBgLegendary: card.level === 3,
-                      }"
-                      >
-                        Level {{ card.level }}
-                      </div>
-                    </div>
                     <div class="abilityDescriptionText">
                       {{ card.description }}
                     </div>
@@ -208,6 +199,10 @@ paperBg: card.level === 1,
                         paperBgLegendary: card.level === 3,
                       }"
                       >
+                        <div class="abilityTitleText">
+                          {{ card.name }}
+                          {{ card.level > 1 ? "+" + (card.level - 1) : "" }}
+                        </div>
                         <div class="abilitySuitsBox">
                           <img
                             *ngFor="let cost of card.cost"
@@ -240,18 +235,6 @@ paperBg: card.level === 1,
                         paperBgLegendary: card.level === 3,
                       }"
                       >
-                        <div class="abilityDescriptionLevel">
-                          <div
-                            class="levelText"
-                            [ngClass]="{
-                        paperBg: card.level === 1,
-                        paperBgRare: card.level === 2,
-                        paperBgLegendary: card.level === 3,
-                      }"
-                          >
-                            Level {{ card.level }}
-                          </div>
-                        </div>
                         <div class="abilityDescriptionText">
                           {{ card.description }}
                         </div>
@@ -289,7 +272,10 @@ paperBg: card.level === 1,
                         paperBgLegendary: card.level === 3,
                       }"
                       >
-                        <div class="abilityTitleText">{{ card.name }}</div>
+                        <div class="abilityTitleText">
+                          {{ card.name }}
+                          {{ card.level > 1 ? "+" + (card.level - 1) : "" }}
+                        </div>
                         <div class="abilitySuitsBox">
                           <img
                             *ngFor="let cost of card.cost"
@@ -322,18 +308,6 @@ paperBg: card.level === 1,
                         paperBgLegendary: card.level === 3,
                       }"
                       >
-                        <div class="abilityDescriptionLevel">
-                          <div
-                            class="levelText"
-                            [ngClass]="{
-                            paperBg: card.level === 1,
-                        paperBgRare: card.level === 2,
-                        paperBgLegendary: card.level === 3,
-                          }"
-                          >
-                            Level {{ card.level }}
-                          </div>
-                        </div>
                         <div class="abilityDescriptionText">
                           {{ card.description }}
                         </div>
