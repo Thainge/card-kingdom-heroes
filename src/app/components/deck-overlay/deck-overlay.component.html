@@ -95,6 +95,9 @@
                   </div>
                   <div class="abilityBorder1 paperBg"></div>
                   <div class="abilityBorder2 paperBg"></div>
+                  <div class="cardCount">
+                    {{ card.numberOwned }}<b class="smaller">x</b>
+                  </div>
                   <div class="abilityDescription paperBg">
                     <div class="abilityDescriptionLevel">
                       <div class="levelText paperBg">
@@ -150,6 +153,7 @@
                   }"
                   *ngIf="
                     currentHoveringCard?.id === card.id &&
+                    currentIndex === i &&
                     abilityHand.length > 1
                   "
                 >
@@ -188,8 +192,10 @@
                 </div>
                 <div
                   class="absoluteHoverBox"
-                  (mouseenter)="currentHoveringCard = card"
-                  (mouseleave)="currentHoveringCard = undefined"
+                  (mouseenter)="currentHoveringCard = card; currentIndex = i"
+                  (mouseleave)="
+                    currentHoveringCard = undefined; currentIndex = -10
+                  "
                   (dblclick)="removeCardFromHand(card)"
                 ></div>
                 <div

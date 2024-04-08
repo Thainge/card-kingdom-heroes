@@ -13,6 +13,8 @@ interface AbilityDeckCard extends AbilityCard {
   owned: boolean;
   inHand: boolean;
   isNew: boolean;
+  numberOwned: number;
+  index: number;
 }
 
 type SortValue = 'Color' | 'Level' | 'Cost';
@@ -37,12 +39,33 @@ export class DeckOverlayComponent implements OnInit {
     this.open = x;
     this.abilityCards = this.userService.getAbilityCards().map((x, i) => {
       if (i < 5) {
-        return { ...x, owned: true, inHand: false, isNew: true };
+        return {
+          ...x,
+          owned: true,
+          inHand: false,
+          isNew: true,
+          numberOwned: 4,
+          index: i,
+        };
       }
       if (i < 16) {
-        return { ...x, owned: true, inHand: false, isNew: false };
+        return {
+          ...x,
+          owned: true,
+          inHand: false,
+          isNew: false,
+          numberOwned: 2,
+          index: i,
+        };
       }
-      return { ...x, owned: false, inHand: false, isNew: false };
+      return {
+        ...x,
+        owned: false,
+        inHand: false,
+        isNew: false,
+        numberOwned: 1,
+        index: i,
+      };
     });
     this.initialAbilityHand = JSON.parse(JSON.stringify(this.abilityHand));
     this.sortCards();
@@ -51,6 +74,7 @@ export class DeckOverlayComponent implements OnInit {
   abilityHand: AbilityDeckCard[] = [];
   initialAbilityHand: AbilityDeckCard[] = [];
   currentHoveringCard: AbilityDeckCard | undefined;
+  currentIndex: number = -10;
   currentSort: SortValue = 'Color';
   errorList: any[] = [];
   errorListInactive: any[] = [];
@@ -67,14 +91,30 @@ export class DeckOverlayComponent implements OnInit {
       return;
     }
 
-    this.abilityHand.push(card);
-    this.abilityCards = this.abilityCards.map((x) => {
-      if (x.id === card.id) {
-        return { ...x, inHand: true };
-      }
+    const totalCountIdsInHand = this.abilityHand.filter(
+      (x) => x.id === card.id
+    );
 
-      return x;
-    });
+    // disable card if count = 1
+    if (card.numberOwned === 1 || totalCountIdsInHand.length === 2) {
+      this.abilityHand.push(card);
+      this.abilityCards = this.abilityCards.map((x) => {
+        if (x.id === card.id) {
+          return { ...x, inHand: true, numberOwned: x.numberOwned - 1 };
+        }
+
+        return x;
+      });
+    } else if (card.numberOwned !== 1) {
+      this.abilityHand.push(card);
+      this.abilityCards = this.abilityCards.map((x) => {
+        if (x.id === card.id) {
+          return { ...x, inHand: false, numberOwned: x.numberOwned - 1 };
+        }
+
+        return x;
+      });
+    }
   }
 
   pushError(message: string) {
@@ -104,10 +144,18 @@ export class DeckOverlayComponent implements OnInit {
   }
 
   removeCardFromHand(card: AbilityDeckCard) {
-    this.abilityHand = this.abilityHand.filter((x) => x.id !== card.id);
+    let found = false;
+    this.abilityHand = this.abilityHand.filter((x) => {
+      if (x.id === card.id && !found) {
+        found = true;
+        return null;
+      }
+
+      return x;
+    });
     this.abilityCards = this.abilityCards.map((x) => {
       if (x.id === card.id) {
-        return { ...x, inHand: false };
+        return { ...x, inHand: false, numberOwned: x.numberOwned + 1 };
       }
 
       return x;
