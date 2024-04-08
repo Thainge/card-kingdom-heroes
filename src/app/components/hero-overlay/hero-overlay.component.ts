@@ -35,7 +35,7 @@ interface Hero {
 }
 
 @Component({
-  selector: 'app-hero-overlay-overlay',
+  selector: 'app-hero-overlay',
   templateUrl: './hero-overlay.component.html',
   styleUrls: ['./hero-overlay.component.scss'],
   standalone: true,

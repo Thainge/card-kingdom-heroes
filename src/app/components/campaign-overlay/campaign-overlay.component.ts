@@ -23,7 +23,7 @@ interface CampaignBox {
 }
 
 @Component({
-  selector: 'app-campaign-overlay-overlay',
+  selector: 'app-campaign-overlay',
   templateUrl: './campaign-overlay.component.html',
   styleUrls: ['./campaign-overlay.component.scss'],
   standalone: true,

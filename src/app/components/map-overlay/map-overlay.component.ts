@@ -58,8 +58,9 @@ export class MapOverlayComponent implements OnInit {
   galleryOpen: boolean = false;
   chooseDifficultyOpen: boolean = false;
   chooseCampaignOpen: boolean = false;
-  premiumOpen: boolean = true;
+  premiumOpen: boolean = false;
 
+  showInformation: boolean = false;
   display: boolean = true;
 
   constructor(private loadingService: LoadingService) {}
@@ -67,6 +68,10 @@ export class MapOverlayComponent implements OnInit {
   ngOnInit() {
     this.loadingService.displayOptions$.subscribe((x) => {
       // this.display = x;
+    });
+    this.loadingService.difficultyIsOpen$.subscribe((x) => {
+      this.chooseDifficultyOpen = x;
+      this.showInformation = false;
     });
   }
 }

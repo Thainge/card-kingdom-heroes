@@ -21,7 +21,11 @@
         src="./assets/normal.png"
         (click)="closeMenu()"
       />
-      <img src="./assets/difficultyText.png" class="absoluteText" />
+      <img
+        src="./assets/difficultyText.png"
+        *ngIf="showInformation"
+        class="absoluteText"
+      />
     </div>
   </div>
 </div>

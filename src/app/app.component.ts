@@ -62,6 +62,7 @@ export class AppComponent implements OnInit {
   isFullScreen: boolean = false;
   soundControl = new FormControl('75');
   musicControl = new FormControl('75');
+  areYouSurePopup: boolean = false;
 
   display!: boolean;
 
@@ -142,6 +143,18 @@ export class AppComponent implements OnInit {
       }
       this.isFullScreen = !this.isFullScreen;
     }
+  }
+
+  openDifficulty() {
+    this.optionsMenuOpened = false;
+    this.loadingService.difficultyIsOpen$.next(true);
+  }
+
+  resetProgress() {}
+
+  openConsole() {
+    this.consoleShouldShow = true;
+    this.consoleOpen = true;
   }
 
   refreshCombat() {

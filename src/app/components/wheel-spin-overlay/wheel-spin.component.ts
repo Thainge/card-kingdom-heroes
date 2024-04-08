@@ -14,7 +14,7 @@ interface GalleryImage {
 }
 
 @Component({
-  selector: 'app-gallery-overlay-overlay',
+  selector: 'app-gallery-overlay',
   templateUrl: './gallery-overlay.component.html',
   styleUrls: ['./gallery-overlay.component.scss'],
   standalone: true,

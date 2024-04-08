@@ -36,7 +36,7 @@
       src="./assets/rightArrow.png"
       class="rightArrow leftRightarrow"
       (click)="changeIndexRight()"
-      *ngIf="currentIndex < campaigns.length - 1"
+      *ngIf="currentIndex < premiumItems.length - 1"
       [@fadeEnter]="{
         value: '',
         params: { duration: 300, delay: 0 }
@@ -47,6 +47,13 @@
       }"
     />
     <div class="innerOptionsBoxShopping">
+      <div class="goldBoxAbsolute">
+        <div class="currentGoldBox">
+          <img src="./assets/shopBtnBg.png" class="currentGoldBgImg" />
+          <img src="./assets/gold.png" class="currentGoldImg" />
+          <div class="currentGoldTxt">5323</div>
+        </div>
+      </div>
       <swiper-container
         #swiper
         class="swiperBox"
@@ -62,17 +69,8 @@
         (swiperactiveindexchange)="onActiveIndexChange()"
       >
         <swiper-slide
-          *ngFor="let item of campaigns; index as i; trackBy: trackById"
+          *ngFor="let item of premiumItems; index as i; trackBy: trackById"
         >
-          <div
-            class="headerBox"
-            [ngClass]="{
-              disabledText: currentIndex !== i
-            }"
-          >
-            <img class="headerStar" src="./assets/battleStar.png" />
-            <div class="headerText">0/80</div>
-          </div>
           <div
             class="boosterContainer"
             [ngClass]="{
@@ -81,15 +79,49 @@
             }"
           >
             <div class="relativeBox">
-              <img *ngIf="i > 1" class="absoluteLock" src="./assets/lock.png" />
+              <img class="overlayImage" [src]="'./assets/' + item.image" />
+            </div>
+          </div>
+          <div class="swipeBtnBox">
+            <div
+              class="swipeCost"
+              [ngClass]="{
+                isInactiveTextBtn: currentIndex !== i,
+              }"
+              (click)="buyItem(item)"
+            >
+              <img src="./assets/wideButton.png" class="swipeBtn" />
               <img
-                [ngClass]="{
-                  dimImage: i > 1
-                }"
-                class="overlayImage"
-                [src]="'./assets/' + item.image"
-                (click)="closeMenu()"
+                src="./assets/gold.png"
+                class="swipeBtnInnerImage"
+                *ngIf="!item.bought"
               />
+              <img
+                src="./assets/activeCircle.png"
+                class="swipeBtnInnerImage2"
+                *ngIf="item.bought"
+                [ngClass]="{
+                  inactive: item.bought && !item.active,
+                  extra: item.bought && item.active,
+                  inactiveImage: item.bought && !item.active,
+                }"
+              />
+              <div
+                class="swipeBtnText"
+                [ngClass]="{
+                  activeText: item.bought,
+                  inactive: item.bought && !item.active,
+                  extraText: item.bought && item.active
+                }"
+              >
+                {{
+                  !item.bought
+                    ? item.cost
+                    : item.bought && item.active
+                    ? "Active"
+                    : "Inactive"
+                }}
+              </div>
             </div>
           </div>
         </swiper-slide>

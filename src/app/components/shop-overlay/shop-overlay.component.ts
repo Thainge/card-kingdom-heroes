@@ -30,7 +30,7 @@ type ShopStep = 'picking' | 'shopping' | 'opening';
 type OpeningCardsStep = 'initial' | 'openingCards';
 
 @Component({
-  selector: 'app-shop-overlay-overlay',
+  selector: 'app-shop-overlay',
   templateUrl: './shop-overlay.component.html',
   styleUrls: ['./shop-overlay.component.scss'],
   standalone: true,

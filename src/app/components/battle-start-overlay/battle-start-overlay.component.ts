@@ -16,7 +16,7 @@ interface MissionDetails {
 }
 
 @Component({
-  selector: 'app-battle-start-overlay-overlay',
+  selector: 'app-battle-start-overlay',
   templateUrl: './battle-start-overlay.component.html',
   styleUrls: ['./battle-start-overlay.component.scss'],
   standalone: true,

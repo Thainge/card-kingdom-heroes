@@ -94,21 +94,13 @@
   filter: drop-shadow(0 0 0.3em black);
 }
 
-.overlayImage:hover {
-  filter: drop-shadow(0 0 0.3em gold);
-  scale: 1.1;
-}
-
-.overlayImage:active {
-  scale: 1;
-}
-
 // Campaigns
 
 .innerOptionsBoxShopping {
   position: absolute;
   top: 24%;
   width: 100%;
+  left: -2%;
 }
 
 .swiperBox {
@@ -191,7 +183,7 @@
   align-items: center;
   text-align: center;
   column-gap: 3%;
-  width: 110%;
+  width: 115%;
   transition: all 0.3s;
 }
 
@@ -210,4 +202,170 @@
   filter: brightness(0.5);
   font-size: 0.7em;
   transform: translate(0, 4em);
+}
+
+.goldBoxAbsolute {
+  position: absolute;
+  bottom: -4%;
+  left: 10%;
+  z-index: 50;
+}
+
+.currentGoldImg {
+  position: absolute;
+  width: 20%;
+  z-index: 2;
+  left: 10%;
+}
+.currentGoldTxt {
+  position: absolute;
+  font-size: 1.1em;
+  left: 38%;
+  z-index: 2;
+  text-align: center;
+  color: white;
+  font-family: "headerFont";
+  background: -webkit-linear-gradient(#f5f2e6, #a8a075);
+  -webkit-text-stroke: 2px #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.currentGoldBox {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.currentGoldBgImg {
+  position: relative;
+  z-index: 1;
+}
+
+.swipeCost {
+  position: relative;
+  padding-bottom: 1em;
+  transition: all 0.3s;
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swipeBtnBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 115%;
+}
+
+.isInactiveTextBtn {
+  opacity: 0;
+}
+
+.swipeBtn {
+  position: relative;
+  z-index: 1;
+}
+
+.swipeCost:hover {
+  filter: drop-shadow(0 0 0.5em rgb(0, 255, 0));
+}
+
+.swipeCost:active {
+  scale: 0.9;
+}
+
+.swipeBtnInnerImage {
+  position: absolute;
+  left: 17%;
+  z-index: 2;
+  width: 20%;
+}
+
+.swipeBtnInnerImage2 {
+  position: absolute;
+  left: 14%;
+  z-index: 2;
+  width: 14%;
+}
+
+.swipeBtnText {
+  position: absolute;
+  left: 43%;
+  margin-top: 2%;
+  z-index: 2;
+  text-align: center;
+  color: white;
+  font-family: "headerFont";
+  background: -webkit-linear-gradient(#f5f2e6, #a8a075);
+  -webkit-text-stroke: 2px #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.activeText {
+  left: 28%;
+  background: -webkit-linear-gradient(#84ff7d, #4ba335);
+  -webkit-text-stroke: 1px #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+}
+
+.inactiveImage {
+  left: 11%;
+}
+
+.btnTextCenter {
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkmarkImg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 0.8em;
+  width: 120%;
+}
+
+.inactive {
+  filter: brightness(0.5) grayscale(1);
+}
+
+.inactiveImage {
+  // margin-left: 0% !important;
+}
+
+.extra {
+  margin-left: 3%;
+}
+
+.extraText {
+  margin-left: 5%;
 }

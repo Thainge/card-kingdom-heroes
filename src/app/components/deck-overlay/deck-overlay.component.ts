@@ -18,7 +18,7 @@ interface AbilityDeckCard extends AbilityCard {
 type SortValue = 'Color' | 'Level' | 'Cost';
 
 @Component({
-  selector: 'app-deck-overlay-overlay',
+  selector: 'app-deck-overlay',
   templateUrl: './deck-overlay.component.html',
   styleUrls: ['./deck-overlay.component.scss'],
   standalone: true,

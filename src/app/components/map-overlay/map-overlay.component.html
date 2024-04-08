@@ -1,36 +1,37 @@
 <div class="container">
-  <app-hero-overlay-overlay
+  <app-hero-overlay
     [open]="heroRoomOpen"
     (onCloseMenu)="heroRoomOpen = false"
-  ></app-hero-overlay-overlay>
-  <app-deck-overlay-overlay
+  ></app-hero-overlay>
+  <app-deck-overlay
     [open]="deckOpen"
     (onCloseMenu)="deckOpen = false"
-  ></app-deck-overlay-overlay>
-  <app-gallery-overlay-overlay
+  ></app-deck-overlay>
+  <app-gallery-overlay
     [open]="galleryOpen"
     (onCloseMenu)="galleryOpen = false"
-  ></app-gallery-overlay-overlay>
-  <app-achievements-overlay-overlay
+  ></app-gallery-overlay>
+  <app-achievements-overlay
     [open]="achievementsOpen"
     (onCloseMenu)="achievementsOpen = false"
-  ></app-achievements-overlay-overlay>
-  <app-shop-overlay-overlay
+  ></app-achievements-overlay>
+  <app-shop-overlay
     [open]="shopOpen"
     (onCloseMenu)="shopOpen = false"
-  ></app-shop-overlay-overlay>
-  <app-choose-difficulty-overlay-overlay
+  ></app-shop-overlay>
+  <app-choose-difficulty-overlay
     [open]="chooseDifficultyOpen"
     (onCloseMenu)="chooseDifficultyOpen = false"
-  ></app-choose-difficulty-overlay-overlay>
-  <app-campaign-overlay-overlay
+    [showInformation]="showInformation"
+  ></app-choose-difficulty-overlay>
+  <app-campaign-overlay
     [open]="chooseCampaignOpen"
     (onCloseMenu)="chooseCampaignOpen = false"
-  ></app-campaign-overlay-overlay>
-  <app-premium-overlay-overlay
+  ></app-campaign-overlay>
+  <app-premium-overlay
     [open]="premiumOpen"
     (onCloseMenu)="premiumOpen = false"
-  ></app-premium-overlay-overlay>
+  ></app-premium-overlay>
 
   <!-- Top -->
   <div
@@ -45,6 +46,17 @@
     </div>
   </div>
   <div
+    class="premiumBox"
+    *ngIf="display"
+    [@fadeUpEnter]="{ value: '', params: { duration: 500, delay: 0 } }"
+  >
+    <img
+      src="./assets/premium.png"
+      class="premiumImg"
+      (click)="premiumOpen = true"
+    />
+  </div>
+  <div
     class="progressBarGold"
     *ngIf="display"
     [@fadeUpEnter]="{ value: '', params: { duration: 500, delay: 0 } }"
@@ -52,11 +64,11 @@
     <div class="progressBarContainer">
       <img src="./assets/progressBar.png" class="progressBarImage" />
       <img src="./assets/gold.png" class="progressGoldImage" />
-      <img
+      <!-- <img
         src="./assets/plus.png"
         class="progressPlusImage"
         (click)="premiumOpen = true"
-      />
+      /> -->
       <div class="progresssTextGold">512</div>
     </div>
   </div>

@@ -15,7 +15,7 @@ import {
 } from 'angular-animations';
 
 @Component({
-  selector: 'app-choose-difficulty-overlay-overlay',
+  selector: 'app-choose-difficulty-overlay',
   templateUrl: './choose-difficulty-overlay.component.html',
   styleUrls: ['./choose-difficulty-overlay.component.scss'],
   standalone: true,
@@ -34,6 +34,7 @@ export class DifficultyOverlayComponent implements OnInit {
   @Input('open') set openChanged(x: boolean) {
     this.open = x;
   }
+  @Input('showInformation') showInformation: boolean = true;
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
   constructor() {}

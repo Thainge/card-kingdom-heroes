@@ -20,6 +20,7 @@ export class LoadingService {
   readonly isSurrendering$ = new BehaviorSubject<boolean>(false);
   readonly isRefreshing$ = new BehaviorSubject<boolean>(false);
   readonly displayOptions$ = new BehaviorSubject<boolean>(true);
+  readonly difficultyIsOpen$ = new BehaviorSubject<boolean>(false);
 
   constructor() {}
 

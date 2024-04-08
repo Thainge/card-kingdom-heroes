@@ -9,7 +9,7 @@ import {
 import { AchievementObject } from 'src/app/models/achievement';
 
 @Component({
-  selector: 'app-achievements-overlay-overlay',
+  selector: 'app-achievements-overlay',
   templateUrl: './achievements-overlay.component.html',
   styleUrls: ['./achievements-overlay.component.scss'],
   standalone: true,

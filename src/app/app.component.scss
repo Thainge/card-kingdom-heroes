@@ -757,12 +757,169 @@
   scale: 0.9;
 }
 
-// @media screen and (max-width: 1000px) {
-//   .optionsButton {
-//     scale: 0.7;
-//   }
+// Check Save
 
-//   .optionsMenu {
-//     scale: 0.5;
-//   }
-// }
+.checkSurrenderOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkSurrenderBox {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10005;
+}
+
+.surrenderMenuBackdrop {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 10002;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.btnText {
+  position: absolute;
+  text-align: center;
+  color: white;
+  font-family: "headerFont";
+  background: -webkit-linear-gradient(#f5f2e6, #a8a075);
+  -webkit-text-stroke: 1px #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+  font-size: 0.8em;
+}
+
+.checkSurrenderBg {
+  width: 70%;
+}
+
+.surrenderText {
+  color: whitesmoke !important;
+}
+
+.surrenderTitle {
+  position: absolute;
+  top: 0;
+  text-align: center;
+  color: white;
+  font-family: "headerFont";
+  background: -webkit-linear-gradient(#f5f2e6, #c1b98e);
+  -webkit-text-stroke: 1px #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+  font-size: 0.9em;
+  margin-top: 3em;
+  height: 5em;
+  width: 60%;
+}
+
+.surrenderBtns {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 3em;
+  bottom: 2em;
+  z-index: 6;
+}
+
+.finishButtonGo {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  scale: 0.9;
+}
+
+.finishButton {
+  width: 10em;
+  -webkit-user-drag: none;
+}
+
+.finishButtonGo:hover {
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.finishButtonGo:active {
+  -webkit-transform: scale(0.9);
+  -ms-transform: scale(0.9);
+  transform: scale(0.9);
+}
+
+.finishButtonText {
+  position: absolute;
+  margin-bottom: 2px;
+}
+
+.finishedBox {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  color: white;
+}
+
+.biggerText {
+  font-size: 1.1em;
+}
+
+.newImageBox {
+  position: absolute;
+  width: 100%;
+  top: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s;
+}
+
+.newImage {
+  width: 50%;
+  animation: newHoverAnimation 1.5s infinite forwards linear;
+}

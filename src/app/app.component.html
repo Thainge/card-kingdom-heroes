@@ -24,6 +24,47 @@
       }"
     >
       <div class="optionsMenuBackdrop"></div>
+      <div class="checkSurrenderOverlay">
+        <div
+          class="surrenderMenuBackdrop"
+          *ngIf="areYouSurePopup"
+          [@fadeEnter]="{
+            value: '',
+            params: { duration: 500, delay: 0 }
+          }"
+          [@fadeOutLeave]="{
+            value: '',
+            params: { duration: 500, delay: 0 }
+          }"
+        ></div>
+        <div
+          class="checkSurrenderBox"
+          *ngIf="areYouSurePopup"
+          [@fadeEnter]="{
+            value: '',
+            params: { duration: 500, delay: 0 }
+          }"
+          [@fadeOutLeave]="{
+            value: '',
+            params: { duration: 500, delay: 0 }
+          }"
+        >
+          <img class="checkSurrenderBg" src="./assets/box.png" />
+          <div class="surrenderTitle">
+            Are you sure? All progress will be lost forver.
+          </div>
+          <div class="surrenderBtns">
+            <div class="finishButtonGo" (click)="areYouSurePopup = false">
+              <img class="finishButton" [src]="'./assets/button.png'" />
+              <div class="finishButtonText btnText biggerText">Cancel</div>
+            </div>
+            <div class="finishButtonGo" (click)="resetProgress()">
+              <img class="finishButton" [src]="'./assets/button.png'" />
+              <div class="finishButtonText btnText biggerText">Continue</div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="optionsMenu">
         <img src="./assets/menu.png" class="optionsMenuBg" />
         <div class="menuHeader optionsText">Options</div>
@@ -57,6 +98,32 @@
               <img
                 src="./assets/fullscreen.png"
                 (click)="toggleFullScreen()"
+                class="optionsItemButton hoverButton"
+              />
+            </div>
+            <div class="optionsItem" *ngIf="!isBattle()">
+              <div class="optionsItemTitle optionsText">Difficulty</div>
+              <img
+                src="./assets/difficulty.png"
+                (click)="openDifficulty()"
+                class="optionsItemButton hoverButton"
+              />
+            </div>
+          </div>
+          <div class="optionsButtonsRow">
+            <div class="optionsItem" *ngIf="!isBattle()">
+              <div class="optionsItemTitle optionsText">Open Console</div>
+              <img
+                src="./assets/console.png"
+                (click)="openConsole()"
+                class="optionsItemButton hoverButton"
+              />
+            </div>
+            <div class="optionsItem" *ngIf="!isBattle()">
+              <div class="optionsItemTitle optionsText">Reset Progress</div>
+              <img
+                src="./assets/surrender.png"
+                (click)="areYouSurePopup = true"
                 class="optionsItemButton hoverButton"
               />
             </div>

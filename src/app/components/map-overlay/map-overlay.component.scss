@@ -62,7 +62,7 @@
   margin-top: -0.2em;
   text-align: left;
   width: 100%;
-  left: 39%;
+  left: 40%;
 }
 
 .progressBarGold {
@@ -246,4 +246,25 @@
 .shopIcon {
   transition: all 0.3s;
   transform: translate(var(--shopTransform1), var(--shopTransform2));
+}
+
+.premiumBox {
+  position: absolute;
+  top: 6em;
+  left: 1em;
+}
+
+.premiumImg {
+  -webkit-transform-style: preserve-3d;
+  transition: all 0.3s;
+  width: 80%;
+}
+
+.premiumImg:hover {
+  filter: drop-shadow(0 0 0.2em gold);
+  scale: 1.1;
+}
+
+.premiumImg:active {
+  scale: 1;
 }

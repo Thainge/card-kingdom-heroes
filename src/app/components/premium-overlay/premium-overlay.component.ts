@@ -20,10 +20,13 @@ import Swiper from 'swiper';
 interface PremiumBox {
   id: number;
   image: string;
+  bought: boolean;
+  active: boolean;
+  cost: number;
 }
 
 @Component({
-  selector: 'app-premium-overlay-overlay',
+  selector: 'app-premium-overlay',
   templateUrl: './premium-overlay.component.html',
   styleUrls: ['./premium-overlay.component.scss'],
   standalone: true,
@@ -51,30 +54,41 @@ export class PremiumOverlayComponent implements OnInit {
   @ViewChild('swiper') swiperRef: ElementRef | undefined;
   swiper?: Swiper;
   currentIndex: number = 0;
-  campaigns: PremiumBox[] = [
+  premiumItems: PremiumBox[] = [
     {
       id: 1,
       image: 'normalCampaign.png',
+      bought: false,
+      active: false,
+      cost: 1000,
     },
     {
       id: 2,
       image: 'linkCampaign.png',
+      bought: false,
+      active: false,
+      cost: 2500,
     },
     {
       id: 3,
       image: 'marioCampaign.png',
+      bought: false,
+      active: false,
+      cost: 5000,
     },
     {
       id: 4,
       image: 'tf2Campaign.png',
+      bought: false,
+      active: false,
+      cost: 7500,
     },
     {
       id: 5,
       image: 'kirbyCampaign.png',
-    },
-    {
-      id: 6,
-      image: 'donkeyKongCampaign.png',
+      bought: false,
+      active: false,
+      cost: 9999,
     },
   ];
 
@@ -90,6 +104,31 @@ export class PremiumOverlayComponent implements OnInit {
 
   onActiveIndexChange() {
     this.currentIndex = this.swiper?.activeIndex ?? 0;
+  }
+
+  buyItem(item: PremiumBox) {
+    if (item.bought) {
+      this.toggleActive(item);
+      return;
+    }
+
+    this.premiumItems = this.premiumItems.map((x) => {
+      if (x.id === item.id) {
+        return { ...x, bought: true, active: true };
+      }
+
+      return x;
+    });
+  }
+
+  toggleActive(item: PremiumBox) {
+    this.premiumItems = this.premiumItems.map((x) => {
+      if (x.id === item.id) {
+        return { ...x, active: !x.active };
+      }
+
+      return x;
+    });
   }
 
   changeIndexLeft() {
