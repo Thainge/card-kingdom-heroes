@@ -27,6 +27,10 @@
     [open]="chooseCampaignOpen"
     (onCloseMenu)="chooseCampaignOpen = false"
   ></app-campaign-overlay-overlay>
+  <app-premium-overlay-overlay
+    [open]="premiumOpen"
+    (onCloseMenu)="premiumOpen = false"
+  ></app-premium-overlay-overlay>
 
   <!-- Top -->
   <div
@@ -48,7 +52,11 @@
     <div class="progressBarContainer">
       <img src="./assets/progressBar.png" class="progressBarImage" />
       <img src="./assets/gold.png" class="progressGoldImage" />
-      <img src="./assets/plus.png" class="progressPlusImage" />
+      <img
+        src="./assets/plus.png"
+        class="progressPlusImage"
+        (click)="premiumOpen = true"
+      />
       <div class="progresssTextGold">512</div>
     </div>
   </div>

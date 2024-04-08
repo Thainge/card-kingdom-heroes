@@ -1,0 +1,213 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  z-index: 5001;
+}
+
+.optionsMenuBackdrop {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.overlayBox {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlayPanelBg {
+  filter: drop-shadow(0 0 0.5em rgba(0, 0, 0, 1));
+  -webkit-user-drag: none;
+}
+
+.overlalPanelTitle {
+  position: absolute;
+  top: 5.5%;
+  margin-left: -3%;
+  font-size: 1.4em;
+
+  text-align: center;
+  color: white;
+  font-family: "headerFont";
+  background: -webkit-linear-gradient(#f5f2e6, #a8a075);
+  -webkit-text-stroke: 2px #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.closeMenuButtonBox {
+  position: absolute;
+  top: 2.4%;
+  right: 0.9%;
+}
+
+.closeMenuButton {
+  -webkit-user-drag: none;
+  position: relative;
+  z-index: 1;
+  transition: all 0.2s;
+  --closeOpacity: 0;
+}
+
+.closeMenuButton:hover {
+  --closeOpacity: 1;
+}
+
+.activeBtn {
+  position: absolute;
+  left: 0;
+  opacity: var(--closeOpacity);
+}
+
+.optionsBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  column-gap: 4%;
+  scale: 0.85;
+}
+
+.overlayImage {
+  width: 120%;
+  -webkit-transform-style: preserve-3d;
+  transition: all 0.3s;
+  filter: drop-shadow(0 0 0.3em black);
+}
+
+.overlayImage:hover {
+  filter: drop-shadow(0 0 0.3em gold);
+  scale: 1.1;
+}
+
+.overlayImage:active {
+  scale: 1;
+}
+
+// Campaigns
+
+.innerOptionsBoxShopping {
+  position: absolute;
+  top: 24%;
+  width: 100%;
+}
+
+.swiperBox {
+  position: relative;
+  top: -10%;
+  width: 90%;
+}
+
+.boosterContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  padding: 10%;
+}
+
+.disabledBooster {
+  filter: brightness(0.5);
+}
+
+.scaleDownBooster {
+  user-select: none;
+  pointer-events: none;
+  scale: 0.7 !important;
+}
+
+.leftArrow {
+  position: absolute;
+  z-index: 50;
+  left: 15%;
+  color: wheat;
+}
+
+.rightArrow {
+  position: absolute;
+  z-index: 50;
+  right: 15%;
+  color: wheat;
+}
+
+.leftRightarrow {
+  filter: brightness(0.8);
+  opacity: 0.8;
+  scale: 0.7;
+  -webkit-transform-style: preserve-3d;
+  transition: all 0.1s;
+}
+
+.leftRightarrow:hover {
+  opacity: 1;
+  scale: 0.8;
+  filter: drop-shadow(0 0 0.2em black) brightness(1);
+}
+
+.leftRightarrow:active {
+  scale: 0.7;
+}
+
+.absoluteLock {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 120%;
+  filter: brightness(0.8);
+}
+
+.relativeBox {
+  position: relative;
+}
+
+.dimImage {
+  filter: brightness(0.5);
+}
+
+.headerBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  column-gap: 3%;
+  width: 110%;
+  transition: all 0.3s;
+}
+
+.headerStar {
+  width: 9%;
+}
+
+.headerText {
+  font-family: soho;
+  color: #e9e9b2;
+  font-size: 1.3em;
+  font-style: italic;
+}
+
+.disabledText {
+  filter: brightness(0.5);
+  font-size: 0.7em;
+  transform: translate(0, 4em);
+}

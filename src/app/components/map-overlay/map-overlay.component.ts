@@ -18,6 +18,7 @@ import { GalleryOverlayComponent } from '../gallery-overlay/gallery-overlay.comp
 import { LoadingService } from 'src/app/services/loading.service';
 import { DifficultyOverlayComponent } from '../choose-difficulty-overlay/choose-difficulty-overlay.component';
 import { CampaignOverlayComponent } from '../campaign-overlay/campaign-overlay.component';
+import { PremiumOverlayComponent } from '../premium-overlay/premium-overlay.component';
 
 @Component({
   selector: 'app-map-overlay',
@@ -33,6 +34,7 @@ import { CampaignOverlayComponent } from '../campaign-overlay/campaign-overlay.c
     GalleryOverlayComponent,
     DifficultyOverlayComponent,
     CampaignOverlayComponent,
+    PremiumOverlayComponent,
   ],
   animations: [
     fadeInOnEnterAnimation({ anchor: 'fadeEnter' }),
@@ -55,7 +57,8 @@ export class MapOverlayComponent implements OnInit {
   deckOpen: boolean = false;
   galleryOpen: boolean = false;
   chooseDifficultyOpen: boolean = false;
-  chooseCampaignOpen: boolean = true;
+  chooseCampaignOpen: boolean = false;
+  premiumOpen: boolean = true;
 
   display: boolean = true;
 

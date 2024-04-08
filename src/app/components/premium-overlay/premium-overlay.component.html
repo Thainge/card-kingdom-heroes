@@ -1,0 +1,99 @@
+<div
+  class="container"
+  *ngIf="open"
+  [@fadeEnter]="{
+    value: '',
+    params: { duration: 300, delay: 0 }
+  }"
+  [@fadeOutLeave]="{
+    value: '',
+    params: { duration: 300, delay: 0 }
+  }"
+>
+  <div class="optionsMenuBackdrop"></div>
+  <div class="overlayBox">
+    <div class="closeMenuButtonBox" (click)="closeMenu()">
+      <img src="./assets/close.png" class="closeMenuButton" />
+      <img src="./assets/closeActive.png" class="closeMenuButton activeBtn" />
+    </div>
+    <img class="overlayPanelBg" src="./assets/wideMenu.png" />
+    <div class="overlalPanelTitle">Premium</div>
+    <img
+      src="./assets/leftArrow.png"
+      class="leftArrow leftRightarrow"
+      (click)="changeIndexLeft()"
+      *ngIf="currentIndex > 0"
+      [@fadeEnter]="{
+        value: '',
+        params: { duration: 300, delay: 0 }
+      }"
+      [@fadeOutLeave]="{
+        value: '',
+        params: { duration: 300, delay: 0 }
+      }"
+    />
+    <img
+      src="./assets/rightArrow.png"
+      class="rightArrow leftRightarrow"
+      (click)="changeIndexRight()"
+      *ngIf="currentIndex < campaigns.length - 1"
+      [@fadeEnter]="{
+        value: '',
+        params: { duration: 300, delay: 0 }
+      }"
+      [@fadeOutLeave]="{
+        value: '',
+        params: { duration: 300, delay: 0 }
+      }"
+    />
+    <div class="innerOptionsBoxShopping">
+      <swiper-container
+        #swiper
+        class="swiperBox"
+        effect="coverflow"
+        [grab-cursor]="true"
+        centered-slides="true"
+        slides-per-view="3"
+        coverflow-effect-rotate="10"
+        coverflow-effect-stretch="0"
+        coverflow-effect-depth="20"
+        coverflow-effect-modifier=".2"
+        coverflow-effect-slide-shadows="false"
+        (swiperactiveindexchange)="onActiveIndexChange()"
+      >
+        <swiper-slide
+          *ngFor="let item of campaigns; index as i; trackBy: trackById"
+        >
+          <div
+            class="headerBox"
+            [ngClass]="{
+              disabledText: currentIndex !== i
+            }"
+          >
+            <img class="headerStar" src="./assets/battleStar.png" />
+            <div class="headerText">0/80</div>
+          </div>
+          <div
+            class="boosterContainer"
+            [ngClass]="{
+              disabledBooster: currentIndex !== i,
+              scaleDownBooster: currentIndex !== i
+            }"
+          >
+            <div class="relativeBox">
+              <img *ngIf="i > 1" class="absoluteLock" src="./assets/lock.png" />
+              <img
+                [ngClass]="{
+                  dimImage: i > 1
+                }"
+                class="overlayImage"
+                [src]="'./assets/' + item.image"
+                (click)="closeMenu()"
+              />
+            </div>
+          </div>
+        </swiper-slide>
+      </swiper-container>
+    </div>
+  </div>
+</div>
