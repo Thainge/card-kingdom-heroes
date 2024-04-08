@@ -242,6 +242,14 @@
   background: url(~src/assets/paper.png);
 }
 
+.paperBgRare {
+  background: url(~src/assets/rarePaper.png);
+}
+
+.paperBgLegendary {
+  background: url(~src/assets/goldPaper.png);
+}
+
 .paperBgEnemy {
   background: url(~src/assets/paper.png);
   z-index: 11 !important;
@@ -300,7 +308,7 @@
 .abilityBorder1 {
   position: absolute;
   background-position: top;
-  background-position: 50% 90%;
+  background-position: 50% -80%;
   width: 3%;
   top: 0;
   right: 0;
@@ -310,7 +318,7 @@
 .abilityBorder2 {
   position: absolute;
   background-position: top;
-  background-position: 50% 90%;
+  background-position: 50% -80%;
   width: 3%;
   top: 0;
   left: 0;
@@ -564,7 +572,7 @@
 
 .cardsListBoxRight {
   position: absolute;
-  top: 29%;
+  top: 28%;
   left: 0;
   display: flex;
   align-items: flex-end;
@@ -876,6 +884,7 @@
   position: absolute;
   top: -10%;
   right: -10%;
+  font-style: italic;
   font-size: 1.8em;
   color: #e9e9b2;
   font-family: soho;

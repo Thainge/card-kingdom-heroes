@@ -46,9 +46,10 @@ export class DeckOverlayComponent implements OnInit {
           isNew: true,
           numberOwned: 4,
           index: i,
+          level: 1,
         };
       }
-      if (i < 16) {
+      if (i < 11) {
         return {
           ...x,
           owned: true,
@@ -56,15 +57,17 @@ export class DeckOverlayComponent implements OnInit {
           isNew: false,
           numberOwned: 2,
           index: i,
+          level: 2,
         };
       }
       return {
         ...x,
-        owned: false,
+        owned: true,
         inHand: false,
         isNew: false,
         numberOwned: 1,
         index: i,
+        level: 3,
       };
     });
     this.initialAbilityHand = JSON.parse(JSON.stringify(this.abilityHand));
@@ -75,7 +78,7 @@ export class DeckOverlayComponent implements OnInit {
   initialAbilityHand: AbilityDeckCard[] = [];
   currentHoveringCard: AbilityDeckCard | undefined;
   currentIndex: number = -10;
-  currentSort: SortValue = 'Color';
+  currentSort: SortValue = 'Level';
   errorList: any[] = [];
   errorListInactive: any[] = [];
   areYouSurePopup: boolean = false;
@@ -247,10 +250,10 @@ export class DeckOverlayComponent implements OnInit {
     // Sort by Level
     if (this.currentSort === 'Level') {
       this.abilityCards = this.abilityCards.sort((a, b) => {
-        if (a.level < b.level) {
+        if (a.level > b.level) {
           return -1;
         }
-        if (a.level > b.level) {
+        if (a.level < b.level) {
           return 1;
         }
         return 0;

@@ -83,7 +83,14 @@
                   >
                     <img src="./assets/new.png" class="newImage" />
                   </div>
-                  <div class="abilityTitle paperBg">
+                  <div
+                    class="abilityTitle"
+                    [ngClass]="{
+                    paperBg: card.level === 1,
+                        paperBgRare: card.level === 2,
+                        paperBgLegendary: card.level === 3,
+                  }"
+                  >
                     <div class="abilityTitleText">{{ card.name }}</div>
                     <div class="abilitySuitsBox">
                       <img
@@ -93,14 +100,42 @@
                       />
                     </div>
                   </div>
-                  <div class="abilityBorder1 paperBg"></div>
-                  <div class="abilityBorder2 paperBg"></div>
-                  <div class="cardCount">
+                  <div
+                    class="abilityBorder1"
+                    [ngClass]="{
+paperBg: card.level === 1,
+                        paperBgRare: card.level === 2,
+                        paperBgLegendary: card.level === 3,
+                  }"
+                  ></div>
+                  <div
+                    class="abilityBorder2"
+                    [ngClass]="{
+paperBg: card.level === 1,
+                        paperBgRare: card.level === 2,
+                        paperBgLegendary: card.level === 3,
+                  }"
+                  ></div>
+                  <div class="cardCount" *ngIf="card.numberOwned > 0">
                     {{ card.numberOwned }}<b class="smaller">x</b>
                   </div>
-                  <div class="abilityDescription paperBg">
+                  <div
+                    class="abilityDescription"
+                    [ngClass]="{
+paperBg: card.level === 1,
+                        paperBgRare: card.level === 2,
+                        paperBgLegendary: card.level === 3,
+                  }"
+                  >
                     <div class="abilityDescriptionLevel">
-                      <div class="levelText paperBg">
+                      <div
+                        class="levelText"
+                        [ngClass]="{
+paperBg: card.level === 1,
+                        paperBgRare: card.level === 2,
+                        paperBgLegendary: card.level === 3,
+                      }"
+                      >
                         Level {{ card.level }}
                       </div>
                     </div>
@@ -165,8 +200,14 @@
                     <div
                       class="wildCardSuites bottomWildCard bottomAbilityStuff"
                     >
-                      <div class="abilityTitle paperBg">
-                        <div class="abilityTitleText">{{ card.name }}</div>
+                      <div
+                        class="abilityTitle"
+                        [ngClass]="{
+                        paperBg: card.level === 1,
+                        paperBgRare: card.level === 2,
+                        paperBgLegendary: card.level === 3,
+                      }"
+                      >
                         <div class="abilitySuitsBox">
                           <img
                             *ngFor="let cost of card.cost"
@@ -175,11 +216,39 @@
                           />
                         </div>
                       </div>
-                      <div class="abilityBorder1 paperBg"></div>
-                      <div class="abilityBorder2 paperBg"></div>
-                      <div class="abilityDescription paperBg">
+                      <div
+                        class="abilityBorder1"
+                        [ngClass]="{
+                        paperBg: card.level === 1,
+                        paperBgRare: card.level === 2,
+                        paperBgLegendary: card.level === 3,
+                      }"
+                      ></div>
+                      <div
+                        class="abilityBorder2"
+                        [ngClass]="{
+                        paperBg: card.level === 1,
+                        paperBgRare: card.level === 2,
+                        paperBgLegendary: card.level === 3,
+                      }"
+                      ></div>
+                      <div
+                        class="abilityDescription"
+                        [ngClass]="{
+                        paperBg: card.level === 1,
+                        paperBgRare: card.level === 2,
+                        paperBgLegendary: card.level === 3,
+                      }"
+                      >
                         <div class="abilityDescriptionLevel">
-                          <div class="levelText paperBg">
+                          <div
+                            class="levelText"
+                            [ngClass]="{
+                        paperBg: card.level === 1,
+                        paperBgRare: card.level === 2,
+                        paperBgLegendary: card.level === 3,
+                      }"
+                          >
                             Level {{ card.level }}
                           </div>
                         </div>
@@ -212,7 +281,14 @@
                     <div
                       class="wildCardSuites bottomWildCard bottomAbilityStuff"
                     >
-                      <div class="abilityTitle paperBg">
+                      <div
+                        class="abilityTitle"
+                        [ngClass]="{
+                        paperBg: card.level === 1,
+                        paperBgRare: card.level === 2,
+                        paperBgLegendary: card.level === 3,
+                      }"
+                      >
                         <div class="abilityTitleText">{{ card.name }}</div>
                         <div class="abilitySuitsBox">
                           <img
@@ -222,11 +298,39 @@
                           />
                         </div>
                       </div>
-                      <div class="abilityBorder1 paperBg"></div>
-                      <div class="abilityBorder2 paperBg"></div>
-                      <div class="abilityDescription paperBg">
+                      <div
+                        class="abilityBorder1"
+                        [ngClass]="{
+                        paperBg: card.level === 1,
+                        paperBgRare: card.level === 2,
+                        paperBgLegendary: card.level === 3,
+                      }"
+                      ></div>
+                      <div
+                        class="abilityBorder2"
+                        [ngClass]="{
+                        paperBg: card.level === 1,
+                        paperBgRare: card.level === 2,
+                        paperBgLegendary: card.level === 3,
+                      }"
+                      ></div>
+                      <div
+                        class="abilityDescription"
+                        [ngClass]="{
+                        paperBg: card.level === 1,
+                        paperBgRare: card.level === 2,
+                        paperBgLegendary: card.level === 3,
+                      }"
+                      >
                         <div class="abilityDescriptionLevel">
-                          <div class="levelText paperBg">
+                          <div
+                            class="levelText"
+                            [ngClass]="{
+                            paperBg: card.level === 1,
+                        paperBgRare: card.level === 2,
+                        paperBgLegendary: card.level === 3,
+                          }"
+                          >
                             Level {{ card.level }}
                           </div>
                         </div>
