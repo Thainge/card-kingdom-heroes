@@ -99,5 +99,21 @@ export class MapOverlayComponent implements OnInit {
       this.chooseDifficultyOpen = x;
       this.showInformation = false;
     });
+    this.checkTip();
+  }
+
+  checkTip() {
+    const mapTipShown = localStorage.getItem('mapTipShown');
+    if (!mapTipShown) {
+      localStorage.setItem('mapTipShown', JSON.stringify(true));
+      this.loadingService.currentTip$.next({
+        title: 'New Tip',
+        header: 'Map',
+        text: 'Select missions to progress campaign',
+        img: 'wildImg.png',
+        tipRows: ['- Select flags to start missions'],
+      });
+      this.loadingService.showTip$.next(true);
+    }
   }
 }
