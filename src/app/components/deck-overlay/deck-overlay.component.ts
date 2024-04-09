@@ -92,6 +92,12 @@ export class DeckOverlayComponent implements OnInit {
   errorListInactive: any[] = [];
   areYouSurePopup: boolean = false;
 
+  leftUpgradeCard: AbilityDeckCard | undefined;
+  rightUpgradeCard: AbilityDeckCard | undefined;
+  showingUpgradeCard: boolean = false;
+  showingUpgradeAnimation: boolean = false;
+  canClickEnd: boolean = false;
+
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
   constructor(private userService: playerService) {}
@@ -102,6 +108,7 @@ export class DeckOverlayComponent implements OnInit {
     if (this.abilityHand.length === 16 || card.inHand) {
       return;
     }
+    this.currentHoveringCard = undefined;
 
     const totalCountIdsInHand = this.abilityHand.filter(
       (x) => x.id === card.id
@@ -127,6 +134,21 @@ export class DeckOverlayComponent implements OnInit {
         return x;
       });
     }
+  }
+
+  timeout(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  hideUpgrade() {
+    if (!this.canClickEnd) {
+      return;
+    }
+
+    this.showingUpgradeAnimation = false;
+    this.showingUpgradeCard = false;
+    this.rightUpgradeCard = undefined;
+    this.leftUpgradeCard = undefined;
   }
 
   pushError(message: string) {
@@ -169,22 +191,48 @@ export class DeckOverlayComponent implements OnInit {
       return '66%';
     }
 
-    return '91%';
+    return '91.5%';
   }
 
-  upgradeCard(card: AbilityDeckCard) {
+  cancelUpgrade() {
+    this.leftUpgradeCard = undefined;
+    this.rightUpgradeCard = undefined;
+    this.showingUpgradeCard = false;
+  }
+
+  startUpgradeCard(card: AbilityDeckCard) {
     if (card.level === 3 || card.trueNumberOwned <= 2) {
       return;
     }
 
-    this.abilityHand = this.abilityHand.filter((x) => x.id !== card.id);
+    this.leftUpgradeCard = card;
+    const newCard = { ...card, level: card.level + 1 };
+    this.rightUpgradeCard = newCard;
+    this.showingUpgradeCard = true;
+  }
+
+  async upgradeCard() {
+    const card = this.leftUpgradeCard;
+
+    // Show animation for upgrading card
+    this.showingUpgradeCard = false;
+    this.showingUpgradeAnimation = true;
+    this.timeout(1000);
+    this.canClickEnd = true;
+
+    // If card was in hand, add to hand again
+    const currentLength = this.abilityHand.length; // 2
+    this.abilityHand = this.abilityHand.filter((x) => x.id !== card?.id);
+    const newLength = this.abilityHand.length; // 0
+
     this.abilityCards = this.abilityCards.map((x) => {
-      if (x.id === card.id) {
+      if (x.id === card?.id) {
         return {
           ...x,
           level: x.level + 1,
           trueNumberOwned: x.trueNumberOwned - 3,
           numberOwned: x.trueNumberOwned - 3,
+          isNew: true,
           owned: true,
           inHand: false,
         };
@@ -192,6 +240,11 @@ export class DeckOverlayComponent implements OnInit {
 
       return x;
     });
+
+    const foundCard = this.abilityCards.find((x) => x.id === card?.id);
+    if (currentLength !== newLength && foundCard) {
+      this.abilityHand.push(foundCard);
+    }
   }
 
   removeCardFromHand(card: AbilityDeckCard) {

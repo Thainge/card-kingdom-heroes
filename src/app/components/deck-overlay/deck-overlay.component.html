@@ -11,6 +11,412 @@
   }"
 >
   <div class="optionsMenuBackdrop"></div>
+  <div
+    class="absoluteUpgradeContainer"
+    *ngIf="showingUpgradeAnimation"
+    [@fadeEnter]="{
+      value: '',
+      params: { duration: 300, delay: 0 }
+    }"
+    [@fadeOutLeave]="{
+      value: '',
+      params: { duration: 300, delay: 0 }
+    }"
+    (click)="hideUpgrade()"
+  >
+    <div class="optionsMenuBackdrop backdrop2"></div>
+    <div class="relativeUpgradeContainer">
+      <div
+        class="bottomCard playerBottomCard"
+        [@zoomInEnter]="{
+          value: '',
+          params: { duration: 1000, delay: 300, translate: '30px' }
+        }"
+      >
+        <div class="playerPulseBox">
+          <div class="playerPulse playerPulseAnimation"></div>
+        </div>
+        <div class="cardBorder tadaEffect">
+          <img
+            [src]="'./assets/abilities/' + rightUpgradeCard?.image"
+            class="cardBackgroundImage"
+          />
+          <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
+            <div
+              class="newImageBox"
+              [ngClass]="{
+                      fadeInNew: rightUpgradeCard?.isNew,
+                      fadeOutNew: !rightUpgradeCard?.isNew,
+                    }"
+            >
+              <img src="./assets/new.png" class="newImage" />
+            </div>
+            <div
+              class="abilityTitle"
+              [ngClass]="{
+                    paperBg: rightUpgradeCard?.level === 1,
+                        paperBgRare: rightUpgradeCard?.level === 2,
+                        paperBgLegendary: rightUpgradeCard?.level === 3,
+                  }"
+            >
+              <div class="abilityTitleText">
+                {{ rightUpgradeCard?.name }}
+                {{
+                  rightUpgradeCard?.level ?? 0 > 1
+                    ? "+" + ((rightUpgradeCard?.level ?? 0) - 1)
+                    : ""
+                }}
+              </div>
+              <div class="abilitySuitsBox">
+                <img
+                  *ngFor="let cost of rightUpgradeCard?.cost"
+                  [src]="'./assets/' + cost + '.png'"
+                  class="abilitySuit"
+                />
+              </div>
+            </div>
+            <div
+              class="abilityBorder1"
+              [ngClass]="{
+                        paperBg: rightUpgradeCard?.level === 1,
+                        paperBgRare: rightUpgradeCard?.level === 2,
+                        paperBgLegendary: rightUpgradeCard?.level === 3,
+                  }"
+            ></div>
+            <div
+              class="abilityBorder2"
+              [ngClass]="{
+                        paperBg: rightUpgradeCard?.level === 1,
+                        paperBgRare: rightUpgradeCard?.level === 2,
+                        paperBgLegendary: rightUpgradeCard?.level === 3,
+                  }"
+            ></div>
+            <div
+              class="abilityDescription"
+              [ngClass]="{
+                        paperBg: rightUpgradeCard?.level === 1,
+                        paperBgRare: rightUpgradeCard?.level === 2,
+                        paperBgLegendary: rightUpgradeCard?.level === 3,
+                  }"
+            >
+              <div class="abilityDescriptionText">
+                {{
+                  (rightUpgradeCard?.description ?? [])[
+                    (rightUpgradeCard?.level ?? 1) - 1
+                  ]
+                }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="upgradeBox"
+          [ngClass]="{
+            upgradeBoxFinished:
+              (rightUpgradeCard?.trueNumberOwned ?? 0 > 2) &&
+              rightUpgradeCard?.level !== 3,
+          }"
+        >
+          <div class="upgradeBg"></div>
+          <div
+            class="upgradeBgFill upgradeBgMaxFill"
+            [ngStyle]="{
+              width: '91.5%'
+            }"
+          ></div>
+          <img class="upgradeArrow" src="./assets/goldArrow.png" />
+          <div class="upgradeText">Level Up!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="absoluteUpgradeContainer"
+    *ngIf="showingUpgradeCard"
+    [@fadeEnter]="{
+      value: '',
+      params: { duration: 300, delay: 0 }
+    }"
+    [@fadeOutLeave]="{
+      value: '',
+      params: { duration: 300, delay: 0 }
+    }"
+  >
+    <div class="optionsMenuBackdrop backdrop2"></div>
+    <div class="relativeUpgradeContainer">
+      <div class="absoluteButton">
+        <div
+          class="upgradeBox absoluteBtnBox"
+          [ngClass]="{
+            upgradeBoxFinished:
+              (rightUpgradeCard?.trueNumberOwned ?? 0 > 2) &&
+              rightUpgradeCard?.level !== 3,
+          }"
+          (click)="cancelUpgrade()"
+        >
+          <div class="upgradeBg"></div>
+          <div
+            class="upgradeBgFill upgradeCancelFill"
+            [ngStyle]="{
+              width: '91.5%'
+            }"
+          ></div>
+          <div class="upgradeText">Cancel</div>
+        </div>
+        <div
+          class="upgradeBox absoluteBtnBox"
+          [ngClass]="{
+            upgradeBoxFinished:
+              (rightUpgradeCard?.trueNumberOwned ?? 0 > 2) &&
+              rightUpgradeCard?.level !== 3,
+          }"
+          (click)="upgradeCard()"
+        >
+          <div class="upgradeBg"></div>
+          <div
+            class="upgradeBgFill upgradeBgFinishedFill"
+            [ngStyle]="{
+              width: '91.5%'
+            }"
+          ></div>
+          <img src="./assets/gold.png" class="goldCostImg" />
+          <div class="upgradeText goldText">1000</div>
+        </div>
+      </div>
+      <div class="bottomCard playerBottomCard">
+        <div class="cardBorder">
+          <img
+            [src]="'./assets/abilities/' + leftUpgradeCard?.image"
+            class="cardBackgroundImage"
+          />
+          <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
+            <div
+              class="newImageBox"
+              [ngClass]="{
+                      fadeInNew: leftUpgradeCard?.isNew,
+                      fadeOutNew: !leftUpgradeCard?.isNew,
+                    }"
+            >
+              <img src="./assets/new.png" class="newImage" />
+            </div>
+            <div
+              class="abilityTitle"
+              [ngClass]="{
+                    paperBg: leftUpgradeCard?.level === 1,
+                        paperBgRare: leftUpgradeCard?.level === 2,
+                        paperBgLegendary: leftUpgradeCard?.level === 3,
+                  }"
+            >
+              <div class="abilityTitleText">
+                {{ leftUpgradeCard?.name }}
+                {{
+                  (leftUpgradeCard?.level ?? 0) > 1
+                    ? "+" + ((leftUpgradeCard?.level ?? 0) - 1)
+                    : ""
+                }}
+              </div>
+              <div class="abilitySuitsBox">
+                <img
+                  *ngFor="let cost of leftUpgradeCard?.cost"
+                  [src]="'./assets/' + cost + '.png'"
+                  class="abilitySuit"
+                />
+              </div>
+            </div>
+            <div
+              class="abilityBorder1"
+              [ngClass]="{
+                        paperBg: leftUpgradeCard?.level === 1,
+                        paperBgRare: leftUpgradeCard?.level === 2,
+                        paperBgLegendary: leftUpgradeCard?.level === 3,
+                  }"
+            ></div>
+            <div
+              class="abilityBorder2"
+              [ngClass]="{
+                        paperBg: leftUpgradeCard?.level === 1,
+                        paperBgRare: leftUpgradeCard?.level === 2,
+                        paperBgLegendary: leftUpgradeCard?.level === 3,
+                  }"
+            ></div>
+            <div
+              class="abilityDescription"
+              [ngClass]="{
+                        paperBg: leftUpgradeCard?.level === 1,
+                        paperBgRare: leftUpgradeCard?.level === 2,
+                        paperBgLegendary: leftUpgradeCard?.level === 3,
+                  }"
+            >
+              <div class="abilityDescriptionText">
+                {{
+                  (leftUpgradeCard?.description ?? [])[
+                    (leftUpgradeCard?.level ?? 1) - 1
+                  ]
+                }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="upgradeBox"
+          [ngClass]="{
+            upgradeBoxFinished:
+              (leftUpgradeCard?.trueNumberOwned ?? 0) > 2 &&
+              leftUpgradeCard?.level !== 3,
+          }"
+        >
+          <div class="upgradeBg"></div>
+          <div
+            class="upgradeBgFill"
+            [ngClass]="{
+              upgradeBgFinishedFill:
+                (leftUpgradeCard?.trueNumberOwned ?? 0) > 2,
+              upgradeBgMaxFill: leftUpgradeCard?.level === 3
+            }"
+            [ngStyle]="{
+              width:
+                leftUpgradeCard?.level === 3
+                  ? '91.5%'
+                  : determineWidth(leftUpgradeCard!)
+            }"
+          ></div>
+          <img
+            class="upgradeArrow"
+            src="./assets/blueArrow.png"
+            *ngIf="
+              (leftUpgradeCard?.trueNumberOwned ?? 0) <= 2 &&
+              leftUpgradeCard?.level !== 3
+            "
+          />
+          <img
+            class="upgradeArrow"
+            src="./assets/greenArrow.png"
+            *ngIf="
+              (leftUpgradeCard?.trueNumberOwned ?? 0) > 2 &&
+              leftUpgradeCard?.level !== 3
+            "
+          />
+          <div
+            class="upgradeText"
+            *ngIf="
+              leftUpgradeCard?.level !== 3 &&
+              ((leftUpgradeCard?.trueNumberOwned ?? 0) <= 2 ||
+                currentUpgradeHover?.id !== leftUpgradeCard?.id)
+            "
+          >
+            {{ leftUpgradeCard?.trueNumberOwned }}/3
+          </div>
+          <div
+            class="upgradeText goldText"
+            *ngIf="
+              leftUpgradeCard?.level !== 3 &&
+              (leftUpgradeCard?.trueNumberOwned ?? 0) > 2 &&
+              currentUpgradeHover?.id === leftUpgradeCard?.id
+            "
+          >
+            Upgrade
+          </div>
+          <div class="upgradeText" *ngIf="leftUpgradeCard?.level === 3">
+            Max Level
+          </div>
+        </div>
+      </div>
+      <img src="./assets/upgradeRightArrow.png" class="arrowSplitter" />
+      <div class="bottomCard playerBottomCard">
+        <div class="cardBorder">
+          <img
+            [src]="'./assets/abilities/' + rightUpgradeCard?.image"
+            class="cardBackgroundImage"
+          />
+          <div class="wildCardSuites bottomWildCard bottomAbilityStuff">
+            <div
+              class="newImageBox"
+              [ngClass]="{
+                      fadeInNew: rightUpgradeCard?.isNew,
+                      fadeOutNew: !rightUpgradeCard?.isNew,
+                    }"
+            >
+              <img src="./assets/new.png" class="newImage" />
+            </div>
+            <div
+              class="abilityTitle"
+              [ngClass]="{
+                    paperBg: rightUpgradeCard?.level === 1,
+                        paperBgRare: rightUpgradeCard?.level === 2,
+                        paperBgLegendary: rightUpgradeCard?.level === 3,
+                  }"
+            >
+              <div class="abilityTitleText">
+                {{ rightUpgradeCard?.name }}
+                {{
+                  rightUpgradeCard?.level ?? 0 > 1
+                    ? "+" + ((rightUpgradeCard?.level ?? 0) - 1)
+                    : ""
+                }}
+              </div>
+              <div class="abilitySuitsBox">
+                <img
+                  *ngFor="let cost of rightUpgradeCard?.cost"
+                  [src]="'./assets/' + cost + '.png'"
+                  class="abilitySuit"
+                />
+              </div>
+            </div>
+            <div
+              class="abilityBorder1"
+              [ngClass]="{
+                        paperBg: rightUpgradeCard?.level === 1,
+                        paperBgRare: rightUpgradeCard?.level === 2,
+                        paperBgLegendary: rightUpgradeCard?.level === 3,
+                  }"
+            ></div>
+            <div
+              class="abilityBorder2"
+              [ngClass]="{
+                        paperBg: rightUpgradeCard?.level === 1,
+                        paperBgRare: rightUpgradeCard?.level === 2,
+                        paperBgLegendary: rightUpgradeCard?.level === 3,
+                  }"
+            ></div>
+            <div
+              class="abilityDescription"
+              [ngClass]="{
+                        paperBg: rightUpgradeCard?.level === 1,
+                        paperBgRare: rightUpgradeCard?.level === 2,
+                        paperBgLegendary: rightUpgradeCard?.level === 3,
+                  }"
+            >
+              <div class="abilityDescriptionText">
+                {{
+                  (rightUpgradeCard?.description ?? [])[
+                    (rightUpgradeCard?.level ?? 1) - 1
+                  ]
+                }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="upgradeBox"
+          [ngClass]="{
+            upgradeBoxFinished:
+              (rightUpgradeCard?.trueNumberOwned ?? 0 > 2) &&
+              rightUpgradeCard?.level !== 3,
+          }"
+        >
+          <div class="upgradeBg"></div>
+          <div
+            class="upgradeBgFill upgradeBgMaxFill"
+            [ngStyle]="{
+              width: '91.5%'
+            }"
+          ></div>
+          <img class="upgradeArrow" src="./assets/goldArrow.png" />
+          <div class="upgradeText">Level Up!</div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="overlayBox">
     <img class="overlayPanelBg" src="./assets/wideMenu.png" />
     <div class="overlalPanelTitle">Deck</div>
@@ -28,7 +434,7 @@
           [ngClass]="{
             fade: errorListInactive.includes(item.id)
           }"
-          [@zoomInEnter]="{
+          [@fadeEnter]="{
             value: '',
             params: { duration: 1000, delay: 0, translate: '30px' }
           }"
@@ -148,7 +554,7 @@
                     (!card.owned || (card.inHand && card.owned)) &&
                     card.trueNumberOwned <= 2
                 }"
-                (click)="upgradeCard(card)"
+                (click)="startUpgradeCard(card)"
               >
                 <div class="upgradeBg"></div>
                 <div
@@ -158,7 +564,7 @@
                     upgradeBgMaxFill: card.level === 3
                   }"
                   [ngStyle]="{
-                    width: card.level === 3 ? '91%' : determineWidth(card)
+                    width: card.level === 3 ? '91.5%' : determineWidth(card)
                   }"
                 ></div>
                 <img
@@ -189,17 +595,8 @@
                     currentUpgradeHover?.id === card.id
                   "
                 >
-                  {{ card.goldCost[card.level] }}
+                  Upgrade
                 </div>
-                <img
-                  src="./assets/gold.png"
-                  *ngIf="
-                    card.level !== 3 &&
-                    card.trueNumberOwned > 2 &&
-                    currentUpgradeHover?.id === card.id
-                  "
-                  class="goldCostImg"
-                />
                 <div class="upgradeText" *ngIf="card.level === 3">
                   Max Level
                 </div>

@@ -937,7 +937,7 @@
 }
 
 .upgradeBg {
-  width: 95%;
+  width: 96%;
   height: 3em;
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 0.3em;
@@ -958,6 +958,10 @@
 
 .upgradeBgMaxFill {
   background: linear-gradient(#ebd44f 35%, #ceaf00 55%);
+}
+
+.upgradeCancelFill {
+  background: linear-gradient(rgb(235, 79, 79) 35%, #c84e4e 55%);
 }
 
 .upgradeText {
@@ -988,4 +992,150 @@
   margin-bottom: 0.1em;
   z-index: 2;
   margin-right: 0.3em;
+}
+
+.absoluteUpgradeContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5555;
+}
+
+.relativeUpgradeContainer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  column-gap: 5%;
+  align-items: center;
+  height: 80%;
+}
+
+.relativeUpgradeContainer .bottomCard {
+  width: 17%;
+}
+
+.relativeUpgradeContainer .upgradeBox,
+.relativeUpgradeContainer .playerBottomCard {
+  scale: 1;
+}
+
+.absoluteBtnBox {
+  width: 14em;
+}
+
+.absoluteBtnBox:hover {
+  scale: 1.1 !important;
+}
+
+.absoluteBtnBox:active {
+  scale: 1 !important;
+}
+
+.arrowSplitter {
+  width: 10%;
+}
+
+.backdrop2 {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.absoluteButton {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 5%;
+}
+
+.playerPulseBox {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 10em;
+  left: 0.8em;
+}
+
+.playerPulse {
+  width: 40%;
+  height: 40%;
+  border-radius: 0.5em;
+  background-color: rgba(255, 255, 255, 0);
+  pointer-events: none;
+}
+
+@keyframes pulseEffect {
+  0% {
+    scale: 0;
+    -webkit-box-shadow: 0 0 0.3em 1em rgba(255, 255, 255, 0.7);
+    box-shadow: 0 0 0.3em 1em rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+
+  70% {
+    -webkit-box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
+    box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
+    background-color: rgba(38, 132, 219, 0);
+  }
+
+  100% {
+    scale: 3;
+    -webkit-box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
+    box-shadow: 0 0 10px 30px rgba(38, 132, 219, 0);
+    background-color: rgba(38, 132, 219, 0);
+  }
+}
+
+.playerPulseAnimation {
+  -webkit-animation: pulseEffect infinite;
+  animation: pulseEffect infinite;
+  -webkit-animation-duration: 2000ms;
+  animation-duration: 2000ms;
+  -webkit-animation-delay: 800ms;
+  animation-delay: 800ms;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+@keyframes tada {
+  0% {
+    transform: scale(1);
+  }
+  10%,
+  20% {
+    transform: scale(0.9) rotate(-3deg);
+  }
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: scale(1.1) rotate(3deg);
+  }
+  40%,
+  60%,
+  80% {
+    transform: scale(1.1) rotate(-3deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+.tadaEffect {
+  animation: tada 1s both;
+  animation-delay: 1s;
 }
