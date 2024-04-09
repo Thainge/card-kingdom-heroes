@@ -24,6 +24,7 @@ import {
   flipOnEnterAnimation,
 } from 'angular-animations';
 import { BoosterPack } from 'src/app/models/boosterPack';
+import { LoadingService } from 'src/app/services/loading.service';
 import Swiper from 'swiper';
 
 type ShopStep = 'picking' | 'shopping' | 'opening';
@@ -62,6 +63,9 @@ export class ShopOverlayComponent implements OnInit {
     this.open = x;
     this.currentIndex = 0;
     this.currentStep = 'picking';
+    if (x) {
+      this.checkShopTip();
+    }
   }
   currentStep: ShopStep = 'picking';
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
@@ -128,11 +132,26 @@ export class ShopOverlayComponent implements OnInit {
   specialList: number[] = [];
   canClickNext: boolean = false;
 
-  constructor() {}
+  constructor(private loadingService: LoadingService) {}
 
   ngOnInit() {}
 
   ngAfterViewInit() {}
+
+  checkShopTip() {
+    const shopTipShown = localStorage.getItem('shopTipShown');
+    if (!shopTipShown) {
+      localStorage.setItem('shopTipShown', JSON.stringify(true));
+      this.loadingService.currentTip$.next({
+        title: 'New Tip',
+        header: 'Shop',
+        text: 'Buy and open booster packs to unlock new cards',
+        img: 'wildImg.png',
+        tipRows: ['- Buy booster packs', '- Open booster packs'],
+      });
+      this.loadingService.showTip$.next(true);
+    }
+  }
 
   startPhase() {
     this.openingCards = true;

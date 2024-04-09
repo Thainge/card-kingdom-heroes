@@ -558,9 +558,9 @@
     *ngIf="showWildHintOverlay"
     [@fadeEnter]="{
       value: '',
-      params: { duration: 500, delay: 200, translate: '300px' }
+      params: { duration: 300, delay: 200, translate: '300px' }
     }"
-    [@fadeOutLeave]
+    [@fadeOutLeave]="{ value: '', params: { duration: 300 } }"
   >
     <div class="relativeHintBoxBackdrop"></div>
     <div class="relativeHintBox">

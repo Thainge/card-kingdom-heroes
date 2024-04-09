@@ -7,6 +7,7 @@ import {
   zoomOutOnLeaveAnimation,
 } from 'angular-animations';
 import { AbilityCard } from 'src/app/models/abilityCard';
+import { LoadingService } from 'src/app/services/loading.service';
 import { playerService } from 'src/app/services/player.service';
 
 interface AbilityDeckCard extends AbilityCard {
@@ -80,6 +81,9 @@ export class DeckOverlayComponent implements OnInit {
     });
     this.initialAbilityHand = JSON.parse(JSON.stringify(this.abilityHand));
     this.sortCards();
+    if (x) {
+      this.checkTip();
+    }
   }
   abilityCards: AbilityDeckCard[] = [];
   abilityHand: AbilityDeckCard[] = [];
@@ -100,9 +104,31 @@ export class DeckOverlayComponent implements OnInit {
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
-  constructor(private userService: playerService) {}
+  constructor(
+    private userService: playerService,
+    private loadingService: LoadingService
+  ) {}
 
   ngOnInit() {}
+
+  checkTip() {
+    const deckTipShown = localStorage.getItem('deckTipShown');
+    if (!deckTipShown) {
+      localStorage.setItem('deckTipShown', JSON.stringify(true));
+      this.loadingService.currentTip$.next({
+        title: 'New Tip',
+        header: 'Deck',
+        text: 'Upgrade cards and change your deck',
+        img: 'wildImg.png',
+        tipRows: [
+          '- Create your own ability deck',
+          '- Combine 3 cards to upgrade them',
+          '- Upgrades cost gold',
+        ],
+      });
+      this.loadingService.showTip$.next(true);
+    }
+  }
 
   addCardToHand(card: AbilityDeckCard) {
     if (this.abilityHand.length === 16 || card.inHand) {

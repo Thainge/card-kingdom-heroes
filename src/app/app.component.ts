@@ -118,8 +118,9 @@ export class AppComponent implements OnInit {
     //   unlocked: true,
     // });
     this.loadingService.displayOptions$.subscribe((x) => {
-      this.display = x;
+      // this.display = x;
     });
+    this.display = true;
   }
 
   isBattle(): boolean {
@@ -150,7 +151,10 @@ export class AppComponent implements OnInit {
     this.loadingService.difficultyIsOpen$.next(true);
   }
 
-  resetProgress() {}
+  resetProgress() {
+    localStorage.clear();
+    location.reload();
+  }
 
   openConsole() {
     this.consoleShouldShow = true;

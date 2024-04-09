@@ -32,6 +32,36 @@
     [open]="premiumOpen"
     (onCloseMenu)="premiumOpen = false"
   ></app-premium-overlay>
+  <div
+    class="overlayHintBox"
+    *ngIf="showWildHintOverlay"
+    [@fadeEnter]="{
+      value: '',
+      params: { duration: 300, delay: 200, translate: '300px' }
+    }"
+    [@fadeOutLeave]="{ value: '', params: { duration: 300 } }"
+  >
+    <div class="relativeHintBoxBackdrop"></div>
+    <div class="relativeHintBox">
+      <img src="./assets/tip.png" class="tipBg" />
+      <img src="./assets/wildImg.png" class="tipImage" />
+      <img
+        src="./assets/tipButton.png"
+        class="tipButton"
+        (click)="showWildHintOverlay = false"
+      />
+      <div class="tipTitle">{{ currentTip.title }}</div>
+      <div class="tipHeader">{{ currentTip.header }}</div>
+      <div class="tipText">
+        {{ currentTip.text }}
+      </div>
+      <div class="tipRows">
+        <div class="tipRowItem" *ngFor="let item of currentTip.tipRows">
+          {{ item }}
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Top -->
   <div

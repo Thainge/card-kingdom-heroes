@@ -334,7 +334,6 @@ export class BattleComponent implements OnInit {
   allCardsWild: boolean = false;
   skippingGuide: boolean = false;
 
-  shouldShowWildCardHint: boolean = true;
   showWildHintOverlay: boolean = false;
   currentTip: Tip = {
     title: 'New Tip',
@@ -438,8 +437,9 @@ export class BattleComponent implements OnInit {
 
   checkShowWildCardHint(card: CardDto) {
     // Show wild card hint
-    if (this.shouldShowWildCardHint && (card.wildRange ?? 0) >= 13) {
-      this.shouldShowWildCardHint = false;
+    const wildTipShown = localStorage.getItem('wildTipShown');
+    if (!wildTipShown && (card.wildRange ?? 0) >= 13) {
+      localStorage.setItem('wildTipShown', JSON.stringify(true));
       this.showWildHintOverlay = true;
       this.currentTip = {
         title: 'New Tip',

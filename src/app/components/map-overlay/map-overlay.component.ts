@@ -20,6 +20,14 @@ import { DifficultyOverlayComponent } from '../choose-difficulty-overlay/choose-
 import { CampaignOverlayComponent } from '../campaign-overlay/campaign-overlay.component';
 import { PremiumOverlayComponent } from '../premium-overlay/premium-overlay.component';
 
+interface Tip {
+  title: string;
+  header: string;
+  text: string;
+  img: string;
+  tipRows: string[];
+}
+
 @Component({
   selector: 'app-map-overlay',
   templateUrl: './map-overlay.component.html',
@@ -63,11 +71,29 @@ export class MapOverlayComponent implements OnInit {
   showInformation: boolean = false;
   display: boolean = true;
 
+  showWildHintOverlay: boolean = false;
+  currentTip: Tip = {
+    title: 'New Tip',
+    header: 'Wild Cards',
+    text: 'Wild cards can be any value or suite',
+    img: 'wildImg.png',
+    tipRows: [
+      '- Use mousewheel to change value',
+      '- Click the suite icons to change suite',
+    ],
+  };
+
   constructor(private loadingService: LoadingService) {}
 
   ngOnInit() {
     this.loadingService.displayOptions$.subscribe((x) => {
       // this.display = x;
+    });
+    this.loadingService.currentTip$.subscribe((x) => {
+      this.currentTip = x;
+    });
+    this.loadingService.showTip$.subscribe((x) => {
+      this.showWildHintOverlay = x;
     });
     this.loadingService.difficultyIsOpen$.subscribe((x) => {
       this.chooseDifficultyOpen = x;

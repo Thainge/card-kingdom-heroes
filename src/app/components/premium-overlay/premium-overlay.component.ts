@@ -15,6 +15,7 @@ import {
   fadeInUpOnEnterAnimation,
   fadeOutUpOnLeaveAnimation,
 } from 'angular-animations';
+import { LoadingService } from 'src/app/services/loading.service';
 import Swiper from 'swiper';
 
 interface PremiumBox {
@@ -48,6 +49,9 @@ export class PremiumOverlayComponent implements OnInit {
     setTimeout(() => {
       this.swiper = this.swiperRef?.nativeElement.swiper;
     }, 0);
+    if (x) {
+      this.checkTip();
+    }
   }
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
@@ -92,11 +96,26 @@ export class PremiumOverlayComponent implements OnInit {
     },
   ];
 
-  constructor() {}
+  constructor(private loadingService: LoadingService) {}
 
   ngOnInit() {}
 
   ngAfterViewInit() {}
+
+  checkTip() {
+    const premiumTipShown = localStorage.getItem('premiumTipShown');
+    if (!premiumTipShown) {
+      localStorage.setItem('premiumTipShown', JSON.stringify(true));
+      this.loadingService.currentTip$.next({
+        title: 'New Tip',
+        header: 'Premium',
+        text: 'Access exclusive premium upgrades to provide advantages in combat',
+        img: 'wildImg.png',
+        tipRows: ['- Expensive'],
+      });
+      this.loadingService.showTip$.next(true);
+    }
+  }
 
   closeMenu() {
     this.onCloseMenu.emit(false);

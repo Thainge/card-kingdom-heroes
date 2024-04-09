@@ -6,6 +6,7 @@ import {
   fadeInOnEnterAnimation,
   zoomOutOnLeaveAnimation,
 } from 'angular-animations';
+import { LoadingService } from 'src/app/services/loading.service';
 
 interface HeroUpgrade {
   id: number;
@@ -49,7 +50,13 @@ interface Hero {
   ],
 })
 export class HeroOverlayComponent implements OnInit {
-  @Input('open') open: boolean = false;
+  open: boolean = false;
+  @Input('open') set openChanged(x: boolean) {
+    this.open = x;
+    if (x) {
+      this.checkTip();
+    }
+  }
 
   heroes: Hero[] = [];
   currentHero: Hero | undefined;
@@ -57,7 +64,7 @@ export class HeroOverlayComponent implements OnInit {
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
-  constructor() {}
+  constructor(private loadingService: LoadingService) {}
 
   ngOnInit() {
     const upgrades: HeroUpgrade[] = [
@@ -171,6 +178,21 @@ export class HeroOverlayComponent implements OnInit {
   }
 
   trackById = (index: number, item: HeroUpgrade) => item.id;
+
+  checkTip() {
+    const heroTipShown = localStorage.getItem('heroTipShown');
+    if (!heroTipShown) {
+      localStorage.setItem('heroTipShown', JSON.stringify(true));
+      this.loadingService.currentTip$.next({
+        title: 'New Tip',
+        header: 'Hero Room',
+        text: 'Upgrade and change active hero',
+        img: 'wildImg.png',
+        tipRows: ['- Upgrade heroes', '- Change heroes'],
+      });
+      this.loadingService.showTip$.next(true);
+    }
+  }
 
   selectHero() {
     if (!this.currentHero || !this.currentHero.unlocked) {
