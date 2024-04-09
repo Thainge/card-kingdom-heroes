@@ -296,10 +296,10 @@ export class DeckOverlayComponent implements OnInit {
 
       // First sort by cost
       this.abilityCards = this.abilityCards.sort((a, b) => {
-        if (a.cost.length < b.cost.length) {
+        if (a.cost[a.level].length < b.cost[b.level].length) {
           return -1;
         }
-        if (a.cost.length > b.cost.length) {
+        if (a.cost[a.level].length > b.cost[b.level].length) {
           return 1;
         }
         return 0;
@@ -324,7 +324,7 @@ export class DeckOverlayComponent implements OnInit {
           !includesDiamonds &&
           !includesRed;
 
-        if (onlyRed || x.cost.length === 0) {
+        if (onlyRed || x.cost[x.level].length === 0) {
           onlyRedArray.push(x);
         } else if (onlyBlack) {
           onlyBlackArray.push(x);
@@ -353,10 +353,10 @@ export class DeckOverlayComponent implements OnInit {
     // Sort by cost
     if (this.currentSort === 'Cost') {
       this.abilityCards = this.abilityCards.sort((a, b) => {
-        if (a.cost.length < b.cost.length) {
+        if (a.cost[a.level].length < b.cost[b.level].length) {
           return -1;
         }
-        if (a.cost.length > b.cost.length) {
+        if (a.cost[a.level].length > b.cost[b.level].length) {
           return 1;
         }
         return 0;

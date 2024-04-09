@@ -69,7 +69,11 @@
               </div>
               <div class="abilitySuitsBox">
                 <img
-                  *ngFor="let cost of rightUpgradeCard?.cost"
+                  *ngFor="
+                    let cost of (rightUpgradeCard?.cost ?? [])[
+                      rightUpgradeCard?.level ?? 0
+                    ]
+                  "
                   [src]="'./assets/' + cost + '.png'"
                   class="abilitySuit"
                 />
@@ -217,7 +221,11 @@
               </div>
               <div class="abilitySuitsBox">
                 <img
-                  *ngFor="let cost of leftUpgradeCard?.cost"
+                  *ngFor="
+                    let cost of (leftUpgradeCard?.cost ?? [])[
+                      leftUpgradeCard?.level ?? 0
+                    ]
+                  "
                   [src]="'./assets/' + cost + '.png'"
                   class="abilitySuit"
                 />
@@ -356,7 +364,11 @@
               </div>
               <div class="abilitySuitsBox">
                 <img
-                  *ngFor="let cost of rightUpgradeCard?.cost"
+                  *ngFor="
+                    let cost of (rightUpgradeCard?.cost ?? [])[
+                      rightUpgradeCard?.level ?? 0
+                    ]
+                  "
                   [src]="'./assets/' + cost + '.png'"
                   class="abilitySuit"
                 />
@@ -506,7 +518,7 @@
                     </div>
                     <div class="abilitySuitsBox">
                       <img
-                        *ngFor="let cost of card.cost"
+                        *ngFor="let cost of card.cost[card.level]"
                         [src]="'./assets/' + cost + '.png'"
                         class="abilitySuit"
                       />
@@ -670,7 +682,7 @@
                         </div>
                         <div class="abilitySuitsBox">
                           <img
-                            *ngFor="let cost of card.cost"
+                            *ngFor="let cost of card.cost[card.level]"
                             [src]="'./assets/' + cost + '.png'"
                             class="abilitySuit"
                           />
@@ -743,7 +755,7 @@
                         </div>
                         <div class="abilitySuitsBox">
                           <img
-                            *ngFor="let cost of card.cost"
+                            *ngFor="let cost of card.cost[card.level]"
                             [src]="'./assets/' + cost + '.png'"
                             class="abilitySuit"
                           />

@@ -51,6 +51,8 @@ export class DialogComponent implements OnInit {
     image: 'avatar.png',
     player: true,
     text: '',
+    title: '',
+    color: '',
     shownText: '',
   };
 

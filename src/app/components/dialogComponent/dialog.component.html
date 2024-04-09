@@ -40,6 +40,14 @@
   >
     <img src="./assets/dialogBox.png" class="dialogBoxImage" />
     <img src="./assets/dialogPlayers/avatar.png" class="dialogBoxPlayer" />
+    <div
+      class="dialogTextTitle"
+      [ngStyle]="{
+        color: activeDialog?.color
+      }"
+    >
+      {{ activeDialog?.title }}
+    </div>
     <div class="dialogText">{{ activeDialog?.shownText }}</div>
   </div>
 </div>

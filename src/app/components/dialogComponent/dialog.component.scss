@@ -47,15 +47,29 @@
 .dialogText {
   position: absolute;
   width: 44%;
-  height: 60%;
+  height: 54%;
   left: 45%;
-  top: 27%;
+  top: 38%;
   font-size: 1.3em;
   color: #e9e9b2;
   -webkit-text-stroke: 0.2px #000;
   font-family: soho;
   line-height: 1.7em;
   font-weight: 500;
+}
+
+.dialogTextTitle {
+  position: absolute;
+  width: 44%;
+  height: 9%;
+  left: 45%;
+  top: 27%;
+  font-size: 1.4em;
+  color: #e9e9b2;
+  text-shadow: 2px 2px black;
+  font-weight: bold;
+  font-family: soho;
+  line-height: 1.7em;
 }
 
 .leftSide {

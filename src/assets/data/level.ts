@@ -2,10 +2,10 @@ import { LevelDto } from 'src/app/models/level';
 
 export const passedObj: LevelDto = {
   id: 1,
-  skipRedrawPhase: true,
+  skipRedrawPhase: false,
   battleRewardXp: 61,
   playerLevelUpEnabled: true,
-  hideDialog: true,
+  hideDialog: false,
   allCardsWild: false,
   showGuide: false,
   showAbilityGuide: false,
@@ -272,6 +272,8 @@ export const passedObj: LevelDto = {
         {
           id: 1,
           image: 'avatar.png',
+          title: 'Link',
+          color: '#4CE500',
           text: 'Bowser has to be here somewhere...',
           shownText: '',
           player: true,
@@ -279,6 +281,8 @@ export const passedObj: LevelDto = {
         {
           id: 2,
           image: 'avatar.png',
+          title: 'Bowser',
+          color: '#E50000',
           text: "Who's there!?!",
           shownText: '',
           player: false,
@@ -286,6 +290,8 @@ export const passedObj: LevelDto = {
         {
           id: 3,
           image: 'avatar.png',
+          title: 'Link',
+          color: '#4CE500',
           text: "He's seen us, we have no choice... Fight!!",
           shownText: '',
           player: true,
@@ -295,6 +301,8 @@ export const passedObj: LevelDto = {
         {
           id: 1,
           image: 'avatar.png',
+          title: 'Bowser',
+          color: '#E50000',
           text: 'Nooooo!!!!',
           shownText: '',
           player: false,
@@ -554,6 +562,8 @@ export const passedObj: LevelDto = {
           id: 1,
           image: 'avatar.png',
           text: 'Bwaaaaaahhhhgg!!!!',
+          title: 'Bowser',
+          color: '#E50000',
           shownText: '',
           player: false,
         },
