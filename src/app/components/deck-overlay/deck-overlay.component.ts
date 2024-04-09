@@ -19,7 +19,7 @@ interface AbilityDeckCard extends AbilityCard {
   goldCost: number[];
 }
 
-type SortValue = 'Color' | 'Level' | 'Cost';
+type SortValue = 'Color' | 'Upgrade' | 'Level' | 'Cost';
 
 @Component({
   selector: 'app-deck-overlay',
@@ -99,7 +99,7 @@ export class DeckOverlayComponent implements OnInit {
   ngOnInit() {}
 
   addCardToHand(card: AbilityDeckCard) {
-    if (this.abilityHand.length === 16) {
+    if (this.abilityHand.length === 16 || card.inHand) {
       return;
     }
 
@@ -172,6 +172,28 @@ export class DeckOverlayComponent implements OnInit {
     return '91%';
   }
 
+  upgradeCard(card: AbilityDeckCard) {
+    if (card.level === 3 || card.trueNumberOwned <= 2) {
+      return;
+    }
+
+    this.abilityHand = this.abilityHand.filter((x) => x.id !== card.id);
+    this.abilityCards = this.abilityCards.map((x) => {
+      if (x.id === card.id) {
+        return {
+          ...x,
+          level: x.level + 1,
+          trueNumberOwned: x.trueNumberOwned - 3,
+          numberOwned: x.trueNumberOwned - 3,
+          owned: true,
+          inHand: false,
+        };
+      }
+
+      return x;
+    });
+  }
+
   removeCardFromHand(card: AbilityDeckCard) {
     let found = false;
     this.abilityHand = this.abilityHand.filter((x) => {
@@ -200,6 +222,8 @@ export class DeckOverlayComponent implements OnInit {
 
   nextSort() {
     if (this.currentSort === 'Color') {
+      this.currentSort = 'Upgrade';
+    } else if (this.currentSort === 'Upgrade') {
       this.currentSort = 'Cost';
     } else if (this.currentSort === 'Cost') {
       this.currentSort = 'Level';
@@ -258,6 +282,19 @@ export class DeckOverlayComponent implements OnInit {
 
       // Combine arrays
       this.abilityCards = [...onlyRedArray, ...onlyBlackArray, ...bothArray];
+    }
+
+    // Sort by levelup
+    if (this.currentSort === 'Upgrade') {
+      this.abilityCards = this.abilityCards.sort((a, b) => {
+        if (a.trueNumberOwned > b.trueNumberOwned) {
+          return -1;
+        }
+        if (a.trueNumberOwned < b.trueNumberOwned) {
+          return 1;
+        }
+        return 0;
+      });
     }
 
     // Sort by cost

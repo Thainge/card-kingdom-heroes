@@ -65,11 +65,13 @@
               (dblclick)="addCardToHand(card)"
               (mouseenter)="setIsNewFalseCard(card)"
               (mouseleave)="currentUpgradeHover = undefined"
-              [ngClass]="{
-                darkenCard: !card.owned || (card.inHand && card.owned)
-              }"
             >
-              <div class="cardBorder">
+              <div
+                class="cardBorder"
+                [ngClass]="{
+                  darkenCard: !card.owned || (card.inHand && card.owned)
+                }"
+              >
                 <img
                   [src]="'./assets/abilities/' + card.image"
                   class="cardBackgroundImage"
@@ -140,34 +142,41 @@
               <div
                 class="upgradeBox"
                 [ngClass]="{
-                  upgradeBoxFinished: card.trueNumberOwned > 2
+                  upgradeBoxFinished:
+                    card.trueNumberOwned > 2 && card.level !== 3,
+                  darkenCard:
+                    (!card.owned || (card.inHand && card.owned)) &&
+                    card.trueNumberOwned <= 2
                 }"
+                (click)="upgradeCard(card)"
               >
                 <div class="upgradeBg"></div>
                 <div
                   class="upgradeBgFill"
                   [ngClass]="{
-                    upgradeBgFinishedFill: card.trueNumberOwned > 2
+                    upgradeBgFinishedFill: card.trueNumberOwned > 2,
+                    upgradeBgMaxFill: card.level === 3
                   }"
                   [ngStyle]="{
-                    width: determineWidth(card)
+                    width: card.level === 3 ? '91%' : determineWidth(card)
                   }"
                 ></div>
                 <img
                   class="upgradeArrow"
                   src="./assets/blueArrow.png"
-                  *ngIf="card.trueNumberOwned <= 2"
+                  *ngIf="card.trueNumberOwned <= 2 && card.level !== 3"
                 />
                 <img
                   class="upgradeArrow"
                   src="./assets/greenArrow.png"
-                  *ngIf="card.trueNumberOwned > 2"
+                  *ngIf="card.trueNumberOwned > 2 && card.level !== 3"
                 />
                 <div
                   class="upgradeText"
                   *ngIf="
-                    card.trueNumberOwned <= 2 ||
-                    currentUpgradeHover?.id !== card.id
+                    card.level !== 3 &&
+                    (card.trueNumberOwned <= 2 ||
+                      currentUpgradeHover?.id !== card.id)
                   "
                 >
                   {{ card.trueNumberOwned }}/3
@@ -175,6 +184,7 @@
                 <div
                   class="upgradeText goldText"
                   *ngIf="
+                    card.level !== 3 &&
                     card.trueNumberOwned > 2 &&
                     currentUpgradeHover?.id === card.id
                   "
@@ -184,11 +194,15 @@
                 <img
                   src="./assets/gold.png"
                   *ngIf="
+                    card.level !== 3 &&
                     card.trueNumberOwned > 2 &&
                     currentUpgradeHover?.id === card.id
                   "
                   class="goldCostImg"
                 />
+                <div class="upgradeText" *ngIf="card.level === 3">
+                  Max Level
+                </div>
               </div>
             </div>
           </div>

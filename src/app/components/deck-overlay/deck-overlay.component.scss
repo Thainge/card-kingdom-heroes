@@ -160,6 +160,13 @@
   filter: brightness(0.5);
 }
 
+.noClickCard {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .cardBackgroundImage {
   width: 100%;
   background-position: center;
@@ -947,6 +954,10 @@
 
 .upgradeBgFinishedFill {
   background: linear-gradient(#54ff56 35%, #4ec851 55%);
+}
+
+.upgradeBgMaxFill {
+  background: linear-gradient(#ebd44f 35%, #ceaf00 55%);
 }
 
 .upgradeText {
