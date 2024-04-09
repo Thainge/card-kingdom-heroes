@@ -4,7 +4,7 @@ export interface AbilityCard {
   id: number;
   name: string;
   cost: CostValue[];
-  description: string;
+  description: string[];
   level: number;
   image: string;
   abilityFunction: AbilityFunction;

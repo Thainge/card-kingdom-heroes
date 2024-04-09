@@ -2184,7 +2184,7 @@
                 <div class="levelText paperBg">Level {{ card.level }}</div>
               </div>
               <div class="abilityDescriptionText">
-                {{ card.description }}
+                {{ card.description[card.level - 1] }}
               </div>
             </div>
           </div>
@@ -2261,7 +2261,9 @@
                   </div>
                 </div>
                 <div class="abilityDescriptionText">
-                  {{ topAbilityCardBot.description }}
+                  {{
+                    topAbilityCardBot.description[topAbilityCardBot.level - 1]
+                  }}
                 </div>
               </div>
             </div>
@@ -2795,7 +2797,7 @@
                   </div>
                 </div>
                 <div class="abilityDescriptionText">
-                  {{ topAbilityCard.description }}
+                  {{ topAbilityCard.description[topAbilityCard.level - 1] }}
                 </div>
               </div>
             </div>
@@ -2853,7 +2855,7 @@
         >
           <div class="abilityHoverTitle">{{ card.name }}</div>
           <div class="abilityHoverDescription">
-            {{ card.description }}
+            {{ card.description[card.level - 1] }}
           </div>
           <div class="abilitySuitsBox abilitySuitsBoxHover">
             <img
@@ -2895,7 +2897,7 @@
                 <div class="levelText paperBg">Level {{ card.level }}</div>
               </div>
               <div class="abilityDescriptionText">
-                {{ card.description }}
+                {{ card.description[card.level - 1] }}
               </div>
             </div>
           </div>
