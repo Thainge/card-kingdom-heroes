@@ -64,6 +64,7 @@
               #activeAbilityCards
               (dblclick)="addCardToHand(card)"
               (mouseenter)="setIsNewFalseCard(card)"
+              (mouseleave)="currentUpgradeHover = undefined"
               [ngClass]="{
                 darkenCard: !card.owned || (card.inHand && card.owned)
               }"
@@ -106,7 +107,7 @@
                   <div
                     class="abilityBorder1"
                     [ngClass]="{
-paperBg: card.level === 1,
+                        paperBg: card.level === 1,
                         paperBgRare: card.level === 2,
                         paperBgLegendary: card.level === 3,
                   }"
@@ -114,18 +115,18 @@ paperBg: card.level === 1,
                   <div
                     class="abilityBorder2"
                     [ngClass]="{
-paperBg: card.level === 1,
+                        paperBg: card.level === 1,
                         paperBgRare: card.level === 2,
                         paperBgLegendary: card.level === 3,
                   }"
                   ></div>
                   <div class="cardCount" *ngIf="card.numberOwned > 0">
-                    {{ card.numberOwned }}<b class="smaller">x</b>
+                    <b class="smaller">x</b>{{ card.numberOwned }}
                   </div>
                   <div
                     class="abilityDescription"
                     [ngClass]="{
-paperBg: card.level === 1,
+                        paperBg: card.level === 1,
                         paperBgRare: card.level === 2,
                         paperBgLegendary: card.level === 3,
                   }"
@@ -135,6 +136,59 @@ paperBg: card.level === 1,
                     </div>
                   </div>
                 </div>
+              </div>
+              <div
+                class="upgradeBox"
+                [ngClass]="{
+                  upgradeBoxFinished: card.trueNumberOwned > 2
+                }"
+              >
+                <div class="upgradeBg"></div>
+                <div
+                  class="upgradeBgFill"
+                  [ngClass]="{
+                    upgradeBgFinishedFill: card.trueNumberOwned > 2
+                  }"
+                  [ngStyle]="{
+                    width: determineWidth(card)
+                  }"
+                ></div>
+                <img
+                  class="upgradeArrow"
+                  src="./assets/blueArrow.png"
+                  *ngIf="card.trueNumberOwned <= 2"
+                />
+                <img
+                  class="upgradeArrow"
+                  src="./assets/greenArrow.png"
+                  *ngIf="card.trueNumberOwned > 2"
+                />
+                <div
+                  class="upgradeText"
+                  *ngIf="
+                    card.trueNumberOwned <= 2 ||
+                    currentUpgradeHover?.id !== card.id
+                  "
+                >
+                  {{ card.trueNumberOwned }}/3
+                </div>
+                <div
+                  class="upgradeText goldText"
+                  *ngIf="
+                    card.trueNumberOwned > 2 &&
+                    currentUpgradeHover?.id === card.id
+                  "
+                >
+                  {{ card.goldCost[card.level] }}
+                </div>
+                <img
+                  src="./assets/gold.png"
+                  *ngIf="
+                    card.trueNumberOwned > 2 &&
+                    currentUpgradeHover?.id === card.id
+                  "
+                  class="goldCostImg"
+                />
               </div>
             </div>
           </div>

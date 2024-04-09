@@ -14,7 +14,9 @@ interface AbilityDeckCard extends AbilityCard {
   inHand: boolean;
   isNew: boolean;
   numberOwned: number;
+  trueNumberOwned: number;
   index: number;
+  goldCost: number[];
 }
 
 type SortValue = 'Color' | 'Level' | 'Cost';
@@ -45,8 +47,10 @@ export class DeckOverlayComponent implements OnInit {
           inHand: false,
           isNew: true,
           numberOwned: 4,
+          trueNumberOwned: 4,
           index: i,
           level: 1,
+          goldCost: [500, 1000, 1500],
         };
       }
       if (i < 11) {
@@ -56,8 +60,10 @@ export class DeckOverlayComponent implements OnInit {
           inHand: false,
           isNew: false,
           numberOwned: 2,
+          trueNumberOwned: 2,
           index: i,
           level: 2,
+          goldCost: [150, 500, 1000],
         };
       }
       return {
@@ -66,8 +72,10 @@ export class DeckOverlayComponent implements OnInit {
         inHand: false,
         isNew: false,
         numberOwned: 1,
+        trueNumberOwned: 1,
         index: i,
         level: 3,
+        goldCost: [500, 1000, 1500],
       };
     });
     this.initialAbilityHand = JSON.parse(JSON.stringify(this.abilityHand));
@@ -77,6 +85,7 @@ export class DeckOverlayComponent implements OnInit {
   abilityHand: AbilityDeckCard[] = [];
   initialAbilityHand: AbilityDeckCard[] = [];
   currentHoveringCard: AbilityDeckCard | undefined;
+  currentUpgradeHover: AbilityDeckCard | undefined;
   currentIndex: number = -10;
   currentSort: SortValue = 'Level';
   errorList: any[] = [];
@@ -138,12 +147,29 @@ export class DeckOverlayComponent implements OnInit {
   }
 
   setIsNewFalseCard(card: AbilityDeckCard) {
+    this.currentUpgradeHover = card;
     this.abilityCards = this.abilityCards.map((x) => {
       if (x.id === card.id) {
         return { ...x, isNew: false };
       }
       return x;
     });
+  }
+
+  determineWidth(card: AbilityDeckCard): string {
+    if (card.trueNumberOwned === 0) {
+      return '0';
+    }
+
+    if (card.trueNumberOwned === 1) {
+      return '33%';
+    }
+
+    if (card.trueNumberOwned === 2) {
+      return '66%';
+    }
+
+    return '91%';
   }
 
   removeCardFromHand(card: AbilityDeckCard) {

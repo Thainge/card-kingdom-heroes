@@ -54,7 +54,7 @@ export class MapOverlayComponent implements OnInit {
   achievementsOpen: boolean = false;
   shopOpen: boolean = false;
   heroRoomOpen: boolean = false;
-  deckOpen: boolean = false;
+  deckOpen: boolean = true;
   galleryOpen: boolean = false;
   chooseDifficultyOpen: boolean = false;
   chooseCampaignOpen: boolean = false;
