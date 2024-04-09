@@ -49,8 +49,8 @@ const defaultAbilityCard: AbilityCard = {
   id: 0,
   abilityFunction: 'damage',
   targetAll: false,
-  abilityValue: 1,
-  cost: ['hearts'],
+  abilityValue: [1, 2, 3],
+  cost: [['hearts'], ['hearts'], ['hearts']],
   description: ['', '', ''],
   image: 'sliceAbility.png',
   level: 1,
@@ -692,8 +692,12 @@ export class BattleComponent implements OnInit {
       this.abilityDeck[0] = {
         id: 98,
         abilityFunction: 'damage',
-        abilityValue: 1,
-        cost: ['diamonds', 'hearts'],
+        abilityValue: [1, 2, 3],
+        cost: [
+          ['diamonds', 'hearts'],
+          ['diamonds', 'hearts'],
+          ['diamonds', 'hearts'],
+        ],
         description: [
           'Deal 1 damage to every enemy',
           'Deal 2 damage to every enemy',
@@ -709,7 +713,7 @@ export class BattleComponent implements OnInit {
         id: 99,
         abilityFunction: 'wildSuitRange',
         targetAll: false,
-        abilityValue: 14,
+        abilityValue: [14, 14, 14],
         cost: [],
         name: 'Wild',
         description: [
@@ -1551,7 +1555,7 @@ export class BattleComponent implements OnInit {
   async increaseDefenseAbility(ability: AbilityCard) {
     // green hp while healing
     // potion fades on player
-    let newAttack = this.player.attack + ability.abilityValue;
+    let newAttack = this.player.attack + ability.abilityValue[ability.level];
 
     // Remove ability card from hand
     this.abilityCardsHand = this.abilityCardsHand.filter(
@@ -1566,7 +1570,7 @@ export class BattleComponent implements OnInit {
   }
 
   async drawAbility(ability: AbilityCard) {
-    this.addPlayerCardsToHand(ability.abilityValue);
+    this.addPlayerCardsToHand(ability.abilityValue[ability.level]);
     this.endAbilityTurn(ability, 100);
   }
 
@@ -1594,7 +1598,7 @@ export class BattleComponent implements OnInit {
 
   async discardAbility(ability: AbilityCard) {
     let usedDiscards: number = 0;
-    const abilityCost = ability.abilityValue;
+    const abilityCost = ability.abilityValue[ability.level];
 
     this.enemyHand = this.enemyHand.filter((x, i) => {
       if (usedDiscards !== abilityCost) {
@@ -1612,7 +1616,9 @@ export class BattleComponent implements OnInit {
     if (ability.targetAll) {
       // Automatically apply -x to all enemies
       this.enemyPlayers = this.enemyPlayers.map((x) => {
-        let newAttack = x.attack - this.currentAbility.abilityValue;
+        let newAttack =
+          x.attack -
+          this.currentAbility.abilityValue[this.currentAbility.level];
         if (newAttack < 1) {
           newAttack = 0;
         }
@@ -1635,12 +1641,12 @@ export class BattleComponent implements OnInit {
         (x) => x.health > 0
       );
       const totalHealthRegained =
-        totalEnemyPlayersValid.length * ability.abilityValue;
+        totalEnemyPlayersValid.length * ability.abilityValue[ability.level];
 
       // Automatically apply -x to all enemies
       this.enemyPlayers = this.enemyPlayers.map((x) => {
         // Decrease enemy health by value
-        let newHealth = x.health - ability.abilityValue;
+        let newHealth = x.health - ability.abilityValue[ability.level];
         this.leachOnEnemies.push(x);
 
         return { ...x, health: newHealth };
@@ -1658,7 +1664,7 @@ export class BattleComponent implements OnInit {
 
       let healAbility = { ...ability };
       healAbility.abilityFunction = 'heal';
-      healAbility.abilityValue = totalHealthRegained;
+      healAbility.abilityValue[healAbility.level] = totalHealthRegained;
 
       await this.timeout(400);
       this.healAbility(healAbility);
@@ -1696,7 +1702,7 @@ export class BattleComponent implements OnInit {
     if (ability.targetAll) {
       // Automatically attack all enemies
       for (const x of this.enemyPlayers) {
-        const incomingAttackPower = ability.abilityValue;
+        const incomingAttackPower = ability.abilityValue[ability.level];
         const newHealth = x.health - incomingAttackPower;
         if (ability.hitAnimation === 'fire') {
           this.flamesOnEnemies.push(x);
@@ -1704,7 +1710,7 @@ export class BattleComponent implements OnInit {
         this.enemyTarget = x.id;
         this.numbersGoDownIncrementallyBot(x.health, newHealth);
       }
-      await this.timeout(200 * ability.abilityValue);
+      await this.timeout(200 * ability.abilityValue[ability.level]);
       this.endAbilityTurn(ability, 1200);
     } else {
       const ID = this.pushDisplayMessage(
@@ -1717,7 +1723,7 @@ export class BattleComponent implements OnInit {
   async healAbility(ability: AbilityCard) {
     // green hp while healing
     // potion fades on player
-    let newHealth = this.player.health + ability.abilityValue;
+    let newHealth = this.player.health + ability.abilityValue[ability.level];
     if (newHealth > this.player.baseHealth) {
       newHealth = this.player.baseHealth;
     }
@@ -1783,7 +1789,7 @@ export class BattleComponent implements OnInit {
 
     for await (const x of this.enemyPlayers) {
       if (x.id === this.enemyTarget) {
-        const incomingAttackPower = ability.abilityValue;
+        const incomingAttackPower = ability.abilityValue[ability.level];
         const newHealth = x.health - incomingAttackPower;
         if (ability.hitAnimation === 'fire') {
           this.flamesOnEnemies.push(x);
@@ -1804,7 +1810,9 @@ export class BattleComponent implements OnInit {
 
     this.enemyPlayers = this.enemyPlayers.map((x) => {
       if (x.id === this.enemyTarget) {
-        let newAttack = x.attack - this.currentAbility.abilityValue;
+        let newAttack =
+          x.attack -
+          this.currentAbility.abilityValue[this.currentAbility.level];
         if (newAttack < 1) {
           newAttack = 0;
         }
@@ -1828,7 +1836,7 @@ export class BattleComponent implements OnInit {
     this.enemyPlayers = this.enemyPlayers.map((x) => {
       if (x.id === this.enemyTarget) {
         // Decrease enemy health by value
-        let newHealth = x.health - ability.abilityValue;
+        let newHealth = x.health - ability.abilityValue[ability.level];
         this.leachOnEnemies.push(x);
 
         return { ...x, health: newHealth };
@@ -1840,10 +1848,10 @@ export class BattleComponent implements OnInit {
       (x) => x.id === this.enemyTarget
     );
     const totalHealthRegained =
-      totalEnemyPlayersValid.length * ability.abilityValue;
+      totalEnemyPlayersValid.length * ability.abilityValue[ability.level];
     let healAbility = ability;
     healAbility.abilityFunction = 'heal';
-    healAbility.abilityValue = totalHealthRegained;
+    healAbility.abilityValue[ability.level] = totalHealthRegained;
 
     // Remove active lines
     try {
@@ -1887,7 +1895,7 @@ export class BattleComponent implements OnInit {
     const newCard: CardDto = {
       ...card,
       wild: true,
-      wildRange: this.currentAbility.abilityValue,
+      wildRange: this.currentAbility.abilityValue[this.currentAbility.level],
     };
     this.playerHand = this.playerHand.map((x) => {
       if (x.id === card.id) {
@@ -1905,7 +1913,7 @@ export class BattleComponent implements OnInit {
     const newCard: CardDto = {
       ...card,
       wild: true,
-      wildRange: this.currentAbility.abilityValue,
+      wildRange: this.currentAbility.abilityValue[this.currentAbility.level],
       wildSuit: true,
       wildSuits: [1, 1, 1, 1],
     };
@@ -2221,8 +2229,8 @@ export class BattleComponent implements OnInit {
       id: 0,
       abilityFunction: 'damage',
       targetAll: false,
-      abilityValue: 1,
-      cost: ['hearts'],
+      abilityValue: [1, 2, 3],
+      cost: [['hearts'], ['hearts'], ['hearts']],
       description: ['', '', ''],
       image: 'sliceAbility.png',
       level: 1,
@@ -2234,8 +2242,8 @@ export class BattleComponent implements OnInit {
       id: 0,
       abilityFunction: 'damage',
       targetAll: false,
-      abilityValue: 1,
-      cost: ['hearts'],
+      abilityValue: [1, 2, 3],
+      cost: [['hearts'], ['hearts'], ['hearts']],
       description: ['', '', ''],
       image: 'sliceAbility.png',
       level: 1,
@@ -4091,7 +4099,7 @@ export class BattleComponent implements OnInit {
       this.supportOnEnemies.push(x);
     });
     await this.timeout(1000);
-    const newAllies = ability.alliesCalled;
+    const newAllies = ability.alliesCalled![ability.level];
     newAllies?.forEach((x) => {
       const newId = this.enemyPlayers.length + 1;
       const newAlly = { ...x, id: newId };
@@ -4115,7 +4123,7 @@ export class BattleComponent implements OnInit {
         if (x.health < 1) {
           return x;
         } else {
-          const incomingHeal = ability.abilityValue;
+          const incomingHeal = ability.abilityValue[ability.level];
           let newDefense = x.attack + incomingHeal;
           this.addDefenseOnEnemies.push(x);
           return { ...x, attack: newDefense };
@@ -4144,7 +4152,7 @@ export class BattleComponent implements OnInit {
         this.addDefenseOnEnemies.push(foundPlayer);
         this.enemyPlayers = this.enemyPlayers.map((x) => {
           if (x.id === foundPlayer?.id) {
-            let newDefense = x.attack + ability.abilityValue;
+            let newDefense = x.attack + ability.abilityValue[ability.level];
             return { ...x, attack: newDefense };
           }
 
@@ -4161,7 +4169,8 @@ export class BattleComponent implements OnInit {
     this.pushDisplayMessage('Fire Attack');
     await this.timeout(500);
 
-    this.player.health = this.player.health - ability.abilityValue;
+    this.player.health =
+      this.player.health - ability.abilityValue[ability.level];
 
     this.fireOnPlayer = true;
     await this.timeout(1200);
@@ -4173,7 +4182,8 @@ export class BattleComponent implements OnInit {
     this.pushDisplayMessage(`-${ability.abilityValue} Defense`);
     await this.timeout(500);
 
-    this.player.attack = this.player.attack - ability.abilityValue;
+    this.player.attack =
+      this.player.attack - ability.abilityValue[ability.level];
     if (this.player.attack < 0) {
       this.player.attack = 0;
     }
@@ -4190,7 +4200,7 @@ export class BattleComponent implements OnInit {
     const shuffledArray = this.cardService.shuffle(this.playerHand);
     let finishedDiscards = 0;
     for await (const x of shuffledArray) {
-      if (finishedDiscards !== ability.abilityValue) {
+      if (finishedDiscards !== ability.abilityValue[ability.level]) {
         finishedDiscards++;
         this.playerHand = this.playerHand.filter((a) => a.id !== x.id);
       }
@@ -4203,7 +4213,7 @@ export class BattleComponent implements OnInit {
     // Draw cards
     this.pushDisplayMessage(`Draw ${ability.abilityValue} Cards`);
     await this.timeout(500);
-    this.addBotCardsToHand(ability.abilityValue);
+    this.addBotCardsToHand(ability.abilityValue[ability.level]);
     await this.timeout(100);
     this.botEndAbilityTurn();
   }
@@ -4217,7 +4227,7 @@ export class BattleComponent implements OnInit {
         if (x.health < 1) {
           return x;
         } else {
-          const incomingHeal = ability.abilityValue;
+          const incomingHeal = ability.abilityValue[ability.level];
           let newHealth = x.health + incomingHeal;
           if (newHealth > x.baseHealth) {
             newHealth = x.baseHealth;
@@ -4249,7 +4259,7 @@ export class BattleComponent implements OnInit {
         this.healOnEnemies.push(foundPlayer);
         this.enemyPlayers = this.enemyPlayers.map((x) => {
           if (x.id === foundPlayer?.id) {
-            let newHealth = x.health + ability.abilityValue;
+            let newHealth = x.health + ability.abilityValue[ability.level];
             if (newHealth > x.baseHealth) {
               newHealth = x.baseHealth;
             }

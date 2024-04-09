@@ -307,12 +307,12 @@ export class DeckOverlayComponent implements OnInit {
 
       // Manually sort
       this.abilityCards.forEach((x) => {
-        const includesHearts = x.cost.includes('hearts');
-        const includesDiamonds = x.cost.includes('diamonds');
-        const includesRed = x.cost.includes('red');
-        const includesSpades = x.cost.includes('spades');
-        const includesClubs = x.cost.includes('clubs');
-        const includesBlack = x.cost.includes('black');
+        const includesHearts = x.cost[x.level].includes('hearts');
+        const includesDiamonds = x.cost[x.level].includes('diamonds');
+        const includesRed = x.cost[x.level].includes('red');
+        const includesSpades = x.cost[x.level].includes('spades');
+        const includesClubs = x.cost[x.level].includes('clubs');
+        const includesBlack = x.cost[x.level].includes('black');
         const onlyRed =
           (includesHearts || includesDiamonds || includesRed) &&
           !includesSpades &&

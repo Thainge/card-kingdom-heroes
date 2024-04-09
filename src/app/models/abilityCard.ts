@@ -3,15 +3,15 @@ import { PlayerDto } from './player';
 export interface AbilityCard {
   id: number;
   name: string;
-  cost: CostValue[];
+  cost: CostValue[][];
   description: string[];
   level: number;
   image: string;
   abilityFunction: AbilityFunction;
   targetAll: boolean;
-  abilityValue: number;
+  abilityValue: number[];
   hitAnimation: AnimationType;
-  alliesCalled?: PlayerDto[];
+  alliesCalled?: PlayerDto[][];
 }
 
 type AbilityFunction =

@@ -5,7 +5,7 @@ import { MapComponent } from './pages/map/map.component';
 
 const routes: Routes = [
   // { path: 'battle', component: BattleComponent },
-  { path: '', component: MapComponent },
+  { path: '', component: BattleComponent },
   { path: '**', redirectTo: '/' },
 ];
 

@@ -56,7 +56,7 @@ export class AbilityService {
 
     if ([...ability.cost].length === totalValidCards) {
       const foundCards: CardDto[] = [];
-      const totalValidCardsArray = [...ability.cost];
+      const totalValidCardsArray = [...ability.cost[ability.level]];
 
       // Loop through cards array
       // Check what cards we still need
