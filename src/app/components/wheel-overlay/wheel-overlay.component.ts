@@ -21,6 +21,45 @@ interface WheelItem {
   weight?: number;
 }
 
+interface WheelProps {
+  borderColor?: string;
+  borderWidth?: number;
+  debug?: boolean;
+  image?: string;
+  isInteractive?: boolean;
+  itemBackgroundColors?: string[];
+  itemLabelAlign?: string;
+  itemLabelBaselineOffset?: number;
+  itemLabelColors?: string;
+  itemLabelFont?: string;
+  itemLabelFontSizeMax?: number;
+  itemLabelRadius?: number;
+  itemLabelRadiusMax?: number;
+  itemLabelRotation?: number;
+  itemLabelStrokeColor?: string;
+  itemLabelStrokeWidth?: number;
+  items?: WheelItem[];
+  lineColor?: string;
+  lineWidth?: number;
+  pixelRatio?: number;
+  radius?: number;
+  rotation?: number;
+  rotationResistance?: number;
+  rotationSpeed?: number;
+  rotationSpeedMax?: number;
+  offset?: Offset;
+  onCurrentIndexChange?: string;
+  onRest?: any;
+  onSpin?: any;
+  overlayImage?: any;
+  pointerAngle?: number;
+}
+
+interface Offset {
+  w: number;
+  h: number;
+}
+
 @Component({
   selector: 'app-wheel-overlay',
   templateUrl: './wheel-overlay.component.html',
@@ -44,26 +83,94 @@ export class WheelOverlayComponent implements OnInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    // 1. Configure the wheel's properties:
     const wheelItems: WheelItem[] = [
       {
-        label: 'one',
+        value: 4,
+        label: '999x',
+        image: './assets/wheelImages/gold.png',
+        imageScale: 0.3,
+        weight: 0.5,
+        backgroundColor: '#ffd700',
       },
       {
-        label: 'two',
+        value: 1,
+        label: '1x',
+        image: './assets/wheelImages/boosterPack.png',
+        imageScale: 0.15,
       },
       {
-        label: 'three',
+        value: 2,
+        label: '150x',
+        image: './assets/wheelImages/gold.png',
+        imageScale: 0.5,
       },
       {
-        label: 'four',
+        value: 3,
+        label: '1x',
+        image: './assets/wheelImages/boosterPack.png',
+        imageScale: 0.15,
+      },
+      {
+        value: 4,
+        label: '150x',
+        image: './assets/wheelImages/gold.png',
+        imageScale: 0.5,
+      },
+      {
+        value: 4,
+        label: '1x',
+        image: './assets/wheelImages/boosterPack.png',
+        imageScale: 0.15,
+      },
+      {
+        value: 4,
+        label: '150x',
+        image: './assets/wheelImages/gold.png',
+        imageScale: 0.5,
+      },
+      {
+        value: 4,
+        label: '1x',
+        image: './assets/wheelImages/boosterPack.png',
+        imageScale: 0.15,
+      },
+
+      {
+        value: 4,
+        label: '150x',
+        image: './assets/wheelImages/gold.png',
+        imageScale: 0.5,
+      },
+      {
+        value: 4,
+        label: '1x',
+        image: './assets/wheelImages/boosterPack.png',
+        imageScale: 0.15,
       },
     ];
-    const props = {
+    const props: WheelProps = {
       items: wheelItems,
+      borderColor: '#FFDE00',
+      borderWidth: 12,
+      isInteractive: false,
+      radius: 1,
+      itemBackgroundColors: ['#ffffff', '#0082EE'],
+      lineWidth: 2,
     };
     const container = document.querySelector('.wheel-container');
     const wheel = new Wheel(container, props);
+  }
+
+  OnSpin() {
+    console.log('spin');
+  }
+
+  OnRest() {
+    console.log('rest');
+  }
+
+  OnCurrentIndexChange() {
+    console.log('index');
   }
 
   closeMenu() {

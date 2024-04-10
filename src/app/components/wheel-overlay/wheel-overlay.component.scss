@@ -25,4 +25,43 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 35em;
+  height: 35em;
+}
+
+.wheel-container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.centerWheelImage {
+  position: absolute;
+  width: 25%;
+  filter: drop-shadow(0 0 0.3em black);
+}
+
+.centerShadow {
+  position: absolute;
+  border-radius: 100%;
+  height: 96%;
+  width: 96%;
+  box-shadow: inset 0 0 0.8em 1.2em rgba(0, 0, 0, 0.45);
+}
+
+.centerShadowBorder {
+  position: absolute;
+  border-radius: 100%;
+  height: 95.5%;
+  width: 95.5%;
+  border: 2px solid #eb5e00;
+}
+
+.centerShadowBorder2 {
+  position: absolute;
+  border-radius: 100%;
+  height: 100%;
+  width: 100%;
+  border: 2px solid #eb5e00;
+  box-shadow: 0 0 1em 0.5em rgba(0, 0, 0, 0.534);
 }
