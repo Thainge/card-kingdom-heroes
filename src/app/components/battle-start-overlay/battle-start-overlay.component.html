@@ -27,7 +27,12 @@
     <!-- Left side -->
     <div class="leftBox">
       <div class="relativeBoxRewards">
-        <div class="rewardBox">
+        <div
+          class="rewardBox"
+          [ngClass]="{
+            specialExtraStyles: isSpecialBattle
+          }"
+        >
           <div class="rewardRelativeBox">
             <img src="./assets/battleBox.png" />
             <div class="battleBoxImages">
@@ -38,7 +43,7 @@
             </div>
           </div>
         </div>
-        <div class="rewardBoxOther">
+        <div class="rewardBoxOther" *ngIf="!isSpecialBattle">
           <div class="rewardRelativeBox">
             <img src="./assets/battleBox.png" />
             <div class="battleBoxImages starExtra">

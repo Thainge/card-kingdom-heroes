@@ -3,6 +3,7 @@
   <app-battle-start-overlay
     [open]="battleStartOpen"
     (onCloseMenu)="battleStartOpen = false"
+    [isSpecialBattle]="isSpecialBattle"
   ></app-battle-start-overlay>
   <div class="container">
     <div
@@ -31,7 +32,7 @@
             disabledBox: !specialLevelsData.hero4Show,
             showHoverIcon: !specialLevelsData.hero4Finished
           }"
-          (click)="specialLevelsData.hero4Finished = true"
+          (click)="startSpecialBattle('battle4')"
         >
           <div class="heroiconContainer">
             <img
@@ -112,7 +113,7 @@
             disabledBox: !specialLevelsData.hero3Show,
             showHoverIcon: !specialLevelsData.hero3Finished
           }"
-          (click)="specialLevelsData.hero3Finished = true"
+          (click)="startSpecialBattle('battle3')"
         >
           <div class="heroiconContainer">
             <img
@@ -193,7 +194,7 @@
             disabledBox: !specialLevelsData.hero2Show,
             showHoverIcon: !specialLevelsData.hero2Finished
           }"
-          (click)="specialLevelsData.hero2Finished = true"
+          (click)="startSpecialBattle('battle2')"
         >
           <div class="heroiconContainer">
             <img
@@ -274,7 +275,7 @@
             disabledBox: !specialLevelsData.hero1Show,
             showHoverIcon: !specialLevelsData.hero1Finished
           }"
-          (click)="specialLevelsData.hero1Finished = true"
+          (click)="startSpecialBattle('battle1')"
         >
           <div class="heroiconContainer">
             <img

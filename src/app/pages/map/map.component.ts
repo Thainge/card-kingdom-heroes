@@ -24,6 +24,7 @@ const { Pins } = require('@fancyapps/ui/dist/panzoom/panzoom.pins.esm.js');
 
 type WhirlpoolSize = 1 | 1.25 | 1.5 | 2;
 type WhirlpoolOpacity = 0.4 | 0.6 | 0.8 | 1;
+type Battle = 'battle1' | 'battle2' | 'battle3' | 'battle4';
 
 interface SpecialLevels {
   wheelShow: boolean;
@@ -130,6 +131,7 @@ export class MapComponent implements AfterViewInit, OnInit {
     // town4FightShow: false,
     // town4FightFinished: false,
   };
+  isSpecialBattle: boolean = false;
   battleStartOpen: boolean = false;
 
   constructor(private loadingService: LoadingService) {}
@@ -231,6 +233,7 @@ export class MapComponent implements AfterViewInit, OnInit {
 
   showBattleStartOverlay() {
     this.battleStartOpen = true;
+    this.isSpecialBattle = false;
   }
 
   finishLevel(flag: FlagDto) {
@@ -349,6 +352,11 @@ export class MapComponent implements AfterViewInit, OnInit {
         this.placingFlag = true;
       }
     }
+  }
+
+  startSpecialBattle(battle: Battle) {
+    this.battleStartOpen = true;
+    this.isSpecialBattle = true;
   }
 
   trackById = (index: number, item: any) => item.id;

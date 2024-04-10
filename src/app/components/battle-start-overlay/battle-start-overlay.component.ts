@@ -31,6 +31,7 @@ interface MissionDetails {
 })
 export class BattleStartOverlayComponent implements OnInit {
   @Input('open') open: boolean = false;
+  @Input('isSpecialBattle') isSpecialBattle: boolean = false;
 
   missionDetails: MissionDetails = {
     image: 'forest.png',
