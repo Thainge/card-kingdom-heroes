@@ -70,6 +70,9 @@
   <!-- Top -->
   <div
     class="progressBarBox"
+    [ngClass]="{
+      bigIndex: wheelOpen
+    }"
     *ngIf="display"
     [@fadeUpEnter]="{ value: '', params: { duration: 500, delay: 0 } }"
   >
@@ -93,6 +96,9 @@
   <div
     class="progressBarGold"
     *ngIf="display"
+    [ngClass]="{
+      bigIndex: wheelOpen
+    }"
     [@fadeUpEnter]="{ value: '', params: { duration: 500, delay: 0 } }"
   >
     <div class="progressBarContainer">
