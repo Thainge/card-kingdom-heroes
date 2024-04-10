@@ -24,6 +24,7 @@
     "ngx-glide": "^15.0.0",
     "node-sass": "^9.0.0",
     "rxjs": "~7.5.0",
+    "spin-wheel": "^4.3.1",
     "swiper": "^11.1.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"

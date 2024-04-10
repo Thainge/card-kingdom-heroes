@@ -19,6 +19,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { DifficultyOverlayComponent } from '../choose-difficulty-overlay/choose-difficulty-overlay.component';
 import { CampaignOverlayComponent } from '../campaign-overlay/campaign-overlay.component';
 import { PremiumOverlayComponent } from '../premium-overlay/premium-overlay.component';
+import { WheelOverlayComponent } from '../wheel-overlay/wheel-overlay.component';
 
 interface Tip {
   title: string;
@@ -43,6 +44,7 @@ interface Tip {
     DifficultyOverlayComponent,
     CampaignOverlayComponent,
     PremiumOverlayComponent,
+    WheelOverlayComponent,
   ],
   animations: [
     fadeInOnEnterAnimation({ anchor: 'fadeEnter' }),
@@ -67,6 +69,7 @@ export class MapOverlayComponent implements OnInit {
   chooseDifficultyOpen: boolean = false;
   chooseCampaignOpen: boolean = false;
   premiumOpen: boolean = false;
+  wheelOpen: boolean = true;
 
   showInformation: boolean = false;
   display: boolean = true;

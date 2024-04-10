@@ -32,6 +32,10 @@
     [open]="premiumOpen"
     (onCloseMenu)="premiumOpen = false"
   ></app-premium-overlay>
+  <app-wheel-overlay
+    [open]="wheelOpen"
+    (onCloseMenu)="wheelOpen = false"
+  ></app-wheel-overlay>
   <div
     class="overlayHintBox"
     *ngIf="showWildHintOverlay"
