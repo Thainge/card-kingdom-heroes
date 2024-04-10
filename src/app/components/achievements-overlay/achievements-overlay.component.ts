@@ -41,6 +41,8 @@ export class AchievementsOverlayComponent implements OnInit {
         description: 'Beat the first level in the game.',
         image: 'gold.png',
         unlocked: true,
+        gemsUnlocked: false,
+        reward: 150,
       },
       {
         id: 2,
@@ -48,6 +50,8 @@ export class AchievementsOverlayComponent implements OnInit {
         description: 'Beat the first level in the game.',
         image: 'gold.png',
         unlocked: true,
+        gemsUnlocked: false,
+        reward: 150,
       },
       {
         id: 3,
@@ -55,6 +59,8 @@ export class AchievementsOverlayComponent implements OnInit {
         description: 'Beat the first level in the game.',
         image: 'gold.png',
         unlocked: true,
+        gemsUnlocked: false,
+        reward: 150,
       },
       {
         id: 4,
@@ -62,6 +68,8 @@ export class AchievementsOverlayComponent implements OnInit {
         description: 'Beat the first level in the game.',
         image: 'gold.png',
         unlocked: true,
+        gemsUnlocked: false,
+        reward: 150,
       },
       {
         id: 5,
@@ -69,6 +77,8 @@ export class AchievementsOverlayComponent implements OnInit {
         description: 'Beat the first level in the game.',
         image: 'gold.png',
         unlocked: true,
+        gemsUnlocked: false,
+        reward: 150,
       },
       {
         id: 6,
@@ -76,6 +86,8 @@ export class AchievementsOverlayComponent implements OnInit {
         description: 'Beat the first level in the game.',
         image: 'gold.png',
         unlocked: false,
+        gemsUnlocked: false,
+        reward: 150,
       },
       {
         id: 7,
@@ -83,6 +95,8 @@ export class AchievementsOverlayComponent implements OnInit {
         description: 'Beat the first level in the game.',
         image: 'gold.png',
         unlocked: false,
+        gemsUnlocked: false,
+        reward: 150,
       },
       {
         id: 8,
@@ -90,6 +104,8 @@ export class AchievementsOverlayComponent implements OnInit {
         description: 'Beat the first level in the game.',
         image: 'gold.png',
         unlocked: false,
+        gemsUnlocked: false,
+        reward: 150,
       },
       {
         id: 9,
@@ -97,6 +113,8 @@ export class AchievementsOverlayComponent implements OnInit {
         description: 'Beat the first level in the game.',
         image: 'gold.png',
         unlocked: false,
+        gemsUnlocked: false,
+        reward: 150,
       },
       {
         id: 10,
@@ -104,6 +122,8 @@ export class AchievementsOverlayComponent implements OnInit {
         description: 'Beat the first level in the game.',
         image: 'gold.png',
         unlocked: false,
+        gemsUnlocked: false,
+        reward: 150,
       },
       {
         id: 11,
@@ -111,6 +131,8 @@ export class AchievementsOverlayComponent implements OnInit {
         description: 'Beat the first level in the game.',
         image: 'gold.png',
         unlocked: false,
+        gemsUnlocked: false,
+        reward: 150,
       },
       {
         id: 12,
@@ -118,6 +140,8 @@ export class AchievementsOverlayComponent implements OnInit {
         description: 'Beat the first level in the game.',
         image: 'gold.png',
         unlocked: false,
+        gemsUnlocked: false,
+        reward: 150,
       },
       {
         id: 13,
@@ -125,6 +149,8 @@ export class AchievementsOverlayComponent implements OnInit {
         description: 'Beat the first level in the game.',
         image: 'gold.png',
         unlocked: false,
+        gemsUnlocked: false,
+        reward: 150,
       },
       {
         id: 14,
@@ -132,6 +158,8 @@ export class AchievementsOverlayComponent implements OnInit {
         description: 'Beat the first level in the game.',
         image: 'gold.png',
         unlocked: false,
+        gemsUnlocked: false,
+        reward: 150,
       },
       {
         id: 15,
@@ -139,6 +167,8 @@ export class AchievementsOverlayComponent implements OnInit {
         description: 'Beat the first level in the game.',
         image: 'gold.png',
         unlocked: false,
+        gemsUnlocked: false,
+        reward: 150,
       },
       {
         id: 16,
@@ -146,6 +176,8 @@ export class AchievementsOverlayComponent implements OnInit {
         description: 'Beat the first level in the game.',
         image: 'gold.png',
         unlocked: false,
+        gemsUnlocked: false,
+        reward: 150,
       },
       {
         id: 17,
@@ -153,6 +185,8 @@ export class AchievementsOverlayComponent implements OnInit {
         description: 'Beat the first level in the game.',
         image: 'gold.png',
         unlocked: false,
+        gemsUnlocked: false,
+        reward: 150,
       },
       {
         id: 18,
@@ -160,6 +194,8 @@ export class AchievementsOverlayComponent implements OnInit {
         description: 'Beat the first level in the game.',
         image: 'gold.png',
         unlocked: false,
+        gemsUnlocked: false,
+        reward: 150,
       },
       {
         id: 19,
@@ -167,6 +203,8 @@ export class AchievementsOverlayComponent implements OnInit {
         description: 'Beat the first level in the game.',
         image: 'gold.png',
         unlocked: false,
+        gemsUnlocked: false,
+        reward: 150,
       },
       {
         id: 20,
@@ -174,6 +212,8 @@ export class AchievementsOverlayComponent implements OnInit {
         description: 'Beat the first level in the game.',
         image: 'gold.png',
         unlocked: false,
+        gemsUnlocked: false,
+        reward: 150,
       },
       {
         id: 21,
@@ -181,9 +221,21 @@ export class AchievementsOverlayComponent implements OnInit {
         description: 'Beat the first level in the game.',
         image: 'gold.png',
         unlocked: false,
+        gemsUnlocked: false,
+        reward: 150,
       },
     ];
 
+    this.pageAchievements(this.currentpage);
+  }
+
+  getReward(achievement: AchievementObject) {
+    this.achievementsListClean = this.achievementsListClean.map((x) => {
+      if (x.id === achievement.id) {
+        return { ...x, gemsUnlocked: true };
+      }
+      return x;
+    });
     this.pageAchievements(this.currentpage);
   }
 
@@ -198,4 +250,6 @@ export class AchievementsOverlayComponent implements OnInit {
   closeMenu() {
     this.onCloseMenu.emit(false);
   }
+
+  trackById = (index: number, item: AchievementObject) => item.id;
 }

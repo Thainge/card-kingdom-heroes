@@ -21,15 +21,53 @@
     <div class="achievementsList">
       <div
         class="achievement"
-        *ngFor="let item of achievementsList"
-        [ngClass]="{
-          disabled: !item.unlocked
-        }"
+        *ngFor="let item of achievementsList; trackBy: trackById"
       >
-        <img src="./assets/achievementBox.png" class="achievementBackground" />
-        <img src="./assets/achievements/gold.png" class="achievementIcon" />
-        <div class="achievementTitle">First Blood</div>
-        <div class="achievementText">Beat your first enemy in the game!</div>
+        <div
+          class="overlayAchievementContainer"
+          *ngIf="item.unlocked && !item.gemsUnlocked"
+          [@fadeOutLeave]="{
+            value: '',
+            params: { duration: 300, delay: 0 }
+          }"
+          (click)="getReward(item)"
+        >
+          <div class="relativeAchievement">
+            <div class="overlayAchievementBg"></div>
+            <img src="./assets/gold.png" class="goldImg" />
+            <div class="goldText">150</div>
+          </div>
+        </div>
+        <img
+          src="./assets/achievementBox.png"
+          [ngClass]="{
+            disabled: !item.unlocked || !item.gemsUnlocked
+          }"
+          class="achievementBackground"
+        />
+        <img
+          src="./assets/achievements/gold.png"
+          [ngClass]="{
+            disabled: !item.unlocked || !item.gemsUnlocked
+          }"
+          class="achievementIcon"
+        />
+        <div
+          class="achievementTitle"
+          [ngClass]="{
+            disabled: !item.unlocked || !item.gemsUnlocked
+          }"
+        >
+          First Blood
+        </div>
+        <div
+          class="achievementText"
+          [ngClass]="{
+            disabled: !item.unlocked || !item.gemsUnlocked
+          }"
+        >
+          Beat your first enemy in the game!
+        </div>
       </div>
     </div>
     <div class="achievementNumbersList">

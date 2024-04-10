@@ -4,4 +4,6 @@ export interface AchievementObject {
   description: string;
   image: string;
   unlocked: boolean;
+  gemsUnlocked: boolean;
+  reward: number;
 }

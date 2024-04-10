@@ -28,38 +28,38 @@ type WhirlpoolOpacity = 0.4 | 0.6 | 0.8 | 1;
 interface SpecialLevels {
   wheelShow: boolean;
   wheelFinished: boolean;
-  flyingShipShow: boolean;
-  flyingShipFinished: boolean;
-  sailingBoatShowShow: boolean;
-  sailingBoatShowFinished: boolean;
+  // flyingShipShow: boolean;
+  // flyingShipFinished: boolean;
+  // sailingBoatShowShow: boolean;
+  // sailingBoatShowFinished: boolean;
 
   hero1Show: boolean;
   hero1Finished: boolean;
-  town1GameShow: boolean;
-  town1GameFinished: boolean;
-  town1FightShow: boolean;
-  town1FightFinished: boolean;
+  // town1GameShow: boolean;
+  // town1GameFinished: boolean;
+  // town1FightShow: boolean;
+  // town1FightFinished: boolean;
 
   hero2Show: boolean;
   hero2Finished: boolean;
-  town2GameShow: boolean;
-  town2GameFinished: boolean;
-  town2FightShow: boolean;
-  town2FightFinished: boolean;
+  // town2GameShow: boolean;
+  // town2GameFinished: boolean;
+  // town2FightShow: boolean;
+  // town2FightFinished: boolean;
 
   hero3Show: boolean;
   hero3Finished: boolean;
-  town3GameShow: boolean;
-  town3GameFinished: boolean;
-  town3FightShow: boolean;
-  town3FightFinished: boolean;
+  // town3GameShow: boolean;
+  // town3GameFinished: boolean;
+  // town3FightShow: boolean;
+  // town3FightFinished: boolean;
 
   hero4Show: boolean;
   hero4Finished: boolean;
-  town4GameShow: boolean;
-  town4GameFinished: boolean;
-  town4FightShow: boolean;
-  town4FightFinished: boolean;
+  // town4GameShow: boolean;
+  // town4GameFinished: boolean;
+  // town4FightShow: boolean;
+  // town4FightFinished: boolean;
 }
 
 @Component({
@@ -97,38 +97,38 @@ export class MapComponent implements AfterViewInit, OnInit {
   specialLevelsData: SpecialLevels = {
     wheelShow: false,
     wheelFinished: false,
-    flyingShipShow: false,
-    flyingShipFinished: false,
-    sailingBoatShowShow: false,
-    sailingBoatShowFinished: false,
+    // flyingShipShow: false,
+    // flyingShipFinished: false,
+    // sailingBoatShowShow: false,
+    // sailingBoatShowFinished: false,
 
     hero1Show: false,
     hero1Finished: false,
-    town1GameShow: false,
-    town1GameFinished: false,
-    town1FightShow: false,
-    town1FightFinished: false,
+    // town1GameShow: false,
+    // town1GameFinished: false,
+    // town1FightShow: false,
+    // town1FightFinished: false,
 
     hero2Show: false,
     hero2Finished: false,
-    town2GameShow: false,
-    town2GameFinished: false,
-    town2FightShow: false,
-    town2FightFinished: false,
+    // town2GameShow: false,
+    // town2GameFinished: false,
+    // town2FightShow: false,
+    // town2FightFinished: false,
 
     hero3Show: false,
     hero3Finished: false,
-    town3GameShow: false,
-    town3GameFinished: false,
-    town3FightShow: false,
-    town3FightFinished: false,
+    // town3GameShow: false,
+    // town3GameFinished: false,
+    // town3FightShow: false,
+    // town3FightFinished: false,
 
     hero4Show: false,
     hero4Finished: false,
-    town4GameShow: false,
-    town4GameFinished: false,
-    town4FightShow: false,
-    town4FightFinished: false,
+    // town4GameShow: false,
+    // town4GameFinished: false,
+    // town4FightShow: false,
+    // town4FightFinished: false,
   };
   battleStartOpen: boolean = false;
 
@@ -147,14 +147,17 @@ export class MapComponent implements AfterViewInit, OnInit {
     const currentLevel = this.flagsList.find(
       (x) => x.levelStatus === 'justFinished'
     );
-    setTimeout(() => {
-      this.flagsList = this.flagsList.map((x, i) => {
-        if (x.id === currentLevel?.id) {
-          return { ...x, levelStatus: 'finished' };
-        }
-        return x;
-      });
-    }, 1500);
+    // setTimeout(() => {
+    //   this.flagsList = this.flagsList.map((x, i) => {
+    //     if (x.id === currentLevel?.id) {
+    //       return { ...x, levelStatus: 'nextLevel' };
+    //     }
+    //     return { ...x, levelStatus: 'nextLevel' };
+    //   });
+    // }, 1500);
+    this.flagsList.forEach((x) => {
+      this.finishLevel(x);
+    });
     this.currentLevel = currentLevel;
   }
 
@@ -240,45 +243,45 @@ export class MapComponent implements AfterViewInit, OnInit {
       if (flag.id === 4) {
         this.specialLevelsData.hero1Show = true;
       }
-      if (flag.id === 5) {
-        this.specialLevelsData.town1GameShow = true;
-      }
-      if (flag.id === 5) {
-        this.specialLevelsData.town1FightShow = true;
-      }
+      // if (flag.id === 5) {
+      //   this.specialLevelsData.town1GameShow = true;
+      // }
+      // if (flag.id === 5) {
+      //   this.specialLevelsData.town1FightShow = true;
+      // }
 
       // Snow land
-      if (flag.id === 7) {
+      if (flag.id === 8) {
         this.specialLevelsData.hero2Show = true;
       }
-      if (flag.id === 8) {
-        this.specialLevelsData.town2GameShow = true;
-      }
-      if (flag.id === 8) {
-        this.specialLevelsData.town2FightShow = true;
-      }
+      // if (flag.id === 8) {
+      //   this.specialLevelsData.town2GameShow = true;
+      // }
+      // if (flag.id === 8) {
+      //   this.specialLevelsData.town2FightShow = true;
+      // }
 
       // Desert land
-      if (flag.id === 12) {
+      if (flag.id === 14) {
         this.specialLevelsData.hero3Show = true;
       }
-      if (flag.id === 14) {
-        this.specialLevelsData.town3GameShow = true;
-      }
-      if (flag.id === 14) {
-        this.specialLevelsData.town3FightShow = true;
-      }
+      // if (flag.id === 14) {
+      //   this.specialLevelsData.town3GameShow = true;
+      // }
+      // if (flag.id === 14) {
+      //   this.specialLevelsData.town3FightShow = true;
+      // }
 
       // Fire land
-      if (flag.id === 16) {
+      if (flag.id === 19) {
         this.specialLevelsData.hero4Show = true;
       }
-      if (flag.id === 18) {
-        this.specialLevelsData.town4GameShow = true;
-      }
-      if (flag.id === 18) {
-        this.specialLevelsData.town4FightShow = true;
-      }
+      // if (flag.id === 18) {
+      //   this.specialLevelsData.town4GameShow = true;
+      // }
+      // if (flag.id === 18) {
+      //   this.specialLevelsData.town4FightShow = true;
+      // }
 
       if (x.id === flag.id) {
         foundIndex = i + 1;

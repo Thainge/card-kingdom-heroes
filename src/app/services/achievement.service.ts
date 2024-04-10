@@ -12,6 +12,8 @@ export class AchievementService {
     image: '',
     title: '',
     unlocked: false,
+    gemsUnlocked: false,
+    reward: 150,
   });
 
   constructor() {}

@@ -123,11 +123,11 @@
   flex-wrap: wrap;
   overflow: hidden;
   row-gap: 1%;
-  column-gap: 10%;
+  column-gap: 2%;
 }
 
 .achievement {
-  width: 45%;
+  width: 49%;
   height: 19%;
   position: relative;
   display: flex;
@@ -154,7 +154,7 @@
   top: 24%;
   left: 29%;
   color: #e3d9b6;
-  font-size: 0.65em;
+  font-size: 0.75em;
   font-family: headerFont;
   letter-spacing: 0.01em;
   -webkit-text-stroke: 0.8px rgba(0, 0, 0, 0.8);
@@ -165,7 +165,7 @@
   z-index: 2;
   top: 44%;
   left: 29%;
-  font-size: 0.6em;
+  font-size: 0.7em;
   width: 65%;
   height: 30%;
   font-weight: 100;
@@ -176,4 +176,66 @@
 
 .disabled {
   filter: grayscale(1) brightness(0.5);
+}
+
+.overlayAchievementContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.relativeAchievement {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  -webkit-transform-style: preserve-3d;
+  transition: all 0.3s;
+  transform-origin: center center;
+}
+
+.relativeAchievement:hover {
+  transform: scale(1.1, 1.1) translateX(3%);
+}
+
+.relativeAchievement:active {
+  transform: scale(1, 1);
+}
+
+.overlayAchievementBg {
+  position: absolute;
+  top: 7%;
+  left: 1%;
+  width: 24%;
+  height: 90%;
+  background-color: rgba(0, 128, 0, 0.6);
+  border-radius: 10em;
+  z-index: 1;
+}
+
+.goldImg {
+  width: 10%;
+  position: absolute;
+  top: 45%;
+  left: 7.8%;
+  z-index: 2;
+}
+
+.goldText {
+  width: 18%;
+  position: absolute;
+  top: 17%;
+  left: 3.7%;
+  font-family: soho;
+  color: #e9e9b2;
+  font-size: 1.3em;
+  font-style: italic;
+  text-align: center;
+  text-shadow: 2px 2px black;
+  z-index: 2;
 }

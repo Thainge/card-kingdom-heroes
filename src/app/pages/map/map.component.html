@@ -35,11 +35,14 @@
         >
           <div class="heroiconContainer">
             <img
-              src="./assets/playerIcons/levelBorder1.png"
+              src="./assets/levelBorder1.png"
+              [style]="{
+                opacity: '0'
+              }"
               class="heroiconBorderImage"
             />
             <img
-              src="./assets/playerIcons/levelBorder2.png"
+              src="./assets/levelBorder2.png"
               *ngIf="specialLevelsData.hero4Finished"
               class="heroiconBorderImage heroiconBorderImageFinished"
               [@fadeEnter]="{
@@ -56,10 +59,10 @@
                 params: { duration: 500, delay: 0 }
               }"
             />
-            <img class="heroiconImage" src="./assets/playerIcons/link.png" />
+            <img class="heroiconImage" src="./assets/battle4.png" />
           </div>
         </div>
-        <div
+        <!-- <div
           class="firelandtownIconBox shownIcon"
           [ngClass]="{
             disabledBox: !specialLevelsData.town4GameShow,
@@ -79,8 +82,8 @@
               }"
             />
           </div>
-        </div>
-        <div
+        </div> -->
+        <!-- <div
           class="firelandtownIconBox2 shownIcon"
           [ngClass]="{
             disabledBox: !specialLevelsData.town4FightShow,
@@ -100,7 +103,7 @@
             />
             <img class="heroiconBorderImage" src="./assets/battle4.png" />
           </div>
-        </div>
+        </div> -->
 
         <!-- Desert -->
         <div
@@ -113,11 +116,14 @@
         >
           <div class="heroiconContainer">
             <img
-              src="./assets/playerIcons/levelBorder1.png"
+              src="./assets/levelBorder1.png"
+              [style]="{
+                opacity: '0'
+              }"
               class="heroiconBorderImage"
             />
             <img
-              src="./assets/playerIcons/levelBorder2.png"
+              src="./assets/levelBorder2.png"
               *ngIf="specialLevelsData.hero3Finished"
               class="heroiconBorderImage heroiconBorderImageFinished"
               [@fadeEnter]="{
@@ -134,10 +140,10 @@
                 params: { duration: 500, delay: 0 }
               }"
             />
-            <img class="heroiconImage" src="./assets/playerIcons/link.png" />
+            <img class="heroiconImage" src="./assets/battle3.png" />
           </div>
         </div>
-        <div
+        <!-- <div
           class="deserttownIconBox shownIcon"
           [ngClass]="{
             disabledBox: !specialLevelsData.town3GameShow,
@@ -178,7 +184,7 @@
             />
             <img class="heroiconBorderImage" src="./assets/battle3.png" />
           </div>
-        </div>
+        </div> -->
 
         <!-- Winter -->
         <div
@@ -191,11 +197,14 @@
         >
           <div class="heroiconContainer">
             <img
-              src="./assets/playerIcons/levelBorder1.png"
+              src="./assets/levelBorder1.png"
+              [style]="{
+                opacity: '0'
+              }"
               class="heroiconBorderImage"
             />
             <img
-              src="./assets/playerIcons/levelBorder2.png"
+              src="./assets/levelBorder2.png"
               *ngIf="specialLevelsData.hero2Finished"
               class="heroiconBorderImage heroiconBorderImageFinished"
               [@fadeEnter]="{
@@ -212,10 +221,10 @@
                 params: { duration: 500, delay: 0 }
               }"
             />
-            <img class="heroiconImage" src="./assets/playerIcons/link.png" />
+            <img class="heroiconImage" src="./assets/battle2.png" />
           </div>
         </div>
-        <div
+        <!-- <div
           class="snowtownIconBox shownIcon"
           [ngClass]="{
             disabledBox: !specialLevelsData.town2GameShow,
@@ -256,7 +265,7 @@
             />
             <img class="heroiconBorderImage" src="./assets/battle2.png" />
           </div>
-        </div>
+        </div> -->
 
         <!-- Forest -->
         <div
@@ -269,11 +278,14 @@
         >
           <div class="heroiconContainer">
             <img
-              src="./assets/playerIcons/levelBorder1.png"
+              src="./assets/levelBorder1.png"
+              [style]="{
+                opacity: '0'
+              }"
               class="heroiconBorderImage"
             />
             <img
-              src="./assets/playerIcons/levelBorder2.png"
+              src="./assets/levelBorder2.png"
               *ngIf="specialLevelsData.hero1Finished"
               class="heroiconBorderImage heroiconBorderImageFinished"
               [@fadeEnter]="{
@@ -290,10 +302,10 @@
                 params: { duration: 500, delay: 0 }
               }"
             />
-            <img class="heroiconImage" src="./assets/playerIcons/link.png" />
+            <img class="heroiconImage" src="./assets/battle1.png" />
           </div>
         </div>
-        <div
+        <!-- <div
           class="castleIconBox shownIcon"
           [ngClass]="{
             disabledBox: !specialLevelsData.town1GameShow,
@@ -334,7 +346,7 @@
             />
             <img class="heroiconBorderImage" src="./assets/battle1.png" />
           </div>
-        </div>
+        </div> -->
         <div
           class="wheelspinBox shownIcon"
           [ngClass]="{
@@ -354,11 +366,14 @@
               }"
             />
             <img
-              src="./assets/playerIcons/levelBorder1.png"
+              src="./assets/levelBorder1.png"
+              [style]="{
+                opacity: '0'
+              }"
               class="heroiconBorderImage"
             />
             <img
-              src="./assets/playerIcons/levelBorder2.png"
+              src="./assets/levelBorder2.png"
               *ngIf="specialLevelsData.wheelFinished"
               class="heroiconBorderImage heroiconBorderImageFinished"
               [@fadeEnter]="{
@@ -510,13 +525,14 @@
         </div>
         <div class="flyingShipBox">
           <div class="flyingShipContainer">
+            <!-- <div
             <div
               class="absoluteHeroIcon"
               [ngClass]="{
                 hoverShip: !specialLevelsData.flyingShipFinished
               }"
             >
-              <div
+              
                 class="shownIcon"
                 [ngClass]="{
                   disabledBox: !specialLevelsData.flyingShipShow,
@@ -525,11 +541,13 @@
                 (click)="specialLevelsData.flyingShipFinished = true"
               >
                 <img
-                  src="./assets/playerIcons/levelBorder1.png"
+                  src="./assets/levelBorder1.png" [style]="{
+                    'opacity': '0'
+                  }"
                   class="heroiconBorderImage"
                 />
                 <img
-                  src="./assets/playerIcons/levelBorder2.png"
+                  src="./assets/levelBorder2.png"
                   *ngIf="specialLevelsData.flyingShipFinished"
                   class="heroiconBorderImage heroiconBorderImageFinished"
                   [@fadeEnter]="{
@@ -548,10 +566,10 @@
                 />
                 <img
                   class="heroiconImage"
-                  src="./assets/playerIcons/link.png"
+                  src="./assets/battle1.png"
                 />
               </div>
-            </div>
+            </div> -->
             <img src="./assets/flyingShip.gif" class="flyingShipImage" />
           </div>
         </div>
@@ -562,7 +580,7 @@
         </div>
         <div class="sailingShipBox">
           <div class="sailingShipContainer">
-            <div
+            <!-- <div
               class="sailingShipHeroIcon"
               [ngClass]="{
                 hoverShip: !specialLevelsData.sailingBoatShowFinished
@@ -577,11 +595,13 @@
                 (click)="specialLevelsData.sailingBoatShowFinished = true"
               >
                 <img
-                  src="./assets/playerIcons/levelBorder1.png"
+                  src="./assets/levelBorder1.png" [style]="{
+                    'opacity': '0'
+                  }"
                   class="heroiconBorderImage"
                 />
                 <img
-                  src="./assets/playerIcons/levelBorder2.png"
+                  src="./assets/levelBorder2.png"
                   *ngIf="specialLevelsData.sailingBoatShowFinished"
                   class="heroiconBorderImage heroiconBorderImageFinished"
                   [@fadeEnter]="{
@@ -600,10 +620,10 @@
                 />
                 <img
                   class="heroiconImage"
-                  src="./assets/playerIcons/link.png"
+                  src="./assets/battle1.png"
                 />
               </div>
-            </div>
+            </div> -->
             <img src="./assets/ship.gif" class="sailingShipImage" />
           </div>
         </div>
