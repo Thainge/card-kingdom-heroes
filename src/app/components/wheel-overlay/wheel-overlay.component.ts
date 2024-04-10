@@ -78,6 +78,9 @@ export class WheelOverlayComponent implements OnInit {
   @Input('open') open: boolean = false;
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
+  spinning: boolean = false;
+  wheel: any;
+
   constructor() {}
 
   ngOnInit() {}
@@ -158,6 +161,23 @@ export class WheelOverlayComponent implements OnInit {
     };
     const container = document.querySelector('.wheel-container');
     const wheel = new Wheel(container, props);
+    this.wheel = wheel;
+  }
+
+  spinWheel() {
+    if (this.spinning) {
+      return;
+    }
+
+    if (this.wheel) {
+      this.spinning = true;
+      const winningItemIndex = 0;
+      const duration = 3000;
+      this.wheel.spinToItem(winningItemIndex, duration, true, 2, 1);
+      setTimeout(() => {
+        this.spinning = false;
+      }, 4000);
+    }
   }
 
   OnSpin() {

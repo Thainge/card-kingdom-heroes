@@ -118,10 +118,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  -webkit-transform-style: preserve-3d;
+  transition: all 0.3s;
 }
 
 .btnImage {
-  width: 17em;
+  width: 14em;
 }
 
 .btnText {
@@ -130,6 +132,7 @@
 
 .spinText {
   position: absolute;
+  left: 3.4em;
 }
 
 .text {
@@ -137,7 +140,7 @@
   text-align: center;
   color: white;
   font-family: "headerFont";
-  background: -webkit-linear-gradient(#f5f2e6, #a8a075);
+  background: -webkit-linear-gradient(#f5f2e6, #cfcbb6);
   -webkit-text-stroke: 2px #000;
   background-clip: text;
   -webkit-background-clip: text;
@@ -148,12 +151,21 @@
   -moz-background-clip: text;
   -moz-text-fill-color: transparent;
   font-weight: bold;
-  font-size: 1.4em;
+  font-size: 1.2em;
   margin-top: 0.1em;
 }
 
 .spinGold {
   position: absolute;
-  width: 3em;
-  right: 0;
+  width: 2.5em;
+  margin-bottom: 0.1em;
+  right: 3.1em;
+}
+
+.button:hover {
+  scale: 1.1;
+}
+
+.button:active {
+  scale: 1;
 }

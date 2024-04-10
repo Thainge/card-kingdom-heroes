@@ -17,18 +17,67 @@
     <div class="centerShadow"></div>
     <div class="centerShadowBorder"></div>
     <div class="centerShadowBorder2"></div>
-    <div class="overlayText">Spin the wheel to win a prize!</div>
-    <img src="./assets/wheelImages/wheelArrow.png" class="wheelArrow" />
+    <div
+      class="overlayText"
+      *ngIf="!spinning"
+      [@fadeEnter]="{
+        value: '',
+        params: { duration: 300, delay: 0 }
+      }"
+      [@fadeOutLeave]="{
+        value: '',
+        params: { duration: 300, delay: 0 }
+      }"
+    >
+      Spin the wheel to win a prize!
+    </div>
+    <img
+      src="./assets/wheelImages/wheelArrow.png"
+      class="wheelArrow"
+      *ngIf="spinning"
+      [@fadeEnter]="{
+        value: '',
+        params: { duration: 300, delay: 0 }
+      }"
+      [@fadeOutLeave]="{
+        value: '',
+        params: { duration: 300, delay: 0 }
+      }"
+    />
   </div>
   <div class="buttons">
     <div class="buttonsBox">
-      <div class="button">
+      <div
+        class="button"
+        *ngIf="!spinning"
+        [@fadeEnter]="{
+          value: '',
+          params: { duration: 300, delay: 0 }
+        }"
+        [@fadeOutLeave]="{
+          value: '',
+          params: { duration: 300, delay: 0 }
+        }"
+        (click)="closeMenu()"
+      >
         <img src="./assets/cancel.png" class="btnImage" />
         <div class="btnText text">Cancel</div>
       </div>
-      <div class="button">
+      <div
+        class="button"
+        *ngIf="!spinning"
+        [@fadeEnter]="{
+          value: '',
+          params: { duration: 300, delay: 0 }
+        }"
+        [@fadeOutLeave]="{
+          value: '',
+          params: { duration: 300, delay: 0 }
+        }"
+        (click)="spinWheel()"
+      >
         <img src="./assets/continue.png" class="btnImage" />
-        <div class="spinText text">Spin!</div>
+        <div class="spinText text">200</div>
         <img src="./assets/gold.png" class="spinGold" />
       </div>
     </div>
