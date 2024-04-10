@@ -1,11 +1,47 @@
 .container {
+  width: 100vw;
+  height: 100vh;
+  background-image: url(~src/assets/home.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.homeBox {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url(~src/assets/home.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 90%;
+}
+
+.homeLogoImg {
+  width: 22%;
+  margin-bottom: 1em;
+}
+
+.startBtn {
+  width: 13%;
+}
+
+.creditsBtn {
+  width: 8%;
+}
+
+.btn {
+  -webkit-transform-style: preserve-3d;
+  transition: all 0.3s;
+}
+
+.btn:hover {
+  scale: 1.1;
+}
+
+.btn:active {
+  scale: 1;
 }

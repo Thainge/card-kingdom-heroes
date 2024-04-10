@@ -6,7 +6,7 @@ import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
   // { path: 'battle', component: BattleComponent },
-  { path: '', component: HomeComponent },
+  { path: '', component: MapComponent },
   { path: '**', redirectTo: '/' },
 ];
 

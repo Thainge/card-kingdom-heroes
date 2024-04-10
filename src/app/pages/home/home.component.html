@@ -1,1 +1,24 @@
-<div class="container"></div>
+<div class="container">
+  <div class="homeBox">
+    <app-credits-overlay
+      [open]="creditsOpen"
+      (onCloseMenu)="creditsOpen = false"
+    ></app-credits-overlay>
+    <app-choose-difficulty-overlay
+      [open]="chooseDifficultyOpen"
+      (onCloseMenu)="endSelection()"
+      [showInformation]="true"
+    ></app-choose-difficulty-overlay>
+    <app-campaign-overlay
+      [open]="chooseCampaignOpen"
+      (onCloseMenu)="chooseDifficulty()"
+    ></app-campaign-overlay>
+    <img src="./assets/homeLogo.png" class="homeLogoImg" />
+    <img src="./assets/start.png" class="startBtn btn" (click)="startGame()" />
+    <img
+      src="./assets/credits.png"
+      class="creditsBtn btn"
+      (click)="creditsOpen = true"
+    />
+  </div>
+</div>

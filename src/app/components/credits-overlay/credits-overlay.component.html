@@ -1,0 +1,34 @@
+<div
+  class="container"
+  *ngIf="open"
+  [@fadeEnter]="{
+    value: '',
+    params: { duration: 300, delay: 0 }
+  }"
+  [@fadeOutLeave]="{
+    value: '',
+    params: { duration: 300, delay: 0 }
+  }"
+>
+  <div class="optionsMenuBackdrop"></div>
+  <div class="overlayBox">
+    <img class="overlayPanelBg" src="./assets/menu.png" />
+    <div class="overlalPanelTitle">Credits</div>
+    <div class="closeMenuButtonBox" (click)="closeMenu()">
+      <img src="./assets/close.png" class="closeMenuButton" />
+      <img src="./assets/closeActive.png" class="closeMenuButton activeBtn" />
+    </div>
+    <div class="centerTextList">
+      <div
+        class="centerText"
+        *ngFor="let item of credits; index as i"
+        [@fadeUpEnter]="{
+          value: '',
+          params: { duration: 800, delay: i * 100 + 100, translate: '150px' }
+        }"
+      >
+        {{ item }}
+      </div>
+    </div>
+  </div>
+</div>

@@ -174,7 +174,15 @@
       </div>
     </div>
   </div>
-  <div class="loadingContainer" *ngIf="isLoading">
+  <div
+    class="loadingContainer"
+    *ngIf="isLoading"
+    [@fadeEnter]="{
+      value: '',
+      params: { duration: 300, delay: 0 }
+    }"
+    [@fadeOutLeave]
+  >
     <div
       class="loadingBg"
       [ngStyle]="{
