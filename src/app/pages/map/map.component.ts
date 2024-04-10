@@ -167,6 +167,10 @@ export class MapComponent implements AfterViewInit, OnInit {
     this.initPanZoom();
   }
 
+  showWheel() {
+    this.loadingService.showWheel$.next(true);
+  }
+
   async initPanZoom() {
     setTimeout(() => {
       this.loadingService.displayOptions$.next(false);

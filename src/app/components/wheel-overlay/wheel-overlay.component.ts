@@ -7,6 +7,7 @@ import {
   zoomOutOnLeaveAnimation,
 } from 'angular-animations';
 import { Wheel } from 'spin-wheel';
+import { CardService } from 'src/app/services/card.service';
 
 interface WheelItem {
   backgroundColor?: string;
@@ -19,6 +20,10 @@ interface WheelItem {
   labelColor?: string;
   value?: number;
   weight?: number;
+
+  text: string;
+  textAmount: string;
+  rewardImage: string;
 }
 
 interface WheelProps {
@@ -75,93 +80,138 @@ interface Offset {
   ],
 })
 export class WheelOverlayComponent implements OnInit {
-  @Input('open') open: boolean = false;
+  open: boolean = false;
+  @Input('open') set openChanged(x: boolean) {
+    this.open = x;
+    if (x) {
+      this.initWheel();
+    }
+  }
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
   spinning: boolean = false;
   wheel: any;
+  prizes: WheelItem[] = [];
+  wonPrize: WheelItem | undefined;
+  showPrize: boolean = false;
 
-  constructor() {}
+  constructor(private cardService: CardService) {}
 
-  ngOnInit() {}
-
-  ngAfterViewInit() {
+  ngOnInit() {
     const wheelItems: WheelItem[] = [
       {
-        value: 4,
+        value: 1,
         image: './assets/wheelImages/gold3.png',
         imageScale: 0.3,
         backgroundColor: '#ffd700',
         weight: 0.5,
-      },
-      {
-        value: 1,
-        image: './assets/wheelImages/booster1.png',
-        imageScale: 0.15,
-        weight: 0.75,
+        rewardImage: 'goldReward.png',
+        text: 'Diamonds',
+        textAmount: '999x',
       },
       {
         value: 2,
-        image: './assets/wheelImages/gold2.png',
-        imageScale: 0.5,
-        weight: 1,
+        image: './assets/wheelImages/booster1.png',
+        imageScale: 0.15,
+        weight: 0.75,
+        rewardImage: 'boosterPack.png',
+        text: 'Booster Pack',
+        textAmount: '1x',
       },
       {
         value: 3,
-        image: './assets/wheelImages/booster2.png',
-        imageScale: 0.15,
-        weight: 0.75,
-      },
-      {
-        value: 4,
-        image: './assets/wheelImages/gold1.png',
-        imageScale: 0.5,
-        weight: 1,
-      },
-      {
-        value: 4,
-        image: './assets/wheelImages/booster1.png',
-        imageScale: 0.15,
-        weight: 0.75,
-      },
-      {
-        value: 4,
         image: './assets/wheelImages/gold2.png',
         imageScale: 0.5,
         weight: 1,
+        rewardImage: 'goldReward.png',
+        text: 'Diamonds',
+        textAmount: '150x',
       },
       {
         value: 4,
         image: './assets/wheelImages/booster2.png',
         imageScale: 0.15,
         weight: 0.75,
+        rewardImage: 'boosterPack.png',
+        text: 'Booster Pack',
+        textAmount: '1x',
       },
-
       {
-        value: 4,
+        value: 5,
         image: './assets/wheelImages/gold1.png',
         imageScale: 0.5,
         weight: 1,
+        rewardImage: 'goldReward.png',
+        text: 'Diamonds',
+        textAmount: '150x',
       },
       {
-        value: 4,
+        value: 6,
         image: './assets/wheelImages/booster1.png',
         imageScale: 0.15,
         weight: 0.75,
+        rewardImage: 'boosterPack.png',
+        text: 'Booster Pack',
+        textAmount: '1x',
+      },
+      {
+        value: 7,
+        image: './assets/wheelImages/gold2.png',
+        imageScale: 0.5,
+        weight: 1,
+        rewardImage: 'goldReward.png',
+        text: 'Diamonds',
+        textAmount: '150x',
+      },
+      {
+        value: 8,
+        image: './assets/wheelImages/booster2.png',
+        imageScale: 0.15,
+        weight: 0.75,
+        rewardImage: 'boosterPack.png',
+        text: 'Booster Pack',
+        textAmount: '1x',
+      },
+
+      {
+        value: 9,
+        image: './assets/wheelImages/gold1.png',
+        imageScale: 0.5,
+        weight: 1,
+        rewardImage: 'goldReward.png',
+        text: 'Diamonds',
+        textAmount: '150x',
+      },
+      {
+        value: 10,
+        image: './assets/wheelImages/booster1.png',
+        imageScale: 0.15,
+        weight: 0.75,
+        rewardImage: 'boosterPack.png',
+        text: 'Booster Pack',
+        textAmount: '1x',
       },
     ];
-    const props: WheelProps = {
-      items: wheelItems,
-      borderColor: '#FFDE00',
-      borderWidth: 12,
-      isInteractive: false,
-      radius: 1,
-      itemBackgroundColors: ['#ffffff', '#0082EE'],
-      lineWidth: 2,
-    };
-    const container = document.querySelector('.wheel-container');
-    const wheel = new Wheel(container, props);
-    this.wheel = wheel;
+    this.prizes = wheelItems;
+  }
+
+  ngAfterViewInit() {}
+
+  initWheel() {
+    setTimeout(() => {
+      const props: WheelProps = {
+        items: this.prizes,
+        borderColor: '#FFDE00',
+        borderWidth: 12,
+        isInteractive: false,
+        radius: 1,
+        itemBackgroundColors: ['#ffffff', '#0082EE'],
+        lineWidth: 2,
+      };
+      const container = document.querySelector('.wheel-container');
+      const wheel = new Wheel(container, props);
+      this.wheel = wheel;
+    }, 1);
   }
 
   spinWheel() {
@@ -171,25 +221,25 @@ export class WheelOverlayComponent implements OnInit {
 
     if (this.wheel) {
       this.spinning = true;
-      const winningItemIndex = 0;
+      // Randomly spin to index
+      const shuffledArray = this.cardService.shuffle(this.prizes);
+      const winningIndex = this.prizes.findIndex(
+        (x: WheelItem) => x.value === shuffledArray[0].value
+      );
       const duration = 3000;
-      this.wheel.spinToItem(winningItemIndex, duration, true, 2, 1);
+      this.wheel.spinToItem(winningIndex, duration, true, 2, 1);
       setTimeout(() => {
-        this.spinning = false;
-      }, 4000);
+        // Show won prize like at end of combat
+        this.wonPrize = this.prizes[winningIndex];
+        this.showPrize = true;
+      }, 3300);
     }
   }
 
-  OnSpin() {
-    console.log('spin');
-  }
-
-  OnRest() {
-    console.log('rest');
-  }
-
-  OnCurrentIndexChange() {
-    console.log('index');
+  endSpin() {
+    this.showPrize = false;
+    this.wonPrize = undefined;
+    this.spinning = false;
   }
 
   closeMenu() {

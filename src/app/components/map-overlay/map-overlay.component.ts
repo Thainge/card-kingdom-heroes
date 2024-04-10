@@ -69,7 +69,7 @@ export class MapOverlayComponent implements OnInit {
   chooseDifficultyOpen: boolean = false;
   chooseCampaignOpen: boolean = false;
   premiumOpen: boolean = false;
-  wheelOpen: boolean = true;
+  wheelOpen: boolean = false;
 
   showInformation: boolean = false;
   display: boolean = true;
@@ -91,6 +91,9 @@ export class MapOverlayComponent implements OnInit {
   ngOnInit() {
     this.loadingService.displayOptions$.subscribe((x) => {
       // this.display = x;
+    });
+    this.loadingService.showWheel$.subscribe((x) => {
+      this.wheelOpen = x;
     });
     this.loadingService.currentTip$.subscribe((x) => {
       this.currentTip = x;

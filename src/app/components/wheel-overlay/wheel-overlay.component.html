@@ -1,70 +1,89 @@
-<div
-  class="container"
-  *ngIf="open"
-  [@fadeEnter]="{
-    value: '',
-    params: { duration: 300, delay: 0 }
-  }"
-  [@fadeOutLeave]="{
-    value: '',
-    params: { duration: 300, delay: 0 }
-  }"
->
-  <div class="optionsMenuBackdrop"></div>
-  <div class="overlayBox">
-    <div class="wheel-container"></div>
-    <img src="./assets/wheelImages/wheelCenter.png" class="centerWheelImage" />
-    <div class="centerShadow"></div>
-    <div class="centerShadowBorder"></div>
-    <div class="centerShadowBorder2"></div>
-    <div
-      class="overlayText"
-      *ngIf="!spinning"
-      [@fadeEnter]="{
-        value: '',
-        params: { duration: 300, delay: 0 }
-      }"
-      [@fadeOutLeave]="{
-        value: '',
-        params: { duration: 300, delay: 0 }
-      }"
-    >
-      Spin the wheel to win a prize!
-    </div>
-    <img
-      src="./assets/wheelImages/wheelArrow.png"
-      class="wheelArrow"
-      *ngIf="spinning"
-      [@fadeEnter]="{
-        value: '',
-        params: { duration: 300, delay: 0 }
-      }"
-      [@fadeOutLeave]="{
-        value: '',
-        params: { duration: 300, delay: 0 }
-      }"
-    />
-  </div>
-  <div class="buttons">
-    <div class="buttonsBox">
+<div class="relativeBox">
+  <div
+    *ngIf="showPrize"
+    [@fadeEnter]="{
+      value: '',
+      params: { duration: 300, delay: 0 }
+    }"
+    [@fadeOutLeave]="{
+      value: '',
+      params: { duration: 300, delay: 0 }
+    }"
+    class="prizeOverlay"
+  >
+    <div class="optionsMenuBackdrop2"></div>
+    <div class="centerPrizeBox">
       <div
-        class="button"
-        *ngIf="!spinning"
-        [@fadeEnter]="{
+        class="rayItem"
+        (click)="endSpin()"
+        [@zoomInEnter]="{
           value: '',
-          params: { duration: 300, delay: 0 }
+          params: {
+            duration: 400,
+            translate: '100px'
+          }
         }"
-        [@fadeOutLeave]="{
-          value: '',
-          params: { duration: 300, delay: 0 }
-        }"
-        (click)="closeMenu()"
+        [@zoomOutLeave]
       >
-        <img src="./assets/cancel.png" class="btnImage" />
-        <div class="btnText text">Cancel</div>
+        <div class="raysContainer">
+          <div
+            class="raysTextTitle"
+            [ngStyle]="{
+              'font-family': 'headerFont'
+            }"
+          >
+            {{ wonPrize?.text }}
+          </div>
+          <div
+            class="raysTextAmount"
+            [ngStyle]="{
+              'font-family': 'headerFont'
+            }"
+          >
+            {{ wonPrize?.textAmount }}
+          </div>
+          <div
+            class="raysContinueText"
+            [ngStyle]="{
+              'font-family': 'headerFont'
+            }"
+          >
+            Click to continue...
+          </div>
+          <img
+            class="raysMiddle"
+            [src]="'./assets/rewards/' + wonPrize?.rewardImage"
+          />
+          <div class="pulseBox"><div class="pulse"></div></div>
+          <div class="rays"></div>
+        </div>
       </div>
+    </div>
+  </div>
+  <div
+    class="container"
+    *ngIf="open"
+    [@fadeEnter]="{
+      value: '',
+      params: { duration: 300, delay: 0 }
+    }"
+    [@fadeOutLeave]="{
+      value: '',
+      params: { duration: 300, delay: 0 }
+    }"
+  >
+    <div class="optionsMenuBackdrop"></div>
+    <div class="overlayBox">
+      <div class="wheel-container"></div>
+      <img
+        src="./assets/wheelImages/wheelCenter.png"
+        class="centerWheelImage"
+      />
+      <div class="centerShadow"></div>
+      <div class="centerShadowBorder"></div>
+      <div class="centerShadowBorder2"></div>
       <div
-        class="button"
+        class="overlayText"
         *ngIf="!spinning"
         [@fadeEnter]="{
           value: '',
@@ -74,11 +93,58 @@
           value: '',
           params: { duration: 300, delay: 0 }
         }"
-        (click)="spinWheel()"
       >
-        <img src="./assets/continue.png" class="btnImage" />
-        <div class="spinText text">200</div>
-        <img src="./assets/gold.png" class="spinGold" />
+        Spin the wheel to win a prize!
+      </div>
+      <img
+        src="./assets/wheelImages/wheelArrow.png"
+        class="wheelArrow"
+        *ngIf="spinning"
+        [@fadeEnter]="{
+          value: '',
+          params: { duration: 300, delay: 0 }
+        }"
+        [@fadeOutLeave]="{
+          value: '',
+          params: { duration: 300, delay: 0 }
+        }"
+      />
+    </div>
+    <div class="buttons">
+      <div class="buttonsBox">
+        <div
+          class="button"
+          *ngIf="!spinning"
+          [@fadeEnter]="{
+            value: '',
+            params: { duration: 300, delay: 0 }
+          }"
+          [@fadeOutLeave]="{
+            value: '',
+            params: { duration: 300, delay: 0 }
+          }"
+          (click)="closeMenu()"
+        >
+          <img src="./assets/cancel.png" class="btnImage" />
+          <div class="btnText text">Cancel</div>
+        </div>
+        <div
+          class="button"
+          *ngIf="!spinning"
+          [@fadeEnter]="{
+            value: '',
+            params: { duration: 300, delay: 0 }
+          }"
+          [@fadeOutLeave]="{
+            value: '',
+            params: { duration: 300, delay: 0 }
+          }"
+          (click)="spinWheel()"
+        >
+          <img src="./assets/continue.png" class="btnImage" />
+          <div class="spinText text">200</div>
+          <img src="./assets/gold.png" class="spinGold" />
+        </div>
       </div>
     </div>
   </div>

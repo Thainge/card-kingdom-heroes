@@ -29,6 +29,7 @@ export class LoadingService {
   readonly isRefreshing$ = new BehaviorSubject<boolean>(false);
   readonly displayOptions$ = new BehaviorSubject<boolean>(true);
   readonly difficultyIsOpen$ = new BehaviorSubject<boolean>(false);
+  readonly showWheel$ = new BehaviorSubject<boolean>(true);
   readonly currentTip$ = new BehaviorSubject<Tip>({
     title: 'New Tip',
     header: 'Wild Cards',
