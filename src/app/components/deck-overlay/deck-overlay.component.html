@@ -185,7 +185,11 @@
           ></div>
           <img src="./assets/gold.png" class="goldCostImg" />
           <div class="upgradeText goldText">
-            {{ (leftUpgradeCard?.goldCost ?? [])[leftUpgradeCard?.level ?? 0] }}
+            {{
+              (this.leftUpgradeCard?.goldCost ?? [])[
+                (this.leftUpgradeCard?.level ?? 1) - 1
+              ]
+            }}
           </div>
         </div>
       </div>

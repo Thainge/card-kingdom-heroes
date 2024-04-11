@@ -59,6 +59,7 @@ const defaultAbilityCard: AbilityCard = {
   isNew: false,
   numberOwned: 1,
   trueNumberOwned: 1,
+  goldCost: [0, 0, 0],
   alliesCalled: [],
 };
 
@@ -776,6 +777,7 @@ export class BattleComponent implements OnInit {
         isNew: false,
         numberOwned: 1,
         trueNumberOwned: 1,
+        goldCost: [0, 0, 0],
         alliesCalled: [],
       };
       this.abilityDeck[1] = {
@@ -796,6 +798,7 @@ export class BattleComponent implements OnInit {
         isNew: false,
         numberOwned: 1,
         trueNumberOwned: 1,
+        goldCost: [0, 0, 0],
         alliesCalled: [],
       };
       this.drawAbilityCard(2);
@@ -2316,6 +2319,7 @@ export class BattleComponent implements OnInit {
       isNew: false,
       numberOwned: 1,
       trueNumberOwned: 1,
+      goldCost: [0, 0, 0],
       alliesCalled: [],
     };
     this.hoveringAbilityHand = [];
@@ -2333,6 +2337,7 @@ export class BattleComponent implements OnInit {
       isNew: false,
       numberOwned: 1,
       trueNumberOwned: 1,
+      goldCost: [0, 0, 0],
       alliesCalled: [],
     };
     this.currentlyRunning = false;

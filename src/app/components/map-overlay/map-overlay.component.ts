@@ -91,6 +91,7 @@ export class MapOverlayComponent implements OnInit {
     ],
   };
   gold: number = 0;
+  stars: number = 0;
 
   constructor(
     private loadingService: LoadingService,
@@ -101,6 +102,9 @@ export class MapOverlayComponent implements OnInit {
   ngOnInit() {
     this.playerService.gold$.subscribe((x) => {
       this.gold = x;
+    });
+    this.playerService.stars$.subscribe((x) => {
+      this.stars = x;
     });
     this.loadingService.displayOptions$.subscribe((x) => {
       // this.display = x;

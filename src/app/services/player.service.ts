@@ -25,6 +25,7 @@ export class playerService implements OnInit {
   };
 
   readonly gold$ = new BehaviorSubject<number>(-9999);
+  readonly stars$ = new BehaviorSubject<number>(0);
 
   constructor(private router: Router) {
     this.gameTheme$.subscribe((x) => {

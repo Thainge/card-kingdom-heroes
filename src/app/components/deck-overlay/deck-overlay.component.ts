@@ -14,7 +14,6 @@ interface AbilityDeckCard extends AbilityCard {
   owned: boolean;
   inHand: boolean;
   index: number;
-  goldCost: number[];
 }
 
 type SortValue = 'Color' | 'Upgrade' | 'Level' | 'Cost';
@@ -251,11 +250,19 @@ export class DeckOverlayComponent implements OnInit {
 
   async upgradeCard() {
     if (
-      (this.leftUpgradeCard?.goldCost ?? [])[this.leftUpgradeCard?.level ?? 0] >
-      this.gold
+      (this.leftUpgradeCard?.goldCost ?? [])[
+        (this.leftUpgradeCard?.level ?? 1) - 1
+      ] > this.gold
     ) {
       return;
     }
+
+    this.playerService.gold$.next(
+      this.gold -
+        (this.leftUpgradeCard?.goldCost ?? [])[
+          (this.leftUpgradeCard?.level ?? 1) - 1
+        ]
+    );
 
     const card = this.leftUpgradeCard;
 
@@ -288,7 +295,7 @@ export class DeckOverlayComponent implements OnInit {
 
     const foundCard = this.abilityCards.find((x) => x.id === card?.id);
     if (currentLength !== newLength && foundCard) {
-      this.abilityHand.push(foundCard);
+      // this.abilityHand.push(foundCard);
     }
     localStorage.setItem('playerDeck', JSON.stringify(this.abilityHand));
     localStorage.setItem('abilityCards', JSON.stringify(this.abilityCards));

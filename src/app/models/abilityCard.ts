@@ -15,6 +15,7 @@ export interface AbilityCard {
   numberOwned: number;
   trueNumberOwned: number;
   isNew: boolean;
+  goldCost: number[];
 }
 
 type AbilityFunction =
