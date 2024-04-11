@@ -28,6 +28,7 @@ import { AbilityCard } from 'src/app/models/abilityCard';
 import { BoosterPack } from 'src/app/models/boosterPack';
 import { CardService } from 'src/app/services/card.service';
 import { LoadingService } from 'src/app/services/loading.service';
+import { playerService } from 'src/app/services/player.service';
 import { AbilityData } from 'src/assets/data/ability';
 import { BoosterPacks } from 'src/assets/data/boosterData/booster';
 import { BoosterPacksZelda } from 'src/assets/data/boosterData/boosterZelda';
@@ -95,15 +96,20 @@ export class ShopOverlayComponent implements OnInit {
   canClickNext: boolean = false;
 
   allCards: AbilityCard[] = [];
+  gold: number = 0;
 
   constructor(
     private loadingService: LoadingService,
     private router: Router,
-    private cardService: CardService
+    private cardService: CardService,
+    private playerService: playerService
   ) {}
 
   ngOnInit() {
     this.allCards = AbilityData;
+    this.playerService.gold$.subscribe((x) => {
+      this.gold = x;
+    });
   }
 
   ngAfterViewInit() {}
@@ -305,6 +311,12 @@ export class ShopOverlayComponent implements OnInit {
   }
 
   buyBoosterPack(item: BoosterPack) {
+    if (item.cost > this.gold) {
+      return;
+    }
+
+    this.playerService.gold$.next(this.gold - item.cost);
+
     this.boosterPacks = this.boosterPacks.map((x) => {
       if (x.id === item.id) {
         return { ...x, count: item.count + 1, showNew: false };

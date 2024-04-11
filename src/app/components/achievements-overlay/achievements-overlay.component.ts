@@ -7,6 +7,7 @@ import {
   zoomOutOnLeaveAnimation,
 } from 'angular-animations';
 import { AchievementObject } from 'src/app/models/achievement';
+import { playerService } from 'src/app/services/player.service';
 
 @Component({
   selector: 'app-achievements-overlay',
@@ -28,12 +29,16 @@ export class AchievementsOverlayComponent implements OnInit {
   achievementsListClean: AchievementObject[] = [];
   currentpage: number = 1;
   pageNumbers: number[] = [1, 2, 3];
+  gold: number = 0;
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
-  constructor() {}
+  constructor(private playerService: playerService) {}
 
   ngOnInit() {
+    this.playerService.gold$.subscribe((x) => {
+      this.gold = x;
+    });
     this.achievementsListClean = [
       {
         id: 1,

@@ -106,15 +106,21 @@ export class DeckOverlayComponent implements OnInit {
   showingUpgradeCard: boolean = false;
   showingUpgradeAnimation: boolean = false;
   canClickEnd: boolean = false;
+  gold: number = 0;
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
   constructor(
     private userService: playerService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private playerService: playerService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.playerService.gold$.subscribe((x) => {
+      this.gold = x;
+    });
+  }
 
   checkTip() {
     const deckTipShown = localStorage.getItem('deckTipShown');
@@ -207,6 +213,7 @@ export class DeckOverlayComponent implements OnInit {
       }
       return x;
     });
+    localStorage.setItem('abilityCards', JSON.stringify(this.abilityCards));
   }
 
   determineWidth(card: AbilityDeckCard): string {
@@ -243,6 +250,13 @@ export class DeckOverlayComponent implements OnInit {
   }
 
   async upgradeCard() {
+    if (
+      (this.leftUpgradeCard?.goldCost ?? [])[this.leftUpgradeCard?.level ?? 0] >
+      this.gold
+    ) {
+      return;
+    }
+
     const card = this.leftUpgradeCard;
 
     // Show animation for upgrading card

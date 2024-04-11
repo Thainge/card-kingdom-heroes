@@ -16,6 +16,7 @@ import {
   fadeOutUpOnLeaveAnimation,
 } from 'angular-animations';
 import { LoadingService } from 'src/app/services/loading.service';
+import { playerService } from 'src/app/services/player.service';
 import Swiper from 'swiper';
 
 interface PremiumBox {
@@ -95,10 +96,18 @@ export class PremiumOverlayComponent implements OnInit {
       cost: 9999,
     },
   ];
+  gold: number = 0;
 
-  constructor(private loadingService: LoadingService) {}
+  constructor(
+    private loadingService: LoadingService,
+    private playerService: playerService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.playerService.gold$.subscribe((x) => {
+      this.gold = x;
+    });
+  }
 
   ngAfterViewInit() {}
 

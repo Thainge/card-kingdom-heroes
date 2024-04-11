@@ -21,6 +21,7 @@ import { CampaignOverlayComponent } from '../campaign-overlay/campaign-overlay.c
 import { PremiumOverlayComponent } from '../premium-overlay/premium-overlay.component';
 import { WheelOverlayComponent } from '../wheel-overlay/wheel-overlay.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { playerService } from 'src/app/services/player.service';
 
 interface Tip {
   title: string;
@@ -89,10 +90,18 @@ export class MapOverlayComponent implements OnInit {
       '- Click the suite icons to change suite',
     ],
   };
+  gold: number = 0;
 
-  constructor(private loadingService: LoadingService, private router: Router) {}
+  constructor(
+    private loadingService: LoadingService,
+    private router: Router,
+    private playerService: playerService
+  ) {}
 
   ngOnInit() {
+    this.playerService.gold$.subscribe((x) => {
+      this.gold = x;
+    });
     this.loadingService.displayOptions$.subscribe((x) => {
       // this.display = x;
     });

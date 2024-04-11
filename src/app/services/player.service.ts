@@ -24,9 +24,19 @@ export class playerService implements OnInit {
     image: '14_of_spades.png',
   };
 
+  readonly gold$ = new BehaviorSubject<number>(-9999);
+
   constructor(private router: Router) {
     this.gameTheme$.subscribe((x) => {
       this.updateThemeStyles(x);
+    });
+    const localGold = Number(localStorage.getItem('playerGold') ?? 0);
+    this.gold$.next(localGold);
+    this.gold$.next(9999);
+    this.gold$.subscribe((x) => {
+      if (x !== -9999) {
+        localStorage.setItem('playerGold', JSON.stringify(x));
+      }
     });
   }
 
