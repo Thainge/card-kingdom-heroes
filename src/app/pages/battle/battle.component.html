@@ -1922,7 +1922,7 @@
             value: '',
             params: {
               duration: 400,
-              delay: (i + 1) * 100 + 2500,
+              delay: (i + 1) * 100 + 500,
               translate: '30px'
             }
           }"
@@ -1957,7 +1957,7 @@
                   class="wildText wildValueText"
                   [@fadeEnter]="{
                     value: '',
-                    params: { duration: 400, delay: 3500, translate: '30px' }
+                    params: { duration: 400, delay: 1500, translate: '30px' }
                   }"
                   [ngClass]="{
                     specialWildRangeIconText: card.wildRange === 14
@@ -1982,7 +1982,7 @@
           class="goBtnContainer"
           [@fadeUpEnter]="{
             value: '',
-            params: { duration: 600, delay: 3000, translate: '200px' }
+            params: { duration: 600, delay: 1000, translate: '200px' }
           }"
           *ngIf="redrawing"
         >

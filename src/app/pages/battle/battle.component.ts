@@ -501,6 +501,10 @@ export class BattleComponent implements OnInit {
   }
 
   drawAbilityCard(amount: number) {
+    if (this.abilityDeck.length < 1) {
+      return;
+    }
+
     if (!this.easyMode) {
       const abilityCardAddArr = Array.from(Array(amount).keys());
       for (const x of abilityCardAddArr) {
@@ -516,6 +520,10 @@ export class BattleComponent implements OnInit {
   }
 
   drawAbilityCardBot(amount: number) {
+    if (this.abilityDeckBot.length < 1) {
+      return;
+    }
+
     if (!this.easyMode) {
       const abilityCardAddArr = Array.from(Array(amount).keys());
       for (const x of abilityCardAddArr) {
@@ -531,8 +539,16 @@ export class BattleComponent implements OnInit {
   }
 
   async gameInit() {
-    const passedObj: LevelDto = (await import('src/assets/data/level'))
-      .passedObj;
+    // const passedObj: LevelDto = (await import('src/assets/data/level'))
+    //   .passedObj;
+    const passedObj: LevelDto = JSON.parse(
+      localStorage.getItem('currentLevel') ?? ''
+    ) as LevelDto;
+
+    if (!passedObj) {
+      this.loadingService.navigate('/cardkingdom-map', 'loadingBg.png');
+    }
+
     // Passed object for battle
     const currentLevel: LevelDto = JSON.parse(JSON.stringify(passedObj));
     this.currentLevel = currentLevel;
@@ -567,9 +583,12 @@ export class BattleComponent implements OnInit {
     this.player = this.userService.getPlayer();
     if (!this.easyMode) {
       this.abilityDeck = this.userService.getAbilityCards();
-      if (this.currentLevel.shuffleAbilityCards) {
+      if (this.currentLevel.shuffleAbilityCards && this.abilityDeck.length > 0) {
         this.abilityDeck = this.cardService.shuffle(this.abilityDeck);
       }
+    }
+    if (this.abilityDeck.length < 1) {
+      this.easyMode = true;
     }
     this.updateDeckBasedOnPlayerSkills();
 
@@ -1265,12 +1284,7 @@ export class BattleComponent implements OnInit {
   async continue() {
     // localStorage.setItem('showLoading', JSON.stringify(true));
     // window.location.reload();
-    this.loadingService.navigate('', 'forest.png');
-    setTimeout(() => {
-      this.resetGame();
-      this.Cards = Cards;
-      this.gameInit();
-    }, 2000);
+    this.loadingService.navigate('/cardkingdom-map', 'forest.png');
   }
 
   async retry() {

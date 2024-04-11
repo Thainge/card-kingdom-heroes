@@ -6,9 +6,9 @@ import { HomeComponent } from './pages/home/home.component';
 import { ZeldaMapComponent } from './pages/zeldaMap/map.component';
 
 const routes: Routes = [
-  // { path: 'battle/:world', component: BattleComponent },
   { path: 'cardkingdom-map', component: MapComponent },
   { path: 'zelda-map', component: ZeldaMapComponent },
+  { path: 'battle', component: BattleComponent },
   { path: '**', redirectTo: '/cardkingdom-map' },
 ];
 

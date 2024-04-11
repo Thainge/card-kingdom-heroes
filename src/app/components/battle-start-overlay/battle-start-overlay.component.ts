@@ -1,5 +1,7 @@
+import { LoadingService } from 'src/app/services/loading.service';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   zoomInOnEnterAnimation,
   fadeOutOnLeaveAnimation,
@@ -32,6 +34,7 @@ interface MissionDetails {
 export class BattleStartOverlayComponent implements OnInit {
   @Input('open') open: boolean = false;
   @Input('isSpecialBattle') isSpecialBattle: boolean = false;
+  @Input('currentLevel') currentLevel: any = {};
 
   missionDetails: MissionDetails = {
     image: 'forest.png',
@@ -45,7 +48,12 @@ export class BattleStartOverlayComponent implements OnInit {
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
-  constructor() {}
+  constructor(private loadingService: LoadingService) {}
+
+  startBattle() {
+    localStorage.setItem('currentLevel', JSON.stringify(this.currentLevel));
+    this.loadingService.navigate('/battle', 'forest.png');
+  }
 
   ngOnInit() {}
 

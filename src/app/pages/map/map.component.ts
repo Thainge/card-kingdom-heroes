@@ -19,8 +19,10 @@ import { BattleStartOverlayComponent } from 'src/app/components/battle-start-ove
 import { DialogComponent } from 'src/app/components/dialogComponent/dialog.component';
 import { MapOverlayComponent } from 'src/app/components/map-overlay/map-overlay.component';
 import { DotDto, FlagDto } from 'src/app/models/flag';
+import { LevelDto } from 'src/app/models/level';
 import { LoadingService } from 'src/app/services/loading.service';
-import { flagsData } from 'src/assets/data/flagsData/flags';
+import { flagsData } from 'src/assets/data/flags';
+import { LevelsData } from 'src/assets/data/level';
 const { Pins } = require('@fancyapps/ui/dist/panzoom/panzoom.pins.esm.js');
 
 type WhirlpoolSize = 1 | 1.25 | 1.5 | 2;
@@ -89,6 +91,7 @@ export class MapComponent implements AfterViewInit, OnInit {
   previousFlagsList: any[] = [];
   currentFlagHover: FlagDto | undefined;
   currentLevel: FlagDto | undefined;
+  currentBattle: LevelDto | undefined;
   placingFlag = true;
   placingCurrentFlag: FlagDto | undefined;
   mouseX: number = 0;
@@ -167,6 +170,7 @@ export class MapComponent implements AfterViewInit, OnInit {
     );
     this.finishLevel(this.flagsList[0]);
     this.currentLevel = currentLevel;
+    this.currentBattle = LevelsData.find((x) => x.id === currentLevel?.id);
   }
 
   async initPanZoom() {
