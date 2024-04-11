@@ -89,7 +89,7 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
   previousFlagsList: any[] = [];
   currentFlagHover: FlagDto | undefined;
   currentLevel: FlagDto | undefined;
-  placingFlag = true;
+  placingFlag = false;
   placingCurrentFlag: FlagDto | undefined;
   mouseX: number = 0;
   mouseY: number = 0;
@@ -97,7 +97,7 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
   currentWhirlpoolScale: WhirlpoolSize = 1;
   currentWhirlpoolOpacity: WhirlpoolOpacity = 0.4;
   specialLevelsData: SpecialLevels = {
-    wheelShow: false,
+    wheelShow: true,
     wheelFinished: false,
     // flyingShipShow: false,
     // flyingShipFinished: false,
@@ -111,7 +111,7 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
     // town1FightShow: false,
     // town1FightFinished: false,
 
-    hero2Show: false,
+    hero2Show: true,
     hero2Finished: false,
     // town2GameShow: false,
     // town2GameFinished: false,
@@ -167,6 +167,11 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
     );
     this.finishLevel(this.flagsList[0]);
     this.currentLevel = currentLevel;
+    this.flagsList.forEach((x, index) => {
+      setTimeout(() => {
+        this.finishLevel(x);
+      }, 2000 * index);
+    });
   }
 
   async initPanZoom() {
@@ -243,9 +248,6 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
     let foundIndex = -10;
     this.flagsList = this.flagsList.map((x, i) => {
       // Green land
-      if (flag.id === 3) {
-        this.specialLevelsData.wheelShow = true;
-      }
       if (flag.id === 4) {
         this.specialLevelsData.hero1Show = true;
       }
@@ -257,8 +259,8 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
       // }
 
       // Snow land
-      if (flag.id === 8) {
-        this.specialLevelsData.hero2Show = true;
+      if (flag.id === 7) {
+        this.specialLevelsData.hero4Show = true;
       }
       // if (flag.id === 8) {
       //   this.specialLevelsData.town2GameShow = true;
@@ -268,7 +270,7 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
       // }
 
       // Desert land
-      if (flag.id === 14) {
+      if (flag.id === 10) {
         this.specialLevelsData.hero3Show = true;
       }
       // if (flag.id === 14) {
@@ -278,10 +280,6 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
       //   this.specialLevelsData.town3FightShow = true;
       // }
 
-      // Fire land
-      if (flag.id === 19) {
-        this.specialLevelsData.hero4Show = true;
-      }
       // if (flag.id === 18) {
       //   this.specialLevelsData.town4GameShow = true;
       // }
