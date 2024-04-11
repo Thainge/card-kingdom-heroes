@@ -276,6 +276,8 @@ export class DeckOverlayComponent implements OnInit {
     if (currentLength !== newLength && foundCard) {
       this.abilityHand.push(foundCard);
     }
+    localStorage.setItem('playerDeck', JSON.stringify(this.abilityHand));
+    localStorage.setItem('abilityCards', JSON.stringify(this.abilityCards));
   }
 
   removeCardFromHand(card: AbilityDeckCard) {

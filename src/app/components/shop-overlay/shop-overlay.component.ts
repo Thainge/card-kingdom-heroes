@@ -68,8 +68,8 @@ export class ShopOverlayComponent implements OnInit {
   @Input('open') set openChanged(x: boolean) {
     this.open = x;
     this.currentIndex = 0;
-    this.currentStep = 'picking';
     this.initBoosters();
+    this.setCurrentStep('picking');
     if (x) {
       this.checkShopTip();
     }
@@ -109,13 +109,20 @@ export class ShopOverlayComponent implements OnInit {
   ngAfterViewInit() {}
 
   initBoosters() {
-    if (this.router.url.includes('cardkingdom-map')) {
+    this.boosterPacks = JSON.parse(
+      localStorage.getItem('boosterPacks') ?? '[]'
+    );
+    if (this.boosterPacks.length < 1) {
       this.boosterPacks = BoosterPacks;
     }
 
-    if (this.router.url.includes('zelda-map')) {
-      this.boosterPacks = BoosterPacksZelda;
-    }
+    // if (this.router.url.includes('cardkingdom-map')) {
+    //   this.boosterPacks = BoosterPacks;
+    // }
+
+    // if (this.router.url.includes('zelda-map')) {
+    //   this.boosterPacks = BoosterPacksZelda;
+    // }
   }
 
   checkShopTip() {
@@ -274,6 +281,11 @@ export class ShopOverlayComponent implements OnInit {
   setCurrentStep(step: ShopStep) {
     this.currentStep = step;
     this.currentIndex = 0;
+    this.changeIndexLeft();
+    this.changeIndexLeft();
+    this.changeIndexLeft();
+    this.changeIndexLeft();
+    this.changeIndexLeft();
     setTimeout(() => {
       if (step === 'shopping') {
         this.swiper1 = this.swiperRef1?.nativeElement.swiper;
@@ -299,6 +311,7 @@ export class ShopOverlayComponent implements OnInit {
       }
       return x;
     });
+    localStorage.setItem('boosterPacks', JSON.stringify(this.boosterPacks));
   }
 
   openBoosterPack(item: BoosterPack) {
@@ -310,6 +323,7 @@ export class ShopOverlayComponent implements OnInit {
       }
       return x;
     });
+    localStorage.setItem('boosterPacks', JSON.stringify(this.boosterPacks));
   }
 
   closeMenu() {
