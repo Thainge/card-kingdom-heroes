@@ -12,6 +12,12 @@
 >
   <div class="optionsMenuBackdrop"></div>
   <div class="overlayBox">
+    <div class="menuBtnBox">
+      <div class="menuBtnRelative" *ngIf="routeIsMap()" (click)="closeMenu()">
+        <img src="./assets/menuBtn.png" class="menuBtn" />
+        <div class="doneText">Cancel</div>
+      </div>
+    </div>
     <img class="overlayPanelBg" src="./assets/wideNoClose.png" />
     <div class="overlalPanelTitle">Campaign</div>
     <img
@@ -84,7 +90,7 @@
                 }"
                 class="overlayImage"
                 [src]="'./assets/' + item.image"
-                (click)="closeMenu()"
+                (click)="chooseCampaign(item)"
               />
             </div>
           </div>

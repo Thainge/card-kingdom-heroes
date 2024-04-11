@@ -9,18 +9,29 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   fadeOutOnLeaveAnimation,
   fadeInOnEnterAnimation,
   fadeInUpOnEnterAnimation,
   fadeOutUpOnLeaveAnimation,
 } from 'angular-animations';
+import { LoadingService } from 'src/app/services/loading.service';
 import Swiper from 'swiper';
 
 interface CampaignBox {
   id: number;
   image: string;
+  url: MapRoute;
 }
+
+type MapRoute =
+  | 'cardkingdom'
+  | 'zelda'
+  | 'mario'
+  | 'tf2'
+  | 'kirby'
+  | 'donkeykong';
 
 @Component({
   selector: 'app-campaign-overlay',
@@ -55,37 +66,59 @@ export class CampaignOverlayComponent implements OnInit {
     {
       id: 1,
       image: 'normalCampaign.png',
+      url: 'cardkingdom',
     },
     {
       id: 2,
       image: 'linkCampaign.png',
+      url: 'zelda',
     },
     {
       id: 3,
       image: 'marioCampaign.png',
+      url: 'mario',
     },
     {
       id: 4,
       image: 'tf2Campaign.png',
+      url: 'tf2',
     },
     {
       id: 5,
       image: 'kirbyCampaign.png',
+      url: 'kirby',
     },
     {
       id: 6,
       image: 'donkeyKongCampaign.png',
+      url: 'donkeykong',
     },
   ];
 
-  constructor() {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private loadingService: LoadingService
+  ) {}
 
   ngOnInit() {}
 
   ngAfterViewInit() {}
 
+  routeIsMap(): boolean {
+    return this.route.toString().includes('map');
+  }
+
   closeMenu() {
     this.onCloseMenu.emit(false);
+  }
+
+  chooseCampaign(campaign: CampaignBox) {
+    const route = '/map/' + campaign.url;
+    this.router.navigate([route]);
+    this.closeMenu();
+    this.loadingService.isRefreshing$.next(true);
+    this.loadingService.navigate(route, 'loadingBg.png');
   }
 
   onActiveIndexChange() {

@@ -5,8 +5,8 @@ import { MapComponent } from './pages/map/map.component';
 import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
-  // { path: 'battle', component: BattleComponent },
-  { path: '', component: MapComponent },
+  // { path: 'battle/:world', component: BattleComponent },
+  { path: 'map/:world', component: MapComponent },
   { path: '**', redirectTo: '/' },
 ];
 

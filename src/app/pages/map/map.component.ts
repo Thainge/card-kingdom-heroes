@@ -7,6 +7,7 @@ import {
   OnInit,
   HostListener,
 } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Panzoom } from '@fancyapps/ui/dist/panzoom/panzoom.esm.js';
 import {
   fadeInOnEnterAnimation,
@@ -62,6 +63,14 @@ interface SpecialLevels {
   // town4FightShow: boolean;
   // town4FightFinished: boolean;
 }
+
+type MapRoute =
+  | 'cardkingdom'
+  | 'zelda'
+  | 'mario'
+  | 'tf2'
+  | 'kirby'
+  | 'donkeykong';
 
 @Component({
   selector: 'app-map',
@@ -133,11 +142,41 @@ export class MapComponent implements AfterViewInit, OnInit {
   };
   isSpecialBattle: boolean = false;
   battleStartOpen: boolean = false;
+  currentMap: string = '';
 
-  constructor(private loadingService: LoadingService) {}
+  constructor(
+    private loadingService: LoadingService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.flagsList = flagsData;
+    this.initFlags();
+    this.loadingService.isRefreshing$.subscribe((x) => {
+      if (x) {
+        this.loadingService.isRefreshing$.next(false);
+        setTimeout(() => {
+          this.initFlags();
+        }, 500);
+        setTimeout(() => {
+          this.initPanZoom();
+        }, 2500);
+      }
+    });
+  }
+
+  ngAfterViewInit() {
+    this.initPanZoom();
+  }
+
+  showWheel() {
+    this.loadingService.showWheel$.next(true);
+  }
+
+  initFlags() {
+    // Get current route
+    this.currentMap = this.route.snapshot.paramMap.get('world') ?? '';
+
+    if (this.currentMap === '') this.flagsList = flagsData;
     this.flagsList = flagsData.map((item, i) => {
       return {
         ...item,
@@ -149,26 +188,8 @@ export class MapComponent implements AfterViewInit, OnInit {
     const currentLevel = this.flagsList.find(
       (x) => x.levelStatus === 'justFinished'
     );
-    // setTimeout(() => {
-    //   this.flagsList = this.flagsList.map((x, i) => {
-    //     if (x.id === currentLevel?.id) {
-    //       return { ...x, levelStatus: 'nextLevel' };
-    //     }
-    //     return { ...x, levelStatus: 'nextLevel' };
-    //   });
-    // }, 1500);
-    this.flagsList.forEach((x) => {
-      this.finishLevel(x);
-    });
+    this.finishLevel(this.flagsList[0]);
     this.currentLevel = currentLevel;
-  }
-
-  ngAfterViewInit() {
-    this.initPanZoom();
-  }
-
-  showWheel() {
-    this.loadingService.showWheel$.next(true);
   }
 
   async initPanZoom() {

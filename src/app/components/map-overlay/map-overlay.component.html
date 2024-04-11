@@ -119,6 +119,13 @@
     [@fadeUpEnter]="{ value: '', params: { duration: 500, delay: 0 } }"
   >
     <div class="bottomRightContainer">
+      <div class="relativeIcon">
+        <img
+          src="./assets/worlds.png"
+          class="overlayIcon"
+          (click)="chooseCampaignOpen = true"
+        />
+      </div>
       <div class="relativeIcon shopHover">
         <img
           src="./assets/shopPoints.png"
