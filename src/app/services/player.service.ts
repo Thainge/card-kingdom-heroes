@@ -85,22 +85,10 @@ export class playerService implements OnInit {
 
   public getAbilityCards(): AbilityCard[] {
     const localDeck = JSON.parse(
-      localStorage.getItem('playerDeck') ?? '{}'
+      localStorage.getItem('playerDeck') ?? '[]'
     ) as AbilityCard[];
-    if (localDeck) {
-      return localDeck;
-    }
 
-    return [];
-    // if (this.router.url.includes('cardkingdom-map')) {
-
-    // }
-
-    // if (this.router.url.includes('zelda-map')) {
-    //   return BoosterZeldaData;
-    // }
-    // return this.
-    // return [];
+    return localDeck;
   }
 
   public generateWildCard(cards: CardDto[]): CardDto {

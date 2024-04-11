@@ -56,6 +56,10 @@ const defaultAbilityCard: AbilityCard = {
   level: 1,
   name: '',
   hitAnimation: 'heal',
+  isNew: false,
+  numberOwned: 1,
+  trueNumberOwned: 1,
+  alliesCalled: [],
 };
 
 interface ComboObject {
@@ -583,7 +587,10 @@ export class BattleComponent implements OnInit {
     this.player = this.userService.getPlayer();
     if (!this.easyMode) {
       this.abilityDeck = this.userService.getAbilityCards();
-      if (this.currentLevel.shuffleAbilityCards && this.abilityDeck.length > 0) {
+      if (
+        this.currentLevel.shuffleAbilityCards &&
+        this.abilityDeck.length > 0
+      ) {
         this.abilityDeck = this.cardService.shuffle(this.abilityDeck);
       }
     }
@@ -766,6 +773,10 @@ export class BattleComponent implements OnInit {
         level: 1,
         name: 'Burn',
         targetAll: true,
+        isNew: false,
+        numberOwned: 1,
+        trueNumberOwned: 1,
+        alliesCalled: [],
       };
       this.abilityDeck[1] = {
         id: 99,
@@ -782,6 +793,10 @@ export class BattleComponent implements OnInit {
         image: 'sliceAbility.png',
         level: 3,
         hitAnimation: 'fire',
+        isNew: false,
+        numberOwned: 1,
+        trueNumberOwned: 1,
+        alliesCalled: [],
       };
       this.drawAbilityCard(2);
       this.setGuideHands();
@@ -2298,6 +2313,10 @@ export class BattleComponent implements OnInit {
       level: 1,
       name: '',
       hitAnimation: 'heal',
+      isNew: false,
+      numberOwned: 1,
+      trueNumberOwned: 1,
+      alliesCalled: [],
     };
     this.hoveringAbilityHand = [];
     this.hoveringAbilityCard = {
@@ -2311,6 +2330,10 @@ export class BattleComponent implements OnInit {
       level: 1,
       name: '',
       hitAnimation: 'heal',
+      isNew: false,
+      numberOwned: 1,
+      trueNumberOwned: 1,
+      alliesCalled: [],
     };
     this.currentlyRunning = false;
     try {

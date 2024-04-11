@@ -1,4 +1,6 @@
-export const AbilityData = [
+import { AbilityCard } from 'src/app/models/abilityCard';
+
+export const AbilityData: AbilityCard[] = [
   {
     id: 1,
     abilityFunction: 'leach',
@@ -18,6 +20,10 @@ export const AbilityData = [
 
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
   {
@@ -39,6 +45,10 @@ export const AbilityData = [
 
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
   {
@@ -60,6 +70,10 @@ export const AbilityData = [
 
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
   {
@@ -81,6 +95,10 @@ export const AbilityData = [
 
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
   {
@@ -102,6 +120,10 @@ export const AbilityData = [
 
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
   {
@@ -119,6 +141,10 @@ export const AbilityData = [
 
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
   {
@@ -140,6 +166,10 @@ export const AbilityData = [
 
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
   {
@@ -156,6 +186,10 @@ export const AbilityData = [
     description: ['Draw 3 cards', 'Draw 3 cards', 'Draw 3 cards'],
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
   {
@@ -176,6 +210,10 @@ export const AbilityData = [
     ],
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
   {
@@ -196,6 +234,10 @@ export const AbilityData = [
     ],
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
   {
@@ -212,6 +254,10 @@ export const AbilityData = [
     ],
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
   {
@@ -228,6 +274,10 @@ export const AbilityData = [
     ],
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
   {
@@ -244,6 +294,10 @@ export const AbilityData = [
     ],
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
   {
@@ -261,6 +315,10 @@ export const AbilityData = [
 
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
   {
@@ -278,6 +336,10 @@ export const AbilityData = [
 
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
 ];

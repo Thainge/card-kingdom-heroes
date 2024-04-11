@@ -13,9 +13,6 @@ import { playerService } from 'src/app/services/player.service';
 interface AbilityDeckCard extends AbilityCard {
   owned: boolean;
   inHand: boolean;
-  isNew: boolean;
-  numberOwned: number;
-  trueNumberOwned: number;
   index: number;
   goldCost: number[];
 }
@@ -40,46 +37,54 @@ export class DeckOverlayComponent implements OnInit {
   open: boolean = false;
   @Input('open') set openChanged(x: boolean) {
     this.open = x;
-    this.abilityCards = this.userService.getAbilityCards().map((x, i) => {
-      if (i < 5) {
-        return {
-          ...x,
-          owned: true,
-          inHand: false,
-          isNew: true,
-          numberOwned: 4,
-          trueNumberOwned: 4,
-          index: i,
-          level: 1,
-          goldCost: [500, 1000, 1500],
-        };
-      }
-      if (i < 11) {
-        return {
-          ...x,
-          owned: true,
-          inHand: false,
-          isNew: false,
-          numberOwned: 2,
-          trueNumberOwned: 2,
-          index: i,
-          level: 2,
-          goldCost: [150, 500, 1000],
-        };
-      }
-      return {
-        ...x,
-        owned: true,
-        inHand: false,
-        isNew: false,
-        numberOwned: 1,
-        trueNumberOwned: 1,
-        index: i,
-        level: 3,
-        goldCost: [500, 1000, 1500],
-      };
+    this.abilityHand = JSON.parse(localStorage.getItem('playerDeck') ?? '[]');
+    this.abilityCards = JSON.parse(
+      localStorage.getItem('abilityCards') ?? '[]'
+    );
+    this.abilityCards = this.abilityCards.map((x) => {
+      return { ...x, owned: true };
     });
     this.initialAbilityHand = JSON.parse(JSON.stringify(this.abilityHand));
+    // this.abilityCards = this.userService.getAbilityCards().map((x, i) => {
+    //   if (i < 5) {
+    //     return {
+    //       ...x,
+    //       owned: true,
+    //       inHand: false,
+    //       isNew: true,
+    //       numberOwned: 4,
+    //       trueNumberOwned: 4,
+    //       index: i,
+    //       level: 1,
+    //       goldCost: [500, 1000, 1500],
+    //     };
+    //   }
+    //   if (i < 11) {
+    //     return {
+    //       ...x,
+    //       owned: true,
+    //       inHand: false,
+    //       isNew: false,
+    //       numberOwned: 2,
+    //       trueNumberOwned: 2,
+    //       index: i,
+    //       level: 2,
+    //       goldCost: [150, 500, 1000],
+    //     };
+    //   }
+    //   return {
+    //     ...x,
+    //     owned: true,
+    //     inHand: false,
+    //     isNew: false,
+    //     numberOwned: 1,
+    //     trueNumberOwned: 1,
+    //     index: i,
+    //     level: 3,
+    //     goldCost: [500, 1000, 1500],
+    //   };
+    // });
+    // this.initialAbilityHand = JSON.parse(JSON.stringify(this.abilityHand));
     this.sortCards();
     if (x) {
       this.checkTip();
@@ -440,6 +445,8 @@ export class DeckOverlayComponent implements OnInit {
       this.pushError('Invalid deck length');
       return;
     } else {
+      localStorage.setItem('playerDeck', JSON.stringify(this.abilityHand));
+      localStorage.setItem('abilityCards', JSON.stringify(this.abilityCards));
       this.closeMenu();
     }
   }

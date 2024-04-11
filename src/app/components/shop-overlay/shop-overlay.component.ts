@@ -24,8 +24,11 @@ import {
   fadeOutUpOnLeaveAnimation,
   flipOnEnterAnimation,
 } from 'angular-animations';
+import { AbilityCard } from 'src/app/models/abilityCard';
 import { BoosterPack } from 'src/app/models/boosterPack';
+import { CardService } from 'src/app/services/card.service';
 import { LoadingService } from 'src/app/services/loading.service';
+import { AbilityData } from 'src/assets/data/ability';
 import { BoosterPacks } from 'src/assets/data/boosterData/booster';
 import { BoosterPacksZelda } from 'src/assets/data/boosterData/boosterZelda';
 import Swiper from 'swiper';
@@ -91,9 +94,17 @@ export class ShopOverlayComponent implements OnInit {
   specialList: number[] = [];
   canClickNext: boolean = false;
 
-  constructor(private loadingService: LoadingService, private router: Router) {}
+  allCards: AbilityCard[] = [];
 
-  ngOnInit() {}
+  constructor(
+    private loadingService: LoadingService,
+    private router: Router,
+    private cardService: CardService
+  ) {}
+
+  ngOnInit() {
+    this.allCards = AbilityData;
+  }
 
   ngAfterViewInit() {}
 
@@ -124,11 +135,33 @@ export class ShopOverlayComponent implements OnInit {
 
   startPhase() {
     this.openingCards = true;
-    this.openCards = [
-      { id: 1, special: false, rarityImage: 'rare.png' },
-      { id: 2, special: false, rarityImage: 'epic.png' },
-      { id: 3, special: true, rarityImage: 'legendary.png' },
-    ];
+    let shuffled1 = this.cardService.shuffle(this.allCards).map((x, i) => {
+      if (i < 2) {
+        return { ...x, special: true, rarityImage: 'rare.png' };
+      }
+
+      return { ...x, special: false };
+    });
+    const shuffled = this.cardService.shuffle(shuffled1);
+    this.openCards = [shuffled[0], shuffled[1], shuffled[2]];
+    let currentCards = JSON.parse(localStorage.getItem('abilityCards') ?? '[]');
+
+    let newCards: AbilityCard[] = currentCards;
+
+    this.openCards.forEach((a) => {
+      const foundIndex = newCards.findIndex((x) => x.id === a.id);
+
+      if (foundIndex !== -1) {
+        // Set value owned +1
+        newCards[foundIndex].trueNumberOwned++;
+        newCards[foundIndex].numberOwned++;
+      } else {
+        // Add if does not exist
+        newCards.push({ ...a, isNew: true });
+      }
+    });
+
+    localStorage.setItem('abilityCards', JSON.stringify(newCards));
 
     setTimeout(() => {
       this.canClickNext = true;

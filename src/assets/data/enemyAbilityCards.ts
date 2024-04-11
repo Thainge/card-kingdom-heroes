@@ -15,6 +15,10 @@ export const EnemyAbilityCardsSet1: AbilityCard[] = [
     ],
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
   {
@@ -31,6 +35,10 @@ export const EnemyAbilityCardsSet1: AbilityCard[] = [
     ],
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
   {
@@ -47,6 +55,9 @@ export const EnemyAbilityCardsSet1: AbilityCard[] = [
     ],
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
     hitAnimation: 'fire',
     alliesCalled: [
       [
@@ -131,6 +142,10 @@ export const EnemyAbilityCardsSet1: AbilityCard[] = [
     ],
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
   {
@@ -147,6 +162,10 @@ export const EnemyAbilityCardsSet1: AbilityCard[] = [
     ],
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
   {
@@ -163,6 +182,10 @@ export const EnemyAbilityCardsSet1: AbilityCard[] = [
     ],
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
   {
@@ -179,6 +202,10 @@ export const EnemyAbilityCardsSet1: AbilityCard[] = [
     ],
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
   {
@@ -195,6 +222,10 @@ export const EnemyAbilityCardsSet1: AbilityCard[] = [
     ],
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
   {
@@ -211,6 +242,10 @@ export const EnemyAbilityCardsSet1: AbilityCard[] = [
     ],
     image: 'sliceAbility.png',
     level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    alliesCalled: [],
     hitAnimation: 'fire',
   },
 ];

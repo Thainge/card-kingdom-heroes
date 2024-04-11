@@ -12,6 +12,9 @@ export interface AbilityCard {
   abilityValue: number[];
   hitAnimation: AnimationType;
   alliesCalled?: PlayerDto[][];
+  numberOwned: number;
+  trueNumberOwned: number;
+  isNew: boolean;
 }
 
 type AbilityFunction =
