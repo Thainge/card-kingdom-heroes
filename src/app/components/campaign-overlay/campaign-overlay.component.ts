@@ -73,26 +73,26 @@ export class CampaignOverlayComponent implements OnInit {
       image: 'linkCampaign.png',
       url: 'zelda-map',
     },
-    {
-      id: 3,
-      image: 'marioCampaign.png',
-      url: 'mario-map',
-    },
-    {
-      id: 4,
-      image: 'tf2Campaign.png',
-      url: 'tf2-map',
-    },
-    {
-      id: 5,
-      image: 'kirbyCampaign.png',
-      url: 'kirby-map',
-    },
-    {
-      id: 6,
-      image: 'donkeyKongCampaign.png',
-      url: 'donkeykong-map',
-    },
+    // {
+    //   id: 3,
+    //   image: 'marioCampaign.png',
+    //   url: 'mario-map',
+    // },
+    // {
+    //   id: 4,
+    //   image: 'tf2Campaign.png',
+    //   url: 'tf2-map',
+    // },
+    // {
+    //   id: 5,
+    //   image: 'kirbyCampaign.png',
+    //   url: 'kirby-map',
+    // },
+    // {
+    //   id: 6,
+    //   image: 'donkeyKongCampaign.png',
+    //   url: 'donkeykong-map',
+    // },
   ];
 
   constructor(

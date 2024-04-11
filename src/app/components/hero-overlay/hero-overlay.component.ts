@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   zoomInOnEnterAnimation,
   fadeOutOnLeaveAnimation,
@@ -7,6 +8,7 @@ import {
   zoomOutOnLeaveAnimation,
 } from 'angular-animations';
 import { LoadingService } from 'src/app/services/loading.service';
+import { HeroData } from 'src/assets/data/heroData/hero';
 
 interface HeroUpgrade {
   id: number;
@@ -33,6 +35,7 @@ interface Hero {
   selected: boolean;
   unlocked: boolean;
   upgrades: HeroUpgrade[];
+  disabled: boolean;
 }
 
 @Component({
@@ -64,115 +67,31 @@ export class HeroOverlayComponent implements OnInit {
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
-  constructor(private loadingService: LoadingService) {}
+  constructor(private loadingService: LoadingService, private router: Router) {}
 
   ngOnInit() {
-    const upgrades: HeroUpgrade[] = [
-      {
-        id: 1,
-        level: 0,
-        image: 'greenUpgrade1.png',
-        cost: [1, 2, 3],
-        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
-        description: [
-          'Increases defense by 1',
-          'Increases defense by 2',
-          'Increases defense by 3',
-        ],
-      },
-      {
-        id: 2,
-        level: 0,
-        image: 'greenUpgrade2.png',
-        cost: [1, 2, 3],
-        title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
-        description: [
-          'Increases health by 1',
-          'Increases health by 2',
-          'Increases health by 3',
-        ],
-      },
-      {
-        id: 3,
-        level: 0,
-        image: 'greenUpgrade3.png',
-        cost: [1, 1, 1],
-        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
-        description: [
-          'Increases defense by 1',
-          'Increases defense by 2',
-          'Increases defense by 3',
-        ],
-      },
-      {
-        id: 4,
-        level: 0,
-        image: 'greenUpgrade4.png',
-        cost: [2, 4, 6],
-        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
-        description: [
-          'Increases defense by 1',
-          'Increases defense by 2',
-          'Increases defense by 3',
-        ],
-      },
-      {
-        id: 5,
-        level: 0,
-        image: 'greenUpgrade5.png',
-        cost: [2, 4, 6],
-        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
-        description: [
-          'Increases defense by 1',
-          'Increases defense by 2',
-          'Increases defense by 3',
-        ],
-      },
-    ];
-    const newHero: Hero = {
-      id: 1,
-      name: 'Mario',
-      image: 'mario.png',
-      color: 'red',
-      level: 1,
-      health: 3,
-      defense: 1,
-      upgrades: upgrades,
-      points: 5,
-      selected: false,
-      unlocked: false,
-      usedPoints: 0,
-    };
-    this.heroes.push({ ...newHero, id: 1 });
-    this.heroes.push({ ...newHero, id: 2 });
-    this.heroes.push({ ...newHero, id: 3 });
-    this.heroes.push({ ...newHero, id: 4 });
-    this.heroes.push({ ...newHero, id: 5 });
-    this.heroes.push({ ...newHero, id: 6 });
-    this.heroes.push({ ...newHero, id: 7 });
-    this.heroes.push({ ...newHero, id: 8 });
+    this.heroes = HeroData;
+
+    if (this.router.url.includes('cardkingdom-map')) {
+      this.heroes[0].disabled = false;
+      this.heroes[0].selected = true;
+      this.heroes[0].unlocked = true;
+      this.currentHero = this.heroes[0];
+      this.heroes[1].disabled = false;
+      this.heroes[1].unlocked = true;
+    }
+
+    if (this.router.url.includes('zelda-map')) {
+      this.heroes[2].disabled = false;
+      this.heroes[2].selected = true;
+      this.heroes[2].unlocked = true;
+      this.currentHero = this.heroes[2];
+      this.heroes[3].disabled = false;
+      this.heroes[3].unlocked = true;
+    }
 
     this.heroes[0].selected = true;
     this.heroes[0].unlocked = true;
-    this.heroes[0].name = 'Link';
-    this.heroes[0].color = 'green';
-    this.heroes[0].image = 'link.png';
-
-    this.heroes[1].unlocked = true;
-    this.heroes[1].name = 'Mario';
-    this.heroes[1].image = 'mario.png';
-
-    this.heroes[2].color = 'orange';
-    this.heroes[2].image = 'koopa.png';
-
-    this.heroes[3].color = 'yellow';
-    this.heroes[3].image = 'goomba.png';
-
-    this.heroes[4].color = 'blue';
-    this.heroes[4].image = 'moblin.png';
-
-    this.heroes[5].color = 'purple';
-    this.heroes[5].image = 'dummy.png';
 
     this.currentHero = this.heroes.find((x) => x.selected);
   }

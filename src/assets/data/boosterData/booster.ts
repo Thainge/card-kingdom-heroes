@@ -1,0 +1,38 @@
+export const BoosterPacks = [
+  {
+    id: 1,
+    image: 'boosterPackGreen.png',
+    title: 'Forest Booster Pack',
+    count: 3,
+    cost: 100,
+    unlocked: true,
+    showNew: true,
+  },
+  {
+    id: 1,
+    image: 'boosterPackBlue.png',
+    title: 'Snow Booster Pack',
+    count: 3,
+    cost: 100,
+    unlocked: true,
+    showNew: true,
+  },
+  {
+    id: 1,
+    image: 'boosterPackYellow.png',
+    title: 'Desert Booster Pack',
+    count: 3,
+    cost: 100,
+    unlocked: true,
+    showNew: true,
+  },
+  {
+    id: 1,
+    image: 'boosterPackRed.png',
+    title: 'Fire Booster Pack',
+    count: 3,
+    cost: 100,
+    unlocked: true,
+    showNew: true,
+  },
+];

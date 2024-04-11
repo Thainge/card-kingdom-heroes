@@ -1,0 +1,638 @@
+interface HeroUpgrade {
+  id: number;
+  level: HeroUpgradeLevel;
+  image: string;
+  title: string[];
+  description: string[];
+  cost: number[];
+}
+
+type HeroUpgradeLevel = 0 | 1 | 2 | 3;
+type HeroColor = 'red' | 'orange' | 'yellow' | 'green' | 'blue' | 'purple';
+
+interface Hero {
+  id: number;
+  color: HeroColor;
+  image: string;
+  name: string;
+  level: number;
+  points: number;
+  health: number;
+  defense: number;
+  usedPoints: number;
+  selected: boolean;
+  unlocked: boolean;
+  upgrades: HeroUpgrade[];
+  disabled: boolean;
+}
+
+export const HeroData: Hero[] = [
+  {
+    id: 1,
+    name: 'Mario',
+    image: 'mario.png',
+    color: 'red',
+    level: 1,
+    health: 3,
+    defense: 1,
+    upgrades: [
+      {
+        id: 1,
+        level: 0,
+        image: 'greenUpgrade1.png',
+        cost: [1, 2, 3],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 2,
+        level: 0,
+        image: 'greenUpgrade2.png',
+        cost: [1, 2, 3],
+        title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
+        description: [
+          'Increases health by 1',
+          'Increases health by 2',
+          'Increases health by 3',
+        ],
+      },
+      {
+        id: 3,
+        level: 0,
+        image: 'greenUpgrade3.png',
+        cost: [1, 1, 1],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 4,
+        level: 0,
+        image: 'greenUpgrade4.png',
+        cost: [2, 4, 6],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 5,
+        level: 0,
+        image: 'greenUpgrade5.png',
+        cost: [2, 4, 6],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+    ],
+    points: 5,
+    selected: false,
+    unlocked: false,
+    usedPoints: 0,
+    disabled: true,
+  },
+  {
+    id: 2,
+    name: 'Mario',
+    image: 'mario.png',
+    color: 'red',
+    level: 1,
+    health: 3,
+    defense: 1,
+    upgrades: [
+      {
+        id: 1,
+        level: 0,
+        image: 'greenUpgrade1.png',
+        cost: [1, 2, 3],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 2,
+        level: 0,
+        image: 'greenUpgrade2.png',
+        cost: [1, 2, 3],
+        title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
+        description: [
+          'Increases health by 1',
+          'Increases health by 2',
+          'Increases health by 3',
+        ],
+      },
+      {
+        id: 3,
+        level: 0,
+        image: 'greenUpgrade3.png',
+        cost: [1, 1, 1],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 4,
+        level: 0,
+        image: 'greenUpgrade4.png',
+        cost: [2, 4, 6],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 5,
+        level: 0,
+        image: 'greenUpgrade5.png',
+        cost: [2, 4, 6],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+    ],
+    points: 5,
+    selected: false,
+    unlocked: false,
+    usedPoints: 0,
+    disabled: true,
+  },
+  {
+    id: 3,
+    name: 'Link',
+    image: 'link.png',
+    color: 'green',
+    level: 1,
+    health: 3,
+    defense: 1,
+    upgrades: [
+      {
+        id: 1,
+        level: 0,
+        image: 'greenUpgrade1.png',
+        cost: [1, 2, 3],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 2,
+        level: 0,
+        image: 'greenUpgrade2.png',
+        cost: [1, 2, 3],
+        title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
+        description: [
+          'Increases health by 1',
+          'Increases health by 2',
+          'Increases health by 3',
+        ],
+      },
+      {
+        id: 3,
+        level: 0,
+        image: 'greenUpgrade3.png',
+        cost: [1, 1, 1],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 4,
+        level: 0,
+        image: 'greenUpgrade4.png',
+        cost: [2, 4, 6],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 5,
+        level: 0,
+        image: 'greenUpgrade5.png',
+        cost: [2, 4, 6],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+    ],
+    points: 5,
+    selected: false,
+    unlocked: false,
+    usedPoints: 0,
+    disabled: true,
+  },
+  {
+    id: 4,
+    name: 'Link',
+    image: 'link.png',
+    color: 'green',
+    level: 1,
+    health: 3,
+    defense: 1,
+    upgrades: [
+      {
+        id: 1,
+        level: 0,
+        image: 'greenUpgrade1.png',
+        cost: [1, 2, 3],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 2,
+        level: 0,
+        image: 'greenUpgrade2.png',
+        cost: [1, 2, 3],
+        title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
+        description: [
+          'Increases health by 1',
+          'Increases health by 2',
+          'Increases health by 3',
+        ],
+      },
+      {
+        id: 3,
+        level: 0,
+        image: 'greenUpgrade3.png',
+        cost: [1, 1, 1],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 4,
+        level: 0,
+        image: 'greenUpgrade4.png',
+        cost: [2, 4, 6],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 5,
+        level: 0,
+        image: 'greenUpgrade5.png',
+        cost: [2, 4, 6],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+    ],
+    points: 5,
+    selected: false,
+    unlocked: false,
+    usedPoints: 0,
+    disabled: true,
+  },
+  {
+    id: 5,
+    name: 'Koopa',
+    image: 'koopa.png',
+    color: 'orange',
+    level: 1,
+    health: 3,
+    defense: 1,
+    upgrades: [
+      {
+        id: 1,
+        level: 0,
+        image: 'greenUpgrade1.png',
+        cost: [1, 2, 3],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 2,
+        level: 0,
+        image: 'greenUpgrade2.png',
+        cost: [1, 2, 3],
+        title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
+        description: [
+          'Increases health by 1',
+          'Increases health by 2',
+          'Increases health by 3',
+        ],
+      },
+      {
+        id: 3,
+        level: 0,
+        image: 'greenUpgrade3.png',
+        cost: [1, 1, 1],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 4,
+        level: 0,
+        image: 'greenUpgrade4.png',
+        cost: [2, 4, 6],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 5,
+        level: 0,
+        image: 'greenUpgrade5.png',
+        cost: [2, 4, 6],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+    ],
+    points: 5,
+    selected: false,
+    unlocked: false,
+    usedPoints: 0,
+    disabled: true,
+  },
+  {
+    id: 6,
+    name: 'Goomba',
+    image: 'goomba.png',
+    color: 'yellow',
+    level: 1,
+    health: 3,
+    defense: 1,
+    upgrades: [
+      {
+        id: 1,
+        level: 0,
+        image: 'greenUpgrade1.png',
+        cost: [1, 2, 3],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 2,
+        level: 0,
+        image: 'greenUpgrade2.png',
+        cost: [1, 2, 3],
+        title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
+        description: [
+          'Increases health by 1',
+          'Increases health by 2',
+          'Increases health by 3',
+        ],
+      },
+      {
+        id: 3,
+        level: 0,
+        image: 'greenUpgrade3.png',
+        cost: [1, 1, 1],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 4,
+        level: 0,
+        image: 'greenUpgrade4.png',
+        cost: [2, 4, 6],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 5,
+        level: 0,
+        image: 'greenUpgrade5.png',
+        cost: [2, 4, 6],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+    ],
+    points: 5,
+    selected: false,
+    unlocked: false,
+    usedPoints: 0,
+    disabled: true,
+  },
+  {
+    id: 7,
+    name: 'Moblin',
+    image: 'moblin.png',
+    color: 'blue',
+    level: 1,
+    health: 3,
+    defense: 1,
+    upgrades: [
+      {
+        id: 1,
+        level: 0,
+        image: 'greenUpgrade1.png',
+        cost: [1, 2, 3],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 2,
+        level: 0,
+        image: 'greenUpgrade2.png',
+        cost: [1, 2, 3],
+        title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
+        description: [
+          'Increases health by 1',
+          'Increases health by 2',
+          'Increases health by 3',
+        ],
+      },
+      {
+        id: 3,
+        level: 0,
+        image: 'greenUpgrade3.png',
+        cost: [1, 1, 1],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 4,
+        level: 0,
+        image: 'greenUpgrade4.png',
+        cost: [2, 4, 6],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 5,
+        level: 0,
+        image: 'greenUpgrade5.png',
+        cost: [2, 4, 6],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+    ],
+    points: 5,
+    selected: false,
+    unlocked: false,
+    usedPoints: 0,
+    disabled: true,
+  },
+  {
+    id: 8,
+    name: 'Dummy',
+    image: 'dummy.png',
+    color: 'purple',
+    level: 1,
+    health: 3,
+    defense: 1,
+    upgrades: [
+      {
+        id: 1,
+        level: 0,
+        image: 'greenUpgrade1.png',
+        cost: [1, 2, 3],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 2,
+        level: 0,
+        image: 'greenUpgrade2.png',
+        cost: [1, 2, 3],
+        title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
+        description: [
+          'Increases health by 1',
+          'Increases health by 2',
+          'Increases health by 3',
+        ],
+      },
+      {
+        id: 3,
+        level: 0,
+        image: 'greenUpgrade3.png',
+        cost: [1, 1, 1],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 4,
+        level: 0,
+        image: 'greenUpgrade4.png',
+        cost: [2, 4, 6],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+      {
+        id: 5,
+        level: 0,
+        image: 'greenUpgrade5.png',
+        cost: [2, 4, 6],
+        title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
+        description: [
+          'Increases defense by 1',
+          'Increases defense by 2',
+          'Increases defense by 3',
+        ],
+      },
+    ],
+    points: 5,
+    selected: false,
+    unlocked: false,
+    usedPoints: 0,
+    disabled: true,
+  },
+];

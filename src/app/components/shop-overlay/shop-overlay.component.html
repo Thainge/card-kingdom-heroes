@@ -37,7 +37,7 @@
         class="flexDisplay"
       >
         <img
-          src="./assets/rewards/boosterPack.png"
+          [src]="'./assets/rewards/' + openBooster?.image"
           class="boosterPackImgOpen showBooster"
         />
       </div>
@@ -77,7 +77,7 @@
                 }"
               >
                 <img
-                  src="./assets/rewards/boosterPack.png"
+                  [src]="'./assets/rewards/' + openBooster?.image"
                   class="boosterPackImgOpen"
                 />
                 <img
@@ -295,7 +295,8 @@
             <img
               [src]="'./assets/rewards/' + item.image"
               [ngClass]="{
-                disabledBtn: !item.unlocked || item.count === 0
+                disabledBtn:
+                  !item.unlocked || item.count === 0 || currentIndex !== i
               }"
               (click)="openBoosterPack(item)"
               class="boosterImg hoverBoosterImg"

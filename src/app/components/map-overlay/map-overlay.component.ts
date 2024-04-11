@@ -20,6 +20,7 @@ import { DifficultyOverlayComponent } from '../choose-difficulty-overlay/choose-
 import { CampaignOverlayComponent } from '../campaign-overlay/campaign-overlay.component';
 import { PremiumOverlayComponent } from '../premium-overlay/premium-overlay.component';
 import { WheelOverlayComponent } from '../wheel-overlay/wheel-overlay.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 interface Tip {
   title: string;
@@ -28,6 +29,8 @@ interface Tip {
   img: string;
   tipRows: string[];
 }
+
+type Theme = 'cardkingdom' | 'zelda';
 
 @Component({
   selector: 'app-map-overlay',
@@ -70,6 +73,7 @@ export class MapOverlayComponent implements OnInit {
   chooseCampaignOpen: boolean = false;
   premiumOpen: boolean = false;
   wheelOpen: boolean = false;
+  currentTheme: Theme = 'cardkingdom';
 
   showInformation: boolean = false;
   display: boolean = true;
@@ -86,7 +90,7 @@ export class MapOverlayComponent implements OnInit {
     ],
   };
 
-  constructor(private loadingService: LoadingService) {}
+  constructor(private loadingService: LoadingService, private router: Router) {}
 
   ngOnInit() {
     this.loadingService.displayOptions$.subscribe((x) => {
@@ -106,6 +110,17 @@ export class MapOverlayComponent implements OnInit {
       this.showInformation = false;
     });
     this.checkTip();
+    this.setTheme();
+  }
+
+  setTheme() {
+    const currentRoute = this.router.url;
+    if (currentRoute.includes('zelda-map')) {
+      this.currentTheme = 'zelda';
+    }
+    if (currentRoute.includes('cardkingdom-map')) {
+      this.currentTheme = 'cardkingdom';
+    }
   }
 
   checkTip() {

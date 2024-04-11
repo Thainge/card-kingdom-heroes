@@ -9,6 +9,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   zoomInOnEnterAnimation,
   fadeOutOnLeaveAnimation,
@@ -25,6 +26,8 @@ import {
 } from 'angular-animations';
 import { BoosterPack } from 'src/app/models/boosterPack';
 import { LoadingService } from 'src/app/services/loading.service';
+import { BoosterPacks } from 'src/assets/data/boosterData/booster';
+import { BoosterPacksZelda } from 'src/assets/data/boosterData/boosterZelda';
 import Swiper from 'swiper';
 
 type ShopStep = 'picking' | 'shopping' | 'opening';
@@ -63,6 +66,7 @@ export class ShopOverlayComponent implements OnInit {
     this.open = x;
     this.currentIndex = 0;
     this.currentStep = 'picking';
+    this.initBoosters();
     if (x) {
       this.checkShopTip();
     }
@@ -70,58 +74,13 @@ export class ShopOverlayComponent implements OnInit {
   currentStep: ShopStep = 'picking';
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
-  boosterPacks: BoosterPack[] = [
-    {
-      id: 1,
-      image: 'boosterPack.png',
-      title: 'Zelda Booster Pack',
-      count: 3,
-      cost: 100,
-      unlocked: true,
-      showNew: true,
-    },
-    {
-      id: 2,
-      image: 'boosterPack.png',
-      title: 'Mario Booster Pack',
-      count: 0,
-      cost: 125,
-      unlocked: false,
-      showNew: false,
-    },
-    {
-      id: 3,
-      image: 'boosterPack.png',
-      title: 'Team Fortress 2 Booster Pack',
-      count: 0,
-      cost: 150,
-      unlocked: false,
-      showNew: false,
-    },
-    {
-      id: 4,
-      image: 'boosterPack.png',
-      title: 'Sonic Booster Pack',
-      count: 0,
-      cost: 175,
-      unlocked: false,
-      showNew: false,
-    },
-    {
-      id: 5,
-      image: 'boosterPack.png',
-      title: 'Kirby Booster Pack',
-      count: 0,
-      cost: 200,
-      unlocked: false,
-      showNew: false,
-    },
-  ];
+  boosterPacks: BoosterPack[] = [];
   @ViewChild('swiper1') swiperRef1: ElementRef | undefined;
   @ViewChild('swiper2') swiperRef2: ElementRef | undefined;
   swiper1?: Swiper;
   swiper2?: Swiper;
   currentIndex: number = 0;
+  openBooster: BoosterPack | undefined;
 
   openingCards: boolean = false;
   openStep: OpeningCardsStep = 'initial';
@@ -132,11 +91,21 @@ export class ShopOverlayComponent implements OnInit {
   specialList: number[] = [];
   canClickNext: boolean = false;
 
-  constructor(private loadingService: LoadingService) {}
+  constructor(private loadingService: LoadingService, private router: Router) {}
 
   ngOnInit() {}
 
   ngAfterViewInit() {}
+
+  initBoosters() {
+    if (this.router.url.includes('cardkingdom-map')) {
+      this.boosterPacks = BoosterPacks;
+    }
+
+    if (this.router.url.includes('zelda-map')) {
+      this.boosterPacks = BoosterPacksZelda;
+    }
+  }
 
   checkShopTip() {
     const shopTipShown = localStorage.getItem('shopTipShown');
@@ -301,6 +270,7 @@ export class ShopOverlayComponent implements OnInit {
 
   openBoosterPack(item: BoosterPack) {
     this.startPhase();
+    this.openBooster = item;
     this.boosterPacks = this.boosterPacks.map((x) => {
       if (x.id === item.id) {
         return { ...x, count: item.count - 1 };

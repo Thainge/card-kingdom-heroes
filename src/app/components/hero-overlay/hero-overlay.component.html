@@ -28,7 +28,7 @@
             *ngFor="let hero of heroes; index as i"
             class="heroItemBox"
             [ngClass]="{
-              disabledBox: i > 2
+              disabledBox: hero.disabled
             }"
             (click)="currentHero = hero"
           >

@@ -93,7 +93,7 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
   placingCurrentFlag: FlagDto | undefined;
   mouseX: number = 0;
   mouseY: number = 0;
-  devMode: boolean = true;
+  devMode: boolean = false;
   currentWhirlpoolScale: WhirlpoolSize = 1;
   currentWhirlpoolOpacity: WhirlpoolOpacity = 0.4;
   specialLevelsData: SpecialLevels = {
@@ -167,11 +167,6 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
     );
     this.finishLevel(this.flagsList[0]);
     this.currentLevel = currentLevel;
-    this.flagsList.forEach((x, index) => {
-      setTimeout(() => {
-        this.finishLevel(x);
-      }, 2000 * index);
-    });
   }
 
   async initPanZoom() {
