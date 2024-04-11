@@ -130,9 +130,13 @@
         <img
           src="./assets/shopPoints.png"
           class="alertIcon shopIcon"
-          *ngIf="true"
+          *ngIf="boostersIncludeUnopened()"
         />
-        <img src="./assets/notification.png" class="alertIcon" *ngIf="false" />
+        <!-- <img
+          src="./assets/notification.png"
+          class="alertIcon"
+          *ngIf="boostersIncludeUnopened()"
+        /> -->
         <img
           src="./assets/shop.png"
           class="overlayIcon"

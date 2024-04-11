@@ -22,6 +22,7 @@ import { PremiumOverlayComponent } from '../premium-overlay/premium-overlay.comp
 import { WheelOverlayComponent } from '../wheel-overlay/wheel-overlay.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { playerService } from 'src/app/services/player.service';
+import { BoosterPack } from 'src/app/models/boosterPack';
 
 interface Tip {
   title: string;
@@ -92,6 +93,7 @@ export class MapOverlayComponent implements OnInit {
   };
   gold: number = 0;
   stars: number = 0;
+  boosterPacks: BoosterPack[] = [];
 
   constructor(
     private loadingService: LoadingService,
@@ -100,6 +102,12 @@ export class MapOverlayComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    setInterval(() => {
+      this.boosterPacks = JSON.parse(
+        localStorage.getItem('boosterPacks') ?? '[]'
+      );
+    }, 1000);
+    console.log(this.boosterPacks);
     this.playerService.gold$.subscribe((x) => {
       this.gold = x;
     });
@@ -124,6 +132,16 @@ export class MapOverlayComponent implements OnInit {
     });
     this.checkTip();
     this.setTheme();
+  }
+
+  boostersIncludeUnopened(): boolean {
+    let found = false;
+    this.boosterPacks.forEach((x) => {
+      if (x.cost <= this.gold) {
+        found = true;
+      }
+    });
+    return true;
   }
 
   setTheme() {

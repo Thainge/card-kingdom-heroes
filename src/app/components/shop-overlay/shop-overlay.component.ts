@@ -114,6 +114,16 @@ export class ShopOverlayComponent implements OnInit {
 
   ngAfterViewInit() {}
 
+  boostersIncludeUnopened(): boolean {
+    let found = false;
+    this.boosterPacks.forEach((x) => {
+      if (x.cost <= this.gold) {
+        found = true;
+      }
+    });
+    return true;
+  }
+
   initBoosters() {
     this.boosterPacks = JSON.parse(
       localStorage.getItem('boosterPacks') ?? '[]'
