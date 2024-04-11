@@ -43,6 +43,16 @@ export class DifficultyOverlayComponent implements OnInit {
 
   ngAfterViewInit() {}
 
+  chooseEasy() {
+    localStorage.setItem('easymode', JSON.stringify(true));
+    this.closeMenu();
+  }
+
+  chooseHard() {
+    localStorage.setItem('easymode', JSON.stringify(false));
+    this.closeMenu();
+  }
+
   closeMenu() {
     this.onCloseMenu.emit(false);
   }

@@ -16,7 +16,15 @@ export class AchievementService {
     reward: 150,
   });
 
-  constructor() {}
+  constructor() {
+    this.achievements$.subscribe((x) => {
+      if (x.id !== 0) {
+        let current = JSON.parse(localStorage.getItem('achievements') ?? '[]');
+        current.push(x);
+        localStorage.setItem('achievements', JSON.stringify(current));
+      }
+    });
+  }
 
   public pushNewAchievement(achievement: AchievementObject) {
     this.achievements$.next(achievement);

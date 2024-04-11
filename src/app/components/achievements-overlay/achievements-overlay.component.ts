@@ -8,6 +8,7 @@ import {
 } from 'angular-animations';
 import { AchievementObject } from 'src/app/models/achievement';
 import { playerService } from 'src/app/services/player.service';
+import { AchievementsData } from 'src/assets/data/achievements';
 
 @Component({
   selector: 'app-achievements-overlay',
@@ -39,198 +40,12 @@ export class AchievementsOverlayComponent implements OnInit {
     this.playerService.gold$.subscribe((x) => {
       this.gold = x;
     });
-    this.achievementsListClean = [
-      {
-        id: 1,
-        title: 'First Blood',
-        description: 'Beat the first level in the game.',
-        image: 'gold.png',
-        unlocked: true,
-        gemsUnlocked: false,
-        reward: 150,
-      },
-      {
-        id: 2,
-        title: 'First Blood',
-        description: 'Beat the first level in the game.',
-        image: 'gold.png',
-        unlocked: true,
-        gemsUnlocked: false,
-        reward: 150,
-      },
-      {
-        id: 3,
-        title: 'First Blood',
-        description: 'Beat the first level in the game.',
-        image: 'gold.png',
-        unlocked: true,
-        gemsUnlocked: false,
-        reward: 150,
-      },
-      {
-        id: 4,
-        title: 'First Blood',
-        description: 'Beat the first level in the game.',
-        image: 'gold.png',
-        unlocked: true,
-        gemsUnlocked: false,
-        reward: 150,
-      },
-      {
-        id: 5,
-        title: 'First Blood',
-        description: 'Beat the first level in the game.',
-        image: 'gold.png',
-        unlocked: true,
-        gemsUnlocked: false,
-        reward: 150,
-      },
-      {
-        id: 6,
-        title: 'First Blood',
-        description: 'Beat the first level in the game.',
-        image: 'gold.png',
-        unlocked: false,
-        gemsUnlocked: false,
-        reward: 150,
-      },
-      {
-        id: 7,
-        title: 'First Blood',
-        description: 'Beat the first level in the game.',
-        image: 'gold.png',
-        unlocked: false,
-        gemsUnlocked: false,
-        reward: 150,
-      },
-      {
-        id: 8,
-        title: 'First Blood',
-        description: 'Beat the first level in the game.',
-        image: 'gold.png',
-        unlocked: false,
-        gemsUnlocked: false,
-        reward: 150,
-      },
-      {
-        id: 9,
-        title: 'First Blood',
-        description: 'Beat the first level in the game.',
-        image: 'gold.png',
-        unlocked: false,
-        gemsUnlocked: false,
-        reward: 150,
-      },
-      {
-        id: 10,
-        title: 'First Blood',
-        description: 'Beat the first level in the game.',
-        image: 'gold.png',
-        unlocked: false,
-        gemsUnlocked: false,
-        reward: 150,
-      },
-      {
-        id: 11,
-        title: 'First Blood',
-        description: 'Beat the first level in the game.',
-        image: 'gold.png',
-        unlocked: false,
-        gemsUnlocked: false,
-        reward: 150,
-      },
-      {
-        id: 12,
-        title: 'First Blood',
-        description: 'Beat the first level in the game.',
-        image: 'gold.png',
-        unlocked: false,
-        gemsUnlocked: false,
-        reward: 150,
-      },
-      {
-        id: 13,
-        title: 'First Blood',
-        description: 'Beat the first level in the game.',
-        image: 'gold.png',
-        unlocked: false,
-        gemsUnlocked: false,
-        reward: 150,
-      },
-      {
-        id: 14,
-        title: 'First Blood',
-        description: 'Beat the first level in the game.',
-        image: 'gold.png',
-        unlocked: false,
-        gemsUnlocked: false,
-        reward: 150,
-      },
-      {
-        id: 15,
-        title: 'First Blood',
-        description: 'Beat the first level in the game.',
-        image: 'gold.png',
-        unlocked: false,
-        gemsUnlocked: false,
-        reward: 150,
-      },
-      {
-        id: 16,
-        title: 'First Blood',
-        description: 'Beat the first level in the game.',
-        image: 'gold.png',
-        unlocked: false,
-        gemsUnlocked: false,
-        reward: 150,
-      },
-      {
-        id: 17,
-        title: 'First Blood',
-        description: 'Beat the first level in the game.',
-        image: 'gold.png',
-        unlocked: false,
-        gemsUnlocked: false,
-        reward: 150,
-      },
-      {
-        id: 18,
-        title: 'First Blood',
-        description: 'Beat the first level in the game.',
-        image: 'gold.png',
-        unlocked: false,
-        gemsUnlocked: false,
-        reward: 150,
-      },
-      {
-        id: 19,
-        title: 'First Blood',
-        description: 'Beat the first level in the game.',
-        image: 'gold.png',
-        unlocked: false,
-        gemsUnlocked: false,
-        reward: 150,
-      },
-      {
-        id: 20,
-        title: 'First Blood',
-        description: 'Beat the first level in the game.',
-        image: 'gold.png',
-        unlocked: false,
-        gemsUnlocked: false,
-        reward: 150,
-      },
-      {
-        id: 21,
-        title: 'First Blood',
-        description: 'Beat the first level in the game.',
-        image: 'gold.png',
-        unlocked: false,
-        gemsUnlocked: false,
-        reward: 150,
-      },
-    ];
-
+    this.achievementsListClean = JSON.parse(
+      localStorage.getItem('achievements') ?? '[]'
+    );
+    if (this.achievementsListClean.length < 1) {
+      this.achievementsListClean = AchievementsData;
+    }
     this.pageAchievements(this.currentpage);
   }
 
@@ -242,6 +57,11 @@ export class AchievementsOverlayComponent implements OnInit {
       return x;
     });
     this.pageAchievements(this.currentpage);
+    this.playerService.gold$.next(this.gold + achievement.reward);
+    localStorage.setItem(
+      'achievements',
+      JSON.stringify(this.achievementsListClean)
+    );
   }
 
   pageAchievements(number: number) {

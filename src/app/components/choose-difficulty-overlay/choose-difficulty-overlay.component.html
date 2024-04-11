@@ -15,11 +15,15 @@
     <img class="overlayPanelBg" src="./assets/menuNoClose.png" />
     <div class="overlalPanelTitle">Difficulty</div>
     <div class="optionsBox">
-      <img class="overlayImage" src="./assets/easy.png" (click)="closeMenu()" />
+      <img
+        class="overlayImage"
+        src="./assets/easy.png"
+        (click)="chooseEasy()"
+      />
       <img
         class="overlayImage"
         src="./assets/normal.png"
-        (click)="closeMenu()"
+        (click)="chooseHard()"
       />
       <img
         src="./assets/difficultyText.png"
