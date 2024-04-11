@@ -142,7 +142,8 @@ export class MapComponent implements AfterViewInit, OnInit {
   };
   isSpecialBattle: boolean = false;
   battleStartOpen: boolean = false;
-  currentMap: string = '';
+  currentMap: MapRoute = 'cardkingdom';
+  currentMapImage: string = '';
 
   constructor(
     private loadingService: LoadingService,
@@ -174,9 +175,35 @@ export class MapComponent implements AfterViewInit, OnInit {
 
   initFlags() {
     // Get current route
-    this.currentMap = this.route.snapshot.paramMap.get('world') ?? '';
+    const activeRoute =
+      this.route.snapshot.paramMap.get('world') ?? 'cardkingdom';
+    this.currentMap = activeRoute as MapRoute;
 
-    if (this.currentMap === '') this.flagsList = flagsData;
+    if (this.currentMap === 'cardkingdom') {
+      this.currentMapImage = './assets/maps/map.png';
+    }
+
+    if (this.currentMap === 'zelda') {
+      this.currentMapImage = './assets/maps/zeldaMap.png';
+    }
+
+    if (this.currentMap === 'mario') {
+      this.currentMapImage = './assets/maps/marioMap.png';
+    }
+
+    if (this.currentMap === 'kirby') {
+      this.currentMapImage = './assets/maps/kirbyMap.png';
+    }
+
+    if (this.currentMap === 'tf2') {
+      this.currentMapImage = './assets/maps/tf2Map.png';
+    }
+
+    if (this.currentMap === 'donkeykong') {
+      this.currentMapImage = './assets/maps/donkeykongMap.png';
+    }
+
+    this.flagsList = flagsData;
     this.flagsList = flagsData.map((item, i) => {
       return {
         ...item,

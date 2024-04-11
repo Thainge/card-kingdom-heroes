@@ -83,10 +83,10 @@
             }"
           >
             <div class="relativeBox">
-              <img *ngIf="i > 1" class="absoluteLock" src="./assets/lock.png" />
+              <img *ngIf="i > 6" class="absoluteLock" src="./assets/lock.png" />
               <img
                 [ngClass]="{
-                  dimImage: i > 1
+                  dimImage: i > 6
                 }"
                 class="overlayImage"
                 [src]="'./assets/' + item.image"

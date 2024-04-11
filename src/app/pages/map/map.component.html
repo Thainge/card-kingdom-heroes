@@ -21,8 +21,15 @@
       <img
         class="f-panzoom__content"
         (contextmenu)="addLevel($event)"
-        src="./assets/map.png"
-        class="mapImage"
+        [src]="currentMapImage"
+        [ngClass]="{
+          cardKingdomMap: currentMap === 'cardkingdom',
+          zeldaMap: currentMap === 'zelda',
+          marioMap: currentMap === 'mario',
+          kirbyMap: currentMap === 'kirby',
+          donkeykongMap: currentMap === 'donkeykong',
+          tf2Map: currentMap === 'tf2',
+        }"
       />
       <div data-panzoom-pin data-x="0%" data-y="0%" class="overlayContainer">
         <!-- fire -->
