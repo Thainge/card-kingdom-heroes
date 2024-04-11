@@ -433,6 +433,10 @@ export class BattleComponent implements OnInit {
       if (loadingLocal) {
         const showLoading = JSON.parse(loadingLocal);
         if (showLoading) {
+          this.activeLeaderLines.forEach((x) => {
+            x.hide();
+            x.remove();
+          });
           this.loadingService.navigate('/', 'forest.png');
           localStorage.setItem('showLoading', JSON.stringify(false));
         }
@@ -551,6 +555,10 @@ export class BattleComponent implements OnInit {
     ) as LevelDto;
 
     if (!passedObj) {
+      this.activeLeaderLines.forEach((x) => {
+        x.hide();
+        x.remove();
+      });
       this.loadingService.navigate('/cardkingdom-map', 'loadingBg.png');
     }
 
@@ -890,6 +898,10 @@ export class BattleComponent implements OnInit {
         return;
       }
       this.hideGuideNow = true;
+      this.activeLeaderLines.forEach((x) => {
+        x.hide();
+        x.remove();
+      });
       this.loadingService.navigate('', 'forest.png');
       this.resetGame();
       this.Cards = Cards;
@@ -1044,6 +1056,10 @@ export class BattleComponent implements OnInit {
       await this.hidePreviousGuideMessages();
       await this.timeout(1000);
       this.hideGuideNow = true;
+      this.activeLeaderLines.forEach((x) => {
+        x.hide();
+        x.remove();
+      });
       this.loadingService.navigate('', 'forest.png');
       this.resetGame();
       this.Cards = Cards;
@@ -1215,6 +1231,10 @@ export class BattleComponent implements OnInit {
         return;
       }
       this.hideGuideNow = true;
+      this.activeLeaderLines.forEach((x) => {
+        x.hide();
+        x.remove();
+      });
       this.loadingService.navigate('', 'forest.png');
       this.resetGame();
       this.Cards = Cards;
@@ -1302,12 +1322,20 @@ export class BattleComponent implements OnInit {
   async continue() {
     // localStorage.setItem('showLoading', JSON.stringify(true));
     // window.location.reload();
+    this.activeLeaderLines.forEach((x) => {
+      x.hide();
+      x.remove();
+    });
     this.loadingService.navigate('/cardkingdom-map', 'forest.png');
   }
 
   async retry() {
     // localStorage.setItem('showLoading', JSON.stringify(true));
     // window.location.reload();
+    this.activeLeaderLines.forEach((x) => {
+      x.hide();
+      x.remove();
+    });
     this.loadingService.navigate('', 'forest.png');
     setTimeout(() => {
       this.resetGame();

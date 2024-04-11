@@ -181,5 +181,15 @@
       class="overlayIcon achievementButton"
       (click)="achievementsOpen = true"
     />
+    <img
+      [@fadeEnter]="{
+        value: '',
+        params: { duration: 300, delay: 200, translate: '300px' }
+      }"
+      [@fadeOutLeave]="{ value: '', params: { duration: 300 } }"
+      src="./assets/notification.png"
+      class="alertIconNot"
+      *ngIf="achievementHasGems()"
+    />
   </div>
 </div>

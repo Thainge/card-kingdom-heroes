@@ -23,6 +23,8 @@ import { WheelOverlayComponent } from '../wheel-overlay/wheel-overlay.component'
 import { ActivatedRoute, Router } from '@angular/router';
 import { playerService } from 'src/app/services/player.service';
 import { BoosterPack } from 'src/app/models/boosterPack';
+import { AchievementService } from 'src/app/services/achievement.service';
+import { AchievementObject } from 'src/app/models/achievement';
 
 interface Tip {
   title: string;
@@ -95,14 +97,19 @@ export class MapOverlayComponent implements OnInit {
   stars: number = 0;
   boosterPacks: BoosterPack[] = [];
   currentHero: any | undefined;
+  achievements: AchievementObject[] = [];
 
   constructor(
     private loadingService: LoadingService,
     private router: Router,
-    private playerService: playerService
+    private playerService: playerService,
+    private achievementService: AchievementService
   ) {}
 
   ngOnInit() {
+    this.achievementService.allAchievements$.subscribe((x) => {
+      this.achievements = x;
+    });
     this.playerService.currentHero$.subscribe((x) => {
       this.currentHero = x;
     });
@@ -136,6 +143,14 @@ export class MapOverlayComponent implements OnInit {
     });
     this.checkTip();
     this.setTheme();
+  }
+
+  achievementHasGems(): boolean {
+    if (this.achievements.find((x) => x.unlocked && !x.gemsUnlocked)) {
+      return true;
+    }
+
+    return false;
   }
 
   boostersIncludeUnopened(): boolean {

@@ -13,6 +13,7 @@ import {
   fadeInUpOnEnterAnimation,
   fadeOutUpOnLeaveAnimation,
 } from 'angular-animations';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-choose-difficulty-overlay',
@@ -37,18 +38,20 @@ export class DifficultyOverlayComponent implements OnInit {
   @Input('showInformation') showInformation: boolean = true;
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
-  constructor() {}
+  constructor(private loadingService: LoadingService) {}
 
   ngOnInit() {}
 
   ngAfterViewInit() {}
 
   chooseEasy() {
+    this.loadingService.difficultyIsOpen$.next(false);
     localStorage.setItem('easymode', JSON.stringify(true));
     this.closeMenu();
   }
 
   chooseHard() {
+    this.loadingService.difficultyIsOpen$.next(false);
     localStorage.setItem('easymode', JSON.stringify(false));
     this.closeMenu();
   }
