@@ -144,10 +144,10 @@
         />
       </div>
       <div class="overlayHeroBox" (click)="heroRoomOpen = true">
-        <div class="iconContainer" *ngIf="true">
+        <div class="iconContainer" *ngIf="currentHero?.points > 0">
           <div class="iconBox">
             <img src="./assets/heroPoints.png" class="smallerIcon" />
-            <div class="iconText">3</div>
+            <div class="iconText">{{ currentHero?.points }}</div>
           </div>
         </div>
         <img src="./assets/playerIcons/link.png" class="heroIcon" />

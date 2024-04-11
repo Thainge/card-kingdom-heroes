@@ -8,6 +8,7 @@ import {
   zoomOutOnLeaveAnimation,
 } from 'angular-animations';
 import { LoadingService } from 'src/app/services/loading.service';
+import { playerService } from 'src/app/services/player.service';
 import { HeroData } from 'src/assets/data/heroData/hero';
 
 interface HeroUpgrade {
@@ -67,12 +68,21 @@ export class HeroOverlayComponent implements OnInit {
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
-  constructor(private loadingService: LoadingService, private router: Router) {}
+  constructor(
+    private loadingService: LoadingService,
+    private router: Router,
+    private playerService: playerService
+  ) {}
 
   ngOnInit() {
-    this.heroes = HeroData;
+    this.heroes = JSON.parse(localStorage.getItem('heroData') ?? '[]');
+    if (this.heroes.length < 1) {
+      this.heroes = HeroData;
+      localStorage.setItem('heroData', JSON.stringify(this.heroes));
+      this.playerService.currentHero$.next(this.heroes.find((x) => x.selected));
+    }
 
-    if (this.router.url.includes('cardkingdom-map')) {
+    if (!this.heroes.find((x) => x.selected)) {
       this.heroes[0].disabled = false;
       this.heroes[0].selected = true;
       this.heroes[0].unlocked = true;
@@ -81,19 +91,27 @@ export class HeroOverlayComponent implements OnInit {
       this.heroes[1].unlocked = true;
     }
 
-    if (this.router.url.includes('zelda-map')) {
-      this.heroes[2].disabled = false;
-      this.heroes[2].selected = true;
-      this.heroes[2].unlocked = true;
-      this.currentHero = this.heroes[2];
-      this.heroes[3].disabled = false;
-      this.heroes[3].unlocked = true;
-    }
+    // if (this.router.url.includes('cardkingdom-map')) {
+    //   this.heroes[0].disabled = false;
+    //   this.heroes[0].selected = true;
+    //   this.heroes[0].unlocked = true;
+    //   this.currentHero = this.heroes[0];
+    //   this.heroes[1].disabled = false;
+    //   this.heroes[1].unlocked = true;
+    // }
 
-    this.heroes[0].selected = true;
-    this.heroes[0].unlocked = true;
+    // if (this.router.url.includes('zelda-map')) {
+    //   this.heroes[2].disabled = false;
+    //   this.heroes[2].selected = true;
+    //   this.heroes[2].unlocked = true;
+    //   this.currentHero = this.heroes[2];
+    //   this.heroes[3].disabled = false;
+    //   this.heroes[3].unlocked = true;
+    // }
 
     this.currentHero = this.heroes.find((x) => x.selected);
+    localStorage.setItem('heroData', JSON.stringify(this.heroes));
+    this.playerService.currentHero$.next(this.heroes.find((x) => x.selected));
   }
 
   trackById = (index: number, item: HeroUpgrade) => item.id;
@@ -126,6 +144,8 @@ export class HeroOverlayComponent implements OnInit {
     });
 
     this.currentHero.selected = true;
+    localStorage.setItem('heroData', JSON.stringify(this.heroes));
+    this.playerService.currentHero$.next(this.heroes.find((x) => x.selected));
   }
 
   upgradeHero(item: HeroUpgrade) {
@@ -155,6 +175,8 @@ export class HeroOverlayComponent implements OnInit {
         }
         return x;
       });
+      localStorage.setItem('heroData', JSON.stringify(this.heroes));
+      this.playerService.currentHero$.next(this.heroes.find((x) => x.selected));
     }
   }
 
@@ -166,6 +188,8 @@ export class HeroOverlayComponent implements OnInit {
       this.currentHero.points =
         this.currentHero.points + this.currentHero.usedPoints;
       this.currentHero.usedPoints = 0;
+      localStorage.setItem('heroData', JSON.stringify(this.heroes));
+      this.playerService.currentHero$.next(this.heroes.find((x) => x.selected));
     }
   }
 

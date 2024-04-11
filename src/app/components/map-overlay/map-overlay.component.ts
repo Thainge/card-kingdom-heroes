@@ -94,6 +94,7 @@ export class MapOverlayComponent implements OnInit {
   gold: number = 0;
   stars: number = 0;
   boosterPacks: BoosterPack[] = [];
+  currentHero: any | undefined;
 
   constructor(
     private loadingService: LoadingService,
@@ -102,6 +103,9 @@ export class MapOverlayComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.playerService.currentHero$.subscribe((x) => {
+      this.currentHero = x;
+    });
     setInterval(() => {
       this.boosterPacks = JSON.parse(
         localStorage.getItem('boosterPacks') ?? '[]'
