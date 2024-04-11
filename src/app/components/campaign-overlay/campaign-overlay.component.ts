@@ -26,12 +26,12 @@ interface CampaignBox {
 }
 
 type MapRoute =
-  | 'cardkingdom'
-  | 'zelda'
-  | 'mario'
-  | 'tf2'
-  | 'kirby'
-  | 'donkeykong';
+  | 'cardkingdom-map'
+  | 'zelda-map'
+  | 'mario-map'
+  | 'tf2-map'
+  | 'kirby-map'
+  | 'donkeykong-map';
 
 @Component({
   selector: 'app-campaign-overlay',
@@ -66,32 +66,32 @@ export class CampaignOverlayComponent implements OnInit {
     {
       id: 1,
       image: 'normalCampaign.png',
-      url: 'cardkingdom',
+      url: 'cardkingdom-map',
     },
     {
       id: 2,
       image: 'linkCampaign.png',
-      url: 'zelda',
+      url: 'zelda-map',
     },
     {
       id: 3,
       image: 'marioCampaign.png',
-      url: 'mario',
+      url: 'mario-map',
     },
     {
       id: 4,
       image: 'tf2Campaign.png',
-      url: 'tf2',
+      url: 'tf2-map',
     },
     {
       id: 5,
       image: 'kirbyCampaign.png',
-      url: 'kirby',
+      url: 'kirby-map',
     },
     {
       id: 6,
       image: 'donkeyKongCampaign.png',
-      url: 'donkeykong',
+      url: 'donkeykong-map',
     },
   ];
 
@@ -114,8 +114,7 @@ export class CampaignOverlayComponent implements OnInit {
   }
 
   chooseCampaign(campaign: CampaignBox) {
-    const route = '/map/' + campaign.url;
-    this.router.navigate([route]);
+    const route = '/' + campaign.url;
     this.closeMenu();
     this.loadingService.isRefreshing$.next(true);
     this.loadingService.navigate(route, 'loadingBg.png');

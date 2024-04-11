@@ -20,7 +20,7 @@ import { DialogComponent } from 'src/app/components/dialogComponent/dialog.compo
 import { MapOverlayComponent } from 'src/app/components/map-overlay/map-overlay.component';
 import { DotDto, FlagDto } from 'src/app/models/flag';
 import { LoadingService } from 'src/app/services/loading.service';
-import { flagsData } from 'src/assets/data/flags';
+import { flagsData } from 'src/assets/data/flagsData/flags';
 const { Pins } = require('@fancyapps/ui/dist/panzoom/panzoom.pins.esm.js');
 
 type WhirlpoolSize = 1 | 1.25 | 1.5 | 2;
@@ -63,14 +63,6 @@ interface SpecialLevels {
   // town4FightShow: boolean;
   // town4FightFinished: boolean;
 }
-
-type MapRoute =
-  | 'cardkingdom'
-  | 'zelda'
-  | 'mario'
-  | 'tf2'
-  | 'kirby'
-  | 'donkeykong';
 
 @Component({
   selector: 'app-map',
@@ -142,8 +134,6 @@ export class MapComponent implements AfterViewInit, OnInit {
   };
   isSpecialBattle: boolean = false;
   battleStartOpen: boolean = false;
-  currentMap: MapRoute = 'cardkingdom';
-  currentMapImage: string = '';
 
   constructor(
     private loadingService: LoadingService,
@@ -152,17 +142,6 @@ export class MapComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {
     this.initFlags();
-    this.loadingService.isRefreshing$.subscribe((x) => {
-      if (x) {
-        this.loadingService.isRefreshing$.next(false);
-        setTimeout(() => {
-          this.initFlags();
-        }, 500);
-        setTimeout(() => {
-          this.initPanZoom();
-        }, 2500);
-      }
-    });
   }
 
   ngAfterViewInit() {
@@ -174,35 +153,6 @@ export class MapComponent implements AfterViewInit, OnInit {
   }
 
   initFlags() {
-    // Get current route
-    const activeRoute =
-      this.route.snapshot.paramMap.get('world') ?? 'cardkingdom';
-    this.currentMap = activeRoute as MapRoute;
-
-    if (this.currentMap === 'cardkingdom') {
-      this.currentMapImage = './assets/maps/map.png';
-    }
-
-    if (this.currentMap === 'zelda') {
-      this.currentMapImage = './assets/maps/zeldaMap.png';
-    }
-
-    if (this.currentMap === 'mario') {
-      this.currentMapImage = './assets/maps/marioMap.png';
-    }
-
-    if (this.currentMap === 'kirby') {
-      this.currentMapImage = './assets/maps/kirbyMap.png';
-    }
-
-    if (this.currentMap === 'tf2') {
-      this.currentMapImage = './assets/maps/tf2Map.png';
-    }
-
-    if (this.currentMap === 'donkeykong') {
-      this.currentMapImage = './assets/maps/donkeykongMap.png';
-    }
-
     this.flagsList = flagsData;
     this.flagsList = flagsData.map((item, i) => {
       return {
@@ -223,6 +173,7 @@ export class MapComponent implements AfterViewInit, OnInit {
     setTimeout(() => {
       this.loadingService.displayOptions$.next(false);
     }, 1);
+    await this.timeout(1);
     const container = document.getElementById('myPanzoom');
     const options = {
       maxScale: 0.8,
