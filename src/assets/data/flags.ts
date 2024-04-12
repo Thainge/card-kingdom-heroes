@@ -859,7 +859,7 @@ export const flagsData: FlagDto[] = [
     id: 20,
     x: 2423,
     y: 1446,
-    levelStatus: 'nextLevel',
+    levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
       image: 'forest.png',
