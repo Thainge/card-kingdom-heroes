@@ -8,6 +8,7 @@ import {
 } from 'angular-animations';
 import { Wheel } from 'spin-wheel';
 import { CardService } from 'src/app/services/card.service';
+import { playerService } from 'src/app/services/player.service';
 
 interface WheelItem {
   backgroundColor?: string;
@@ -24,7 +25,10 @@ interface WheelItem {
   text: string;
   textAmount: string;
   rewardImage: string;
+  rewardType: RewardType;
 }
+
+type RewardType = 'gold' | 'booster';
 
 interface WheelProps {
   borderColor?: string;
@@ -94,10 +98,17 @@ export class WheelOverlayComponent implements OnInit {
   prizes: WheelItem[] = [];
   wonPrize: WheelItem | undefined;
   showPrize: boolean = false;
+  gold: number = 0;
 
-  constructor(private cardService: CardService) {}
+  constructor(
+    private cardService: CardService,
+    private playerService: playerService
+  ) {}
 
   ngOnInit() {
+    this.playerService.gold$.subscribe((x) => {
+      this.gold = x;
+    });
     const wheelItems: WheelItem[] = [
       {
         value: 1,
@@ -107,6 +118,7 @@ export class WheelOverlayComponent implements OnInit {
         weight: 0.5,
         rewardImage: 'goldReward.png',
         text: 'Diamonds',
+        rewardType: 'gold',
         textAmount: '999x',
       },
       {
@@ -116,6 +128,7 @@ export class WheelOverlayComponent implements OnInit {
         weight: 0.75,
         rewardImage: 'boosterPack.png',
         text: 'Booster Pack',
+        rewardType: 'booster',
         textAmount: '1x',
       },
       {
@@ -125,6 +138,7 @@ export class WheelOverlayComponent implements OnInit {
         weight: 1,
         rewardImage: 'goldReward.png',
         text: 'Diamonds',
+        rewardType: 'gold',
         textAmount: '150x',
       },
       {
@@ -134,6 +148,7 @@ export class WheelOverlayComponent implements OnInit {
         weight: 0.75,
         rewardImage: 'boosterPack.png',
         text: 'Booster Pack',
+        rewardType: 'booster',
         textAmount: '1x',
       },
       {
@@ -143,6 +158,7 @@ export class WheelOverlayComponent implements OnInit {
         weight: 1,
         rewardImage: 'goldReward.png',
         text: 'Diamonds',
+        rewardType: 'gold',
         textAmount: '150x',
       },
       {
@@ -152,6 +168,7 @@ export class WheelOverlayComponent implements OnInit {
         weight: 0.75,
         rewardImage: 'boosterPack.png',
         text: 'Booster Pack',
+        rewardType: 'booster',
         textAmount: '1x',
       },
       {
@@ -161,6 +178,7 @@ export class WheelOverlayComponent implements OnInit {
         weight: 1,
         rewardImage: 'goldReward.png',
         text: 'Diamonds',
+        rewardType: 'gold',
         textAmount: '150x',
       },
       {
@@ -170,6 +188,7 @@ export class WheelOverlayComponent implements OnInit {
         weight: 0.75,
         rewardImage: 'boosterPack.png',
         text: 'Booster Pack',
+        rewardType: 'booster',
         textAmount: '1x',
       },
 
@@ -180,6 +199,7 @@ export class WheelOverlayComponent implements OnInit {
         weight: 1,
         rewardImage: 'goldReward.png',
         text: 'Diamonds',
+        rewardType: 'gold',
         textAmount: '150x',
       },
       {
@@ -189,6 +209,7 @@ export class WheelOverlayComponent implements OnInit {
         weight: 0.75,
         rewardImage: 'boosterPack.png',
         text: 'Booster Pack',
+        rewardType: 'booster',
         textAmount: '1x',
       },
     ];
@@ -237,6 +258,14 @@ export class WheelOverlayComponent implements OnInit {
   }
 
   endSpin() {
+    if (this.wonPrize?.rewardType === 'gold') {
+      this.playerService.gold$.next(this.gold + this.wonPrize?.value!);
+    }
+
+    if (this.wonPrize?.rewardType === 'booster') {
+      // Add booster pack prize
+    }
+
     this.showPrize = false;
     this.wonPrize = undefined;
     this.spinning = false;
