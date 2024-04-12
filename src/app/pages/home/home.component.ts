@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.flagsList = JSON.parse(localStorage.getItem('flagsData') ?? '[]');
     if (this.flagsList.length < 1) {
-      localStorage.setItem('flagsData', JSON.stringify(this.flagsList));
+      localStorage.setItem('flagsData', JSON.stringify(flagsData));
     }
   }
 
