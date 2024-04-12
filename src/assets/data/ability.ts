@@ -28,7 +28,7 @@ export const AbilityData: AbilityCard[] = [
     hitAnimation: 'fire',
   },
   {
-    id: 2,
+    id: 5,
     abilityFunction: 'leach',
     targetAll: true,
     abilityValue: [1, 1, 1],
@@ -54,7 +54,7 @@ export const AbilityData: AbilityCard[] = [
     hitAnimation: 'fire',
   },
   {
-    id: 3,
+    id: 10,
     abilityFunction: 'offense',
     targetAll: true,
     abilityValue: [1, 1, 1],
@@ -80,7 +80,7 @@ export const AbilityData: AbilityCard[] = [
     hitAnimation: 'fire',
   },
   {
-    id: 4,
+    id: 15,
     abilityFunction: 'offense',
     targetAll: false,
     abilityValue: [2, 2, 2],
@@ -106,7 +106,7 @@ export const AbilityData: AbilityCard[] = [
     hitAnimation: 'fire',
   },
   {
-    id: 6,
+    id: 20,
     abilityFunction: 'damage',
     targetAll: false,
     abilityValue: [3, 3, 3],
@@ -132,7 +132,7 @@ export const AbilityData: AbilityCard[] = [
     hitAnimation: 'fire',
   },
   {
-    id: 7,
+    id: 25,
     abilityFunction: 'heal',
     targetAll: false,
     abilityValue: [1, 1, 1],
@@ -154,7 +154,7 @@ export const AbilityData: AbilityCard[] = [
     hitAnimation: 'fire',
   },
   {
-    id: 8,
+    id: 30,
     abilityFunction: 'heal',
     targetAll: false,
     abilityValue: [3, 3, 3],
@@ -180,7 +180,7 @@ export const AbilityData: AbilityCard[] = [
     hitAnimation: 'fire',
   },
   {
-    id: 9,
+    id: 35,
     abilityFunction: 'draw',
     targetAll: false,
     abilityValue: [3, 3, 3],
@@ -201,7 +201,7 @@ export const AbilityData: AbilityCard[] = [
     hitAnimation: 'fire',
   },
   {
-    id: 10,
+    id: 40,
     abilityFunction: 'redraw',
     targetAll: false,
     abilityValue: [5, 5, 5],
@@ -226,7 +226,7 @@ export const AbilityData: AbilityCard[] = [
     hitAnimation: 'fire',
   },
   {
-    id: 11,
+    id: 45,
     abilityFunction: 'redrawAll',
     targetAll: false,
     abilityValue: [5, 5, 5],
@@ -251,7 +251,7 @@ export const AbilityData: AbilityCard[] = [
     hitAnimation: 'fire',
   },
   {
-    id: 12,
+    id: 50,
     abilityFunction: 'wildSuit',
     targetAll: false,
     abilityValue: [1, 1, 1],
@@ -272,7 +272,7 @@ export const AbilityData: AbilityCard[] = [
     hitAnimation: 'fire',
   },
   {
-    id: 13,
+    id: 55,
     abilityFunction: 'wildRange',
     targetAll: false,
     abilityValue: [1, 1, 1],
@@ -293,7 +293,7 @@ export const AbilityData: AbilityCard[] = [
     hitAnimation: 'fire',
   },
   {
-    id: 14,
+    id: 60,
     abilityFunction: 'wildSuitRange',
     targetAll: false,
     abilityValue: [14, 14, 14],
@@ -314,7 +314,7 @@ export const AbilityData: AbilityCard[] = [
     hitAnimation: 'fire',
   },
   {
-    id: 15,
+    id: 65,
     abilityFunction: 'increaseDefense',
     targetAll: false,
     abilityValue: [1, 1, 1],
@@ -336,7 +336,7 @@ export const AbilityData: AbilityCard[] = [
     hitAnimation: 'fire',
   },
   {
-    id: 16,
+    id: 70,
     abilityFunction: 'increaseDefense',
     targetAll: true,
     abilityValue: [2, 2, 2],

@@ -16,7 +16,7 @@ interface AbilityDeckCard extends AbilityCard {
   index: number;
 }
 
-type SortValue = 'Color' | 'Upgrade' | 'Level' | 'Cost';
+type SortValue = 'Color' | 'Upgrade' | 'Level' | 'Cost' | 'Card';
 
 @Component({
   selector: 'app-deck-overlay',
@@ -277,25 +277,58 @@ export class DeckOverlayComponent implements OnInit {
     this.abilityHand = this.abilityHand.filter((x) => x.id !== card?.id);
     const newLength = this.abilityHand.length; // 0
 
+    // Upgrade card
+
+    // If 3/3 remove previous ID and add new id
+    let added = false;
     this.abilityCards = this.abilityCards.map((x) => {
+      // Reduce number owned
       if (x.id === card?.id) {
+        console.log('yes');
         return {
           ...x,
-          level: x.level + 1,
           trueNumberOwned: x.trueNumberOwned - 3,
           numberOwned: x.trueNumberOwned - 3,
-          isNew: true,
           owned: true,
           inHand: false,
         };
       }
 
+      // Check if needs to add to existing ID
+      if (x.id === card?.id! + 1) {
+        added = true;
+        console.log('hit');
+        return {
+          ...x,
+          trueNumberOwned: x.trueNumberOwned + 1,
+          numberOwned: x.trueNumberOwned + 1,
+          owned: true,
+          inHand: false,
+          isNew: true,
+        };
+      }
       return x;
     });
 
-    const foundCard = this.abilityCards.find((x) => x.id === card?.id);
-    if (currentLength !== newLength && foundCard) {
-      // this.abilityHand.push(foundCard);
+    this.abilityCards = this.abilityCards.filter((x) => {
+      if (x.id === card?.id && x.trueNumberOwned < 1) {
+        return false;
+      }
+
+      return true;
+    });
+
+    if (!added && card) {
+      this.abilityCards.push({
+        ...card,
+        numberOwned: 1,
+        trueNumberOwned: 1,
+        id: card.id + 1,
+        level: card.level + 1,
+        owned: true,
+        inHand: false,
+        isNew: true,
+      });
     }
     localStorage.setItem('playerDeck', JSON.stringify(this.abilityHand));
     localStorage.setItem('abilityCards', JSON.stringify(this.abilityCards));
@@ -328,106 +361,139 @@ export class DeckOverlayComponent implements OnInit {
   }
 
   nextSort() {
-    if (this.currentSort === 'Color') {
+    if (this.currentSort === 'Card') {
+      this.currentSort = 'Color';
+    } else if (this.currentSort === 'Color') {
       this.currentSort = 'Upgrade';
     } else if (this.currentSort === 'Upgrade') {
       this.currentSort = 'Cost';
     } else if (this.currentSort === 'Cost') {
       this.currentSort = 'Level';
     } else if (this.currentSort === 'Level') {
-      this.currentSort = 'Color';
+      this.currentSort = 'Card';
     }
 
     this.sortCards();
   }
 
   sortCards() {
-    // Sort by cost
-    if (this.currentSort === 'Color') {
-      let onlyRedArray: AbilityDeckCard[] = [];
-      let onlyBlackArray: AbilityDeckCard[] = [];
-      let bothArray: AbilityDeckCard[] = [];
+    try {
+      // Sort by card
+      if (this.currentSort === 'Card') {
+        this.abilityCards = this.abilityCards.sort((a, b) => b.id - a.id);
+      }
 
-      // First sort by cost
-      this.abilityCards = this.abilityCards.sort((a, b) => {
-        if (a.cost[a.level].length < b.cost[b.level].length) {
-          return -1;
-        }
-        if (a.cost[a.level].length > b.cost[b.level].length) {
-          return 1;
-        }
-        return 0;
-      });
+      // Sort by cost
+      if (this.currentSort === 'Color') {
+        let onlyRedArray: AbilityDeckCard[] = [];
+        let onlyBlackArray: AbilityDeckCard[] = [];
+        let bothArray: AbilityDeckCard[] = [];
 
-      // Manually sort
-      this.abilityCards.forEach((x) => {
-        const includesHearts = x.cost[x.level].includes('hearts');
-        const includesDiamonds = x.cost[x.level].includes('diamonds');
-        const includesRed = x.cost[x.level].includes('red');
-        const includesSpades = x.cost[x.level].includes('spades');
-        const includesClubs = x.cost[x.level].includes('clubs');
-        const includesBlack = x.cost[x.level].includes('black');
-        const onlyRed =
-          (includesHearts || includesDiamonds || includesRed) &&
-          !includesSpades &&
-          !includesClubs &&
-          !includesBlack;
-        const onlyBlack =
-          (includesSpades || includesClubs || includesBlack) &&
-          !includesHearts &&
-          !includesDiamonds &&
-          !includesRed;
+        // First sort by cost
+        this.abilityCards = this.abilityCards.sort((a, b) => {
+          if (
+            a.cost[a.level] &&
+            b.cost[b.level] &&
+            a.cost[a.level].length < b.cost[b.level].length
+          ) {
+            return -1;
+          }
+          if (
+            a.cost[a.level] &&
+            b.cost[b.level] &&
+            a.cost[a.level].length > b.cost[b.level].length
+          ) {
+            return 1;
+          }
+          return 0;
+        });
 
-        if (onlyRed || x.cost[x.level].length === 0) {
-          onlyRedArray.push(x);
-        } else if (onlyBlack) {
-          onlyBlackArray.push(x);
-        } else {
-          bothArray.push(x);
-        }
-      });
+        // Manually sort
+        this.abilityCards.forEach((x) => {
+          const includesHearts =
+            x.cost[x.level] && x.cost[x.level].includes('hearts');
+          const includesDiamonds =
+            x.cost[x.level] && x.cost[x.level].includes('diamonds');
+          const includesRed =
+            x.cost[x.level] && x.cost[x.level].includes('red');
+          const includesSpades =
+            x.cost[x.level] && x.cost[x.level].includes('spades');
+          const includesClubs =
+            x.cost[x.level] && x.cost[x.level].includes('clubs');
+          const includesBlack =
+            x.cost[x.level] && x.cost[x.level].includes('black');
+          const onlyRed =
+            (includesHearts || includesDiamonds || includesRed) &&
+            !includesSpades &&
+            !includesClubs &&
+            !includesBlack;
+          const onlyBlack =
+            (includesSpades || includesClubs || includesBlack) &&
+            !includesHearts &&
+            !includesDiamonds &&
+            !includesRed;
 
-      // Combine arrays
-      this.abilityCards = [...onlyRedArray, ...onlyBlackArray, ...bothArray];
-    }
+          if (onlyRed || (x.cost[x.level] && x.cost[x.level].length === 0)) {
+            onlyRedArray.push(x);
+          } else if (onlyBlack) {
+            onlyBlackArray.push(x);
+          } else {
+            bothArray.push(x);
+          }
+        });
 
-    // Sort by levelup
-    if (this.currentSort === 'Upgrade') {
-      this.abilityCards = this.abilityCards.sort((a, b) => {
-        if (a.trueNumberOwned > b.trueNumberOwned) {
-          return -1;
-        }
-        if (a.trueNumberOwned < b.trueNumberOwned) {
-          return 1;
-        }
-        return 0;
-      });
-    }
+        // Combine arrays
+        this.abilityCards = [...onlyRedArray, ...onlyBlackArray, ...bothArray];
+      }
 
-    // Sort by cost
-    if (this.currentSort === 'Cost') {
-      this.abilityCards = this.abilityCards.sort((a, b) => {
-        if (a.cost[a.level].length < b.cost[b.level].length) {
-          return -1;
-        }
-        if (a.cost[a.level].length > b.cost[b.level].length) {
-          return 1;
-        }
-        return 0;
-      });
-    }
+      // Sort by levelup
+      if (this.currentSort === 'Upgrade') {
+        this.abilityCards = this.abilityCards.sort((a, b) => {
+          if (a.trueNumberOwned > b.trueNumberOwned) {
+            return -1;
+          }
+          if (a.trueNumberOwned < b.trueNumberOwned) {
+            return 1;
+          }
+          return 0;
+        });
+      }
 
-    // Sort by Level
-    if (this.currentSort === 'Level') {
-      this.abilityCards = this.abilityCards.sort((a, b) => {
-        if (a.level > b.level) {
-          return -1;
-        }
-        if (a.level < b.level) {
-          return 1;
-        }
-        return 0;
-      });
+      // Sort by cost
+      if (this.currentSort === 'Cost') {
+        this.abilityCards = this.abilityCards.sort((a, b) => {
+          if (
+            a.cost[a.level] &&
+            b.cost[b.level] &&
+            a.cost[a.level].length < b.cost[b.level].length
+          ) {
+            return -1;
+          }
+          if (
+            a.cost[a.level] &&
+            b.cost[b.level] &&
+            a.cost[a.level].length > b.cost[b.level].length
+          ) {
+            return 1;
+          }
+          return 0;
+        });
+      }
+
+      // Sort by Level
+      if (this.currentSort === 'Level') {
+        this.abilityCards = this.abilityCards.sort((a, b) => {
+          if (a.level > b.level) {
+            return -1;
+          }
+          if (a.level < b.level) {
+            return 1;
+          }
+          return 0;
+        });
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
 

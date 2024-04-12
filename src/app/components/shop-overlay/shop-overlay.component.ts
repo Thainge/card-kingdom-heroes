@@ -37,6 +37,11 @@ import Swiper from 'swiper';
 type ShopStep = 'picking' | 'shopping' | 'opening';
 type OpeningCardsStep = 'initial' | 'openingCards';
 
+interface AbilityDeckCard extends AbilityCard {
+  owned: boolean;
+  inHand: boolean;
+}
+
 interface ExtendedAbilityCard extends AbilityCard {
   rarityImage: string;
   special: boolean;
@@ -173,26 +178,41 @@ export class ShopOverlayComponent implements OnInit {
         return { ...x, special: false, rarityImage: 'rare.png' };
       });
     const shuffled: ExtendedAbilityCard[] = this.cardService.shuffle(shuffled1);
-    this.openCards = [shuffled[0], shuffled[1], shuffled[2]];
-    let currentCards = JSON.parse(localStorage.getItem('abilityCards') ?? '[]');
+    this.openCards = [shuffled[0], shuffled[1], shuffled[2]].map((x) => {
+      return { ...x, id: x.id + x.level - 1 };
+    });
+    const currentCards: ExtendedAbilityCard[] = JSON.parse(
+      localStorage.getItem('abilityCards') ?? '[]'
+    );
 
-    let newCards: AbilityCard[] = currentCards;
+    let returnCards: ExtendedAbilityCard[] = JSON.parse(
+      JSON.stringify(currentCards)
+    );
 
-    this.openCards.forEach((a) => {
-      const foundIndex = newCards.findIndex((x) => x.id === a.id);
+    this.openCards.forEach((x: ExtendedAbilityCard) => {
+      const exists = currentCards.find((a) => a.id === x.id);
 
-      if (foundIndex !== -1) {
-        // Set value owned +1
-        newCards[foundIndex].trueNumberOwned++;
-        newCards[foundIndex].numberOwned++;
+      if (exists) {
+        // If card ID exists, increase owned count
+        returnCards = returnCards.map((a) => {
+          if (a.id === x.id) {
+            return {
+              ...a,
+              trueNumberOwned: a.trueNumberOwned + 1,
+              numberOwned: a.trueNumberOwned + 1,
+            };
+          }
+          return a;
+        });
       } else {
-        // Add if does not exist
-        newCards.push({ ...a, isNew: true });
+        // If card ID does not exist, add card to deck
+        const newCard: ExtendedAbilityCard = {
+          ...x,
+        };
+        returnCards.push(newCard);
       }
     });
-
-    localStorage.setItem('abilityCards', JSON.stringify(newCards));
-
+    localStorage.setItem('abilityCards', JSON.stringify(returnCards));
     setTimeout(() => {
       this.canClickNext = true;
     }, 800);

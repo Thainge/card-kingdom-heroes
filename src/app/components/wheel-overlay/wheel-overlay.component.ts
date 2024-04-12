@@ -7,8 +7,10 @@ import {
   zoomOutOnLeaveAnimation,
 } from 'angular-animations';
 import { Wheel } from 'spin-wheel';
+import { BoosterPack } from 'src/app/models/boosterPack';
 import { CardService } from 'src/app/services/card.service';
 import { playerService } from 'src/app/services/player.service';
+import { BoosterPacks } from 'src/assets/data/boosterData/booster';
 
 interface WheelItem {
   backgroundColor?: string;
@@ -26,6 +28,8 @@ interface WheelItem {
   textAmount: string;
   rewardImage: string;
   rewardType: RewardType;
+  boosterPackId?: number;
+  goldAmount: number;
 }
 
 type RewardType = 'gold' | 'booster';
@@ -92,6 +96,7 @@ export class WheelOverlayComponent implements OnInit {
     }
   }
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
+  spinCost: number = 50;
 
   spinning: boolean = false;
   wheel: any;
@@ -117,19 +122,22 @@ export class WheelOverlayComponent implements OnInit {
         backgroundColor: '#ffd700',
         weight: 0.5,
         rewardImage: 'goldReward.png',
-        text: 'Diamonds',
+        text: 'Gems',
         rewardType: 'gold',
         textAmount: '999x',
+        goldAmount: 999,
       },
       {
         value: 2,
         image: './assets/wheelImages/booster1.png',
         imageScale: 0.15,
         weight: 0.75,
-        rewardImage: 'boosterPack.png',
-        text: 'Booster Pack',
+        rewardImage: 'boosterPackGreen.png',
+        text: 'Green Booster Pack',
         rewardType: 'booster',
+        boosterPackId: 1,
         textAmount: '1x',
+        goldAmount: 1,
       },
       {
         value: 3,
@@ -137,19 +145,22 @@ export class WheelOverlayComponent implements OnInit {
         imageScale: 0.5,
         weight: 1,
         rewardImage: 'goldReward.png',
-        text: 'Diamonds',
+        text: 'Gems',
         rewardType: 'gold',
         textAmount: '150x',
+        goldAmount: 150,
       },
       {
         value: 4,
         image: './assets/wheelImages/booster2.png',
         imageScale: 0.15,
         weight: 0.75,
-        rewardImage: 'boosterPack.png',
-        text: 'Booster Pack',
+        rewardImage: 'boosterPackBlue.png',
+        text: 'Blue Booster Pack',
         rewardType: 'booster',
+        boosterPackId: 2,
         textAmount: '1x',
+        goldAmount: 1,
       },
       {
         value: 5,
@@ -157,19 +168,22 @@ export class WheelOverlayComponent implements OnInit {
         imageScale: 0.5,
         weight: 1,
         rewardImage: 'goldReward.png',
-        text: 'Diamonds',
+        text: 'Gems',
         rewardType: 'gold',
         textAmount: '150x',
+        goldAmount: 150,
       },
       {
         value: 6,
         image: './assets/wheelImages/booster1.png',
         imageScale: 0.15,
         weight: 0.75,
-        rewardImage: 'boosterPack.png',
-        text: 'Booster Pack',
+        rewardImage: 'boosterPackYellow.png',
+        text: 'Yellow Booster Pack',
         rewardType: 'booster',
+        boosterPackId: 3,
         textAmount: '1x',
+        goldAmount: 1,
       },
       {
         value: 7,
@@ -177,19 +191,22 @@ export class WheelOverlayComponent implements OnInit {
         imageScale: 0.5,
         weight: 1,
         rewardImage: 'goldReward.png',
-        text: 'Diamonds',
+        text: 'Gems',
         rewardType: 'gold',
         textAmount: '150x',
+        goldAmount: 150,
       },
       {
         value: 8,
         image: './assets/wheelImages/booster2.png',
         imageScale: 0.15,
         weight: 0.75,
-        rewardImage: 'boosterPack.png',
-        text: 'Booster Pack',
+        rewardImage: 'boosterPackRed.png',
+        text: 'Red Booster Pack',
         rewardType: 'booster',
+        boosterPackId: 4,
         textAmount: '1x',
+        goldAmount: 1,
       },
 
       {
@@ -198,19 +215,22 @@ export class WheelOverlayComponent implements OnInit {
         imageScale: 0.5,
         weight: 1,
         rewardImage: 'goldReward.png',
-        text: 'Diamonds',
+        text: 'Gems',
         rewardType: 'gold',
         textAmount: '150x',
+        goldAmount: 150,
       },
       {
         value: 10,
         image: './assets/wheelImages/booster1.png',
         imageScale: 0.15,
         weight: 0.75,
-        rewardImage: 'boosterPack.png',
-        text: 'Booster Pack',
+        rewardImage: 'boosterPackGreen.png',
+        text: 'Green Booster Pack',
         rewardType: 'booster',
+        boosterPackId: 1,
         textAmount: '1x',
+        goldAmount: 1,
       },
     ];
     this.prizes = wheelItems;
@@ -240,6 +260,12 @@ export class WheelOverlayComponent implements OnInit {
       return;
     }
 
+    if (this.spinCost > this.gold) {
+      return;
+    }
+
+    this.playerService.gold$.next(this.gold - this.spinCost);
+
     if (this.wheel) {
       this.spinning = true;
       // Randomly spin to index
@@ -259,11 +285,24 @@ export class WheelOverlayComponent implements OnInit {
 
   endSpin() {
     if (this.wonPrize?.rewardType === 'gold') {
-      this.playerService.gold$.next(this.gold + this.wonPrize?.value!);
+      this.playerService.gold$.next(this.gold + this.wonPrize?.goldAmount!);
     }
 
     if (this.wonPrize?.rewardType === 'booster') {
       // Add booster pack prize
+      let boosterPacks: BoosterPack[] = JSON.parse(
+        localStorage.getItem('boosterPacks') ?? '[]'
+      );
+      if (boosterPacks.length < 1) {
+        boosterPacks = BoosterPacks;
+      }
+      boosterPacks = boosterPacks.map((x) => {
+        if (x.id === this.wonPrize?.boosterPackId!) {
+          return { ...x, count: x.count + 1, showNew: false };
+        }
+        return x;
+      });
+      localStorage.setItem('boosterPacks', JSON.stringify(boosterPacks));
     }
 
     this.showPrize = false;

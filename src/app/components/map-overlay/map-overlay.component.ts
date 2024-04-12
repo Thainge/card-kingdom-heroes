@@ -127,7 +127,6 @@ export class MapOverlayComponent implements OnInit {
         localStorage.getItem('boosterPacks') ?? '[]'
       );
     }, 1000);
-    console.log(this.boosterPacks);
     this.playerService.gold$.subscribe((x) => {
       this.gold = x;
     });
