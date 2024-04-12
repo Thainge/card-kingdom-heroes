@@ -1,3 +1,5 @@
+import { BackgroundDto } from './backgrounds';
+
 export interface FlagDto {
   id: number;
   x: number;
@@ -10,7 +12,7 @@ export interface FlagDto {
 }
 
 interface MissionDetails {
-  image: string;
+  image: BackgroundDto;
   title: string;
   description: string;
   rewardMin: number;

@@ -8,11 +8,9 @@ export const flagsData: FlagDto[] = [
     levelStatus: 'nextLevel',
     alreadyAnimated: true,
     missionDetails: {
-      image: 'forest.png',
+      image: 'loadingBg.png',
       title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      description: `A place of harmony and peace...`,
       rewardMin: 50,
       rewardMax: 100,
     },

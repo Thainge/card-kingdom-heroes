@@ -58,6 +58,7 @@ export class CampaignOverlayComponent implements OnInit {
     }, 0);
   }
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
+  @Input('navigate') navigate: boolean = true;
 
   @ViewChild('swiper') swiperRef: ElementRef | undefined;
   swiper?: Swiper;
@@ -116,8 +117,11 @@ export class CampaignOverlayComponent implements OnInit {
   chooseCampaign(campaign: CampaignBox) {
     const route = '/' + campaign.url;
     this.closeMenu();
-    this.loadingService.isRefreshing$.next(true);
-    this.loadingService.navigate(route, 'loadingBg.png');
+
+    if (this.navigate) {
+      this.loadingService.isRefreshing$.next(true);
+      this.loadingService.navigate(route, 'loadingBg.png');
+    }
   }
 
   onActiveIndexChange() {

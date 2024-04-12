@@ -20,6 +20,11 @@
   height: 90%;
 }
 
+.nothing {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .homeLogoImg {
   width: 22%;
   margin-bottom: 1em;

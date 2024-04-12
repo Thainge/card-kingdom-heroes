@@ -3,12 +3,12 @@ import { EnemyAbilityCardsSet1 } from './enemyAbilityCards';
 
 const Level: LevelDto = {
   id: 1,
-  skipRedrawPhase: false,
-  battleRewardXp: 61,
+  skipRedrawPhase: true,
+  battleRewardXp: 50,
   playerLevelUpEnabled: true,
   hideDialog: false,
   allCardsWild: false,
-  showGuide: false,
+  showGuide: true,
   showAbilityGuide: false,
 
   shuffleAbilityCards: true,
@@ -41,7 +41,7 @@ export const LevelsData: LevelDto[] = [
         ],
         enemyAbilityCards: EnemyAbilityCardsSet1,
         enemyCardTheme: 'mario',
-        background: 'forest.png',
+        background: 'loadingBg.png',
         showSnowEffect: false,
         showBubblesEffect: false,
         showLeavesEffect: true,

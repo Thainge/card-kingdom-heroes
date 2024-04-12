@@ -9,9 +9,10 @@ import {
   zoomOutOnLeaveAnimation,
 } from 'angular-animations';
 import { FlagDto } from 'src/app/models/flag';
+import { BackgroundDto } from 'src/app/models/backgrounds';
 
 interface MissionDetails {
-  image: string;
+  image: BackgroundDto;
   title: string;
   description: string;
   rewardMin: number;
@@ -46,7 +47,11 @@ export class BattleStartOverlayComponent implements OnInit {
   startBattle() {
     localStorage.setItem('currentLevel', JSON.stringify(this.currentLevel));
     localStorage.setItem('currentDetails', JSON.stringify(this.missionDetails));
-    this.loadingService.navigate('/battle', 'forest.png');
+    if (this.missionDetails?.image) {
+      this.loadingService.navigate('/battle', this.missionDetails.image);
+    } else {
+      this.loadingService.navigate('/battle', 'loadingBg.png');
+    }
   }
 
   ngOnInit() {}

@@ -442,7 +442,7 @@ export class MapComponent implements AfterViewInit, OnInit {
       dots: [],
       missionDetails: {
         description: '',
-        image: '',
+        image: 'loadingBg.png',
         rewardMax: 0,
         rewardMin: 0,
         title: '',

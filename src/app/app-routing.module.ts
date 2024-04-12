@@ -6,10 +6,11 @@ import { HomeComponent } from './pages/home/home.component';
 import { ZeldaMapComponent } from './pages/zeldaMap/map.component';
 
 const routes: Routes = [
+  { path: '', component: HomeComponent },
   { path: 'cardkingdom-map', component: MapComponent },
   { path: 'zelda-map', component: ZeldaMapComponent },
   { path: 'battle', component: BattleComponent },
-  { path: '**', redirectTo: '/cardkingdom-map' },
+  { path: '**', redirectTo: '/' },
 ];
 
 @NgModule({

@@ -12,7 +12,9 @@
     <app-campaign-overlay
       [open]="chooseCampaignOpen"
       (onCloseMenu)="chooseDifficulty()"
+      [navigate]="false"
     ></app-campaign-overlay>
+    <app-map-overlay class="nothing"></app-map-overlay>
     <img src="./assets/homeLogo.png" class="homeLogoImg" />
     <img src="./assets/start.png" class="startBtn btn" (click)="startGame()" />
     <img

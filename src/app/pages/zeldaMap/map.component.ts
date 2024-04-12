@@ -384,7 +384,7 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
       dots: [],
       missionDetails: {
         description: '',
-        image: '',
+        image: 'forest.png',
         rewardMax: 0,
         rewardMin: 0,
         title: '',

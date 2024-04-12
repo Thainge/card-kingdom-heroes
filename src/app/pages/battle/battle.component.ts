@@ -468,7 +468,14 @@ export class BattleComponent implements OnInit {
             x.hide();
             x.remove();
           });
-          this.loadingService.navigate('/', 'forest.png');
+          if (this.currentCombatPhase?.background) {
+            this.loadingService.navigate(
+              '/battle',
+              this.currentCombatPhase.background
+            );
+          } else {
+            this.loadingService.navigate('/battle', 'loadingBg.png');
+          }
           localStorage.setItem('showLoading', JSON.stringify(false));
         }
       }
@@ -1028,7 +1035,14 @@ export class BattleComponent implements OnInit {
         x.hide();
         x.remove();
       });
-      this.loadingService.navigate('', 'forest.png');
+      if (this.currentCombatPhase?.background) {
+        this.loadingService.navigate(
+          '/battle',
+          this.currentCombatPhase.background
+        );
+      } else {
+        this.loadingService.navigate('/battle', 'loadingBg.png');
+      }
       this.resetGame();
       this.Cards = Cards;
       setTimeout(() => {
@@ -1186,7 +1200,14 @@ export class BattleComponent implements OnInit {
         x.hide();
         x.remove();
       });
-      this.loadingService.navigate('', 'forest.png');
+      if (this.currentCombatPhase?.background) {
+        this.loadingService.navigate(
+          '/battle',
+          this.currentCombatPhase.background
+        );
+      } else {
+        this.loadingService.navigate('/battle', 'loadingBg.png');
+      }
       this.resetGame();
       this.Cards = Cards;
       this.gameInit();
@@ -1361,7 +1382,14 @@ export class BattleComponent implements OnInit {
         x.hide();
         x.remove();
       });
-      this.loadingService.navigate('', 'forest.png');
+      if (this.currentCombatPhase?.background) {
+        this.loadingService.navigate(
+          '/battle',
+          this.currentCombatPhase.background
+        );
+      } else {
+        this.loadingService.navigate('/battle', 'loadingBg.png');
+      }
       this.resetGame();
       this.Cards = Cards;
       setTimeout(() => {
@@ -1452,7 +1480,14 @@ export class BattleComponent implements OnInit {
       x.hide();
       x.remove();
     });
-    this.loadingService.navigate('/cardkingdom-map', 'forest.png');
+    if (this.currentCombatPhase?.background) {
+      this.loadingService.navigate(
+        '/cardkingdom-map',
+        this.currentCombatPhase.background
+      );
+    } else {
+      this.loadingService.navigate('/cardkingdom-map', 'loadingBg.png');
+    }
   }
 
   async retry() {
@@ -1462,7 +1497,14 @@ export class BattleComponent implements OnInit {
       x.hide();
       x.remove();
     });
-    this.loadingService.navigate('/battle', 'forest.png');
+    if (this.currentCombatPhase?.background) {
+      this.loadingService.navigate(
+        '/battle',
+        this.currentCombatPhase.background
+      );
+    } else {
+      this.loadingService.navigate('/battle', 'loadingBg.png');
+    }
     setTimeout(() => {
       this.resetGame();
     }, 500);
