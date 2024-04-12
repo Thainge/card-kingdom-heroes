@@ -1,32 +1,6 @@
-interface HeroUpgrade {
-  id: number;
-  level: HeroUpgradeLevel;
-  image: string;
-  title: string[];
-  description: string[];
-  cost: number[];
-}
+import { PlayerDto } from 'src/app/models/player';
 
-type HeroUpgradeLevel = 0 | 1 | 2 | 3;
-type HeroColor = 'red' | 'orange' | 'yellow' | 'green' | 'blue' | 'purple';
-
-interface Hero {
-  id: number;
-  color: HeroColor;
-  image: string;
-  name: string;
-  level: number;
-  points: number;
-  health: number;
-  defense: number;
-  usedPoints: number;
-  selected: boolean;
-  unlocked: boolean;
-  upgrades: HeroUpgrade[];
-  disabled: boolean;
-}
-
-export const HeroData: Hero[] = [
+export const HeroData: PlayerDto[] = [
   {
     id: 1,
     name: 'Mario',
@@ -34,7 +8,33 @@ export const HeroData: Hero[] = [
     color: 'red',
     level: 1,
     health: 3,
-    defense: 1,
+    attack: 1,
+    baseAttack: 1,
+    baseHealth: 3,
+    xp: 0,
+    isMaxLevel: false,
+    skills: {
+      wildHearts: false,
+      wildDiamonds: false,
+      wildSpades: false,
+      wildClubs: false,
+      rangeHearts: 0,
+      rangeDiamonds: 0,
+      rangeSpades: 0,
+      rangeClubs: 0,
+      showWildHearts: false,
+      showWildDiamonds: false,
+      showWildSpades: false,
+      showWildClubs: false,
+      extraHeartsDamage: false,
+      extraDiamondsDamage: false,
+      extraSpadesDamage: false,
+      extraClubsDamage: false,
+      wildCardsCount: 4,
+      extraHealth: 0,
+      extraAttack: 0,
+    },
+    xpLevels: [60, 90, 120],
     upgrades: [
       {
         id: 1,
@@ -105,12 +105,38 @@ export const HeroData: Hero[] = [
   },
   {
     id: 2,
-    name: 'Mario',
-    image: 'mario.png',
-    color: 'red',
+    name: 'Link',
+    image: 'link.png',
+    color: 'green',
     level: 1,
     health: 3,
-    defense: 1,
+    attack: 1,
+    baseAttack: 1,
+    baseHealth: 3,
+    xp: 0,
+    isMaxLevel: false,
+    skills: {
+      wildHearts: false,
+      wildDiamonds: false,
+      wildSpades: false,
+      wildClubs: false,
+      rangeHearts: 0,
+      rangeDiamonds: 0,
+      rangeSpades: 0,
+      rangeClubs: 0,
+      showWildHearts: false,
+      showWildDiamonds: false,
+      showWildSpades: false,
+      showWildClubs: false,
+      extraHeartsDamage: false,
+      extraDiamondsDamage: false,
+      extraSpadesDamage: false,
+      extraClubsDamage: false,
+      wildCardsCount: 4,
+      extraHealth: 0,
+      extraAttack: 0,
+    },
+    xpLevels: [60, 90, 120],
     upgrades: [
       {
         id: 1,
@@ -186,7 +212,33 @@ export const HeroData: Hero[] = [
     color: 'green',
     level: 1,
     health: 3,
-    defense: 1,
+    attack: 1,
+    baseAttack: 1,
+    baseHealth: 3,
+    xp: 0,
+    isMaxLevel: false,
+    skills: {
+      wildHearts: false,
+      wildDiamonds: false,
+      wildSpades: false,
+      wildClubs: false,
+      rangeHearts: 0,
+      rangeDiamonds: 0,
+      rangeSpades: 0,
+      rangeClubs: 0,
+      showWildHearts: false,
+      showWildDiamonds: false,
+      showWildSpades: false,
+      showWildClubs: false,
+      extraHeartsDamage: false,
+      extraDiamondsDamage: false,
+      extraSpadesDamage: false,
+      extraClubsDamage: false,
+      wildCardsCount: 4,
+      extraHealth: 0,
+      extraAttack: 0,
+    },
+    xpLevels: [60, 90, 120],
     upgrades: [
       {
         id: 1,
@@ -262,7 +314,33 @@ export const HeroData: Hero[] = [
     color: 'green',
     level: 1,
     health: 3,
-    defense: 1,
+    attack: 1,
+    baseAttack: 1,
+    baseHealth: 3,
+    xp: 0,
+    isMaxLevel: false,
+    skills: {
+      wildHearts: false,
+      wildDiamonds: false,
+      wildSpades: false,
+      wildClubs: false,
+      rangeHearts: 0,
+      rangeDiamonds: 0,
+      rangeSpades: 0,
+      rangeClubs: 0,
+      showWildHearts: false,
+      showWildDiamonds: false,
+      showWildSpades: false,
+      showWildClubs: false,
+      extraHeartsDamage: false,
+      extraDiamondsDamage: false,
+      extraSpadesDamage: false,
+      extraClubsDamage: false,
+      wildCardsCount: 4,
+      extraHealth: 0,
+      extraAttack: 0,
+    },
+    xpLevels: [60, 90, 120],
     upgrades: [
       {
         id: 1,
@@ -338,7 +416,33 @@ export const HeroData: Hero[] = [
     color: 'orange',
     level: 1,
     health: 3,
-    defense: 1,
+    attack: 1,
+    baseAttack: 1,
+    baseHealth: 3,
+    xp: 0,
+    isMaxLevel: false,
+    skills: {
+      wildHearts: false,
+      wildDiamonds: false,
+      wildSpades: false,
+      wildClubs: false,
+      rangeHearts: 0,
+      rangeDiamonds: 0,
+      rangeSpades: 0,
+      rangeClubs: 0,
+      showWildHearts: false,
+      showWildDiamonds: false,
+      showWildSpades: false,
+      showWildClubs: false,
+      extraHeartsDamage: false,
+      extraDiamondsDamage: false,
+      extraSpadesDamage: false,
+      extraClubsDamage: false,
+      wildCardsCount: 4,
+      extraHealth: 0,
+      extraAttack: 0,
+    },
+    xpLevels: [60, 90, 120],
     upgrades: [
       {
         id: 1,
@@ -414,7 +518,33 @@ export const HeroData: Hero[] = [
     color: 'yellow',
     level: 1,
     health: 3,
-    defense: 1,
+    attack: 1,
+    baseAttack: 1,
+    baseHealth: 3,
+    xp: 0,
+    isMaxLevel: false,
+    skills: {
+      wildHearts: false,
+      wildDiamonds: false,
+      wildSpades: false,
+      wildClubs: false,
+      rangeHearts: 0,
+      rangeDiamonds: 0,
+      rangeSpades: 0,
+      rangeClubs: 0,
+      showWildHearts: false,
+      showWildDiamonds: false,
+      showWildSpades: false,
+      showWildClubs: false,
+      extraHeartsDamage: false,
+      extraDiamondsDamage: false,
+      extraSpadesDamage: false,
+      extraClubsDamage: false,
+      wildCardsCount: 4,
+      extraHealth: 0,
+      extraAttack: 0,
+    },
+    xpLevels: [60, 90, 120],
     upgrades: [
       {
         id: 1,
@@ -490,7 +620,33 @@ export const HeroData: Hero[] = [
     color: 'blue',
     level: 1,
     health: 3,
-    defense: 1,
+    attack: 1,
+    baseAttack: 1,
+    baseHealth: 3,
+    xp: 0,
+    isMaxLevel: false,
+    skills: {
+      wildHearts: false,
+      wildDiamonds: false,
+      wildSpades: false,
+      wildClubs: false,
+      rangeHearts: 0,
+      rangeDiamonds: 0,
+      rangeSpades: 0,
+      rangeClubs: 0,
+      showWildHearts: false,
+      showWildDiamonds: false,
+      showWildSpades: false,
+      showWildClubs: false,
+      extraHeartsDamage: false,
+      extraDiamondsDamage: false,
+      extraSpadesDamage: false,
+      extraClubsDamage: false,
+      wildCardsCount: 4,
+      extraHealth: 0,
+      extraAttack: 0,
+    },
+    xpLevels: [60, 90, 120],
     upgrades: [
       {
         id: 1,
@@ -566,7 +722,33 @@ export const HeroData: Hero[] = [
     color: 'purple',
     level: 1,
     health: 3,
-    defense: 1,
+    attack: 1,
+    baseAttack: 1,
+    baseHealth: 3,
+    xp: 0,
+    isMaxLevel: false,
+    skills: {
+      wildHearts: false,
+      wildDiamonds: false,
+      wildSpades: false,
+      wildClubs: false,
+      rangeHearts: 0,
+      rangeDiamonds: 0,
+      rangeSpades: 0,
+      rangeClubs: 0,
+      showWildHearts: false,
+      showWildDiamonds: false,
+      showWildSpades: false,
+      showWildClubs: false,
+      extraHeartsDamage: false,
+      extraDiamondsDamage: false,
+      extraSpadesDamage: false,
+      extraClubsDamage: false,
+      wildCardsCount: 4,
+      extraHealth: 0,
+      extraAttack: 0,
+    },
+    xpLevels: [60, 90, 120],
     upgrades: [
       {
         id: 1,

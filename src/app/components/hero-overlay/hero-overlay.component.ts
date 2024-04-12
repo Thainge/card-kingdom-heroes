@@ -7,37 +7,10 @@ import {
   fadeInOnEnterAnimation,
   zoomOutOnLeaveAnimation,
 } from 'angular-animations';
+import { HeroUpgrade, PlayerDto } from 'src/app/models/player';
 import { LoadingService } from 'src/app/services/loading.service';
 import { playerService } from 'src/app/services/player.service';
 import { HeroData } from 'src/assets/data/heroData/hero';
-
-interface HeroUpgrade {
-  id: number;
-  level: HeroUpgradeLevel;
-  image: string;
-  title: string[];
-  description: string[];
-  cost: number[];
-}
-
-type HeroUpgradeLevel = 0 | 1 | 2 | 3;
-type HeroColor = 'red' | 'orange' | 'yellow' | 'green' | 'blue' | 'purple';
-
-interface Hero {
-  id: number;
-  color: HeroColor;
-  image: string;
-  name: string;
-  level: number;
-  points: number;
-  health: number;
-  defense: number;
-  usedPoints: number;
-  selected: boolean;
-  unlocked: boolean;
-  upgrades: HeroUpgrade[];
-  disabled: boolean;
-}
 
 @Component({
   selector: 'app-hero-overlay',
@@ -62,8 +35,8 @@ export class HeroOverlayComponent implements OnInit {
     }
   }
 
-  heroes: Hero[] = [];
-  currentHero: Hero | undefined;
+  heroes: PlayerDto[] = [];
+  currentHero: PlayerDto | undefined;
   currentHoveringUpgrade: HeroUpgrade | undefined;
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
@@ -156,6 +129,7 @@ export class HeroOverlayComponent implements OnInit {
     if (
       this.currentHero &&
       this.currentHero.upgrades &&
+      this.currentHero.points &&
       this.currentHero.points > 0
     ) {
       this.currentHero.upgrades = this.currentHero.upgrades.map((x) => {
@@ -181,7 +155,12 @@ export class HeroOverlayComponent implements OnInit {
   }
 
   resetUpgrades() {
-    if (this.currentHero && this.currentHero.upgrades) {
+    if (
+      this.currentHero &&
+      this.currentHero.upgrades &&
+      this.currentHero.points &&
+      this.currentHero.usedPoints
+    ) {
       this.currentHero.upgrades = this.currentHero.upgrades.map((x) => {
         return { ...x, level: 0 };
       });
@@ -194,7 +173,11 @@ export class HeroOverlayComponent implements OnInit {
   }
 
   subtractUpgradePoints(item: HeroUpgrade): boolean {
-    if (!this.currentHero) {
+    if (
+      !this.currentHero ||
+      !this.currentHero.points ||
+      !this.currentHero.usedPoints
+    ) {
       return false;
     }
     const newPoints = this.currentHero.points - item.cost[item.level];

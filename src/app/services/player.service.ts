@@ -6,6 +6,34 @@ import { CheatDto } from '../models/cheat';
 import { PlayerDto } from '../models/player';
 import { AbilityCard } from '../models/abilityCard';
 import { Router } from '@angular/router';
+import { HeroData } from 'src/assets/data/heroData/hero';
+
+const defaultPlayer: PlayerDto = {
+  id: 0,
+  health: 1,
+  attack: 1,
+  image: 'link.png',
+  name: '',
+  baseHealth: 1,
+  baseAttack: 1,
+  level: 1,
+  color: 'green',
+  disabled: false,
+  points: 0,
+  selected: true,
+  unlocked: true,
+  upgrades: [
+    {
+      cost: [0],
+      description: [''],
+      id: 0,
+      image: '',
+      level: 0,
+      title: [''],
+    },
+  ],
+  usedPoints: 0,
+};
 
 @Injectable({
   providedIn: 'root',
@@ -45,54 +73,14 @@ export class playerService implements OnInit {
   ngOnInit(): void {}
 
   public getPlayer(): PlayerDto {
-    const playerSkills = {
-      // Which cards are wild
-      wildHearts: false,
-      wildDiamonds: false,
-      wildSpades: false,
-      wildClubs: false,
-
-      // What range can wild cards go
-      rangeHearts: 0,
-      rangeDiamonds: 0,
-      rangeSpades: 0,
-      rangeClubs: 0,
-
-      // What suit options should appear
-      showWildHearts: false,
-      showWildDiamonds: false,
-      showWildSpades: false,
-      showWildClubs: false,
-
-      // Extra damage for suites
-      extraHeartsDamage: false,
-      extraDiamondsDamage: false,
-      extraSpadesDamage: false,
-      extraClubsDamage: false,
-
-      // Wild cards unlocked
-      wildCardsCount: 4,
-
-      // Extra health
-      extraHealth: 0,
-
-      // Extra attack
-      extraAttack: 0,
-    };
-    return {
-      id: 5,
-      image: 'mario.png',
-      name: 'Mario',
-      attack: 2 + playerSkills.extraAttack,
-      baseAttack: 2 + playerSkills.extraAttack,
-      health: 5 + playerSkills.extraHealth,
-      baseHealth: 5 + playerSkills.extraHealth,
-      level: 1,
-      xp: 10,
-      xpLevels: [60, 90, 120],
-      skills: playerSkills,
-      isMaxLevel: false,
-    };
+    let heroes: PlayerDto[] = JSON.parse(
+      localStorage.getItem('heroData') ?? '[]'
+    );
+    if (heroes.length < 1) {
+      localStorage.setItem('heroData', JSON.stringify(HeroData));
+      heroes = HeroData;
+    }
+    return heroes.find((x) => x.selected) ?? defaultPlayer;
   }
 
   public getAbilityCards(): AbilityCard[] {

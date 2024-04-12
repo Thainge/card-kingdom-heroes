@@ -150,7 +150,10 @@
             <div class="iconText">{{ currentHero?.points }}</div>
           </div>
         </div>
-        <img src="./assets/playerIcons/link.png" class="heroIcon" />
+        <img
+          [src]="'./assets/playerIcons/' + currentHero?.image"
+          class="heroIcon"
+        />
         <img src="./assets/hero.png" class="overlayIcon" />
       </div>
       <div class="relativeIcon">

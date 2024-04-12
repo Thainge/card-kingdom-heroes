@@ -667,7 +667,7 @@
         'top': item.y + 'px',
       }"
           >
-            <div class="flagBox" (click)="showBattleStartOverlay()">
+            <div class="flagBox" (click)="showBattleStartOverlay(item)">
               <!-- Next Level -->
               <div
                 class="flagLevelBox currentLevelAnimation"
@@ -680,7 +680,9 @@
                   value: '',
                   params: {
                     duration: 400,
-                    delay: determineDelayFlag() + 2000,
+                    delay: currentLevel?.alreadyAnimated
+                      ? determineDelayFlag() + 2000
+                      : 0,
                     translate: '100px'
                   }
                 }"

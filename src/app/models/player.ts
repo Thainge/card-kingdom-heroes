@@ -11,7 +11,26 @@ export interface PlayerDto {
   xpLevels?: number[];
   isMaxLevel?: boolean;
   skills?: PlayerUnlockedAbilties;
+  color?: HeroColor;
+  points?: number;
+  usedPoints?: number;
+  selected?: boolean;
+  unlocked?: boolean;
+  upgrades?: HeroUpgrade[];
+  disabled?: boolean;
 }
+
+export interface HeroUpgrade {
+  id: number;
+  level: HeroUpgradeLevel;
+  image: string;
+  title: string[];
+  description: string[];
+  cost: number[];
+}
+
+type HeroUpgradeLevel = 0 | 1 | 2 | 3;
+type HeroColor = 'red' | 'orange' | 'yellow' | 'green' | 'blue' | 'purple';
 
 interface PlayerUnlockedAbilties {
   // Which cards are wild

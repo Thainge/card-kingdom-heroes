@@ -48,7 +48,7 @@
     <img src="./assets/upgradeDetails.png" class="upgradeDetails" />
     <div class="upgradeDetailsLevel">{{ currentHero?.level }}</div>
     <div class="upgradeDetailsHealth">{{ currentHero?.health }}</div>
-    <div class="upgradeDetailsDefense">{{ currentHero?.defense }}</div>
+    <div class="upgradeDetailsDefense">{{ currentHero?.attack }}</div>
     <img
       src="./assets/heroBorder.png"
       class="heroBorder"
@@ -144,11 +144,13 @@
                   [ngClass]="{
                     greyBox:
                       (currentHero &&
+                        currentHero.points &&
                         currentHero.points < item.cost[item.level]) ||
                       !currentHero?.unlocked,
                     relativeIconBoxHover:
                       isCurrentlyHovering(item) &&
                       currentHero &&
+                      currentHero.points &&
                       currentHero.points >= item.cost[item.level]
                   }"
                 />
@@ -158,6 +160,7 @@
                     showHoveringBox:
                       isCurrentlyHovering(item) &&
                       currentHero &&
+                      currentHero.points &&
                       currentHero.points >= item.cost[item.level]
                   }"
                 >
@@ -176,6 +179,7 @@
                   [ngClass]="{
                     greyBox:
                       (currentHero &&
+                        currentHero.points &&
                         currentHero.points < item.cost[item.level]) ||
                       !currentHero?.unlocked
                   }"

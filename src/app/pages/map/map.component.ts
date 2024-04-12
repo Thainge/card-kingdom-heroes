@@ -156,21 +156,24 @@ export class MapComponent implements AfterViewInit, OnInit {
   }
 
   initFlags() {
-    this.flagsList = flagsData;
-    this.flagsList = flagsData.map((item, i) => {
-      return {
-        ...item,
-        levelStatus: 'hidden',
-      };
-    });
-    this.flagsList[0].levelStatus = 'justFinished';
-    this.flagsList[1].levelStatus = 'nextLevel';
+    this.flagsList = JSON.parse(localStorage.getItem('flagsData') ?? '[]');
+    if (this.flagsList.length < 1) {
+      this.flagsList = flagsData;
+      localStorage.setItem('flagsData', JSON.stringify(this.flagsList));
+    }
+    // this.flagsList = this.flagsList.map((item, i) => {
+    //   return {
+    //     ...item,
+    //     levelStatus: 'hidden',
+    //   };
+    // });
+    // this.flagsList[0].levelStatus = 'justFinished';
+    // this.flagsList[1].levelStatus = 'nextLevel';
     const currentLevel = this.flagsList.find(
       (x) => x.levelStatus === 'justFinished'
     );
     this.finishLevel(this.flagsList[0]);
     this.currentLevel = currentLevel;
-    this.currentBattle = LevelsData.find((x) => x.id === currentLevel?.id);
   }
 
   async initPanZoom() {
@@ -218,6 +221,14 @@ export class MapComponent implements AfterViewInit, OnInit {
       });
     }
     await this.timeout(4000);
+    this.flagsList = this.flagsList.map((x) => {
+      if (x.levelStatus === 'nextLevel') {
+        return { ...x, alreadyAnimated: true };
+      }
+
+      return x;
+    });
+    localStorage.setItem('flagsData', JSON.stringify(this.flagsList));
     this.loadingService.displayOptions$.next(true);
   }
 
@@ -238,9 +249,17 @@ export class MapComponent implements AfterViewInit, OnInit {
     return delay + 200;
   }
 
-  showBattleStartOverlay() {
+  showBattleStartOverlay(flag: FlagDto) {
     this.battleStartOpen = true;
     this.isSpecialBattle = false;
+    this.currentBattle = LevelsData.find((x) => x.id === flag.id);
+  }
+
+  startSpecialBattle(battle: Battle) {
+    // this.battleStartOpen = true;
+    // this.isSpecialBattle = true;
+    // this.currentBattle = LevelsData.find((x) => x.id === this.currentLevel?.id);
+    // set up special file that has special combats (ids battle1, battle2, battle3, battle4,)
   }
 
   finishLevel(flag: FlagDto) {
@@ -361,11 +380,6 @@ export class MapComponent implements AfterViewInit, OnInit {
     }
   }
 
-  startSpecialBattle(battle: Battle) {
-    this.battleStartOpen = true;
-    this.isSpecialBattle = true;
-  }
-
   trackById = (index: number, item: any) => item.id;
 
   addLevel(e: any) {
@@ -391,6 +405,7 @@ export class MapComponent implements AfterViewInit, OnInit {
       y,
       levelStatus: 'finished',
       levelType: 'normal',
+      alreadyAnimated: false,
       dots: [],
     };
     this.previousFlagsList.push(this.flagsList);

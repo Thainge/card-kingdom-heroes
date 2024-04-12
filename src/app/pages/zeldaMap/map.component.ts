@@ -380,6 +380,7 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
       y,
       levelStatus: 'finished',
       levelType: 'normal',
+      alreadyAnimated: false,
       dots: [],
     };
     this.previousFlagsList.push(this.flagsList);

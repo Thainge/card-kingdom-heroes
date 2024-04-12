@@ -6,6 +6,7 @@ export const flagsData: FlagDto[] = [
     x: 553,
     y: 1836,
     levelStatus: 'finished',
+    alreadyAnimated: false,
     levelType: 'normal',
     dots: [
       {
@@ -45,6 +46,7 @@ export const flagsData: FlagDto[] = [
     x: 1054,
     y: 1768,
     levelStatus: 'finished',
+    alreadyAnimated: false,
     levelType: 'normal',
     dots: [
       {
@@ -79,6 +81,7 @@ export const flagsData: FlagDto[] = [
     x: 775,
     y: 1515,
     levelStatus: 'finished',
+    alreadyAnimated: false,
     levelType: 'normal',
     dots: [
       {
@@ -138,6 +141,7 @@ export const flagsData: FlagDto[] = [
     x: 1329,
     y: 1269,
     levelStatus: 'finished',
+    alreadyAnimated: false,
     levelType: 'normal',
     dots: [
       {
@@ -182,6 +186,7 @@ export const flagsData: FlagDto[] = [
     x: 678,
     y: 1190,
     levelStatus: 'finished',
+    alreadyAnimated: false,
     levelType: 'normal',
     dots: [
       {
@@ -211,6 +216,7 @@ export const flagsData: FlagDto[] = [
     x: 540,
     y: 826,
     levelStatus: 'finished',
+    alreadyAnimated: false,
     levelType: 'normal',
     dots: [
       {
@@ -240,6 +246,7 @@ export const flagsData: FlagDto[] = [
     x: 601,
     y: 684,
     levelStatus: 'finished',
+    alreadyAnimated: false,
     levelType: 'normal',
     dots: [
       {
@@ -269,6 +276,7 @@ export const flagsData: FlagDto[] = [
     x: 732,
     y: 469,
     levelStatus: 'finished',
+    alreadyAnimated: false,
     levelType: 'normal',
     dots: [
       {
@@ -313,6 +321,7 @@ export const flagsData: FlagDto[] = [
     x: 927,
     y: 265,
     levelStatus: 'finished',
+    alreadyAnimated: false,
     levelType: 'normal',
     dots: [
       {
@@ -342,6 +351,7 @@ export const flagsData: FlagDto[] = [
     x: 1239,
     y: 192,
     levelStatus: 'finished',
+    alreadyAnimated: false,
     levelType: 'normal',
     dots: [
       {
@@ -366,6 +376,7 @@ export const flagsData: FlagDto[] = [
     x: 1456,
     y: 439,
     levelStatus: 'finished',
+    alreadyAnimated: false,
     levelType: 'normal',
     dots: [
       {
@@ -395,6 +406,7 @@ export const flagsData: FlagDto[] = [
     x: 1867,
     y: 306,
     levelStatus: 'finished',
+    alreadyAnimated: false,
     levelType: 'normal',
     dots: [
       {
@@ -424,6 +436,7 @@ export const flagsData: FlagDto[] = [
     x: 2207,
     y: 389,
     levelStatus: 'finished',
+    alreadyAnimated: false,
     levelType: 'normal',
     dots: [
       {
@@ -448,6 +461,7 @@ export const flagsData: FlagDto[] = [
     x: 2446,
     y: 511,
     levelStatus: 'finished',
+    alreadyAnimated: false,
     levelType: 'normal',
     dots: [
       {
@@ -492,6 +506,7 @@ export const flagsData: FlagDto[] = [
     x: 2018,
     y: 786,
     levelStatus: 'finished',
+    alreadyAnimated: false,
     levelType: 'normal',
     dots: [
       {
@@ -526,6 +541,7 @@ export const flagsData: FlagDto[] = [
     x: 2150,
     y: 1138,
     levelStatus: 'finished',
+    alreadyAnimated: false,
     levelType: 'normal',
     dots: [
       {
@@ -550,6 +566,7 @@ export const flagsData: FlagDto[] = [
     x: 2133,
     y: 1353,
     levelStatus: 'finished',
+    alreadyAnimated: false,
     levelType: 'normal',
     dots: [
       {
@@ -584,6 +601,7 @@ export const flagsData: FlagDto[] = [
     x: 1846,
     y: 1385,
     levelStatus: 'finished',
+    alreadyAnimated: false,
     levelType: 'normal',
     dots: [
       {
@@ -628,6 +646,7 @@ export const flagsData: FlagDto[] = [
     x: 2158,
     y: 1722,
     levelStatus: 'finished',
+    alreadyAnimated: false,
     levelType: 'normal',
     dots: [
       {
@@ -672,6 +691,7 @@ export const flagsData: FlagDto[] = [
     x: 2423,
     y: 1446,
     levelStatus: 'nextLevel',
+    alreadyAnimated: false,
     levelType: 'normal',
     dots: [],
   },

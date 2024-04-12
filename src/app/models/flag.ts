@@ -5,6 +5,7 @@ export interface FlagDto {
   levelStatus: levelStatus;
   levelType: levelType;
   dots: DotDto[];
+  alreadyAnimated: boolean;
 }
 
 type levelStatus = 'nextLevel' | 'finished' | 'justFinished' | 'hidden';

@@ -63,6 +63,33 @@ const defaultAbilityCard: AbilityCard = {
   alliesCalled: [],
 };
 
+const defaultPlayer: PlayerDto = {
+  id: 0,
+  health: 1,
+  attack: 1,
+  image: 'link.png',
+  name: '',
+  baseHealth: 1,
+  baseAttack: 1,
+  level: 1,
+  color: 'green',
+  disabled: false,
+  points: 0,
+  selected: true,
+  unlocked: true,
+  upgrades: [
+    {
+      cost: [0],
+      description: [''],
+      id: 0,
+      image: '',
+      level: 0,
+      title: [''],
+    },
+  ],
+  usedPoints: 0,
+};
+
 interface ComboObject {
   id: number;
   cards: any[];
@@ -132,16 +159,7 @@ export class BattleComponent implements OnInit {
   playerDeck: CardDto[] = [];
   playerHand: CardDto[] = [];
   playerDefense: CardDto[] = [];
-  player: PlayerDto = {
-    id: 0,
-    health: 1,
-    attack: 1,
-    image: 'link.png',
-    name: '',
-    baseHealth: 1,
-    baseAttack: 1,
-    level: 1,
-  };
+  player: PlayerDto = defaultPlayer;
   playerTarget: number = 0;
   playerAttackHand: DetermineObject = {
     valid: false,
@@ -211,16 +229,7 @@ export class BattleComponent implements OnInit {
 
   Cards: CardDto[] = [];
   completedEnemyTurns: number[] = [];
-  currentEnemyTurn: PlayerDto = {
-    id: 0,
-    health: 1,
-    attack: 1,
-    image: 'goomba.png',
-    name: '',
-    baseHealth: 1,
-    baseAttack: 1,
-    level: 1,
-  };
+  currentEnemyTurn: PlayerDto = defaultPlayer;
 
   discardCards: CardDto[] = [];
   discardSelectedCards: CardDto[] = [];
@@ -418,7 +427,7 @@ export class BattleComponent implements OnInit {
     this.loadingService.isSurrendering$.subscribe((x) => {
       if (x === true) {
         this.loadingService.isSurrendering$.next(false);
-        this.checkSurrender = true;
+        this.surrender();
       }
     });
   }
@@ -672,6 +681,7 @@ export class BattleComponent implements OnInit {
       this.currentLevel.battleRewardXp = 0;
       this.enemyPlayers = [
         {
+          ...defaultPlayer,
           id: 1,
           image: 'dummy.png',
           name: 'Dummy',
@@ -682,6 +692,7 @@ export class BattleComponent implements OnInit {
           level: 1,
         },
         {
+          ...defaultPlayer,
           id: 2,
           image: 'dummy.png',
           name: 'Dummy',
@@ -1336,7 +1347,7 @@ export class BattleComponent implements OnInit {
       x.hide();
       x.remove();
     });
-    this.loadingService.navigate('', 'forest.png');
+    this.loadingService.navigate('/battle', 'forest.png');
     setTimeout(() => {
       this.resetGame();
       this.Cards = Cards;
@@ -1348,16 +1359,7 @@ export class BattleComponent implements OnInit {
     this.playerDeck = [];
     this.playerHand = [];
     this.playerDefense = [];
-    this.player = {
-      id: 0,
-      health: 1,
-      attack: 1,
-      image: 'link.png',
-      name: '',
-      baseHealth: 1,
-      baseAttack: 1,
-      level: 1,
-    };
+    this.player = defaultPlayer;
     this.playerTarget = 0;
     this.playerAttackHand = {
       valid: false,
@@ -1422,16 +1424,7 @@ export class BattleComponent implements OnInit {
     this.usedSpecialCardThisTurn = false;
 
     this.completedEnemyTurns = [];
-    this.currentEnemyTurn = {
-      id: 0,
-      health: 1,
-      attack: 1,
-      image: 'goomba.png',
-      name: '',
-      baseHealth: 1,
-      baseAttack: 1,
-      level: 1,
-    };
+    this.currentEnemyTurn = defaultPlayer;
 
     this.discardCards = [];
     this.discardSelectedCards = [];
@@ -2943,18 +2936,7 @@ export class BattleComponent implements OnInit {
     const enemyPlayer = this.enemyPlayers.find(
       (x) => x.id === this.enemyTarget
     );
-    return (
-      enemyPlayer ?? {
-        id: 0,
-        health: 1,
-        attack: 1,
-        image: 'goomba.png',
-        name: '',
-        baseHealth: 1,
-        baseAttack: 1,
-        level: 1,
-      }
-    );
+    return enemyPlayer ?? defaultPlayer;
   }
 
   findEnemyPlayerAttack(): PlayerDto {
@@ -2977,18 +2959,7 @@ export class BattleComponent implements OnInit {
     const enemyPlayer = this.enemyPlayers.find(
       (x) => x.id === this.staticEnemyTarget
     );
-    return (
-      enemyPlayer ?? {
-        id: 0,
-        health: 1,
-        attack: 1,
-        image: 'goomba.png',
-        name: '',
-        baseHealth: 1,
-        baseAttack: 1,
-        level: 1,
-      }
-    );
+    return enemyPlayer ?? defaultPlayer;
   }
 
   redrawCardIsSelected(card: CardDto): boolean {
@@ -4539,16 +4510,7 @@ export class BattleComponent implements OnInit {
   newTurn() {
     this.finishedChoosingDefensePlayer = false;
     this.enemyTarget = 0;
-    this.currentEnemyTurn = {
-      id: 0,
-      health: 1,
-      attack: 1,
-      image: 'goomba.png',
-      name: '',
-      baseHealth: 1,
-      baseAttack: 1,
-      level: 1,
-    };
+    this.currentEnemyTurn = defaultPlayer;
     this.playerTarget = 0;
     this.canSelectCards = true;
     this.selectedCards = [];
