@@ -52,8 +52,10 @@ export class HomeComponent implements OnInit {
 
   startGame() {
     if (
-      this.flagsList[0].levelStatus === 'finished' ||
-      this.flagsList[0].levelStatus === 'justFinished'
+      this.flagsList &&
+      this.flagsList.length > 0 &&
+      (this.flagsList[0].levelStatus === 'finished' ||
+        this.flagsList[0].levelStatus === 'justFinished')
     ) {
       this.loadingService.navigate('/cardkingdom-map', 'loadingBg.png');
     } else {
