@@ -20,6 +20,10 @@ const defaultPlayer: PlayerDto = {
   color: 'green',
   disabled: false,
   points: 0,
+  canDefendWithMultipleCards: false,
+  alwaysWinTies: false,
+  canSeeTopCard: false,
+  canSeeTopCardAbilities: false,
   selected: true,
   unlocked: true,
   upgrades: [

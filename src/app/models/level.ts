@@ -16,10 +16,6 @@ export interface LevelDto {
 
   hideDialog?: boolean;
   easyMode?: boolean;
-  canDefendWithMultipleCards: boolean;
-  alwaysWinTies: boolean;
-  canSeeTopCard: boolean;
-  canSeeTopCardAbilities: boolean;
   combatPhases: EnemyLevelDto[];
 
   playerLevelUpEnabled: boolean;

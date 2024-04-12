@@ -680,9 +680,10 @@
                   value: '',
                   params: {
                     duration: 400,
-                    delay: currentLevel?.alreadyAnimated
-                      ? determineDelayFlag() + 2000
-                      : 0,
+                    delay:
+                      !currentLevel || currentLevel.alreadyAnimated
+                        ? 0
+                        : determineDelayFlag() + 2000,
                     translate: '100px'
                   }
                 }"

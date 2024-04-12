@@ -18,6 +18,10 @@ export interface PlayerDto {
   unlocked?: boolean;
   upgrades?: HeroUpgrade[];
   disabled?: boolean;
+  canDefendWithMultipleCards?: boolean;
+  alwaysWinTies?: boolean;
+  canSeeTopCard?: boolean;
+  canSeeTopCardAbilities?: boolean;
 }
 
 export interface HeroUpgrade {

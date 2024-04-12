@@ -44,6 +44,7 @@ import { EnemyLevelDto, LevelDto } from 'src/app/models/level';
 import { DialogComponent } from 'src/app/components/dialogComponent/dialog.component';
 import { DialogDto } from 'src/app/models/dialog';
 import { BackgroundDto } from 'src/app/models/backgrounds';
+import { FlagDto } from 'src/app/models/flag';
 
 const defaultAbilityCard: AbilityCard = {
   id: 0,
@@ -77,6 +78,10 @@ const defaultPlayer: PlayerDto = {
   points: 0,
   selected: true,
   unlocked: true,
+  canDefendWithMultipleCards: false,
+  alwaysWinTies: false,
+  canSeeTopCard: false,
+  canSeeTopCardAbilities: false,
   upgrades: [
     {
       cost: [0],
@@ -507,11 +512,36 @@ export class BattleComponent implements OnInit {
       this.shownRewardItem = this.rewardItems[0];
       if (this.rewardItems.length === 0) {
         this.finishedRewards = true;
+        this.updateFlag();
       }
       await this.timeout(500);
       // Can click again
       this.canClickNextReward = true;
     }
+  }
+
+  updateFlag() {
+    const flagsList: FlagDto[] = JSON.parse(
+      localStorage.getItem('flagsData') ?? '[]'
+    );
+    const currentLevel: LevelDto = JSON.parse(
+      localStorage.getItem('currentLevel') ?? ''
+    );
+
+    let foundIndex = -10;
+    const newFlagsList = flagsList.map((x, i) => {
+      if (x.id === currentLevel.id) {
+        foundIndex = i + 1;
+        return { ...x, levelStatus: 'justFinished' };
+      }
+
+      if (foundIndex === i) {
+        foundIndex = -10;
+        return { ...x, levelStatus: 'nextLevel' };
+      }
+      return x;
+    });
+    localStorage.setItem('flagsData', JSON.stringify(newFlagsList));
   }
 
   isActiveReward(rewardItem: any) {
@@ -590,13 +620,13 @@ export class BattleComponent implements OnInit {
     this.allCardsWild = this.currentLevel.allCardsWild ?? false;
 
     // Hero abilities
-    this.canDefendWithMultipleCards =
-      this.currentLevel.canDefendWithMultipleCards;
-    this.alwaysWinTies = this.currentLevel.alwaysWinTies;
-    this.canSeeTopCard = this.currentLevel.canSeeTopCard;
-    this.canSeeTopCardAbilities = this.currentLevel.canSeeTopCardAbilities;
-    this.battleRewardXp = this.currentLevel.battleRewardXp;
-    this.playerLevelUpEnabled = this.currentLevel.playerLevelUpEnabled;
+    // this.canDefendWithMultipleCards =
+    //   this.currentLevel.canDefendWithMultipleCards;
+    // this.alwaysWinTies = this.currentLevel.alwaysWinTies;
+    // this.canSeeTopCard = this.currentLevel.canSeeTopCard;
+    // this.canSeeTopCardAbilities = this.currentLevel.canSeeTopCardAbilities;
+    // this.battleRewardXp = this.currentLevel.battleRewardXp;
+    // this.playerLevelUpEnabled = this.currentLevel.playerLevelUpEnabled;
 
     // Start bot phase
     this.nextCombatPhaseBot();
@@ -616,6 +646,12 @@ export class BattleComponent implements OnInit {
       this.easyMode = true;
     }
     this.updateDeckBasedOnPlayerSkills();
+
+    this.canDefendWithMultipleCards =
+      this.player.canDefendWithMultipleCards ?? false;
+    this.alwaysWinTies = this.player.alwaysWinTies ?? false;
+    this.canSeeTopCard = this.player.canSeeTopCard ?? false;
+    this.canSeeTopCardAbilities = this.player.canSeeTopCardAbilities ?? false;
 
     // Add wildcards to player deck
     let playerCards: CardDto[] = this.Cards.map((x) => {

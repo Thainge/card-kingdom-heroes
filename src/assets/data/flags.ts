@@ -5,7 +5,7 @@ export const flagsData: FlagDto[] = [
     id: 1,
     x: 553,
     y: 1836,
-    levelStatus: 'justFinished',
+    levelStatus: 'nextLevel',
     alreadyAnimated: true,
     levelType: 'normal',
     dots: [
