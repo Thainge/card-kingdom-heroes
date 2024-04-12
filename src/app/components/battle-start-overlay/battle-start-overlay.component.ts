@@ -8,6 +8,7 @@ import {
   fadeInOnEnterAnimation,
   zoomOutOnLeaveAnimation,
 } from 'angular-animations';
+import { FlagDto } from 'src/app/models/flag';
 
 interface MissionDetails {
   image: string;
@@ -34,17 +35,9 @@ interface MissionDetails {
 export class BattleStartOverlayComponent implements OnInit {
   @Input('open') open: boolean = false;
   @Input('isSpecialBattle') isSpecialBattle: boolean = false;
-  @Input('currentLevel') currentLevel: any = {};
-
-  missionDetails: MissionDetails = {
-    image: 'forest.png',
-    title: 'Skyloft',
-    description: `General, a band of gnolls approaches! They are beasts who only
-    think about looting and burning everything their wake, but they
-    will be sorry they ever left their arid hills... For the queen!`,
-    rewardMin: 100,
-    rewardMax: 150,
-  };
+  @Input('currentLevel') currentLevel: any | undefined;
+  @Input('missionDetails') missionDetails: MissionDetails | undefined;
+  @Input('finished') finished: boolean = false;
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
@@ -52,6 +45,7 @@ export class BattleStartOverlayComponent implements OnInit {
 
   startBattle() {
     localStorage.setItem('currentLevel', JSON.stringify(this.currentLevel));
+    localStorage.setItem('currentDetails', JSON.stringify(this.missionDetails));
     this.loadingService.navigate('/battle', 'forest.png');
   }
 

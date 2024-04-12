@@ -126,13 +126,8 @@ export class HeroOverlayComponent implements OnInit {
       return;
     }
 
-    if (
-      this.currentHero &&
-      this.currentHero.upgrades &&
-      this.currentHero.points &&
-      this.currentHero.points > 0
-    ) {
-      this.currentHero.upgrades = this.currentHero.upgrades.map((x) => {
+    if (this.currentHero && this.currentHero?.points! > 0) {
+      this.currentHero.upgrades = this.currentHero.upgrades!.map((x) => {
         if (item.id === x.id) {
           if (x.level === 0) {
             const canLevelUp = this.subtractUpgradePoints(item);
@@ -149,23 +144,24 @@ export class HeroOverlayComponent implements OnInit {
         }
         return x;
       });
+      this.heroes = this.heroes.map((x) => {
+        if (x.id === this.currentHero?.id) {
+          return this.currentHero;
+        }
+        return x;
+      });
       localStorage.setItem('heroData', JSON.stringify(this.heroes));
       this.playerService.currentHero$.next(this.heroes.find((x) => x.selected));
     }
   }
 
   resetUpgrades() {
-    if (
-      this.currentHero &&
-      this.currentHero.upgrades &&
-      this.currentHero.points &&
-      this.currentHero.usedPoints
-    ) {
-      this.currentHero.upgrades = this.currentHero.upgrades.map((x) => {
+    if (this.currentHero) {
+      this.currentHero.upgrades = this.currentHero.upgrades!.map((x) => {
         return { ...x, level: 0 };
       });
       this.currentHero.points =
-        this.currentHero.points + this.currentHero.usedPoints;
+        this.currentHero.points! + this.currentHero.usedPoints!;
       this.currentHero.usedPoints = 0;
       localStorage.setItem('heroData', JSON.stringify(this.heroes));
       this.playerService.currentHero$.next(this.heroes.find((x) => x.selected));
@@ -173,18 +169,13 @@ export class HeroOverlayComponent implements OnInit {
   }
 
   subtractUpgradePoints(item: HeroUpgrade): boolean {
-    if (
-      !this.currentHero ||
-      !this.currentHero.points ||
-      !this.currentHero.usedPoints
-    ) {
+    if (!this.currentHero) {
       return false;
     }
-    const newPoints = this.currentHero.points - item.cost[item.level];
-
+    const newPoints = this.currentHero.points! - item.cost[item.level];
     if (newPoints >= 0) {
       this.currentHero.points = newPoints;
-      this.currentHero.usedPoints += item.cost[item.level];
+      this.currentHero.usedPoints! += item.cost[item.level];
       return true;
     }
     return false;

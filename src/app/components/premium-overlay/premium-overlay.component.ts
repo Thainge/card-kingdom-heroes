@@ -104,6 +104,12 @@ export class PremiumOverlayComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    const localPremium = JSON.parse(
+      localStorage.getItem('premiumData') ?? '[]'
+    );
+    if (localPremium.length > 0) {
+      this.premiumItems = localPremium;
+    }
     this.playerService.gold$.subscribe((x) => {
       this.gold = x;
     });
@@ -140,6 +146,10 @@ export class PremiumOverlayComponent implements OnInit {
       return;
     }
 
+    if (item.cost > this.gold) {
+      return;
+    }
+
     this.premiumItems = this.premiumItems.map((x) => {
       if (x.id === item.id) {
         return { ...x, bought: true, active: true };
@@ -147,6 +157,7 @@ export class PremiumOverlayComponent implements OnInit {
 
       return x;
     });
+    localStorage.setItem('premiumData', JSON.stringify(this.premiumItems));
   }
 
   toggleActive(item: PremiumBox) {
@@ -157,6 +168,7 @@ export class PremiumOverlayComponent implements OnInit {
 
       return x;
     });
+    localStorage.setItem('premiumData', JSON.stringify(this.premiumItems));
   }
 
   changeIndexLeft() {

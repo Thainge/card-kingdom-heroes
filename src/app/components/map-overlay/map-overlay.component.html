@@ -79,7 +79,9 @@
     <div class="progressBarContainer">
       <img src="./assets/progressBar.png" class="progressBarImage" />
       <img src="./assets/battleStar.png" class="progressStarImage" />
-      <div class="progressText">0/80</div>
+      <div class="progressText">
+        {{ completedFlagsList.length * 3 }}/{{ flagsList.length * 3 }}
+      </div>
     </div>
   </div>
   <div

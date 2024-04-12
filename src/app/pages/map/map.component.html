@@ -5,6 +5,8 @@
     (onCloseMenu)="battleStartOpen = false"
     [isSpecialBattle]="isSpecialBattle"
     [currentLevel]="currentBattle"
+    [missionDetails]="currentDetails"
+    [finished]="finished"
   ></app-battle-start-overlay>
   <div class="container">
     <div
@@ -642,7 +644,9 @@
                 item.levelStatus === 'finished' ||
                 item.levelStatus === 'justFinished'
               "
-              [@.disabled]="currentLevel?.id !== item.id"
+              [@.disabled]="
+                currentLevel?.id !== item.id || nextLevel?.alreadyAnimated
+              "
               [@zoomInEnter]="{
                 value: '',
                 params: {
@@ -675,15 +679,14 @@
                   item.levelType === 'normal' &&
                   item.levelStatus === 'nextLevel'
                 "
-                [@.disabled]="currentLevel?.id === item.id"
+                [@.disabled]="
+                  currentLevel?.id === item.id || nextLevel?.alreadyAnimated
+                "
                 [@zoomInEnter]="{
                   value: '',
                   params: {
                     duration: 400,
-                    delay:
-                      !currentLevel || currentLevel.alreadyAnimated
-                        ? 0
-                        : determineDelayFlag() + 2000,
+                    delay: determineDelayFlag() + 2000,
                     translate: '100px'
                   }
                 }"

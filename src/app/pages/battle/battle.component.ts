@@ -46,6 +46,14 @@ import { DialogDto } from 'src/app/models/dialog';
 import { BackgroundDto } from 'src/app/models/backgrounds';
 import { FlagDto } from 'src/app/models/flag';
 
+interface MissionDetails {
+  image: string;
+  title: string;
+  description: string;
+  rewardMin: number;
+  rewardMax: number;
+}
+
 const defaultAbilityCard: AbilityCard = {
   id: 0,
   abilityFunction: 'damage',
@@ -108,6 +116,7 @@ interface RewardItem {
   textAmount: string;
   image: string;
   color: RewardColor;
+  value: number;
 }
 
 interface CombatImages {
@@ -287,6 +296,7 @@ export class BattleComponent implements OnInit {
     image: '',
     text: '',
     textAmount: '',
+    value: 0,
   };
   rewardItemsClean: RewardItem[] = [
     {
@@ -295,6 +305,7 @@ export class BattleComponent implements OnInit {
       image: 'goldReward.png',
       text: 'Gold',
       textAmount: 'x100',
+      value: 100,
     },
   ];
   rewardItems: RewardItem[] = [
@@ -304,6 +315,7 @@ export class BattleComponent implements OnInit {
       image: 'goldReward.png',
       text: 'Gold',
       textAmount: 'x100',
+      value: 100,
     },
   ];
   canClickNextReward: boolean = false;
@@ -383,16 +395,21 @@ export class BattleComponent implements OnInit {
 
   @ViewChildren('playerRef') playerRef: QueryList<ElementRef> | undefined;
   @ViewChild('enemyDefenseRef') enemyDefenseRef: ElementRef | undefined;
+  gold: number = 0;
 
   constructor(
     private cardService: CardService,
     private userService: playerService,
     private abilityService: AbilityService,
     private cheatsService: CheatsService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private playerService: playerService
   ) {}
 
   ngOnInit() {
+    this.playerService.gold$.subscribe((x) => {
+      this.gold = x;
+    });
     // Player game theme
     this.userService.gameTheme$.subscribe((x) => {
       this.gameThemePath = x;
@@ -506,6 +523,7 @@ export class BattleComponent implements OnInit {
         image: '',
         text: '',
         textAmount: '',
+        value: 0,
       };
       await this.timeout(750);
       // show new reward
@@ -542,6 +560,30 @@ export class BattleComponent implements OnInit {
       return x;
     });
     localStorage.setItem('flagsData', JSON.stringify(newFlagsList));
+
+    // set gold
+    this.playerService.gold$.next(this.gold + this.rewardItemsClean[0].value);
+
+    // set player xp
+    const heroes: PlayerDto[] = JSON.parse(
+      localStorage.getItem('heroData') ?? '[]'
+    );
+    const newHeroes = heroes.map((x) => {
+      if (x.id === this.player.id) {
+        const newPoints = this.leveledUp ? (x.points ?? 0) + 3 : x.points;
+        return {
+          ...x,
+          xp: this.player.xp,
+          level: this.player.level,
+          isMaxLevel: this.player.isMaxLevel,
+          points: newPoints,
+        };
+      }
+
+      return x;
+    });
+    this.playerService.currentHero$.next(newHeroes.find((x) => x.selected));
+    localStorage.setItem('heroData', JSON.stringify(newHeroes));
   }
 
   isActiveReward(rewardItem: any) {
@@ -586,9 +628,12 @@ export class BattleComponent implements OnInit {
     }
   }
 
+  randomIntFromInterval(min: number, max: number) {
+    // min and max included
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
   async gameInit() {
-    // const passedObj: LevelDto = (await import('src/assets/data/level'))
-    //   .passedObj;
     const passedObj: LevelDto = JSON.parse(
       localStorage.getItem('currentLevel') ?? ''
     ) as LevelDto;
@@ -609,6 +654,40 @@ export class BattleComponent implements OnInit {
     this.combatImages = this.currentLevel.combatPhases.map((x) => {
       return { id: x.id, image: x.background, display: false };
     });
+
+    const missionDetails: MissionDetails = JSON.parse(
+      localStorage.getItem('currentDetails') ?? '[]'
+    );
+
+    if (missionDetails) {
+      const randomAmount = this.randomIntFromInterval(
+        missionDetails.rewardMin,
+        missionDetails.rewardMax
+      );
+      this.rewardItemsClean = [
+        {
+          id: 1,
+          color: 'blue',
+          image: 'goldReward.png',
+          text: 'Gems',
+          textAmount: 'x' + randomAmount,
+          value: randomAmount,
+        },
+      ];
+      this.rewardItems = this.rewardItemsClean;
+    } else {
+      this.rewardItemsClean = [
+        {
+          id: 1,
+          color: 'blue',
+          image: 'goldReward.png',
+          text: 'Gems',
+          textAmount: 'x' + 100,
+          value: 100,
+        },
+      ];
+      this.rewardItems = this.rewardItemsClean;
+    }
 
     // Easy mode
     const localEasyMode = localStorage.getItem('easymode');
@@ -1386,6 +1465,9 @@ export class BattleComponent implements OnInit {
     this.loadingService.navigate('/battle', 'forest.png');
     setTimeout(() => {
       this.resetGame();
+    }, 500);
+    setTimeout(() => {
+      this.resetGame();
       this.Cards = Cards;
       this.gameInit();
     }, 2000);
@@ -1513,6 +1595,7 @@ export class BattleComponent implements OnInit {
       image: '',
       text: '',
       textAmount: '',
+      value: 0,
     };
     this.rewardItemsClean = [
       {
@@ -1521,6 +1604,7 @@ export class BattleComponent implements OnInit {
         image: 'goldReward.png',
         text: 'Gold',
         textAmount: 'x100',
+        value: 100,
       },
     ];
     this.rewardItems = [
@@ -1530,6 +1614,7 @@ export class BattleComponent implements OnInit {
         image: 'goldReward.png',
         text: 'Gold',
         textAmount: 'x100',
+        value: 100,
       },
     ];
     this.canClickNextReward = false;
@@ -3729,23 +3814,6 @@ export class BattleComponent implements OnInit {
 
   finishHeroLevelUp() {
     if (this.leveledUp) {
-      const newId = this.rewardItemsClean.length;
-      const heroLevelUpItem: RewardItem = {
-        id: newId + 1,
-        color: 'blue',
-        image: 'levelUpHero.png',
-        text: 'Upgrade Points!',
-        textAmount: 'x3',
-      };
-      const heroCardPack: RewardItem = {
-        id: newId + 2,
-        color: 'purple',
-        image: 'boosterPack.png',
-        text: 'Booster Pack',
-        textAmount: 'x1',
-      };
-      this.rewardItemsClean.unshift(heroLevelUpItem);
-      this.rewardItemsClean.unshift(heroCardPack);
       this.rewardItems = this.rewardItemsClean;
       this.showHeroLevelUp = false;
       setTimeout(() => {

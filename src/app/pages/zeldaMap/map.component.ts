@@ -382,6 +382,13 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
       levelType: 'normal',
       alreadyAnimated: false,
       dots: [],
+      missionDetails: {
+        description: '',
+        image: '',
+        rewardMax: 0,
+        rewardMin: 0,
+        title: '',
+      },
     };
     this.previousFlagsList.push(this.flagsList);
     if (this.placingFlag) {

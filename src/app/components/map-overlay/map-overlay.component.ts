@@ -25,6 +25,8 @@ import { playerService } from 'src/app/services/player.service';
 import { BoosterPack } from 'src/app/models/boosterPack';
 import { AchievementService } from 'src/app/services/achievement.service';
 import { AchievementObject } from 'src/app/models/achievement';
+import { LevelDto } from 'src/app/models/level';
+import { FlagDto } from 'src/app/models/flag';
 
 interface Tip {
   title: string;
@@ -98,6 +100,8 @@ export class MapOverlayComponent implements OnInit {
   boosterPacks: BoosterPack[] = [];
   currentHero: any | undefined;
   achievements: AchievementObject[] = [];
+  flagsList: FlagDto[] = [];
+  completedFlagsList: FlagDto[] = [];
 
   constructor(
     private loadingService: LoadingService,
@@ -107,6 +111,11 @@ export class MapOverlayComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.flagsList =
+      JSON.parse(localStorage.getItem('flagsData') ?? '[]') ?? [];
+    this.completedFlagsList = this.flagsList.filter(
+      (x) => x.levelStatus === 'finished' || x.levelStatus === 'justFinished'
+    );
     this.achievementService.allAchievements$.subscribe((x) => {
       this.achievements = x;
     });

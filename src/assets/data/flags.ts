@@ -7,6 +7,15 @@ export const flagsData: FlagDto[] = [
     y: 1836,
     levelStatus: 'nextLevel',
     alreadyAnimated: true,
+    missionDetails: {
+      image: 'forest.png',
+      title: 'Skyloft',
+      description: `General, a band of gnolls approaches! They are beasts who only
+      think about looting and burning everything their wake, but they
+      will be sorry they ever left their arid hills... For the queen!`,
+      rewardMin: 50,
+      rewardMax: 100,
+    },
     levelType: 'normal',
     dots: [
       {
@@ -47,6 +56,15 @@ export const flagsData: FlagDto[] = [
     y: 1768,
     levelStatus: 'hidden',
     alreadyAnimated: false,
+    missionDetails: {
+      image: 'forest.png',
+      title: 'Forest',
+      description: `General, a band of gnolls approaches! They are beasts who only
+      think about looting and burning everything their wake, but they
+      will be sorry they ever left their arid hills... For the queen!`,
+      rewardMin: 100,
+      rewardMax: 150,
+    },
     levelType: 'normal',
     dots: [
       {
@@ -82,6 +100,15 @@ export const flagsData: FlagDto[] = [
     y: 1515,
     levelStatus: 'hidden',
     alreadyAnimated: false,
+    missionDetails: {
+      image: 'forest.png',
+      title: 'Skyloft',
+      description: `General, a band of gnolls approaches! They are beasts who only
+      think about looting and burning everything their wake, but they
+      will be sorry they ever left their arid hills... For the queen!`,
+      rewardMin: 100,
+      rewardMax: 150,
+    },
     levelType: 'normal',
     dots: [
       {
@@ -142,6 +169,15 @@ export const flagsData: FlagDto[] = [
     y: 1269,
     levelStatus: 'hidden',
     alreadyAnimated: false,
+    missionDetails: {
+      image: 'forest.png',
+      title: 'Skyloft',
+      description: `General, a band of gnolls approaches! They are beasts who only
+      think about looting and burning everything their wake, but they
+      will be sorry they ever left their arid hills... For the queen!`,
+      rewardMin: 100,
+      rewardMax: 150,
+    },
     levelType: 'normal',
     dots: [
       {
@@ -187,6 +223,15 @@ export const flagsData: FlagDto[] = [
     y: 1190,
     levelStatus: 'hidden',
     alreadyAnimated: false,
+    missionDetails: {
+      image: 'forest.png',
+      title: 'Skyloft',
+      description: `General, a band of gnolls approaches! They are beasts who only
+      think about looting and burning everything their wake, but they
+      will be sorry they ever left their arid hills... For the queen!`,
+      rewardMin: 100,
+      rewardMax: 150,
+    },
     levelType: 'normal',
     dots: [
       {
@@ -217,6 +262,15 @@ export const flagsData: FlagDto[] = [
     y: 826,
     levelStatus: 'hidden',
     alreadyAnimated: false,
+    missionDetails: {
+      image: 'forest.png',
+      title: 'Skyloft',
+      description: `General, a band of gnolls approaches! They are beasts who only
+      think about looting and burning everything their wake, but they
+      will be sorry they ever left their arid hills... For the queen!`,
+      rewardMin: 100,
+      rewardMax: 150,
+    },
     levelType: 'normal',
     dots: [
       {
@@ -247,6 +301,15 @@ export const flagsData: FlagDto[] = [
     y: 684,
     levelStatus: 'hidden',
     alreadyAnimated: false,
+    missionDetails: {
+      image: 'forest.png',
+      title: 'Skyloft',
+      description: `General, a band of gnolls approaches! They are beasts who only
+      think about looting and burning everything their wake, but they
+      will be sorry they ever left their arid hills... For the queen!`,
+      rewardMin: 100,
+      rewardMax: 150,
+    },
     levelType: 'normal',
     dots: [
       {
@@ -277,6 +340,15 @@ export const flagsData: FlagDto[] = [
     y: 469,
     levelStatus: 'hidden',
     alreadyAnimated: false,
+    missionDetails: {
+      image: 'forest.png',
+      title: 'Skyloft',
+      description: `General, a band of gnolls approaches! They are beasts who only
+      think about looting and burning everything their wake, but they
+      will be sorry they ever left their arid hills... For the queen!`,
+      rewardMin: 100,
+      rewardMax: 150,
+    },
     levelType: 'normal',
     dots: [
       {
@@ -322,6 +394,15 @@ export const flagsData: FlagDto[] = [
     y: 265,
     levelStatus: 'hidden',
     alreadyAnimated: false,
+    missionDetails: {
+      image: 'forest.png',
+      title: 'Skyloft',
+      description: `General, a band of gnolls approaches! They are beasts who only
+      think about looting and burning everything their wake, but they
+      will be sorry they ever left their arid hills... For the queen!`,
+      rewardMin: 100,
+      rewardMax: 150,
+    },
     levelType: 'normal',
     dots: [
       {
@@ -352,6 +433,15 @@ export const flagsData: FlagDto[] = [
     y: 192,
     levelStatus: 'hidden',
     alreadyAnimated: false,
+    missionDetails: {
+      image: 'forest.png',
+      title: 'Skyloft',
+      description: `General, a band of gnolls approaches! They are beasts who only
+      think about looting and burning everything their wake, but they
+      will be sorry they ever left their arid hills... For the queen!`,
+      rewardMin: 100,
+      rewardMax: 150,
+    },
     levelType: 'normal',
     dots: [
       {
@@ -377,6 +467,15 @@ export const flagsData: FlagDto[] = [
     y: 439,
     levelStatus: 'hidden',
     alreadyAnimated: false,
+    missionDetails: {
+      image: 'forest.png',
+      title: 'Skyloft',
+      description: `General, a band of gnolls approaches! They are beasts who only
+      think about looting and burning everything their wake, but they
+      will be sorry they ever left their arid hills... For the queen!`,
+      rewardMin: 100,
+      rewardMax: 150,
+    },
     levelType: 'normal',
     dots: [
       {
@@ -407,6 +506,15 @@ export const flagsData: FlagDto[] = [
     y: 306,
     levelStatus: 'hidden',
     alreadyAnimated: false,
+    missionDetails: {
+      image: 'forest.png',
+      title: 'Skyloft',
+      description: `General, a band of gnolls approaches! They are beasts who only
+      think about looting and burning everything their wake, but they
+      will be sorry they ever left their arid hills... For the queen!`,
+      rewardMin: 100,
+      rewardMax: 150,
+    },
     levelType: 'normal',
     dots: [
       {
@@ -437,6 +545,15 @@ export const flagsData: FlagDto[] = [
     y: 389,
     levelStatus: 'hidden',
     alreadyAnimated: false,
+    missionDetails: {
+      image: 'forest.png',
+      title: 'Skyloft',
+      description: `General, a band of gnolls approaches! They are beasts who only
+      think about looting and burning everything their wake, but they
+      will be sorry they ever left their arid hills... For the queen!`,
+      rewardMin: 100,
+      rewardMax: 150,
+    },
     levelType: 'normal',
     dots: [
       {
@@ -462,6 +579,15 @@ export const flagsData: FlagDto[] = [
     y: 511,
     levelStatus: 'hidden',
     alreadyAnimated: false,
+    missionDetails: {
+      image: 'forest.png',
+      title: 'Skyloft',
+      description: `General, a band of gnolls approaches! They are beasts who only
+      think about looting and burning everything their wake, but they
+      will be sorry they ever left their arid hills... For the queen!`,
+      rewardMin: 100,
+      rewardMax: 150,
+    },
     levelType: 'normal',
     dots: [
       {
@@ -507,6 +633,15 @@ export const flagsData: FlagDto[] = [
     y: 786,
     levelStatus: 'hidden',
     alreadyAnimated: false,
+    missionDetails: {
+      image: 'forest.png',
+      title: 'Skyloft',
+      description: `General, a band of gnolls approaches! They are beasts who only
+      think about looting and burning everything their wake, but they
+      will be sorry they ever left their arid hills... For the queen!`,
+      rewardMin: 100,
+      rewardMax: 150,
+    },
     levelType: 'normal',
     dots: [
       {
@@ -542,6 +677,15 @@ export const flagsData: FlagDto[] = [
     y: 1138,
     levelStatus: 'hidden',
     alreadyAnimated: false,
+    missionDetails: {
+      image: 'forest.png',
+      title: 'Skyloft',
+      description: `General, a band of gnolls approaches! They are beasts who only
+      think about looting and burning everything their wake, but they
+      will be sorry they ever left their arid hills... For the queen!`,
+      rewardMin: 100,
+      rewardMax: 150,
+    },
     levelType: 'normal',
     dots: [
       {
@@ -567,6 +711,15 @@ export const flagsData: FlagDto[] = [
     y: 1353,
     levelStatus: 'hidden',
     alreadyAnimated: false,
+    missionDetails: {
+      image: 'forest.png',
+      title: 'Skyloft',
+      description: `General, a band of gnolls approaches! They are beasts who only
+      think about looting and burning everything their wake, but they
+      will be sorry they ever left their arid hills... For the queen!`,
+      rewardMin: 100,
+      rewardMax: 150,
+    },
     levelType: 'normal',
     dots: [
       {
@@ -602,6 +755,15 @@ export const flagsData: FlagDto[] = [
     y: 1385,
     levelStatus: 'hidden',
     alreadyAnimated: false,
+    missionDetails: {
+      image: 'forest.png',
+      title: 'Skyloft',
+      description: `General, a band of gnolls approaches! They are beasts who only
+      think about looting and burning everything their wake, but they
+      will be sorry they ever left their arid hills... For the queen!`,
+      rewardMin: 100,
+      rewardMax: 150,
+    },
     levelType: 'normal',
     dots: [
       {
@@ -647,6 +809,15 @@ export const flagsData: FlagDto[] = [
     y: 1722,
     levelStatus: 'hidden',
     alreadyAnimated: false,
+    missionDetails: {
+      image: 'forest.png',
+      title: 'Skyloft',
+      description: `General, a band of gnolls approaches! They are beasts who only
+      think about looting and burning everything their wake, but they
+      will be sorry they ever left their arid hills... For the queen!`,
+      rewardMin: 100,
+      rewardMax: 150,
+    },
     levelType: 'normal',
     dots: [
       {
@@ -692,6 +863,15 @@ export const flagsData: FlagDto[] = [
     y: 1446,
     levelStatus: 'nextLevel',
     alreadyAnimated: false,
+    missionDetails: {
+      image: 'forest.png',
+      title: 'Skyloft',
+      description: `General, a band of gnolls approaches! They are beasts who only
+      think about looting and burning everything their wake, but they
+      will be sorry they ever left their arid hills... For the queen!`,
+      rewardMin: 100,
+      rewardMax: 150,
+    },
     levelType: 'normal',
     dots: [],
   },

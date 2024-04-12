@@ -6,6 +6,15 @@ export interface FlagDto {
   levelType: levelType;
   dots: DotDto[];
   alreadyAnimated: boolean;
+  missionDetails: MissionDetails;
+}
+
+interface MissionDetails {
+  image: string;
+  title: string;
+  description: string;
+  rewardMin: number;
+  rewardMax: number;
 }
 
 type levelStatus = 'nextLevel' | 'finished' | 'justFinished' | 'hidden';

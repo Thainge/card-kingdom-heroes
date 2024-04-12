@@ -15,13 +15,13 @@
     <img
       [ngStyle]="{
         'background-image':
-          'url(./assets/backgrounds/' + missionDetails.image + ')'
+          'url(./assets/backgrounds/' + missionDetails?.image + ')'
       }"
       class="missionImage"
     />
     <img class="overlayPanelBg" src="./assets/mission.png" />
     <div class="overlalPanelTitle overlalPanelTitleLeft">
-      {{ missionDetails.title }}
+      {{ missionDetails?.title }}
     </div>
     <div class="overlalPanelTitle overlalPanelTitleRight">Objective</div>
     <!-- Left side -->
@@ -38,7 +38,8 @@
             <div class="battleBoxImages">
               <img src="./assets/gold.png" class="goldImg" />
               <div class="goldEstimateText">
-                {{ missionDetails.rewardMin }} - {{ missionDetails.rewardMax }}
+                {{ missionDetails?.rewardMin }} -
+                {{ missionDetails?.rewardMax }}
               </div>
             </div>
           </div>
@@ -51,21 +52,21 @@
                 src="./assets/battleStar.png"
                 class="starBattle"
                 [ngClass]="{
-                  darkImage: true
+                  darkImage: !finished
                 }"
               />
               <img
                 src="./assets/battleStar.png"
                 class="starBattle"
                 [ngClass]="{
-                  darkImage: true
+                  darkImage: !finished
                 }"
               />
               <img
                 src="./assets/battleStar.png"
                 class="starBattle"
                 [ngClass]="{
-                  darkImage: true
+                  darkImage: !finished
                 }"
               />
             </div>
@@ -80,10 +81,10 @@
           <div class="textRelativeBox">
             <img src="./assets/castle.png" class="castleImage" />
             <div class="firstLetter">
-              {{ missionDetails.description.substring(0, 1) }}
+              {{ missionDetails?.description?.substring(0, 1) }}
             </div>
             <div class="battleText">
-              {{ missionDetails.description.substring(1) }}
+              {{ missionDetails?.description?.substring(1) }}
             </div>
           </div>
         </div>

@@ -66,7 +66,6 @@ export class playerService implements OnInit {
     });
     const localGold = Number(localStorage.getItem('playerGold') ?? 0);
     this.gold$.next(localGold);
-    this.gold$.next(9999);
     this.gold$.subscribe((x) => {
       if (x !== -9999) {
         localStorage.setItem('playerGold', JSON.stringify(x));
