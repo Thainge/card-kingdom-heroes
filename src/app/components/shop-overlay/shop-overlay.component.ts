@@ -37,6 +37,11 @@ import Swiper from 'swiper';
 type ShopStep = 'picking' | 'shopping' | 'opening';
 type OpeningCardsStep = 'initial' | 'openingCards';
 
+interface ExtendedAbilityCard extends AbilityCard {
+  rarityImage: string;
+  special: boolean;
+}
+
 @Component({
   selector: 'app-shop-overlay',
   templateUrl: './shop-overlay.component.html',
@@ -88,8 +93,8 @@ export class ShopOverlayComponent implements OnInit {
 
   openingCards: boolean = false;
   openStep: OpeningCardsStep = 'initial';
-  openCards: any[] = [];
-  showCardsList: any[] = [];
+  openCards: ExtendedAbilityCard[] = [];
+  showCardsList: ExtendedAbilityCard[] = [];
   showCardAnimation: boolean = false;
   canClickFinish: boolean = false;
   specialList: number[] = [];
@@ -158,14 +163,16 @@ export class ShopOverlayComponent implements OnInit {
 
   startPhase() {
     this.openingCards = true;
-    let shuffled1 = this.cardService.shuffle(this.allCards).map((x, i) => {
-      if (i < 2) {
-        return { ...x, special: true, rarityImage: 'rare.png' };
-      }
+    let shuffled1: ExtendedAbilityCard[] = this.cardService
+      .shuffle(this.allCards)
+      .map((x, i) => {
+        if (i < 2) {
+          return { ...x, special: true, rarityImage: 'epic.png', level: 2 };
+        }
 
-      return { ...x, special: false };
-    });
-    const shuffled = this.cardService.shuffle(shuffled1);
+        return { ...x, special: false, rarityImage: 'rare.png' };
+      });
+    const shuffled: ExtendedAbilityCard[] = this.cardService.shuffle(shuffled1);
     this.openCards = [shuffled[0], shuffled[1], shuffled[2]];
     let currentCards = JSON.parse(localStorage.getItem('abilityCards') ?? '[]');
 
@@ -352,5 +359,5 @@ export class ShopOverlayComponent implements OnInit {
     this.onCloseMenu.emit(false);
   }
 
-  trackById = (index: number, item: BoosterPack) => item.id;
+  trackById = (index: number, item: any) => item.id;
 }

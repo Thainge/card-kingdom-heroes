@@ -47,7 +47,7 @@
         (click)="finishPhase()"
       >
         <div
-          *ngFor="let item of openCards; index as i; trackBy: trackById"
+          *ngFor="let card of openCards; index as i; trackBy: trackById"
           class="hoverImage"
           [ngStyle]="{
             'animation-delay': determineDelayCard(i) + 'ms'
@@ -59,7 +59,7 @@
               params: { delay: determineDelayCard(i) }
             }"
             [@zoomOutLeave]
-            *ngIf="showCardAnimation && showCardsIncludes(item)"
+            *ngIf="showCardAnimation && showCardsIncludes(card)"
           >
             <div
               [@flipOnEnter]="{
@@ -73,15 +73,12 @@
                   'animation-delay': 800 + determineDelayCard(i) + 'ms',
                 }"
                 [ngClass]="{
-                  tadaAnimation: item.special
+                  tadaAnimation: card.special
                 }"
               >
                 <img
-                  [src]="'./assets/rewards/' + openBooster?.image"
-                  class="boosterPackImgOpen"
-                />
-                <img
-                  [src]="'./assets/' + item.rarityImage"
+                  [src]="'./assets/' + card.rarityImage"
+                  *ngIf="card.special"
                   class="newLogoPopup"
                   [@zoomInEnter]="{
                     value: '',
@@ -91,6 +88,66 @@
                     }
                   }"
                 />
+                <div class="bottomCard playerBottomCard">
+                  <div class="cardBorder">
+                    <img
+                      [src]="'./assets/abilities/' + card.image"
+                      class="cardBackgroundImage"
+                    />
+                    <div
+                      class="wildCardSuites bottomWildCard bottomAbilityStuff"
+                    >
+                      <div
+                        class="abilityTitle"
+                        [ngClass]="{
+                    paperBg: card.level === 1,
+                        paperBgRare: card.level === 2,
+                        paperBgLegendary: card.level === 3,
+                  }"
+                      >
+                        <div class="abilityTitleText">
+                          {{ card.name }}
+                          {{ card.level > 1 ? "+" + (card.level - 1) : "" }}
+                        </div>
+                        <div class="abilitySuitsBox">
+                          <img
+                            *ngFor="let cost of card.cost[card.level]"
+                            [src]="'./assets/' + cost + '.png'"
+                            class="abilitySuit"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="abilityBorder1"
+                        [ngClass]="{
+                        paperBg: card.level === 1,
+                        paperBgRare: card.level === 2,
+                        paperBgLegendary: card.level === 3,
+                  }"
+                      ></div>
+                      <div
+                        class="abilityBorder2"
+                        [ngClass]="{
+                        paperBg: card.level === 1,
+                        paperBgRare: card.level === 2,
+                        paperBgLegendary: card.level === 3,
+                  }"
+                      ></div>
+                      <div
+                        class="abilityDescription"
+                        [ngClass]="{
+                        paperBg: card.level === 1,
+                        paperBgRare: card.level === 2,
+                        paperBgLegendary: card.level === 3,
+                  }"
+                      >
+                        <div class="abilityDescriptionText">
+                          {{ card.description[card.level - 1] }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
