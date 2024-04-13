@@ -63,6 +63,7 @@ export class AppComponent implements OnInit {
   soundControl = new FormControl('75');
   musicControl = new FormControl('75');
   areYouSurePopup: boolean = false;
+  loadingText: string = '';
 
   display!: boolean;
 
@@ -82,22 +83,23 @@ export class AppComponent implements OnInit {
       if (x.loading === true && x.url !== 'null') {
         this.isLoading = true;
         this.loadingBg = x.image;
+        this.loadingText = x.text;
 
         setTimeout(() => {
           if (this.isLoading) {
             this.isLoading = false;
             this.router.navigate([x.url]);
           }
-        }, 2500);
+        }, 1500);
       } else if (x.url !== 'null') {
         this.isLoading = false;
       }
       setTimeout(() => {
         this.initFinished = true;
-      }, 2500);
+      }, 1500);
     });
     const currentRoute = this.router.url;
-    // this.loadingService.navigate(currentRoute, 'forest.png');
+    this.loadingService.navigate(currentRoute, 'homeLoading.png', 'Loading...');
     setInterval(() => {
       try {
         this.clickAnimationsList = this.clickAnimationsList.slice(

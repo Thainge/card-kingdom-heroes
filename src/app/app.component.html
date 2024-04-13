@@ -189,9 +189,12 @@
         'background-image': 'url(./assets/backgrounds/' + loadingBg + ')'
       }"
     >
-      <div class="loadingDropShadow"></div>
+      <div
+        class="loadingDropShadow"
+        *ngIf="loadingBg !== 'homeLoading.png'"
+      ></div>
       <div class="loadingBarBox">
-        <div class="loadingText">Amazing, right?</div>
+        <div class="loadingText">{{ loadingText }}</div>
         <img class="loadingBar" src="./assets/loadingBar.png" />
         <img class="loadingBarFill" />
         <img class="loadingBarFill loadingBarFillFull" />

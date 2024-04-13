@@ -6,6 +6,7 @@ interface LoadingObject {
   loading: boolean;
   url: string;
   image: BackgroundDto;
+  text: string;
 }
 
 interface Tip {
@@ -24,6 +25,7 @@ export class LoadingService {
     loading: true,
     url: 'null',
     image: 'forest.png',
+    text: 'Amazing, right?',
   });
   readonly isSurrendering$ = new BehaviorSubject<boolean>(false);
   readonly isRefreshing$ = new BehaviorSubject<boolean>(false);
@@ -44,7 +46,7 @@ export class LoadingService {
 
   constructor() {}
 
-  public navigate(url: string, image: BackgroundDto) {
-    this.isLoading$.next({ loading: true, url: url, image: image });
+  public navigate(url: string, image: BackgroundDto, text: string) {
+    this.isLoading$.next({ loading: true, url: url, image: image, text: text });
   }
 }

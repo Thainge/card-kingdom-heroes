@@ -760,8 +760,14 @@ export class BattleComponent implements OnInit {
     this.showGuide = currentLevel.showGuide ?? false;
     this.showAbilityGuide = currentLevel.showAbilityGuide ?? false;
 
+    const localShownGuideAlready = JSON.parse(
+      localStorage.getItem('localShownGuideAlready') ?? ''
+    );
+
     // Guide is initially false, hide guide
-    if (this.showGuide === false) {
+    if (this.showGuide === false || localShownGuideAlready) {
+      this.showGuide = false;
+      this.showAbilityGuide = false;
       this.hideGuideNow = true;
       for (const num of [0, 1, 2, 3, 4]) {
         // Add to player 1 hand and remove player 1 deck
@@ -842,15 +848,17 @@ export class BattleComponent implements OnInit {
       await this.timeout(1000);
       this.redrawHide = true;
       await this.timeout(2500);
-      if (this.currentLevel.showAbilityGuide) {
-        await this.pushDrawOutTextMessage(
-          'Welcome to Card Kingdom Ability Card Combat!'
-        );
-        this.nextGuideStepAbility();
-      } else {
-        await this.pushDrawOutTextMessage('Welcome to Card Kingdom Combat!');
-        this.nextGuideStep();
-      }
+      await this.pushDrawOutTextMessage('Welcome to Card Kingdom Combat!');
+      this.nextGuideStep();
+      // if (this.currentLevel.showAbilityGuide) {
+      //   await this.pushDrawOutTextMessage(
+      //     'Welcome to Card Kingdom Ability Card Combat!'
+      //   );
+      //   this.nextGuideStepAbility();
+      // } else {
+      //   await this.pushDrawOutTextMessage('Welcome to Card Kingdom Combat!');
+      //   this.nextGuideStep();
+      // }
       return;
     }
 
@@ -1186,6 +1194,7 @@ export class BattleComponent implements OnInit {
 
   async skipGuide() {
     if (!this.skippingGuide) {
+      localStorage.setItem('localShownGuideAlready', JSON.stringify(true));
       this.skippingGuide = true;
 
       await this.hidePreviousGuideMessages();
@@ -1390,6 +1399,7 @@ export class BattleComponent implements OnInit {
       } else {
         this.loadingService.navigate('/battle', 'loadingBg.png');
       }
+      localStorage.setItem('localShownGuideAlready', JSON.stringify(true));
       this.resetGame();
       this.Cards = Cards;
       setTimeout(() => {

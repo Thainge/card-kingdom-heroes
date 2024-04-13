@@ -280,8 +280,8 @@
 }
 
 .loadingBarFill {
-  -webkit-animation: fillLoadingBar 3s forwards;
-  animation: fillLoadingBar 3s forwards;
+  -webkit-animation: fillLoadingBar 1.5s forwards;
+  animation: fillLoadingBar 1.5s forwards;
   -webkit-animation-timing-function: ease;
   animation-timing-function: ease;
   position: absolute;
