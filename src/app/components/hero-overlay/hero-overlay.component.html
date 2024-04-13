@@ -148,17 +148,13 @@
                       !currentHero?.unlocked,
                     relativeIconBoxHover:
                       isCurrentlyHovering(item) &&
-                      currentHero &&
-                      currentHero.points! >= item.cost[item.level]
+                      currentHero?.points! >= item.cost[item.level]
                   }"
                 />
                 <div
                   class="hoveringDescriptionBox"
                   [ngClass]="{
-                    showHoveringBox:
-                      isCurrentlyHovering(item) &&
-                      currentHero &&
-                      currentHero.points! >= item.cost[item.level]
+                    showHoveringBox: isCurrentlyHovering(item)
                   }"
                 >
                   <div class="hoveringTitle">{{ item.title[item.level] }}</div>

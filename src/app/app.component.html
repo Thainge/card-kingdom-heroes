@@ -5,7 +5,7 @@
       value: '',
       params: { duration: 500, delay: 0 }
     }"
-    *ngIf="display"
+    *ngIf="display && currentRouteIsNotHome()"
     (click)="optionsMenuOpened = !optionsMenuOpened"
   >
     <img src="./assets/options.png" class="optionsButton hoverButton" />

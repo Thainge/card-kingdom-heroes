@@ -123,6 +123,10 @@ export class AppComponent implements OnInit {
     this.display = true;
   }
 
+  currentRouteIsNotHome(): boolean {
+    return this.router.url.length > 3;
+  }
+
   isBattle(): boolean {
     return this.router.url.includes('battle');
   }

@@ -199,7 +199,7 @@ export class ShopOverlayComponent implements OnInit {
             return {
               ...a,
               trueNumberOwned: a.trueNumberOwned + 1,
-              numberOwned: a.trueNumberOwned + 1,
+              numberOwned: a.numberOwned + 1,
             };
           }
           return a;

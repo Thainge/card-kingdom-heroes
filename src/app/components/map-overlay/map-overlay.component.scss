@@ -187,6 +187,17 @@
   animation: zoomInOut 1.5s linear infinite;
 }
 
+.alertIconNot2 {
+  position: absolute;
+  top: -6%;
+  right: 0%;
+
+  z-index: 3;
+  pointer-events: none;
+  scale: 0.5;
+  animation: zoomInOut 1.5s linear infinite;
+}
+
 .iconContainer {
   position: absolute;
   top: 0;

@@ -37,6 +37,7 @@ export class DeckOverlayComponent implements OnInit {
   @Input('open') set openChanged(x: boolean) {
     this.open = x;
     this.abilityHand = JSON.parse(localStorage.getItem('playerDeck') ?? '[]');
+    console.log(this.abilityHand);
     this.abilityCards = JSON.parse(
       localStorage.getItem('abilityCards') ?? '[]'
     );
@@ -160,6 +161,8 @@ export class DeckOverlayComponent implements OnInit {
 
         return x;
       });
+      localStorage.setItem('playerDeck', JSON.stringify(this.abilityHand));
+      localStorage.setItem('abilityCards', JSON.stringify(this.abilityCards));
     } else if (card.numberOwned !== 1) {
       this.abilityHand.push(card);
       this.abilityCards = this.abilityCards.map((x) => {
@@ -169,6 +172,8 @@ export class DeckOverlayComponent implements OnInit {
 
         return x;
       });
+      localStorage.setItem('playerDeck', JSON.stringify(this.abilityHand));
+      localStorage.setItem('abilityCards', JSON.stringify(this.abilityCards));
     }
   }
 
@@ -284,7 +289,6 @@ export class DeckOverlayComponent implements OnInit {
     this.abilityCards = this.abilityCards.map((x) => {
       // Reduce number owned
       if (x.id === card?.id) {
-        console.log('yes');
         return {
           ...x,
           trueNumberOwned: x.trueNumberOwned - 3,
@@ -297,7 +301,10 @@ export class DeckOverlayComponent implements OnInit {
       // Check if needs to add to existing ID
       if (x.id === card?.id! + 1) {
         added = true;
-        console.log('hit');
+        console.log('existing');
+        this.abilityHand = this.abilityHand.filter(
+          (x) => x.id !== card?.id! + 1
+        );
         return {
           ...x,
           trueNumberOwned: x.trueNumberOwned + 1,
@@ -319,6 +326,7 @@ export class DeckOverlayComponent implements OnInit {
     });
 
     if (!added && card) {
+      console.log('added');
       this.abilityCards.push({
         ...card,
         numberOwned: 1,
@@ -351,6 +359,8 @@ export class DeckOverlayComponent implements OnInit {
 
       return x;
     });
+    localStorage.setItem('playerDeck', JSON.stringify(this.abilityHand));
+    localStorage.setItem('abilityCards', JSON.stringify(this.abilityCards));
   }
 
   resetDeck() {
@@ -358,6 +368,8 @@ export class DeckOverlayComponent implements OnInit {
     this.abilityCards = this.abilityCards.map((x) => {
       return { ...x, inHand: false };
     });
+    localStorage.setItem('playerDeck', JSON.stringify(this.abilityHand));
+    localStorage.setItem('abilityCards', JSON.stringify(this.abilityCards));
   }
 
   nextSort() {

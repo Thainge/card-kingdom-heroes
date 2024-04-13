@@ -27,6 +27,7 @@ import { AchievementService } from 'src/app/services/achievement.service';
 import { AchievementObject } from 'src/app/models/achievement';
 import { LevelDto } from 'src/app/models/level';
 import { FlagDto } from 'src/app/models/flag';
+import { AbilityCard } from 'src/app/models/abilityCard';
 
 interface Tip {
   title: string;
@@ -102,6 +103,8 @@ export class MapOverlayComponent implements OnInit {
   achievements: AchievementObject[] = [];
   flagsList: FlagDto[] = [];
   completedFlagsList: FlagDto[] = [];
+  showDeckIcon: boolean = false;
+  deckInterval: any;
 
   constructor(
     private loadingService: LoadingService,
@@ -151,6 +154,28 @@ export class MapOverlayComponent implements OnInit {
     });
     this.checkTip();
     this.setTheme();
+    this.checkDeck();
+    this.deckInterval = setInterval(() => {
+      this.checkDeck();
+    }, 1000);
+  }
+
+  checkDeck() {
+    const cards: AbilityCard[] = JSON.parse(
+      localStorage.getItem('abilityCards') ?? '[]'
+    );
+    const includesNew = cards.find((x) => x.isNew === true);
+    if (includesNew) {
+      this.showDeckIcon = true;
+    } else {
+      this.showDeckIcon = false;
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.deckInterval) {
+      clearInterval(this.deckInterval);
+    }
   }
 
   achievementHasGems(): boolean {
