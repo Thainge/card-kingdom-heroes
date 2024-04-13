@@ -16,6 +16,7 @@ import {
   fadeInUpOnEnterAnimation,
   fadeOutUpOnLeaveAnimation,
 } from 'angular-animations';
+import { FlagDto } from 'src/app/models/flag';
 import { LoadingService } from 'src/app/services/loading.service';
 import Swiper from 'swiper';
 
@@ -23,6 +24,7 @@ interface CampaignBox {
   id: number;
   image: string;
   url: MapRoute;
+  locked: boolean;
 }
 
 type MapRoute =
@@ -68,11 +70,13 @@ export class CampaignOverlayComponent implements OnInit {
       id: 1,
       image: 'normalCampaign.png',
       url: 'cardkingdom-map',
+      locked: false,
     },
     {
       id: 2,
       image: 'linkCampaign.png',
       url: 'zelda-map',
+      locked: true,
     },
     // {
     //   id: 3,
@@ -95,6 +99,8 @@ export class CampaignOverlayComponent implements OnInit {
     //   url: 'donkeykong-map',
     // },
   ];
+  campaignsStars: number = 0;
+  campaignZeldaStars: number = 0;
 
   constructor(
     private router: Router,
@@ -102,9 +108,20 @@ export class CampaignOverlayComponent implements OnInit {
     private loadingService: LoadingService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.setStars();
+  }
 
   ngAfterViewInit() {}
+
+  setStars() {
+    const flags: FlagDto[] =
+      JSON.parse(localStorage.getItem('flagsData') ?? '[]') ?? [];
+    const completedFlags = flags.filter(
+      (x) => x.levelStatus === 'finished' || x.levelStatus === 'justFinished'
+    );
+    this.campaignsStars = completedFlags.length * 3;
+  }
 
   routeIsMap(): boolean {
     return this.route.toString().includes('map');

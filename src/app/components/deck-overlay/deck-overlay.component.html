@@ -26,6 +26,21 @@
   >
     <div class="optionsMenuBackdrop backdrop2"></div>
     <div class="relativeUpgradeContainer">
+      <img
+        [src]="
+          rightUpgradeCard?.level === 2
+            ? './assets/epic.png'
+            : './assets/legendary.png'
+        "
+        class="newLogoPopup"
+        [@zoomInEnter]="{
+          value: '',
+          params: {
+            duration: 500,
+            delay: 800
+          }
+        }"
+      />
       <div
         class="bottomCard playerBottomCard"
         [@zoomInEnter]="{

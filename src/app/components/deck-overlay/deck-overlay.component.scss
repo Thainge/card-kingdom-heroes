@@ -1003,6 +1003,12 @@
   z-index: 5555;
 }
 
+.newLogoPopup {
+  position: absolute;
+  z-index: 5;
+  top: 36%;
+}
+
 .relativeUpgradeContainer {
   position: relative;
   z-index: 2;
@@ -1015,6 +1021,7 @@
 
 .relativeUpgradeContainer .bottomCard {
   width: 17%;
+  max-width: 20em;
 }
 
 .relativeUpgradeContainer .upgradeBox,

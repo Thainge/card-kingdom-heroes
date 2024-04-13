@@ -3902,6 +3902,7 @@ export class BattleComponent implements OnInit {
 
   endGame(playerWon: boolean) {
     if (playerWon) {
+      localStorage.setItem('gameStartedYet', JSON.stringify(true));
       setTimeout(() => {
         this.gameWinnerPlayer = true;
       }, 1000);
@@ -3920,6 +3921,7 @@ export class BattleComponent implements OnInit {
         }, 3500);
       }
     } else {
+      localStorage.setItem('gameStartedYet', JSON.stringify(true));
       setTimeout(() => {
         this.gameLoserPlayer = true;
         this.rewardItems = [];

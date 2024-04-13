@@ -7,7 +7,7 @@ import {
   OnInit,
   HostListener,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Panzoom } from '@fancyapps/ui/dist/panzoom/panzoom.esm.js';
 import {
   fadeInOnEnterAnimation,
@@ -143,10 +143,12 @@ export class MapComponent implements AfterViewInit, OnInit {
 
   constructor(
     private loadingService: LoadingService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
+    this.checkStartOfGame();
     this.initFlags();
   }
 
@@ -282,6 +284,15 @@ export class MapComponent implements AfterViewInit, OnInit {
     )?.missionDetails;
     this.finished =
       flag.levelStatus === 'finished' || flag.levelStatus === 'justFinished';
+  }
+
+  checkStartOfGame() {
+    const gameStartedYet = JSON.parse(
+      localStorage.getItem('gameStartedYet') ?? ''
+    );
+    if (!gameStartedYet) {
+      this.router.navigate(['/']);
+    }
   }
 
   startSpecialBattle(battle: Battle) {
