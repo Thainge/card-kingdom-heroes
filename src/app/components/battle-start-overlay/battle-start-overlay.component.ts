@@ -48,9 +48,13 @@ export class BattleStartOverlayComponent implements OnInit {
     localStorage.setItem('currentLevel', JSON.stringify(this.currentLevel));
     localStorage.setItem('currentDetails', JSON.stringify(this.missionDetails));
     if (this.missionDetails?.image) {
-      this.loadingService.navigate('/battle', this.missionDetails.image);
+      this.loadingService.navigate(
+        '/battle',
+        this.missionDetails.image,
+        this.missionDetails.title
+      );
     } else {
-      this.loadingService.navigate('/battle', 'loadingBg.png');
+      this.loadingService.navigate('/battle', 'loadingBg.png', 'Loading...');
     }
   }
 

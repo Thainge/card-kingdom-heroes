@@ -301,7 +301,6 @@ export class DeckOverlayComponent implements OnInit {
       // Check if needs to add to existing ID
       if (x.id === card?.id! + 1) {
         added = true;
-        console.log('existing');
         this.abilityHand = this.abilityHand.filter(
           (x) => x.id !== card?.id! + 1
         );

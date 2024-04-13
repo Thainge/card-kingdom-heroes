@@ -57,7 +57,11 @@ export class HomeComponent implements OnInit {
       (this.flagsList[0].levelStatus === 'finished' ||
         this.flagsList[0].levelStatus === 'justFinished')
     ) {
-      this.loadingService.navigate('/cardkingdom-map', 'loadingBg.png');
+      this.loadingService.navigate(
+        '/cardkingdom-map',
+        'loadingBg.png',
+        'Loading...'
+      );
     } else {
       this.chooseCampaignOpen = true;
     }
@@ -74,6 +78,6 @@ export class HomeComponent implements OnInit {
     const battle = LevelsData[0];
     localStorage.setItem('currentLevel', JSON.stringify(battle));
     localStorage.setItem('currentDetails', JSON.stringify(flag.missionDetails));
-    this.loadingService.navigate('/battle', 'loadingBg.png');
+    this.loadingService.navigate('/battle', 'loadingBg.png', 'Loading...');
   }
 }

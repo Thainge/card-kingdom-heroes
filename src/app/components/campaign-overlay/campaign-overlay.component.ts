@@ -137,7 +137,7 @@ export class CampaignOverlayComponent implements OnInit {
 
     if (this.navigate) {
       this.loadingService.isRefreshing$.next(true);
-      this.loadingService.navigate(route, 'loadingBg.png');
+      this.loadingService.navigate(route, 'loadingBg.png', 'Loading..');
     }
   }
 

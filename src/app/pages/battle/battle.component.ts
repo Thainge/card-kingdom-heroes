@@ -471,10 +471,15 @@ export class BattleComponent implements OnInit {
           if (this.currentCombatPhase?.background) {
             this.loadingService.navigate(
               '/battle',
-              this.currentCombatPhase.background
+              this.currentCombatPhase.background,
+              'Loading...'
             );
           } else {
-            this.loadingService.navigate('/battle', 'loadingBg.png');
+            this.loadingService.navigate(
+              '/battle',
+              'loadingBg.png',
+              'Loading...'
+            );
           }
           localStorage.setItem('showLoading', JSON.stringify(false));
         }
@@ -650,7 +655,11 @@ export class BattleComponent implements OnInit {
         x.hide();
         x.remove();
       });
-      this.loadingService.navigate('/cardkingdom-map', 'loadingBg.png');
+      this.loadingService.navigate(
+        '/cardkingdom-map',
+        'loadingBg.png',
+        'Loading...'
+      );
     }
 
     // Passed object for battle
@@ -847,18 +856,21 @@ export class BattleComponent implements OnInit {
 
       await this.timeout(1000);
       this.redrawHide = true;
+      this.redrawing = false;
       await this.timeout(2500);
+      this.redrawHide = true;
+      this.redrawing = false;
+
       await this.pushDrawOutTextMessage('Welcome to Card Kingdom Combat!');
-      this.nextGuideStep();
-      // if (this.currentLevel.showAbilityGuide) {
-      //   await this.pushDrawOutTextMessage(
-      //     'Welcome to Card Kingdom Ability Card Combat!'
-      //   );
-      //   this.nextGuideStepAbility();
-      // } else {
-      //   await this.pushDrawOutTextMessage('Welcome to Card Kingdom Combat!');
-      //   this.nextGuideStep();
-      // }
+      if (this.currentLevel.showAbilityGuide) {
+        await this.pushDrawOutTextMessage(
+          'Welcome to Card Kingdom Ability Card Combat!'
+        );
+        this.nextGuideStepAbility();
+      } else {
+        await this.pushDrawOutTextMessage('Welcome to Card Kingdom Combat!');
+        this.nextGuideStep();
+      }
       return;
     }
 
@@ -1046,10 +1058,11 @@ export class BattleComponent implements OnInit {
       if (this.currentCombatPhase?.background) {
         this.loadingService.navigate(
           '/battle',
-          this.currentCombatPhase.background
+          this.currentCombatPhase.background,
+          'Loading...'
         );
       } else {
-        this.loadingService.navigate('/battle', 'loadingBg.png');
+        this.loadingService.navigate('/battle', 'loadingBg.png', 'Loading...');
       }
       this.resetGame();
       this.Cards = Cards;
@@ -1212,10 +1225,11 @@ export class BattleComponent implements OnInit {
       if (this.currentCombatPhase?.background) {
         this.loadingService.navigate(
           '/battle',
-          this.currentCombatPhase.background
+          this.currentCombatPhase.background,
+          'Loading...'
         );
       } else {
-        this.loadingService.navigate('/battle', 'loadingBg.png');
+        this.loadingService.navigate('/battle', 'loadingBg.png', 'Loading...');
       }
       this.resetGame();
       this.Cards = Cards;
@@ -1394,10 +1408,11 @@ export class BattleComponent implements OnInit {
       if (this.currentCombatPhase?.background) {
         this.loadingService.navigate(
           '/battle',
-          this.currentCombatPhase.background
+          this.currentCombatPhase.background,
+          'Loading...'
         );
       } else {
-        this.loadingService.navigate('/battle', 'loadingBg.png');
+        this.loadingService.navigate('/battle', 'loadingBg.png', 'Loading...');
       }
       localStorage.setItem('localShownGuideAlready', JSON.stringify(true));
       this.resetGame();
@@ -1493,10 +1508,15 @@ export class BattleComponent implements OnInit {
     if (this.currentCombatPhase?.background) {
       this.loadingService.navigate(
         '/cardkingdom-map',
-        this.currentCombatPhase.background
+        this.currentCombatPhase.background,
+        'Loading...'
       );
     } else {
-      this.loadingService.navigate('/cardkingdom-map', 'loadingBg.png');
+      this.loadingService.navigate(
+        '/cardkingdom-map',
+        'loadingBg.png',
+        'Loading...'
+      );
     }
   }
 
@@ -1510,10 +1530,11 @@ export class BattleComponent implements OnInit {
     if (this.currentCombatPhase?.background) {
       this.loadingService.navigate(
         '/battle',
-        this.currentCombatPhase.background
+        this.currentCombatPhase.background,
+        'Loading...'
       );
     } else {
-      this.loadingService.navigate('/battle', 'loadingBg.png');
+      this.loadingService.navigate('/battle', 'loadingBg.png', 'Loading...');
     }
     setTimeout(() => {
       this.resetGame();

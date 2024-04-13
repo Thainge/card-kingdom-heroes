@@ -20,6 +20,8 @@ import {
 import { CheatsService } from './services/cheats.service';
 import { LoadingService } from './services/loading.service';
 import { Router } from '@angular/router';
+import { AbilityCard } from './models/abilityCard';
+import { AbilityData } from 'src/assets/data/ability';
 
 type ClickObject = {
   id: number;
@@ -78,6 +80,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.setInitialDeck();
     this.docElement = document.documentElement;
     this.loadingService.isLoading$.subscribe((x) => {
       if (x.loading === true && x.url !== 'null') {
@@ -123,6 +126,21 @@ export class AppComponent implements OnInit {
       // this.display = x;
     });
     this.display = true;
+  }
+
+  setInitialDeck() {
+    const cards: AbilityCard[] = JSON.parse(
+      localStorage.getItem('abilityCards') ?? '[]'
+    );
+    if (cards.length < 1) {
+      const deckCards = AbilityData.map((x) => {
+        return { ...x, isNew: false, inHand: false, numberOwned: 0 };
+      });
+      localStorage.setItem('abilityCards', JSON.stringify(deckCards));
+
+      const handCards = deckCards;
+      localStorage.setItem('abilityCards', JSON.stringify(handCards));
+    }
   }
 
   currentRouteIsNotHome(): boolean {
