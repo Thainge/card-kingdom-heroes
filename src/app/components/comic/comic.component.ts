@@ -29,6 +29,8 @@ export class ComicComponent implements OnInit {
   }
   @Input('comicData') comicData: Comic = { id: 0, comics: [], display: false };
   currentIndex: number = 0;
+  currentBlackIndex: number = 0;
+  interval: any;
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
@@ -39,10 +41,56 @@ export class ComicComponent implements OnInit {
   initComic() {
     if (this.comicData) {
       this.comicData.display = true;
-      console.log(this.comicData);
-      this.comicData.comics[this.currentIndex].display = true;
+      setTimeout(() => {
+        this.nextStep();
+      }, 500);
     }
   }
+
+  nextStep() {
+    // Show next comic section
+    const isStillMore = this.comicData.comics[this.currentIndex].blackList.find(
+      (x) => x.display === true
+    );
+
+    if (isStillMore) {
+      let found = false;
+      this.comicData.comics = this.comicData.comics.map((x, i) => {
+        if (i === this.currentIndex) {
+          return { ...x, display: true };
+        }
+
+        return { ...x, display: false };
+      });
+      this.comicData.comics[this.currentIndex].blackList =
+        this.comicData.comics[this.currentIndex].blackList.map((x) => {
+          if (!found && x.display) {
+            found = true;
+            return { ...x, display: false };
+          }
+
+          return x;
+        });
+    } else {
+      // If no more black steps go to next page
+      const nextPage = this.comicData.comics[this.currentIndex + 1];
+      if (nextPage) {
+        this.currentIndex = this.currentIndex + 1;
+        this.currentBlackIndex = 0;
+        this.nextStep();
+      } else {
+        // If no more pages end display
+        this.comicData.display = false;
+      }
+    }
+
+    this.comicData.comics[this.currentIndex].display = true;
+    this.comicData.comics[this.currentIndex].blackList[
+      this.currentBlackIndex
+    ].display = false;
+  }
+
+  trackById = (index: number, item: any) => item.id;
 
   closeMenu() {
     this.onCloseMenu.emit(false);

@@ -102,14 +102,14 @@ export class AppComponent implements OnInit {
         this.initFinished = true;
       }, 1500);
     });
-    setTimeout(() => {
-      const currentRoute = this.router.url;
-      this.loadingService.navigate(
-        currentRoute,
-        'homeLoading.png',
-        'Loading...'
-      );
-    }, 1);
+    // setTimeout(() => {
+    //   const currentRoute = this.router.url;
+    //   this.loadingService.navigate(
+    //     currentRoute,
+    //     'homeLoading.png',
+    //     'Loading...'
+    //   );
+    // }, 1);
     setInterval(() => {
       try {
         this.clickAnimationsList = this.clickAnimationsList.slice(

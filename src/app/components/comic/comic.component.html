@@ -1,28 +1,61 @@
 <div
   class="container"
+  (click)="nextStep()"
   *ngIf="comicData?.display"
   [@fadeEnter]="{
     value: '',
-    params: { duration: 300, delay: 0 }
+    params: { duration: 500, delay: 0 }
   }"
   [@fadeOutLeave]="{
     value: '',
-    params: { duration: 300, delay: 0 }
+    params: { duration: 500, delay: 0 }
   }"
 >
   <div class="optionsMenuBackdrop"></div>
-  <div class="overlayBox" *ngFor="let item of comicData.comics">
+  <div
+    class="overlayBox"
+    *ngFor="let item of comicData.comics; trackBy: trackById"
+  >
+    <div
+      class="continueText"
+      *ngIf="item.display"
+      [@fadeEnter]="{
+        value: '',
+        params: { duration: 500, delay: 500 }
+      }"
+      [@fadeOutLeave]="{
+        value: '',
+        params: { duration: 500, delay: 0 }
+      }"
+    >
+      Click to continue...
+    </div>
     <div
       *ngIf="item.display"
       [@fadeEnter]="{
         value: '',
-        params: { duration: 300, delay: 0 }
+        params: { duration: 500, delay: 500 }
       }"
       [@fadeOutLeave]="{
         value: '',
-        params: { duration: 300, delay: 0 }
+        params: { duration: 500, delay: 0 }
       }"
+      class="relativeBox"
     >
+      <div
+        class="absoluteImage"
+        *ngFor="let x of item.blackList; trackBy: trackById"
+        [ngClass]="{
+          fadeIn: x.display,
+          fadeOut: !x.display
+        }"
+        [ngStyle]="{
+          'width': x.width + 'px',
+          'height': x.height + 'px',
+          'left': x.left + 'px',
+          'top': x.top + 'px',
+        }"
+      ></div>
       <img
         class="overlayPanelBg"
         src="./assets/menu.png"

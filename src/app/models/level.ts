@@ -41,11 +41,11 @@ export interface ComicPage {
 
 interface ComicBlack {
   id: number;
-  x: number;
-  y: number;
+  top: number;
+  left: number;
   width: number;
   height: number;
-  displayed: boolean;
+  display: boolean;
 }
 
 export interface EnemyLevelDto {
