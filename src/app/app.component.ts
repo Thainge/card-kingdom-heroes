@@ -22,6 +22,7 @@ import { LoadingService } from './services/loading.service';
 import { Router } from '@angular/router';
 import { AbilityCard } from './models/abilityCard';
 import { AbilityData } from 'src/assets/data/ability';
+import { DefaultAbilityData } from 'src/assets/data/defaultAbility';
 
 type ClickObject = {
   id: number;
@@ -133,13 +134,13 @@ export class AppComponent implements OnInit {
       localStorage.getItem('abilityCards') ?? '[]'
     );
     if (cards.length < 1) {
-      const deckCards = AbilityData.map((x) => {
+      const deckCards = DefaultAbilityData.map((x) => {
         return { ...x, isNew: false, inHand: false, numberOwned: 0 };
       });
       localStorage.setItem('abilityCards', JSON.stringify(deckCards));
 
       const handCards = deckCards;
-      localStorage.setItem('abilityCards', JSON.stringify(handCards));
+      localStorage.setItem('playerDeck', JSON.stringify(handCards));
     }
   }
 
@@ -298,10 +299,7 @@ export class AppComponent implements OnInit {
 
     if (value.includes('easymode')) {
       const easyLocal = localStorage.getItem('easymode');
-      let easyMode = false;
-      if (easyLocal) {
-        easyMode = JSON.parse(easyLocal);
-      }
+      let easyMode = easyLocal;
 
       localStorage.setItem('easymode', JSON.stringify(!easyMode));
       window.location.reload();
