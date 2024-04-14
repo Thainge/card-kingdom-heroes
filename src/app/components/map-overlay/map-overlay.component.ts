@@ -83,7 +83,7 @@ export class MapOverlayComponent implements OnInit {
   currentTheme: Theme = 'cardkingdom';
 
   showInformation: boolean = false;
-  display: boolean = true;
+  display: boolean = false;
 
   showWildHintOverlay: boolean = false;
   currentTip: Tip = {
@@ -137,8 +137,16 @@ export class MapOverlayComponent implements OnInit {
       this.stars = x;
     });
     this.loadingService.displayOptions$.subscribe((x) => {
-      // this.display = x;
+      this.display = x;
     });
+    if (
+      !this.completedFlagsList.find((x) => x.levelStatus === 'justFinished')
+    ) {
+      this.loadingService.displayOptions$.next(true);
+      setTimeout(() => {
+        this.loadingService.displayOptions$.next(true);
+      }, 50);
+    }
     this.loadingService.showWheel$.subscribe((x) => {
       this.wheelOpen = x;
     });

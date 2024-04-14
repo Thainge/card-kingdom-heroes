@@ -68,7 +68,7 @@ export class AppComponent implements OnInit {
   areYouSurePopup: boolean = false;
   loadingText: string = '';
 
-  display!: boolean;
+  display: boolean = false;
 
   @ViewChild('consoleInput') consoleInput: ElementRef | undefined;
 
@@ -102,8 +102,14 @@ export class AppComponent implements OnInit {
         this.initFinished = true;
       }, 1500);
     });
-    const currentRoute = this.router.url;
-    this.loadingService.navigate(currentRoute, 'homeLoading.png', 'Loading...');
+    setTimeout(() => {
+      const currentRoute = this.router.url;
+      this.loadingService.navigate(
+        currentRoute,
+        'homeLoading.png',
+        'Loading...'
+      );
+    }, 1);
     setInterval(() => {
       try {
         this.clickAnimationsList = this.clickAnimationsList.slice(
@@ -124,9 +130,8 @@ export class AppComponent implements OnInit {
     //   unlocked: true,
     // });
     this.loadingService.displayOptions$.subscribe((x) => {
-      // this.display = x;
+      this.display = x;
     });
-    this.display = true;
   }
 
   setInitialDeck() {

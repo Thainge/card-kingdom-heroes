@@ -43,7 +43,6 @@ export class HeroOverlayComponent implements OnInit {
 
   constructor(
     private loadingService: LoadingService,
-    private router: Router,
     private playerService: playerService
   ) {}
 
@@ -129,17 +128,24 @@ export class HeroOverlayComponent implements OnInit {
     if (this.currentHero && this.currentHero?.points! > 0) {
       this.currentHero.upgrades = this.currentHero.upgrades!.map((x) => {
         if (item.id === x.id) {
-          if (x.level === 0) {
+          let returnObj = x;
+          // Upgrade ability
+          // | 'showWildHearts'
+          // | 'showWildDiamonds'
+          // | 'showWildSpades'
+          // | 'showWildClubs'
+
+          if (returnObj.level === 0) {
             const canLevelUp = this.subtractUpgradePoints(item);
-            return canLevelUp ? { ...x, level: 1 } : x;
+            return canLevelUp ? { ...returnObj, level: 1 } : returnObj;
           }
-          if (x.level === 1) {
+          if (returnObj.level === 1) {
             const canLevelUp = this.subtractUpgradePoints(item);
-            return canLevelUp ? { ...x, level: 2 } : x;
+            return canLevelUp ? { ...returnObj, level: 2 } : returnObj;
           }
-          if (x.level === 2) {
+          if (returnObj.level === 2) {
             const canLevelUp = this.subtractUpgradePoints(item);
-            return canLevelUp ? { ...x, level: 3 } : x;
+            return canLevelUp ? { ...returnObj, level: 3 } : returnObj;
           }
         }
         return x;
@@ -150,6 +156,7 @@ export class HeroOverlayComponent implements OnInit {
         }
         return x;
       });
+
       localStorage.setItem('heroData', JSON.stringify(this.heroes));
       this.playerService.currentHero$.next(this.heroes.find((x) => x.selected));
     }

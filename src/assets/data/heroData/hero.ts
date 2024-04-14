@@ -44,6 +44,7 @@ export const HeroData: PlayerDto[] = [
         id: 1,
         level: 0,
         image: 'greenUpgrade1.png',
+        type: 'extraAttack',
         cost: [1, 2, 3],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -56,6 +57,7 @@ export const HeroData: PlayerDto[] = [
         id: 2,
         level: 0,
         image: 'greenUpgrade2.png',
+        type: 'extraHealth',
         cost: [1, 2, 3],
         title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
         description: [
@@ -68,6 +70,7 @@ export const HeroData: PlayerDto[] = [
         id: 3,
         level: 0,
         image: 'greenUpgrade3.png',
+        type: 'wildCardsCount',
         cost: [1, 1, 1],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -80,6 +83,7 @@ export const HeroData: PlayerDto[] = [
         id: 4,
         level: 0,
         image: 'greenUpgrade4.png',
+        type: 'extraHeartsDamage',
         cost: [2, 4, 6],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -92,6 +96,7 @@ export const HeroData: PlayerDto[] = [
         id: 5,
         level: 0,
         image: 'greenUpgrade5.png',
+        type: 'extraClubsDamage',
         cost: [2, 4, 6],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -150,6 +155,7 @@ export const HeroData: PlayerDto[] = [
         id: 1,
         level: 0,
         image: 'greenUpgrade1.png',
+        type: 'extraAttack',
         cost: [1, 2, 3],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -162,6 +168,7 @@ export const HeroData: PlayerDto[] = [
         id: 2,
         level: 0,
         image: 'greenUpgrade2.png',
+        type: 'extraHealth',
         cost: [1, 2, 3],
         title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
         description: [
@@ -174,6 +181,7 @@ export const HeroData: PlayerDto[] = [
         id: 3,
         level: 0,
         image: 'greenUpgrade3.png',
+        type: 'wildCardsCount',
         cost: [1, 1, 1],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -186,6 +194,7 @@ export const HeroData: PlayerDto[] = [
         id: 4,
         level: 0,
         image: 'greenUpgrade4.png',
+        type: 'extraHeartsDamage',
         cost: [2, 4, 6],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -198,6 +207,7 @@ export const HeroData: PlayerDto[] = [
         id: 5,
         level: 0,
         image: 'greenUpgrade5.png',
+        type: 'extraClubsDamage',
         cost: [2, 4, 6],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -256,6 +266,7 @@ export const HeroData: PlayerDto[] = [
         id: 1,
         level: 0,
         image: 'greenUpgrade1.png',
+        type: 'extraAttack',
         cost: [1, 2, 3],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -268,6 +279,7 @@ export const HeroData: PlayerDto[] = [
         id: 2,
         level: 0,
         image: 'greenUpgrade2.png',
+        type: 'extraHealth',
         cost: [1, 2, 3],
         title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
         description: [
@@ -280,6 +292,7 @@ export const HeroData: PlayerDto[] = [
         id: 3,
         level: 0,
         image: 'greenUpgrade3.png',
+        type: 'wildCardsCount',
         cost: [1, 1, 1],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -292,6 +305,7 @@ export const HeroData: PlayerDto[] = [
         id: 4,
         level: 0,
         image: 'greenUpgrade4.png',
+        type: 'extraHeartsDamage',
         cost: [2, 4, 6],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -304,6 +318,7 @@ export const HeroData: PlayerDto[] = [
         id: 5,
         level: 0,
         image: 'greenUpgrade5.png',
+        type: 'extraClubsDamage',
         cost: [2, 4, 6],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -362,6 +377,7 @@ export const HeroData: PlayerDto[] = [
         id: 1,
         level: 0,
         image: 'greenUpgrade1.png',
+        type: 'extraAttack',
         cost: [1, 2, 3],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -374,6 +390,7 @@ export const HeroData: PlayerDto[] = [
         id: 2,
         level: 0,
         image: 'greenUpgrade2.png',
+        type: 'extraHealth',
         cost: [1, 2, 3],
         title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
         description: [
@@ -386,6 +403,7 @@ export const HeroData: PlayerDto[] = [
         id: 3,
         level: 0,
         image: 'greenUpgrade3.png',
+        type: 'wildCardsCount',
         cost: [1, 1, 1],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -398,6 +416,7 @@ export const HeroData: PlayerDto[] = [
         id: 4,
         level: 0,
         image: 'greenUpgrade4.png',
+        type: 'extraHeartsDamage',
         cost: [2, 4, 6],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -410,6 +429,7 @@ export const HeroData: PlayerDto[] = [
         id: 5,
         level: 0,
         image: 'greenUpgrade5.png',
+        type: 'extraClubsDamage',
         cost: [2, 4, 6],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -468,6 +488,7 @@ export const HeroData: PlayerDto[] = [
         id: 1,
         level: 0,
         image: 'greenUpgrade1.png',
+        type: 'extraAttack',
         cost: [1, 2, 3],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -480,6 +501,7 @@ export const HeroData: PlayerDto[] = [
         id: 2,
         level: 0,
         image: 'greenUpgrade2.png',
+        type: 'extraHealth',
         cost: [1, 2, 3],
         title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
         description: [
@@ -492,6 +514,7 @@ export const HeroData: PlayerDto[] = [
         id: 3,
         level: 0,
         image: 'greenUpgrade3.png',
+        type: 'wildCardsCount',
         cost: [1, 1, 1],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -504,6 +527,7 @@ export const HeroData: PlayerDto[] = [
         id: 4,
         level: 0,
         image: 'greenUpgrade4.png',
+        type: 'extraHeartsDamage',
         cost: [2, 4, 6],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -516,6 +540,7 @@ export const HeroData: PlayerDto[] = [
         id: 5,
         level: 0,
         image: 'greenUpgrade5.png',
+        type: 'extraClubsDamage',
         cost: [2, 4, 6],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -574,6 +599,7 @@ export const HeroData: PlayerDto[] = [
         id: 1,
         level: 0,
         image: 'greenUpgrade1.png',
+        type: 'extraAttack',
         cost: [1, 2, 3],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -586,6 +612,7 @@ export const HeroData: PlayerDto[] = [
         id: 2,
         level: 0,
         image: 'greenUpgrade2.png',
+        type: 'extraHealth',
         cost: [1, 2, 3],
         title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
         description: [
@@ -598,6 +625,7 @@ export const HeroData: PlayerDto[] = [
         id: 3,
         level: 0,
         image: 'greenUpgrade3.png',
+        type: 'wildCardsCount',
         cost: [1, 1, 1],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -610,6 +638,7 @@ export const HeroData: PlayerDto[] = [
         id: 4,
         level: 0,
         image: 'greenUpgrade4.png',
+        type: 'extraHeartsDamage',
         cost: [2, 4, 6],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -622,6 +651,7 @@ export const HeroData: PlayerDto[] = [
         id: 5,
         level: 0,
         image: 'greenUpgrade5.png',
+        type: 'extraClubsDamage',
         cost: [2, 4, 6],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -680,6 +710,7 @@ export const HeroData: PlayerDto[] = [
         id: 1,
         level: 0,
         image: 'greenUpgrade1.png',
+        type: 'extraAttack',
         cost: [1, 2, 3],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -692,6 +723,7 @@ export const HeroData: PlayerDto[] = [
         id: 2,
         level: 0,
         image: 'greenUpgrade2.png',
+        type: 'extraHealth',
         cost: [1, 2, 3],
         title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
         description: [
@@ -704,6 +736,7 @@ export const HeroData: PlayerDto[] = [
         id: 3,
         level: 0,
         image: 'greenUpgrade3.png',
+        type: 'wildCardsCount',
         cost: [1, 1, 1],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -716,6 +749,7 @@ export const HeroData: PlayerDto[] = [
         id: 4,
         level: 0,
         image: 'greenUpgrade4.png',
+        type: 'extraHeartsDamage',
         cost: [2, 4, 6],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -728,6 +762,7 @@ export const HeroData: PlayerDto[] = [
         id: 5,
         level: 0,
         image: 'greenUpgrade5.png',
+        type: 'extraClubsDamage',
         cost: [2, 4, 6],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -786,6 +821,7 @@ export const HeroData: PlayerDto[] = [
         id: 1,
         level: 0,
         image: 'greenUpgrade1.png',
+        type: 'extraAttack',
         cost: [1, 2, 3],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -798,6 +834,7 @@ export const HeroData: PlayerDto[] = [
         id: 2,
         level: 0,
         image: 'greenUpgrade2.png',
+        type: 'extraHealth',
         cost: [1, 2, 3],
         title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
         description: [
@@ -810,6 +847,7 @@ export const HeroData: PlayerDto[] = [
         id: 3,
         level: 0,
         image: 'greenUpgrade3.png',
+        type: 'wildCardsCount',
         cost: [1, 1, 1],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -822,6 +860,7 @@ export const HeroData: PlayerDto[] = [
         id: 4,
         level: 0,
         image: 'greenUpgrade4.png',
+        type: 'extraHeartsDamage',
         cost: [2, 4, 6],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
@@ -834,6 +873,7 @@ export const HeroData: PlayerDto[] = [
         id: 5,
         level: 0,
         image: 'greenUpgrade5.png',
+        type: 'extraClubsDamage',
         cost: [2, 4, 6],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [

@@ -287,10 +287,15 @@ export class MapComponent implements AfterViewInit, OnInit {
   }
 
   checkStartOfGame() {
-    // const gameStartedYet = localStorage.getItem('gameStartedYet');
-    // if (!gameStartedYet) {
-    //   this.router.navigate(['/']);
-    // }
+    try {
+      const gameStartedYet = JSON.parse(
+        localStorage.getItem('gameStartedYet') ?? 'false'
+      );
+      if (!gameStartedYet) {
+        console.log('hit');
+        this.router.navigate(['/']);
+      }
+    } catch (err) {}
   }
 
   startSpecialBattle(battle: Battle) {

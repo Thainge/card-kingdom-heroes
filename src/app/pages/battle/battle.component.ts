@@ -98,6 +98,7 @@ const defaultPlayer: PlayerDto = {
       image: '',
       level: 0,
       title: [''],
+      type: 'alwaysWinTies',
     },
   ],
   usedPoints: 0,
@@ -656,6 +657,10 @@ export class BattleComponent implements OnInit {
         x.hide();
         x.remove();
       });
+      this.activeAbilityLeaderLines.forEach((x) => {
+        x.hide();
+        x.remove();
+      });
     }
 
     // Passed object for battle
@@ -1015,6 +1020,10 @@ export class BattleComponent implements OnInit {
         x.hide();
         x.remove();
       });
+      this.activeAbilityLeaderLines.forEach((x) => {
+        x.hide();
+        x.remove();
+      });
       if (this.currentCombatPhase?.background) {
         this.loadingService.navigate(
           '/battle',
@@ -1310,6 +1319,10 @@ export class BattleComponent implements OnInit {
       this.endGuide = true;
       this.hideGuideNow = true;
       this.activeLeaderLines.forEach((x) => {
+        x.hide();
+        x.remove();
+      });
+      this.activeAbilityLeaderLines.forEach((x) => {
         x.hide();
         x.remove();
       });
