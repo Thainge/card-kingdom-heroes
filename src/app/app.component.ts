@@ -44,7 +44,7 @@ type ClickObject = {
   ],
 })
 export class AppComponent implements OnInit {
-  title = 'card-kingdom-heroes';
+  title = 'Card Kingdom Heroes';
 
   consoleShouldShow: boolean = false;
   consoleHasBeenOpened: boolean = false;
