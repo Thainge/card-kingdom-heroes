@@ -1,0 +1,33 @@
+<div
+  class="container"
+  *ngIf="comicData?.display"
+  [@fadeEnter]="{
+    value: '',
+    params: { duration: 300, delay: 0 }
+  }"
+  [@fadeOutLeave]="{
+    value: '',
+    params: { duration: 300, delay: 0 }
+  }"
+>
+  <div class="optionsMenuBackdrop"></div>
+  <div class="overlayBox" *ngFor="let item of comicData.comics">
+    <div
+      *ngIf="item.display"
+      [@fadeEnter]="{
+        value: '',
+        params: { duration: 300, delay: 0 }
+      }"
+      [@fadeOutLeave]="{
+        value: '',
+        params: { duration: 300, delay: 0 }
+      }"
+    >
+      <img
+        class="overlayPanelBg"
+        src="./assets/menu.png"
+        [src]="'./assets/comics/' + item?.image"
+      />
+    </div>
+  </div>
+</div>

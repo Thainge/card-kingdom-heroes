@@ -1,5 +1,6 @@
 import { LevelDto } from 'src/app/models/level';
 import { EnemyAbilityCardsSet1 } from './enemyAbilityCards';
+import { ComicData } from './comic';
 
 const Level: LevelDto = {
   id: 1,
@@ -24,6 +25,8 @@ export const LevelsData: LevelDto[] = [
     ...Level,
     id: 1,
     battleRewardXp: 50,
+    comicData: ComicData[0],
+    showComic: true,
     combatPhases: [
       {
         id: 1,

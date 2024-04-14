@@ -6,6 +6,11 @@
       <div class="finishButtonText surrenderText">Skip Guide</div>
     </div>
   </div>
+  <app-comic
+    [comicData]="comicData"
+    [open]="showComic"
+    (onCloseMenu)="showComic = false"
+  ></app-comic>
   <app-dialog
     [dialogArray]="dialogArray"
     (finishedDialog)="finishedDialog()"

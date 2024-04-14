@@ -40,12 +40,13 @@ import { trigger, style, transition, animate } from '@angular/animations';
 declare let LeaderLine: any;
 import { Cards } from 'src/assets/data/cards';
 import { AbilityService } from 'src/app/services/ability.service';
-import { EnemyLevelDto, LevelDto } from 'src/app/models/level';
+import { Comic, EnemyLevelDto, LevelDto } from 'src/app/models/level';
 import { DialogComponent } from 'src/app/components/dialogComponent/dialog.component';
 import { DialogDto } from 'src/app/models/dialog';
 import { BackgroundDto } from 'src/app/models/backgrounds';
 import { FlagDto } from 'src/app/models/flag';
 import { ChallengeFlags } from 'src/assets/data/specialLevels';
+import { ComicComponent } from 'src/app/components/comic/comic.component';
 
 interface MissionDetails {
   image: string;
@@ -143,7 +144,7 @@ type RewardColor = 'blue' | 'gold' | 'purple';
   templateUrl: './battle.component.html',
   styleUrls: ['./battle.component.scss'],
   standalone: true,
-  imports: [CommonModule, DialogComponent],
+  imports: [CommonModule, DialogComponent, ComicComponent],
   animations: [
     trigger('cardLeaving', [
       transition(':leave', [
@@ -402,6 +403,8 @@ export class BattleComponent implements OnInit {
   gold: number = 0;
   doubleGold: boolean = false;
   abilitiesCostLess: boolean = false;
+  comicData: Comic = { id: 0, comics: [], display: false };
+  showComic: boolean = false;
 
   constructor(
     private cardService: CardService,
@@ -796,6 +799,12 @@ export class BattleComponent implements OnInit {
 
     // Guide is initially false, hide guide
     if (this.showGuide === false || localShownGuideAlready || this.easyMode) {
+      this.comicData = this.currentLevel?.comicData ?? {
+        comics: [],
+        display: false,
+        id: 0,
+      };
+      this.showComic = this.currentLevel?.showComic ?? false;
       this.showGuide = false;
       this.showAbilityGuide = false;
       this.hideGuideNow = true;
@@ -816,6 +825,12 @@ export class BattleComponent implements OnInit {
 
     // Guide is true, show guide
     if (this.showGuide === true && this.hideGuideNow) {
+      this.comicData = this.currentLevel?.comicData ?? {
+        comics: [],
+        display: false,
+        id: 0,
+      };
+      this.showComic = this.currentLevel?.showComic ?? false;
       this.showGuide = false;
       for (const num of [0, 1, 2, 3, 4]) {
         // Add to player 1 hand and remove player 1 deck

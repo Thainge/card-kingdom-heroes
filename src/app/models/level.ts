@@ -13,6 +13,8 @@ export interface LevelDto {
   allCardsWild?: boolean;
   showGuide?: boolean;
   showAbilityGuide?: boolean;
+  showComic?: boolean;
+  comicData?: Comic;
 
   hideDialog?: boolean;
   easyMode?: boolean;
@@ -22,6 +24,28 @@ export interface LevelDto {
   playerLevelUpEnabled: boolean;
   skipRedrawPhase: boolean;
   battleRewardXp: number;
+}
+
+export interface Comic {
+  id: number;
+  comics: ComicPage[];
+  display: boolean;
+}
+
+export interface ComicPage {
+  id: number;
+  image: string;
+  display: boolean;
+  blackList: ComicBlack[];
+}
+
+interface ComicBlack {
+  id: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  displayed: boolean;
 }
 
 export interface EnemyLevelDto {
