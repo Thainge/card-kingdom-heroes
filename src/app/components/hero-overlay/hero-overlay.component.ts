@@ -11,7 +11,7 @@ import {
 import { HeroUpgrade, PlayerDto } from 'src/app/models/player';
 import { LoadingService } from 'src/app/services/loading.service';
 import { playerService } from 'src/app/services/player.service';
-import { HeroData } from 'src/assets/data/heroData/hero';
+import { HeroData } from 'src/assets/data/hero';
 
 @Component({
   selector: 'app-hero-overlay',
@@ -60,8 +60,6 @@ export class HeroOverlayComponent implements OnInit {
       this.heroes[0].selected = true;
       this.heroes[0].unlocked = true;
       this.currentHero = this.heroes[0];
-      this.heroes[1].disabled = false;
-      this.heroes[1].unlocked = true;
     }
 
     // if (this.router.url.includes('cardkingdom-map')) {

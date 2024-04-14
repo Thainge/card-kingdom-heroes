@@ -20,14 +20,16 @@ import { DialogComponent } from 'src/app/components/dialogComponent/dialog.compo
 import { MapOverlayComponent } from 'src/app/components/map-overlay/map-overlay.component';
 import { DotDto, FlagDto } from 'src/app/models/flag';
 import { LevelDto } from 'src/app/models/level';
+import { PlayerDto } from 'src/app/models/player';
 import { LoadingService } from 'src/app/services/loading.service';
 import { flagsData } from 'src/assets/data/flags';
 import { LevelsData } from 'src/assets/data/level';
+import { ChallengeFlags, ChallengeLevels } from 'src/assets/data/specialLevels';
 const { Pins } = require('@fancyapps/ui/dist/panzoom/panzoom.pins.esm.js');
 
 type WhirlpoolSize = 1 | 1.25 | 1.5 | 2;
 type WhirlpoolOpacity = 0.4 | 0.6 | 0.8 | 1;
-type Battle = 'battle1' | 'battle2' | 'battle3' | 'battle4';
+type Battle = 1 | 2 | 3 | 4;
 
 interface SpecialLevels {
   wheelShow: boolean;
@@ -140,6 +142,8 @@ export class MapComponent implements AfterViewInit, OnInit {
   };
   isSpecialBattle: boolean = false;
   battleStartOpen: boolean = false;
+  challengeLevels: LevelDto[] = [];
+  challengeFlags: FlagDto[] = [];
 
   constructor(
     private loadingService: LoadingService,
@@ -148,6 +152,36 @@ export class MapComponent implements AfterViewInit, OnInit {
   ) {}
 
   ngOnInit() {
+    try {
+      this.challengeLevels = JSON.parse(
+        localStorage.getItem('challengeLevels') ?? '[]'
+      );
+      if (this.challengeLevels.length < 1) {
+        this.challengeLevels = ChallengeLevels;
+        localStorage.setItem(
+          'challengeLevels',
+          JSON.stringify(this.challengeLevels)
+        );
+      }
+      this.challengeFlags = JSON.parse(
+        localStorage.getItem('challengeFlags') ?? '[]'
+      );
+      if (this.challengeFlags.length < 1) {
+        this.challengeFlags = ChallengeFlags;
+        localStorage.setItem(
+          'challengeFlags',
+          JSON.stringify(this.challengeFlags)
+        );
+      }
+      this.specialLevelsData.hero1Finished =
+        this.challengeFlags[0].levelStatus === 'finished';
+      this.specialLevelsData.hero2Finished =
+        this.challengeFlags[1].levelStatus === 'finished';
+      this.specialLevelsData.hero3Finished =
+        this.challengeFlags[2].levelStatus === 'finished';
+      this.specialLevelsData.hero4Finished =
+        this.challengeFlags[3].levelStatus === 'finished';
+    } catch (err) {}
     this.checkStartOfGame();
     this.initFlags();
   }
@@ -167,13 +201,10 @@ export class MapComponent implements AfterViewInit, OnInit {
       localStorage.setItem('flagsData', JSON.stringify(this.flagsList));
     }
 
-    const specialLevelsData = JSON.parse(
+    const specialLevelsData: SpecialLevels = JSON.parse(
       localStorage.getItem('specialLevelData') ?? '[]'
     );
-    if (
-      specialLevelsData &&
-      (specialLevelsData.wheelShow || !specialLevelsData.wheelShow)
-    ) {
+    if (!specialLevelsData) {
       this.specialLevelsData = specialLevelsData;
     }
     this.nextLevel = this.flagsList.find((x) => x.levelStatus === 'nextLevel');
@@ -191,8 +222,72 @@ export class MapComponent implements AfterViewInit, OnInit {
 
       return x;
     });
+    const heroes: PlayerDto[] = JSON.parse(
+      localStorage.getItem('heroData') ?? '[]'
+    );
+    this.flagsList.forEach((x) => {
+      if (x.id === 3 && x.levelStatus === 'finished') {
+        this.specialLevelsData.wheelShow = true;
+      }
+
+      if (x.id === 4 && x.levelStatus === 'finished') {
+        this.specialLevelsData.hero1Show = true;
+      }
+
+      if (x.id === 11 && x.levelStatus === 'finished') {
+        if (heroes.length > 0) {
+          const newHeroes = heroes.map((x) => {
+            if (x.id === 2) {
+              return { ...x, disabled: false, unlocked: true };
+            }
+
+            return x;
+          });
+          localStorage.setItem('heroData', JSON.stringify(newHeroes));
+        }
+      }
+
+      if (x.id === 8 && x.levelStatus === 'finished') {
+        this.specialLevelsData.hero2Show = true;
+      }
+
+      if (x.id === 14 && x.levelStatus === 'finished') {
+        this.specialLevelsData.hero3Show = true;
+      }
+
+      if (x.id === 19 && x.levelStatus === 'finished') {
+        this.specialLevelsData.hero4Show = true;
+      }
+    });
+    localStorage.setItem(
+      'specialLevelData',
+      JSON.stringify(this.specialLevelsData)
+    );
     localStorage.setItem('flagsData', JSON.stringify(this.flagsList));
   }
+
+  // test() {
+  //   let found = false;
+  //   let found2 = false;
+  //   let foundIndex = -10;
+
+  //   this.flagsList = this.flagsList.map((x, i) => {
+  //     if (x.levelStatus === 'nextLevel' && !found) {
+  //       found = true;
+  //       foundIndex = i + 1;
+  //       return { ...x, levelStatus: 'finished' };
+  //     }
+
+  //     if (foundIndex !== -10 && !found2) {
+  //       found2 = true;
+  //       return { ...x, levelStatus: 'nextLevel' };
+  //     }
+
+  //     return x;
+  //   });
+  //   console.log(this.flagsList.find((x) => x.levelStatus === 'nextLevel')?.id);
+  //   localStorage.setItem('flagsData', JSON.stringify(this.flagsList));
+  // }
 
   async initPanZoom() {
     setTimeout(() => {
@@ -299,10 +394,14 @@ export class MapComponent implements AfterViewInit, OnInit {
   }
 
   startSpecialBattle(battle: Battle) {
-    // this.battleStartOpen = true;
-    // this.isSpecialBattle = true;
-    // this.currentBattle = LevelsData.find((x) => x.id === this.currentLevel?.id);
-    // set up special file that has special combats (ids battle1, battle2, battle3, battle4,)
+    this.battleStartOpen = true;
+    this.currentBattle = this.challengeLevels.find((x) => x.id === battle);
+    this.currentDetails = this.challengeFlags.find(
+      (x) => x.id === battle
+    )?.missionDetails;
+    this.finished =
+      this.challengeFlags.find((x) => x.id === battle)?.levelStatus ===
+      'finished';
   }
 
   // finishLevel(flag: FlagDto) {

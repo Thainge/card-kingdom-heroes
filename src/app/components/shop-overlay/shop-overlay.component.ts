@@ -30,8 +30,7 @@ import { CardService } from 'src/app/services/card.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { playerService } from 'src/app/services/player.service';
 import { AbilityData } from 'src/assets/data/ability';
-import { BoosterPacks } from 'src/assets/data/boosterData/booster';
-import { BoosterPacksZelda } from 'src/assets/data/boosterData/boosterZelda';
+import { BoosterPacks } from 'src/assets/data/booster';
 import Swiper from 'swiper';
 
 type ShopStep = 'picking' | 'shopping' | 'opening';

@@ -17,6 +17,7 @@ export interface LevelDto {
   hideDialog?: boolean;
   easyMode?: boolean;
   combatPhases: EnemyLevelDto[];
+  isChallengeLevel?: boolean;
 
   playerLevelUpEnabled: boolean;
   skipRedrawPhase: boolean;

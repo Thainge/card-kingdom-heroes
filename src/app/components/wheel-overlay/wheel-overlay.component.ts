@@ -10,7 +10,7 @@ import { Wheel } from 'spin-wheel';
 import { BoosterPack } from 'src/app/models/boosterPack';
 import { CardService } from 'src/app/services/card.service';
 import { playerService } from 'src/app/services/player.service';
-import { BoosterPacks } from 'src/assets/data/boosterData/booster';
+import { BoosterPacks } from 'src/assets/data/booster';
 
 interface WheelItem {
   backgroundColor?: string;
@@ -104,6 +104,7 @@ export class WheelOverlayComponent implements OnInit {
   wonPrize: WheelItem | undefined;
   showPrize: boolean = false;
   gold: number = 0;
+  costLess: boolean = false;
 
   constructor(
     private cardService: CardService,
@@ -111,6 +112,16 @@ export class WheelOverlayComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    try {
+      const localPremium = JSON.parse(
+        localStorage.getItem('premiumData') ?? '[]'
+      );
+
+      if (localPremium && localPremium.length > 0) {
+        console.log(localPremium);
+        this.costLess = localPremium[0].bought && localPremium[0].active;
+      }
+    } catch (err) {}
     this.playerService.gold$.subscribe((x) => {
       this.gold = x;
     });
@@ -264,7 +275,8 @@ export class WheelOverlayComponent implements OnInit {
       return;
     }
 
-    this.playerService.gold$.next(this.gold - this.spinCost);
+    const goldCost = this.costLess ? this.spinCost / 4 : this.spinCost;
+    this.playerService.gold$.next(this.gold - goldCost);
 
     if (this.wheel) {
       this.spinning = true;

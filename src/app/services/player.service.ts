@@ -6,7 +6,7 @@ import { CheatDto } from '../models/cheat';
 import { PlayerDto } from '../models/player';
 import { AbilityCard } from '../models/abilityCard';
 import { Router } from '@angular/router';
-import { HeroData } from 'src/assets/data/heroData/hero';
+import { HeroData } from 'src/assets/data/hero';
 
 const defaultPlayer: PlayerDto = {
   id: 0,

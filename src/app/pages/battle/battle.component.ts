@@ -45,6 +45,7 @@ import { DialogComponent } from 'src/app/components/dialogComponent/dialog.compo
 import { DialogDto } from 'src/app/models/dialog';
 import { BackgroundDto } from 'src/app/models/backgrounds';
 import { FlagDto } from 'src/app/models/flag';
+import { ChallengeFlags } from 'src/assets/data/specialLevels';
 
 interface MissionDetails {
   image: string;
@@ -756,8 +757,6 @@ export class BattleComponent implements OnInit {
     }
     if (this.abilitiesCostLess) {
       this.abilityDeck = this.abilityDeck.map((x) => {
-        console.log('Old: ', x.cost);
-        console.log('New: ', x.cost.slice(1));
         return { ...x, cost: x.cost.slice(1) };
       });
     }
@@ -3876,6 +3875,19 @@ export class BattleComponent implements OnInit {
   endGame(playerWon: boolean) {
     if (playerWon) {
       localStorage.setItem('gameStartedYet', JSON.stringify(true));
+      let challengeFlags: FlagDto[] = JSON.parse(
+        localStorage.getItem('challengeFlags') ?? '[]'
+      );
+      if (challengeFlags.length < 1) {
+        challengeFlags = ChallengeFlags;
+      }
+      challengeFlags = challengeFlags.map((x) => {
+        if (x.id === this.currentLevel?.id) {
+          return { ...x, levelStatus: 'finished' };
+        }
+        return x;
+      });
+      localStorage.setItem('challengeFlags', JSON.stringify(challengeFlags));
       setTimeout(() => {
         this.gameWinnerPlayer = true;
       }, 1000);
