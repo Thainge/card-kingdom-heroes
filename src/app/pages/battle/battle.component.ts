@@ -398,6 +398,8 @@ export class BattleComponent implements OnInit {
   @ViewChildren('playerRef') playerRef: QueryList<ElementRef> | undefined;
   @ViewChild('enemyDefenseRef') enemyDefenseRef: ElementRef | undefined;
   gold: number = 0;
+  doubleGold: boolean = false;
+  abilitiesCostLess: boolean = false;
 
   constructor(
     private cardService: CardService,
@@ -409,6 +411,19 @@ export class BattleComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    try {
+      const localPremium = JSON.parse(
+        localStorage.getItem('premiumData') ?? '[]'
+      );
+      console.log(localPremium);
+
+      if (localPremium && localPremium.length > 0) {
+        console.log(localPremium);
+        this.doubleGold = localPremium[1].bought && localPremium[1].active;
+        this.abilitiesCostLess =
+          localPremium[2].bought && localPremium[2].active;
+      }
+    } catch (err) {}
     this.playerService.gold$.subscribe((x) => {
       this.gold = x;
     });
@@ -576,7 +591,8 @@ export class BattleComponent implements OnInit {
     localStorage.setItem('flagsData', JSON.stringify(newFlagsList));
 
     // set gold
-    this.playerService.gold$.next(this.gold + this.rewardItemsClean[0].value);
+    const newGold = this.gold + this.rewardItemsClean[0].value;
+    this.playerService.gold$.next(newGold);
 
     // set player xp
     const heroes: PlayerDto[] = JSON.parse(
@@ -677,10 +693,11 @@ export class BattleComponent implements OnInit {
     );
 
     if (missionDetails) {
-      const randomAmount = this.randomIntFromInterval(
+      const randomValue = this.randomIntFromInterval(
         missionDetails.rewardMin,
         missionDetails.rewardMax
       );
+      const randomAmount = this.doubleGold ? randomValue * 4 : randomValue;
       this.rewardItemsClean = [
         {
           id: 1,
@@ -736,6 +753,13 @@ export class BattleComponent implements OnInit {
       ) {
         this.abilityDeck = this.cardService.shuffle(this.abilityDeck);
       }
+    }
+    if (this.abilitiesCostLess) {
+      this.abilityDeck = this.abilityDeck.map((x) => {
+        console.log('Old: ', x.cost);
+        console.log('New: ', x.cost.slice(1));
+        return { ...x, cost: x.cost.slice(1) };
+      });
     }
     this.updateDeckBasedOnPlayerSkills();
 

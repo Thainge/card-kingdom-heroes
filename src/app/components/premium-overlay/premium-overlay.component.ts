@@ -25,7 +25,10 @@ interface PremiumBox {
   bought: boolean;
   active: boolean;
   cost: number;
+  type: PremiumType;
 }
+
+type PremiumType = 'quadrupleGold' | 'wheelCostsLess' | 'abilitiesCostLess';
 
 @Component({
   selector: 'app-premium-overlay',
@@ -65,35 +68,24 @@ export class PremiumOverlayComponent implements OnInit {
       image: 'premium1.png',
       bought: false,
       active: false,
-      cost: 1000,
+      cost: 2500,
+      type: 'wheelCostsLess',
     },
     {
       id: 2,
       image: 'premium2.png',
       bought: false,
       active: false,
-      cost: 2500,
+      cost: 5000,
+      type: 'quadrupleGold',
     },
     {
       id: 3,
       image: 'premium3.png',
       bought: false,
       active: false,
-      cost: 5000,
-    },
-    {
-      id: 4,
-      image: 'premium4.png',
-      bought: false,
-      active: false,
       cost: 7500,
-    },
-    {
-      id: 5,
-      image: 'premium5.png',
-      bought: false,
-      active: false,
-      cost: 9999,
+      type: 'abilitiesCostLess',
     },
   ];
   gold: number = 0;
@@ -150,6 +142,7 @@ export class PremiumOverlayComponent implements OnInit {
       return;
     }
 
+    this.playerService.gold$.next(this.gold - item.cost);
     this.premiumItems = this.premiumItems.map((x) => {
       if (x.id === item.id) {
         return { ...x, bought: true, active: true };
@@ -157,6 +150,7 @@ export class PremiumOverlayComponent implements OnInit {
 
       return x;
     });
+
     localStorage.setItem('premiumData', JSON.stringify(this.premiumItems));
   }
 
