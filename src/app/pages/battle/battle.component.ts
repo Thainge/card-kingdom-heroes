@@ -98,7 +98,7 @@ const defaultPlayer: PlayerDto = {
       image: '',
       level: 0,
       title: [''],
-      type: 'alwaysWinTies',
+      type: [],
     },
   ],
   usedPoints: 0,

@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { Xliff } from '@angular/compiler';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -129,11 +130,80 @@ export class HeroOverlayComponent implements OnInit {
       this.currentHero.upgrades = this.currentHero.upgrades!.map((x) => {
         if (item.id === x.id) {
           let returnObj = x;
-          // Upgrade ability
-          // | 'showWildHearts'
-          // | 'showWildDiamonds'
-          // | 'showWildSpades'
-          // | 'showWildClubs'
+          const type = x.type[x.level];
+          // Special
+          if (type === 'alwaysWinTies') {
+            this.currentHero!.alwaysWinTies = true;
+          }
+          if (type === 'canDefendWithMultipleCards') {
+            this.currentHero!.canDefendWithMultipleCards = true;
+          }
+          if (type === 'canSeeTopCard') {
+            this.currentHero!.canSeeTopCard = true;
+          }
+          if (type === 'canSeeTopCardAbilities') {
+            this.currentHero!.canSeeTopCardAbilities = true;
+          }
+
+          // Main
+          if (type === 'extraHealth') {
+            this.currentHero!.skills!.extraHealth++;
+          }
+          if (type === 'extraAttack') {
+            this.currentHero!.skills!.extraAttack++;
+          }
+          if (type === 'wildCardsCount') {
+            this.currentHero!.skills!.wildCardsCount++;
+            if (x.level === 2) {
+              this.currentHero!.skills!.wildCardsCount++;
+            }
+          }
+
+          // Wild suit
+          if (type === 'wildHearts') {
+            this.currentHero!.skills!.wildHearts = true;
+            this.currentHero!.skills!.showWildHearts = true;
+          }
+          if (type === 'wildDiamonds') {
+            this.currentHero!.skills!.wildDiamonds = true;
+            this.currentHero!.skills!.showWildDiamonds = true;
+          }
+          if (type === 'wildSpades') {
+            this.currentHero!.skills!.wildSpades = true;
+            this.currentHero!.skills!.showWildSpades = true;
+          }
+          if (type === 'wildClubs') {
+            this.currentHero!.skills!.wildClubs = true;
+            this.currentHero!.skills!.showWildClubs = true;
+          }
+
+          // Wild range
+          if (type === 'rangeHearts' || type === 'rangeHeartsDiamonds') {
+            this.currentHero!.skills!.rangeHearts++;
+          }
+          if (type === 'rangeDiamonds' || type === 'rangeHeartsDiamonds') {
+            this.currentHero!.skills!.rangeDiamonds++;
+          }
+          if (type === 'rangeSpades' || type === 'rangeSpadesClubs') {
+            this.currentHero!.skills!.rangeSpades++;
+          }
+          if (type === 'rangeClubs' || type === 'rangeSpadesClubs') {
+            this.currentHero!.skills!.rangeClubs++;
+          }
+
+          // Extra Dmg
+          if (type === 'extraHeartsDamage') {
+            this.currentHero!.skills!.extraHeartsDamage = true;
+          }
+          if (type === 'extraDiamondsDamage') {
+            this.currentHero!.skills!.extraDiamondsDamage = true;
+          }
+          if (type === 'extraSpadesDamage') {
+            this.currentHero!.skills!.extraSpadesDamage = true;
+          }
+          if (type === 'extraClubsDamage') {
+            this.currentHero!.skills!.extraClubsDamage = true;
+          }
 
           if (returnObj.level === 0) {
             const canLevelUp = this.subtractUpgradePoints(item);
@@ -150,6 +220,7 @@ export class HeroOverlayComponent implements OnInit {
         }
         return x;
       });
+      console.log(this.currentHero);
       this.heroes = this.heroes.map((x) => {
         if (x.id === this.currentHero?.id) {
           return this.currentHero;
@@ -170,6 +241,43 @@ export class HeroOverlayComponent implements OnInit {
       this.currentHero.points =
         this.currentHero.points! + this.currentHero.usedPoints!;
       this.currentHero.usedPoints = 0;
+
+      this.currentHero = {
+        ...this.currentHero,
+        alwaysWinTies: false,
+        canDefendWithMultipleCards: false,
+        canSeeTopCard: false,
+        canSeeTopCardAbilities: false,
+        skills: {
+          extraAttack: 0,
+          extraHealth: 0,
+          extraClubsDamage: false,
+          extraDiamondsDamage: false,
+          extraHeartsDamage: false,
+          extraSpadesDamage: false,
+          rangeClubs: 0,
+          rangeDiamonds: 0,
+          rangeHearts: 0,
+          rangeSpades: 0,
+          showWildClubs: false,
+          showWildDiamonds: false,
+          showWildHearts: false,
+          showWildSpades: false,
+          wildCardsCount: 0,
+          wildClubs: false,
+          wildDiamonds: false,
+          wildHearts: false,
+          wildSpades: false,
+        },
+      };
+
+      this.heroes = this.heroes.map((x) => {
+        if (x.id === this.currentHero?.id) {
+          return this.currentHero;
+        }
+        return x;
+      });
+      console.log(this.heroes.find((x) => x.id === this.currentHero?.id));
       localStorage.setItem('heroData', JSON.stringify(this.heroes));
       this.playerService.currentHero$.next(this.heroes.find((x) => x.selected));
     }

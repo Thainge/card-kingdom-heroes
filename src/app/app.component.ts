@@ -140,7 +140,7 @@ export class AppComponent implements OnInit {
     );
     if (cards.length < 1) {
       const deckCards = DefaultAbilityData.map((x) => {
-        return { ...x, isNew: false, inHand: false, numberOwned: 0 };
+        return { ...x, isNew: false, inHand: true, numberOwned: 0 };
       });
       localStorage.setItem('abilityCards', JSON.stringify(deckCards));
 

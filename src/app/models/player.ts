@@ -31,7 +31,7 @@ export interface HeroUpgrade {
   title: string[];
   description: string[];
   cost: number[];
-  type: UpgradeType;
+  type: UpgradeType[];
 }
 
 type UpgradeType =
@@ -39,6 +39,9 @@ type UpgradeType =
   | 'alwaysWinTies'
   | 'canSeeTopCard'
   | 'canSeeTopCardAbilities'
+  | 'wildCardsCount'
+  | 'extraHealth'
+  | 'extraAttack'
   | 'wildHearts'
   | 'wildDiamonds'
   | 'wildSpades'
@@ -51,9 +54,8 @@ type UpgradeType =
   | 'extraDiamondsDamage'
   | 'extraSpadesDamage'
   | 'extraClubsDamage'
-  | 'wildCardsCount'
-  | 'extraHealth'
-  | 'extraAttack';
+  | 'rangeHeartsDiamonds'
+  | 'rangeSpadesClubs';
 
 type HeroUpgradeLevel = 0 | 1 | 2 | 3;
 type HeroColor = 'red' | 'orange' | 'yellow' | 'green' | 'blue' | 'purple';
