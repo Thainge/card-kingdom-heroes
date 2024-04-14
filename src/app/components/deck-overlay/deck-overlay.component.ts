@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import {
   zoomInOnEnterAnimation,
   fadeOutOnLeaveAnimation,
@@ -16,7 +23,7 @@ interface AbilityDeckCard extends AbilityCard {
   index: number;
 }
 
-type SortValue = 'Color' | 'Upgrade' | 'Level' | 'Cost' | 'Card';
+type SortValue = 'Color' | 'Upgrade' | 'Level' | 'Cost' | 'Card' | 'New';
 
 @Component({
   selector: 'app-deck-overlay',
@@ -107,6 +114,8 @@ export class DeckOverlayComponent implements OnInit {
   showingUpgradeAnimation: boolean = false;
   canClickEnd: boolean = false;
   gold: number = 0;
+
+  @ViewChild('container') container: any;
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
@@ -337,6 +346,9 @@ export class DeckOverlayComponent implements OnInit {
         isNew: true,
       });
     }
+    this.currentSort = 'New';
+    this.sortCards();
+    this.container.nativeElement.scrollTop = 0;
     localStorage.setItem('playerDeck', JSON.stringify(this.abilityHand));
     localStorage.setItem('abilityCards', JSON.stringify(this.abilityCards));
   }
@@ -379,6 +391,8 @@ export class DeckOverlayComponent implements OnInit {
     } else if (this.currentSort === 'Upgrade') {
       this.currentSort = 'Cost';
     } else if (this.currentSort === 'Cost') {
+      this.currentSort = 'New';
+    } else if (this.currentSort === 'New') {
       this.currentSort = 'Level';
     } else if (this.currentSort === 'Level') {
       this.currentSort = 'Card';
@@ -392,6 +406,13 @@ export class DeckOverlayComponent implements OnInit {
       // Sort by card
       if (this.currentSort === 'Card') {
         this.abilityCards = this.abilityCards.sort((a, b) => b.id - a.id);
+      }
+
+      // Sort by new
+      if (this.currentSort === 'New') {
+        this.abilityCards = this.abilityCards.sort(
+          (a, b) => Number(b.isNew) - Number(a.isNew)
+        );
       }
 
       // Sort by cost
