@@ -18,10 +18,12 @@ import {
 import { BattleStartOverlayComponent } from 'src/app/components/battle-start-overlay/battle-start-overlay.component';
 import { DialogComponent } from 'src/app/components/dialogComponent/dialog.component';
 import { MapOverlayComponent } from 'src/app/components/map-overlay/map-overlay.component';
+import { BoosterPack } from 'src/app/models/boosterPack';
 import { DotDto, FlagDto } from 'src/app/models/flag';
 import { LevelDto } from 'src/app/models/level';
 import { PlayerDto } from 'src/app/models/player';
 import { LoadingService } from 'src/app/services/loading.service';
+import { BoosterPacks } from 'src/assets/data/booster';
 import { flagsData } from 'src/assets/data/flags';
 import { LevelsData } from 'src/assets/data/level';
 import { ChallengeFlags, ChallengeLevels } from 'src/assets/data/specialLevels';
@@ -144,6 +146,8 @@ export class MapComponent implements AfterViewInit, OnInit {
   battleStartOpen: boolean = false;
   challengeLevels: LevelDto[] = [];
   challengeFlags: FlagDto[] = [];
+  shownNewBoosterPack: BoosterPack | undefined;
+  showBoosterPack: boolean = false;
 
   constructor(
     private loadingService: LoadingService,
@@ -234,7 +238,37 @@ export class MapComponent implements AfterViewInit, OnInit {
         this.specialLevelsData.hero1Show = true;
       }
 
-      if (x.id === 11 && x.levelStatus === 'finished') {
+      if (x.id === 5 && x.levelStatus === 'finished') {
+        const boosterPacks: BoosterPack[] = JSON.parse(
+          localStorage.getItem('boosterPacks') ?? '[]'
+        );
+        const newBoosterPacks = boosterPacks.map((x) => {
+          if (x.id === 2 && !x.unlocked) {
+            this.shownNewBoosterPack = x;
+            this.showBoosterPack = true;
+            return { ...x, unlocked: true };
+          }
+          return x;
+        });
+        localStorage.setItem('boosterPacks', JSON.stringify(newBoosterPacks));
+      }
+
+      if (x.id === 10 && x.levelStatus === 'finished') {
+        const boosterPacks: BoosterPack[] = JSON.parse(
+          localStorage.getItem('boosterPacks') ?? '[]'
+        );
+        const newBoosterPacks = boosterPacks.map((x) => {
+          if (x.id === 3) {
+            this.shownNewBoosterPack = x;
+            this.showBoosterPack = true;
+            return { ...x, unlocked: true };
+          }
+          return x;
+        });
+        localStorage.setItem('boosterPacks', JSON.stringify(newBoosterPacks));
+      }
+
+      if (x.id === 10 && x.levelStatus === 'finished') {
         if (heroes.length > 0) {
           const newHeroes = heroes.map((x) => {
             if (x.id === 2) {
@@ -245,6 +279,21 @@ export class MapComponent implements AfterViewInit, OnInit {
           });
           localStorage.setItem('heroData', JSON.stringify(newHeroes));
         }
+      }
+
+      if (x.id === 15 && x.levelStatus === 'finished') {
+        const boosterPacks: BoosterPack[] = JSON.parse(
+          localStorage.getItem('boosterPacks') ?? '[]'
+        );
+        const newBoosterPacks = boosterPacks.map((x) => {
+          if (x.id === 4) {
+            this.shownNewBoosterPack = x;
+            this.showBoosterPack = true;
+            return { ...x, unlocked: true };
+          }
+          return x;
+        });
+        localStorage.setItem('boosterPacks', JSON.stringify(newBoosterPacks));
       }
 
       if (x.id === 8 && x.levelStatus === 'finished') {
@@ -395,6 +444,7 @@ export class MapComponent implements AfterViewInit, OnInit {
 
   startSpecialBattle(battle: Battle) {
     this.battleStartOpen = true;
+    this.isSpecialBattle = true;
     this.currentBattle = this.challengeLevels.find((x) => x.id === battle);
     this.currentDetails = this.challengeFlags.find(
       (x) => x.id === battle

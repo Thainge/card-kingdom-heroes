@@ -165,12 +165,16 @@ export class ShopOverlayComponent implements OnInit {
     }
   }
 
-  startPhase() {
+  startPhase(booster: BoosterPack) {
     this.openingCards = true;
+    const cardsForBooster = this.allCards.filter(
+      (x) => x.boosterId === booster.id
+    );
+    console.log(cardsForBooster);
     let shuffled1: ExtendedAbilityCard[] = this.cardService
-      .shuffle(this.allCards)
+      .shuffle(cardsForBooster)
       .map((x, i) => {
-        if (i < 2) {
+        if (i < 1) {
           return { ...x, special: true, rarityImage: 'epic.png', level: 2 };
         }
 
@@ -363,7 +367,7 @@ export class ShopOverlayComponent implements OnInit {
   }
 
   openBoosterPack(item: BoosterPack) {
-    this.startPhase();
+    this.startPhase(item);
     this.openBooster = item;
     this.boosterPacks = this.boosterPacks.map((x) => {
       if (x.id === item.id) {

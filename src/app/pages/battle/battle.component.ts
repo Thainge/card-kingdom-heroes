@@ -57,6 +57,7 @@ interface MissionDetails {
 
 const defaultAbilityCard: AbilityCard = {
   id: 0,
+  boosterId: 0,
   abilityFunction: 'damage',
   targetAll: false,
   abilityValue: [1, 2, 3],
@@ -1179,6 +1180,7 @@ export class BattleComponent implements OnInit {
       }
       this.abilityDeck[0] = {
         id: 98,
+        boosterId: 88,
         abilityFunction: 'damage',
         abilityValue: [1, 2, 3],
         cost: [
@@ -1204,6 +1206,7 @@ export class BattleComponent implements OnInit {
       };
       this.abilityDeck[1] = {
         id: 99,
+        boosterId: 88,
         abilityFunction: 'wildSuitRange',
         targetAll: false,
         abilityValue: [14, 14, 14],
@@ -2463,6 +2466,7 @@ export class BattleComponent implements OnInit {
 
     this.errorAbilityCard = {
       id: 0,
+      boosterId: 0,
       abilityFunction: 'damage',
       targetAll: false,
       abilityValue: [1, 2, 3],
@@ -2481,6 +2485,7 @@ export class BattleComponent implements OnInit {
     this.hoveringAbilityHand = [];
     this.hoveringAbilityCard = {
       id: 0,
+      boosterId: 0,
       abilityFunction: 'damage',
       targetAll: false,
       abilityValue: [1, 2, 3],

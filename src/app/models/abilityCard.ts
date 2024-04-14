@@ -2,6 +2,7 @@ import { PlayerDto } from './player';
 
 export interface AbilityCard {
   id: number;
+  boosterId: number;
   name: string;
   cost: CostValue[][];
   description: string[];

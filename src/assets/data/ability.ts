@@ -3,6 +3,7 @@ import { AbilityCard } from 'src/app/models/abilityCard';
 export const AbilityData: AbilityCard[] = [
   {
     id: 1,
+    boosterId: 1,
     abilityFunction: 'leach',
     targetAll: false,
     abilityValue: [1, 2, 3],
@@ -29,6 +30,7 @@ export const AbilityData: AbilityCard[] = [
   },
   {
     id: 5,
+    boosterId: 1,
     abilityFunction: 'leach',
     targetAll: true,
     abilityValue: [1, 1, 1],
@@ -55,6 +57,7 @@ export const AbilityData: AbilityCard[] = [
   },
   {
     id: 10,
+    boosterId: 1,
     abilityFunction: 'offense',
     targetAll: true,
     abilityValue: [1, 1, 1],
@@ -81,6 +84,7 @@ export const AbilityData: AbilityCard[] = [
   },
   {
     id: 15,
+    boosterId: 1,
     abilityFunction: 'offense',
     targetAll: false,
     abilityValue: [2, 2, 2],
@@ -107,6 +111,7 @@ export const AbilityData: AbilityCard[] = [
   },
   {
     id: 20,
+    boosterId: 2,
     abilityFunction: 'damage',
     targetAll: false,
     abilityValue: [3, 3, 3],
@@ -133,6 +138,7 @@ export const AbilityData: AbilityCard[] = [
   },
   {
     id: 25,
+    boosterId: 2,
     abilityFunction: 'heal',
     targetAll: false,
     abilityValue: [1, 1, 1],
@@ -155,6 +161,7 @@ export const AbilityData: AbilityCard[] = [
   },
   {
     id: 30,
+    boosterId: 2,
     abilityFunction: 'heal',
     targetAll: false,
     abilityValue: [3, 3, 3],
@@ -181,6 +188,7 @@ export const AbilityData: AbilityCard[] = [
   },
   {
     id: 35,
+    boosterId: 2,
     abilityFunction: 'draw',
     targetAll: false,
     abilityValue: [3, 3, 3],
@@ -202,6 +210,7 @@ export const AbilityData: AbilityCard[] = [
   },
   {
     id: 40,
+    boosterId: 3,
     abilityFunction: 'redraw',
     targetAll: false,
     abilityValue: [5, 5, 5],
@@ -227,6 +236,7 @@ export const AbilityData: AbilityCard[] = [
   },
   {
     id: 45,
+    boosterId: 3,
     abilityFunction: 'redrawAll',
     targetAll: false,
     abilityValue: [5, 5, 5],
@@ -252,6 +262,7 @@ export const AbilityData: AbilityCard[] = [
   },
   {
     id: 50,
+    boosterId: 3,
     abilityFunction: 'wildSuit',
     targetAll: false,
     abilityValue: [1, 1, 1],
@@ -273,6 +284,7 @@ export const AbilityData: AbilityCard[] = [
   },
   {
     id: 55,
+    boosterId: 3,
     abilityFunction: 'wildRange',
     targetAll: false,
     abilityValue: [1, 1, 1],
@@ -294,6 +306,7 @@ export const AbilityData: AbilityCard[] = [
   },
   {
     id: 60,
+    boosterId: 4,
     abilityFunction: 'wildSuitRange',
     targetAll: false,
     abilityValue: [14, 14, 14],
@@ -315,6 +328,7 @@ export const AbilityData: AbilityCard[] = [
   },
   {
     id: 65,
+    boosterId: 4,
     abilityFunction: 'increaseDefense',
     targetAll: false,
     abilityValue: [1, 1, 1],
@@ -337,6 +351,7 @@ export const AbilityData: AbilityCard[] = [
   },
   {
     id: 70,
+    boosterId: 4,
     abilityFunction: 'increaseDefense',
     targetAll: true,
     abilityValue: [2, 2, 2],
@@ -346,6 +361,29 @@ export const AbilityData: AbilityCard[] = [
       'Increase Defense by 2',
       'Increase Defense by 2',
       'Increase Defense by 2',
+    ],
+
+    image: 'sliceAbility.png',
+    level: 1,
+    isNew: true,
+    numberOwned: 1,
+    trueNumberOwned: 1,
+    goldCost: [100, 250, 500],
+    alliesCalled: [],
+    hitAnimation: 'fire',
+  },
+  {
+    id: 70,
+    boosterId: 4,
+    abilityFunction: 'wildRange',
+    targetAll: true,
+    abilityValue: [1, 1, 2],
+    cost: [['black'], [], []],
+    name: 'Ganon',
+    description: [
+      'Wild range +1 for target card in hand',
+      'Wild range +1 for target card in hand',
+      'Wild range +2 for target card in hand',
     ],
 
     image: 'sliceAbility.png',
