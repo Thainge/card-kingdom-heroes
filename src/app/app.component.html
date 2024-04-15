@@ -6,7 +6,7 @@
       params: { duration: 500, delay: 0 }
     }"
     *ngIf="display && currentRouteIsNotHome()"
-    (click)="optionsMenuOpened = !optionsMenuOpened"
+    (click)="toggleOptions()"
   >
     <img src="./assets/options.png" class="optionsButton hoverButton" />
   </div>
@@ -54,7 +54,7 @@
             Are you sure? All progress will be lost forver.
           </div>
           <div class="surrenderBtns">
-            <div class="finishButtonGo" (click)="areYouSurePopup = false">
+            <div class="finishButtonGo" (click)="checkSure()">
               <img class="finishButton" [src]="'./assets/button.png'" />
               <div class="finishButtonText btnText biggerText">Cancel</div>
             </div>
@@ -123,7 +123,7 @@
               <div class="optionsItemTitle optionsText">Reset Progress</div>
               <img
                 src="./assets/reset.png"
-                (click)="areYouSurePopup = true"
+                (click)="checkSureYes()"
                 class="optionsItemButton hoverButton"
               />
             </div>

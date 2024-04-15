@@ -275,6 +275,8 @@ export class WheelOverlayComponent implements OnInit {
       return;
     }
 
+    this.playerService.playSound('buyItem.mp3');
+
     const goldCost = this.costLess ? this.spinCost / 4 : this.spinCost;
     this.playerService.gold$.next(this.gold - goldCost);
 
@@ -299,6 +301,7 @@ export class WheelOverlayComponent implements OnInit {
     if (this.wonPrize?.rewardType === 'gold') {
       this.playerService.gold$.next(this.gold + this.wonPrize?.goldAmount!);
     }
+    this.playerService.playSound('cardOpen.mp3');
 
     if (this.wonPrize?.rewardType === 'booster') {
       // Add booster pack prize

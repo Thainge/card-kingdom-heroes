@@ -1,10 +1,11 @@
+import { playerService } from 'src/app/services/player.service';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   fadeOutOnLeaveAnimation,
   fadeInOnEnterAnimation,
 } from 'angular-animations';
-import { Comic, ComicPage } from 'src/app/models/level';
+import { Comic } from 'src/app/models/level';
 
 @Component({
   selector: 'app-comic',
@@ -34,7 +35,7 @@ export class ComicComponent implements OnInit {
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
-  constructor() {}
+  constructor(private playerService: playerService) {}
 
   ngOnInit() {}
 
@@ -48,6 +49,7 @@ export class ComicComponent implements OnInit {
   }
 
   nextStep() {
+    this.playerService.playSound('cardFlip.mp3');
     // Show next comic section
     const isStillMore = this.comicData.comics[this.currentIndex].blackList.find(
       (x) => x.display === true

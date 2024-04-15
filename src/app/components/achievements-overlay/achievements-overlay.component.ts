@@ -54,6 +54,7 @@ export class AchievementsOverlayComponent implements OnInit {
   }
 
   getReward(achievement: AchievementObject) {
+    this.playerService.playSound('buyItem.mp3');
     this.achievementsListClean = this.achievementsListClean.map((x) => {
       if (x.id === achievement.id) {
         return { ...x, gemsUnlocked: true };
@@ -70,6 +71,7 @@ export class AchievementsOverlayComponent implements OnInit {
   }
 
   pageAchievements(number: number) {
+    this.playerService.playSound('button.mp3');
     const currentPage = number * 10;
     this.currentpage = number;
     this.achievementsList = this.achievementsListClean.filter(
@@ -78,6 +80,7 @@ export class AchievementsOverlayComponent implements OnInit {
   }
 
   closeMenu() {
+    this.playerService.playSound('close.mp3');
     this.onCloseMenu.emit(false);
   }
 

@@ -1,3 +1,4 @@
+import { playerService } from 'src/app/services/player.service';
 import { CommonModule } from '@angular/common';
 import {
   Component,
@@ -154,7 +155,8 @@ export class MapComponent implements AfterViewInit, OnInit {
   constructor(
     private loadingService: LoadingService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private playerService: playerService
   ) {}
 
   ngOnInit() {
@@ -196,8 +198,19 @@ export class MapComponent implements AfterViewInit, OnInit {
     this.initPanZoom();
   }
 
+  hideBooster() {
+    this.showBoosterPack = false;
+    this.playerService.playSound('cardFlip.mp3');
+  }
+
+  hideNewHero() {
+    this.showNewHero = false;
+    this.playerService.playSound('cardFlip.mp3');
+  }
+
   showWheel() {
     this.loadingService.showWheel$.next(true);
+    this.playerService.playSound('open.mp3');
   }
 
   initFlags() {
@@ -432,6 +445,7 @@ export class MapComponent implements AfterViewInit, OnInit {
   }
 
   showBattleStartOverlay(flag: FlagDto) {
+    this.playerService.playSound('open.mp3');
     this.battleStartOpen = true;
     this.isSpecialBattle = false;
     this.currentBattle = LevelsData.find((x) => x.id === flag.id);
@@ -454,6 +468,7 @@ export class MapComponent implements AfterViewInit, OnInit {
   }
 
   startSpecialBattle(battle: Battle) {
+    this.playerService.playSound('open.mp3');
     this.battleStartOpen = true;
     this.isSpecialBattle = true;
     this.currentBattle = this.challengeLevels.find((x) => x.id === battle);
@@ -464,75 +479,6 @@ export class MapComponent implements AfterViewInit, OnInit {
       this.challengeFlags.find((x) => x.id === battle)?.levelStatus ===
       'finished';
   }
-
-  // finishLevel(flag: FlagDto) {
-  //   let foundIndex = -10;
-  //   this.flagsList = this.flagsList.map((x, i) => {
-  //     // Green land
-  //     if (flag.id === 3) {
-  //       this.specialLevelsData.wheelShow = true;
-  //     }
-  //     if (flag.id === 4) {
-  //       this.specialLevelsData.hero1Show = true;
-  //     }
-  //     // if (flag.id === 5) {
-  //     //   this.specialLevelsData.town1GameShow = true;
-  //     // }
-  //     // if (flag.id === 5) {
-  //     //   this.specialLevelsData.town1FightShow = true;
-  //     // }
-
-  //     // Snow land
-  //     if (flag.id === 8) {
-  //       this.specialLevelsData.hero2Show = true;
-  //     }
-  //     // if (flag.id === 8) {
-  //     //   this.specialLevelsData.town2GameShow = true;
-  //     // }
-  //     // if (flag.id === 8) {
-  //     //   this.specialLevelsData.town2FightShow = true;
-  //     // }
-
-  //     // Desert land
-  //     if (flag.id === 14) {
-  //       this.specialLevelsData.hero3Show = true;
-  //     }
-  //     // if (flag.id === 14) {
-  //     //   this.specialLevelsData.town3GameShow = true;
-  //     // }
-  //     // if (flag.id === 14) {
-  //     //   this.specialLevelsData.town3FightShow = true;
-  //     // }
-
-  //     // Fire land
-  //     if (flag.id === 19) {
-  //       this.specialLevelsData.hero4Show = true;
-  //     }
-  //     // if (flag.id === 18) {
-  //     //   this.specialLevelsData.town4GameShow = true;
-  //     // }
-  //     // if (flag.id === 18) {
-  //     //   this.specialLevelsData.town4FightShow = true;
-  //     // }
-
-  //     if (x.id === flag.id) {
-  //       foundIndex = i + 1;
-  //       this.currentLevel = x;
-  //       return { ...x, levelStatus: 'finished' };
-  //     }
-
-  //     if (foundIndex === i) {
-  //       foundIndex = -10;
-  //       return { ...x, levelStatus: 'nextLevel' };
-  //     }
-
-  //     return x;
-  //   });
-  //   localStorage.setItem(
-  //     'specialLevelData',
-  //     JSON.stringify(this.specialLevelsData)
-  //   );
-  // }
 
   @HostListener('mousemove', ['$event']) onMouseMove(e: any) {
     if (!this.devMode) {

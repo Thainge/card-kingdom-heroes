@@ -107,6 +107,8 @@ export class HeroOverlayComponent implements OnInit {
       return;
     }
 
+    this.playerService.playSound('button.mp3');
+
     this.heroes = this.heroes.map((x) => {
       if (x.id === this.currentHero?.id) {
         return { ...x, selected: true };
@@ -123,6 +125,8 @@ export class HeroOverlayComponent implements OnInit {
     if (!this.currentHero?.unlocked) {
       return;
     }
+
+    this.playerService.playSound('button.mp3');
 
     if (this.currentHero && this.currentHero?.points! > 0) {
       this.currentHero.upgrades = this.currentHero.upgrades!.map((x) => {
@@ -233,6 +237,7 @@ export class HeroOverlayComponent implements OnInit {
 
   resetUpgrades() {
     if (this.currentHero) {
+      this.playerService.playSound('button.mp3');
       this.currentHero.upgrades = this.currentHero.upgrades!.map((x) => {
         return { ...x, level: 0 };
       });
@@ -307,5 +312,6 @@ export class HeroOverlayComponent implements OnInit {
 
   closeMenu() {
     this.onCloseMenu.emit(false);
+    this.playerService.playSound('close.mp3');
   }
 }

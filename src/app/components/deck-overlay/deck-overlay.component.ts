@@ -44,7 +44,6 @@ export class DeckOverlayComponent implements OnInit {
   @Input('open') set openChanged(x: boolean) {
     this.open = x;
     this.abilityHand = JSON.parse(localStorage.getItem('playerDeck') ?? '[]');
-    console.log(this.abilityHand);
     this.abilityCards = JSON.parse(
       localStorage.getItem('abilityCards') ?? '[]'
     );
@@ -155,6 +154,7 @@ export class DeckOverlayComponent implements OnInit {
       return;
     }
     this.currentHoveringCard = undefined;
+    this.playerService.playSound('button.mp3');
 
     const totalCountIdsInHand = this.abilityHand.filter(
       (x) => x.id === card.id
@@ -246,6 +246,7 @@ export class DeckOverlayComponent implements OnInit {
   }
 
   cancelUpgrade() {
+    this.playerService.playSound('button.mp3');
     this.leftUpgradeCard = undefined;
     this.rightUpgradeCard = undefined;
     this.showingUpgradeCard = false;
@@ -255,6 +256,8 @@ export class DeckOverlayComponent implements OnInit {
     if (card.level === 3 || card.trueNumberOwned <= 2) {
       return;
     }
+
+    this.playerService.playSound('button.mp3');
 
     this.leftUpgradeCard = card;
     const newCard = { ...card, level: card.level + 1 };
@@ -277,6 +280,7 @@ export class DeckOverlayComponent implements OnInit {
           (this.leftUpgradeCard?.level ?? 1) - 1
         ]
     );
+    this.playerService.playSound('buyItem.mp3');
 
     const card = this.leftUpgradeCard;
 
@@ -346,6 +350,7 @@ export class DeckOverlayComponent implements OnInit {
         isNew: true,
       });
     }
+    this.playerService.playSound('cardOpen.mp3');
     this.currentSort = 'New';
     this.sortCards();
     this.container.nativeElement.scrollTop = 0;
@@ -354,6 +359,7 @@ export class DeckOverlayComponent implements OnInit {
   }
 
   removeCardFromHand(card: AbilityDeckCard) {
+    this.playerService.playSound('button.mp3');
     let found = false;
     this.abilityHand = this.abilityHand.filter((x) => {
       if (x.id === card.id && !found) {
@@ -375,6 +381,7 @@ export class DeckOverlayComponent implements OnInit {
   }
 
   resetDeck() {
+    this.playerService.playSound('button.mp3');
     this.abilityHand = [];
     this.abilityCards = this.abilityCards.map((x) => {
       return { ...x, inHand: false };
@@ -384,6 +391,7 @@ export class DeckOverlayComponent implements OnInit {
   }
 
   nextSort() {
+    this.playerService.playSound('button.mp3');
     if (this.currentSort === 'Card') {
       this.currentSort = 'Color';
     } else if (this.currentSort === 'Color') {
@@ -532,8 +540,10 @@ export class DeckOverlayComponent implements OnInit {
   checkCloseMenu() {
     const deckIsSame = this.deckIsSame();
     if (!deckIsSame) {
+      this.playerService.playSound('button.mp3');
       this.areYouSurePopup = true;
     } else {
+      this.playerService.playSound('close.mp3');
       this.onCloseMenu.emit(false);
     }
   }
@@ -564,6 +574,7 @@ export class DeckOverlayComponent implements OnInit {
       this.abilityCards.length >= maxHandSize
     ) {
       this.pushError('Invalid deck length');
+      this.playerService.playSound('button.mp3');
       return;
     } else {
       localStorage.setItem('playerDeck', JSON.stringify(this.abilityHand));
@@ -575,6 +586,7 @@ export class DeckOverlayComponent implements OnInit {
   closeMenu() {
     this.initialAbilityHand = [];
     this.areYouSurePopup = false;
+    this.playerService.playSound('close.mp3');
     this.onCloseMenu.emit(false);
   }
 

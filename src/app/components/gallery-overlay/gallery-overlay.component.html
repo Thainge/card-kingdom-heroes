@@ -24,7 +24,7 @@
             <div
               class="relativeCardBox"
               *ngFor="let item of heroes"
-              (click)="currentImage = item"
+              (click)="setCurrentItem(item)"
             >
               <img
                 [src]="'./assets/heroImages/' + item.image"

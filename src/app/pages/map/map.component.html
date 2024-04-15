@@ -23,7 +23,7 @@
     <div class="centerPrizeBox">
       <div
         class="rayItem"
-        (click)="showNewHero = false"
+        (click)="hideNewHero()"
         [@zoomInEnter]="{
           value: '',
           params: {
@@ -76,7 +76,7 @@
     <div class="centerPrizeBox">
       <div
         class="rayItem"
-        (click)="showBoosterPack = false"
+        (click)="hideBooster()"
         [@zoomInEnter]="{
           value: '',
           params: {

@@ -1,3 +1,4 @@
+import { playerService } from 'src/app/services/player.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
@@ -42,9 +43,13 @@ export class BattleStartOverlayComponent implements OnInit {
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
-  constructor(private loadingService: LoadingService) {}
+  constructor(
+    private loadingService: LoadingService,
+    private playerService: playerService
+  ) {}
 
   startBattle() {
+    this.playerService.playSound('battleStart.mp3');
     localStorage.setItem('currentLevel', JSON.stringify(this.currentLevel));
     localStorage.setItem('currentDetails', JSON.stringify(this.missionDetails));
     if (this.missionDetails?.image) {
@@ -61,6 +66,7 @@ export class BattleStartOverlayComponent implements OnInit {
   ngOnInit() {}
 
   closeMenu() {
+    this.playerService.playSound('close.mp3');
     this.onCloseMenu.emit(false);
   }
 }

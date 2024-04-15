@@ -140,6 +140,16 @@ export class AppComponent implements OnInit {
     });
   }
 
+  checkSure() {
+    this.areYouSurePopup = false;
+    this.playerService.playSound('button.mp3');
+  }
+
+  checkSureYes() {
+    this.areYouSurePopup = true;
+    this.playerService.playSound('button.mp3');
+  }
+
   setInitialDeck() {
     const cards: AbilityCard[] = JSON.parse(
       localStorage.getItem('abilityCards') ?? '[]'
@@ -172,6 +182,7 @@ export class AppComponent implements OnInit {
   }
 
   toggleFullScreen() {
+    this.playerService.playSound('button.mp3');
     if (this.docElement) {
       if (!this.isFullScreen) {
         this.docElement.requestFullscreen();
@@ -183,26 +194,31 @@ export class AppComponent implements OnInit {
   }
 
   openDifficulty() {
+    this.playerService.playSound('open.mp3');
     this.optionsMenuOpened = false;
     this.loadingService.difficultyIsOpen$.next(true);
   }
 
   resetProgress() {
+    this.playerService.playSound('button.mp3');
     localStorage.clear();
     location.reload();
   }
 
   openConsole() {
+    this.playerService.playSound('button.mp3');
     this.consoleShouldShow = true;
     this.consoleOpen = true;
   }
 
   refreshCombat() {
+    this.playerService.playSound('button.mp3');
     this.loadingService.isRefreshing$.next(true);
     this.optionsMenuOpened = false;
   }
 
   surrenderCombat() {
+    this.playerService.playSound('button.mp3');
     this.loadingService.isSurrendering$.next(true);
     this.optionsMenuOpened = false;
   }
@@ -319,10 +335,16 @@ export class AppComponent implements OnInit {
     this.consoleItems.unshift('');
   }
 
+  toggleOptions() {
+    this.optionsMenuOpened = !this.optionsMenuOpened;
+    this.playerService.playSound('open.mp3');
+  }
+
   closeMenu() {
     this.playerService.musicVolume$.next(Number(this.musicControl.value));
     this.playerService.audioVolume$.next(Number(this.soundControl.value));
     this.optionsMenuOpened = false;
+    this.playerService.playSound('close.mp3');
   }
 
   timeout(ms: number) {

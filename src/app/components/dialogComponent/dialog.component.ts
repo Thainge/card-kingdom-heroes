@@ -16,6 +16,7 @@ import {
   zoomOutOnLeaveAnimation,
 } from 'angular-animations';
 import { DialogDto } from 'src/app/models/dialog';
+import { playerService } from 'src/app/services/player.service';
 
 @Component({
   selector: 'app-dialog',
@@ -72,11 +73,12 @@ export class DialogComponent implements OnInit {
   }
   @Output() finishedDialog = new EventEmitter<boolean>(true);
 
-  constructor() {}
+  constructor(private playerService: playerService) {}
 
   ngOnInit() {}
 
   async playNextDialog() {
+    this.playerService.playSound('cardFlip.mp3');
     if (this.dialogArrayStatic.length > 0) {
       this.dialogArrayStatic = this.dialogArrayStatic.filter(
         (x) => x.id !== this.activeDialog.id

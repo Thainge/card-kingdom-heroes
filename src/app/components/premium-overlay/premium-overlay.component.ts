@@ -126,6 +126,7 @@ export class PremiumOverlayComponent implements OnInit {
 
   closeMenu() {
     this.onCloseMenu.emit(false);
+    this.playerService.playSound('close.mp3');
   }
 
   onActiveIndexChange() {
@@ -142,6 +143,8 @@ export class PremiumOverlayComponent implements OnInit {
       return;
     }
 
+    this.playerService.playSound('buyItem.mp3');
+
     this.playerService.gold$.next(this.gold - item.cost);
     this.premiumItems = this.premiumItems.map((x) => {
       if (x.id === item.id) {
@@ -155,6 +158,7 @@ export class PremiumOverlayComponent implements OnInit {
   }
 
   toggleActive(item: PremiumBox) {
+    this.playerService.playSound('button.mp3');
     this.premiumItems = this.premiumItems.map((x) => {
       if (x.id === item.id) {
         return { ...x, active: !x.active };
@@ -166,10 +170,12 @@ export class PremiumOverlayComponent implements OnInit {
   }
 
   changeIndexLeft() {
+    this.playerService.playSound('button.mp3');
     this.swiper?.slidePrev();
   }
 
   changeIndexRight() {
+    this.playerService.playSound('button.mp3');
     this.swiper?.slideNext();
   }
 

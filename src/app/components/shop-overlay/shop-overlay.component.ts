@@ -167,10 +167,11 @@ export class ShopOverlayComponent implements OnInit {
 
   startPhase(booster: BoosterPack) {
     this.openingCards = true;
+
     const cardsForBooster = this.allCards.filter(
       (x) => x.boosterId === booster.id
     );
-    console.log(cardsForBooster);
+    this.playerService.playSound('button.mp3');
     let shuffled1: ExtendedAbilityCard[] = this.cardService
       .shuffle(cardsForBooster)
       .map((x, i) => {
@@ -232,6 +233,7 @@ export class ShopOverlayComponent implements OnInit {
     setTimeout(() => {
       this.showCardsList = this.openCards;
       this.showCardAnimation = true;
+      this.playerService.playSound('cardOpen.mp3');
     }, 800);
     setTimeout(() => {
       this.canClickFinish = true;
@@ -242,6 +244,7 @@ export class ShopOverlayComponent implements OnInit {
     if (!this.canClickFinish) {
       return;
     }
+    this.playerService.playSound('button.mp3');
 
     this.canClickFinish = false;
 
@@ -306,12 +309,16 @@ export class ShopOverlayComponent implements OnInit {
     });
   }
 
-  changeIndexLeft() {
+  changeIndexLeft(playSound: boolean = true) {
     if (this.currentStep === 'shopping') {
       this.swiper1?.slidePrev();
     }
     if (this.currentStep === 'opening') {
       this.swiper2?.slidePrev();
+    }
+
+    if (playSound) {
+      this.playerService.playSound('button.mp3');
     }
   }
 
@@ -322,16 +329,18 @@ export class ShopOverlayComponent implements OnInit {
     if (this.currentStep === 'opening') {
       this.swiper2?.slideNext();
     }
+    this.playerService.playSound('button.mp3');
   }
 
   setCurrentStep(step: ShopStep) {
     this.currentStep = step;
     this.currentIndex = 0;
-    this.changeIndexLeft();
-    this.changeIndexLeft();
-    this.changeIndexLeft();
-    this.changeIndexLeft();
-    this.changeIndexLeft();
+    this.playerService.playSound('open.mp3');
+    this.changeIndexLeft(false);
+    this.changeIndexLeft(false);
+    this.changeIndexLeft(false);
+    this.changeIndexLeft(false);
+    this.changeIndexLeft(false);
     setTimeout(() => {
       if (step === 'shopping') {
         this.swiper1 = this.swiperRef1?.nativeElement.swiper;
@@ -355,6 +364,8 @@ export class ShopOverlayComponent implements OnInit {
       return;
     }
 
+    this.playerService.playSound('buyItem.mp3');
+
     this.playerService.gold$.next(this.gold - item.cost);
 
     this.boosterPacks = this.boosterPacks.map((x) => {
@@ -369,6 +380,7 @@ export class ShopOverlayComponent implements OnInit {
   openBoosterPack(item: BoosterPack) {
     this.startPhase(item);
     this.openBooster = item;
+    this.playerService.playSound('button.mp3');
     this.boosterPacks = this.boosterPacks.map((x) => {
       if (x.id === item.id) {
         return { ...x, count: item.count - 1 };

@@ -1,3 +1,4 @@
+import { playerService } from 'src/app/services/player.service';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
@@ -37,7 +38,7 @@ export class GalleryOverlayComponent implements OnInit {
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
-  constructor() {}
+  constructor(private playerService: playerService) {}
 
   ngOnInit() {
     const hero: GalleryImage = {
@@ -75,7 +76,13 @@ export class GalleryOverlayComponent implements OnInit {
     ];
   }
 
+  setCurrentItem(item: GalleryImage) {
+    this.playerService.playSound('button.mp3');
+    this.currentImage = item;
+  }
+
   closeMenu() {
+    this.playerService.playSound('close.mp3');
     this.onCloseMenu.emit(false);
   }
 }
