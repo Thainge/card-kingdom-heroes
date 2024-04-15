@@ -4,6 +4,7 @@ export const AchievementsData: AchievementObject[] = [
   {
     id: 1,
     title: 'First Blood',
+    worldId: 1,
     description: 'Defeat your first opponent',
     image: 'gold.png',
     unlocked: false,
@@ -13,6 +14,7 @@ export const AchievementsData: AchievementObject[] = [
   {
     id: 2,
     title: 'First Blood',
+    worldId: 1,
     description: 'Beat the first level in the game.',
     image: 'gold.png',
     unlocked: false,
@@ -22,6 +24,7 @@ export const AchievementsData: AchievementObject[] = [
   {
     id: 3,
     title: 'First Blood',
+    worldId: 1,
     description: 'Beat the first level in the game.',
     image: 'gold.png',
     unlocked: false,
@@ -31,6 +34,7 @@ export const AchievementsData: AchievementObject[] = [
   {
     id: 4,
     title: 'First Blood',
+    worldId: 1,
     description: 'Beat the first level in the game.',
     image: 'gold.png',
     unlocked: false,
@@ -40,6 +44,7 @@ export const AchievementsData: AchievementObject[] = [
   {
     id: 5,
     title: 'First Blood',
+    worldId: 1,
     description: 'Beat the first level in the game.',
     image: 'gold.png',
     unlocked: false,
@@ -49,6 +54,7 @@ export const AchievementsData: AchievementObject[] = [
   {
     id: 6,
     title: 'First Blood',
+    worldId: 1,
     description: 'Beat the first level in the game.',
     image: 'gold.png',
     unlocked: false,
@@ -58,6 +64,7 @@ export const AchievementsData: AchievementObject[] = [
   {
     id: 7,
     title: 'First Blood',
+    worldId: 1,
     description: 'Beat the first level in the game.',
     image: 'gold.png',
     unlocked: false,
@@ -67,6 +74,7 @@ export const AchievementsData: AchievementObject[] = [
   {
     id: 8,
     title: 'First Blood',
+    worldId: 1,
     description: 'Beat the first level in the game.',
     image: 'gold.png',
     unlocked: false,
@@ -76,6 +84,7 @@ export const AchievementsData: AchievementObject[] = [
   {
     id: 9,
     title: 'First Blood',
+    worldId: 1,
     description: 'Beat the first level in the game.',
     image: 'gold.png',
     unlocked: false,
@@ -85,6 +94,7 @@ export const AchievementsData: AchievementObject[] = [
   {
     id: 10,
     title: 'First Blood',
+    worldId: 1,
     description: 'Unlock all 60 stars',
     image: 'gold.png',
     unlocked: false,
@@ -94,6 +104,7 @@ export const AchievementsData: AchievementObject[] = [
   {
     id: 11,
     title: 'First Blood',
+    worldId: 2,
     description: 'Beat the first level in the game.',
     image: 'gold.png',
     unlocked: false,
@@ -103,6 +114,7 @@ export const AchievementsData: AchievementObject[] = [
   {
     id: 12,
     title: 'First Blood',
+    worldId: 2,
     description: 'Beat the first level in the game.',
     image: 'gold.png',
     unlocked: false,
@@ -112,6 +124,7 @@ export const AchievementsData: AchievementObject[] = [
   {
     id: 13,
     title: 'First Blood',
+    worldId: 2,
     description: 'Beat the first level in the game.',
     image: 'gold.png',
     unlocked: false,
@@ -121,6 +134,7 @@ export const AchievementsData: AchievementObject[] = [
   {
     id: 14,
     title: 'First Blood',
+    worldId: 2,
     description: 'Beat the first level in the game.',
     image: 'gold.png',
     unlocked: false,
@@ -130,6 +144,7 @@ export const AchievementsData: AchievementObject[] = [
   {
     id: 15,
     title: 'First Blood',
+    worldId: 2,
     description: 'Beat the first level in the game.',
     image: 'gold.png',
     unlocked: false,
@@ -139,6 +154,7 @@ export const AchievementsData: AchievementObject[] = [
   {
     id: 16,
     title: 'First Blood',
+    worldId: 2,
     description: 'Beat the first level in the game.',
     image: 'gold.png',
     unlocked: false,
@@ -148,6 +164,7 @@ export const AchievementsData: AchievementObject[] = [
   {
     id: 17,
     title: 'First Blood',
+    worldId: 2,
     description: 'Beat the first level in the game.',
     image: 'gold.png',
     unlocked: false,
@@ -157,6 +174,7 @@ export const AchievementsData: AchievementObject[] = [
   {
     id: 18,
     title: 'First Blood',
+    worldId: 2,
     description: 'Beat the first level in the game.',
     image: 'gold.png',
     unlocked: false,
@@ -166,6 +184,7 @@ export const AchievementsData: AchievementObject[] = [
   {
     id: 19,
     title: 'First Blood',
+    worldId: 2,
     description: 'Beat the first level in the game.',
     image: 'gold.png',
     unlocked: false,
@@ -175,6 +194,7 @@ export const AchievementsData: AchievementObject[] = [
   {
     id: 20,
     title: 'First Blood',
+    worldId: 2,
     description: 'Beat the first level in the game.',
     image: 'gold.png',
     unlocked: false,
@@ -183,6 +203,7 @@ export const AchievementsData: AchievementObject[] = [
   },
   {
     id: 21,
+    worldId: 3,
     title: 'First Blood',
     description: 'Beat the first level in the game.',
     image: 'gold.png',

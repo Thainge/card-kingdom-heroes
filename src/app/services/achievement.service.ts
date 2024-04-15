@@ -9,6 +9,7 @@ import { AchievementsData } from 'src/assets/data/achievements';
 export class AchievementService {
   readonly achievements$ = new BehaviorSubject<AchievementObject>({
     id: 0,
+    worldId: 1,
     description: '',
     image: '',
     title: '',
@@ -35,7 +36,7 @@ export class AchievementService {
     let updated = false;
     let updateObj: AchievementObject | undefined;
     const newData = currentData.map((x) => {
-      if (x.id === id && !x.unlocked) {
+      if (x.id === id && !x.unlocked && x.worldId === 1) {
         updated = true;
         updateObj = x;
         return { ...x, unlocked: true };

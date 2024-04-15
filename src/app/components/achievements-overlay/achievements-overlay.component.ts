@@ -8,6 +8,7 @@ import {
 } from 'angular-animations';
 import { AchievementObject } from 'src/app/models/achievement';
 import { AchievementService } from 'src/app/services/achievement.service';
+import { LoadingService } from 'src/app/services/loading.service';
 import { playerService } from 'src/app/services/player.service';
 import { AchievementsData } from 'src/assets/data/achievements';
 
@@ -26,7 +27,13 @@ import { AchievementsData } from 'src/assets/data/achievements';
   ],
 })
 export class AchievementsOverlayComponent implements OnInit {
-  @Input('open') open: boolean = false;
+  open: boolean = false;
+  @Input('open') set openChanged(x: boolean) {
+    this.open = x;
+    if (x) {
+      this.checkTip();
+    }
+  }
   achievementsList: AchievementObject[] = [];
   achievementsListClean: AchievementObject[] = [];
   currentpage: number = 1;
@@ -37,7 +44,8 @@ export class AchievementsOverlayComponent implements OnInit {
 
   constructor(
     private playerService: playerService,
-    private achievementService: AchievementService
+    private achievementService: AchievementService,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit() {
@@ -51,6 +59,24 @@ export class AchievementsOverlayComponent implements OnInit {
       this.achievementsListClean = AchievementsData;
     }
     this.pageAchievements(this.currentpage);
+  }
+
+  checkTip() {
+    const deckTipShown = localStorage.getItem('achievementTipShown');
+    if (!deckTipShown) {
+      localStorage.setItem('achievementTipShown', JSON.stringify(true));
+      this.loadingService.currentTip$.next({
+        title: 'New Tip',
+        header: 'Achievements',
+        text: 'Unlock additonal rewards by completing achievements',
+        img: 'wildImg.png',
+        tipRows: [
+          '- Unlock achievements to earn rewards',
+          '- Unlock all achievements to unlock cheats',
+        ],
+      });
+      this.loadingService.showTip$.next(true);
+    }
   }
 
   getReward(achievement: AchievementObject) {
