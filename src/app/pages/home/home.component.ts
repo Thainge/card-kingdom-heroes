@@ -1,3 +1,4 @@
+import { playerService } from 'src/app/services/player.service';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -41,7 +42,10 @@ export class HomeComponent implements OnInit {
   chooseCampaignOpen: boolean = false;
   flagsList: FlagDto[] = [];
 
-  constructor(private loadingService: LoadingService) {}
+  constructor(
+    private loadingService: LoadingService,
+    private playerService: playerService
+  ) {}
 
   ngOnInit() {
     this.flagsList = JSON.parse(localStorage.getItem('flagsData') ?? '[]');
@@ -62,9 +66,16 @@ export class HomeComponent implements OnInit {
         'loadingBg.png',
         'Loading...'
       );
+      this.playerService.playSound('start.wav');
     } else {
+      this.playerService.playSound('open.mp3');
       this.chooseCampaignOpen = true;
     }
+  }
+
+  openCredits() {
+    this.playerService.playSound('open.mp3');
+    this.creditsOpen = true;
   }
 
   chooseDifficulty() {
@@ -79,5 +90,6 @@ export class HomeComponent implements OnInit {
     localStorage.setItem('currentLevel', JSON.stringify(battle));
     localStorage.setItem('currentDetails', JSON.stringify(flag.missionDetails));
     this.loadingService.navigate('/battle', 'loadingBg.png', 'Loading...');
+    this.playerService.playSound('start.wav');
   }
 }

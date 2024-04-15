@@ -40,6 +40,24 @@ const defaultPlayer: PlayerDto = {
   usedPoints: 0,
 };
 
+type Sound =
+  | 'attack.mp3'
+  | 'battleStart.mp3'
+  | 'block.mp3'
+  | 'button.mp3'
+  | 'buyItem.mp3'
+  | 'cardDestroyed.mp3'
+  | 'cardFlip.mp3'
+  | 'cardOpen.mp3'
+  | 'close.mp3'
+  | 'defeat.mp3'
+  | 'fire.mp3'
+  | 'freeze.mp3'
+  | 'heal.mp3'
+  | 'open.mp3'
+  | 'start.wav'
+  | 'victory.mp3';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -60,6 +78,10 @@ export class playerService implements OnInit {
   readonly gold$ = new BehaviorSubject<number>(-9999);
   readonly currentHero$ = new BehaviorSubject<any | undefined>(undefined);
   readonly stars$ = new BehaviorSubject<number>(0);
+  audioVolume: number = 0.5;
+  musicVolume: number = 0.5;
+  readonly audioVolume$ = new BehaviorSubject<number>(0.5);
+  readonly musicVolume$ = new BehaviorSubject<number>(0.5);
 
   constructor(private router: Router) {
     this.gameTheme$.subscribe((x) => {
@@ -72,9 +94,33 @@ export class playerService implements OnInit {
         localStorage.setItem('playerGold', JSON.stringify(x));
       }
     });
+    const localAudio = localStorage.getItem('audioVolume');
+    const localMusic = localStorage.getItem('audioVolume');
+    if (localAudio) {
+      this.audioVolume$.next(Number(localAudio));
+    }
+    if (localMusic) {
+      this.musicVolume$.next(Number(localMusic));
+    }
+    this.audioVolume$.subscribe((x) => {
+      localStorage.setItem('audioVolume', JSON.stringify(x));
+      this.audioVolume = x;
+    });
+    this.musicVolume$.subscribe((x) => {
+      localStorage.setItem('audioVolume', JSON.stringify(x));
+      this.musicVolume = x;
+    });
   }
 
   ngOnInit(): void {}
+
+  public playSound(sound: Sound) {
+    let audio = new Audio();
+    audio.src = './assets/sound/' + sound;
+    audio.load();
+    audio.play();
+    audio.volume = this.audioVolume;
+  }
 
   public getPlayer(): PlayerDto {
     let heroes: PlayerDto[] = JSON.parse(

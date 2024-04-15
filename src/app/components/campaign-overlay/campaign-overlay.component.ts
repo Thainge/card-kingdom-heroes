@@ -1,3 +1,4 @@
+import { playerService } from 'src/app/services/player.service';
 import { CommonModule } from '@angular/common';
 import {
   CUSTOM_ELEMENTS_SCHEMA,
@@ -105,7 +106,8 @@ export class CampaignOverlayComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private playerService: playerService
   ) {}
 
   ngOnInit() {
@@ -133,6 +135,7 @@ export class CampaignOverlayComponent implements OnInit {
 
   chooseCampaign(campaign: CampaignBox) {
     const route = '/' + campaign.url;
+    this.playerService.playSound('open.mp3');
     this.closeMenu();
 
     if (this.navigate) {
@@ -147,10 +150,12 @@ export class CampaignOverlayComponent implements OnInit {
 
   changeIndexLeft() {
     this.swiper?.slidePrev();
+    this.playerService.playSound('button.mp3');
   }
 
   changeIndexRight() {
     this.swiper?.slideNext();
+    this.playerService.playSound('button.mp3');
   }
 
   trackById = (index: number, item: any) => item.id;

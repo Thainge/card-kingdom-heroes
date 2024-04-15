@@ -6,6 +6,7 @@ import {
   fadeInOnEnterAnimation,
   zoomOutOnLeaveAnimation,
 } from 'angular-animations';
+import { playerService } from 'src/app/services/player.service';
 
 @Component({
   selector: 'app-credits-overlay',
@@ -32,11 +33,12 @@ export class CreditsOverlayComponent implements OnInit {
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
-  constructor() {}
+  constructor(private playerService: playerService) {}
 
   ngOnInit() {}
 
   closeMenu() {
+    this.playerService.playSound('close.mp3');
     this.onCloseMenu.emit(false);
   }
 }

@@ -81,6 +81,12 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.playerService.audioVolume$.subscribe((x) => {
+      this.soundControl.setValue(x.toString());
+    });
+    this.playerService.musicVolume$.subscribe((x) => {
+      this.musicControl.setValue(x.toString());
+    });
     this.setInitialDeck();
     this.docElement = document.documentElement;
     this.loadingService.isLoading$.subscribe((x) => {
@@ -311,6 +317,12 @@ export class AppComponent implements OnInit {
     }
 
     this.consoleItems.unshift('');
+  }
+
+  closeMenu() {
+    this.playerService.musicVolume$.next(Number(this.musicControl.value));
+    this.playerService.audioVolume$.next(Number(this.soundControl.value));
+    this.optionsMenuOpened = false;
   }
 
   timeout(ms: number) {

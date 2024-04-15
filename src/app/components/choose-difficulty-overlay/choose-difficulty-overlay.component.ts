@@ -14,6 +14,7 @@ import {
   fadeOutUpOnLeaveAnimation,
 } from 'angular-animations';
 import { LoadingService } from 'src/app/services/loading.service';
+import { playerService } from 'src/app/services/player.service';
 
 @Component({
   selector: 'app-choose-difficulty-overlay',
@@ -38,19 +39,24 @@ export class DifficultyOverlayComponent implements OnInit {
   @Input('showInformation') showInformation: boolean = true;
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
-  constructor(private loadingService: LoadingService) {}
+  constructor(
+    private loadingService: LoadingService,
+    private playerService: playerService
+  ) {}
 
   ngOnInit() {}
 
   ngAfterViewInit() {}
 
   chooseEasy() {
+    this.playerService.playSound('button.mp3');
     this.loadingService.difficultyIsOpen$.next(false);
     localStorage.setItem('easymode', JSON.stringify(true));
     this.closeMenu();
   }
 
   chooseHard() {
+    this.playerService.playSound('button.mp3');
     this.loadingService.difficultyIsOpen$.next(false);
     localStorage.setItem('easymode', JSON.stringify(false));
     this.closeMenu();
