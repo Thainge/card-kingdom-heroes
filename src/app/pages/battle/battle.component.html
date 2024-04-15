@@ -32,7 +32,7 @@
       marioFont: gameThemePath === 'mario',
       zeldaFont: gameThemePath === 'default'
     }"
-    (click)="showPokerHandsChart = false"
+    (click)="hidePokerHands()"
     *ngIf="showPokerHandsChart"
     [@fadeEnter]="{
       value: '',
@@ -246,7 +246,7 @@
     <img
       src="./assets/question.png"
       class="optionsButton hoverButton"
-      (click)="showPokerHandsChart = true"
+      (click)="openPokerHands()"
     />
   </div>
   <!-- <div class="checkSurrenderOverlay">
@@ -574,7 +574,7 @@
       <img
         src="./assets/tipButton.png"
         class="tipButton"
-        (click)="showWildHintOverlay = false"
+        (click)="hideWildHint()"
       />
       <div class="tipTitle">{{ currentTip.title }}</div>
       <div class="tipHeader">{{ currentTip.header }}</div>
@@ -939,7 +939,10 @@
         }"
       ></div>
 
-      <div class="middleRightBox specialAttacKBoxPlayer2" [ngClass]="{easyModePlayers: easyMode}">
+      <div
+        class="middleRightBox specialAttacKBoxPlayer2"
+        [ngClass]="{ easyModePlayers: easyMode }"
+      >
         <div
           class="middleCard middleRightCard middleLeftCard specialAttacKBoxPlayerCard2"
           [@fadeRightEnter]="{
@@ -1079,7 +1082,10 @@
         </div>
       </div>
 
-      <div class="middleRightBox specialAttacKBoxPlayer" [ngClass]="{easyModePlayers: easyMode}">
+      <div
+        class="middleRightBox specialAttacKBoxPlayer"
+        [ngClass]="{ easyModePlayers: easyMode }"
+      >
         <div
           class="middleCard middleRightCard middleLeftCard specialAttacKBoxPlayerCard"
           [@fadeLeftEnter]="{
@@ -1339,7 +1345,10 @@
           params: { duration: 500, delay: 0, translate: '300px' }
         }"
       >
-        <div class="middleRightBox specialAttacKBoxPlayer2" [ngClass]="{easyModePlayers: easyMode}">
+        <div
+          class="middleRightBox specialAttacKBoxPlayer2"
+          [ngClass]="{ easyModePlayers: easyMode }"
+        >
           <div
             class="middleCard middleRightCard middleLeftCard specialAttacKBoxPlayerCard2"
             [@fadeRightEnter]="{
@@ -1488,7 +1497,10 @@
           </div>
         </div>
 
-        <div class="middleRightBox specialAttacKBoxPlayer" [ngClass]="{easyModePlayers: easyMode}">
+        <div
+          class="middleRightBox specialAttacKBoxPlayer"
+          [ngClass]="{ easyModePlayers: easyMode }"
+        >
           <div
             class="middleCard middleRightCard middleLeftCard specialAttacKBoxPlayerCard"
             [@fadeLeftEnter]="{

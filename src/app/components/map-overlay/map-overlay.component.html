@@ -52,7 +52,7 @@
       <img
         src="./assets/tipButton.png"
         class="tipButton"
-        (click)="showWildHintOverlay = false"
+        (click)="showWildHintOverlay = false; playCloseTipSound()"
       />
       <div class="tipTitle">{{ currentTip.title }}</div>
       <div class="tipHeader">{{ currentTip.header }}</div>
@@ -92,7 +92,7 @@
     <img
       src="./assets/premium.png"
       class="premiumImg"
-      (click)="premiumOpen = true"
+      (click)="premiumOpen = true; playOpenSound()"
     />
   </div>
   <div
@@ -125,7 +125,7 @@
         <img
           src="./assets/worlds.png"
           class="overlayIcon"
-          (click)="chooseCampaignOpen = true"
+          (click)="chooseCampaignOpen = true; playOpenSound()"
         />
       </div>
       <div class="relativeIcon shopHover">
@@ -142,10 +142,13 @@
         <img
           src="./assets/shop.png"
           class="overlayIcon"
-          (click)="shopOpen = true"
+          (click)="shopOpen = true; playOpenSound()"
         />
       </div>
-      <div class="overlayHeroBox" (click)="heroRoomOpen = true">
+      <div
+        class="overlayHeroBox"
+        (click)="heroRoomOpen = true; playOpenSound()"
+      >
         <div class="iconContainer" *ngIf="currentHero?.points > 0">
           <div class="iconBox">
             <img src="./assets/heroPoints.png" class="smallerIcon" />
@@ -162,7 +165,7 @@
         <img
           src="./assets/deck.png"
           class="overlayIcon"
-          (click)="deckOpen = true"
+          (click)="deckOpen = true; playOpenSound()"
         />
         <img
           [@fadeEnter]="{
@@ -179,7 +182,7 @@
         <img
           src="./assets/gallery.png"
           class="overlayIcon"
-          (click)="galleryOpen = true"
+          (click)="galleryOpen = true; playOpenSound()"
         />
       </div>
     </div>
@@ -194,7 +197,7 @@
     <img
       src="./assets/achievements.png"
       class="overlayIcon achievementButton"
-      (click)="achievementsOpen = true"
+      (click)="achievementsOpen = true; playOpenSound()"
     />
     <img
       [@fadeEnter]="{

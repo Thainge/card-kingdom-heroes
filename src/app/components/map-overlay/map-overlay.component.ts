@@ -186,6 +186,14 @@ export class MapOverlayComponent implements OnInit {
     }
   }
 
+  playOpenSound() {
+    this.playerService.playSound('open.mp3');
+  }
+
+  playCloseTipSound() {
+    this.playerService.playSound('close.mp3');
+  }
+
   achievementHasGems(): boolean {
     if (this.achievements.find((x) => x.unlocked && !x.gemsUnlocked)) {
       return true;

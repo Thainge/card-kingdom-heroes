@@ -547,6 +547,7 @@ export class BattleComponent implements OnInit {
 
   async nextReward(rewardItem: any) {
     if (this.canClickNextReward && this.rewardItems.length > 0) {
+      this.playerService.playSound('cardFlip.mp3');
       // no more clicks
       this.canClickNextReward = false;
       this.rewardItems = this.rewardItems.filter((x) => x.id !== rewardItem.id);
@@ -1042,7 +1043,23 @@ export class BattleComponent implements OnInit {
     };
   }
 
+  hidePokerHands() {
+    this.showPokerHandsChart = false;
+    this.playerService.playSound('close.mp3');
+  }
+
+  openPokerHands() {
+    this.showPokerHandsChart = true;
+    this.playerService.playSound('open.mp3');
+  }
+
+  hideWildHint() {
+    this.playerService.playSound('close.mp3');
+    this.showWildHintOverlay = false;
+  }
+
   async skipGuide() {
+    this.playerService.playSound('button.mp3');
     if (!this.skippingGuide) {
       localStorage.setItem('localShownGuideAlready', JSON.stringify(true));
       this.skippingGuide = true;
@@ -1464,6 +1481,7 @@ export class BattleComponent implements OnInit {
       x.hide();
       x.remove();
     });
+    this.playerService.playSound('button.mp3');
     if (this.currentCombatPhase?.background) {
       this.loadingService.navigate(
         '/cardkingdom-map',
@@ -1486,6 +1504,7 @@ export class BattleComponent implements OnInit {
       x.hide();
       x.remove();
     });
+    this.playerService.playSound('button.mp3');
     if (this.currentCombatPhase?.background) {
       this.loadingService.navigate(
         '/battle',
@@ -1692,6 +1711,7 @@ export class BattleComponent implements OnInit {
   }
 
   async selectAbilityCard(ability: AbilityCard) {
+    this.playerService.playSound('cardFlip.mp3');
     const playerHand = this.useMemorizedCards(ability);
     const canUse: CardDto[] = this.abilityService.checkCanUseAbility(
       ability,
@@ -1807,6 +1827,7 @@ export class BattleComponent implements OnInit {
       (x) => x.id !== ability.id
     );
     await this.timeout(200);
+    this.playerService.playSound('heal.mp3');
     this.increaseOffenseOnPlayer = true;
     await this.timeout(400);
     this.player.attack = newAttack;
@@ -1868,6 +1889,8 @@ export class BattleComponent implements OnInit {
           newAttack = 0;
         }
         this.shieldOnEnemies.push(x);
+        this.playerService.playSound('block.mp3');
+
         return { ...x, attack: newAttack };
       });
       this.endAbilityTurn(ability, 1200);
@@ -1898,6 +1921,7 @@ export class BattleComponent implements OnInit {
 
         return { ...x, health: newHealth };
       });
+      this.playerService.playSound('freeze.mp3');
 
       // Remove active lines
       try {
@@ -1958,6 +1982,7 @@ export class BattleComponent implements OnInit {
         if (ability.hitAnimation === 'fire') {
           this.flamesOnEnemies.push(x);
         }
+        this.playerService.playSound('fire.mp3');
         this.enemyTarget = x.id;
         this.numbersGoDownIncrementallyBot(x.health, newHealth);
       }
@@ -1986,6 +2011,7 @@ export class BattleComponent implements OnInit {
       (x) => x.id !== ability.id
     );
     await this.timeout(200);
+    this.playerService.playSound('heal.mp3');
     this.healOnPlayer = true;
     await this.timeout(400);
     this.numbersGoUpIncrementallyPlayer(this.player.health, newHealth);
@@ -2047,6 +2073,7 @@ export class BattleComponent implements OnInit {
         if (ability.hitAnimation === 'fire') {
           this.flamesOnEnemies.push(x);
         }
+        this.playerService.playSound('fire.mp3');
         await this.numbersGoDownIncrementallyBot(x.health, newHealth);
       }
     }
@@ -2335,6 +2362,7 @@ export class BattleComponent implements OnInit {
   MobileValueScrollDown(event: any, card: CardDto) {
     event.stopPropagation();
     event.preventDefault();
+    this.playerService.playSound('button.mp3');
 
     this.wildCardScrollChange(100, card);
   }
@@ -2904,6 +2932,7 @@ export class BattleComponent implements OnInit {
   chooseWildSuit(event: any, card: CardDto, suit: string) {
     event.stopPropagation();
     event.preventDefault();
+    this.playerService.playSound('button.mp3');
 
     // Find card with same value and different suit
     const newCard = {
@@ -3080,6 +3109,7 @@ export class BattleComponent implements OnInit {
     }
 
     if (card && card.id !== this.enemyTarget && this.canSelectCards) {
+      this.playerService.playSound('button.mp3');
       this.enemyTarget = card.id;
       this.staticEnemyTarget = this.enemyTarget;
       const hand = this.cardService.determineHand(this.selectedCards);
@@ -3134,6 +3164,7 @@ export class BattleComponent implements OnInit {
       this.firstLevel.dialogStart.length > 0 &&
       !this.hideDialog
     ) {
+      this.playerService.playSound('button.mp3');
       this.redrawing = false;
       setTimeout(() => {
         this.redrawHide = true;
@@ -3243,6 +3274,8 @@ export class BattleComponent implements OnInit {
       (x: CardDto) => x.id === card.id
     );
 
+    this.playerService.playSound('cardFlip.mp3');
+
     // Add card to selectedCards
     if (!includesCard && this.redrawSelectedCards.length < 2) {
       this.redrawSelectedCards.push(card);
@@ -3288,6 +3321,7 @@ export class BattleComponent implements OnInit {
     }
 
     if (this.canSelectCards) {
+      this.playerService.playSound('cardFlip.mp3');
       const includesCard = this.selectedCards.find(
         (x: CardDto) => x.id === card.id
       );
@@ -3460,6 +3494,7 @@ export class BattleComponent implements OnInit {
     if (this.disableAttackBtn) {
       return;
     }
+    this.playerService.playSound('button.mp3');
 
     if (this.selectedCards.length === 0 && this.playerHand.length === 0) {
       this.newTurn();
@@ -3617,6 +3652,7 @@ export class BattleComponent implements OnInit {
   ) {
     const enemyTarget = this.enemyTarget;
     await this.timeout(defaultTimeout);
+    this.playerService.playSound('attack.mp3');
     if (isAttackingPlayer) {
       // Player goes down
       const difference = currentHealth - newHealth;
@@ -3910,6 +3946,7 @@ export class BattleComponent implements OnInit {
       localStorage.setItem('challengeFlags', JSON.stringify(challengeFlags));
       setTimeout(() => {
         this.gameWinnerPlayer = true;
+        this.playerService.playSound('victory.mp3');
       }, 1000);
       if (this.playerLevelUpEnabled) {
         setTimeout(() => {
@@ -3928,6 +3965,7 @@ export class BattleComponent implements OnInit {
     } else {
       localStorage.setItem('gameStartedYet', JSON.stringify(true));
       setTimeout(() => {
+        this.playerService.playSound('defeat.mp3');
         this.gameLoserPlayer = true;
         this.rewardItems = [];
         this.rewardItemsClean = [];
@@ -3984,6 +4022,7 @@ export class BattleComponent implements OnInit {
       return;
     }
 
+    this.playerService.playSound('button.mp3');
     // finished
     this.discardCards = this.discardCards.filter((x) => {
       const foundCard = this.discardSelectedCards.find((a) => a.id === x.id);
@@ -4033,6 +4072,7 @@ export class BattleComponent implements OnInit {
     const includesCard = this.discardSelectedCards.find(
       (x: CardDto) => x.id === card.id
     );
+    this.playerService.playSound('cardFlip.mp3');
 
     // Add card to selectedCards
     if (
@@ -4126,10 +4166,15 @@ export class BattleComponent implements OnInit {
   async addBotCardsToHand(addLength: number) {
     if (addLength > 0) {
       const addArrEnemy = Array.from(Array(addLength).keys());
+      let i = 1;
       for await (const x of addArrEnemy) {
         this.enemyHand.push(this.enemyDeck[0]);
         this.enemyDeck.push(this.enemyDeck[0]);
         this.enemyDeck.shift();
+        setTimeout(() => {
+          this.playerService.playSound('cardFlip.mp3');
+        }, i * 100);
+        i++;
       }
       await this.timeout(400);
       if (this.enemyDeck[0] && this.enemyDeck[0].id) {
@@ -4141,10 +4186,15 @@ export class BattleComponent implements OnInit {
   async addPlayerCardsToHand(addLength: number) {
     if (addLength > 0) {
       const addArr = Array.from(Array(addLength).keys());
+      let i = 1;
       for await (const x of addArr) {
         this.playerHand.push(this.playerDeck[0]);
         this.playerDeck.push(this.playerDeck[0]);
         this.playerDeck.shift();
+        setTimeout(() => {
+          this.playerService.playSound('cardFlip.mp3');
+        }, i * 100);
+        i++;
       }
       this.topRedrawCard = 0;
       await this.timeout(400);
@@ -4348,6 +4398,7 @@ export class BattleComponent implements OnInit {
       this.enemyPlayers.unshift(newAlly);
       this.completedEnemyTurns.push(newAlly.id);
     });
+    this.playerService.playSound('horn.mp3');
 
     await this.timeout(700);
     this.abilityDeckBot = this.abilityDeckBot.filter(
@@ -4373,6 +4424,7 @@ export class BattleComponent implements OnInit {
           return { ...x, attack: newDefense };
         }
       });
+      this.playerService.playSound('heal.mp3');
       await this.timeout(1200);
       this.botEndAbilityTurn();
     } else {
@@ -4393,6 +4445,7 @@ export class BattleComponent implements OnInit {
       } else {
         foundPlayer = validPlayer ?? undefined;
       }
+      this.playerService.playSound('heal.mp3');
 
       if (foundPlayer) {
         this.addDefenseOnEnemies.push(foundPlayer);
@@ -4414,6 +4467,7 @@ export class BattleComponent implements OnInit {
     // Attack player
     this.pushDisplayMessage('Fire Attack');
     await this.timeout(500);
+    this.playerService.playSound('fire.mp3');
 
     this.player.health =
       this.player.health - ability.abilityValue[ability.level];
@@ -4433,6 +4487,7 @@ export class BattleComponent implements OnInit {
     if (this.player.attack < 0) {
       this.player.attack = 0;
     }
+    this.playerService.playSound('block.mp3');
 
     this.shieldOnPlayer = true;
     await this.timeout(1200);
@@ -4447,6 +4502,7 @@ export class BattleComponent implements OnInit {
     await this.timeout(500);
     const shuffledArray = this.cardService.shuffle(this.playerHand);
     let finishedDiscards = 0;
+    this.playerService.playSound('cardFlip.mp3');
     for await (const x of shuffledArray) {
       if (finishedDiscards !== ability.abilityValue[ability.level]) {
         finishedDiscards++;
@@ -4463,6 +4519,7 @@ export class BattleComponent implements OnInit {
       `Draw ${ability.abilityValue[ability.level]} Cards`
     );
     await this.timeout(500);
+
     this.addBotCardsToHand(ability.abilityValue[ability.level]);
     await this.timeout(100);
     this.botEndAbilityTurn();
@@ -4488,6 +4545,7 @@ export class BattleComponent implements OnInit {
           return { ...x, health: newHealth };
         }
       });
+      this.playerService.playSound('heal.mp3');
       await this.timeout(1200);
       this.botEndAbilityTurn();
     } else {
@@ -4502,6 +4560,8 @@ export class BattleComponent implements OnInit {
       const lowHealthAndValid: PlayerDto | undefined = this.enemyPlayers.find(
         (x) => x.health > 0 && x.health !== x.baseHealth
       );
+      this.playerService.playSound('heal.mp3');
+
       let foundPlayer: PlayerDto | undefined;
       if (lowHealthAndValid) {
         foundPlayer = lowHealthAndValid;
@@ -4602,6 +4662,7 @@ export class BattleComponent implements OnInit {
 
   chooseDefensePlayerCards() {
     this.validCards = [];
+    this.playerService.playSound('button.mp3');
     // If selectedcards length is equal to player hand length, ignore errors
     if (
       this.selectedCards.length !== this.enemyAttackHand.cards.length &&

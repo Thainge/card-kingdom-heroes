@@ -56,7 +56,8 @@ type Sound =
   | 'heal.mp3'
   | 'open.mp3'
   | 'start.wav'
-  | 'victory.mp3';
+  | 'victory.mp3'
+  | 'horn.mp3';
 
 @Injectable({
   providedIn: 'root',
