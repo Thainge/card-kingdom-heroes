@@ -69,6 +69,7 @@ export class AppComponent implements OnInit {
   loadingText: string = '';
 
   display: boolean = false;
+  alreadyStarted: boolean = false;
 
   @ViewChild('consoleInput') consoleInput: ElementRef | undefined;
 
@@ -107,6 +108,10 @@ export class AppComponent implements OnInit {
       setTimeout(() => {
         this.initFinished = true;
       }, 1500);
+      setTimeout(() => {
+        this.alreadyStarted = true;
+        this.playerService.checkNextMusic();
+      }, 1600);
     });
     // setTimeout(() => {
     //   const currentRoute = this.router.url;
@@ -138,6 +143,11 @@ export class AppComponent implements OnInit {
     this.loadingService.displayOptions$.subscribe((x) => {
       this.display = x;
     });
+  }
+
+  setLocal() {
+    this.playerService.musicVolume$.next(Number(this.musicControl.value));
+    this.playerService.audioVolume$.next(Number(this.soundControl.value));
   }
 
   checkSure() {

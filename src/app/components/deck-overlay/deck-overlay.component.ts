@@ -350,7 +350,9 @@ export class DeckOverlayComponent implements OnInit {
         isNew: true,
       });
     }
-    this.playerService.playSound('cardOpen.mp3');
+    setTimeout(() => {
+      this.playerService.playSound('cardOpen.mp3');
+    }, 400);
     this.currentSort = 'New';
     this.sortCards();
     this.container.nativeElement.scrollTop = 0;

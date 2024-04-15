@@ -233,7 +233,9 @@ export class ShopOverlayComponent implements OnInit {
     setTimeout(() => {
       this.showCardsList = this.openCards;
       this.showCardAnimation = true;
-      this.playerService.playSound('cardOpen.mp3');
+      setTimeout(() => {
+        this.playerService.playSound('cardOpen.mp3');
+      }, 500);
     }, 800);
     setTimeout(() => {
       this.canClickFinish = true;

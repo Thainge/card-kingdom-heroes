@@ -136,6 +136,7 @@
                   [ngClass]="{
                     muteRange: muteIconSound() === 0
                   }"
+                  (change)="setLocal()"
                   type="range"
                   min="0"
                   max="100"
@@ -156,6 +157,7 @@
                   [ngClass]="{
                     muteRange: muteIconMusic() === 0
                   }"
+                  (change)="setLocal()"
                   type="range"
                   min="0"
                   max="100"

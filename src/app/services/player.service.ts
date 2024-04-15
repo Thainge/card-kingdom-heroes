@@ -59,6 +59,8 @@ type Sound =
   | 'victory.mp3'
   | 'horn.mp3';
 
+type Music = 'startingPageMusic.mp3' | 'mapMusic.mp3' | 'battleMusic.mp3';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -79,10 +81,12 @@ export class playerService implements OnInit {
   readonly gold$ = new BehaviorSubject<number>(-9999);
   readonly currentHero$ = new BehaviorSubject<any | undefined>(undefined);
   readonly stars$ = new BehaviorSubject<number>(0);
-  audioVolume: number = 0.5;
-  musicVolume: number = 0.5;
-  readonly audioVolume$ = new BehaviorSubject<number>(0.5);
-  readonly musicVolume$ = new BehaviorSubject<number>(0.5);
+  readonly audioVolume$ = new BehaviorSubject<number>(20);
+  readonly musicVolume$ = new BehaviorSubject<number>(20);
+  readonly currentPlayingMusic$ = new BehaviorSubject<any | undefined>(
+    undefined
+  );
+  private currentMusic: HTMLAudioElement | undefined;
 
   constructor(private router: Router) {
     this.gameTheme$.subscribe((x) => {
@@ -96,7 +100,7 @@ export class playerService implements OnInit {
       }
     });
     const localAudio = localStorage.getItem('audioVolume');
-    const localMusic = localStorage.getItem('audioVolume');
+    const localMusic = localStorage.getItem('musicVolume');
     if (localAudio) {
       this.audioVolume$.next(Number(localAudio));
     }
@@ -105,22 +109,66 @@ export class playerService implements OnInit {
     }
     this.audioVolume$.subscribe((x) => {
       localStorage.setItem('audioVolume', JSON.stringify(x));
-      this.audioVolume = x;
     });
     this.musicVolume$.subscribe((x) => {
-      localStorage.setItem('audioVolume', JSON.stringify(x));
-      this.musicVolume = x;
+      localStorage.setItem('musicVolume', JSON.stringify(x));
+      if (this.currentMusic) {
+        this.currentMusic.volume = x / 100;
+        this.currentPlayingMusic$.next(this.currentMusic);
+      }
+    });
+    this.currentPlayingMusic$.subscribe((x) => {
+      this.currentMusic = x;
     });
   }
 
   ngOnInit(): void {}
 
+  public stopCurrentAudio() {
+    this.currentMusic?.pause();
+  }
+
   public playSound(sound: Sound) {
-    let audio = new Audio();
-    audio.src = './assets/sound/' + sound;
-    audio.load();
-    audio.play();
-    audio.volume = this.audioVolume;
+    try {
+      let audio = new Audio();
+      const localVolume = Number(localStorage.getItem('audioVolume'));
+      audio.src = './assets/sound/' + sound;
+      audio.volume = localVolume / 100;
+      audio.load();
+      audio.play();
+    } catch (err) {}
+  }
+
+  public checkNextMusic(): boolean {
+    if (this.router.url === '/') {
+      this.playMusic('startingPageMusic.mp3');
+      return true;
+    }
+
+    if (this.router.url === '/battle') {
+      this.playMusic('battleMusic.mp3');
+      return true;
+    }
+
+    if (this.router.url === '/cardkingdom-map') {
+      this.playMusic('mapMusic.mp3');
+      return true;
+    }
+
+    return false;
+  }
+
+  public playMusic(music: Music) {
+    try {
+      let audio = new Audio();
+      this.currentMusic?.pause();
+      const localVolume = Number(localStorage.getItem('musicVolume'));
+      audio.src = './assets/sound/' + music;
+      audio.volume = localVolume / 100;
+      audio.load();
+      audio.play();
+      this.currentPlayingMusic$.next(audio);
+    } catch (err) {}
   }
 
   public getPlayer(): PlayerDto {

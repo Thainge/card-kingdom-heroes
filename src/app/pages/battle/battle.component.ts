@@ -3164,7 +3164,6 @@ export class BattleComponent implements OnInit {
       this.firstLevel.dialogStart.length > 0 &&
       !this.hideDialog
     ) {
-      this.playerService.playSound('button.mp3');
       this.redrawing = false;
       setTimeout(() => {
         this.redrawHide = true;
@@ -3929,6 +3928,7 @@ export class BattleComponent implements OnInit {
   }
 
   endGame(playerWon: boolean) {
+    this.playerService.stopCurrentAudio();
     if (playerWon) {
       localStorage.setItem('gameStartedYet', JSON.stringify(true));
       let challengeFlags: FlagDto[] = JSON.parse(
@@ -4173,7 +4173,7 @@ export class BattleComponent implements OnInit {
         this.enemyDeck.shift();
         setTimeout(() => {
           this.playerService.playSound('cardFlip.mp3');
-        }, i * 100);
+        }, i * 200);
         i++;
       }
       await this.timeout(400);
@@ -4193,7 +4193,7 @@ export class BattleComponent implements OnInit {
         this.playerDeck.shift();
         setTimeout(() => {
           this.playerService.playSound('cardFlip.mp3');
-        }, i * 100);
+        }, i * 200);
         i++;
       }
       this.topRedrawCard = 0;

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { BackgroundDto } from '../models/backgrounds';
+import { playerService } from './player.service';
 
 interface LoadingObject {
   loading: boolean;
