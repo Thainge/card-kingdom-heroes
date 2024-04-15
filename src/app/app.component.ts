@@ -133,13 +133,6 @@ export class AppComponent implements OnInit {
         this.achievementPopup(x);
       }
     });
-    // this.achievementService.pushNewAchievement({
-    //   id: 1,
-    //   description: 'test description',
-    //   image: 'gold.png',
-    //   title: 'First Blood',
-    //   unlocked: true,
-    // });
     this.loadingService.displayOptions$.subscribe((x) => {
       this.display = x;
     });
@@ -248,13 +241,16 @@ export class AppComponent implements OnInit {
     this.achievementPopupsList.push(achievement);
     this.showGif = true;
     setTimeout(() => {
+      this.playerService.playSound('achievement.mp3');
+    }, 1500);
+    setTimeout(() => {
       this.showGif = false;
     }, 2800);
-    // setTimeout(() => {
-    //   this.achievementPopupsList = this.achievementPopupsList.filter(
-    //     (x) => x.id !== ID
-    //   );
-    // }, 5000);
+    setTimeout(() => {
+      this.achievementPopupsList = this.achievementPopupsList.filter(
+        (x) => x.id !== ID
+      );
+    }, 5000);
   }
 
   @HostListener('document:keypress', ['$event'])

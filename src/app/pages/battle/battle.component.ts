@@ -47,6 +47,7 @@ import { BackgroundDto } from 'src/app/models/backgrounds';
 import { FlagDto } from 'src/app/models/flag';
 import { ChallengeFlags } from 'src/assets/data/specialLevels';
 import { ComicComponent } from 'src/app/components/comic/comic.component';
+import { AchievementService } from 'src/app/services/achievement.service';
 
 interface MissionDetails {
   image: string;
@@ -412,7 +413,8 @@ export class BattleComponent implements OnInit {
     private abilityService: AbilityService,
     private cheatsService: CheatsService,
     private loadingService: LoadingService,
-    private playerService: playerService
+    private playerService: playerService,
+    private achievementService: AchievementService
   ) {}
 
   ngOnInit() {
@@ -507,6 +509,10 @@ export class BattleComponent implements OnInit {
         }
       }
     }, 50);
+  }
+
+  unlockAchievement(id: number) {
+    this.achievementService
   }
 
   checkShowWildCardHint(card: CardDto) {

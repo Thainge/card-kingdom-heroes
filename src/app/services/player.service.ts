@@ -57,7 +57,8 @@ type Sound =
   | 'open.mp3'
   | 'start.wav'
   | 'victory.mp3'
-  | 'horn.mp3';
+  | 'horn.mp3'
+  | 'achievement.mp3';
 
 type Music = 'startingPageMusic.mp3' | 'mapMusic.mp3' | 'battleMusic.mp3';
 
