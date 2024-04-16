@@ -52,6 +52,9 @@
     <img
       src="./assets/heroBorder.png"
       class="heroBorder"
+      [ngClass]="{
+        disabledBox: currentHero?.disabled
+      }"
       [ngStyle]="{
       'background-image': 'url(./assets/heroImages/' + currentHero?.image + ')',
     }"
@@ -60,19 +63,26 @@
       <div
         class="heroTitleText"
         [ngClass]="{
-        redText: currentHero?.color === 'red',
-        orangeText: currentHero?.color === 'orange',
-        yellowText: currentHero?.color === 'yellow',
-        greenText: currentHero?.color === 'green',
-        blueText: currentHero?.color === 'blue',
-        purpleText: currentHero?.color === 'purple',
-      }"
+          redText: currentHero?.color === 'red',
+          orangeText: currentHero?.color === 'orange',
+          yellowText: currentHero?.color === 'yellow',
+          greenText: currentHero?.color === 'green',
+          blueText: currentHero?.color === 'blue',
+          purpleText: currentHero?.color === 'purple',
+          disabledBox: currentHero?.disabled
+        }"
       >
         {{ currentHero?.name }}
       </div>
     </div>
     <div class="heroBtnBox">
-      <div class="heroBtnRelative" (click)="selectHero()">
+      <div
+        class="heroBtnRelative"
+        (click)="selectHero()"
+        [ngClass]="{
+          disabledBtn: currentHero?.disabled
+        }"
+      >
         <img
           src="./assets/selected.png"
           *ngIf="currentHero?.unlocked && currentHero?.selected"

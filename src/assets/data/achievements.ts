@@ -83,13 +83,13 @@ export const AchievementsData: AchievementObject[] = [
   },
   {
     id: 9,
-    title: 'G.I. Joe',
+    title: 'Legen (wait for it)',
     worldId: 1,
-    description: 'Defeat 50 enemies',
+    description: 'Level up a hero to max level',
     image: 'gold.png',
     unlocked: false,
     gemsUnlocked: false,
-    reward: 500,
+    reward: 250,
   },
   {
     id: 10,

@@ -7,6 +7,7 @@ import { PlayerDto } from '../models/player';
 import { AbilityCard } from '../models/abilityCard';
 import { Router } from '@angular/router';
 import { HeroData } from 'src/assets/data/hero';
+import { AchievementService } from './achievement.service';
 
 const defaultPlayer: PlayerDto = {
   id: 0,
@@ -89,7 +90,10 @@ export class playerService implements OnInit {
   );
   private currentMusic: HTMLAudioElement | undefined;
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private achievementService: AchievementService
+  ) {
     this.gameTheme$.subscribe((x) => {
       this.updateThemeStyles(x);
     });
@@ -98,6 +102,9 @@ export class playerService implements OnInit {
     this.gold$.subscribe((x) => {
       if (x !== -9999) {
         localStorage.setItem('playerGold', JSON.stringify(x));
+      }
+      if (x >= 1000) {
+        this.achievementService.unlockNewAchievement(3);
       }
     });
     const localAudio = localStorage.getItem('audioVolume');

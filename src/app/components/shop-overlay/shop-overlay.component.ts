@@ -26,6 +26,7 @@ import {
 } from 'angular-animations';
 import { AbilityCard } from 'src/app/models/abilityCard';
 import { BoosterPack } from 'src/app/models/boosterPack';
+import { AchievementService } from 'src/app/services/achievement.service';
 import { CardService } from 'src/app/services/card.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { playerService } from 'src/app/services/player.service';
@@ -111,7 +112,8 @@ export class ShopOverlayComponent implements OnInit {
     private loadingService: LoadingService,
     private router: Router,
     private cardService: CardService,
-    private playerService: playerService
+    private playerService: playerService,
+    private achievementService: AchievementService
   ) {}
 
   ngOnInit() {
@@ -381,6 +383,7 @@ export class ShopOverlayComponent implements OnInit {
 
   openBoosterPack(item: BoosterPack) {
     this.startPhase(item);
+    this.achievementService.unlockNewAchievement(2);
     this.openBooster = item;
     this.playerService.playSound('button.mp3');
     this.boosterPacks = this.boosterPacks.map((x) => {

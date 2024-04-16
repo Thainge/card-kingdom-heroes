@@ -44,32 +44,24 @@ export class HeroOverlayComponent implements OnInit {
 
   constructor(
     private loadingService: LoadingService,
-    private playerService: playerService
+    private playerService: playerService,
+    private router: Router
   ) {}
 
   ngOnInit() {
+    const currentRoute = localStorage.getItem('currentRoute');
     this.heroes = JSON.parse(localStorage.getItem('heroData') ?? '[]');
     if (this.heroes.length < 1) {
       this.heroes = HeroData;
       localStorage.setItem('heroData', JSON.stringify(this.heroes));
-      this.playerService.currentHero$.next(this.heroes.find((x) => x.selected));
     }
 
-    if (!this.heroes.find((x) => x.selected)) {
+    if (currentRoute === 'cardkingdom-map') {
       this.heroes[0].disabled = false;
       this.heroes[0].selected = true;
       this.heroes[0].unlocked = true;
       this.currentHero = this.heroes[0];
     }
-
-    // if (this.router.url.includes('cardkingdom-map')) {
-    //   this.heroes[0].disabled = false;
-    //   this.heroes[0].selected = true;
-    //   this.heroes[0].unlocked = true;
-    //   this.currentHero = this.heroes[0];
-    //   this.heroes[1].disabled = false;
-    //   this.heroes[1].unlocked = true;
-    // }
 
     // if (this.router.url.includes('zelda-map')) {
     //   this.heroes[2].disabled = false;

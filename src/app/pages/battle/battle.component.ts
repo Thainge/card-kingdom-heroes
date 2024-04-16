@@ -512,7 +512,7 @@ export class BattleComponent implements OnInit {
   }
 
   unlockAchievement(id: number) {
-    this.achievementService
+    this.achievementService;
   }
 
   checkShowWildCardHint(card: CardDto) {
@@ -612,7 +612,7 @@ export class BattleComponent implements OnInit {
     );
     const newHeroes = heroes.map((x) => {
       if (x.id === this.player.id) {
-        const newPoints = this.leveledUp ? (x.points ?? 0) + 3 : x.points;
+        const newPoints = this.leveledUp ? (x.points ?? 0) + 5 : x.points;
         return {
           ...x,
           xp: this.player.xp,
@@ -3523,6 +3523,15 @@ export class BattleComponent implements OnInit {
       const hand: DetermineObject = this.cardService.determineHand(
         this.selectedCards
       );
+      if (hand.name === 'Four of a Kind') {
+        this.achievementService.unlockNewAchievement(5);
+      }
+      if (hand.name === 'Full House') {
+        this.achievementService.unlockNewAchievement(6);
+      }
+      if (hand.name === 'Flush') {
+        this.achievementService.unlockNewAchievement(7);
+      }
 
       if (!hand.valid) {
         this.canSelectCards = true;
@@ -3871,6 +3880,7 @@ export class BattleComponent implements OnInit {
           // If player
           if (this.player.level > 3) {
             this.player.isMaxLevel = true;
+            this.achievementService.unlockNewAchievement(9);
             this.player.level = 3;
           }
         }
@@ -4702,6 +4712,15 @@ export class BattleComponent implements OnInit {
       this.selectedCards
     );
     this.playerAttackHand = hand;
+    if (hand.name === 'Four of a Kind') {
+      this.achievementService.unlockNewAchievement(5);
+    }
+    if (hand.name === 'Full House') {
+      this.achievementService.unlockNewAchievement(6);
+    }
+    if (hand.name === 'Flush') {
+      this.achievementService.unlockNewAchievement(7);
+    }
 
     this.enemyHand = this.enemyHand.filter((x) => {
       const includes = this.enemyDefense.find((a) => a.id === x.id);

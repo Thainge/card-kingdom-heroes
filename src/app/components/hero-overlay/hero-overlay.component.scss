@@ -291,6 +291,12 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+
+.disabledBtn {
+  pointer-events: none;
+  user-select: none;
+}
+
 .doneText {
   position: absolute;
   margin-left: 4%;

@@ -135,6 +135,7 @@ export class CampaignOverlayComponent implements OnInit {
 
   chooseCampaign(campaign: CampaignBox) {
     const route = '/' + campaign.url;
+    localStorage.setItem('currentRoute', campaign.url);
     this.playerService.playSound('open.mp3');
     this.closeMenu();
 

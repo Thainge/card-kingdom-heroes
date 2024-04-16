@@ -28,6 +28,7 @@ import { BoosterPacks } from 'src/assets/data/booster';
 import { flagsData } from 'src/assets/data/flags';
 import { LevelsData } from 'src/assets/data/level';
 import { ChallengeFlags, ChallengeLevels } from 'src/assets/data/specialLevels';
+import { AchievementService } from 'src/app/services/achievement.service';
 const { Pins } = require('@fancyapps/ui/dist/panzoom/panzoom.pins.esm.js');
 
 type WhirlpoolSize = 1 | 1.25 | 1.5 | 2;
@@ -156,7 +157,8 @@ export class MapComponent implements AfterViewInit, OnInit {
     private loadingService: LoadingService,
     private route: ActivatedRoute,
     private router: Router,
-    private playerService: playerService
+    private playerService: playerService,
+    private achievementService: AchievementService
   ) {}
 
   ngOnInit() {

@@ -119,6 +119,16 @@ export class MapOverlayComponent implements OnInit {
     this.completedFlagsList = this.flagsList.filter(
       (x) => x.levelStatus === 'finished' || x.levelStatus === 'justFinished'
     );
+    if (this.completedFlagsList.length * 3 >= 45) {
+      setTimeout(() => {
+        this.achievementService.unlockNewAchievement(8);
+      }, 2000);
+    }
+    if (this.completedFlagsList.length * 3 >= 60) {
+      setTimeout(() => {
+        this.achievementService.unlockNewAchievement(10);
+      }, 2000);
+    }
     this.achievementService.allAchievements$.subscribe((x) => {
       this.achievements = x;
     });

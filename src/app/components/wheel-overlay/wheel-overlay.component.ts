@@ -8,6 +8,7 @@ import {
 } from 'angular-animations';
 import { Wheel } from 'spin-wheel';
 import { BoosterPack } from 'src/app/models/boosterPack';
+import { AchievementService } from 'src/app/services/achievement.service';
 import { CardService } from 'src/app/services/card.service';
 import { playerService } from 'src/app/services/player.service';
 import { BoosterPacks } from 'src/assets/data/booster';
@@ -108,7 +109,8 @@ export class WheelOverlayComponent implements OnInit {
 
   constructor(
     private cardService: CardService,
-    private playerService: playerService
+    private playerService: playerService,
+    private achievementService: AchievementService
   ) {}
 
   ngOnInit() {
@@ -274,6 +276,8 @@ export class WheelOverlayComponent implements OnInit {
     if (this.spinCost > this.gold) {
       return;
     }
+
+    this.achievementService.unlockNewAchievement(4);
 
     this.playerService.playSound('buyItem.mp3');
 

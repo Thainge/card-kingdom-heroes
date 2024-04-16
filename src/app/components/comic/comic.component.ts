@@ -49,7 +49,6 @@ export class ComicComponent implements OnInit {
   }
 
   nextStep() {
-    this.playerService.playSound('cardFlip.mp3');
     // Show next comic section
     const isStillMore = this.comicData.comics[this.currentIndex].blackList.find(
       (x) => x.display === true
@@ -75,6 +74,7 @@ export class ComicComponent implements OnInit {
         });
     } else {
       // If no more black steps go to next page
+      this.playerService.playSound('cardFlip.mp3');
       const nextPage = this.comicData.comics[this.currentIndex + 1];
       if (nextPage) {
         this.currentIndex = this.currentIndex + 1;

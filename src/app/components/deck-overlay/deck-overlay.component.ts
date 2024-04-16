@@ -14,6 +14,7 @@ import {
   zoomOutOnLeaveAnimation,
 } from 'angular-animations';
 import { AbilityCard } from 'src/app/models/abilityCard';
+import { AchievementService } from 'src/app/services/achievement.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { playerService } from 'src/app/services/player.service';
 
@@ -121,7 +122,8 @@ export class DeckOverlayComponent implements OnInit {
   constructor(
     private userService: playerService,
     private loadingService: LoadingService,
-    private playerService: playerService
+    private playerService: playerService,
+    private achievementService: AchievementService
   ) {}
 
   ngOnInit() {
@@ -274,6 +276,7 @@ export class DeckOverlayComponent implements OnInit {
       return;
     }
 
+    this.achievementService.unlockNewAchievement(1);
     this.playerService.gold$.next(
       this.gold -
         (this.leftUpgradeCard?.goldCost ?? [])[
