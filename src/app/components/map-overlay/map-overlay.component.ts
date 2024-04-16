@@ -105,6 +105,7 @@ export class MapOverlayComponent implements OnInit {
   completedFlagsList: FlagDto[] = [];
   showDeckIcon: boolean = false;
   deckInterval: any;
+  achievementHasGems: boolean = false;
 
   constructor(
     private loadingService: LoadingService,
@@ -131,6 +132,7 @@ export class MapOverlayComponent implements OnInit {
     }
     this.achievementService.allAchievements$.subscribe((x) => {
       this.achievements = x;
+      this.checkAchievements();
     });
     this.playerService.currentHero$.subscribe((x) => {
       this.currentHero = x;
@@ -204,12 +206,12 @@ export class MapOverlayComponent implements OnInit {
     this.playerService.playSound('close.mp3');
   }
 
-  achievementHasGems(): boolean {
+  checkAchievements() {
     if (this.achievements.find((x) => x.unlocked && !x.gemsUnlocked)) {
-      return true;
+      this.achievementHasGems = true;
+    } else {
+      this.achievementHasGems = false;
     }
-
-    return false;
   }
 
   boostersIncludeUnopened(): boolean {

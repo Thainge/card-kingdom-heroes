@@ -43,7 +43,10 @@ export class AchievementService {
       }
       return x;
     });
+    console.log(updateObj);
+    console.log(updated);
     if (updated && updateObj) {
+      console.log('hit');
       localStorage.setItem('achievements', JSON.stringify(newData));
       this.pushNewAchievement(updateObj);
     }
