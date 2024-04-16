@@ -111,38 +111,14 @@ export class MapComponent implements AfterViewInit, OnInit {
   specialLevelsData: SpecialLevels = {
     wheelShow: false,
     wheelFinished: false,
-    // flyingShipShow: false,
-    // flyingShipFinished: false,
-    // sailingBoatShowShow: false,
-    // sailingBoatShowFinished: false,
-
     hero1Show: false,
     hero1Finished: false,
-    // town1GameShow: false,
-    // town1GameFinished: false,
-    // town1FightShow: false,
-    // town1FightFinished: false,
-
     hero2Show: false,
     hero2Finished: false,
-    // town2GameShow: false,
-    // town2GameFinished: false,
-    // town2FightShow: false,
-    // town2FightFinished: false,
-
     hero3Show: false,
     hero3Finished: false,
-    // town3GameShow: false,
-    // town3GameFinished: false,
-    // town3FightShow: false,
-    // town3FightFinished: false,
-
     hero4Show: false,
     hero4Finished: false,
-    // town4GameShow: false,
-    // town4GameFinished: false,
-    // town4FightShow: false,
-    // town4FightFinished: false,
   };
   isSpecialBattle: boolean = false;
   battleStartOpen: boolean = false;
