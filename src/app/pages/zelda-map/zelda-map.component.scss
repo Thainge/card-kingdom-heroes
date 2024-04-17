@@ -16,222 +16,6 @@
   height: 2770px !important;
 }
 
-.prizeOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 8000;
-}
-
-.centerPrizeBox {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.optionsMenuBackdrop2 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  z-index: 1;
-}
-
-.relativeBox {
-  position: absolute;
-}
-
-.rayItem {
-  position: absolute;
-  scale: 1.2;
-  z-index: 5;
-}
-
-.raysContainer {
-  position: relative;
-  width: 490px;
-  height: 490px;
-  margin: 100px 0 0 200px;
-}
-
-.rays {
-  z-index: 1;
-  /* with animation properties */
-  background: url(~src/assets/rays.png) 0 0 no-repeat;
-  -webkit-user-drag: none;
-  position: absolute;
-  top: -100px;
-  left: -100px;
-  width: 490px;
-  height: 490px;
-
-  /* microsoft ie */
-  -webkit-animation-name: spin;
-  animation-name: spin;
-  -webkit-animation-duration: 40000ms;
-  animation-duration: 40000ms; /* 40 seconds */
-  -webkit-animation-iteration-count: infinite;
-  animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear;
-  animation-timing-function: linear;
-}
-
-.raysMiddle {
-  position: absolute;
-  -webkit-user-drag: none;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  z-index: 2;
-  width: 50%;
-  padding-left: 5%;
-  padding-top: 5%;
-  -webkit-transform-origin: center center;
-  -ms-transform-origin: center center;
-  transform-origin: center center;
-  -webkit-animation: 2000ms hoveringReward infinite ease-in-out;
-  animation: 2000ms hoveringReward infinite ease-in-out;
-  -webkit-animation-fill-mode: forwards;
-  animation-fill-mode: forwards;
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s;
-}
-
-@keyframes hoveringReward {
-  0% {
-    -webkit-transform: scale(1, 1) translate(0px, 0px);
-    transform: scale(1, 1) translate(0px, 0px);
-  }
-  50% {
-    -webkit-transform: scale(1.1, 1.1) translate(-3px, -3px);
-    transform: scale(1.1, 1.1) translate(-3px, -3px);
-  }
-  100% {
-    -webkit-transform: scale(1, 1) translate(0px, 0px);
-    transform: scale(1, 1) translate(0px, 0px);
-  }
-}
-
-@keyframes spin {
-  from {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-
-.raysTextTitle {
-  position: absolute;
-  top: -5%;
-  left: 0;
-  width: 50%;
-  padding-left: 5%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  text-align: center;
-  text-transform: uppercase;
-  -webkit-text-stroke: 1px #000;
-  color: whitesmoke;
-}
-
-.raysTextAmount {
-  position: absolute;
-  bottom: 40%;
-  left: 0;
-  width: 50%;
-  padding-left: 5%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  text-align: center;
-  text-transform: uppercase;
-  -webkit-text-stroke: 1px #000;
-  color: whitesmoke;
-}
-
-.raysContinueText {
-  position: absolute;
-  bottom: 10%;
-  left: 0;
-  width: 50%;
-  padding-left: 5%;
-  font-size: 0.7em;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  text-align: center;
-  text-transform: uppercase;
-  -webkit-text-stroke: 1px #000;
-  color: #939393;
-  font-style: italic;
-}
-
-.pulseBox {
-  width: 300px;
-  height: 300px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  position: absolute;
-  left: -5px;
-  top: -10px;
-}
-
-.pulse {
-  width: 5em;
-  height: 5em;
-  -webkit-animation: pulseEffect infinite;
-  animation: pulseEffect infinite;
-  -webkit-animation-duration: 2000ms;
-  animation-duration: 2000ms;
-  -webkit-animation-fill-mode: forwards;
-  animation-fill-mode: forwards;
-  border-radius: 10em;
-  background-color: rgba(255, 255, 255, 0);
-  pointer-events: none;
-}
-
-
 .zeldaMap {
   // width: 3840px !important;
   // height: 2770px !important;
@@ -540,20 +324,20 @@
 
 .birds2Box {
   position: absolute;
-  top: 1350px;
-  left: 1260px;
+  top: 930px;
+  left: 2866px;
 }
 
 .birds3Box {
   position: absolute;
-  top: 481px;
-  left: 776px;
+  top: 442px;
+  left: 737px;
 }
 
 .cycloneBox {
   position: absolute;
-  top: 350px;
-  left: 1860px;
+  top: 1100px;
+    left: 1360px;
   animation: cycloneMove 15s forwards infinite ease-in-out;
   z-index: 153;
 }
@@ -597,8 +381,8 @@
 
 .steamBox1 {
   position: absolute;
-  top: 1607px;
-  left: 1643px;
+  top: 250px;
+  left: 2014px;
 }
 
 .steamBox2 {
@@ -645,8 +429,8 @@
 
 .tumbleweedBox {
   position: absolute;
-  top: 463px;
-  left: 2205px;
+  top: 960px;
+  left: 900px;
   animation: tumbleweedAnimation 10s forwards infinite linear;
   animation-delay: 5s;
   z-index: 153;
@@ -654,8 +438,8 @@
 
 .tumbleweedBox2 {
   position: absolute;
-  top: 863px;
-  left: 2200px;
+  top: 1000px;
+  left: 1000px;
   animation: tumbleweedAnimation 10s forwards infinite linear;
   z-index: 153;
 }
@@ -710,8 +494,8 @@
 
 .whirlpoolBox {
   position: absolute;
-  top: 676px;
-  left: 1404px;
+  top: 1221px;
+    left: 2016px;
 }
 
 .whirlpoolContainer {
@@ -789,8 +573,8 @@
 
 .fireworksBox {
   position: absolute;
-  top: 1376px;
-  left: 665px;
+  top: 1263px;
+  left: 869px;
 }
 
 .fireworksContainer {
@@ -818,20 +602,20 @@
 
 .fireballBox1 {
   position: absolute;
-  top: 1100px;
-  left: 2150px;
+  top: 0;
+  left: 1850px;
 }
 
 .fireballBox2 {
   position: absolute;
-  top: 1100px;
-  left: 2300px;
+  top: 0;
+  left: 2000px;
 }
 
 .fireballBox3 {
   position: absolute;
-  top: 1100px;
-  left: 2475px;
+  top: 0;
+  left: 2175px;
 }
 
 .fireballContainer1 {
@@ -880,8 +664,8 @@
 
 .heroiconBox {
   position: absolute;
-  top: 1060px;
-  left: 1318px;
+  top: 310px;
+  left: 2897px;
   z-index: 99;
 }
 
@@ -948,8 +732,8 @@
 
 .wheelspinBox {
   position: absolute;
-  top: 1450px;
-  left: 625px;
+  top: 1398px;
+  left: 915px;
   scale: 0.8;
   z-index: 99;
 }
@@ -995,8 +779,8 @@
 
 .desertheroBox1 {
   position: absolute;
-  top: 569px;
-    left: 2554px;
+  top: 1079px;
+  left: 655px;
   z-index: 99;
 }
 
@@ -1018,8 +802,8 @@
 
 .firelandheroBox1 {
   position: absolute;
-  top: 1657px;
-  left: 2059px;
+  top: 19px;
+  left: 2139px;
   z-index: 99;
 }
 

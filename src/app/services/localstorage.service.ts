@@ -8,7 +8,7 @@ import { flagsData } from 'src/assets/data/flagsData/flags';
 import { DefaultAbilityData } from 'src/assets/data/defaultAbility/defaultAbility';
 import { BoosterPack } from '../models/boosterPack';
 import { BoosterPacks } from 'src/assets/data/booster/booster';
-import { LevelDto } from '../models/level';
+import { Comic, LevelDto } from '../models/level';
 import { BackgroundDto } from '../models/backgrounds';
 import {
   ChallengeFlags,
@@ -17,6 +17,17 @@ import {
 import { WheelData } from 'src/assets/data/wheelData/wheel';
 import { AbilityData } from 'src/assets/data/ability/ability';
 import { LevelsData } from 'src/assets/data/levelData/level';
+import { AchievementsDataZelda } from 'src/assets/data/achievement/achievementsZelda';
+import { AbilityDataZelda } from 'src/assets/data/ability/abilityZelda';
+import { BoosterPacksZelda } from 'src/assets/data/booster/boosterZelda';
+import { DefaultAbilityDataZelda } from 'src/assets/data/defaultAbility/defaultAbilityZelda';
+import { flagsDataZelda } from 'src/assets/data/flagsData/flagsZelda';
+import { LevelsDataZelda } from 'src/assets/data/levelData/levelZelda';
+import { WheelDataZelda } from 'src/assets/data/wheelData/wheelZelda';
+import {
+  ChallengeFlagsZelda,
+  ChallengeLevelsZelda,
+} from 'src/assets/data/specialLevels/specialLevelsZelda';
 
 type RouteUrl = 'cardkingdom-map' | 'zelda-map';
 
@@ -139,6 +150,19 @@ interface CampaignBox {
   total: number;
 }
 
+interface RouteDataObj {
+  ability: AbilityCard[];
+  achievement: AchievementObject[];
+  booster: BoosterPack[];
+  defaultAbility: AbilityCard[];
+  flagsData: FlagDto[];
+  levelsData: LevelDto[];
+  specialLevels: SpecialLevels;
+  challengeLevels: LevelDto[];
+  challengeFlags: FlagDto[];
+  wheelData: WheelItem[];
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -150,9 +174,38 @@ export class LocalStorageService {
   public currentRoute = (): RouteUrl =>
     (localStorage.getItem('currentRoute') as RouteUrl) ?? 'cardkingdom-map';
 
+  private getRouteData(): RouteDataObj {
+    if (this.currentRoute() === 'zelda-map') {
+      return {
+        ability: AbilityDataZelda,
+        achievement: AchievementsDataZelda,
+        booster: BoosterPacksZelda,
+        defaultAbility: DefaultAbilityDataZelda,
+        flagsData: flagsDataZelda,
+        levelsData: LevelsDataZelda,
+        specialLevels: DefaultSpecialLevelsData,
+        challengeLevels: ChallengeLevels,
+        challengeFlags: ChallengeFlags,
+        wheelData: WheelDataZelda,
+      };
+    }
+
+    return {
+      ability: AbilityData,
+      achievement: AchievementsData,
+      booster: BoosterPacks,
+      defaultAbility: DefaultAbilityData,
+      flagsData: flagsData,
+      levelsData: LevelsData,
+      specialLevels: DefaultSpecialLevelsData,
+      challengeLevels: ChallengeLevelsZelda,
+      challengeFlags: ChallengeFlagsZelda,
+      wheelData: WheelData,
+    };
+  }
+
   public getCampaignsData(): CampaignBox[] {
     const localData = JSON.parse(localStorage.getItem('campaignData') ?? '[]');
-
     if (localData.length < 1) {
       const defaultData: CampaignBox[] = [
         {
@@ -171,140 +224,90 @@ export class LocalStorageService {
           stars: 0,
           total: 0,
         },
-        // {
-        //   id: 3,
-        //   image: 'marioCampaign.png',
-        //   url: 'mario-map',
-        // },
-        // {
-        //   id: 4,
-        //   image: 'tf2Campaign.png',
-        //   url: 'tf2-map',
-        // },
-        // {
-        //   id: 5,
-        //   image: 'kirbyCampaign.png',
-        //   url: 'kirby-map',
-        // },
-        // {
-        //   id: 6,
-        //   image: 'donkeyKongCampaign.png',
-        //   url: 'donkeykong-map',
-        // },
       ];
       this.setCampaignsData(defaultData);
+      return defaultData;
     }
 
     return localData;
   }
 
-  setCampaignsData(data: CampaignBox[]) {
+  public setCampaignsData(data: CampaignBox[]) {
     localStorage.setItem('campaignData', JSON.stringify(data));
   }
 
   public getLevelsData(): LevelDto[] {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      return LevelsData;
-    }
-
-    return [];
+    return this.getRouteData().levelsData;
   }
 
   public getWheelItems(): WheelItem[] {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      return WheelData;
-    }
-
-    if (this.currentRoute() === 'zelda-map') {
-    }
-
-    return [];
+    return this.getRouteData().wheelData;
   }
 
   public getAbilityData(): AbilityCard[] {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      return AbilityData;
-    }
-
-    return [];
+    return this.getRouteData().ability;
   }
 
   public getAchievements(): AchievementObject[] {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      const data = JSON.parse(
-        localStorage.getItem('cardkingdom-achievements') ?? '[]'
-      );
-      if (data.length < 1) {
-        this.setAchievements(AchievementsData);
-        return AchievementsData;
-      } else {
-        return data;
-      }
+    const RouteData = this.getRouteData().achievement;
+    const data = JSON.parse(
+      localStorage.getItem(this.currentRoute() + '-achievements') ?? '[]'
+    );
+    if (data.length < 1) {
+      this.setAchievements(RouteData);
+      return RouteData;
+    } else {
+      return data;
     }
-
-    if (this.currentRoute() === 'zelda-map') {
-      // return [];
-    }
-
-    return [];
   }
 
   public setAchievements(data: AchievementObject[]) {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      localStorage.setItem('cardkingdom-achievements', JSON.stringify(data));
-    }
-
-    if (this.currentRoute() === 'zelda-map') {
-      // localstorage.setItem('zelda-achievements', JSON.stringify(data));
-    }
+    localStorage.setItem(
+      this.currentRoute() + '-achievements',
+      JSON.stringify(data)
+    );
   }
 
   public getAbilityCards(): AbilityDeckCard[] {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      const data = JSON.parse(
-        localStorage.getItem('cardkingdom-abilityCards') ?? '[]'
-      );
-      if (data.length < 1) {
-        const handCards: AbilityDeckCard[] = DefaultAbilityData.map((x) => {
-          return {
-            ...x,
-            isNew: false,
-            inHand: true,
-            numberOwned: 0,
-            index: 0,
-            owned: false,
-          };
-        });
-        this.setAbilityCards(handCards);
-        return handCards;
-      } else {
-        return data;
-      }
+    const RouteData = this.getRouteData().defaultAbility;
+    const data = JSON.parse(
+      localStorage.getItem(this.currentRoute() + '-abilityCards') ?? '[]'
+    );
+    if (data.length < 1) {
+      const handCards: AbilityDeckCard[] = RouteData.map((x) => {
+        return {
+          ...x,
+          isNew: false,
+          inHand: true,
+          numberOwned: 0,
+          index: 0,
+          owned: false,
+        };
+      });
+      this.setAbilityCards(handCards);
+      return handCards;
+    } else {
+      return data;
     }
-
-    if (this.currentRoute() === 'zelda-map') {
-      // return [];
-    }
-
-    return [];
   }
 
   public setAbilityCards(data: AbilityDeckCard[]) {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      localStorage.setItem('cardkingdom-abilityCards', JSON.stringify(data));
-    }
-
-    if (this.currentRoute() === 'zelda-map') {
-      // localstorage.setItem('zelda-achievements', JSON.stringify(data));
-    }
+    localStorage.setItem(
+      this.currentRoute() + '-abilityCards',
+      JSON.stringify(data)
+    );
   }
 
   public getStarsData(): StarsData {
-    const cardKingdomFlags = this.getFlagsData(1, true);
+    const cardKingdomFlags: FlagDto[] = JSON.parse(
+      localStorage.getItem('cardkingdom-map-flagsData') ?? '[]'
+    );
     const cardKingdomCompletedLevels = cardKingdomFlags.filter(
       (x) => x.levelStatus === 'finished' || x.levelStatus === 'justFinished'
     );
-    const zeldaFlags = this.getFlagsData(2, true);
+    const zeldaFlags: FlagDto[] = JSON.parse(
+      localStorage.getItem('zelda-map-flagsData') ?? '[]'
+    );
     const zeldaCompletedLevels = zeldaFlags.filter(
       (x) => x.levelStatus === 'finished' || x.levelStatus === 'justFinished'
     );
@@ -317,290 +320,188 @@ export class LocalStorageService {
     };
   }
 
-  public getFlagsData(
-    routeNumber: number = -10,
-    isCustom: boolean = false
-  ): FlagDto[] {
-    if (
-      (this.currentRoute() === 'cardkingdom-map' && !isCustom) ||
-      routeNumber === 1
-    ) {
-      const data = JSON.parse(
-        localStorage.getItem('cardkingdom-flagsData') ?? '[]'
-      );
-      if (data.length < 1) {
-        this.setFlagsData(flagsData);
-        return flagsData;
-      } else {
-        return data;
-      }
+  public getFlagsData(): FlagDto[] {
+    const RouteData = this.getRouteData().flagsData;
+    const data = JSON.parse(
+      localStorage.getItem(this.currentRoute() + '-flagsData') ?? '[]'
+    );
+    if (data.length < 1) {
+      this.setFlagsData(RouteData);
+      return RouteData;
+    } else {
+      return data;
     }
-
-    if (
-      (this.currentRoute() === 'zelda-map' && !isCustom) ||
-      routeNumber === 2
-    ) {
-      // return [];
-    }
-
-    return [];
   }
 
   public setFlagsData(data: FlagDto[]) {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      localStorage.setItem('cardkingdom-flagsData', JSON.stringify(data));
-    }
-
-    if (this.currentRoute() === 'zelda-map') {
-      // localstorage.setItem('zelda-achievements', JSON.stringify(data));
-    }
+    localStorage.setItem(
+      this.currentRoute() + '-flagsData',
+      JSON.stringify(data)
+    );
   }
 
   public getPlayerDeck(): AbilityDeckCard[] {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      const data = JSON.parse(
-        localStorage.getItem('cardkingdom-playerDeck') ?? '[]'
-      );
-      if (data.length < 1) {
-        const deckCards: AbilityDeckCard[] = DefaultAbilityData.map((x) => {
-          return {
-            ...x,
-            isNew: false,
-            inHand: false,
-            numberOwned: 0,
-            index: 0,
-            owned: true,
-          };
-        });
-        this.setPlayerDeck(deckCards);
-        return deckCards;
-      } else {
-        return data;
-      }
+    const RouteData = this.getRouteData().defaultAbility;
+    const data = JSON.parse(
+      localStorage.getItem(this.currentRoute() + '-playerDeck') ?? '[]'
+    );
+    if (data.length < 1) {
+      const deckCards: AbilityDeckCard[] = RouteData.map((x) => {
+        return {
+          ...x,
+          isNew: false,
+          inHand: false,
+          numberOwned: 0,
+          index: 0,
+          owned: true,
+        };
+      });
+      this.setPlayerDeck(deckCards);
+      return deckCards;
+    } else {
+      return data;
     }
-
-    if (this.currentRoute() === 'zelda-map') {
-      // return [];
-    }
-
-    return [];
   }
 
   public setPlayerDeck(data: AbilityDeckCard[]) {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      localStorage.setItem('cardkingdom-playerDeck', JSON.stringify(data));
-    }
-
-    if (this.currentRoute() === 'zelda-map') {
-      // localstorage.setItem('zelda-achievements', JSON.stringify(data));
-    }
+    localStorage.setItem(
+      this.currentRoute() + '-playerDeck',
+      JSON.stringify(data)
+    );
   }
 
   public getBoosterPacks(): BoosterPack[] {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      const data = JSON.parse(
-        localStorage.getItem('cardkingdom-boosterPacks') ?? '[]'
-      );
-      if (data.length < 1) {
-        this.setBoosterPacks(BoosterPacks);
-        return BoosterPacks;
-      } else {
-        return data;
-      }
+    const RouteData = this.getRouteData().booster;
+    const data = JSON.parse(
+      localStorage.getItem(this.currentRoute() + '-boosterPacks') ?? '[]'
+    );
+    if (data.length < 1) {
+      this.setBoosterPacks(RouteData);
+      return RouteData;
+    } else {
+      return data;
     }
-
-    if (this.currentRoute() === 'zelda-map') {
-      // return [];
-    }
-
-    return [];
   }
 
   public setBoosterPacks(data: BoosterPack[]) {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      localStorage.setItem('cardkingdom-boosterPacks', JSON.stringify(data));
-    }
-
-    if (this.currentRoute() === 'zelda-map') {
-      // localstorage.setItem('zelda-achievements', JSON.stringify(data));
-    }
+    localStorage.setItem(
+      this.currentRoute() + '-boosterPacks',
+      JSON.stringify(data)
+    );
   }
 
   public getCurrentBattle(): LevelDto | empty {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      const data = JSON.parse(
-        localStorage.getItem('cardkingdom-currentBattle') ?? '{}'
-      );
-      if (data) {
-        return data;
-      }
+    const data = JSON.parse(
+      localStorage.getItem(this.currentRoute() + '-currentBattle') ?? '{}'
+    );
+    if (data) {
+      return data;
+    } else {
+      return {};
     }
-
-    if (this.currentRoute() === 'zelda-map') {
-      // return {};
-    }
-
-    return {};
   }
 
   public setCurrentBattle(data: LevelDto) {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      localStorage.setItem('cardkingdom-currentBattle', JSON.stringify(data));
-    }
-
-    if (this.currentRoute() === 'zelda-map') {
-      // localstorage.setItem('zelda-achievements', JSON.stringify(data));
-    }
+    localStorage.setItem(
+      this.currentRoute() + '-currentBattle',
+      JSON.stringify(data)
+    );
   }
 
   public getCurrentDetails(): MissionDetails | empty {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      const data = JSON.parse(
-        localStorage.getItem('cardkingdom-currentDetails') ?? '[]'
-      );
-      if (data) {
-        return data;
-      }
+    const data = JSON.parse(
+      localStorage.getItem(this.currentRoute() + '-currentDetails') ?? '[]'
+    );
+    if (data) {
+      return data;
+    } else {
+      return {};
     }
-
-    if (this.currentRoute() === 'zelda-map') {
-      // return {};
-    }
-
-    return {};
   }
 
   public setCurrentDetails(data: MissionDetails) {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      localStorage.setItem('cardkingdom-currentDetails', JSON.stringify(data));
-    }
-
-    if (this.currentRoute() === 'zelda-map') {
-      // localstorage.setItem('zelda-achievements', JSON.stringify(data));
-    }
+    localStorage.setItem(
+      this.currentRoute() + '-currentDetails',
+      JSON.stringify(data)
+    );
   }
 
   public getChallengeFlags(): FlagDto[] {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      const data = JSON.parse(
-        localStorage.getItem('cardkingdom-challengeFlags') ?? '[]'
-      );
-      if (data.length < 1) {
-        this.setChallengeFlags(ChallengeFlags);
-        return ChallengeFlags;
-      } else {
-        return data;
-      }
+    const RouteData = this.getRouteData().challengeFlags;
+    const data = JSON.parse(
+      localStorage.getItem(this.currentRoute() + '-challengeFlags') ?? '[]'
+    );
+    if (data.length < 1) {
+      this.setChallengeFlags(RouteData);
+      return RouteData;
+    } else {
+      return data;
     }
-
-    if (this.currentRoute() === 'zelda-map') {
-      // return [];
-    }
-
-    return [];
   }
 
   public setChallengeFlags(data: FlagDto[]) {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      localStorage.setItem('cardkingdom-challengeFlags', JSON.stringify(data));
-    }
-
-    if (this.currentRoute() === 'zelda-map') {
-      // localstorage.setItem('zelda-achievements', JSON.stringify(data));
-    }
+    localStorage.setItem(
+      this.currentRoute() + '-challengeFlags',
+      JSON.stringify(data)
+    );
   }
 
   public getChallengeLevels(): LevelDto[] {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      const data = JSON.parse(
-        localStorage.getItem('cardkingdom-challengeLevels') ?? '[]'
-      );
-      if (data.length < 1) {
-        this.setChallengeLevels(ChallengeLevels);
-        return ChallengeLevels;
-      } else {
-        return data;
-      }
+    const RouteData = this.getRouteData().challengeLevels;
+    const data = JSON.parse(
+      localStorage.getItem(this.currentRoute() + '-challengeLevels') ?? '[]'
+    );
+    if (data.length < 1) {
+      this.setChallengeLevels(RouteData);
+      return RouteData;
+    } else {
+      return data;
     }
-
-    if (this.currentRoute() === 'zelda-map') {
-      // return [];
-    }
-
-    return [];
   }
 
   public setChallengeLevels(data: LevelDto[]) {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      localStorage.setItem('cardkingdom-challengeLevels', JSON.stringify(data));
-    }
-
-    if (this.currentRoute() === 'zelda-map') {
-      // localstorage.setItem('zelda-achievements', JSON.stringify(data));
-    }
+    localStorage.setItem(
+      this.currentRoute() + '-challengeLevels',
+      JSON.stringify(data)
+    );
   }
 
   public getSpecialLevelsData(): SpecialLevels {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      const data = JSON.parse(
-        localStorage.getItem('cardkingdom-specialLevelsData') ?? '{}'
-      );
-      if (!data) {
-        this.setSpecialLevelsData(DefaultSpecialLevelsData);
-        return DefaultSpecialLevelsData;
-      } else {
-        return data;
-      }
+    const RouteData = this.getRouteData().specialLevels;
+    const data = JSON.parse(
+      localStorage.getItem(this.currentRoute() + '-specialLevelsData') ?? '{}'
+    );
+    if (!data) {
+      this.setSpecialLevelsData(RouteData);
+      return RouteData;
+    } else {
+      return data;
     }
-
-    if (this.currentRoute() === 'zelda-map') {
-      // return [];
-    }
-
-    return DefaultSpecialLevelsData;
   }
 
   public setSpecialLevelsData(data: SpecialLevels) {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      localStorage.setItem(
-        'cardkingdom-specialLevelsData',
-        JSON.stringify(data)
-      );
-    }
-
-    if (this.currentRoute() === 'zelda-map') {
-      // localstorage.setItem('zelda-achievements', JSON.stringify(data));
-    }
+    localStorage.setItem(
+      this.currentRoute() + '-specialLevelsData',
+      JSON.stringify(data)
+    );
   }
 
   public getPlayerGold(): number {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      const data = JSON.parse(
-        localStorage.getItem('cardkingdom-playerGold') ?? '0'
-      );
-      console.log(data);
-      if (!data) {
-        this.setPlayerGold(0);
-        return 0;
-      } else {
-        return data;
-      }
+    const data = JSON.parse(
+      localStorage.getItem(this.currentRoute() + '-playerGold') ?? '0'
+    );
+    if (!data) {
+      this.setPlayerGold(0);
+      return 0;
+    } else {
+      return data;
     }
-
-    if (this.currentRoute() === 'zelda-map') {
-      // return [];
-    }
-
-    return 0;
   }
 
   public setPlayerGold(data: number) {
-    if (this.currentRoute() === 'cardkingdom-map') {
-      localStorage.setItem('cardkingdom-playerGold', JSON.stringify(data));
-    }
-
-    if (this.currentRoute() === 'zelda-map') {
-      // localstorage.setItem('zelda-achievements', JSON.stringify(data));
-    }
+    localStorage.setItem(
+      this.currentRoute() + '-playerGold',
+      JSON.stringify(data)
+    );
   }
 }

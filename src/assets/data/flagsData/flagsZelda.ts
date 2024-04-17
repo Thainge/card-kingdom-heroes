@@ -1,6 +1,6 @@
 import { FlagDto } from 'src/app/models/flag';
 
-export const flagsData: FlagDto[] = [
+export const flagsDataZelda: FlagDto[] = [
   {
     id: 1,
     x: 2027,

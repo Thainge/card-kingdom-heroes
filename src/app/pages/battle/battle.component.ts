@@ -38,7 +38,7 @@ import 'leader-line';
 import { playerService } from 'src/app/services/player.service';
 import { trigger, style, transition, animate } from '@angular/animations';
 declare let LeaderLine: any;
-import { Cards } from 'src/assets/data/cards/cards';
+import { Cards } from 'src/assets/data/cards';
 import { AbilityService } from 'src/app/services/ability.service';
 import { Comic, EnemyLevelDto, LevelDto } from 'src/app/models/level';
 import { DialogComponent } from 'src/app/components/dialogComponent/dialog.component';

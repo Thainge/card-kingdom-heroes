@@ -195,7 +195,7 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
       localStorage.getItem('heroData') ?? '[]'
     );
     this.flagsList.forEach((x) => {
-      if (x.id === 3 && x.levelStatus === 'finished') {
+      if (x.id === 1 && x.levelStatus === 'finished') {
         this.specialLevelsData.wheelShow = true;
       }
 
@@ -329,22 +329,6 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
       });
     }
     await this.timeout(4000);
-    // this.flagsList = this.flagsList.map((x) => {
-    //   if (x.levelStatus === 'nextLevel') {
-    //     return { ...x, alreadyAnimated: true };
-    //   }
-
-    //   return x;
-    // });
-    // this.currentLevel = this.flagsList.find(
-    //   (x) => x.levelStatus === 'nextLevel'
-    // );
-    // console.log(this.currentLevel);
-    // this.flagsList.forEach((x) => {
-    //   if (x.levelStatus === 'justFinished') {
-    //     this.finishLevel(x);
-    //   }
-    // });
     this.loadingService.displayOptions$.next(true);
   }
 

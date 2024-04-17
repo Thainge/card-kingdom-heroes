@@ -68,4 +68,4 @@ export interface EnemyLevelDto {
   dialogEnd?: DialogDto[];
 }
 
-type CardThemeDto = 'default' | 'mario';
+type CardThemeDto = 'default' | 'mario' | 'zelda';

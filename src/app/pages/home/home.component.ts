@@ -48,6 +48,10 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    const localRoute = localStorage.getItem('currentRoute') ?? '';
+    if (localRoute.length < 1) {
+      localStorage.setItem('currentRoute', 'cardkingdom-map');
+    }
     this.localStorageService.getStarsData();
   }
 

@@ -78,7 +78,9 @@ export class CampaignOverlayComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.setStars();
+    setTimeout(() => {
+      this.setStars();
+    }, 1);
   }
 
   ngAfterViewInit() {}
