@@ -81,7 +81,6 @@ export class MapOverlayComponent implements OnInit {
   chooseCampaignOpen: boolean = false;
   premiumOpen: boolean = false;
   wheelOpen: boolean = false;
-  currentTheme: Theme = 'cardkingdom';
 
   showInformation: boolean = false;
   display: boolean = false;
@@ -110,7 +109,6 @@ export class MapOverlayComponent implements OnInit {
 
   constructor(
     private loadingService: LoadingService,
-    private router: Router,
     private playerService: playerService,
     private achievementService: AchievementService,
     private localStorageService: LocalStorageService
@@ -171,7 +169,6 @@ export class MapOverlayComponent implements OnInit {
       this.showInformation = false;
     });
     this.checkTip();
-    this.setTheme();
     this.checkDeck();
     this.checkAchievements();
     this.deckInterval = setInterval(() => {
@@ -219,16 +216,6 @@ export class MapOverlayComponent implements OnInit {
       }
     });
     return true;
-  }
-
-  setTheme() {
-    const currentRoute = this.router.url;
-    if (currentRoute.includes('zelda-map')) {
-      this.currentTheme = 'zelda';
-    }
-    if (currentRoute.includes('cardkingdom-map')) {
-      this.currentTheme = 'cardkingdom';
-    }
   }
 
   checkTip() {

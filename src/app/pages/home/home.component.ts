@@ -51,6 +51,7 @@ export class HomeComponent implements OnInit {
     const localRoute = localStorage.getItem('currentRoute') ?? '';
     if (localRoute.length < 1) {
       localStorage.setItem('currentRoute', 'cardkingdom-map');
+      console.log('hit');
     }
     this.localStorageService.getStarsData();
   }

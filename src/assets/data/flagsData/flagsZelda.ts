@@ -5,8 +5,8 @@ export const flagsDataZelda: FlagDto[] = [
     id: 1,
     x: 2027,
     y: 830,
-    levelStatus: 'finished',
-    alreadyAnimated: false,
+    levelStatus: 'nextLevel',
+    alreadyAnimated: true,
     missionDetails: {
       image: 'forest.png',
       title: 'Skyloft',
@@ -54,7 +54,7 @@ export const flagsDataZelda: FlagDto[] = [
     id: 2,
     x: 2628,
     y: 1096,
-    levelStatus: 'finished',
+    levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
       image: 'forest.png',
@@ -118,7 +118,7 @@ export const flagsDataZelda: FlagDto[] = [
     id: 3,
     x: 2947,
     y: 996,
-    levelStatus: 'finished',
+    levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
       image: 'forest.png',
@@ -162,7 +162,7 @@ export const flagsDataZelda: FlagDto[] = [
     id: 4,
     x: 2992,
     y: 716,
-    levelStatus: 'finished',
+    levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
       image: 'forest.png',
@@ -216,7 +216,7 @@ export const flagsDataZelda: FlagDto[] = [
     id: 5,
     x: 2113,
     y: 517,
-    levelStatus: 'finished',
+    levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
       image: 'forest.png',
@@ -255,7 +255,7 @@ export const flagsDataZelda: FlagDto[] = [
     id: 6,
     x: 2042,
     y: 380,
-    levelStatus: 'finished',
+    levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
       image: 'forest.png',
@@ -309,7 +309,7 @@ export const flagsDataZelda: FlagDto[] = [
     id: 7,
     x: 2551,
     y: 143,
-    levelStatus: 'finished',
+    levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
       image: 'forest.png',
@@ -393,7 +393,7 @@ export const flagsDataZelda: FlagDto[] = [
     id: 8,
     x: 1584,
     y: 1121,
-    levelStatus: 'finished',
+    levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
       image: 'forest.png',
@@ -427,7 +427,7 @@ export const flagsDataZelda: FlagDto[] = [
     id: 9,
     x: 1459,
     y: 869,
-    levelStatus: 'finished',
+    levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
       image: 'forest.png',
@@ -466,7 +466,7 @@ export const flagsDataZelda: FlagDto[] = [
     id: 10,
     x: 1042,
     y: 803,
-    levelStatus: 'finished',
+    levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
       image: 'forest.png',

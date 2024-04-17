@@ -57,12 +57,22 @@ export class HeroOverlayComponent implements OnInit {
       this.heroes = HeroData;
       localStorage.setItem('heroData', JSON.stringify(this.heroes));
     }
+    this.heroes = this.heroes.map((x) => {
+      return { ...x, selected: false };
+    });
 
     if (currentRoute === 'cardkingdom-map') {
       this.heroes[0].disabled = false;
       this.heroes[0].selected = true;
       this.heroes[0].unlocked = true;
       this.currentHero = this.heroes[0];
+    }
+
+    if (currentRoute === 'zelda-map') {
+      this.heroes[2].disabled = false;
+      this.heroes[2].selected = true;
+      this.heroes[2].unlocked = true;
+      this.currentHero = this.heroes[2];
     }
 
     // if (this.router.url.includes('zelda-map')) {

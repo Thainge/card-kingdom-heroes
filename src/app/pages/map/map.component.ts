@@ -221,7 +221,7 @@ export class MapComponent implements AfterViewInit, OnInit {
         const boosterPacks: BoosterPack[] =
           this.localStorageService.getBoosterPacks();
         const newBoosterPacks = boosterPacks.map((x) => {
-          if (x.id === 3) {
+          if (x.id === 3 && !x.unlocked) {
             this.shownNewBoosterPack = x;
             this.showBoosterPack = true;
             return { ...x, unlocked: true };
@@ -258,7 +258,7 @@ export class MapComponent implements AfterViewInit, OnInit {
         const boosterPacks: BoosterPack[] =
           this.localStorageService.getBoosterPacks();
         const newBoosterPacks = boosterPacks.map((x) => {
-          if (x.id === 4) {
+          if (x.id === 4 && !x.unlocked) {
             this.shownNewBoosterPack = x;
             this.showBoosterPack = true;
             return { ...x, unlocked: true };

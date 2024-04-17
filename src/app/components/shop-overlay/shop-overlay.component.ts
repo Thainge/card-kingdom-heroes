@@ -138,14 +138,6 @@ export class ShopOverlayComponent implements OnInit {
 
   initBoosters() {
     this.boosterPacks = this.localStorageService.getBoosterPacks();
-
-    // if (this.router.url.includes('cardkingdom-map')) {
-    //   this.boosterPacks = BoosterPacks;
-    // }
-
-    // if (this.router.url.includes('zelda-map')) {
-    //   this.boosterPacks = BoosterPacksZelda;
-    // }
   }
 
   checkShopTip() {
