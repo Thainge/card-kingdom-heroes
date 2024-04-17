@@ -70,9 +70,9 @@ interface SpecialLevels {
 }
 
 @Component({
-  selector: 'app-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss'],
+  selector: 'app-zelda-map',
+  templateUrl: './zelda-map.component.html',
+  styleUrls: ['./zelda-map.component.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -88,7 +88,7 @@ interface SpecialLevels {
     zoomOutOnLeaveAnimation({ anchor: 'zoomOutLeave' }),
   ],
 })
-export class MapComponent implements AfterViewInit, OnInit {
+export class ZeldaMapComponent implements AfterViewInit, OnInit {
   @ViewChild('panZoom', { static: false }) scene: ElementRef | undefined;
   flagsList: FlagDto[] = [];
   previousFlagsList: any[] = [];
@@ -278,26 +278,6 @@ export class MapComponent implements AfterViewInit, OnInit {
 
       if (x.id === 19 && x.levelStatus === 'finished') {
         this.specialLevelsData.hero4Show = true;
-      }
-      if (x.id === 20 && x.levelStatus === 'finished') {
-        this.showNewHero = true;
-        this.shownNewHero = {
-          id: 2,
-          cost: 0,
-          count: 0,
-          image: 'zeldaCampaign.png',
-          showNew: true,
-          title: 'New Campaign',
-          unlocked: true,
-        };
-        const campaignData = this.localStorageService.getCampaignsData();
-        const newCampaignsData = campaignData.map((x) => {
-          if (x.id === 2) {
-            return { ...x, locked: false };
-          }
-          return x;
-        });
-        this.localStorageService.setCampaignsData(newCampaignsData);
       }
     });
     this.localStorageService.setSpecialLevelsData(this.specialLevelsData);

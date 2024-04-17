@@ -130,6 +130,15 @@ interface Offset {
   h: number;
 }
 
+interface CampaignBox {
+  id: number;
+  image: string;
+  url: RouteUrl;
+  locked: boolean;
+  stars: number;
+  total: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -138,8 +147,60 @@ export class LocalStorageService {
 
   constructor() {}
 
-  private currentRoute = (): RouteUrl =>
+  public currentRoute = (): RouteUrl =>
     (localStorage.getItem('currentRoute') as RouteUrl) ?? 'cardkingdom-map';
+
+  public getCampaignsData(): CampaignBox[] {
+    const localData = JSON.parse(localStorage.getItem('campaignData') ?? '[]');
+
+    if (localData.length < 1) {
+      const defaultData: CampaignBox[] = [
+        {
+          id: 1,
+          image: 'normalCampaign.png',
+          url: 'cardkingdom-map',
+          locked: false,
+          stars: 0,
+          total: 0,
+        },
+        {
+          id: 2,
+          image: 'linkCampaign.png',
+          url: 'zelda-map',
+          locked: true,
+          stars: 0,
+          total: 0,
+        },
+        // {
+        //   id: 3,
+        //   image: 'marioCampaign.png',
+        //   url: 'mario-map',
+        // },
+        // {
+        //   id: 4,
+        //   image: 'tf2Campaign.png',
+        //   url: 'tf2-map',
+        // },
+        // {
+        //   id: 5,
+        //   image: 'kirbyCampaign.png',
+        //   url: 'kirby-map',
+        // },
+        // {
+        //   id: 6,
+        //   image: 'donkeyKongCampaign.png',
+        //   url: 'donkeykong-map',
+        // },
+      ];
+      this.setCampaignsData(defaultData);
+    }
+
+    return localData;
+  }
+
+  setCampaignsData(data: CampaignBox[]) {
+    localStorage.setItem('campaignData', JSON.stringify(data));
+  }
 
   public getLevelsData(): LevelDto[] {
     if (this.currentRoute() === 'cardkingdom-map') {

@@ -10,14 +10,13 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import {
   fadeOutOnLeaveAnimation,
   fadeInOnEnterAnimation,
   fadeInUpOnEnterAnimation,
   fadeOutUpOnLeaveAnimation,
 } from 'angular-animations';
-import { FlagDto } from 'src/app/models/flag';
 import { LoadingService } from 'src/app/services/loading.service';
 import Swiper from 'swiper';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
@@ -69,47 +68,9 @@ export class CampaignOverlayComponent implements OnInit {
   @ViewChild('swiper') swiperRef: ElementRef | undefined;
   swiper?: Swiper;
   currentIndex: number = 0;
-  campaigns: CampaignBox[] = [
-    {
-      id: 1,
-      image: 'normalCampaign.png',
-      url: 'cardkingdom-map',
-      locked: false,
-      stars: 0,
-      total: 0,
-    },
-    {
-      id: 2,
-      image: 'linkCampaign.png',
-      url: 'zelda-map',
-      locked: true,
-      stars: 0,
-      total: 0,
-    },
-    // {
-    //   id: 3,
-    //   image: 'marioCampaign.png',
-    //   url: 'mario-map',
-    // },
-    // {
-    //   id: 4,
-    //   image: 'tf2Campaign.png',
-    //   url: 'tf2-map',
-    // },
-    // {
-    //   id: 5,
-    //   image: 'kirbyCampaign.png',
-    //   url: 'kirby-map',
-    // },
-    // {
-    //   id: 6,
-    //   image: 'donkeyKongCampaign.png',
-    //   url: 'donkeykong-map',
-    // },
-  ];
+  campaigns: CampaignBox[] = [];
 
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
     private loadingService: LoadingService,
     private playerService: playerService,
@@ -124,7 +85,8 @@ export class CampaignOverlayComponent implements OnInit {
 
   setStars() {
     const starsData = this.localStorageService.getStarsData();
-    this.campaigns = this.campaigns.map((x) => {
+    const campaignsData = this.localStorageService.getCampaignsData();
+    this.campaigns = campaignsData.map((x) => {
       if (x.id === 1) {
         return {
           ...x,

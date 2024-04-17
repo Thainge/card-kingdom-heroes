@@ -165,6 +165,11 @@ export class playerService implements OnInit {
       return true;
     }
 
+    if (this.router.url === '/zelda-map') {
+      this.playMusic('mapMusic.mp3');
+      return true;
+    }
+
     return false;
   }
 

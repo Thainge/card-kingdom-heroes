@@ -13,8 +13,6 @@ import { CreditsOverlayComponent } from 'src/app/components/credits-overlay/cred
 import { MapOverlayComponent } from 'src/app/components/map-overlay/map-overlay.component';
 import { FlagDto } from 'src/app/models/flag';
 import { LoadingService } from 'src/app/services/loading.service';
-import { flagsData } from 'src/assets/data/flagsData/flags';
-import { LevelsData } from 'src/assets/data/levelData/level';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
 
 @Component({
@@ -61,7 +59,7 @@ export class HomeComponent implements OnInit {
         this.flagsList[0].levelStatus === 'justFinished')
     ) {
       this.loadingService.navigate(
-        '/cardkingdom-map',
+        '/' + this.localStorageService.currentRoute(),
         'loadingBg.png',
         'Loading...'
       );
@@ -84,8 +82,8 @@ export class HomeComponent implements OnInit {
 
   endSelection() {
     this.chooseDifficultyOpen = false;
-    const flag = flagsData[0];
-    const battle = LevelsData[0];
+    const flag = this.localStorageService.getFlagsData()[0];
+    const battle = this.localStorageService.getLevelsData()[0];
     this.localStorageService.setCurrentBattle(battle);
     this.localStorageService.setCurrentDetails(flag.missionDetails);
     this.loadingService.navigate('/battle', 'loadingBg.png', 'Loading...');

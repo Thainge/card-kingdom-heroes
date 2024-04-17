@@ -1485,13 +1485,13 @@ export class BattleComponent implements OnInit {
     this.playerService.playSound('button.mp3');
     if (this.currentCombatPhase?.background) {
       this.loadingService.navigate(
-        '/cardkingdom-map',
+        '/' + this.localStorageService.currentRoute(),
         this.currentCombatPhase.background,
         'Loading...'
       );
     } else {
       this.loadingService.navigate(
-        '/cardkingdom-map',
+        '/' + this.localStorageService.currentRoute(),
         'loadingBg.png',
         'Loading...'
       );
