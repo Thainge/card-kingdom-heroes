@@ -573,12 +573,12 @@ export class DeckOverlayComponent implements OnInit {
   }
 
   saveDeck() {
-    const maxHandSize = 1;
+    const maxHandSize = 6;
     if (
       this.abilityHand.length < maxHandSize &&
       this.abilityCards.length >= maxHandSize
     ) {
-      this.pushError('Invalid deck length');
+      this.pushError('Must have at least 6 cards');
       this.playerService.playSound('button.mp3');
       return;
     } else {

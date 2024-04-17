@@ -133,7 +133,6 @@ export class MapOverlayComponent implements OnInit {
     }
     this.achievementService.allAchievements$.subscribe((x) => {
       this.achievements = x;
-      this.checkAchievements();
     });
     this.playerService.currentHero$.subscribe((x) => {
       this.currentHero = x;
@@ -174,6 +173,7 @@ export class MapOverlayComponent implements OnInit {
     this.checkTip();
     this.setTheme();
     this.checkDeck();
+    this.checkAchievements();
     this.deckInterval = setInterval(() => {
       this.checkDeck();
     }, 1000);
