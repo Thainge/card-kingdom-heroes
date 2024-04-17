@@ -28,6 +28,7 @@ import { AchievementObject } from 'src/app/models/achievement';
 import { LevelDto } from 'src/app/models/level';
 import { FlagDto } from 'src/app/models/flag';
 import { AbilityCard } from 'src/app/models/abilityCard';
+import { LocalStorageService } from 'src/app/services/localstorage.service';
 
 interface Tip {
   title: string;
@@ -111,12 +112,12 @@ export class MapOverlayComponent implements OnInit {
     private loadingService: LoadingService,
     private router: Router,
     private playerService: playerService,
-    private achievementService: AchievementService
+    private achievementService: AchievementService,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit() {
-    this.flagsList =
-      JSON.parse(localStorage.getItem('flagsData') ?? '[]') ?? [];
+    this.flagsList = this.localStorageService.getFlagsData();
     this.completedFlagsList = this.flagsList.filter(
       (x) => x.levelStatus === 'finished' || x.levelStatus === 'justFinished'
     );
@@ -138,9 +139,7 @@ export class MapOverlayComponent implements OnInit {
       this.currentHero = x;
     });
     setInterval(() => {
-      this.boosterPacks = JSON.parse(
-        localStorage.getItem('boosterPacks') ?? '[]'
-      );
+      this.boosterPacks = this.localStorageService.getBoosterPacks();
     }, 1000);
     this.playerService.gold$.subscribe((x) => {
       this.gold = x;
@@ -181,9 +180,7 @@ export class MapOverlayComponent implements OnInit {
   }
 
   checkDeck() {
-    const cards: AbilityCard[] = JSON.parse(
-      localStorage.getItem('abilityCards') ?? '[]'
-    );
+    const cards: AbilityCard[] = this.localStorageService.getAbilityCards();
     const includesNew = cards.find((x) => x.isNew === true);
     if (includesNew) {
       this.showDeckIcon = true;

@@ -20,6 +20,7 @@ import {
 import { FlagDto } from 'src/app/models/flag';
 import { LoadingService } from 'src/app/services/loading.service';
 import Swiper from 'swiper';
+import { LocalStorageService } from 'src/app/services/localstorage.service';
 
 interface CampaignBox {
   id: number;
@@ -107,7 +108,8 @@ export class CampaignOverlayComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private loadingService: LoadingService,
-    private playerService: playerService
+    private playerService: playerService,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit() {
@@ -117,8 +119,7 @@ export class CampaignOverlayComponent implements OnInit {
   ngAfterViewInit() {}
 
   setStars() {
-    const flags: FlagDto[] =
-      JSON.parse(localStorage.getItem('flagsData') ?? '[]') ?? [];
+    const flags: FlagDto[] = this.localStorageService.getFlagsData();
     const completedFlags = flags.filter(
       (x) => x.levelStatus === 'finished' || x.levelStatus === 'justFinished'
     );

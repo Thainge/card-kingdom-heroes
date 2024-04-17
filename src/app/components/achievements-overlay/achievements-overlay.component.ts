@@ -9,6 +9,7 @@ import {
 import { AchievementObject } from 'src/app/models/achievement';
 import { AchievementService } from 'src/app/services/achievement.service';
 import { LoadingService } from 'src/app/services/loading.service';
+import { LocalStorageService } from 'src/app/services/localstorage.service';
 import { playerService } from 'src/app/services/player.service';
 import { AchievementsData } from 'src/assets/data/achievements';
 
@@ -45,16 +46,15 @@ export class AchievementsOverlayComponent implements OnInit {
   constructor(
     private playerService: playerService,
     private achievementService: AchievementService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit() {
     this.playerService.gold$.subscribe((x) => {
       this.gold = x;
     });
-    this.achievementsListClean = JSON.parse(
-      localStorage.getItem('achievements') ?? '[]'
-    );
+    this.achievementsListClean = this.localStorageService.getAchievements();
     if (this.achievementsListClean.length < 1) {
       this.achievementsListClean = AchievementsData;
     }
@@ -89,10 +89,7 @@ export class AchievementsOverlayComponent implements OnInit {
     });
     this.pageAchievements(this.currentpage);
     this.playerService.gold$.next(this.gold + achievement.reward);
-    localStorage.setItem(
-      'achievements',
-      JSON.stringify(this.achievementsListClean)
-    );
+    this.localStorageService.setAchievements(this.achievementsListClean);
     this.achievementService.allAchievements$.next(this.achievementsListClean);
   }
 

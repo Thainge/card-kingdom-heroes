@@ -14,6 +14,7 @@ import {
   fadeOutUpOnLeaveAnimation,
 } from 'angular-animations';
 import { LoadingService } from 'src/app/services/loading.service';
+import { LocalStorageService } from 'src/app/services/localstorage.service';
 import { playerService } from 'src/app/services/player.service';
 
 @Component({

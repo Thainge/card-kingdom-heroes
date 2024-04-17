@@ -17,6 +17,12 @@ type RouteUrl = 'cardkingdom-map' | 'zelda-map';
 
 interface empty {}
 
+interface AbilityDeckCard extends AbilityCard {
+  owned: boolean;
+  inHand: boolean;
+  index: number;
+}
+
 interface MissionDetails {
   image: BackgroundDto;
   title: string;
@@ -86,16 +92,30 @@ export class LocalStorageService {
     if (this.currentRoute() === 'cardkingdom-map') {
       localStorage.setItem('cardkingdom-achievements', JSON.stringify(data));
     }
+
+    if (this.currentRoute() === 'zelda-map') {
+      // localstorage.setItem('zelda-achievements', JSON.stringify(data));
+    }
   }
 
-  public getAbilityCards(): AbilityCard[] {
+  public getAbilityCards(): AbilityDeckCard[] {
     if (this.currentRoute() === 'cardkingdom-map') {
       const data = JSON.parse(
         localStorage.getItem('cardkingdom-abilityCards') ?? '[]'
       );
       if (data.length < 1) {
-        this.setAbilityCards(AbilityData);
-        return AbilityData;
+        const handCards: AbilityDeckCard[] = DefaultAbilityData.map((x) => {
+          return {
+            ...x,
+            isNew: false,
+            inHand: true,
+            numberOwned: 0,
+            index: 0,
+            owned: false,
+          };
+        });
+        this.setAbilityCards(handCards);
+        return handCards;
       } else {
         return data;
       }
@@ -108,9 +128,13 @@ export class LocalStorageService {
     return [];
   }
 
-  public setAbilityCards(data: AbilityCard[]) {
+  public setAbilityCards(data: AbilityDeckCard[]) {
     if (this.currentRoute() === 'cardkingdom-map') {
       localStorage.setItem('cardkingdom-abilityCards', JSON.stringify(data));
+    }
+
+    if (this.currentRoute() === 'zelda-map') {
+      // localstorage.setItem('zelda-achievements', JSON.stringify(data));
     }
   }
 
@@ -138,16 +162,30 @@ export class LocalStorageService {
     if (this.currentRoute() === 'cardkingdom-map') {
       localStorage.setItem('cardkingdom-flagsData', JSON.stringify(data));
     }
+
+    if (this.currentRoute() === 'zelda-map') {
+      // localstorage.setItem('zelda-achievements', JSON.stringify(data));
+    }
   }
 
-  public getPlayerDeck(): AbilityCard[] {
+  public getPlayerDeck(): AbilityDeckCard[] {
     if (this.currentRoute() === 'cardkingdom-map') {
       const data = JSON.parse(
         localStorage.getItem('cardkingdom-playerDeck') ?? '[]'
       );
       if (data.length < 1) {
-        this.setPlayerDeck(DefaultAbilityData);
-        return DefaultAbilityData;
+        const deckCards: AbilityDeckCard[] = DefaultAbilityData.map((x) => {
+          return {
+            ...x,
+            isNew: false,
+            inHand: false,
+            numberOwned: 0,
+            index: 0,
+            owned: true,
+          };
+        });
+        this.setPlayerDeck(deckCards);
+        return deckCards;
       } else {
         return data;
       }
@@ -160,9 +198,13 @@ export class LocalStorageService {
     return [];
   }
 
-  public setPlayerDeck(data: AbilityCard[]) {
+  public setPlayerDeck(data: AbilityDeckCard[]) {
     if (this.currentRoute() === 'cardkingdom-map') {
       localStorage.setItem('cardkingdom-playerDeck', JSON.stringify(data));
+    }
+
+    if (this.currentRoute() === 'zelda-map') {
+      // localstorage.setItem('zelda-achievements', JSON.stringify(data));
     }
   }
 
@@ -190,6 +232,10 @@ export class LocalStorageService {
     if (this.currentRoute() === 'cardkingdom-map') {
       localStorage.setItem('cardkingdom-boosterPacks', JSON.stringify(data));
     }
+
+    if (this.currentRoute() === 'zelda-map') {
+      // localstorage.setItem('zelda-achievements', JSON.stringify(data));
+    }
   }
 
   public getCurrentBattle(): LevelDto | empty {
@@ -213,6 +259,10 @@ export class LocalStorageService {
     if (this.currentRoute() === 'cardkingdom-map') {
       localStorage.setItem('cardkingdom-currentBattle', JSON.stringify(data));
     }
+
+    if (this.currentRoute() === 'zelda-map') {
+      // localstorage.setItem('zelda-achievements', JSON.stringify(data));
+    }
   }
 
   public getCurrentDetails(): MissionDetails | empty {
@@ -235,6 +285,10 @@ export class LocalStorageService {
   public setCurrentDetails(data: MissionDetails) {
     if (this.currentRoute() === 'cardkingdom-map') {
       localStorage.setItem('cardkingdom-currentDetails', JSON.stringify(data));
+    }
+
+    if (this.currentRoute() === 'zelda-map') {
+      // localstorage.setItem('zelda-achievements', JSON.stringify(data));
     }
   }
 
@@ -262,6 +316,10 @@ export class LocalStorageService {
     if (this.currentRoute() === 'cardkingdom-map') {
       localStorage.setItem('cardkingdom-challengeFlags', JSON.stringify(data));
     }
+
+    if (this.currentRoute() === 'zelda-map') {
+      // localstorage.setItem('zelda-achievements', JSON.stringify(data));
+    }
   }
 
   public getChallengeLevels(): LevelDto[] {
@@ -287,6 +345,10 @@ export class LocalStorageService {
   public setChallengeLevels(data: LevelDto[]) {
     if (this.currentRoute() === 'cardkingdom-map') {
       localStorage.setItem('cardkingdom-challengeLevels', JSON.stringify(data));
+    }
+
+    if (this.currentRoute() === 'zelda-map') {
+      // localstorage.setItem('zelda-achievements', JSON.stringify(data));
     }
   }
 
@@ -317,13 +379,18 @@ export class LocalStorageService {
         JSON.stringify(data)
       );
     }
+
+    if (this.currentRoute() === 'zelda-map') {
+      // localstorage.setItem('zelda-achievements', JSON.stringify(data));
+    }
   }
 
   public getPlayerGold(): number {
     if (this.currentRoute() === 'cardkingdom-map') {
       const data = JSON.parse(
-        localStorage.getItem('cardkingdom-playerGold') ?? '[]'
+        localStorage.getItem('cardkingdom-playerGold') ?? '0'
       );
+      console.log(data);
       if (!data) {
         this.setPlayerGold(0);
         return 0;
@@ -342,6 +409,10 @@ export class LocalStorageService {
   public setPlayerGold(data: number) {
     if (this.currentRoute() === 'cardkingdom-map') {
       localStorage.setItem('cardkingdom-playerGold', JSON.stringify(data));
+    }
+
+    if (this.currentRoute() === 'zelda-map') {
+      // localstorage.setItem('zelda-achievements', JSON.stringify(data));
     }
   }
 }

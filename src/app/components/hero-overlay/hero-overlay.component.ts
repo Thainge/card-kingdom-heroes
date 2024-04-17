@@ -10,6 +10,7 @@ import {
 } from 'angular-animations';
 import { HeroUpgrade, PlayerDto } from 'src/app/models/player';
 import { LoadingService } from 'src/app/services/loading.service';
+import { LocalStorageService } from 'src/app/services/localstorage.service';
 import { playerService } from 'src/app/services/player.service';
 import { HeroData } from 'src/assets/data/hero';
 
@@ -45,7 +46,8 @@ export class HeroOverlayComponent implements OnInit {
   constructor(
     private loadingService: LoadingService,
     private playerService: playerService,
-    private router: Router
+    private router: Router,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit() {

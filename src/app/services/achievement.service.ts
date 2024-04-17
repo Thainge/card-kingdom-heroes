@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AchievementObject } from '../models/achievement';
 import { AchievementsData } from 'src/assets/data/achievements';
+import { LocalStorageService } from './localstorage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,20 +20,14 @@ export class AchievementService {
   });
   readonly allAchievements$ = new BehaviorSubject<AchievementObject[]>([]);
 
-  constructor() {
-    const cleanData = JSON.parse(localStorage.getItem('achievements') ?? '[]');
-    if (cleanData.length < 1) {
-      this.allAchievements$.next(AchievementsData);
-      localStorage.setItem('achievements', JSON.stringify(AchievementsData));
-    } else {
-      this.allAchievements$.next(cleanData);
-    }
+  constructor(private localStorageService: LocalStorageService) {
+    const cleanData = this.localStorageService.getAchievements();
+    this.allAchievements$.next(cleanData);
   }
 
   public unlockNewAchievement(id: number) {
-    const currentData: AchievementObject[] = JSON.parse(
-      localStorage.getItem('achievements') ?? '[]'
-    );
+    const currentData: AchievementObject[] =
+      this.localStorageService.getAchievements();
     let updated = false;
     let updateObj: AchievementObject | undefined;
     const newData = currentData.map((x) => {
@@ -43,11 +38,8 @@ export class AchievementService {
       }
       return x;
     });
-    console.log(updateObj);
-    console.log(updated);
     if (updated && updateObj) {
-      console.log('hit');
-      localStorage.setItem('achievements', JSON.stringify(newData));
+      this.localStorageService.setAchievements(newData);
       this.pushNewAchievement(updateObj);
     }
   }

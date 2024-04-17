@@ -16,6 +16,7 @@ import {
 import { AbilityCard } from 'src/app/models/abilityCard';
 import { AchievementService } from 'src/app/services/achievement.service';
 import { LoadingService } from 'src/app/services/loading.service';
+import { LocalStorageService } from 'src/app/services/localstorage.service';
 import { playerService } from 'src/app/services/player.service';
 
 interface AbilityDeckCard extends AbilityCard {
@@ -44,10 +45,8 @@ export class DeckOverlayComponent implements OnInit {
   open: boolean = false;
   @Input('open') set openChanged(x: boolean) {
     this.open = x;
-    this.abilityHand = JSON.parse(localStorage.getItem('playerDeck') ?? '[]');
-    this.abilityCards = JSON.parse(
-      localStorage.getItem('abilityCards') ?? '[]'
-    );
+    this.abilityHand = this.localStorageService.getPlayerDeck();
+    this.abilityCards = this.localStorageService.getAbilityCards();
     this.abilityCards = this.abilityCards.map((x) => {
       return { ...x, owned: true };
     });
@@ -123,7 +122,8 @@ export class DeckOverlayComponent implements OnInit {
     private userService: playerService,
     private loadingService: LoadingService,
     private playerService: playerService,
-    private achievementService: AchievementService
+    private achievementService: AchievementService,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit() {
@@ -172,8 +172,8 @@ export class DeckOverlayComponent implements OnInit {
 
         return x;
       });
-      localStorage.setItem('playerDeck', JSON.stringify(this.abilityHand));
-      localStorage.setItem('abilityCards', JSON.stringify(this.abilityCards));
+      this.localStorageService.setPlayerDeck(this.abilityHand);
+      this.localStorageService.setAbilityCards(this.abilityCards);
     } else if (card.numberOwned !== 1) {
       this.abilityHand.push(card);
       this.abilityCards = this.abilityCards.map((x) => {
@@ -183,8 +183,8 @@ export class DeckOverlayComponent implements OnInit {
 
         return x;
       });
-      localStorage.setItem('playerDeck', JSON.stringify(this.abilityHand));
-      localStorage.setItem('abilityCards', JSON.stringify(this.abilityCards));
+      this.localStorageService.setPlayerDeck(this.abilityHand);
+      this.localStorageService.setAbilityCards(this.abilityCards);
     }
   }
 
@@ -228,7 +228,7 @@ export class DeckOverlayComponent implements OnInit {
       }
       return x;
     });
-    localStorage.setItem('abilityCards', JSON.stringify(this.abilityCards));
+    this.localStorageService.setAbilityCards(this.abilityCards);
   }
 
   determineWidth(card: AbilityDeckCard): string {
@@ -359,8 +359,8 @@ export class DeckOverlayComponent implements OnInit {
     this.currentSort = 'New';
     this.sortCards();
     this.container.nativeElement.scrollTop = 0;
-    localStorage.setItem('playerDeck', JSON.stringify(this.abilityHand));
-    localStorage.setItem('abilityCards', JSON.stringify(this.abilityCards));
+    this.localStorageService.setPlayerDeck(this.abilityHand);
+    this.localStorageService.setAbilityCards(this.abilityCards);
   }
 
   removeCardFromHand(card: AbilityDeckCard) {
@@ -381,8 +381,8 @@ export class DeckOverlayComponent implements OnInit {
 
       return x;
     });
-    localStorage.setItem('playerDeck', JSON.stringify(this.abilityHand));
-    localStorage.setItem('abilityCards', JSON.stringify(this.abilityCards));
+    this.localStorageService.setPlayerDeck(this.abilityHand);
+    this.localStorageService.setAbilityCards(this.abilityCards);
   }
 
   resetDeck() {
@@ -391,8 +391,8 @@ export class DeckOverlayComponent implements OnInit {
     this.abilityCards = this.abilityCards.map((x) => {
       return { ...x, inHand: false };
     });
-    localStorage.setItem('playerDeck', JSON.stringify(this.abilityHand));
-    localStorage.setItem('abilityCards', JSON.stringify(this.abilityCards));
+    this.localStorageService.setPlayerDeck(this.abilityHand);
+    this.localStorageService.setAbilityCards(this.abilityCards);
   }
 
   nextSort() {
@@ -582,8 +582,8 @@ export class DeckOverlayComponent implements OnInit {
       this.playerService.playSound('button.mp3');
       return;
     } else {
-      localStorage.setItem('playerDeck', JSON.stringify(this.abilityHand));
-      localStorage.setItem('abilityCards', JSON.stringify(this.abilityCards));
+      this.localStorageService.setPlayerDeck(this.abilityHand);
+      this.localStorageService.setAbilityCards(this.abilityCards);
       this.closeMenu();
     }
   }

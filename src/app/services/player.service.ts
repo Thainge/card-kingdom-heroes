@@ -8,6 +8,7 @@ import { AbilityCard } from '../models/abilityCard';
 import { Router } from '@angular/router';
 import { HeroData } from 'src/assets/data/hero';
 import { AchievementService } from './achievement.service';
+import { LocalStorageService } from './localstorage.service';
 
 const defaultPlayer: PlayerDto = {
   id: 0,
@@ -92,16 +93,17 @@ export class playerService implements OnInit {
 
   constructor(
     private router: Router,
-    private achievementService: AchievementService
+    private achievementService: AchievementService,
+    private localStorageService: LocalStorageService
   ) {
     this.gameTheme$.subscribe((x) => {
       this.updateThemeStyles(x);
     });
-    const localGold = Number(localStorage.getItem('playerGold') ?? 0);
+    const localGold = this.localStorageService.getPlayerGold();
     this.gold$.next(localGold);
     this.gold$.subscribe((x) => {
       if (x !== -9999) {
-        localStorage.setItem('playerGold', JSON.stringify(x));
+        this.localStorageService.setPlayerGold(x);
       }
       if (x >= 1000) {
         this.achievementService.unlockNewAchievement(3);
@@ -191,10 +193,7 @@ export class playerService implements OnInit {
   }
 
   public getAbilityCards(): AbilityCard[] {
-    const localDeck = JSON.parse(
-      localStorage.getItem('playerDeck') ?? '[]'
-    ) as AbilityCard[];
-
+    const localDeck = this.localStorageService.getPlayerDeck();
     return localDeck;
   }
 
@@ -204,15 +203,6 @@ export class playerService implements OnInit {
       id: cards.length + 1,
     };
     return newWildCard;
-  }
-
-  public getPlayerCheats(): CheatDto {
-    return {
-      canDefendWithMultipleCards: true,
-      alwaysWinTies: true,
-      canSeeTopCard: true,
-      canSeeTopCardAbilities: false,
-    };
   }
 
   private updateThemeStyles(gameTheme: gameTheme) {

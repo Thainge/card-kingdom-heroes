@@ -11,6 +11,7 @@ import {
 } from 'angular-animations';
 import { FlagDto } from 'src/app/models/flag';
 import { BackgroundDto } from 'src/app/models/backgrounds';
+import { LocalStorageService } from 'src/app/services/localstorage.service';
 
 interface MissionDetails {
   image: BackgroundDto;
@@ -38,20 +39,21 @@ export class BattleStartOverlayComponent implements OnInit {
   @Input('open') open: boolean = false;
   @Input('isSpecialBattle') isSpecialBattle: boolean = false;
   @Input('currentLevel') currentLevel: any | undefined;
-  @Input('missionDetails') missionDetails: MissionDetails | undefined;
+  @Input('missionDetails') missionDetails: any | undefined;
   @Input('finished') finished: boolean = false;
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
   constructor(
     private loadingService: LoadingService,
-    private playerService: playerService
+    private playerService: playerService,
+    private localStorageService: LocalStorageService
   ) {}
 
   startBattle() {
     this.playerService.playSound('battleStart.mp3');
-    localStorage.setItem('currentLevel', JSON.stringify(this.currentLevel));
-    localStorage.setItem('currentDetails', JSON.stringify(this.missionDetails));
+    this.localStorageService.setCurrentBattle(this.currentLevel);
+    this.localStorageService.setCurrentDetails(this.missionDetails);
     if (this.missionDetails?.image) {
       this.loadingService.navigate(
         '/battle',

@@ -16,6 +16,7 @@ import {
   fadeOutUpOnLeaveAnimation,
 } from 'angular-animations';
 import { LoadingService } from 'src/app/services/loading.service';
+import { LocalStorageService } from 'src/app/services/localstorage.service';
 import { playerService } from 'src/app/services/player.service';
 import Swiper from 'swiper';
 
@@ -92,7 +93,8 @@ export class PremiumOverlayComponent implements OnInit {
 
   constructor(
     private loadingService: LoadingService,
-    private playerService: playerService
+    private playerService: playerService,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit() {

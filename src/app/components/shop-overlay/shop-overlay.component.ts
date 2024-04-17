@@ -29,6 +29,7 @@ import { BoosterPack } from 'src/app/models/boosterPack';
 import { AchievementService } from 'src/app/services/achievement.service';
 import { CardService } from 'src/app/services/card.service';
 import { LoadingService } from 'src/app/services/loading.service';
+import { LocalStorageService } from 'src/app/services/localstorage.service';
 import { playerService } from 'src/app/services/player.service';
 import { AbilityData } from 'src/assets/data/ability';
 import { BoosterPacks } from 'src/assets/data/booster';
@@ -40,6 +41,7 @@ type OpeningCardsStep = 'initial' | 'openingCards';
 interface AbilityDeckCard extends AbilityCard {
   owned: boolean;
   inHand: boolean;
+  index: number;
 }
 
 interface ExtendedAbilityCard extends AbilityCard {
@@ -113,7 +115,8 @@ export class ShopOverlayComponent implements OnInit {
     private router: Router,
     private cardService: CardService,
     private playerService: playerService,
-    private achievementService: AchievementService
+    private achievementService: AchievementService,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit() {
@@ -136,9 +139,7 @@ export class ShopOverlayComponent implements OnInit {
   }
 
   initBoosters() {
-    this.boosterPacks = JSON.parse(
-      localStorage.getItem('boosterPacks') ?? '[]'
-    );
+    this.boosterPacks = this.localStorageService.getBoosterPacks();
     if (this.boosterPacks.length < 1) {
       this.boosterPacks = BoosterPacks;
     }
@@ -187,9 +188,8 @@ export class ShopOverlayComponent implements OnInit {
     this.openCards = [shuffled[0], shuffled[1], shuffled[2]].map((x) => {
       return { ...x, id: x.id + x.level - 1 };
     });
-    const currentCards: ExtendedAbilityCard[] = JSON.parse(
-      localStorage.getItem('abilityCards') ?? '[]'
-    );
+    const currentCards: AbilityDeckCard[] =
+      this.localStorageService.getAbilityCards();
 
     let returnCards: ExtendedAbilityCard[] = JSON.parse(
       JSON.stringify(currentCards)
@@ -218,7 +218,10 @@ export class ShopOverlayComponent implements OnInit {
         returnCards.push(newCard);
       }
     });
-    localStorage.setItem('abilityCards', JSON.stringify(returnCards));
+    const returnData: AbilityDeckCard[] = returnCards.map((x) => {
+      return { ...x, index: 0, inHand: false, owned: true };
+    });
+    this.localStorageService.setAbilityCards(returnData);
     setTimeout(() => {
       this.canClickNext = true;
     }, 800);
@@ -378,7 +381,7 @@ export class ShopOverlayComponent implements OnInit {
       }
       return x;
     });
-    localStorage.setItem('boosterPacks', JSON.stringify(this.boosterPacks));
+    this.localStorageService.setBoosterPacks(this.boosterPacks);
   }
 
   openBoosterPack(item: BoosterPack) {
@@ -392,7 +395,7 @@ export class ShopOverlayComponent implements OnInit {
       }
       return x;
     });
-    localStorage.setItem('boosterPacks', JSON.stringify(this.boosterPacks));
+    this.localStorageService.setBoosterPacks(this.boosterPacks);
   }
 
   closeMenu() {

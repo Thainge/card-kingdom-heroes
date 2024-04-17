@@ -23,6 +23,7 @@ import { Router } from '@angular/router';
 import { AbilityCard } from './models/abilityCard';
 import { AbilityData } from 'src/assets/data/ability';
 import { DefaultAbilityData } from 'src/assets/data/defaultAbility';
+import { LocalStorageService } from './services/localstorage.service';
 
 type ClickObject = {
   id: number;
@@ -78,7 +79,8 @@ export class AppComponent implements OnInit {
     private cheatsService: CheatsService,
     private loadingService: LoadingService,
     private playerService: playerService,
-    private router: Router
+    private router: Router,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit(): void {
