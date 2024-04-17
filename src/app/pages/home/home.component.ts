@@ -15,6 +15,7 @@ import { FlagDto } from 'src/app/models/flag';
 import { LoadingService } from 'src/app/services/loading.service';
 import { flagsData } from 'src/assets/data/flags';
 import { LevelsData } from 'src/assets/data/level';
+import { LocalStorageService } from 'src/app/services/localstorage.service';
 
 @Component({
   selector: 'app-home',
@@ -44,14 +45,12 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private loadingService: LoadingService,
-    private playerService: playerService
+    private playerService: playerService,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit() {
-    this.flagsList = JSON.parse(localStorage.getItem('flagsData') ?? '[]');
-    if (this.flagsList.length < 1) {
-      localStorage.setItem('flagsData', JSON.stringify(flagsData));
-    }
+    this.localStorageService.getStarsData();
   }
 
   startGame() {
@@ -87,8 +86,8 @@ export class HomeComponent implements OnInit {
     this.chooseDifficultyOpen = false;
     const flag = flagsData[0];
     const battle = LevelsData[0];
-    localStorage.setItem('currentLevel', JSON.stringify(battle));
-    localStorage.setItem('currentDetails', JSON.stringify(flag.missionDetails));
+    this.localStorageService.setCurrentBattle(battle);
+    this.localStorageService.setCurrentDetails(flag.missionDetails);
     this.loadingService.navigate('/battle', 'loadingBg.png', 'Loading...');
     this.playerService.playSound('start.wav');
   }

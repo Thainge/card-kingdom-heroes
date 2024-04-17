@@ -10,6 +10,7 @@ import { Wheel } from 'spin-wheel';
 import { BoosterPack } from 'src/app/models/boosterPack';
 import { AchievementService } from 'src/app/services/achievement.service';
 import { CardService } from 'src/app/services/card.service';
+import { LocalStorageService } from 'src/app/services/localstorage.service';
 import { playerService } from 'src/app/services/player.service';
 import { BoosterPacks } from 'src/assets/data/booster';
 
@@ -92,6 +93,9 @@ export class WheelOverlayComponent implements OnInit {
   open: boolean = false;
   @Input('open') set openChanged(x: boolean) {
     this.open = x;
+    this.open = true;
+    this.initWheel();
+
     if (x) {
       this.initWheel();
     }
@@ -110,7 +114,8 @@ export class WheelOverlayComponent implements OnInit {
   constructor(
     private cardService: CardService,
     private playerService: playerService,
-    private achievementService: AchievementService
+    private achievementService: AchievementService,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit() {
@@ -127,125 +132,7 @@ export class WheelOverlayComponent implements OnInit {
     this.playerService.gold$.subscribe((x) => {
       this.gold = x;
     });
-    const wheelItems: WheelItem[] = [
-      {
-        value: 1,
-        image: './assets/wheelImages/gold3.png',
-        imageScale: 0.3,
-        backgroundColor: '#ffd700',
-        weight: 0.5,
-        rewardImage: 'goldReward.png',
-        text: 'Gems',
-        rewardType: 'gold',
-        textAmount: '999x',
-        goldAmount: 999,
-      },
-      {
-        value: 2,
-        image: './assets/wheelImages/booster1.png',
-        imageScale: 0.15,
-        weight: 0.75,
-        rewardImage: 'boosterPackGreen.png',
-        text: 'Green Booster Pack',
-        rewardType: 'booster',
-        boosterPackId: 1,
-        textAmount: '1x',
-        goldAmount: 1,
-      },
-      {
-        value: 3,
-        image: './assets/wheelImages/gold2.png',
-        imageScale: 0.5,
-        weight: 1,
-        rewardImage: 'goldReward.png',
-        text: 'Gems',
-        rewardType: 'gold',
-        textAmount: '150x',
-        goldAmount: 150,
-      },
-      {
-        value: 4,
-        image: './assets/wheelImages/booster2.png',
-        imageScale: 0.15,
-        weight: 0.75,
-        rewardImage: 'boosterPackBlue.png',
-        text: 'Blue Booster Pack',
-        rewardType: 'booster',
-        boosterPackId: 2,
-        textAmount: '1x',
-        goldAmount: 1,
-      },
-      {
-        value: 5,
-        image: './assets/wheelImages/gold1.png',
-        imageScale: 0.5,
-        weight: 1,
-        rewardImage: 'goldReward.png',
-        text: 'Gems',
-        rewardType: 'gold',
-        textAmount: '150x',
-        goldAmount: 150,
-      },
-      {
-        value: 6,
-        image: './assets/wheelImages/booster1.png',
-        imageScale: 0.15,
-        weight: 0.75,
-        rewardImage: 'boosterPackYellow.png',
-        text: 'Yellow Booster Pack',
-        rewardType: 'booster',
-        boosterPackId: 3,
-        textAmount: '1x',
-        goldAmount: 1,
-      },
-      {
-        value: 7,
-        image: './assets/wheelImages/gold2.png',
-        imageScale: 0.5,
-        weight: 1,
-        rewardImage: 'goldReward.png',
-        text: 'Gems',
-        rewardType: 'gold',
-        textAmount: '150x',
-        goldAmount: 150,
-      },
-      {
-        value: 8,
-        image: './assets/wheelImages/booster2.png',
-        imageScale: 0.15,
-        weight: 0.75,
-        rewardImage: 'boosterPackRed.png',
-        text: 'Red Booster Pack',
-        rewardType: 'booster',
-        boosterPackId: 4,
-        textAmount: '1x',
-        goldAmount: 1,
-      },
-
-      {
-        value: 9,
-        image: './assets/wheelImages/gold1.png',
-        imageScale: 0.5,
-        weight: 1,
-        rewardImage: 'goldReward.png',
-        text: 'Gems',
-        rewardType: 'gold',
-        textAmount: '150x',
-        goldAmount: 150,
-      },
-      {
-        value: 10,
-        image: './assets/wheelImages/booster1.png',
-        imageScale: 0.15,
-        weight: 0.75,
-        rewardImage: 'boosterPackGreen.png',
-        text: 'Green Booster Pack',
-        rewardType: 'booster',
-        boosterPackId: 1,
-        textAmount: '1x',
-        goldAmount: 1,
-      },
-    ];
+    const wheelItems: WheelItem[] = this.localStorageService.getWheelItems();
     this.prizes = wheelItems;
   }
 

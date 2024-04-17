@@ -12,6 +12,7 @@ import { BoosterPacks } from 'src/assets/data/booster';
 import { LevelDto } from '../models/level';
 import { BackgroundDto } from '../models/backgrounds';
 import { ChallengeFlags, ChallengeLevels } from 'src/assets/data/specialLevels';
+import { WheelData } from 'src/assets/data/wheel';
 
 type RouteUrl = 'cardkingdom-map' | 'zelda-map';
 
@@ -29,6 +30,13 @@ interface MissionDetails {
   description: string;
   rewardMin: number;
   rewardMax: number;
+}
+
+interface StarsData {
+  cardKingdomTotal: number;
+  cardKingdomStars: number;
+  zeldaTotal: number;
+  zeldaStars: number;
 }
 
 interface SpecialLevels {
@@ -57,6 +65,67 @@ const DefaultSpecialLevelsData: SpecialLevels = {
   hero4Finished: false,
 };
 
+interface WheelItem {
+  backgroundColor?: string;
+  image?: string;
+  imageOpacity?: number;
+  imageRadius?: number;
+  imageRotation?: number;
+  imageScale?: number;
+  label?: string;
+  labelColor?: string;
+  value?: number;
+  weight?: number;
+
+  text: string;
+  textAmount: string;
+  rewardImage: string;
+  rewardType: RewardType;
+  boosterPackId?: number;
+  goldAmount: number;
+}
+
+type RewardType = 'gold' | 'booster';
+
+interface WheelProps {
+  borderColor?: string;
+  borderWidth?: number;
+  debug?: boolean;
+  image?: string;
+  isInteractive?: boolean;
+  itemBackgroundColors?: string[];
+  itemLabelAlign?: string;
+  itemLabelBaselineOffset?: number;
+  itemLabelColors?: string;
+  itemLabelFont?: string;
+  itemLabelFontSizeMax?: number;
+  itemLabelRadius?: number;
+  itemLabelRadiusMax?: number;
+  itemLabelRotation?: number;
+  itemLabelStrokeColor?: string;
+  itemLabelStrokeWidth?: number;
+  items?: WheelItem[];
+  lineColor?: string;
+  lineWidth?: number;
+  pixelRatio?: number;
+  radius?: number;
+  rotation?: number;
+  rotationResistance?: number;
+  rotationSpeed?: number;
+  rotationSpeedMax?: number;
+  offset?: Offset;
+  onCurrentIndexChange?: string;
+  onRest?: any;
+  onSpin?: any;
+  overlayImage?: any;
+  pointerAngle?: number;
+}
+
+interface Offset {
+  w: number;
+  h: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -67,6 +136,17 @@ export class LocalStorageService {
 
   private currentRoute = (): RouteUrl =>
     (localStorage.getItem('currentRoute') as RouteUrl) ?? 'cardkingdom-map';
+
+  public getWheelItems(): WheelItem[] {
+    if (this.currentRoute() === 'cardkingdom-map') {
+      return WheelData;
+    }
+
+    if (this.currentRoute() === 'zelda-map') {
+    }
+
+    return [];
+  }
 
   public getAchievements(): AchievementObject[] {
     if (this.currentRoute() === 'cardkingdom-map') {
@@ -138,8 +218,32 @@ export class LocalStorageService {
     }
   }
 
-  public getFlagsData(): FlagDto[] {
-    if (this.currentRoute() === 'cardkingdom-map') {
+  public getStarsData(): StarsData {
+    const cardKingdomFlags = this.getFlagsData(1, true);
+    const cardKingdomCompletedLevels = cardKingdomFlags.filter(
+      (x) => x.levelStatus === 'finished' || x.levelStatus === 'justFinished'
+    );
+    const zeldaFlags = this.getFlagsData(2, true);
+    const zeldaCompletedLevels = zeldaFlags.filter(
+      (x) => x.levelStatus === 'finished' || x.levelStatus === 'justFinished'
+    );
+
+    return {
+      cardKingdomTotal: cardKingdomFlags.length * 3,
+      cardKingdomStars: cardKingdomCompletedLevels.length * 3,
+      zeldaTotal: zeldaFlags.length * 3,
+      zeldaStars: zeldaCompletedLevels.length * 3,
+    };
+  }
+
+  public getFlagsData(
+    routeNumber: number = -10,
+    isCustom: boolean = false
+  ): FlagDto[] {
+    if (
+      (this.currentRoute() === 'cardkingdom-map' && !isCustom) ||
+      routeNumber === 1
+    ) {
       const data = JSON.parse(
         localStorage.getItem('cardkingdom-flagsData') ?? '[]'
       );
@@ -151,7 +255,10 @@ export class LocalStorageService {
       }
     }
 
-    if (this.currentRoute() === 'zelda-map') {
+    if (
+      (this.currentRoute() === 'zelda-map' && !isCustom) ||
+      routeNumber === 2
+    ) {
       // return [];
     }
 

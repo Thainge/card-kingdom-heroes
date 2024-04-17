@@ -29,6 +29,7 @@ import { flagsData } from 'src/assets/data/flags';
 import { LevelsData } from 'src/assets/data/level';
 import { ChallengeFlags, ChallengeLevels } from 'src/assets/data/specialLevels';
 import { AchievementService } from 'src/app/services/achievement.service';
+import { LocalStorageService } from 'src/app/services/localstorage.service';
 const { Pins } = require('@fancyapps/ui/dist/panzoom/panzoom.pins.esm.js');
 
 type WhirlpoolSize = 1 | 1.25 | 1.5 | 2;
@@ -134,31 +135,15 @@ export class MapComponent implements AfterViewInit, OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private playerService: playerService,
-    private achievementService: AchievementService
+    private achievementService: AchievementService,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit() {
     try {
-      this.challengeLevels = JSON.parse(
-        localStorage.getItem('challengeLevels') ?? '[]'
-      );
-      if (this.challengeLevels.length < 1) {
-        this.challengeLevels = ChallengeLevels;
-        localStorage.setItem(
-          'challengeLevels',
-          JSON.stringify(this.challengeLevels)
-        );
-      }
-      this.challengeFlags = JSON.parse(
-        localStorage.getItem('challengeFlags') ?? '[]'
-      );
-      if (this.challengeFlags.length < 1) {
-        this.challengeFlags = ChallengeFlags;
-        localStorage.setItem(
-          'challengeFlags',
-          JSON.stringify(this.challengeFlags)
-        );
-      }
+      this.challengeLevels = this.localStorageService.getChallengeLevels();
+      this.challengeFlags = this.localStorageService.getChallengeFlags();
+
       this.specialLevelsData.hero1Finished =
         this.challengeFlags[0].levelStatus === 'finished';
       this.specialLevelsData.hero2Finished =
@@ -192,18 +177,9 @@ export class MapComponent implements AfterViewInit, OnInit {
   }
 
   initFlags() {
-    this.flagsList = JSON.parse(localStorage.getItem('flagsData') ?? '[]');
-    if (this.flagsList.length < 1) {
-      this.flagsList = flagsData;
-      localStorage.setItem('flagsData', JSON.stringify(this.flagsList));
-    }
+    this.flagsList = this.localStorageService.getFlagsData();
 
-    const specialLevelsData: SpecialLevels = JSON.parse(
-      localStorage.getItem('specialLevelData') ?? '[]'
-    );
-    if (!specialLevelsData) {
-      this.specialLevelsData = specialLevelsData;
-    }
+    this.specialLevelsData = this.localStorageService.getSpecialLevelsData();
     this.nextLevel = this.flagsList.find((x) => x.levelStatus === 'nextLevel');
     this.currentLevel = this.flagsList.find(
       (x) => x.levelStatus === 'justFinished'
@@ -232,9 +208,8 @@ export class MapComponent implements AfterViewInit, OnInit {
       }
 
       if (x.id === 5 && x.levelStatus === 'finished') {
-        const boosterPacks: BoosterPack[] = JSON.parse(
-          localStorage.getItem('boosterPacks') ?? '[]'
-        );
+        const boosterPacks: BoosterPack[] =
+          this.localStorageService.getBoosterPacks();
         const newBoosterPacks = boosterPacks.map((x) => {
           if (x.id === 2 && !x.unlocked) {
             this.shownNewBoosterPack = x;
@@ -243,13 +218,12 @@ export class MapComponent implements AfterViewInit, OnInit {
           }
           return x;
         });
-        localStorage.setItem('boosterPacks', JSON.stringify(newBoosterPacks));
+        this.localStorageService.setBoosterPacks(newBoosterPacks);
       }
 
       if (x.id === 10 && x.levelStatus === 'finished') {
-        const boosterPacks: BoosterPack[] = JSON.parse(
-          localStorage.getItem('boosterPacks') ?? '[]'
-        );
+        const boosterPacks: BoosterPack[] =
+          this.localStorageService.getBoosterPacks();
         const newBoosterPacks = boosterPacks.map((x) => {
           if (x.id === 3) {
             this.shownNewBoosterPack = x;
@@ -258,7 +232,7 @@ export class MapComponent implements AfterViewInit, OnInit {
           }
           return x;
         });
-        localStorage.setItem('boosterPacks', JSON.stringify(newBoosterPacks));
+        this.localStorageService.setBoosterPacks(newBoosterPacks);
       }
 
       if (x.id === 10 && x.levelStatus === 'finished') {
@@ -296,7 +270,7 @@ export class MapComponent implements AfterViewInit, OnInit {
           }
           return x;
         });
-        localStorage.setItem('boosterPacks', JSON.stringify(newBoosterPacks));
+        this.localStorageService.setBoosterPacks(newBoosterPacks);
       }
 
       if (x.id === 8 && x.levelStatus === 'finished') {
@@ -311,11 +285,8 @@ export class MapComponent implements AfterViewInit, OnInit {
         this.specialLevelsData.hero4Show = true;
       }
     });
-    localStorage.setItem(
-      'specialLevelData',
-      JSON.stringify(this.specialLevelsData)
-    );
-    localStorage.setItem('flagsData', JSON.stringify(this.flagsList));
+    this.localStorageService.setSpecialLevelsData(this.specialLevelsData);
+    this.localStorageService.setFlagsData(this.flagsList);
   }
 
   // test() {

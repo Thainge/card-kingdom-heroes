@@ -27,6 +27,8 @@ interface CampaignBox {
   image: string;
   url: MapRoute;
   locked: boolean;
+  stars: number;
+  total: number;
 }
 
 type MapRoute =
@@ -73,12 +75,16 @@ export class CampaignOverlayComponent implements OnInit {
       image: 'normalCampaign.png',
       url: 'cardkingdom-map',
       locked: false,
+      stars: 0,
+      total: 0,
     },
     {
       id: 2,
       image: 'linkCampaign.png',
       url: 'zelda-map',
       locked: true,
+      stars: 0,
+      total: 0,
     },
     // {
     //   id: 3,
@@ -101,8 +107,6 @@ export class CampaignOverlayComponent implements OnInit {
     //   url: 'donkeykong-map',
     // },
   ];
-  campaignsStars: number = 0;
-  campaignZeldaStars: number = 0;
 
   constructor(
     private router: Router,
@@ -119,11 +123,26 @@ export class CampaignOverlayComponent implements OnInit {
   ngAfterViewInit() {}
 
   setStars() {
-    const flags: FlagDto[] = this.localStorageService.getFlagsData();
-    const completedFlags = flags.filter(
-      (x) => x.levelStatus === 'finished' || x.levelStatus === 'justFinished'
-    );
-    this.campaignsStars = completedFlags.length * 3;
+    const starsData = this.localStorageService.getStarsData();
+    this.campaigns = this.campaigns.map((x) => {
+      if (x.id === 1) {
+        return {
+          ...x,
+          stars: starsData.cardKingdomStars,
+          total: starsData.cardKingdomTotal,
+        };
+      }
+
+      if (x.id === 2) {
+        return {
+          ...x,
+          stars: starsData.zeldaStars,
+          total: starsData.zeldaTotal,
+        };
+      }
+
+      return x;
+    });
   }
 
   routeIsMap(): boolean {
@@ -137,6 +156,8 @@ export class CampaignOverlayComponent implements OnInit {
   chooseCampaign(campaign: CampaignBox) {
     const route = '/' + campaign.url;
     localStorage.setItem('currentRoute', campaign.url);
+    const localGold = this.localStorageService.getPlayerGold();
+    this.playerService.gold$.next(localGold);
     this.playerService.playSound('open.mp3');
     this.closeMenu();
 

@@ -48,6 +48,7 @@ import { FlagDto } from 'src/app/models/flag';
 import { ChallengeFlags } from 'src/assets/data/specialLevels';
 import { ComicComponent } from 'src/app/components/comic/comic.component';
 import { AchievementService } from 'src/app/services/achievement.service';
+import { LocalStorageService } from 'src/app/services/localstorage.service';
 
 interface MissionDetails {
   image: string;
@@ -414,7 +415,8 @@ export class BattleComponent implements OnInit {
     private cheatsService: CheatsService,
     private loadingService: LoadingService,
     private playerService: playerService,
-    private achievementService: AchievementService
+    private achievementService: AchievementService,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit() {
@@ -422,7 +424,6 @@ export class BattleComponent implements OnInit {
       const localPremium = JSON.parse(
         localStorage.getItem('premiumData') ?? '[]'
       );
-      console.log(localPremium);
 
       if (localPremium && localPremium.length > 0) {
         console.log(localPremium);
@@ -580,15 +581,12 @@ export class BattleComponent implements OnInit {
   }
 
   updateFlag() {
-    const flagsList: FlagDto[] = JSON.parse(
-      localStorage.getItem('flagsData') ?? '[]'
-    );
-    const currentLevel: LevelDto = JSON.parse(
-      localStorage.getItem('currentLevel') ?? '{}'
-    );
+    const flagsList: FlagDto[] = this.localStorageService.getFlagsData();
+    const currentLevel: LevelDto | any =
+      this.localStorageService.getCurrentBattle();
 
     let foundIndex = -10;
-    const newFlagsList = flagsList.map((x, i) => {
+    const newFlagsList: FlagDto[] = flagsList.map((x, i) => {
       if (x.id === currentLevel.id) {
         foundIndex = i + 1;
         return { ...x, levelStatus: 'justFinished' };
@@ -600,7 +598,7 @@ export class BattleComponent implements OnInit {
       }
       return x;
     });
-    localStorage.setItem('flagsData', JSON.stringify(newFlagsList));
+    this.localStorageService.setFlagsData(newFlagsList);
 
     // set gold
     const newGold = this.gold + this.rewardItemsClean[0].value;
@@ -676,9 +674,8 @@ export class BattleComponent implements OnInit {
   }
 
   async gameInit() {
-    const passedObj: LevelDto = JSON.parse(
-      localStorage.getItem('currentLevel') ?? '{}'
-    ) as LevelDto;
+    const passedObj: LevelDto | any =
+      this.localStorageService.getCurrentBattle();
 
     if (!passedObj) {
       this.activeLeaderLines.forEach((x) => {
@@ -700,9 +697,8 @@ export class BattleComponent implements OnInit {
       return { id: x.id, image: x.background, display: false };
     });
 
-    const missionDetails: MissionDetails = JSON.parse(
-      localStorage.getItem('currentDetails') ?? '[]'
-    );
+    const missionDetails: MissionDetails | any =
+      this.localStorageService.getCurrentDetails();
 
     if (missionDetails) {
       const randomValue = this.randomIntFromInterval(
@@ -3947,9 +3943,8 @@ export class BattleComponent implements OnInit {
     this.playerService.stopCurrentAudio();
     if (playerWon) {
       localStorage.setItem('gameStartedYet', JSON.stringify(true));
-      let challengeFlags: FlagDto[] = JSON.parse(
-        localStorage.getItem('challengeFlags') ?? '[]'
-      );
+      let challengeFlags: FlagDto[] =
+        this.localStorageService.getChallengeFlags();
       if (challengeFlags.length < 1) {
         challengeFlags = ChallengeFlags;
       }
@@ -3959,7 +3954,7 @@ export class BattleComponent implements OnInit {
         }
         return x;
       });
-      localStorage.setItem('challengeFlags', JSON.stringify(challengeFlags));
+      this.localStorageService.setChallengeFlags(challengeFlags);
       setTimeout(() => {
         this.gameWinnerPlayer = true;
         this.playerService.playSound('victory.mp3');
