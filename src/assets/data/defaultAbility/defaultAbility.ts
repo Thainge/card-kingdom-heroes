@@ -1,5 +1,5 @@
 import { AbilityCard } from 'src/app/models/abilityCard';
-import { AbilityData } from './ability';
+import { AbilityData } from '../ability/ability';
 
 export const DefaultAbilityData: AbilityCard[] = [
   AbilityData[1],

@@ -12,7 +12,6 @@ import { AchievementService } from 'src/app/services/achievement.service';
 import { CardService } from 'src/app/services/card.service';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
 import { playerService } from 'src/app/services/player.service';
-import { BoosterPacks } from 'src/assets/data/booster';
 
 interface WheelItem {
   backgroundColor?: string;
@@ -93,8 +92,6 @@ export class WheelOverlayComponent implements OnInit {
   open: boolean = false;
   @Input('open') set openChanged(x: boolean) {
     this.open = x;
-    this.open = true;
-    this.initWheel();
 
     if (x) {
       this.initWheel();
@@ -196,19 +193,15 @@ export class WheelOverlayComponent implements OnInit {
 
     if (this.wonPrize?.rewardType === 'booster') {
       // Add booster pack prize
-      let boosterPacks: BoosterPack[] = JSON.parse(
-        localStorage.getItem('boosterPacks') ?? '[]'
-      );
-      if (boosterPacks.length < 1) {
-        boosterPacks = BoosterPacks;
-      }
+      let boosterPacks: BoosterPack[] =
+        this.localStorageService.getBoosterPacks();
       boosterPacks = boosterPacks.map((x) => {
         if (x.id === this.wonPrize?.boosterPackId!) {
           return { ...x, count: x.count + 1, showNew: false };
         }
         return x;
       });
-      localStorage.setItem('boosterPacks', JSON.stringify(boosterPacks));
+      this.localStorageService.setBoosterPacks(boosterPacks);
     }
 
     this.showPrize = false;

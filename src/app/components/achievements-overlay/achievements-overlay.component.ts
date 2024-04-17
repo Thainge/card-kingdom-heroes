@@ -11,7 +11,6 @@ import { AchievementService } from 'src/app/services/achievement.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
 import { playerService } from 'src/app/services/player.service';
-import { AchievementsData } from 'src/assets/data/achievements';
 
 @Component({
   selector: 'app-achievements-overlay',
@@ -55,9 +54,6 @@ export class AchievementsOverlayComponent implements OnInit {
       this.gold = x;
     });
     this.achievementsListClean = this.localStorageService.getAchievements();
-    if (this.achievementsListClean.length < 1) {
-      this.achievementsListClean = AchievementsData;
-    }
     this.pageAchievements(this.currentpage);
   }
 

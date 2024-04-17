@@ -20,9 +20,6 @@ import {
 import { CheatsService } from './services/cheats.service';
 import { LoadingService } from './services/loading.service';
 import { Router } from '@angular/router';
-import { AbilityCard } from './models/abilityCard';
-import { AbilityData } from 'src/assets/data/ability';
-import { DefaultAbilityData } from 'src/assets/data/defaultAbility';
 import { LocalStorageService } from './services/localstorage.service';
 
 type ClickObject = {
@@ -156,18 +153,7 @@ export class AppComponent implements OnInit {
   }
 
   setInitialDeck() {
-    const cards: AbilityCard[] = JSON.parse(
-      localStorage.getItem('abilityCards') ?? '[]'
-    );
-    if (cards.length < 1) {
-      const deckCards = DefaultAbilityData.map((x) => {
-        return { ...x, isNew: false, inHand: true, numberOwned: 0 };
-      });
-      localStorage.setItem('abilityCards', JSON.stringify(deckCards));
-
-      const handCards = deckCards;
-      localStorage.setItem('playerDeck', JSON.stringify(handCards));
-    }
+    this.localStorageService.getAbilityCards();
   }
 
   currentRouteIsNotHome(): boolean {

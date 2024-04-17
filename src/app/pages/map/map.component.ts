@@ -24,10 +24,6 @@ import { DotDto, FlagDto } from 'src/app/models/flag';
 import { LevelDto } from 'src/app/models/level';
 import { PlayerDto } from 'src/app/models/player';
 import { LoadingService } from 'src/app/services/loading.service';
-import { BoosterPacks } from 'src/assets/data/booster';
-import { flagsData } from 'src/assets/data/flags';
-import { LevelsData } from 'src/assets/data/level';
-import { ChallengeFlags, ChallengeLevels } from 'src/assets/data/specialLevels';
 import { AchievementService } from 'src/app/services/achievement.service';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
 const { Pins } = require('@fancyapps/ui/dist/panzoom/panzoom.pins.esm.js');
@@ -259,9 +255,8 @@ export class MapComponent implements AfterViewInit, OnInit {
       }
 
       if (x.id === 15 && x.levelStatus === 'finished') {
-        const boosterPacks: BoosterPack[] = JSON.parse(
-          localStorage.getItem('boosterPacks') ?? '[]'
-        );
+        const boosterPacks: BoosterPack[] =
+          this.localStorageService.getBoosterPacks();
         const newBoosterPacks = boosterPacks.map((x) => {
           if (x.id === 4) {
             this.shownNewBoosterPack = x;
@@ -288,29 +283,6 @@ export class MapComponent implements AfterViewInit, OnInit {
     this.localStorageService.setSpecialLevelsData(this.specialLevelsData);
     this.localStorageService.setFlagsData(this.flagsList);
   }
-
-  // test() {
-  //   let found = false;
-  //   let found2 = false;
-  //   let foundIndex = -10;
-
-  //   this.flagsList = this.flagsList.map((x, i) => {
-  //     if (x.levelStatus === 'nextLevel' && !found) {
-  //       found = true;
-  //       foundIndex = i + 1;
-  //       return { ...x, levelStatus: 'finished' };
-  //     }
-
-  //     if (foundIndex !== -10 && !found2) {
-  //       found2 = true;
-  //       return { ...x, levelStatus: 'nextLevel' };
-  //     }
-
-  //     return x;
-  //   });
-  //   console.log(this.flagsList.find((x) => x.levelStatus === 'nextLevel')?.id);
-  //   localStorage.setItem('flagsData', JSON.stringify(this.flagsList));
-  // }
 
   async initPanZoom() {
     setTimeout(() => {
@@ -397,7 +369,8 @@ export class MapComponent implements AfterViewInit, OnInit {
     this.playerService.playSound('open.mp3');
     this.battleStartOpen = true;
     this.isSpecialBattle = false;
-    this.currentBattle = LevelsData.find((x) => x.id === flag.id);
+    const levelsData = this.localStorageService.getLevelsData();
+    this.currentBattle = levelsData.find((x) => x.id === flag.id);
     this.currentDetails = this.flagsList.find(
       (x) => x.id === flag.id
     )?.missionDetails;

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AchievementObject } from '../models/achievement';
-import { AchievementsData } from 'src/assets/data/achievements';
 import { LocalStorageService } from './localstorage.service';
 
 @Injectable({

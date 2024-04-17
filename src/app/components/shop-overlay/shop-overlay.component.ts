@@ -31,8 +31,6 @@ import { CardService } from 'src/app/services/card.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
 import { playerService } from 'src/app/services/player.service';
-import { AbilityData } from 'src/assets/data/ability';
-import { BoosterPacks } from 'src/assets/data/booster';
 import Swiper from 'swiper';
 
 type ShopStep = 'picking' | 'shopping' | 'opening';
@@ -120,7 +118,7 @@ export class ShopOverlayComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.allCards = AbilityData;
+    this.allCards = this.localStorageService.getAbilityData();
     this.playerService.gold$.subscribe((x) => {
       this.gold = x;
     });
@@ -140,9 +138,6 @@ export class ShopOverlayComponent implements OnInit {
 
   initBoosters() {
     this.boosterPacks = this.localStorageService.getBoosterPacks();
-    if (this.boosterPacks.length < 1) {
-      this.boosterPacks = BoosterPacks;
-    }
 
     // if (this.router.url.includes('cardkingdom-map')) {
     //   this.boosterPacks = BoosterPacks;

@@ -38,14 +38,13 @@ import 'leader-line';
 import { playerService } from 'src/app/services/player.service';
 import { trigger, style, transition, animate } from '@angular/animations';
 declare let LeaderLine: any;
-import { Cards } from 'src/assets/data/cards';
+import { Cards } from 'src/assets/data/cards/cards';
 import { AbilityService } from 'src/app/services/ability.service';
 import { Comic, EnemyLevelDto, LevelDto } from 'src/app/models/level';
 import { DialogComponent } from 'src/app/components/dialogComponent/dialog.component';
 import { DialogDto } from 'src/app/models/dialog';
 import { BackgroundDto } from 'src/app/models/backgrounds';
 import { FlagDto } from 'src/app/models/flag';
-import { ChallengeFlags } from 'src/assets/data/specialLevels';
 import { ComicComponent } from 'src/app/components/comic/comic.component';
 import { AchievementService } from 'src/app/services/achievement.service';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
@@ -3945,9 +3944,6 @@ export class BattleComponent implements OnInit {
       localStorage.setItem('gameStartedYet', JSON.stringify(true));
       let challengeFlags: FlagDto[] =
         this.localStorageService.getChallengeFlags();
-      if (challengeFlags.length < 1) {
-        challengeFlags = ChallengeFlags;
-      }
       challengeFlags = challengeFlags.map((x) => {
         if (x.id === this.currentLevel?.id) {
           return { ...x, levelStatus: 'finished' };

@@ -1,5 +1,5 @@
 import { LevelDto } from 'src/app/models/level';
-import { EnemyAbilityCardsSet1 } from './enemyAbilityCards';
+import { EnemyAbilityCardsSet1 } from '../enemyAbilityCards/enemyAbilityCards';
 import { FlagDto } from 'src/app/models/flag';
 
 const Level: LevelDto = {

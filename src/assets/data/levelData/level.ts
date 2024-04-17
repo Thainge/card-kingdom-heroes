@@ -1,6 +1,6 @@
 import { LevelDto } from 'src/app/models/level';
-import { EnemyAbilityCardsSet1 } from './enemyAbilityCards';
-import { ComicData } from './comic';
+import { EnemyAbilityCardsSet1 } from '../enemyAbilityCards/enemyAbilityCards';
+import { ComicData } from '../comic/comic';
 
 const Level: LevelDto = {
   id: 1,

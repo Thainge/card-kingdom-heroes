@@ -1,18 +1,22 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AchievementObject } from '../models/achievement';
-import { AchievementsData } from 'src/assets/data/achievements';
+import { AchievementsData } from 'src/assets/data/achievement/achievements';
 import { AbilityCard } from '../models/abilityCard';
-import { AbilityData } from 'src/assets/data/ability';
 import { FlagDto } from '../models/flag';
-import { flagsData } from 'src/assets/data/flags';
-import { DefaultAbilityData } from 'src/assets/data/defaultAbility';
+import { flagsData } from 'src/assets/data/flagsData/flags';
+import { DefaultAbilityData } from 'src/assets/data/defaultAbility/defaultAbility';
 import { BoosterPack } from '../models/boosterPack';
-import { BoosterPacks } from 'src/assets/data/booster';
+import { BoosterPacks } from 'src/assets/data/booster/booster';
 import { LevelDto } from '../models/level';
 import { BackgroundDto } from '../models/backgrounds';
-import { ChallengeFlags, ChallengeLevels } from 'src/assets/data/specialLevels';
-import { WheelData } from 'src/assets/data/wheel';
+import {
+  ChallengeFlags,
+  ChallengeLevels,
+} from 'src/assets/data/specialLevels/specialLevels';
+import { WheelData } from 'src/assets/data/wheelData/wheel';
+import { AbilityData } from 'src/assets/data/ability/ability';
+import { LevelsData } from 'src/assets/data/levelData/level';
 
 type RouteUrl = 'cardkingdom-map' | 'zelda-map';
 
@@ -137,12 +141,28 @@ export class LocalStorageService {
   private currentRoute = (): RouteUrl =>
     (localStorage.getItem('currentRoute') as RouteUrl) ?? 'cardkingdom-map';
 
+  public getLevelsData(): LevelDto[] {
+    if (this.currentRoute() === 'cardkingdom-map') {
+      return LevelsData;
+    }
+
+    return [];
+  }
+
   public getWheelItems(): WheelItem[] {
     if (this.currentRoute() === 'cardkingdom-map') {
       return WheelData;
     }
 
     if (this.currentRoute() === 'zelda-map') {
+    }
+
+    return [];
+  }
+
+  public getAbilityData(): AbilityCard[] {
+    if (this.currentRoute() === 'cardkingdom-map') {
+      return AbilityData;
     }
 
     return [];
