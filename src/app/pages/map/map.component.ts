@@ -30,7 +30,7 @@ const { Pins } = require('@fancyapps/ui/dist/panzoom/panzoom.pins.esm.js');
 
 type WhirlpoolSize = 1 | 1.25 | 1.5 | 2;
 type WhirlpoolOpacity = 0.4 | 0.6 | 0.8 | 1;
-type Battle = 1 | 2 | 3 | 4;
+type Battle = 101 | 102 | 103 | 104;
 
 interface SpecialLevels {
   wheelShow: boolean;
@@ -136,19 +136,8 @@ export class MapComponent implements AfterViewInit, OnInit {
   ) {}
 
   ngOnInit() {
-    try {
-      this.challengeLevels = this.localStorageService.getChallengeLevels();
-      this.challengeFlags = this.localStorageService.getChallengeFlags();
-
-      this.specialLevelsData.hero1Finished =
-        this.challengeFlags[0].levelStatus === 'finished';
-      this.specialLevelsData.hero2Finished =
-        this.challengeFlags[1].levelStatus === 'finished';
-      this.specialLevelsData.hero3Finished =
-        this.challengeFlags[2].levelStatus === 'finished';
-      this.specialLevelsData.hero4Finished =
-        this.challengeFlags[3].levelStatus === 'finished';
-    } catch (err) {}
+    this.challengeLevels = this.localStorageService.getChallengeLevels();
+    this.challengeFlags = this.localStorageService.getChallengeFlags();
     this.checkStartOfGame();
     this.initFlags();
   }
@@ -177,6 +166,16 @@ export class MapComponent implements AfterViewInit, OnInit {
       this.flagsList = this.localStorageService.getFlagsData();
 
       this.specialLevelsData = this.localStorageService.getSpecialLevelsData();
+      try {
+        this.specialLevelsData.hero1Finished =
+          this.challengeFlags[0].levelStatus === 'finished';
+        this.specialLevelsData.hero2Finished =
+          this.challengeFlags[1].levelStatus === 'finished';
+        this.specialLevelsData.hero3Finished =
+          this.challengeFlags[2].levelStatus === 'finished';
+        this.specialLevelsData.hero4Finished =
+          this.challengeFlags[3].levelStatus === 'finished';
+      } catch (err) {}
       this.nextLevel = this.flagsList.find(
         (x) => x.levelStatus === 'nextLevel'
       );

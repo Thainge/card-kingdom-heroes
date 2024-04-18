@@ -94,7 +94,7 @@ export class AppComponent implements OnInit {
         this.isLoading = true;
         this.loadingBg = x.image;
         this.loadingText = x.text;
-
+        console.log(x.url);
         setTimeout(() => {
           if (this.isLoading) {
             this.isLoading = false;

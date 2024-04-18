@@ -53,7 +53,6 @@ export class HeroOverlayComponent implements OnInit {
 
   ngOnInit() {
     this.playerService.heroDataChanged$.subscribe((x) => {
-      console.log('hit');
       setTimeout(() => {
         this.initHeroes();
       }, 1);

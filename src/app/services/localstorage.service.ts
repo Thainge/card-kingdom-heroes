@@ -201,8 +201,8 @@ export class LocalStorageService {
         flagsData: flagsDataZelda,
         levelsData: LevelsDataZelda,
         specialLevels: DefaultSpecialLevelsData,
-        challengeLevels: ChallengeLevels,
-        challengeFlags: ChallengeFlags,
+        challengeLevels: ChallengeLevelsZelda,
+        challengeFlags: ChallengeFlagsZelda,
         wheelData: WheelDataZelda,
       };
     }
@@ -215,8 +215,8 @@ export class LocalStorageService {
       flagsData: flagsData,
       levelsData: LevelsData,
       specialLevels: DefaultSpecialLevelsData,
-      challengeLevels: ChallengeLevelsZelda,
-      challengeFlags: ChallengeFlagsZelda,
+      challengeLevels: ChallengeLevels,
+      challengeFlags: ChallengeFlags,
       wheelData: WheelData,
     };
   }

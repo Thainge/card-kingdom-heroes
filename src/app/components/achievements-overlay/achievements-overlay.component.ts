@@ -93,6 +93,9 @@ export class AchievementsOverlayComponent implements OnInit {
 
   checkTipFinish() {
     const allDone = this.achievementsListClean.filter((x) => x.unlocked);
+    if (allDone.length !== this.achievementsListClean.length) {
+      return;
+    }
 
     const deckTipShown = localStorage.getItem('achievementTipShownFinish');
     if (!deckTipShown) {

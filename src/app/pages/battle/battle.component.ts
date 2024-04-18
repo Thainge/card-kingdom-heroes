@@ -327,7 +327,7 @@ export class BattleComponent implements OnInit {
   finishedRewards: boolean = false;
   showHeroLevelUp: boolean = false;
 
-  battleRewardXp: number = 50;
+  battleRewardXp: number = 70;
   leveledUp: boolean = false;
 
   snowFlakesArray: any[] = [];
@@ -464,6 +464,7 @@ export class BattleComponent implements OnInit {
     // Game init
     if (this.Cards.length < 1) {
       this.gameInit();
+      this.endGame(true);
     }
 
     this.loadingService.isRefreshing$.subscribe((x) => {
@@ -3848,6 +3849,10 @@ export class BattleComponent implements OnInit {
   }
 
   levelUpPlayer() {
+    if (this.player.level === 3) {
+      this.finishHeroLevelUp();
+      return;
+    }
     // Gradually increase xp
     setTimeout(() => {
       this.gradualXpIncrease();

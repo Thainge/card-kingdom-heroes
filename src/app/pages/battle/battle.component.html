@@ -630,7 +630,7 @@
             [@fadeOutLeave]
             *ngIf="battleRewardXp > 0"
           >
-            +{{ battleRewardXp - 1 }} XP
+            +{{ battleRewardXp > 10 ? battleRewardXp : battleRewardXp - 1 }} XP
           </div>
           <div
             *ngIf="leveledUp && battleRewardXp === 0"
