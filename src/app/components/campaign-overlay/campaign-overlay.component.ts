@@ -105,9 +105,7 @@ export class CampaignOverlayComponent implements OnInit {
     this.closeMenu();
 
     if (this.navigate) {
-      console.log(route);
-      this.loadingService.isRefreshing$.next(true);
-      this.loadingService.navigate(route, 'loadingBg.png', 'Loading..');
+      this.loadingService.navigate(route, 'loadingBg.png', 'Loading...');
     }
   }
 

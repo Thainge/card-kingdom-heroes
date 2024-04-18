@@ -464,7 +464,6 @@ export class BattleComponent implements OnInit {
     // Game init
     if (this.Cards.length < 1) {
       this.gameInit();
-      this.endGame(true);
     }
 
     this.loadingService.isRefreshing$.subscribe((x) => {
