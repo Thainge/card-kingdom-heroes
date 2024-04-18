@@ -299,6 +299,10 @@ export class AppComponent implements OnInit {
     }
 
     if (value.includes('setgold')) {
+      const goldValue = Number(value.slice(8));
+      if (goldValue && typeof goldValue === 'number') {
+        this.playerService.gold$.next(goldValue);
+      }
       this.consoleItems.unshift(value);
       this.consoleItems.unshift('');
       return;

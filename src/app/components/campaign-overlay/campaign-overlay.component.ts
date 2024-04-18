@@ -20,6 +20,7 @@ import {
 import { LoadingService } from 'src/app/services/loading.service';
 import Swiper from 'swiper';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
+import { gameTheme } from 'src/app/models/theme';
 
 interface CampaignBox {
   id: number;
@@ -28,6 +29,7 @@ interface CampaignBox {
   locked: boolean;
   stars: number;
   total: number;
+  theme: gameTheme;
 }
 
 type MapRoute =
@@ -120,6 +122,8 @@ export class CampaignOverlayComponent implements OnInit {
   chooseCampaign(campaign: CampaignBox) {
     const route = '/' + campaign.url;
     localStorage.setItem('currentRoute', campaign.url);
+    const gameTheme = campaign.theme;
+    this.playerService.gameTheme$.next(gameTheme);
     const localGold = this.localStorageService.getPlayerGold();
     this.playerService.gold$.next(localGold);
     this.playerService.playSound('open.mp3');

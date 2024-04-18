@@ -192,9 +192,8 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
       return x;
     });
     this.flagsList.forEach((x) => {
-      if (x.id === 1 && x.levelStatus === 'finished') {
+      if (x.id === 1) {
         this.specialLevelsData.wheelShow = true;
-        this.specialLevelsData.hero4Show = true;
       }
 
       // Forest finished unlock challenge

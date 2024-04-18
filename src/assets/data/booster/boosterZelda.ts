@@ -2,7 +2,7 @@ export const BoosterPacksZelda = [
   {
     id: 1,
     image: 'boosterPackZeldaGreen.png',
-    title: 'Forest Booster Pack',
+    title: 'Faron Woods Pack',
     count: 0,
     cost: 100,
     unlocked: true,
@@ -10,8 +10,8 @@ export const BoosterPacksZelda = [
   },
   {
     id: 2,
-    image: 'boosterPackZeldaBlue.png',
-    title: 'Snow Booster Pack',
+    image: 'boosterPackZeldaRed.png',
+    title: 'Eldin Volcano Pack',
     count: 0,
     cost: 100,
     unlocked: false,
@@ -20,7 +20,7 @@ export const BoosterPacksZelda = [
   {
     id: 3,
     image: 'boosterPackZeldaYellow.png',
-    title: 'Desert Booster Pack',
+    title: 'Lanayru Desert Pack',
     count: 0,
     cost: 100,
     unlocked: false,

@@ -68,7 +68,7 @@ type Music = 'startingPageMusic.mp3' | 'mapMusic.mp3' | 'battleMusic.mp3';
   providedIn: 'root',
 })
 export class playerService implements OnInit {
-  readonly gameTheme$ = new BehaviorSubject<gameTheme>('mario');
+  readonly gameTheme$ = new BehaviorSubject<gameTheme>('default');
   readonly wildCard: CardDto = {
     id: 55,
     wild: true,

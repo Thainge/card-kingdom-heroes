@@ -877,7 +877,7 @@ export class BattleComponent implements OnInit {
           level: 2,
         },
       ];
-      this.gameThemePathEnemy = 'mario';
+      this.gameThemePathEnemy = 'default';
       this.showSnowEffect = false;
       this.showBubblesEffect = false;
       this.showLeavesEffect = false;

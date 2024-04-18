@@ -28,6 +28,7 @@ import {
   ChallengeFlagsZelda,
   ChallengeLevelsZelda,
 } from 'src/assets/data/specialLevels/specialLevelsZelda';
+import { gameTheme } from '../models/theme';
 
 type RouteUrl = 'cardkingdom-map' | 'zelda-map';
 
@@ -148,6 +149,7 @@ interface CampaignBox {
   locked: boolean;
   stars: number;
   total: number;
+  theme: gameTheme;
 }
 
 interface RouteDataObj {
@@ -215,6 +217,7 @@ export class LocalStorageService {
           locked: false,
           stars: 0,
           total: 0,
+          theme: 'default',
         },
         {
           id: 2,
@@ -223,6 +226,7 @@ export class LocalStorageService {
           locked: true,
           stars: 0,
           total: 0,
+          theme: 'zelda',
         },
       ];
       this.setCampaignsData(defaultData);
