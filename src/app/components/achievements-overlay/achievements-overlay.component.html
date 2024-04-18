@@ -26,6 +26,9 @@
         <div
           class="overlayAchievementContainer"
           *ngIf="item.unlocked && !item.gemsUnlocked"
+          [ngClass]="{
+            disabledHover: item.worldId !== currentWorld
+          }"
           [@fadeOutLeave]="{
             value: '',
             params: { duration: 300, delay: 0 }

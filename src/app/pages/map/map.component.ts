@@ -191,7 +191,7 @@ export class MapComponent implements AfterViewInit, OnInit {
 
       return x;
     });
-    const heroes: PlayerDto[] = JSON.parse(
+    let heroes: PlayerDto[] = JSON.parse(
       localStorage.getItem('heroData') ?? '[]'
     );
     this.flagsList.forEach((x) => {
@@ -236,6 +236,7 @@ export class MapComponent implements AfterViewInit, OnInit {
 
             return x;
           });
+          heroes = newHeroes;
           localStorage.setItem('heroData', JSON.stringify(newHeroes));
         }
       }
@@ -303,19 +304,19 @@ export class MapComponent implements AfterViewInit, OnInit {
         this.specialLevelsData.hero4Show = true;
       }
       if (x.id === 20 && x.levelStatus === 'finished') {
-        this.showNewHero = true;
-        this.shownNewHero = {
-          id: 2,
-          cost: 0,
-          count: 0,
-          image: 'zeldaCampaign.png',
-          showNew: true,
-          title: 'New Campaign',
-          unlocked: true,
-        };
         const campaignData = this.localStorageService.getCampaignsData();
         const newCampaignsData = campaignData.map((x) => {
-          if (x.id === 2) {
+          if (x.id === 2 && x.locked) {
+            this.showNewHero = true;
+            this.shownNewHero = {
+              id: 2,
+              cost: 0,
+              count: 0,
+              image: 'zeldaCampaign.png',
+              showNew: true,
+              title: 'New Campaign',
+              unlocked: true,
+            };
             return { ...x, locked: false };
           }
           return x;
@@ -372,22 +373,6 @@ export class MapComponent implements AfterViewInit, OnInit {
       });
     }
     await this.timeout(4000);
-    // this.flagsList = this.flagsList.map((x) => {
-    //   if (x.levelStatus === 'nextLevel') {
-    //     return { ...x, alreadyAnimated: true };
-    //   }
-
-    //   return x;
-    // });
-    // this.currentLevel = this.flagsList.find(
-    //   (x) => x.levelStatus === 'nextLevel'
-    // );
-    // console.log(this.currentLevel);
-    // this.flagsList.forEach((x) => {
-    //   if (x.levelStatus === 'justFinished') {
-    //     this.finishLevel(x);
-    //   }
-    // });
     this.loadingService.displayOptions$.next(true);
   }
 

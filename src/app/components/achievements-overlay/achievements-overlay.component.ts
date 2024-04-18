@@ -28,8 +28,11 @@ import { playerService } from 'src/app/services/player.service';
 })
 export class AchievementsOverlayComponent implements OnInit {
   open: boolean = false;
+  currentWorld: number = 0;
   @Input('open') set openChanged(x: boolean) {
     this.open = x;
+    this.currentWorld = this.localStorageService.getCurrentAchievementPage();
+    this.pageAchievements(this.currentpage);
     if (x) {
       this.checkTip();
     }
@@ -37,7 +40,7 @@ export class AchievementsOverlayComponent implements OnInit {
   achievementsList: AchievementObject[] = [];
   achievementsListClean: AchievementObject[] = [];
   currentpage: number = 1;
-  pageNumbers: number[] = [1, 2, 3];
+  pageNumbers: number[] = [1, 2];
   gold: number = 0;
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
@@ -55,8 +58,19 @@ export class AchievementsOverlayComponent implements OnInit {
     this.playerService.gold$.subscribe((x) => {
       this.gold = x;
     });
-    this.achievementsListClean = this.localStorageService.getAchievements();
+    this.achievementService.achievements$.subscribe((x) => {
+      this.initAchievements();
+    });
+    this.achievementService.allAchievements$.subscribe((x) => {
+      this.initAchievements();
+    });
+    this.initAchievements();
+    this.currentpage = this.localStorageService.getCurrentAchievementPage();
     this.pageAchievements(this.currentpage);
+  }
+
+  initAchievements() {
+    this.achievementsListClean = this.localStorageService.getAllAchievements();
   }
 
   checkTip() {
@@ -78,6 +92,13 @@ export class AchievementsOverlayComponent implements OnInit {
   }
 
   getReward(achievement: AchievementObject) {
+    if (
+      achievement.worldId !==
+      this.localStorageService.getCurrentAchievementPage()
+    ) {
+      return;
+    }
+
     this.playerService.playSound('buyItem.mp3');
     this.achievementsListClean = this.achievementsListClean.map((x) => {
       if (x.id === achievement.id) {

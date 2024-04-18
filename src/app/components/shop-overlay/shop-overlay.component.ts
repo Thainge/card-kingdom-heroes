@@ -111,7 +111,6 @@ export class ShopOverlayComponent implements OnInit {
 
   constructor(
     private loadingService: LoadingService,
-    private router: Router,
     private cardService: CardService,
     private playerService: playerService,
     private achievementService: AchievementService,

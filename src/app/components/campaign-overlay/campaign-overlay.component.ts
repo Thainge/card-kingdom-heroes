@@ -21,6 +21,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 import Swiper from 'swiper';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
 import { gameTheme } from 'src/app/models/theme';
+import { MapRoute } from 'src/app/models/mapRoute';
 
 interface CampaignBox {
   id: number;
@@ -31,14 +32,6 @@ interface CampaignBox {
   total: number;
   theme: gameTheme;
 }
-
-type MapRoute =
-  | 'cardkingdom-map'
-  | 'zelda-map'
-  | 'mario-map'
-  | 'tf2-map'
-  | 'kirby-map'
-  | 'donkeykong-map';
 
 @Component({
   selector: 'app-campaign-overlay',
@@ -62,13 +55,7 @@ export class CampaignOverlayComponent implements OnInit {
     this.currentIndex = 0;
     setTimeout(() => {
       this.swiper = this.swiperRef?.nativeElement.swiper;
-      const campaignsData = this.localStorageService.currentRoute();
-      if (campaignsData === 'cardkingdom-map') {
-        this.swiper?.slideTo(0);
-      }
-      if (campaignsData === 'zelda-map') {
-        this.swiper?.slideTo(1);
-      }
+      this.swiper?.slideTo(this.localStorageService.getCurrentSlide());
     }, 0);
   }
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
@@ -95,27 +82,7 @@ export class CampaignOverlayComponent implements OnInit {
   ngAfterViewInit() {}
 
   setStars() {
-    const starsData = this.localStorageService.getStarsData();
-    const campaignsData = this.localStorageService.getCampaignsData();
-    this.campaigns = campaignsData.map((x) => {
-      if (x.id === 1) {
-        return {
-          ...x,
-          stars: starsData.cardKingdomStars,
-          total: starsData.cardKingdomTotal,
-        };
-      }
-
-      if (x.id === 2) {
-        return {
-          ...x,
-          stars: starsData.zeldaStars,
-          total: starsData.zeldaTotal,
-        };
-      }
-
-      return x;
-    });
+    this.campaigns = this.localStorageService.getCampaignStarsData();
   }
 
   routeIsMap(): boolean {

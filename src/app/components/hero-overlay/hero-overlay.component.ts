@@ -88,7 +88,7 @@ export class HeroOverlayComponent implements OnInit {
     // }
 
     this.currentHero = this.heroes.find((x) => x.selected);
-    localStorage.setItem('heroData', JSON.stringify(this.heroes));
+    // localStorage.setItem('heroData', JSON.stringify(this.heroes));
     this.playerService.currentHero$.next(this.heroes.find((x) => x.selected));
   }
 
@@ -232,7 +232,6 @@ export class HeroOverlayComponent implements OnInit {
         }
         return x;
       });
-      console.log(this.currentHero);
       this.heroes = this.heroes.map((x) => {
         if (x.id === this.currentHero?.id) {
           return this.currentHero;
@@ -290,7 +289,7 @@ export class HeroOverlayComponent implements OnInit {
         }
         return x;
       });
-      console.log(this.heroes.find((x) => x.id === this.currentHero?.id));
+
       localStorage.setItem('heroData', JSON.stringify(this.heroes));
       this.playerService.currentHero$.next(this.heroes.find((x) => x.selected));
     }

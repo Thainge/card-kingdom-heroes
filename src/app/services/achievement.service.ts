@@ -9,8 +9,8 @@ import { LocalStorageService } from './localstorage.service';
 export class AchievementService {
   readonly achievements$ = new BehaviorSubject<AchievementObject>({
     id: 0,
-    worldId: 1,
     description: '',
+    worldId: 0,
     image: '',
     title: '',
     unlocked: false,
@@ -26,11 +26,12 @@ export class AchievementService {
 
   public unlockNewAchievement(id: number) {
     const currentData: AchievementObject[] =
-      this.localStorageService.getAchievements();
+      this.localStorageService.getAllAchievements();
     let updated = false;
     let updateObj: AchievementObject | undefined;
+    const currentPage = this.localStorageService.getCurrentAchievementPage();
     const newData = currentData.map((x) => {
-      if (x.id === id && !x.unlocked && x.worldId === 1) {
+      if (x.id === id && !x.unlocked && x.worldId === currentPage) {
         updated = true;
         updateObj = x;
         return { ...x, unlocked: true };

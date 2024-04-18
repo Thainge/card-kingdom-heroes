@@ -239,3 +239,9 @@
   text-shadow: 2px 2px black;
   z-index: 2;
 }
+
+.disabledHover {
+  filter: grayscale(1) brightness(0.8);
+  scale: 1 !important;
+  pointer-events: none;
+}

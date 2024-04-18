@@ -185,8 +185,14 @@ export class LocalStorageService {
   public currentRoute = (): RouteUrl =>
     (localStorage.getItem('currentRoute') as RouteUrl) ?? 'cardkingdom-map';
 
-  private getRouteData(): RouteDataObj {
-    if (this.currentRoute() === 'zelda-map') {
+  private getRouteData(
+    custom: boolean = false,
+    route: RouteUrl = 'cardkingdom-map'
+  ): RouteDataObj {
+    if (
+      this.currentRoute() === 'zelda-map' ||
+      (custom && route === 'zelda-map')
+    ) {
       return {
         ability: AbilityDataZelda,
         achievement: AchievementsDataZelda,
@@ -213,6 +219,51 @@ export class LocalStorageService {
       challengeFlags: ChallengeFlagsZelda,
       wheelData: WheelData,
     };
+  }
+
+  public getCampaignStarsData(): CampaignBox[] {
+    const starsData = this.getStarsData();
+    const campaignsData = this.getCampaignsData();
+    return campaignsData.map((x) => {
+      if (x.id === 1) {
+        return {
+          ...x,
+          stars: starsData.cardKingdomStars,
+          total: starsData.cardKingdomTotal,
+        };
+      }
+
+      if (x.id === 2) {
+        return {
+          ...x,
+          stars: starsData.zeldaStars,
+          total: starsData.zeldaTotal,
+        };
+      }
+
+      return x;
+    });
+  }
+
+  public getCurrentSlide(): number {
+    if (this.currentRoute() === 'cardkingdom-map') {
+      return 0;
+    }
+    if (this.currentRoute() === 'zelda-map') {
+      return 1;
+    }
+    return 0;
+  }
+
+  public getCurrentAchievementPage(): number {
+    if (this.currentRoute() === 'cardkingdom-map') {
+      return 1;
+    }
+    if (this.currentRoute() === 'zelda-map') {
+      return 2;
+    }
+
+    return 1;
   }
 
   public getCurrentGoldImage(): string {
@@ -298,6 +349,24 @@ export class LocalStorageService {
 
   public getAbilityData(): AbilityCard[] {
     return this.getRouteData().ability;
+  }
+
+  public getAllAchievements(): AchievementObject[] {
+    const achievements = this.getSingleAchievementList('cardkingdom-map');
+    const achievementsZelda = this.getSingleAchievementList('zelda-map');
+    return [...achievements, ...achievementsZelda];
+  }
+
+  private getSingleAchievementList(route: RouteUrl): AchievementObject[] {
+    const RouteData = this.getRouteData(true, route).achievement;
+    const data = JSON.parse(
+      localStorage.getItem(route + '-achievements') ?? '[]'
+    );
+    if (data.length < 1) {
+      return RouteData;
+    } else {
+      return data;
+    }
   }
 
   public getAchievements(): AchievementObject[] {

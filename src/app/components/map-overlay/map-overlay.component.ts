@@ -20,12 +20,10 @@ import { DifficultyOverlayComponent } from '../choose-difficulty-overlay/choose-
 import { CampaignOverlayComponent } from '../campaign-overlay/campaign-overlay.component';
 import { PremiumOverlayComponent } from '../premium-overlay/premium-overlay.component';
 import { WheelOverlayComponent } from '../wheel-overlay/wheel-overlay.component';
-import { ActivatedRoute, Router } from '@angular/router';
 import { playerService } from 'src/app/services/player.service';
 import { BoosterPack } from 'src/app/models/boosterPack';
 import { AchievementService } from 'src/app/services/achievement.service';
 import { AchievementObject } from 'src/app/models/achievement';
-import { LevelDto } from 'src/app/models/level';
 import { FlagDto } from 'src/app/models/flag';
 import { AbilityCard } from 'src/app/models/abilityCard';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
@@ -37,8 +35,6 @@ interface Tip {
   img: string;
   tipRows: string[];
 }
-
-type Theme = 'cardkingdom' | 'zelda';
 
 @Component({
   selector: 'app-map-overlay',
@@ -131,8 +127,13 @@ export class MapOverlayComponent implements OnInit {
         this.achievementService.unlockNewAchievement(10);
       }, 2000);
     }
+    this.achievementService.achievements$.subscribe((x) => {
+      this.achievements = this.localStorageService.getAchievements();
+      this.checkAchievements();
+    });
     this.achievementService.allAchievements$.subscribe((x) => {
-      this.achievements = x;
+      this.achievements = this.localStorageService.getAchievements();
+      this.checkAchievements();
     });
     this.playerService.currentHero$.subscribe((x) => {
       this.currentHero = x;
@@ -172,6 +173,7 @@ export class MapOverlayComponent implements OnInit {
     });
     this.checkTip();
     this.checkDeck();
+    this.achievements = this.localStorageService.getAchievements();
     this.checkAchievements();
     this.deckInterval = setInterval(() => {
       this.checkDeck();
