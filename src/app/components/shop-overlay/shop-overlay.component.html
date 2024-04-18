@@ -285,7 +285,7 @@
               (click)="buyBoosterPack(item)"
             >
               <img src="./assets/button.png" class="swipeBtn" />
-              <img src="./assets/gold.png" class="swipeBtnInnerImage" />
+              <img [src]="goldImage" class="swipeBtnInnerImage" />
               <div class="swipeBtnText">{{ item.cost }}</div>
             </div>
             <div class="absoluteCountBox">
@@ -305,7 +305,7 @@
       <div class="goldBoxAbsolute">
         <div class="currentGoldBox">
           <img src="./assets/shopBtnBg.png" class="currentGoldBgImg" />
-          <img src="./assets/gold.png" class="currentGoldImg" />
+          <img [src]="goldImage" class="currentGoldImg" />
           <div class="currentGoldTxt swipeBtnText">{{ gold }}</div>
         </div>
       </div>

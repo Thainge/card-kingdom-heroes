@@ -107,6 +107,7 @@ export class WheelOverlayComponent implements OnInit {
   showPrize: boolean = false;
   gold: number = 0;
   costLess: boolean = false;
+  goldImage: string = './assets/gold.png';
 
   constructor(
     private cardService: CardService,
@@ -116,6 +117,7 @@ export class WheelOverlayComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.goldImage = this.localStorageService.getCurrentGoldImage();
     try {
       const localPremium = JSON.parse(
         localStorage.getItem('premiumData') ?? '[]'

@@ -217,6 +217,29 @@ export class MapComponent implements AfterViewInit, OnInit {
         this.localStorageService.setBoosterPacks(newBoosterPacks);
       }
 
+      if (x.id === 5 && x.levelStatus === 'finished') {
+        if (heroes.length > 0) {
+          const newHeroes = heroes.map((x) => {
+            if (x.id === 2) {
+              this.showNewHero = true;
+              this.shownNewHero = {
+                id: 2,
+                cost: 0,
+                count: 0,
+                image: x.image,
+                showNew: true,
+                title: 'New Hero!',
+                unlocked: true,
+              };
+              return { ...x, disabled: false, unlocked: true };
+            }
+
+            return x;
+          });
+          localStorage.setItem('heroData', JSON.stringify(newHeroes));
+        }
+      }
+
       if (x.id === 10 && x.levelStatus === 'finished') {
         const boosterPacks: BoosterPack[] =
           this.localStorageService.getBoosterPacks();
@@ -234,10 +257,10 @@ export class MapComponent implements AfterViewInit, OnInit {
       if (x.id === 10 && x.levelStatus === 'finished') {
         if (heroes.length > 0) {
           const newHeroes = heroes.map((x) => {
-            if (x.id === 2) {
+            if (x.id === 3) {
               this.showNewHero = true;
               this.shownNewHero = {
-                id: 2,
+                id: 3,
                 cost: 0,
                 count: 0,
                 image: x.image,

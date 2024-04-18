@@ -43,6 +43,7 @@ export class BattleStartOverlayComponent implements OnInit {
   @Input('finished') finished: boolean = false;
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
+  goldImage: string = './assets/gold.png';
 
   constructor(
     private loadingService: LoadingService,
@@ -65,7 +66,9 @@ export class BattleStartOverlayComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.goldImage = this.localStorageService.getCurrentGoldImage();
+  }
 
   closeMenu() {
     this.playerService.playSound('close.mp3');

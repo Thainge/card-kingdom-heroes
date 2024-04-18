@@ -101,6 +101,15 @@ interface WheelItem {
   goldAmount: number;
 }
 
+interface RewardItemPartial {
+  id: number;
+  text: string;
+  image: string;
+  color: RewardColor;
+}
+
+type RewardColor = 'blue' | 'gold' | 'purple' | 'green';
+
 type RewardType = 'gold' | 'booster';
 
 interface WheelProps {
@@ -203,6 +212,45 @@ export class LocalStorageService {
       challengeLevels: ChallengeLevelsZelda,
       challengeFlags: ChallengeFlagsZelda,
       wheelData: WheelData,
+    };
+  }
+
+  public getCurrentGoldImage(): string {
+    if (this.currentRoute() === 'cardkingdom-map') {
+      return './assets/gold.png';
+    }
+
+    if (this.currentRoute() === 'zelda-map') {
+      return './assets/goldZelda.png';
+    }
+
+    return './assets/gold.png';
+  }
+
+  public getRewardItem(): RewardItemPartial {
+    if (this.currentRoute() === 'cardkingdom-map') {
+      return {
+        id: 1,
+        color: 'blue',
+        image: 'goldReward.png',
+        text: 'Gems',
+      };
+    }
+
+    if (this.currentRoute() === 'zelda-map') {
+      return {
+        id: 1,
+        color: 'green',
+        image: 'goldRewardZelda.png',
+        text: 'Rupees',
+      };
+    }
+
+    return {
+      id: 1,
+      color: 'blue',
+      image: 'goldReward.png',
+      text: 'Gems',
     };
   }
 

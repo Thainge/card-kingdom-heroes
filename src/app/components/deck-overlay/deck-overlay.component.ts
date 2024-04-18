@@ -113,6 +113,7 @@ export class DeckOverlayComponent implements OnInit {
   showingUpgradeAnimation: boolean = false;
   canClickEnd: boolean = false;
   gold: number = 0;
+  goldImage: string = './assets/gold.png';
 
   @ViewChild('container') container: any;
 
@@ -127,6 +128,7 @@ export class DeckOverlayComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.goldImage = this.localStorageService.getCurrentGoldImage();
     this.playerService.gold$.subscribe((x) => {
       this.gold = x;
     });

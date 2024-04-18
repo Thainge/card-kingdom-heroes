@@ -191,6 +191,9 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
 
       return x;
     });
+    const heroes: PlayerDto[] = JSON.parse(
+      localStorage.getItem('heroData') ?? '[]'
+    );
     this.flagsList.forEach((x) => {
       if (x.id === 1) {
         this.specialLevelsData.wheelShow = true;
@@ -215,6 +218,29 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
           return x;
         });
         this.localStorageService.setBoosterPacks(newBoosterPacks);
+      }
+
+      if (x.id === 5 && x.levelStatus === 'finished') {
+        if (heroes.length > 0) {
+          const newHeroes = heroes.map((x) => {
+            if (x.id === 5) {
+              this.showNewHero = true;
+              this.shownNewHero = {
+                id: 5,
+                cost: 0,
+                count: 0,
+                image: x.image,
+                showNew: true,
+                title: 'New Hero!',
+                unlocked: true,
+              };
+              return { ...x, disabled: false, unlocked: true };
+            }
+
+            return x;
+          });
+          localStorage.setItem('heroData', JSON.stringify(newHeroes));
+        }
       }
 
       // Fire finished unlock challenge

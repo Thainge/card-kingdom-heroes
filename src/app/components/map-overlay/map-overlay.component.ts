@@ -106,6 +106,7 @@ export class MapOverlayComponent implements OnInit {
   showDeckIcon: boolean = false;
   deckInterval: any;
   achievementHasGems: boolean = false;
+  goldImage: string = './assets/gold.png';
 
   constructor(
     private loadingService: LoadingService,
@@ -115,6 +116,7 @@ export class MapOverlayComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.goldImage = this.localStorageService.getCurrentGoldImage();
     this.flagsList = this.localStorageService.getFlagsData();
     this.completedFlagsList = this.flagsList.filter(
       (x) => x.levelStatus === 'finished' || x.levelStatus === 'justFinished'

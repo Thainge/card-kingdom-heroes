@@ -28,7 +28,7 @@
             *ngFor="let hero of heroes; index as i"
             class="heroItemBox"
             [ngClass]="{
-              disabledBox: hero.disabled
+              disabledBox: hero.disabled || !activeIndexes.includes(hero.id)
             }"
             (click)="currentHero = hero"
           >
@@ -53,7 +53,9 @@
       src="./assets/heroBorder.png"
       class="heroBorder"
       [ngClass]="{
-        disabledBox: currentHero?.disabled
+        disabledBox:
+          currentHero?.disabled ||
+          !activeIndexes.includes(currentHero?.id ?? -1)
       }"
       [ngStyle]="{
       'background-image': 'url(./assets/heroImages/' + currentHero?.image + ')',
@@ -69,7 +71,6 @@
           greenText: currentHero?.color === 'green',
           blueText: currentHero?.color === 'blue',
           purpleText: currentHero?.color === 'purple',
-          disabledBox: currentHero?.disabled
         }"
       >
         {{ currentHero?.name }}
@@ -80,7 +81,9 @@
         class="heroBtnRelative"
         (click)="selectHero()"
         [ngClass]="{
-          disabledBtn: currentHero?.disabled
+          disabledBtn:
+            currentHero?.disabled ||
+            !activeIndexes.includes(currentHero?.id ?? -1)
         }"
       >
         <img
@@ -155,7 +158,8 @@
                     greyBox:
                       (currentHero &&
                         currentHero.points! < item.cost[item.level]) ||
-                      !currentHero?.unlocked,
+                      !currentHero?.unlocked ||
+                      !activeIndexes.includes(currentHero?.id ?? -1),
                     relativeIconBoxHover:
                       isCurrentlyHovering(item) &&
                       currentHero?.points! >= item.cost[item.level]
@@ -183,7 +187,8 @@
                     greyBox:
                       (currentHero &&
                         currentHero.points! < item.cost[item.level]) ||
-                      !currentHero?.unlocked
+                      !currentHero?.unlocked ||
+                      !activeIndexes.includes(currentHero?.id ?? -1)
                   }"
                 >
                   <div class="miniRelative">

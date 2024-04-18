@@ -836,7 +836,8 @@
                 [ngClass]="{
                   goldReward: item.color === 'gold',
                   purpleReward: item.color === 'purple',
-                  blueReward: item.color === 'blue'
+                  blueReward: item.color === 'blue',
+                  greenReward: item.color === 'green'
                 }"
                 [src]="'./assets/rewards/' + item.image"
               />
@@ -845,7 +846,8 @@
                 [ngClass]="{
                   goldText: item.color === 'gold',
                   purpleText: item.color === 'purple',
-                  blueText: item.color === 'blue'
+                  blueText: item.color === 'blue',
+                  greenText: item.color === 'green'
                 }"
                 [ngStyle]="{
                   'font-family': 'headerFont'

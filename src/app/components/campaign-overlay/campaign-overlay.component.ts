@@ -62,6 +62,13 @@ export class CampaignOverlayComponent implements OnInit {
     this.currentIndex = 0;
     setTimeout(() => {
       this.swiper = this.swiperRef?.nativeElement.swiper;
+      const campaignsData = this.localStorageService.currentRoute();
+      if (campaignsData === 'cardkingdom-map') {
+        this.swiper?.slideTo(0);
+      }
+      if (campaignsData === 'zelda-map') {
+        this.swiper?.slideTo(1);
+      }
     }, 0);
   }
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
@@ -124,6 +131,7 @@ export class CampaignOverlayComponent implements OnInit {
     localStorage.setItem('currentRoute', campaign.url);
     const gameTheme = campaign.theme;
     this.playerService.gameTheme$.next(gameTheme);
+    localStorage.setItem('gameThemePath', gameTheme);
     const localGold = this.localStorageService.getPlayerGold();
     this.playerService.gold$.next(localGold);
     this.playerService.playSound('open.mp3');

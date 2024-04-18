@@ -50,7 +50,7 @@
       <div class="goldBoxAbsolute">
         <div class="currentGoldBox">
           <img src="./assets/shopBtnBg.png" class="currentGoldBgImg" />
-          <img src="./assets/gold.png" class="currentGoldImg" />
+          <img [src]="goldImage" class="currentGoldImg" />
           <div class="currentGoldTxt">{{ gold }}</div>
         </div>
       </div>
@@ -92,7 +92,7 @@
             >
               <img src="./assets/wideButton.png" class="swipeBtn" />
               <img
-                src="./assets/gold.png"
+                [src]="goldImage"
                 class="swipeBtnInnerImage"
                 *ngIf="!item.bought"
               />

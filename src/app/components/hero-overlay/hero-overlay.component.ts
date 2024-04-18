@@ -40,6 +40,7 @@ export class HeroOverlayComponent implements OnInit {
   heroes: PlayerDto[] = [];
   currentHero: PlayerDto | undefined;
   currentHoveringUpgrade: HeroUpgrade | undefined;
+  activeIndexes: number[] = [];
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
 
@@ -62,6 +63,7 @@ export class HeroOverlayComponent implements OnInit {
     });
 
     if (currentRoute === 'cardkingdom-map') {
+      this.activeIndexes = [1, 2, 3];
       this.heroes[0].disabled = false;
       this.heroes[0].selected = true;
       this.heroes[0].unlocked = true;
@@ -69,10 +71,11 @@ export class HeroOverlayComponent implements OnInit {
     }
 
     if (currentRoute === 'zelda-map') {
-      this.heroes[2].disabled = false;
-      this.heroes[2].selected = true;
-      this.heroes[2].unlocked = true;
-      this.currentHero = this.heroes[2];
+      this.activeIndexes = [4, 5];
+      this.heroes[3].disabled = false;
+      this.heroes[3].selected = true;
+      this.heroes[3].unlocked = true;
+      this.currentHero = this.heroes[3];
     }
 
     // if (this.router.url.includes('zelda-map')) {
@@ -126,7 +129,10 @@ export class HeroOverlayComponent implements OnInit {
   }
 
   upgradeHero(item: HeroUpgrade) {
-    if (!this.currentHero?.unlocked) {
+    if (
+      !this.currentHero?.unlocked ||
+      !this.activeIndexes.includes(this.currentHero?.id ?? -1)
+    ) {
       return;
     }
 

@@ -104,6 +104,7 @@ export class ShopOverlayComponent implements OnInit {
   canClickFinish: boolean = false;
   specialList: number[] = [];
   canClickNext: boolean = false;
+  goldImage: string = './assets/gold.png';
 
   allCards: AbilityCard[] = [];
   gold: number = 0;
@@ -118,6 +119,7 @@ export class ShopOverlayComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.goldImage = this.localStorageService.getCurrentGoldImage();
     this.allCards = this.localStorageService.getAbilityData();
     this.playerService.gold$.subscribe((x) => {
       this.gold = x;

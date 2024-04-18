@@ -41,6 +41,7 @@ export class AchievementsOverlayComponent implements OnInit {
   gold: number = 0;
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
+  goldImage: string = './assets/gold.png';
 
   constructor(
     private playerService: playerService,
@@ -50,6 +51,7 @@ export class AchievementsOverlayComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.goldImage = this.localStorageService.getCurrentGoldImage();
     this.playerService.gold$.subscribe((x) => {
       this.gold = x;
     });

@@ -4880,6 +4880,10 @@ text {
   color: rgb(0, 140, 255);
 }
 
+.greenText {
+  color: rgb(43, 255, 0);
+}
+
 .purpleReward {
   background: -webkit-gradient(
     linear,
@@ -4920,6 +4924,27 @@ text {
     rgba(0, 140, 255, 0.6) 100%
   );
   border: 0.3em solid rgba(0, 140, 255, 0.7);
+}
+
+.blueReward {
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(rgba(0, 255, 0, 0.4)),
+    to(rgba(0, 255, 13, 0.6))
+  );
+  background: -o-linear-gradient(
+    top,
+    rgba(0, 255, 0, 0.4) 0%,
+    rgba(0, 255, 13, 0.6) 100%
+  );
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 255, 0, 0.4) 0%,
+    rgba(0, 255, 13, 0.6) 100%
+  );
+  border: 0.3em solid rgba(9, 255, 0, 0.7);
 }
 
 .goldReward {

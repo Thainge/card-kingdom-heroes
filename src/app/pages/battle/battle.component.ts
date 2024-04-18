@@ -138,7 +138,7 @@ interface Tip {
   tipRows: string[];
 }
 
-type RewardColor = 'blue' | 'gold' | 'purple';
+type RewardColor = 'blue' | 'gold' | 'purple' | 'green';
 
 @Component({
   selector: 'app-battle',
@@ -436,8 +436,11 @@ export class BattleComponent implements OnInit {
     });
     // Player game theme
     this.userService.gameTheme$.subscribe((x) => {
-      this.gameThemePath = x;
+      // this.gameThemePath = x;
     });
+    this.gameThemePath =
+      (localStorage.getItem('gameThemePath') as gameTheme) ?? 'default';
+    console.log(this.gameThemePath);
     // Cheats
     this.cheatsService.cheats$.subscribe((x) => {
       if (x === 'wildHand') {
@@ -705,24 +708,20 @@ export class BattleComponent implements OnInit {
         missionDetails.rewardMax
       );
       const randomAmount = this.doubleGold ? randomValue * 4 : randomValue;
+      const localRewardItem = this.localStorageService.getRewardItem();
       this.rewardItemsClean = [
         {
-          id: 1,
-          color: 'blue',
-          image: 'goldReward.png',
-          text: 'Gems',
+          ...localRewardItem,
           textAmount: 'x' + randomAmount,
           value: randomAmount,
         },
       ];
       this.rewardItems = this.rewardItemsClean;
     } else {
+      const localRewardItem = this.localStorageService.getRewardItem();
       this.rewardItemsClean = [
         {
-          id: 1,
-          color: 'blue',
-          image: 'goldReward.png',
-          text: 'Gems',
+          ...localRewardItem,
           textAmount: 'x' + 100,
           value: 100,
         },

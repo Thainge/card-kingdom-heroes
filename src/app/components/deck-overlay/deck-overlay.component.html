@@ -198,7 +198,7 @@
               width: '91.5%'
             }"
           ></div>
-          <img src="./assets/gold.png" class="goldCostImg" />
+          <img [src]="goldImage" class="goldCostImg" />
           <div class="upgradeText goldText">
             {{
               (this.leftUpgradeCard?.goldCost ?? [])[

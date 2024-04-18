@@ -36,7 +36,7 @@
           <div class="rewardRelativeBox">
             <img src="./assets/battleBox.png" />
             <div class="battleBoxImages">
-              <img src="./assets/gold.png" class="goldImg" />
+              <img [src]="goldImage" class="goldImg" />
               <div class="goldEstimateText">
                 {{ missionDetails?.rewardMin }} -
                 {{ missionDetails?.rewardMax }}

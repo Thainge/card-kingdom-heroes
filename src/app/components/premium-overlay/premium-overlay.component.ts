@@ -90,6 +90,7 @@ export class PremiumOverlayComponent implements OnInit {
     },
   ];
   gold: number = 0;
+  goldImage: string = './assets/gold.png';
 
   constructor(
     private loadingService: LoadingService,
@@ -98,6 +99,7 @@ export class PremiumOverlayComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.goldImage = this.localStorageService.getCurrentGoldImage();
     const localPremium = JSON.parse(
       localStorage.getItem('premiumData') ?? '[]'
     );
