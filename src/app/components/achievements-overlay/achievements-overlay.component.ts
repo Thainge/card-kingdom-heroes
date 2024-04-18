@@ -91,6 +91,27 @@ export class AchievementsOverlayComponent implements OnInit {
     }
   }
 
+  checkTipFinish() {
+    const allDone = this.achievementsListClean.filter((x) => x.unlocked);
+
+    const deckTipShown = localStorage.getItem('achievementTipShownFinish');
+    if (!deckTipShown) {
+      localStorage.setItem('achievementTipShownFinish', JSON.stringify(true));
+      this.loadingService.currentTip$.next({
+        title: 'New Unlock',
+        header: 'Congratulations!',
+        text: 'You have 100% complete every achievement in the game!',
+        img: 'achievementImg.png',
+        tipRows: [
+          '- Cheats can now be unlocked',
+          '- Type iloveyou in the console',
+          '- Unlocks all cheat codes',
+        ],
+      });
+      this.loadingService.showTip$.next(true);
+    }
+  }
+
   getReward(achievement: AchievementObject) {
     if (
       achievement.worldId !==
@@ -110,6 +131,9 @@ export class AchievementsOverlayComponent implements OnInit {
     this.playerService.gold$.next(this.gold + achievement.reward);
     this.localStorageService.setAchievements(this.achievementsListClean);
     this.achievementService.allAchievements$.next(this.achievementsListClean);
+    setTimeout(() => {
+      this.checkTipFinish();
+    }, 1);
   }
 
   pageAchievements(number: number) {

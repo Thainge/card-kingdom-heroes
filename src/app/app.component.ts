@@ -268,27 +268,42 @@ export class AppComponent implements OnInit {
   }
 
   async determineCommand(value: string) {
+    const secretCodeEntered = localStorage.getItem('secretCodeEntered');
+    const secretCodeUnlocked = localStorage.getItem(
+      'achievementTipShownFinish'
+    );
+
     if (value.toLowerCase() === 'help') {
       await this.timeout(500);
       this.consoleItems.unshift('--- Commands List ---');
-      this.consoleItems.unshift(
-        'Toggles the difficulty to easy or hard: &nbsp;<b>easyMode</b>'
-      );
-      this.consoleItems.unshift(
-        'Gives player x amount of gold:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>setGold x</b>'
-      );
-      this.consoleItems.unshift(
-        'All cards in hand turn wild:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>wildHand</b>'
-      );
-      this.consoleItems.unshift(
-        "Sets the player's health to 99:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>infiniteHealth</b>"
-      );
+
+      if (secretCodeEntered) {
+        this.consoleItems.unshift(
+          'Gives player x amount of gold:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>setGold x</b>'
+        );
+        this.consoleItems.unshift(
+          'All cards in hand turn wild:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>wildHand</b>'
+        );
+        this.consoleItems.unshift(
+          "Sets the player's health to 99:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>infiniteHealth</b>"
+        );
+      }
+
       this.consoleItems.unshift(
         'Shows list of possible commands:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>help</b>'
       );
       this.consoleItems.unshift(
         'Clears the console:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <b>clear</b>'
       );
+      if (!secretCodeEntered) {
+        this.consoleItems.unshift(
+          `Unlocks Cheat Codes:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <b>${
+            secretCodeUnlocked
+              ? 'iloveyou'
+              : 'SECRET CODE (100% all achievements to view secret code)'
+          }</b>`
+        );
+      }
       this.consoleItems.unshift('');
       return;
     }
@@ -298,7 +313,7 @@ export class AppComponent implements OnInit {
       return;
     }
 
-    if (value.includes('setgold')) {
+    if (value.includes('setgold') && secretCodeEntered) {
       const goldValue = Number(value.slice(8));
       if (goldValue && typeof goldValue === 'number') {
         this.playerService.gold$.next(goldValue);
@@ -308,26 +323,34 @@ export class AppComponent implements OnInit {
       return;
     }
 
-    if (value.includes('wildhand')) {
+    if (value.includes('wildhand') && secretCodeEntered) {
       this.consoleItems.unshift(value);
       this.consoleItems.unshift('');
       this.cheatsService.cheats$.next('wildHand');
       return;
     }
 
-    if (value.includes('infinitehealth')) {
+    if (value.includes('infinitehealth') && secretCodeEntered) {
       this.consoleItems.unshift(value);
       this.consoleItems.unshift('');
       this.cheatsService.cheats$.next('infiniteHealth');
       return;
     }
 
-    if (value.includes('easymode')) {
-      const easyLocal = localStorage.getItem('easymode');
-      let easyMode = easyLocal;
-
-      localStorage.setItem('easymode', JSON.stringify(!easyMode));
-      window.location.reload();
+    if (value.includes('iloveyou')) {
+      localStorage.setItem('secretCodeEntered', JSON.stringify(true));
+      setTimeout(() => {
+        this.consoleItems.unshift('Congratualations!');
+      }, 100);
+      setTimeout(() => {
+        this.consoleItems.unshift('Cheats have now been unlocked');
+      }, 300);
+      setTimeout(() => {
+        this.consoleItems.unshift(
+          "Type 'help' to list out all possible cheat commands"
+        );
+        this.consoleItems.unshift('');
+      }, 500);
     }
 
     this.consoleItems.unshift('');

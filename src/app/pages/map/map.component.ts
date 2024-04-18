@@ -173,159 +173,163 @@ export class MapComponent implements AfterViewInit, OnInit {
   }
 
   initFlags() {
-    this.flagsList = this.localStorageService.getFlagsData();
+    setTimeout(() => {
+      this.flagsList = this.localStorageService.getFlagsData();
 
-    this.specialLevelsData = this.localStorageService.getSpecialLevelsData();
-    this.nextLevel = this.flagsList.find((x) => x.levelStatus === 'nextLevel');
-    this.currentLevel = this.flagsList.find(
-      (x) => x.levelStatus === 'justFinished'
-    );
-    this.flagsList = this.flagsList.map((x) => {
-      if (x.levelStatus === 'justFinished') {
-        return { ...x, levelStatus: 'finished' };
-      }
+      this.specialLevelsData = this.localStorageService.getSpecialLevelsData();
+      this.nextLevel = this.flagsList.find(
+        (x) => x.levelStatus === 'nextLevel'
+      );
+      this.currentLevel = this.flagsList.find(
+        (x) => x.levelStatus === 'justFinished'
+      );
+      this.flagsList = this.flagsList.map((x) => {
+        if (x.levelStatus === 'justFinished') {
+          return { ...x, levelStatus: 'finished' };
+        }
 
-      if (x.levelStatus === 'nextLevel') {
-        return { ...x, alreadyAnimated: true };
-      }
+        if (x.levelStatus === 'nextLevel') {
+          return { ...x, alreadyAnimated: true };
+        }
 
-      return x;
-    });
-    let heroes: PlayerDto[] = JSON.parse(
-      localStorage.getItem('heroData') ?? '[]'
-    );
-    this.flagsList.forEach((x) => {
-      if (x.id === 3 && x.levelStatus === 'finished') {
-        this.specialLevelsData.wheelShow = true;
-      }
+        return x;
+      });
+      let heroes: PlayerDto[] = JSON.parse(
+        localStorage.getItem('heroData') ?? '[]'
+      );
+      this.flagsList.forEach((x) => {
+        if (x.id === 3 && x.levelStatus === 'finished') {
+          this.specialLevelsData.wheelShow = true;
+        }
 
-      if (x.id === 4 && x.levelStatus === 'finished') {
-        this.specialLevelsData.hero1Show = true;
-      }
+        if (x.id === 4 && x.levelStatus === 'finished') {
+          this.specialLevelsData.hero1Show = true;
+        }
 
-      if (x.id === 5 && x.levelStatus === 'finished') {
-        const boosterPacks: BoosterPack[] =
-          this.localStorageService.getBoosterPacks();
-        const newBoosterPacks = boosterPacks.map((x) => {
-          if (x.id === 2 && !x.unlocked) {
-            this.shownNewBoosterPack = x;
-            this.showBoosterPack = true;
-            return { ...x, unlocked: true };
-          }
-          return x;
-        });
-        this.localStorageService.setBoosterPacks(newBoosterPacks);
-      }
-
-      if (x.id === 5 && x.levelStatus === 'finished') {
-        if (heroes.length > 0) {
-          const newHeroes = heroes.map((x) => {
+        if (x.id === 5 && x.levelStatus === 'finished') {
+          const boosterPacks: BoosterPack[] =
+            this.localStorageService.getBoosterPacks();
+          const newBoosterPacks = boosterPacks.map((x) => {
             if (x.id === 2 && !x.unlocked) {
+              this.shownNewBoosterPack = x;
+              this.showBoosterPack = true;
+              return { ...x, unlocked: true };
+            }
+            return x;
+          });
+          this.localStorageService.setBoosterPacks(newBoosterPacks);
+        }
+
+        if (x.id === 5 && x.levelStatus === 'finished') {
+          if (heroes.length > 0) {
+            const newHeroes = heroes.map((x) => {
+              if (x.id === 2 && !x.unlocked) {
+                this.showNewHero = true;
+                this.shownNewHero = {
+                  id: 2,
+                  cost: 0,
+                  count: 0,
+                  image: x.image,
+                  showNew: true,
+                  title: 'New Hero!',
+                  unlocked: true,
+                };
+                return { ...x, disabled: false, unlocked: true };
+              }
+
+              return x;
+            });
+            heroes = newHeroes;
+            localStorage.setItem('heroData', JSON.stringify(newHeroes));
+          }
+        }
+
+        if (x.id === 10 && x.levelStatus === 'finished') {
+          const boosterPacks: BoosterPack[] =
+            this.localStorageService.getBoosterPacks();
+          const newBoosterPacks = boosterPacks.map((x) => {
+            if (x.id === 3 && !x.unlocked) {
+              this.shownNewBoosterPack = x;
+              this.showBoosterPack = true;
+              return { ...x, unlocked: true };
+            }
+            return x;
+          });
+          this.localStorageService.setBoosterPacks(newBoosterPacks);
+        }
+
+        if (x.id === 10 && x.levelStatus === 'finished') {
+          if (heroes.length > 0) {
+            const newHeroes = heroes.map((x) => {
+              if (x.id === 3 && !x.unlocked) {
+                this.showNewHero = true;
+                this.shownNewHero = {
+                  id: 3,
+                  cost: 0,
+                  count: 0,
+                  image: x.image,
+                  showNew: true,
+                  title: 'New Hero!',
+                  unlocked: true,
+                };
+                return { ...x, disabled: false, unlocked: true };
+              }
+
+              return x;
+            });
+            localStorage.setItem('heroData', JSON.stringify(newHeroes));
+          }
+        }
+
+        if (x.id === 15 && x.levelStatus === 'finished') {
+          const boosterPacks: BoosterPack[] =
+            this.localStorageService.getBoosterPacks();
+          const newBoosterPacks = boosterPacks.map((x) => {
+            if (x.id === 4 && !x.unlocked) {
+              this.shownNewBoosterPack = x;
+              this.showBoosterPack = true;
+              return { ...x, unlocked: true };
+            }
+            return x;
+          });
+          this.localStorageService.setBoosterPacks(newBoosterPacks);
+        }
+
+        if (x.id === 8 && x.levelStatus === 'finished') {
+          this.specialLevelsData.hero2Show = true;
+        }
+
+        if (x.id === 14 && x.levelStatus === 'finished') {
+          this.specialLevelsData.hero3Show = true;
+        }
+
+        if (x.id === 19 && x.levelStatus === 'finished') {
+          this.specialLevelsData.hero4Show = true;
+        }
+        if (x.id === 20 && x.levelStatus === 'finished') {
+          const campaignData = this.localStorageService.getCampaignsData();
+          const newCampaignsData = campaignData.map((x) => {
+            if (x.id === 2 && x.locked) {
               this.showNewHero = true;
               this.shownNewHero = {
                 id: 2,
                 cost: 0,
                 count: 0,
-                image: x.image,
+                image: 'zeldaCampaign.png',
                 showNew: true,
-                title: 'New Hero!',
+                title: 'New Campaign',
                 unlocked: true,
               };
-              return { ...x, disabled: false, unlocked: true };
+              return { ...x, locked: false };
             }
-
             return x;
           });
-          heroes = newHeroes;
-          localStorage.setItem('heroData', JSON.stringify(newHeroes));
+          this.localStorageService.setCampaignsData(newCampaignsData);
         }
-      }
-
-      if (x.id === 10 && x.levelStatus === 'finished') {
-        const boosterPacks: BoosterPack[] =
-          this.localStorageService.getBoosterPacks();
-        const newBoosterPacks = boosterPacks.map((x) => {
-          if (x.id === 3 && !x.unlocked) {
-            this.shownNewBoosterPack = x;
-            this.showBoosterPack = true;
-            return { ...x, unlocked: true };
-          }
-          return x;
-        });
-        this.localStorageService.setBoosterPacks(newBoosterPacks);
-      }
-
-      if (x.id === 10 && x.levelStatus === 'finished') {
-        if (heroes.length > 0) {
-          const newHeroes = heroes.map((x) => {
-            if (x.id === 3 && !x.unlocked) {
-              this.showNewHero = true;
-              this.shownNewHero = {
-                id: 3,
-                cost: 0,
-                count: 0,
-                image: x.image,
-                showNew: true,
-                title: 'New Hero!',
-                unlocked: true,
-              };
-              return { ...x, disabled: false, unlocked: true };
-            }
-
-            return x;
-          });
-          localStorage.setItem('heroData', JSON.stringify(newHeroes));
-        }
-      }
-
-      if (x.id === 15 && x.levelStatus === 'finished') {
-        const boosterPacks: BoosterPack[] =
-          this.localStorageService.getBoosterPacks();
-        const newBoosterPacks = boosterPacks.map((x) => {
-          if (x.id === 4 && !x.unlocked) {
-            this.shownNewBoosterPack = x;
-            this.showBoosterPack = true;
-            return { ...x, unlocked: true };
-          }
-          return x;
-        });
-        this.localStorageService.setBoosterPacks(newBoosterPacks);
-      }
-
-      if (x.id === 8 && x.levelStatus === 'finished') {
-        this.specialLevelsData.hero2Show = true;
-      }
-
-      if (x.id === 14 && x.levelStatus === 'finished') {
-        this.specialLevelsData.hero3Show = true;
-      }
-
-      if (x.id === 19 && x.levelStatus === 'finished') {
-        this.specialLevelsData.hero4Show = true;
-      }
-      if (x.id === 20 && x.levelStatus === 'finished') {
-        const campaignData = this.localStorageService.getCampaignsData();
-        const newCampaignsData = campaignData.map((x) => {
-          if (x.id === 2 && x.locked) {
-            this.showNewHero = true;
-            this.shownNewHero = {
-              id: 2,
-              cost: 0,
-              count: 0,
-              image: 'zeldaCampaign.png',
-              showNew: true,
-              title: 'New Campaign',
-              unlocked: true,
-            };
-            return { ...x, locked: false };
-          }
-          return x;
-        });
-        this.localStorageService.setCampaignsData(newCampaignsData);
-      }
-    });
-    this.localStorageService.setSpecialLevelsData(this.specialLevelsData);
-    this.localStorageService.setFlagsData(this.flagsList);
+      });
+      this.localStorageService.setSpecialLevelsData(this.specialLevelsData);
+      this.localStorageService.setFlagsData(this.flagsList);
+    }, 1);
   }
 
   async initPanZoom() {

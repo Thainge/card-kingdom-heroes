@@ -465,7 +465,6 @@ export class BattleComponent implements OnInit {
     if (this.Cards.length < 1) {
       this.Cards = Cards;
       this.gameInit();
-      this.endGame(true);
     }
 
     this.loadingService.isRefreshing$.subscribe((x) => {
@@ -613,7 +612,7 @@ export class BattleComponent implements OnInit {
     );
     const newHeroes = heroes.map((x) => {
       if (x.id === this.player.id) {
-        const newPoints = this.leveledUp ? (x.points ?? 0) + 5 : x.points;
+        const newPoints = this.leveledUp ? (x.points ?? 0) + 6 : x.points;
         return {
           ...x,
           xp: this.player.xp,
@@ -1673,7 +1672,7 @@ export class BattleComponent implements OnInit {
     this.finishedRewards = false;
     this.showHeroLevelUp = false;
 
-    this.battleRewardXp = 50;
+    this.battleRewardXp = 70;
     this.leveledUp = false;
 
     this.snowFlakesArray = [];

@@ -173,128 +173,134 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
   }
 
   initFlags() {
-    this.flagsList = this.localStorageService.getFlagsData();
-
-    this.specialLevelsData = this.localStorageService.getSpecialLevelsData();
-    this.nextLevel = this.flagsList.find((x) => x.levelStatus === 'nextLevel');
-    this.currentLevel = this.flagsList.find(
-      (x) => x.levelStatus === 'justFinished'
-    );
-    this.flagsList = this.flagsList.map((x) => {
-      if (x.levelStatus === 'justFinished') {
-        return { ...x, levelStatus: 'finished' };
-      }
-
-      if (x.levelStatus === 'nextLevel') {
-        return { ...x, alreadyAnimated: true };
-      }
-
-      return x;
-    });
-    const heroes: PlayerDto[] = JSON.parse(
-      localStorage.getItem('heroData') ?? '[]'
-    );
-    this.flagsList.forEach((x) => {
-      if (x.id === 1) {
-        this.specialLevelsData.wheelShow = true;
-      }
-
-      // Forest finished unlock challenge
-      if (x.id === 3 && x.levelStatus === 'finished') {
-        this.specialLevelsData.hero1Show = true;
-      }
-
-      // Forest finished unlock pack
-      if (x.id === 4 && x.levelStatus === 'finished') {
-        const boosterPacks: BoosterPack[] =
-          this.localStorageService.getBoosterPacks();
-        const newBoosterPacks = boosterPacks.map((x) => {
-          if (x.id === 2 && !x.unlocked) {
-            console.log(boosterPacks);
-            this.shownNewBoosterPack = x;
-            this.showBoosterPack = true;
-            return { ...x, unlocked: true };
-          }
-          return x;
-        });
-        this.localStorageService.setBoosterPacks(newBoosterPacks);
-      }
-
-      if (x.id === 6 && x.levelStatus === 'finished') {
-        if (heroes.length > 0) {
-          const newHeroes = heroes.map((x) => {
-            if (x.id === 5 && !x.unlocked) {
-              this.showNewHero = true;
-              this.shownNewHero = {
-                id: 5,
-                cost: 0,
-                count: 0,
-                image: x.image,
-                showNew: true,
-                title: 'New Hero!',
-                unlocked: true,
-              };
-              return { ...x, disabled: false, unlocked: true };
-            }
-
-            return x;
-          });
-          localStorage.setItem('heroData', JSON.stringify(newHeroes));
-        }
-      }
-
-      // Fire finished unlock challenge
-      if (x.id === 6 && x.levelStatus === 'finished') {
-        this.specialLevelsData.hero4Show = true;
-      }
-
-      // Fire finished unlock pack
-      if (x.id === 7 && x.levelStatus === 'finished') {
-        this.specialLevelsData.hero2Show = true;
-        const boosterPacks: BoosterPack[] =
-          this.localStorageService.getBoosterPacks();
-        const newBoosterPacks = boosterPacks.map((x) => {
-          if (x.id === 3 && !x.unlocked) {
-            this.shownNewBoosterPack = x;
-            this.showBoosterPack = true;
-            return { ...x, unlocked: true };
-          }
-          return x;
-        });
-        this.localStorageService.setBoosterPacks(newBoosterPacks);
-      }
-
-      // Fire finished unlock pack
-      if (x.id === 8 && x.levelStatus === 'finished') {
-        this.specialLevelsData.hero3Show = true;
-      }
-    });
-    this.localStorageService.setSpecialLevelsData(this.specialLevelsData);
-    this.localStorageService.setFlagsData(this.flagsList);
-  }
-
-  finishLevelTest() {
-    const foundCurrentFlag = this.flagsList.find(
-      (x) => x.levelStatus === 'nextLevel'
-    );
-    console.log(foundCurrentFlag);
-    if (foundCurrentFlag) {
+    setTimeout(() => {
+      this.flagsList = this.localStorageService.getFlagsData();
+      console.log(1);
+      console.log(this.flagsList.find((x) => x.levelStatus === 'justFinished'));
+      this.specialLevelsData = this.localStorageService.getSpecialLevelsData();
+      this.nextLevel = this.flagsList.find(
+        (x) => x.levelStatus === 'nextLevel'
+      );
+      this.currentLevel = this.flagsList.find(
+        (x) => x.levelStatus === 'justFinished'
+      );
       this.flagsList = this.flagsList.map((x) => {
-        if (x.id === foundCurrentFlag.id) {
-          return { ...x, levelStatus: 'justFinished', alreadyAnimated: false };
+        if (x.levelStatus === 'justFinished') {
+          return { ...x, levelStatus: 'finished' };
         }
 
-        if (x.id === foundCurrentFlag.id + 1) {
-          return { ...x, levelStatus: 'nextLevel' };
+        if (x.levelStatus === 'nextLevel') {
+          return { ...x, alreadyAnimated: true };
         }
 
         return x;
       });
+      const heroes: PlayerDto[] = JSON.parse(
+        localStorage.getItem('heroData') ?? '[]'
+      );
+      this.flagsList.forEach((x) => {
+        if (x.id === 1) {
+          this.specialLevelsData.wheelShow = true;
+        }
+
+        // Forest finished unlock challenge
+        if (x.id === 3 && x.levelStatus === 'finished') {
+          this.specialLevelsData.hero1Show = true;
+        }
+
+        // Forest finished unlock pack
+        if (x.id === 4 && x.levelStatus === 'finished') {
+          const boosterPacks: BoosterPack[] =
+            this.localStorageService.getBoosterPacks();
+          const newBoosterPacks = boosterPacks.map((x) => {
+            if (x.id === 2 && !x.unlocked) {
+              console.log(boosterPacks);
+              this.shownNewBoosterPack = x;
+              this.showBoosterPack = true;
+              return { ...x, unlocked: true };
+            }
+            return x;
+          });
+          this.localStorageService.setBoosterPacks(newBoosterPacks);
+        }
+
+        if (x.id === 6 && x.levelStatus === 'finished') {
+          if (heroes.length > 0) {
+            const newHeroes = heroes.map((x) => {
+              if (x.id === 5 && !x.unlocked) {
+                this.showNewHero = true;
+                this.shownNewHero = {
+                  id: 5,
+                  cost: 0,
+                  count: 0,
+                  image: x.image,
+                  showNew: true,
+                  title: 'New Hero!',
+                  unlocked: true,
+                };
+                return { ...x, disabled: false, unlocked: true };
+              }
+
+              return x;
+            });
+            this.playerService.heroDataChanged$.next(true);
+            localStorage.setItem('heroData', JSON.stringify(newHeroes));
+          }
+        }
+
+        // Fire finished unlock challenge
+        if (x.id === 6 && x.levelStatus === 'finished') {
+          this.specialLevelsData.hero4Show = true;
+        }
+
+        // Fire finished unlock pack
+        if (x.id === 7 && x.levelStatus === 'finished') {
+          this.specialLevelsData.hero2Show = true;
+          const boosterPacks: BoosterPack[] =
+            this.localStorageService.getBoosterPacks();
+          const newBoosterPacks = boosterPacks.map((x) => {
+            if (x.id === 3 && !x.unlocked) {
+              this.shownNewBoosterPack = x;
+              this.showBoosterPack = true;
+              return { ...x, unlocked: true };
+            }
+            return x;
+          });
+          this.localStorageService.setBoosterPacks(newBoosterPacks);
+        }
+
+        // Fire finished unlock pack
+        if (x.id === 8 && x.levelStatus === 'finished') {
+          this.specialLevelsData.hero3Show = true;
+        }
+      });
+      this.localStorageService.setSpecialLevelsData(this.specialLevelsData);
       this.localStorageService.setFlagsData(this.flagsList);
-      console.log('hit');
-      location.reload();
-    }
+    }, 1);
   }
+
+  // finishLevelTest() {
+  //   const foundCurrentFlag = this.flagsList.find(
+  //     (x) => x.levelStatus === 'nextLevel'
+  //   );
+  //   console.log(foundCurrentFlag);
+  //   if (foundCurrentFlag) {
+  //     this.flagsList = this.flagsList.map((x) => {
+  //       if (x.id === foundCurrentFlag.id) {
+  //         return { ...x, levelStatus: 'justFinished', alreadyAnimated: false };
+  //       }
+
+  //       if (x.id === foundCurrentFlag.id + 1) {
+  //         return { ...x, levelStatus: 'nextLevel' };
+  //       }
+
+  //       return x;
+  //     });
+  //     this.localStorageService.setFlagsData(this.flagsList);
+  //     console.log('hit');
+  //     location.reload();
+  //   }
+  // }
 
   async initPanZoom() {
     setTimeout(() => {
@@ -409,7 +415,7 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
 
   @HostListener('window:keydown', ['$event'])
   onKeyPress($event: KeyboardEvent) {
-    this.finishLevelTest();
+    // this.finishLevelTest();
 
     if (!this.devMode) {
       return;

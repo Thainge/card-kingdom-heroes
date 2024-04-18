@@ -47,8 +47,12 @@
     </div>
     <img src="./assets/upgradeDetails.png" class="upgradeDetails" />
     <div class="upgradeDetailsLevel">{{ currentHero?.level }}</div>
-    <div class="upgradeDetailsHealth">{{ currentHero?.health }}</div>
-    <div class="upgradeDetailsDefense">{{ currentHero?.attack }}</div>
+    <div class="upgradeDetailsHealth">
+      {{ (currentHero?.health ?? 0) + (currentHero?.skills?.extraHealth ?? 0) }}
+    </div>
+    <div class="upgradeDetailsDefense">
+      {{ (currentHero?.attack ?? 0) + (currentHero?.skills?.extraAttack ?? 0) }}
+    </div>
     <img
       src="./assets/heroBorder.png"
       class="heroBorder"

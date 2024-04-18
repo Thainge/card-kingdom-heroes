@@ -86,6 +86,7 @@ export class playerService implements OnInit {
   readonly stars$ = new BehaviorSubject<number>(0);
   readonly audioVolume$ = new BehaviorSubject<number>(20);
   readonly musicVolume$ = new BehaviorSubject<number>(20);
+  readonly heroDataChanged$ = new BehaviorSubject<boolean>(true);
   readonly currentPlayingMusic$ = new BehaviorSubject<any | undefined>(
     undefined
   );
