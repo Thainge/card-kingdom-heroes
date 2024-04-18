@@ -420,15 +420,21 @@ export class LocalStorageService {
   }
 
   public getStarsData(): StarsData {
-    const cardKingdomFlags: FlagDto[] = JSON.parse(
+    let cardKingdomFlags: FlagDto[] = JSON.parse(
       localStorage.getItem('cardkingdom-map-flagsData') ?? '[]'
     );
+    if (cardKingdomFlags.length < 1) {
+      cardKingdomFlags = flagsData;
+    }
     const cardKingdomCompletedLevels = cardKingdomFlags.filter(
       (x) => x.levelStatus === 'finished' || x.levelStatus === 'justFinished'
     );
-    const zeldaFlags: FlagDto[] = JSON.parse(
+    let zeldaFlags: FlagDto[] = JSON.parse(
       localStorage.getItem('zelda-map-flagsData') ?? '[]'
     );
+    if (zeldaFlags.length < 1) {
+      zeldaFlags = flagsDataZelda;
+    }
     const zeldaCompletedLevels = zeldaFlags.filter(
       (x) => x.levelStatus === 'finished' || x.levelStatus === 'justFinished'
     );

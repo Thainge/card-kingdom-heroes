@@ -1,6 +1,7 @@
 import { LevelDto } from 'src/app/models/level';
 import { EnemyAbilityCardsSet1Zelda } from '../enemyAbilityCards/enemyAbilityCardsZelda';
 import { FlagDto } from 'src/app/models/flag';
+import { Cards } from '../cards';
 
 const Level: LevelDto = {
   id: 1,
@@ -11,6 +12,7 @@ const Level: LevelDto = {
   allCardsWild: false,
   showGuide: true,
   showAbilityGuide: false,
+  cards: Cards,
 
   shuffleAbilityCards: true,
   shuffleCards: true,

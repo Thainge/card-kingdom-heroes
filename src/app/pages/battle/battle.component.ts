@@ -38,7 +38,6 @@ import 'leader-line';
 import { playerService } from 'src/app/services/player.service';
 import { trigger, style, transition, animate } from '@angular/animations';
 declare let LeaderLine: any;
-import { Cards } from 'src/assets/data/cards';
 import { AbilityService } from 'src/app/services/ability.service';
 import { Comic, EnemyLevelDto, LevelDto } from 'src/app/models/level';
 import { DialogComponent } from 'src/app/components/dialogComponent/dialog.component';
@@ -48,6 +47,7 @@ import { FlagDto } from 'src/app/models/flag';
 import { ComicComponent } from 'src/app/components/comic/comic.component';
 import { AchievementService } from 'src/app/services/achievement.service';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
+import { Cards } from 'src/assets/data/cards';
 
 interface MissionDetails {
   image: string;
@@ -463,7 +463,6 @@ export class BattleComponent implements OnInit {
 
     // Game init
     if (this.Cards.length < 1) {
-      this.Cards = Cards;
       this.gameInit();
     }
 
@@ -692,6 +691,7 @@ export class BattleComponent implements OnInit {
 
     // Passed object for battle
     const currentLevel: LevelDto = JSON.parse(JSON.stringify(passedObj));
+    this.Cards = currentLevel.cards ? currentLevel.cards : Cards;
     this.currentLevel = currentLevel;
     this.firstLevel = passedObj.combatPhases[0];
     this.allCombatPhases = this.currentLevel.combatPhases;
@@ -1090,7 +1090,7 @@ export class BattleComponent implements OnInit {
         this.loadingService.navigate('/battle', 'loadingBg.png', 'Loading...');
       }
       this.resetGame();
-      this.Cards = Cards;
+      this.Cards = this.currentLevel?.cards ? this.currentLevel.cards : Cards;
       this.gameInit();
     }
   }
@@ -1392,11 +1392,13 @@ export class BattleComponent implements OnInit {
       }
       localStorage.setItem('localShownGuideAlready', JSON.stringify(true));
       this.resetGame();
-      this.Cards = Cards;
+      this.Cards = this.currentLevel?.cards ? this.currentLevel.cards : Cards;
       setTimeout(() => {
         if (!this.skippingGuide) {
           this.resetGame();
-          this.Cards = Cards;
+          this.Cards = this.currentLevel?.cards
+            ? this.currentLevel.cards
+            : Cards;
           this.gameInit();
         }
       }, 500);
@@ -1519,7 +1521,6 @@ export class BattleComponent implements OnInit {
     }, 500);
     setTimeout(() => {
       this.resetGame();
-      this.Cards = Cards;
       this.gameInit();
     }, 2000);
   }

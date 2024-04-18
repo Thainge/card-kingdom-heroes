@@ -1,5 +1,6 @@
 import { AbilityCard } from './abilityCard';
 import { BackgroundDto } from './backgrounds';
+import { CardDto } from './card';
 import { DialogDto } from './dialog';
 import { PlayerDto } from './player';
 
@@ -15,6 +16,8 @@ export interface LevelDto {
   showAbilityGuide?: boolean;
   showComic?: boolean;
   comicData?: Comic;
+
+  cards: CardDto[];
 
   hideDialog?: boolean;
   easyMode?: boolean;
