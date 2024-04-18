@@ -142,7 +142,7 @@ export class DeckOverlayComponent implements OnInit {
         title: 'New Tip',
         header: 'Deck',
         text: 'Upgrade cards and change your deck',
-        img: 'wildImg.png',
+        img: 'deckImg.png',
         tipRows: [
           '- Create your own ability deck',
           '- Combine 3 cards to upgrade them',

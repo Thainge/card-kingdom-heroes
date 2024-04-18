@@ -149,7 +149,7 @@ export class ShopOverlayComponent implements OnInit {
         title: 'New Tip',
         header: 'Shop',
         text: 'Buy and open booster packs to unlock new cards',
-        img: 'wildImg.png',
+        img: 'shopImg.png',
         tipRows: ['- Buy booster packs', '- Open booster packs'],
       });
       this.loadingService.showTip$.next(true);

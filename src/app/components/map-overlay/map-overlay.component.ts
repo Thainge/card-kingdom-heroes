@@ -230,7 +230,7 @@ export class MapOverlayComponent implements OnInit {
         title: 'New Tip',
         header: 'Map',
         text: 'Select missions to progress campaign',
-        img: 'wildImg.png',
+        img: 'mapImg.png',
         tipRows: ['- Select flags to start missions'],
       });
       this.loadingService.showTip$.next(true);

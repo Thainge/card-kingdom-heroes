@@ -102,7 +102,7 @@ export class HeroOverlayComponent implements OnInit {
         title: 'New Tip',
         header: 'Hero Room',
         text: 'Upgrade and change active hero',
-        img: 'wildImg.png',
+        img: 'heroImg.png',
         tipRows: ['- Upgrade heroes', '- Change heroes'],
       });
       this.loadingService.showTip$.next(true);

@@ -81,7 +81,7 @@ export class AchievementsOverlayComponent implements OnInit {
         title: 'New Tip',
         header: 'Achievements',
         text: 'Unlock additonal rewards by completing achievements',
-        img: 'wildImg.png',
+        img: 'achievementImg.png',
         tipRows: [
           '- Unlock achievements to earn rewards',
           '- Unlock all achievements to unlock cheats',

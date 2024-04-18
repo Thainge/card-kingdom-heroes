@@ -121,7 +121,7 @@ export class PremiumOverlayComponent implements OnInit {
         title: 'New Tip',
         header: 'Premium',
         text: 'Access exclusive premium upgrades to provide advantages in combat',
-        img: 'wildImg.png',
+        img: 'premiumImg.png',
         tipRows: ['- Expensive'],
       });
       this.loadingService.showTip$.next(true);
