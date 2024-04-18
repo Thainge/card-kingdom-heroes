@@ -171,12 +171,26 @@
                     showHoveringBox: isCurrentlyHovering(item)
                   }"
                 >
-                  <div class="hoveringTitle">{{ item.title[item.level] }}</div>
-                  <div class="hoveringDescription">
-                    {{ item.description[item.level] }}
+                  <div class="hoveringTitle">
+                    {{
+                      item.title[item.level === 3 ? item.level - 1 : item.level]
+                    }}
                   </div>
-                  <img src="./assets/orb.png" class="hoveringOrb" />
-                  <div class="hoveringCost">{{ item.cost[item.level] }}</div>
+                  <div class="hoveringDescription">
+                    {{
+                      item.description[
+                        item.level === 3 ? item.level - 1 : item.level
+                      ]
+                    }}
+                  </div>
+                  <img
+                    src="./assets/orb.png"
+                    class="hoveringOrb"
+                    *ngIf="item.level !== 3"
+                  />
+                  <div class="hoveringCost" *ngIf="item.level !== 3">
+                    {{ item.cost[item.level] }}
+                  </div>
                 </div>
                 <div
                   (mouseenter)="currentHoveringUpgrade = item"

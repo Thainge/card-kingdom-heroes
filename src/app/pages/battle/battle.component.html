@@ -1,6 +1,5 @@
 <div class="container">
-  <div class="guide" *ngIf="this.showGuide"></div>
-  <div class="skipGuideButtonBox" *ngIf="this.showGuide">
+  <div class="skipGuideButtonBox" *ngIf="showGuide && !skippingGuide">
     <div class="finishButtonGo" (click)="skipGuide()">
       <img class="finishButton" [src]="'./assets/continue.png'" />
       <div class="finishButtonText surrenderText">Skip Guide</div>

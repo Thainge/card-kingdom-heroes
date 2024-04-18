@@ -220,7 +220,7 @@ export class MapComponent implements AfterViewInit, OnInit {
       if (x.id === 5 && x.levelStatus === 'finished') {
         if (heroes.length > 0) {
           const newHeroes = heroes.map((x) => {
-            if (x.id === 2) {
+            if (x.id === 2 && !x.unlocked) {
               this.showNewHero = true;
               this.shownNewHero = {
                 id: 2,
@@ -257,7 +257,7 @@ export class MapComponent implements AfterViewInit, OnInit {
       if (x.id === 10 && x.levelStatus === 'finished') {
         if (heroes.length > 0) {
           const newHeroes = heroes.map((x) => {
-            if (x.id === 3) {
+            if (x.id === 3 && !x.unlocked) {
               this.showNewHero = true;
               this.shownNewHero = {
                 id: 3,

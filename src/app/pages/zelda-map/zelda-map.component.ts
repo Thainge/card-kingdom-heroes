@@ -200,7 +200,7 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
       }
 
       // Forest finished unlock challenge
-      if (x.id === 4 && x.levelStatus === 'finished') {
+      if (x.id === 3 && x.levelStatus === 'finished') {
         this.specialLevelsData.hero1Show = true;
       }
 
@@ -220,10 +220,10 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
         this.localStorageService.setBoosterPacks(newBoosterPacks);
       }
 
-      if (x.id === 5 && x.levelStatus === 'finished') {
+      if (x.id === 6 && x.levelStatus === 'finished') {
         if (heroes.length > 0) {
           const newHeroes = heroes.map((x) => {
-            if (x.id === 5) {
+            if (x.id === 5 && !x.unlocked) {
               this.showNewHero = true;
               this.shownNewHero = {
                 id: 5,
@@ -244,8 +244,8 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
       }
 
       // Fire finished unlock challenge
-      if (x.id === 7 && x.levelStatus === 'finished') {
-        this.specialLevelsData.hero2Show = true;
+      if (x.id === 6 && x.levelStatus === 'finished') {
+        this.specialLevelsData.hero4Show = true;
       }
 
       // Fire finished unlock pack
@@ -265,12 +265,35 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
       }
 
       // Fire finished unlock pack
-      if (x.id === 10 && x.levelStatus === 'finished') {
+      if (x.id === 8 && x.levelStatus === 'finished') {
         this.specialLevelsData.hero3Show = true;
       }
     });
     this.localStorageService.setSpecialLevelsData(this.specialLevelsData);
     this.localStorageService.setFlagsData(this.flagsList);
+  }
+
+  finishLevelTest() {
+    const foundCurrentFlag = this.flagsList.find(
+      (x) => x.levelStatus === 'nextLevel'
+    );
+    console.log(foundCurrentFlag);
+    if (foundCurrentFlag) {
+      this.flagsList = this.flagsList.map((x) => {
+        if (x.id === foundCurrentFlag.id) {
+          return { ...x, levelStatus: 'justFinished', alreadyAnimated: false };
+        }
+
+        if (x.id === foundCurrentFlag.id + 1) {
+          return { ...x, levelStatus: 'nextLevel' };
+        }
+
+        return x;
+      });
+      this.localStorageService.setFlagsData(this.flagsList);
+      console.log('hit');
+      location.reload();
+    }
   }
 
   async initPanZoom() {
@@ -386,6 +409,8 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
 
   @HostListener('window:keydown', ['$event'])
   onKeyPress($event: KeyboardEvent) {
+    this.finishLevelTest();
+
     if (!this.devMode) {
       return;
     }

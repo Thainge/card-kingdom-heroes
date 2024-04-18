@@ -235,9 +235,9 @@ export class AppComponent implements OnInit {
       this.showGif = false;
     }, 2800);
     setTimeout(() => {
-      this.achievementPopupsList = this.achievementPopupsList.filter(
-        (x) => x.id !== ID
-      );
+      // this.achievementPopupsList = this.achievementPopupsList.filter(
+      //   (x) => x.id !== ID
+      // );
     }, 5000);
   }
 

@@ -45,7 +45,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade1.png',
         type: ['extraHealth', 'extraHealth', 'extraHealth'],
-        cost: [1, 2, 3],
+        cost: [1, 1, 1],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           'Increases defense by 1',
@@ -58,7 +58,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade2.png',
         type: ['extraAttack', 'extraAttack', 'extraAttack'],
-        cost: [1, 2, 3],
+        cost: [1, 1, 1],
         title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
         description: [
           'Increases health by 1',
@@ -71,7 +71,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade3.png',
         type: ['wildCardsCount', 'wildCardsCount', 'wildCardsCount'],
-        cost: [1, 1, 1],
+        cost: [1, 1, 2],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           'Adds 1 wild card to your card deck',
@@ -88,7 +88,7 @@ export const HeroData: PlayerDto[] = [
           'canSeeTopCardAbilities',
           'canDefendWithMultipleCards',
         ],
-        cost: [2, 4, 6],
+        cost: [1, 2, 4],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           "Shows the top card on both player's decks",
@@ -101,7 +101,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade5.png',
         type: ['wildHearts', 'wildDiamonds', 'rangeHeartsDiamonds'],
-        cost: [2, 4, 6],
+        cost: [1, 2, 4],
         title: ['Wild Hearts', 'Wild Diamonds', 'Hearts +1/Diamonds +1'],
         description: [
           'All hearts are wild to red',
@@ -110,7 +110,7 @@ export const HeroData: PlayerDto[] = [
         ],
       },
     ],
-    points: 5,
+    points: 7,
     selected: false,
     unlocked: false,
     usedPoints: 0,
@@ -160,7 +160,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade1.png',
         type: ['extraHealth', 'extraHealth', 'extraHealth'],
-        cost: [1, 2, 3],
+        cost: [1, 1, 1],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           'Increases defense by 1',
@@ -173,7 +173,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade2.png',
         type: ['extraAttack', 'extraAttack', 'extraAttack'],
-        cost: [1, 2, 3],
+        cost: [1, 1, 1],
         title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
         description: [
           'Increases health by 1',
@@ -186,7 +186,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade3.png',
         type: ['wildCardsCount', 'wildCardsCount', 'wildCardsCount'],
-        cost: [1, 1, 1],
+        cost: [1, 1, 2],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           'Adds 1 wild card to your card deck',
@@ -203,7 +203,7 @@ export const HeroData: PlayerDto[] = [
           'canSeeTopCardAbilities',
           'canDefendWithMultipleCards',
         ],
-        cost: [2, 4, 6],
+        cost: [1, 2, 4],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           "Shows the top card on both player's decks",
@@ -216,7 +216,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade5.png',
         type: ['wildHearts', 'wildDiamonds', 'rangeHeartsDiamonds'],
-        cost: [2, 4, 6],
+        cost: [1, 2, 4],
         title: ['Wild Hearts', 'Wild Diamonds', 'Hearts +1/Diamonds +1'],
         description: [
           'All hearts are wild to red',
@@ -225,7 +225,7 @@ export const HeroData: PlayerDto[] = [
         ],
       },
     ],
-    points: 5,
+    points: 7,
     selected: false,
     unlocked: false,
     usedPoints: 0,
@@ -275,7 +275,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade1.png',
         type: ['extraHealth', 'extraHealth', 'extraHealth'],
-        cost: [1, 2, 3],
+        cost: [1, 1, 1],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           'Increases defense by 1',
@@ -288,7 +288,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade2.png',
         type: ['extraAttack', 'extraAttack', 'extraAttack'],
-        cost: [1, 2, 3],
+        cost: [1, 1, 1],
         title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
         description: [
           'Increases health by 1',
@@ -301,7 +301,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade3.png',
         type: ['wildCardsCount', 'wildCardsCount', 'wildCardsCount'],
-        cost: [1, 1, 1],
+        cost: [1, 1, 2],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           'Adds 1 wild card to your card deck',
@@ -318,7 +318,7 @@ export const HeroData: PlayerDto[] = [
           'canSeeTopCardAbilities',
           'canDefendWithMultipleCards',
         ],
-        cost: [2, 4, 6],
+        cost: [1, 2, 4],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           "Shows the top card on both player's decks",
@@ -331,7 +331,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade5.png',
         type: ['wildHearts', 'wildDiamonds', 'rangeHeartsDiamonds'],
-        cost: [2, 4, 6],
+        cost: [1, 2, 4],
         title: ['Wild Hearts', 'Wild Diamonds', 'Hearts +1/Diamonds +1'],
         description: [
           'All hearts are wild to red',
@@ -340,7 +340,7 @@ export const HeroData: PlayerDto[] = [
         ],
       },
     ],
-    points: 5,
+    points: 7,
     selected: false,
     unlocked: false,
     usedPoints: 0,
@@ -390,7 +390,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade1.png',
         type: ['extraHealth', 'extraHealth', 'extraHealth'],
-        cost: [1, 2, 3],
+        cost: [1, 1, 1],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           'Increases defense by 1',
@@ -403,7 +403,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade2.png',
         type: ['extraAttack', 'extraAttack', 'extraAttack'],
-        cost: [1, 2, 3],
+        cost: [1, 1, 1],
         title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
         description: [
           'Increases health by 1',
@@ -416,7 +416,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade3.png',
         type: ['wildCardsCount', 'wildCardsCount', 'wildCardsCount'],
-        cost: [1, 1, 1],
+        cost: [1, 1, 2],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           'Adds 1 wild card to your card deck',
@@ -433,7 +433,7 @@ export const HeroData: PlayerDto[] = [
           'canSeeTopCardAbilities',
           'canDefendWithMultipleCards',
         ],
-        cost: [2, 4, 6],
+        cost: [1, 2, 4],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           "Shows the top card on both player's decks",
@@ -446,7 +446,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade5.png',
         type: ['wildHearts', 'wildDiamonds', 'rangeHeartsDiamonds'],
-        cost: [2, 4, 6],
+        cost: [1, 2, 4],
         title: ['Wild Hearts', 'Wild Diamonds', 'Hearts +1/Diamonds +1'],
         description: [
           'All hearts are wild to red',
@@ -455,7 +455,7 @@ export const HeroData: PlayerDto[] = [
         ],
       },
     ],
-    points: 5,
+    points: 7,
     selected: false,
     unlocked: false,
     usedPoints: 0,
@@ -505,7 +505,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade1.png',
         type: ['extraHealth', 'extraHealth', 'extraHealth'],
-        cost: [1, 2, 3],
+        cost: [1, 1, 1],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           'Increases defense by 1',
@@ -518,7 +518,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade2.png',
         type: ['extraAttack', 'extraAttack', 'extraAttack'],
-        cost: [1, 2, 3],
+        cost: [1, 1, 1],
         title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
         description: [
           'Increases health by 1',
@@ -531,7 +531,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade3.png',
         type: ['wildCardsCount', 'wildCardsCount', 'wildCardsCount'],
-        cost: [1, 1, 1],
+        cost: [1, 1, 2],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           'Adds 1 wild card to your card deck',
@@ -548,7 +548,7 @@ export const HeroData: PlayerDto[] = [
           'canSeeTopCardAbilities',
           'canDefendWithMultipleCards',
         ],
-        cost: [2, 4, 6],
+        cost: [1, 2, 4],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           "Shows the top card on both player's decks",
@@ -561,7 +561,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade5.png',
         type: ['wildHearts', 'wildDiamonds', 'rangeHeartsDiamonds'],
-        cost: [2, 4, 6],
+        cost: [1, 2, 4],
         title: ['Wild Hearts', 'Wild Diamonds', 'Hearts +1/Diamonds +1'],
         description: [
           'All hearts are wild to red',
@@ -570,7 +570,7 @@ export const HeroData: PlayerDto[] = [
         ],
       },
     ],
-    points: 5,
+    points: 7,
     selected: false,
     unlocked: false,
     usedPoints: 0,
@@ -620,7 +620,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade1.png',
         type: ['extraHealth', 'extraHealth', 'extraHealth'],
-        cost: [1, 2, 3],
+        cost: [1, 1, 1],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           'Increases defense by 1',
@@ -633,7 +633,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade2.png',
         type: ['extraAttack', 'extraAttack', 'extraAttack'],
-        cost: [1, 2, 3],
+        cost: [1, 1, 1],
         title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
         description: [
           'Increases health by 1',
@@ -646,7 +646,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade3.png',
         type: ['wildCardsCount', 'wildCardsCount', 'wildCardsCount'],
-        cost: [1, 1, 1],
+        cost: [1, 1, 2],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           'Adds 1 wild card to your card deck',
@@ -663,7 +663,7 @@ export const HeroData: PlayerDto[] = [
           'canSeeTopCardAbilities',
           'canDefendWithMultipleCards',
         ],
-        cost: [2, 4, 6],
+        cost: [1, 2, 4],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           "Shows the top card on both player's decks",
@@ -676,7 +676,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade5.png',
         type: ['wildHearts', 'wildDiamonds', 'rangeHeartsDiamonds'],
-        cost: [2, 4, 6],
+        cost: [1, 2, 4],
         title: ['Wild Hearts', 'Wild Diamonds', 'Hearts +1/Diamonds +1'],
         description: [
           'All hearts are wild to red',
@@ -685,7 +685,7 @@ export const HeroData: PlayerDto[] = [
         ],
       },
     ],
-    points: 5,
+    points: 7,
     selected: false,
     unlocked: false,
     usedPoints: 0,
@@ -735,7 +735,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade1.png',
         type: ['extraHealth', 'extraHealth', 'extraHealth'],
-        cost: [1, 2, 3],
+        cost: [1, 1, 1],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           'Increases defense by 1',
@@ -748,7 +748,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade2.png',
         type: ['extraAttack', 'extraAttack', 'extraAttack'],
-        cost: [1, 2, 3],
+        cost: [1, 1, 1],
         title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
         description: [
           'Increases health by 1',
@@ -761,7 +761,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade3.png',
         type: ['wildCardsCount', 'wildCardsCount', 'wildCardsCount'],
-        cost: [1, 1, 1],
+        cost: [1, 1, 2],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           'Adds 1 wild card to your card deck',
@@ -778,7 +778,7 @@ export const HeroData: PlayerDto[] = [
           'canSeeTopCardAbilities',
           'canDefendWithMultipleCards',
         ],
-        cost: [2, 4, 6],
+        cost: [1, 2, 4],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           "Shows the top card on both player's decks",
@@ -791,7 +791,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade5.png',
         type: ['wildHearts', 'wildDiamonds', 'rangeHeartsDiamonds'],
-        cost: [2, 4, 6],
+        cost: [1, 2, 4],
         title: ['Wild Hearts', 'Wild Diamonds', 'Hearts +1/Diamonds +1'],
         description: [
           'All hearts are wild to red',
@@ -800,7 +800,7 @@ export const HeroData: PlayerDto[] = [
         ],
       },
     ],
-    points: 5,
+    points: 7,
     selected: false,
     unlocked: false,
     usedPoints: 0,
@@ -850,7 +850,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade1.png',
         type: ['extraHealth', 'extraHealth', 'extraHealth'],
-        cost: [1, 2, 3],
+        cost: [1, 1, 1],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           'Increases defense by 1',
@@ -863,7 +863,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade2.png',
         type: ['extraAttack', 'extraAttack', 'extraAttack'],
-        cost: [1, 2, 3],
+        cost: [1, 1, 1],
         title: ['Life Crystal +1', 'Life Crystal +2', 'Life Crystal +3'],
         description: [
           'Increases health by 1',
@@ -876,7 +876,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade3.png',
         type: ['wildCardsCount', 'wildCardsCount', 'wildCardsCount'],
-        cost: [1, 1, 1],
+        cost: [1, 1, 2],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           'Adds 1 wild card to your card deck',
@@ -893,7 +893,7 @@ export const HeroData: PlayerDto[] = [
           'canSeeTopCardAbilities',
           'canDefendWithMultipleCards',
         ],
-        cost: [2, 4, 6],
+        cost: [1, 2, 4],
         title: ['Hylian Shield +1', 'Hylian Shield +2', 'Hylian Shield +3'],
         description: [
           "Shows the top card on both player's decks",
@@ -906,7 +906,7 @@ export const HeroData: PlayerDto[] = [
         level: 0,
         image: 'greenUpgrade5.png',
         type: ['wildHearts', 'wildDiamonds', 'rangeHeartsDiamonds'],
-        cost: [2, 4, 6],
+        cost: [1, 2, 4],
         title: ['Wild Hearts', 'Wild Diamonds', 'Hearts +1/Diamonds +1'],
         description: [
           'All hearts are wild to red',
@@ -915,7 +915,7 @@ export const HeroData: PlayerDto[] = [
         ],
       },
     ],
-    points: 5,
+    points: 7,
     selected: false,
     unlocked: false,
     usedPoints: 0,

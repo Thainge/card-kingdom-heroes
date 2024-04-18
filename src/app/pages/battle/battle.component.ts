@@ -465,6 +465,7 @@ export class BattleComponent implements OnInit {
     if (this.Cards.length < 1) {
       this.Cards = Cards;
       this.gameInit();
+      this.endGame(true);
     }
 
     this.loadingService.isRefreshing$.subscribe((x) => {
@@ -594,7 +595,7 @@ export class BattleComponent implements OnInit {
         return { ...x, levelStatus: 'justFinished' };
       }
 
-      if (foundIndex === i) {
+      if (foundIndex === i && x.levelStatus !== 'finished') {
         foundIndex = -10;
         return { ...x, levelStatus: 'nextLevel' };
       }
