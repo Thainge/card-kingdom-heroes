@@ -122,7 +122,7 @@ export class MapOverlayComponent implements OnInit {
         this.achievementService.unlockNewAchievement(8);
       }, 2000);
     }
-    if (this.completedFlagsList.length * 3 >= 60) {
+    if (this.completedFlagsList.length * 3 >= 63) {
       setTimeout(() => {
         this.achievementService.unlockNewAchievement(10);
       }, 2000);

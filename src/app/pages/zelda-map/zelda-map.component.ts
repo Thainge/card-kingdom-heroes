@@ -28,8 +28,8 @@ import { AchievementService } from 'src/app/services/achievement.service';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
 const { Pins } = require('@fancyapps/ui/dist/panzoom/panzoom.pins.esm.js');
 
-type WhirlpoolSize = 1 | 1.25 | 1.5 | 2 | 2.5;
-type WhirlpoolOpacity = 0.4 | 0.6 | 0.8 | 1;
+type WhirlpoolSize = 0 | 1 | 1.25 | 1.5 | 2 | 2.5;
+type WhirlpoolOpacity = 0 | 0.4 | 0.6 | 0.8 | 1;
 type Battle = 201 | 202 | 203 | 204;
 
 interface SpecialLevels {
@@ -296,6 +296,32 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
         if (x.id === 10 && x.levelStatus === 'finished') {
           this.currentWhirlpoolScale = 2.5;
           this.currentWhirlpoolOpacity = 1;
+        }
+
+        if (x.id === 11 && x.levelStatus === 'finished') {
+          setTimeout(() => {
+            this.currentWhirlpoolScale = 0;
+            this.currentWhirlpoolOpacity = 0;
+          }, 1000);
+          setTimeout(() => {
+            this.showNewCampaigns = true;
+            this.shownNewCampaigns = [
+              ...this.shownNewCampaigns,
+              {
+                id: 199,
+                cost: 0,
+                count: 0,
+                image: './assets/campaignFinished.png',
+                showNew: true,
+                title: 'Campaign Finished!',
+                unlocked: true,
+              },
+            ];
+            this.shownRewardItem = this.shownNewCampaigns[0];
+            setTimeout(() => {
+              this.canClickNextReward = true;
+            }, 300);
+          }, 1500);
         }
       });
       this.localStorageService.setSpecialLevelsData(this.specialLevelsData);

@@ -480,4 +480,22 @@ export const flagsDataZelda: FlagDto[] = [
     levelType: 'normal',
     dots: [],
   },
+  {
+    id: 11,
+    x: 2117,
+    y: 1298,
+    levelStatus: 'hidden',
+    levelType: 'boss',
+    alreadyAnimated: false,
+    dots: [],
+    missionDetails: {
+      image: 'forest.png',
+      title: 'Skyloft',
+      description: `General, a band of gnolls approaches! They are beasts who only
+      think about looting and burning everything their wake, but they
+      will be sorry they ever left their arid hills... For the queen!`,
+      rewardMin: 50,
+      rewardMax: 100,
+    },
+  },
 ];

@@ -28,8 +28,8 @@ import { AchievementService } from 'src/app/services/achievement.service';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
 const { Pins } = require('@fancyapps/ui/dist/panzoom/panzoom.pins.esm.js');
 
-type WhirlpoolSize = 1 | 1.25 | 1.5 | 2 | 2.5;
-type WhirlpoolOpacity = 0.4 | 0.6 | 0.8 | 1;
+type WhirlpoolSize = 0 | 1 | 1.25 | 1.5 | 2 | 2.5;
+type WhirlpoolOpacity = 0 | 0.4 | 0.6 | 0.8 | 1;
 type Battle = 101 | 102 | 103 | 104;
 
 interface SpecialLevels {
@@ -361,74 +361,100 @@ export class MapComponent implements AfterViewInit, OnInit {
           this.specialLevelsData.hero4Show = true;
         }
         if (x.id === 20 && x.levelStatus === 'finished') {
-          const campaignData = this.localStorageService.getCampaignsData();
-          const newCampaignsData = campaignData.map((x) => {
-            if (x.id !== 1 && x.locked) {
-              return { ...x, locked: false };
-            }
-            return x;
-          });
-          this.showNewCampaigns = true;
-          this.shownNewCampaigns = [
-            ...this.shownNewCampaigns,
-            {
-              id: 106,
-              cost: 0,
-              count: 0,
-              image: './assets/linkCampaign.png',
-              showNew: true,
-              title: 'New Campaign',
-              unlocked: true,
-            },
-            {
-              id: 107,
-              cost: 0,
-              count: 0,
-              image: './assets/marioCampaign.png',
-              showNew: true,
-              title: 'New Campaign',
-              unlocked: true,
-            },
-            {
-              id: 108,
-              cost: 0,
-              count: 0,
-              image: './assets/tf2Campaign.png',
-              showNew: true,
-              title: 'New Campaign',
-              unlocked: true,
-            },
-            {
-              id: 109,
-              cost: 0,
-              count: 0,
-              image: './assets/donkeyKongCampaign.png',
-              showNew: true,
-              title: 'New Campaign',
-              unlocked: true,
-            },
-            {
-              id: 110,
-              cost: 0,
-              count: 0,
-              image: './assets/kirbyCampaign.png',
-              showNew: true,
-              title: 'New Campaign',
-              unlocked: true,
-            },
-          ];
-          this.shownRewardItem = this.shownNewCampaigns[0];
-          setTimeout(() => {
-            this.canClickNextReward = true;
-          }, 300);
           this.currentWhirlpoolScale = 2.5;
           this.currentWhirlpoolOpacity = 1;
-          this.localStorageService.setCampaignsData(newCampaignsData);
+        }
+
+        if (x.id === 21 && x.levelStatus === 'finished') {
+          setTimeout(() => {
+            this.currentWhirlpoolScale = 0;
+            this.currentWhirlpoolOpacity = 0;
+          }, 1000);
+          setTimeout(() => {
+            this.showCampaignsData();
+          }, 1500);
         }
       });
       this.localStorageService.setSpecialLevelsData(this.specialLevelsData);
       this.localStorageService.setFlagsData(this.flagsList);
     }, 1);
+  }
+
+  showCampaignsData() {
+    let showData = false;
+    const campaignData = this.localStorageService.getCampaignsData();
+    const newCampaignsData = campaignData.map((x) => {
+      if (x.id !== 1 && x.locked) {
+        showData = true;
+        return { ...x, locked: false };
+      }
+      return x;
+    });
+    if (showData) {
+      this.showNewCampaigns = true;
+      this.shownNewCampaigns = [
+        ...this.shownNewCampaigns,
+        {
+          id: 199,
+          cost: 0,
+          count: 0,
+          image: './assets/campaignFinished.png',
+          showNew: true,
+          title: 'Campaign Finished!',
+          unlocked: true,
+        },
+        {
+          id: 106,
+          cost: 0,
+          count: 0,
+          image: './assets/linkCampaign.png',
+          showNew: true,
+          title: 'New Campaign',
+          unlocked: true,
+        },
+        {
+          id: 107,
+          cost: 0,
+          count: 0,
+          image: './assets/marioCampaign.png',
+          showNew: true,
+          title: 'New Campaign',
+          unlocked: true,
+        },
+        {
+          id: 108,
+          cost: 0,
+          count: 0,
+          image: './assets/tf2Campaign.png',
+          showNew: true,
+          title: 'New Campaign',
+          unlocked: true,
+        },
+        {
+          id: 109,
+          cost: 0,
+          count: 0,
+          image: './assets/donkeyKongCampaign.png',
+          showNew: true,
+          title: 'New Campaign',
+          unlocked: true,
+        },
+        {
+          id: 110,
+          cost: 0,
+          count: 0,
+          image: './assets/kirbyCampaign.png',
+          showNew: true,
+          title: 'New Campaign',
+          unlocked: true,
+        },
+      ];
+      this.shownRewardItem = this.shownNewCampaigns[0];
+      this.localStorageService.setCampaignsData(newCampaignsData);
+      setTimeout(() => {
+        this.canClickNextReward = true;
+      }, 300);
+    }
   }
 
   isActiveReward(rewardItem: BoosterPack) {

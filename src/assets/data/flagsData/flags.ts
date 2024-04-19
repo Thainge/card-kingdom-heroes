@@ -873,4 +873,22 @@ export const flagsData: FlagDto[] = [
     levelType: 'normal',
     dots: [],
   },
+  {
+    id: 21,
+    x: 1511,
+    y: 759,
+    levelStatus: 'hidden',
+    alreadyAnimated: false,
+    dots: [],
+    missionDetails: {
+      image: 'forest.png',
+      title: 'Skyloft',
+      description: `General, a band of gnolls approaches! They are beasts who only
+      think about looting and burning everything their wake, but they
+      will be sorry they ever left their arid hills... For the queen!`,
+      rewardMin: 100,
+      rewardMax: 150,
+    },
+    levelType: 'boss',
+  },
 ];
