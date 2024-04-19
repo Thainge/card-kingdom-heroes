@@ -29,6 +29,8 @@ import {
   ChallengeLevelsZelda,
 } from 'src/assets/data/specialLevels/specialLevelsZelda';
 import { gameTheme } from '../models/theme';
+import { PlayerDto } from '../models/player';
+import { HeroData } from 'src/assets/data/hero';
 
 type RouteUrl = 'cardkingdom-map' | 'zelda-map';
 
@@ -174,6 +176,12 @@ interface RouteDataObj {
   wheelData: WheelItem[];
 }
 
+interface HeroData {
+  activeIndexes: number[];
+  heroes: PlayerDto[];
+  currentHero: PlayerDto;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -219,6 +227,41 @@ export class LocalStorageService {
       challengeFlags: ChallengeFlags,
       wheelData: WheelData,
     };
+  }
+
+  public getHeroDataForWorld(): HeroData {
+    let heroes: PlayerDto[] = JSON.parse(
+      localStorage.getItem('heroData') ?? '[]'
+    );
+    if (heroes.length < 1) {
+      heroes = HeroData;
+      localStorage.setItem('heroData', JSON.stringify(heroes));
+    }
+    heroes = heroes.map((x) => {
+      return { ...x, selected: false };
+    });
+
+    if (this.currentRoute() === 'zelda-map') {
+      heroes[3].disabled = false;
+      heroes[3].selected = true;
+      heroes[3].unlocked = true;
+      const returnObj: HeroData = {
+        activeIndexes: [4, 5],
+        heroes: heroes,
+        currentHero: heroes[3],
+      };
+      return returnObj;
+    }
+
+    heroes[0].disabled = false;
+    heroes[0].selected = true;
+    heroes[0].unlocked = true;
+    const returnObj: HeroData = {
+      activeIndexes: [1, 2, 3],
+      heroes: heroes,
+      currentHero: heroes[0],
+    };
+    return returnObj;
   }
 
   public getCampaignStarsData(): CampaignBox[] {

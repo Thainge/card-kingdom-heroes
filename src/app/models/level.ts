@@ -3,6 +3,7 @@ import { BackgroundDto } from './backgrounds';
 import { CardDto } from './card';
 import { DialogDto } from './dialog';
 import { PlayerDto } from './player';
+import { gameTheme } from './theme';
 
 export interface LevelDto {
   id: number;
@@ -56,7 +57,7 @@ export interface EnemyLevelDto {
   enemyPlayers: PlayerDto[];
   enemyAbilityCards: AbilityCard[];
   background: BackgroundDto;
-  enemyCardTheme: CardThemeDto;
+  enemyCardTheme: gameTheme;
 
   showSnowEffect: boolean;
   showBubblesEffect: boolean;
@@ -70,5 +71,3 @@ export interface EnemyLevelDto {
   dialogStart?: DialogDto[];
   dialogEnd?: DialogDto[];
 }
-
-type CardThemeDto = 'default' | 'mario' | 'zelda';

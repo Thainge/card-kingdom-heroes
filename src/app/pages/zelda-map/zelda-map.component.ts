@@ -121,10 +121,18 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
   battleStartOpen: boolean = false;
   challengeLevels: LevelDto[] = [];
   challengeFlags: FlagDto[] = [];
-  shownNewBoosterPack: BoosterPack | undefined;
-  showBoosterPack: boolean = false;
-  shownNewHero: BoosterPack | undefined;
-  showNewHero: boolean = false;
+  showNewCampaigns: boolean = false;
+  shownNewCampaigns: BoosterPack[] = [];
+  shownRewardItem: BoosterPack = {
+    id: 0,
+    image: '',
+    cost: 0,
+    count: 0,
+    showNew: false,
+    title: '',
+    unlocked: true,
+  };
+  canClickNextReward: boolean = false;
 
   constructor(
     private loadingService: LoadingService,
@@ -144,16 +152,6 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit() {
     this.initPanZoom();
-  }
-
-  hideBooster() {
-    this.showBoosterPack = false;
-    this.playerService.playSound('cardFlip.mp3');
-  }
-
-  hideNewHero() {
-    this.showNewHero = false;
-    this.playerService.playSound('cardFlip.mp3');
   }
 
   showWheel() {
@@ -211,9 +209,15 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
             this.localStorageService.getBoosterPacks();
           const newBoosterPacks = boosterPacks.map((x) => {
             if (x.id === 2 && !x.unlocked) {
-              console.log(boosterPacks);
-              this.shownNewBoosterPack = x;
-              this.showBoosterPack = true;
+              this.showNewCampaigns = true;
+              this.shownNewCampaigns = [
+                ...this.shownNewCampaigns,
+                { ...x, id: 102, image: './assets/rewards/' + x.image },
+              ];
+              this.shownRewardItem = this.shownNewCampaigns[0];
+              setTimeout(() => {
+                this.canClickNextReward = true;
+              }, 300);
               return { ...x, unlocked: true };
             }
             return x;
@@ -227,16 +231,23 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
           if (heroes.length > 0) {
             const newHeroes = heroes.map((x) => {
               if (x.id === 5 && !x.unlocked) {
-                this.showNewHero = true;
-                this.shownNewHero = {
-                  id: 5,
-                  cost: 0,
-                  count: 0,
-                  image: x.image,
-                  showNew: true,
-                  title: 'New Hero!',
-                  unlocked: true,
-                };
+                this.showNewCampaigns = true;
+                this.shownNewCampaigns = [
+                  ...this.shownNewCampaigns,
+                  {
+                    id: 104,
+                    cost: 0,
+                    count: 0,
+                    image: './assets/rewards/' + x.image,
+                    showNew: true,
+                    title: 'New Hero!',
+                    unlocked: true,
+                  },
+                ];
+                this.shownRewardItem = this.shownNewCampaigns[0];
+                setTimeout(() => {
+                  this.canClickNextReward = true;
+                }, 300);
                 return { ...x, disabled: false, unlocked: true };
               }
 
@@ -259,8 +270,15 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
             this.localStorageService.getBoosterPacks();
           const newBoosterPacks = boosterPacks.map((x) => {
             if (x.id === 3 && !x.unlocked) {
-              this.shownNewBoosterPack = x;
-              this.showBoosterPack = true;
+              this.showNewCampaigns = true;
+              this.shownNewCampaigns = [
+                ...this.shownNewCampaigns,
+                { ...x, id: 109, image: './assets/rewards/' + x.image },
+              ];
+              this.shownRewardItem = this.shownNewCampaigns[0];
+              setTimeout(() => {
+                this.canClickNextReward = true;
+              }, 300);
               return { ...x, unlocked: true };
             }
             return x;
@@ -275,7 +293,7 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
           this.specialLevelsData.hero3Show = true;
         }
 
-        if (x.id === 10) {
+        if (x.id === 10 && x.levelStatus === 'finished') {
           this.currentWhirlpoolScale = 2.5;
           this.currentWhirlpoolOpacity = 1;
         }
@@ -283,6 +301,40 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
       this.localStorageService.setSpecialLevelsData(this.specialLevelsData);
       this.localStorageService.setFlagsData(this.flagsList);
     }, 1);
+  }
+
+  isActiveReward(rewardItem: BoosterPack) {
+    return this.shownRewardItem.id === rewardItem.id;
+  }
+
+  async nextReward(rewardItem: any) {
+    if (this.canClickNextReward && this.shownNewCampaigns.length > 0) {
+      this.playerService.playSound('cardFlip.mp3');
+      // no more clicks
+      this.canClickNextReward = false;
+      this.shownNewCampaigns = this.shownNewCampaigns.filter(
+        (x) => x.id !== rewardItem.id
+      );
+      // Hide current reward
+      this.shownRewardItem = {
+        id: 0,
+        image: '',
+        cost: 0,
+        count: 0,
+        showNew: false,
+        title: '',
+        unlocked: true,
+      };
+      await this.timeout(750);
+      // show new reward
+      this.shownRewardItem = this.shownNewCampaigns[0];
+      if (this.shownNewCampaigns.length === 0) {
+        this.showNewCampaigns = false;
+      }
+      await this.timeout(500);
+      // Can click again
+      this.canClickNextReward = true;
+    }
   }
 
   // finishLevelTest() {

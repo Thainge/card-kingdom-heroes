@@ -61,32 +61,10 @@ export class HeroOverlayComponent implements OnInit {
   }
 
   initHeroes() {
-    const currentRoute = localStorage.getItem('currentRoute');
-    this.heroes = JSON.parse(localStorage.getItem('heroData') ?? '[]');
-    if (this.heroes.length < 1) {
-      this.heroes = HeroData;
-      localStorage.setItem('heroData', JSON.stringify(this.heroes));
-    }
-    this.heroes = this.heroes.map((x) => {
-      return { ...x, selected: false };
-    });
-
-    if (currentRoute === 'cardkingdom-map') {
-      this.activeIndexes = [1, 2, 3];
-      this.heroes[0].disabled = false;
-      this.heroes[0].selected = true;
-      this.heroes[0].unlocked = true;
-      this.currentHero = this.heroes[0];
-    }
-
-    if (currentRoute === 'zelda-map') {
-      this.activeIndexes = [4, 5];
-      this.heroes[3].disabled = false;
-      this.heroes[3].selected = true;
-      this.heroes[3].unlocked = true;
-      this.currentHero = this.heroes[3];
-    }
-
+    const localHeroData = this.localStorageService.getHeroDataForWorld();
+    this.activeIndexes = localHeroData.activeIndexes;
+    this.heroes = localHeroData.heroes;
+    this.currentHero = localHeroData.currentHero;
     this.currentHero = this.heroes.find((x) => x.selected);
     localStorage.setItem('heroData', JSON.stringify(this.heroes));
     this.playerService.currentHero$.next(this.heroes.find((x) => x.selected));

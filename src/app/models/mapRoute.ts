@@ -3,5 +3,5 @@ export type MapRoute =
   | 'zelda-map'
   | 'mario-map'
   | 'tf2-map'
-  | 'kirby-map'
-  | 'donkeykong-map';
+  | 'donkeykong-map'
+  | 'kirby-map';

@@ -121,10 +121,6 @@ export class MapComponent implements AfterViewInit, OnInit {
   battleStartOpen: boolean = false;
   challengeLevels: LevelDto[] = [];
   challengeFlags: FlagDto[] = [];
-  shownNewBoosterPack: BoosterPack | undefined;
-  showBoosterPack: boolean = false;
-  shownNewHero: BoosterPack | undefined;
-  showNewHero: boolean = false;
   showNewCampaigns: boolean = false;
   shownNewCampaigns: BoosterPack[] = [];
   shownRewardItem: BoosterPack = {
@@ -156,16 +152,6 @@ export class MapComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit() {
     this.initPanZoom();
-  }
-
-  hideBooster() {
-    this.showBoosterPack = false;
-    this.playerService.playSound('cardFlip.mp3');
-  }
-
-  hideNewHero() {
-    this.showNewHero = false;
-    this.playerService.playSound('cardFlip.mp3');
   }
 
   showWheel() {
@@ -210,6 +196,23 @@ export class MapComponent implements AfterViewInit, OnInit {
       this.flagsList.forEach((x) => {
         if (x.id === 3 && x.levelStatus === 'finished') {
           this.specialLevelsData.wheelShow = true;
+          this.showNewCampaigns = true;
+          this.shownNewCampaigns = [
+            ...this.shownNewCampaigns,
+            {
+              id: 104,
+              cost: 0,
+              count: 0,
+              image: './assets/wheel.png',
+              showNew: true,
+              title: 'Wheel Unlocked!',
+              unlocked: true,
+            },
+          ];
+          this.shownRewardItem = this.shownNewCampaigns[0];
+          setTimeout(() => {
+            this.canClickNextReward = true;
+          }, 300);
         }
 
         if (x.id === 4 && x.levelStatus === 'finished') {
@@ -221,8 +224,15 @@ export class MapComponent implements AfterViewInit, OnInit {
             this.localStorageService.getBoosterPacks();
           const newBoosterPacks = boosterPacks.map((x) => {
             if (x.id === 2 && !x.unlocked) {
-              this.shownNewBoosterPack = x;
-              this.showBoosterPack = true;
+              this.showNewCampaigns = true;
+              this.shownNewCampaigns = [
+                ...this.shownNewCampaigns,
+                { ...x, id: 101, image: './assets/rewards/' + x.image },
+              ];
+              this.shownRewardItem = this.shownNewCampaigns[0];
+              setTimeout(() => {
+                this.canClickNextReward = true;
+              }, 300);
               return { ...x, unlocked: true };
             }
             return x;
@@ -236,16 +246,23 @@ export class MapComponent implements AfterViewInit, OnInit {
           if (heroes.length > 0) {
             const newHeroes = heroes.map((x) => {
               if (x.id === 2 && !x.unlocked) {
-                this.showNewHero = true;
-                this.shownNewHero = {
-                  id: 2,
-                  cost: 0,
-                  count: 0,
-                  image: x.image,
-                  showNew: true,
-                  title: 'New Hero!',
-                  unlocked: true,
-                };
+                this.showNewCampaigns = true;
+                this.shownNewCampaigns = [
+                  ...this.shownNewCampaigns,
+                  {
+                    id: 102,
+                    cost: 0,
+                    count: 0,
+                    image: './assets/rewards/' + x.image,
+                    showNew: true,
+                    title: 'New Hero!',
+                    unlocked: true,
+                  },
+                ];
+                this.shownRewardItem = this.shownNewCampaigns[0];
+                setTimeout(() => {
+                  this.canClickNextReward = true;
+                }, 300);
                 return { ...x, disabled: false, unlocked: true };
               }
 
@@ -261,8 +278,15 @@ export class MapComponent implements AfterViewInit, OnInit {
             this.localStorageService.getBoosterPacks();
           const newBoosterPacks = boosterPacks.map((x) => {
             if (x.id === 3 && !x.unlocked) {
-              this.shownNewBoosterPack = x;
-              this.showBoosterPack = true;
+              this.showNewCampaigns = true;
+              this.shownNewCampaigns = [
+                ...this.shownNewCampaigns,
+                { ...x, id: 103, image: './assets/rewards/' + x.image },
+              ];
+              this.shownRewardItem = this.shownNewCampaigns[0];
+              setTimeout(() => {
+                this.canClickNextReward = true;
+              }, 300);
               return { ...x, unlocked: true };
             }
             return x;
@@ -276,16 +300,23 @@ export class MapComponent implements AfterViewInit, OnInit {
           if (heroes.length > 0) {
             const newHeroes = heroes.map((x) => {
               if (x.id === 3 && !x.unlocked) {
-                this.showNewHero = true;
-                this.shownNewHero = {
-                  id: 3,
-                  cost: 0,
-                  count: 0,
-                  image: x.image,
-                  showNew: true,
-                  title: 'New Hero!',
-                  unlocked: true,
-                };
+                this.showNewCampaigns = true;
+                this.shownNewCampaigns = [
+                  ...this.shownNewCampaigns,
+                  {
+                    id: 104,
+                    cost: 0,
+                    count: 0,
+                    image: './assets/rewards/' + x.image,
+                    showNew: true,
+                    title: 'New Hero!',
+                    unlocked: true,
+                  },
+                ];
+                this.shownRewardItem = this.shownNewCampaigns[0];
+                setTimeout(() => {
+                  this.canClickNextReward = true;
+                }, 300);
                 return { ...x, disabled: false, unlocked: true };
               }
 
@@ -300,8 +331,15 @@ export class MapComponent implements AfterViewInit, OnInit {
             this.localStorageService.getBoosterPacks();
           const newBoosterPacks = boosterPacks.map((x) => {
             if (x.id === 4 && !x.unlocked) {
-              this.shownNewBoosterPack = x;
-              this.showBoosterPack = true;
+              this.showNewCampaigns = true;
+              this.shownNewCampaigns = [
+                ...this.shownNewCampaigns,
+                { ...x, id: 105, image: './assets/rewards/' + x.image },
+              ];
+              this.shownRewardItem = this.shownNewCampaigns[0];
+              setTimeout(() => {
+                this.canClickNextReward = true;
+              }, 300);
               return { ...x, unlocked: true };
             }
             return x;
@@ -322,7 +360,7 @@ export class MapComponent implements AfterViewInit, OnInit {
         if (x.id === 19 && x.levelStatus === 'finished') {
           this.specialLevelsData.hero4Show = true;
         }
-        if (x.id === 20) {
+        if (x.id === 20 && x.levelStatus === 'finished') {
           const campaignData = this.localStorageService.getCampaignsData();
           const newCampaignsData = campaignData.map((x) => {
             if (x.id !== 1 && x.locked) {
@@ -331,63 +369,55 @@ export class MapComponent implements AfterViewInit, OnInit {
             return x;
           });
           this.showNewCampaigns = true;
-          this.shownRewardItem = {
-            id: 2,
-            cost: 0,
-            count: 0,
-            image: 'linkCampaign.png',
-            showNew: true,
-            title: 'New Campaign',
-            unlocked: true,
-          };
           this.shownNewCampaigns = [
             ...this.shownNewCampaigns,
             {
-              id: 2,
+              id: 106,
               cost: 0,
               count: 0,
-              image: 'linkCampaign.png',
+              image: './assets/linkCampaign.png',
               showNew: true,
               title: 'New Campaign',
               unlocked: true,
             },
             {
-              id: 3,
+              id: 107,
               cost: 0,
               count: 0,
-              image: 'marioCampaign.png',
+              image: './assets/marioCampaign.png',
               showNew: true,
               title: 'New Campaign',
               unlocked: true,
             },
             {
-              id: 4,
+              id: 108,
               cost: 0,
               count: 0,
-              image: 'tf2Campaign.png',
+              image: './assets/tf2Campaign.png',
               showNew: true,
               title: 'New Campaign',
               unlocked: true,
             },
             {
-              id: 5,
+              id: 109,
               cost: 0,
               count: 0,
-              image: 'donkeyKongCampaign.png',
+              image: './assets/donkeyKongCampaign.png',
               showNew: true,
               title: 'New Campaign',
               unlocked: true,
             },
             {
-              id: 5,
+              id: 110,
               cost: 0,
               count: 0,
-              image: 'kirbyCampaign.png',
+              image: './assets/kirbyCampaign.png',
               showNew: true,
               title: 'New Campaign',
               unlocked: true,
             },
           ];
+          this.shownRewardItem = this.shownNewCampaigns[0];
           setTimeout(() => {
             this.canClickNextReward = true;
           }, 300);
