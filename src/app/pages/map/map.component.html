@@ -62,6 +62,63 @@
     </div>
   </div>
   <div
+    *ngIf="showNewCampaigns"
+    [@fadeEnter]="{
+      value: '',
+      params: { duration: 300, delay: 0 }
+    }"
+    [@fadeOutLeave]="{
+      value: '',
+      params: { duration: 300, delay: 0 }
+    }"
+    class="prizeOverlay"
+  >
+    <div class="optionsMenuBackdrop2"></div>
+    <div class="centerPrizeBox">
+      <ng-container *ngFor="let item of shownNewCampaigns">
+        <div
+          class="rayItem"
+          *ngIf="isActiveReward(item)"
+          [@zoomInEnter]="{
+            value: '',
+            params: {
+              duration: 400,
+              translate: '100px'
+            }
+          }"
+          (click)="nextReward(item)"
+          [@zoomOutLeave]
+        >
+          <div class="raysContainer">
+            <div
+              class="raysTextTitle"
+              [ngStyle]="{
+                'font-family': 'headerFont'
+              }"
+              *ngIf="isActiveReward(item)"
+              [@fadeOutLeave]="{ value: '', params: { duration: 200 } }"
+            >
+              {{ item.title }}
+            </div>
+            <div
+              class="raysContinueText"
+              [ngStyle]="{
+                'font-family': 'headerFont'
+              }"
+              *ngIf="isActiveReward(item)"
+              [@fadeOutLeave]="{ value: '', params: { duration: 200 } }"
+            >
+              Click to continue...
+            </div>
+            <img class="raysMiddle" [src]="'./assets/' + item.image" />
+            <div class="pulseBox"><div class="pulse"></div></div>
+            <div class="rays"></div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div
     *ngIf="showBoosterPack"
     [@fadeEnter]="{
       value: '',

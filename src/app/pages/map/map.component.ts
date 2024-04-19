@@ -28,7 +28,7 @@ import { AchievementService } from 'src/app/services/achievement.service';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
 const { Pins } = require('@fancyapps/ui/dist/panzoom/panzoom.pins.esm.js');
 
-type WhirlpoolSize = 1 | 1.25 | 1.5 | 2;
+type WhirlpoolSize = 1 | 1.25 | 1.5 | 2 | 2.5;
 type WhirlpoolOpacity = 0.4 | 0.6 | 0.8 | 1;
 type Battle = 101 | 102 | 103 | 104;
 
@@ -125,6 +125,18 @@ export class MapComponent implements AfterViewInit, OnInit {
   showBoosterPack: boolean = false;
   shownNewHero: BoosterPack | undefined;
   showNewHero: boolean = false;
+  showNewCampaigns: boolean = false;
+  shownNewCampaigns: BoosterPack[] = [];
+  shownRewardItem: BoosterPack = {
+    id: 0,
+    image: '',
+    cost: 0,
+    count: 0,
+    showNew: false,
+    title: '',
+    unlocked: true,
+  };
+  canClickNextReward: boolean = false;
 
   constructor(
     private loadingService: LoadingService,
@@ -164,7 +176,6 @@ export class MapComponent implements AfterViewInit, OnInit {
   initFlags() {
     setTimeout(() => {
       this.flagsList = this.localStorageService.getFlagsData();
-
       this.specialLevelsData = this.localStorageService.getSpecialLevelsData();
       try {
         this.specialLevelsData.hero1Finished =
@@ -216,6 +227,8 @@ export class MapComponent implements AfterViewInit, OnInit {
             }
             return x;
           });
+          this.currentWhirlpoolScale = 1.25;
+          this.currentWhirlpoolOpacity = 0.4;
           this.localStorageService.setBoosterPacks(newBoosterPacks);
         }
 
@@ -254,6 +267,8 @@ export class MapComponent implements AfterViewInit, OnInit {
             }
             return x;
           });
+          this.currentWhirlpoolScale = 1.5;
+          this.currentWhirlpoolOpacity = 0.6;
           this.localStorageService.setBoosterPacks(newBoosterPacks);
         }
 
@@ -291,6 +306,8 @@ export class MapComponent implements AfterViewInit, OnInit {
             }
             return x;
           });
+          this.currentWhirlpoolScale = 2;
+          this.currentWhirlpoolOpacity = 0.8;
           this.localStorageService.setBoosterPacks(newBoosterPacks);
         }
 
@@ -305,30 +322,117 @@ export class MapComponent implements AfterViewInit, OnInit {
         if (x.id === 19 && x.levelStatus === 'finished') {
           this.specialLevelsData.hero4Show = true;
         }
-        if (x.id === 20 && x.levelStatus === 'finished') {
+        if (x.id === 20) {
           const campaignData = this.localStorageService.getCampaignsData();
           const newCampaignsData = campaignData.map((x) => {
-            if (x.id === 2 && x.locked) {
-              this.showNewHero = true;
-              this.shownNewHero = {
-                id: 2,
-                cost: 0,
-                count: 0,
-                image: 'zeldaCampaign.png',
-                showNew: true,
-                title: 'New Campaign',
-                unlocked: true,
-              };
+            if (x.id !== 1 && x.locked) {
               return { ...x, locked: false };
             }
             return x;
           });
+          this.showNewCampaigns = true;
+          this.shownRewardItem = {
+            id: 2,
+            cost: 0,
+            count: 0,
+            image: 'linkCampaign.png',
+            showNew: true,
+            title: 'New Campaign',
+            unlocked: true,
+          };
+          this.shownNewCampaigns = [
+            ...this.shownNewCampaigns,
+            {
+              id: 2,
+              cost: 0,
+              count: 0,
+              image: 'linkCampaign.png',
+              showNew: true,
+              title: 'New Campaign',
+              unlocked: true,
+            },
+            {
+              id: 3,
+              cost: 0,
+              count: 0,
+              image: 'marioCampaign.png',
+              showNew: true,
+              title: 'New Campaign',
+              unlocked: true,
+            },
+            {
+              id: 4,
+              cost: 0,
+              count: 0,
+              image: 'tf2Campaign.png',
+              showNew: true,
+              title: 'New Campaign',
+              unlocked: true,
+            },
+            {
+              id: 5,
+              cost: 0,
+              count: 0,
+              image: 'donkeyKongCampaign.png',
+              showNew: true,
+              title: 'New Campaign',
+              unlocked: true,
+            },
+            {
+              id: 5,
+              cost: 0,
+              count: 0,
+              image: 'kirbyCampaign.png',
+              showNew: true,
+              title: 'New Campaign',
+              unlocked: true,
+            },
+          ];
+          setTimeout(() => {
+            this.canClickNextReward = true;
+          }, 300);
+          this.currentWhirlpoolScale = 2.5;
+          this.currentWhirlpoolOpacity = 1;
           this.localStorageService.setCampaignsData(newCampaignsData);
         }
       });
       this.localStorageService.setSpecialLevelsData(this.specialLevelsData);
       this.localStorageService.setFlagsData(this.flagsList);
     }, 1);
+  }
+
+  isActiveReward(rewardItem: BoosterPack) {
+    return this.shownRewardItem.id === rewardItem.id;
+  }
+
+  async nextReward(rewardItem: any) {
+    if (this.canClickNextReward && this.shownNewCampaigns.length > 0) {
+      this.playerService.playSound('cardFlip.mp3');
+      // no more clicks
+      this.canClickNextReward = false;
+      this.shownNewCampaigns = this.shownNewCampaigns.filter(
+        (x) => x.id !== rewardItem.id
+      );
+      // Hide current reward
+      this.shownRewardItem = {
+        id: 0,
+        image: '',
+        cost: 0,
+        count: 0,
+        showNew: false,
+        title: '',
+        unlocked: true,
+      };
+      await this.timeout(750);
+      // show new reward
+      this.shownRewardItem = this.shownNewCampaigns[0];
+      if (this.shownNewCampaigns.length === 0) {
+        this.showNewCampaigns = false;
+      }
+      await this.timeout(500);
+      // Can click again
+      this.canClickNextReward = true;
+    }
   }
 
   async initPanZoom() {

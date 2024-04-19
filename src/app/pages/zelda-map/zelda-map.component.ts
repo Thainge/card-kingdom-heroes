@@ -28,7 +28,7 @@ import { AchievementService } from 'src/app/services/achievement.service';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
 const { Pins } = require('@fancyapps/ui/dist/panzoom/panzoom.pins.esm.js');
 
-type WhirlpoolSize = 1 | 1.25 | 1.5 | 2;
+type WhirlpoolSize = 1 | 1.25 | 1.5 | 2 | 2.5;
 type WhirlpoolOpacity = 0.4 | 0.6 | 0.8 | 1;
 type Battle = 201 | 202 | 203 | 204;
 
@@ -165,7 +165,6 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
     setTimeout(() => {
       this.flagsList = this.localStorageService.getFlagsData();
       this.specialLevelsData = this.localStorageService.getSpecialLevelsData();
-
       try {
         this.specialLevelsData.hero1Finished =
           this.challengeFlags[0].levelStatus === 'finished';
@@ -219,6 +218,8 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
             }
             return x;
           });
+          this.currentWhirlpoolScale = 1.5;
+          this.currentWhirlpoolOpacity = 0.6;
           this.localStorageService.setBoosterPacks(newBoosterPacks);
         }
 
@@ -264,12 +265,19 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
             }
             return x;
           });
+          this.currentWhirlpoolScale = 2;
+          this.currentWhirlpoolOpacity = 0.8;
           this.localStorageService.setBoosterPacks(newBoosterPacks);
         }
 
         // Fire finished unlock pack
         if (x.id === 8 && x.levelStatus === 'finished') {
           this.specialLevelsData.hero3Show = true;
+        }
+
+        if (x.id === 10) {
+          this.currentWhirlpoolScale = 2.5;
+          this.currentWhirlpoolOpacity = 1;
         }
       });
       this.localStorageService.setSpecialLevelsData(this.specialLevelsData);
@@ -413,8 +421,6 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
 
   @HostListener('window:keydown', ['$event'])
   onKeyPress($event: KeyboardEvent) {
-    // this.finishLevelTest();
-
     if (!this.devMode) {
       return;
     }

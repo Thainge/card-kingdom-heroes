@@ -513,10 +513,6 @@ export class BattleComponent implements OnInit {
     }, 50);
   }
 
-  unlockAchievement(id: number) {
-    this.achievementService;
-  }
-
   checkShowWildCardHint(card: CardDto) {
     // Show wild card hint
     const wildTipShown = localStorage.getItem('wildTipShown');
