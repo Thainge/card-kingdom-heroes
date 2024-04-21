@@ -133,6 +133,7 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
     unlocked: true,
   };
   canClickNextReward: boolean = false;
+  hideWhirlpool: boolean = false;
 
   constructor(
     private loadingService: LoadingService,
@@ -148,6 +149,11 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
     this.challengeFlags = this.localStorageService.getChallengeFlags();
     this.checkStartOfGame();
     this.initFlags();
+
+    const hideWhirlpool = this.localStorageService.getHideWhirlpool();
+    if (hideWhirlpool) {
+      this.hideWhirlpool = true;
+    }
   }
 
   ngAfterViewInit() {
@@ -302,6 +308,7 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
           setTimeout(() => {
             this.currentWhirlpoolScale = 0;
             this.currentWhirlpoolOpacity = 0;
+            this.localStorageService.setHideWhirlpool(true);
           }, 1000);
           const finishedCampaignShown =
             this.localStorageService.getDidShowCampaignFinish();

@@ -33,5 +33,11 @@ type AbilityFunction =
   | 'wildSuitRange'
   | 'increaseDefense'
   | 'callInSupport';
-type CostValue = 'hearts' | 'diamonds' | 'spades' | 'clubs' | 'black' | 'red';
+export type CostValue =
+  | 'hearts'
+  | 'diamonds'
+  | 'spades'
+  | 'clubs'
+  | 'black'
+  | 'red';
 type AnimationType = 'fire' | 'heal' | 'shield';

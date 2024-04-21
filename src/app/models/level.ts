@@ -15,7 +15,8 @@ export interface LevelDto {
   allCardsWild?: boolean;
   showGuide?: boolean;
   showAbilityGuide?: boolean;
-  showComic?: boolean;
+  showComicStart?: boolean;
+  showComicEnd?: boolean;
   comicData?: Comic;
 
   cards: CardDto[];

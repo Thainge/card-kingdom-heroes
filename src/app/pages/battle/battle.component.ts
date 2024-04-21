@@ -1,7 +1,7 @@
 import { gameTheme } from './../../models/theme';
 import { LoadingService } from './../../services/loading.service';
 import { CheatsService } from './../../services/cheats.service';
-import { AbilityCard } from './../../models/abilityCard';
+import { AbilityCard, CostValue } from './../../models/abilityCard';
 import { CommonModule } from '@angular/common';
 import {
   Component,
@@ -425,7 +425,6 @@ export class BattleComponent implements OnInit {
       );
 
       if (localPremium && localPremium.length > 0) {
-        console.log(localPremium);
         this.doubleGold = localPremium[1].bought && localPremium[1].active;
         this.abilitiesCostLess =
           localPremium[2].bought && localPremium[2].active;
@@ -440,7 +439,6 @@ export class BattleComponent implements OnInit {
     });
     this.gameThemePath =
       (localStorage.getItem('gameThemePath') as gameTheme) ?? 'default';
-    console.log(this.gameThemePath);
     // Cheats
     this.cheatsService.cheats$.subscribe((x) => {
       if (x === 'wildHand') {
@@ -464,6 +462,10 @@ export class BattleComponent implements OnInit {
     // Game init
     if (this.Cards.length < 1) {
       this.gameInit();
+      this.enemyPlayers = this.enemyPlayers.map((x) => {
+        return { ...x, health: 0 };
+      });
+      this.checkEndGame();
     }
 
     this.loadingService.isRefreshing$.subscribe((x) => {
@@ -758,7 +760,10 @@ export class BattleComponent implements OnInit {
     }
     if (this.abilitiesCostLess) {
       this.abilityDeck = this.abilityDeck.map((x) => {
-        return { ...x, cost: x.cost.slice(1) };
+        const newCosts = x.cost.map((a) => {
+          return a.slice(1) ?? [];
+        });
+        return { ...x, cost: newCosts };
       });
     }
     this.updateDeckBasedOnPlayerSkills();
@@ -801,7 +806,7 @@ export class BattleComponent implements OnInit {
         display: false,
         id: 0,
       };
-      this.showComic = this.currentLevel?.showComic ?? false;
+      this.showComic = this.currentLevel?.showComicStart ?? false;
       this.showGuide = false;
       this.showAbilityGuide = false;
       this.hideGuideNow = true;
@@ -827,7 +832,7 @@ export class BattleComponent implements OnInit {
         display: false,
         id: 0,
       };
-      this.showComic = this.currentLevel?.showComic ?? false;
+      this.showComic = this.currentLevel?.showComicStart ?? false;
       this.showGuide = false;
       for (const num of [0, 1, 2, 3, 4]) {
         // Add to player 1 hand and remove player 1 deck
@@ -3202,6 +3207,12 @@ export class BattleComponent implements OnInit {
       this.currentCombatPhase.dialogEnd.length > 0 &&
       !this.hideDialog
     ) {
+      this.comicData = this.currentLevel?.comicData ?? {
+        comics: [],
+        display: false,
+        id: 0,
+      };
+      this.showComic = this.currentLevel?.showComicEnd ?? false;
       this.displayDialogGameEnd = true;
       this.dialogArrayGameEnd = this.currentCombatPhase.dialogEnd;
       this.currentCombatPhase.dialogEnd = [];

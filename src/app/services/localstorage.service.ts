@@ -295,6 +295,22 @@ export class LocalStorageService {
     return 'startingPageMusic.mp3';
   }
 
+  public getHideWhirlpool(): boolean {
+    const data = localStorage.getItem(this.currentRoute() + '-hideWhirlpool');
+    if (data) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public setHideWhirlpool(data: boolean) {
+    localStorage.setItem(
+      this.currentRoute() + '-hideWhirlpool',
+      JSON.stringify(data)
+    );
+  }
+
   public getDidShowCampaignFinish(): boolean {
     const data = localStorage.getItem(
       this.currentRoute() + '-finishedCampaignShow'

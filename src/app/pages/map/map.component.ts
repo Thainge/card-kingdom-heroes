@@ -133,21 +133,31 @@ export class MapComponent implements AfterViewInit, OnInit {
     unlocked: true,
   };
   canClickNextReward: boolean = false;
+  hideWhirlpool: boolean = false;
 
   constructor(
     private loadingService: LoadingService,
-    private route: ActivatedRoute,
     private router: Router,
     private playerService: playerService,
-    private achievementService: AchievementService,
     private localStorageService: LocalStorageService
-  ) {}
+  ) {
+    const hideWhirlpool = this.localStorageService.getHideWhirlpool();
+    if (hideWhirlpool) {
+      this.currentWhirlpoolOpacity = 0;
+      this.currentWhirlpoolScale = 0;
+    }
+  }
 
   ngOnInit() {
     this.challengeLevels = this.localStorageService.getChallengeLevels();
     this.challengeFlags = this.localStorageService.getChallengeFlags();
     this.checkStartOfGame();
     this.initFlags();
+
+    const hideWhirlpool = this.localStorageService.getHideWhirlpool();
+    if (hideWhirlpool) {
+      this.hideWhirlpool = true;
+    }
   }
 
   ngAfterViewInit() {
@@ -163,6 +173,7 @@ export class MapComponent implements AfterViewInit, OnInit {
     setTimeout(() => {
       this.flagsList = this.localStorageService.getFlagsData();
       this.specialLevelsData = this.localStorageService.getSpecialLevelsData();
+
       try {
         this.specialLevelsData.hero1Finished =
           this.challengeFlags[0].levelStatus === 'finished';
@@ -179,8 +190,6 @@ export class MapComponent implements AfterViewInit, OnInit {
       this.currentLevel = this.flagsList.find(
         (x) => x.levelStatus === 'justFinished'
       );
-      console.log(this.nextLevel);
-      console.log(this.currentLevel);
       this.flagsList = this.flagsList.map((x) => {
         if (x.levelStatus === 'justFinished') {
           return { ...x, levelStatus: 'finished' };
@@ -375,6 +384,7 @@ export class MapComponent implements AfterViewInit, OnInit {
           setTimeout(() => {
             this.currentWhirlpoolScale = 0;
             this.currentWhirlpoolOpacity = 0;
+            this.localStorageService.setHideWhirlpool(true);
           }, 1000);
           setTimeout(() => {
             this.showCampaignsData();
@@ -386,26 +396,26 @@ export class MapComponent implements AfterViewInit, OnInit {
     }, 1);
   }
 
-  // finishLevelTest() {
-  //   const foundCurrentFlag = this.flagsList.find(
-  //     (x) => x.levelStatus === 'nextLevel'
-  //   );
-  //   if (foundCurrentFlag) {
-  //     this.flagsList = this.flagsList.map((x) => {
-  //       if (x.id === foundCurrentFlag.id) {
-  //         return { ...x, levelStatus: 'justFinished', alreadyAnimated: false };
-  //       }
+  finishLevelTest() {
+    const foundCurrentFlag = this.flagsList.find(
+      (x) => x.levelStatus === 'nextLevel'
+    );
+    if (foundCurrentFlag) {
+      this.flagsList = this.flagsList.map((x) => {
+        if (x.id === foundCurrentFlag.id) {
+          return { ...x, levelStatus: 'justFinished', alreadyAnimated: false };
+        }
 
-  //       if (x.id === foundCurrentFlag.id + 1) {
-  //         return { ...x, levelStatus: 'nextLevel' };
-  //       }
+        if (x.id === foundCurrentFlag.id + 1) {
+          return { ...x, levelStatus: 'nextLevel' };
+        }
 
-  //       return x;
-  //     });
-  //     this.localStorageService.setFlagsData(this.flagsList);
-  //     location.reload();
-  //   }
-  // }
+        return x;
+      });
+      this.localStorageService.setFlagsData(this.flagsList);
+      location.reload();
+    }
+  }
 
   showCampaignsData() {
     let showData = false;
@@ -631,7 +641,7 @@ export class MapComponent implements AfterViewInit, OnInit {
 
   @HostListener('window:keydown', ['$event'])
   onKeyPress($event: KeyboardEvent) {
-    // this.finishLevelTest();
+    this.finishLevelTest();
 
     if (!this.devMode) {
       return;
