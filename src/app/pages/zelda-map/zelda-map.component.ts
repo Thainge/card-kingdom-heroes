@@ -303,25 +303,31 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
             this.currentWhirlpoolScale = 0;
             this.currentWhirlpoolOpacity = 0;
           }, 1000);
-          setTimeout(() => {
-            this.showNewCampaigns = true;
-            this.shownNewCampaigns = [
-              ...this.shownNewCampaigns,
-              {
-                id: 199,
-                cost: 0,
-                count: 0,
-                image: './assets/campaignFinished.png',
-                showNew: true,
-                title: 'Campaign Finished!',
-                unlocked: true,
-              },
-            ];
-            this.shownRewardItem = this.shownNewCampaigns[0];
+          const finishedCampaignShown =
+            this.localStorageService.getDidShowCampaignFinish();
+          console.log(finishedCampaignShown);
+          if (!finishedCampaignShown) {
             setTimeout(() => {
-              this.canClickNextReward = true;
-            }, 300);
-          }, 1500);
+              this.localStorageService.setDidShowCampaignFinish(true);
+              this.showNewCampaigns = true;
+              this.shownNewCampaigns = [
+                ...this.shownNewCampaigns,
+                {
+                  id: 199,
+                  cost: 0,
+                  count: 0,
+                  image: './assets/campaignFinished.png',
+                  showNew: true,
+                  title: 'Campaign Finished!',
+                  unlocked: true,
+                },
+              ];
+              this.shownRewardItem = this.shownNewCampaigns[0];
+              setTimeout(() => {
+                this.canClickNextReward = true;
+              }, 300);
+            }, 1500);
+          }
         }
       });
       this.localStorageService.setSpecialLevelsData(this.specialLevelsData);

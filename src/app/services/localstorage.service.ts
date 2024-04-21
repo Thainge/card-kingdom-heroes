@@ -295,6 +295,24 @@ export class LocalStorageService {
     return 'startingPageMusic.mp3';
   }
 
+  public getDidShowCampaignFinish(): boolean {
+    const data = localStorage.getItem(
+      this.currentRoute() + '-finishedCampaignShow'
+    );
+    if (data) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public setDidShowCampaignFinish(data: boolean) {
+    localStorage.setItem(
+      this.currentRoute() + '-finishedCampaignShow',
+      JSON.stringify(data)
+    );
+  }
+
   public getHeroDataForWorld(): HeroData {
     let heroes: PlayerDto[] = JSON.parse(
       localStorage.getItem('heroData') ?? '[]'
