@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { HeroData } from 'src/assets/data/hero';
 import { AchievementService } from './achievement.service';
 import { LocalStorageService } from './localstorage.service';
+import { Music } from '../models/music';
 
 const defaultPlayer: PlayerDto = {
   id: 0,
@@ -61,8 +62,6 @@ type Sound =
   | 'victory.mp3'
   | 'horn.mp3'
   | 'achievement.mp3';
-
-type Music = 'startingPageMusic.mp3' | 'mapMusic.mp3' | 'battleMusic.mp3';
 
 @Injectable({
   providedIn: 'root',
@@ -146,30 +145,6 @@ export class playerService {
       audio.load();
       audio.play();
     } catch (err) {}
-  }
-
-  public checkNextMusic(): boolean {
-    if (this.router.url === '/') {
-      this.playMusic('startingPageMusic.mp3');
-      return true;
-    }
-
-    if (this.router.url === '/battle') {
-      this.playMusic('battleMusic.mp3');
-      return true;
-    }
-
-    if (this.router.url === '/cardkingdom-map') {
-      this.playMusic('mapMusic.mp3');
-      return true;
-    }
-
-    if (this.router.url === '/zelda-map') {
-      this.playMusic('mapMusic.mp3');
-      return true;
-    }
-
-    return false;
   }
 
   public playMusic(music: Music) {

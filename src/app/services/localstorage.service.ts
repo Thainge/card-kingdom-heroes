@@ -32,6 +32,7 @@ import { gameTheme } from '../models/theme';
 import { PlayerDto } from '../models/player';
 import { HeroData } from 'src/assets/data/hero';
 import { Router } from '@angular/router';
+import { Music } from '../models/music';
 
 type RouteUrl = 'cardkingdom-map' | 'zelda-map';
 
@@ -251,6 +252,47 @@ export class LocalStorageService {
     const currentTheme =
       (localStorage.getItem('currentRoute') as gameTheme) ?? 'default';
     return currentTheme;
+  }
+
+  public getMusic(): Music {
+    if (this.router.url === '/') {
+      return 'startingPageMusic.mp3';
+    }
+
+    if (this.router.url === '/cardkingdom-map') {
+      return 'mapMusic.mp3';
+    }
+
+    if (this.router.url === '/zelda-map') {
+      return 'mapMusic.mp3';
+    }
+
+    if (
+      this.router.url === '/battle' &&
+      this.currentRoute() === 'cardkingdom-map'
+    ) {
+      const musicOptions: Music[] = [
+        'battleMusic.mp3',
+        'battleMusic.mp3',
+        'battleMusic.mp3',
+      ];
+      const random = Math.floor(Math.random() * musicOptions.length);
+      const randomPick = musicOptions[random];
+      return randomPick;
+    }
+
+    if (this.router.url === '/battle' && this.currentRoute() === 'zelda-map') {
+      const musicOptions: Music[] = [
+        'battleMusic.mp3',
+        'battleMusic.mp3',
+        'battleMusic.mp3',
+      ];
+      const random = Math.floor(Math.random() * musicOptions.length);
+      const randomPick = musicOptions[random];
+      return randomPick;
+    }
+
+    return 'startingPageMusic.mp3';
   }
 
   public getHeroDataForWorld(): HeroData {
