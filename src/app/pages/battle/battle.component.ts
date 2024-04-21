@@ -462,10 +462,6 @@ export class BattleComponent implements OnInit {
     // Game init
     if (this.Cards.length < 1) {
       this.gameInit();
-      this.enemyPlayers = this.enemyPlayers.map((x) => {
-        return { ...x, health: 0 };
-      });
-      this.checkEndGame();
     }
 
     this.loadingService.isRefreshing$.subscribe((x) => {
