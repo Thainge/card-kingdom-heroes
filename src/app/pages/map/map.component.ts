@@ -208,7 +208,7 @@ export class MapComponent implements AfterViewInit, OnInit {
         if (
           x.id === 3 &&
           x.levelStatus === 'finished' &&
-          this.specialLevelsData.wheelShow === false
+          !this.specialLevelsData.wheelShow
         ) {
           this.specialLevelsData.wheelShow = true;
           this.showNewCampaigns = true;
@@ -341,7 +341,7 @@ export class MapComponent implements AfterViewInit, OnInit {
           }
         }
 
-        if (x.id === 15 && x.levelStatus === 'finished') {
+        if (x.id === 14 && x.levelStatus === 'finished') {
           const boosterPacks: BoosterPack[] =
             this.localStorageService.getBoosterPacks();
           const newBoosterPacks = boosterPacks.map((x) => {
@@ -368,19 +368,19 @@ export class MapComponent implements AfterViewInit, OnInit {
           this.specialLevelsData.hero2Show = true;
         }
 
-        if (x.id === 14 && x.levelStatus === 'finished') {
+        if (x.id === 13 && x.levelStatus === 'finished') {
           this.specialLevelsData.hero3Show = true;
         }
 
-        if (x.id === 19 && x.levelStatus === 'finished') {
+        if (x.id === 18 && x.levelStatus === 'finished') {
           this.specialLevelsData.hero4Show = true;
         }
-        if (x.id === 20 && x.levelStatus === 'finished') {
+        if (x.id === 19 && x.levelStatus === 'finished') {
           this.currentWhirlpoolScale = 2.5;
           this.currentWhirlpoolOpacity = 1;
         }
 
-        if (x.id === 21 && x.levelStatus === 'finished') {
+        if (x.id === 20 && x.levelStatus === 'finished') {
           setTimeout(() => {
             this.currentWhirlpoolScale = 0;
             this.currentWhirlpoolOpacity = 0;
@@ -401,7 +401,7 @@ export class MapComponent implements AfterViewInit, OnInit {
       (x) => x.levelStatus === 'nextLevel'
     );
     if (foundCurrentFlag) {
-      this.flagsList = this.flagsList.map((x) => {
+      const newFlags: FlagDto[] = this.flagsList.map((x) => {
         if (x.id === foundCurrentFlag.id) {
           return { ...x, levelStatus: 'justFinished', alreadyAnimated: false };
         }
@@ -412,7 +412,7 @@ export class MapComponent implements AfterViewInit, OnInit {
 
         return x;
       });
-      this.localStorageService.setFlagsData(this.flagsList);
+      this.localStorageService.setFlagsData(newFlags);
       location.reload();
     }
   }
@@ -641,7 +641,7 @@ export class MapComponent implements AfterViewInit, OnInit {
 
   @HostListener('window:keydown', ['$event'])
   onKeyPress($event: KeyboardEvent) {
-    this.finishLevelTest();
+    // this.finishLevelTest();
 
     if (!this.devMode) {
       return;

@@ -137,10 +137,8 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
 
   constructor(
     private loadingService: LoadingService,
-    private route: ActivatedRoute,
     private router: Router,
     private playerService: playerService,
-    private achievementService: AchievementService,
     private localStorageService: LocalStorageService
   ) {}
 
@@ -299,12 +297,12 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
           this.specialLevelsData.hero3Show = true;
         }
 
-        if (x.id === 10 && x.levelStatus === 'finished') {
+        if (x.id === 9 && x.levelStatus === 'finished') {
           this.currentWhirlpoolScale = 2.5;
           this.currentWhirlpoolOpacity = 1;
         }
 
-        if (x.id === 11 && x.levelStatus === 'finished') {
+        if (x.id === 10 && x.levelStatus === 'finished') {
           setTimeout(() => {
             this.currentWhirlpoolScale = 0;
             this.currentWhirlpoolOpacity = 0;
@@ -380,9 +378,8 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
     const foundCurrentFlag = this.flagsList.find(
       (x) => x.levelStatus === 'nextLevel'
     );
-    console.log(foundCurrentFlag);
     if (foundCurrentFlag) {
-      this.flagsList = this.flagsList.map((x) => {
+      const newFlags: FlagDto[] = this.flagsList.map((x) => {
         if (x.id === foundCurrentFlag.id) {
           return { ...x, levelStatus: 'justFinished', alreadyAnimated: false };
         }
@@ -393,8 +390,7 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
 
         return x;
       });
-      this.localStorageService.setFlagsData(this.flagsList);
-      console.log('hit');
+      this.localStorageService.setFlagsData(newFlags);
       location.reload();
     }
   }
@@ -512,7 +508,7 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
 
   @HostListener('window:keydown', ['$event'])
   onKeyPress($event: KeyboardEvent) {
-    this.finishLevelTest();
+    // this.finishLevelTest();
 
     if (!this.devMode) {
       return;

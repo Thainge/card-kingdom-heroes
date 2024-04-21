@@ -535,44 +535,30 @@ export const flagsData: FlagDto[] = [
         x: 2168,
         y: 478,
       },
-    ],
-  },
-  {
-    id: 13,
-    x: 2207,
-    y: 389,
-    levelStatus: 'hidden',
-    alreadyAnimated: false,
-    missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
-      rewardMin: 100,
-      rewardMax: 150,
-    },
-    levelType: 'normal',
-    dots: [
       {
-        id: 1,
+        id: 5,
+        x: 2235,
+        y: 450,
+      },
+      {
+        id: 6,
         x: 2299,
         y: 457,
       },
       {
-        id: 2,
+        id: 7,
         x: 2363,
         y: 503,
       },
       {
-        id: 3,
+        id: 8,
         x: 2435,
         y: 525,
       },
     ],
   },
   {
-    id: 14,
+    id: 13,
     x: 2446,
     y: 511,
     levelStatus: 'hidden',
@@ -626,7 +612,7 @@ export const flagsData: FlagDto[] = [
     ],
   },
   {
-    id: 15,
+    id: 14,
     x: 2018,
     y: 786,
     levelStatus: 'hidden',
@@ -670,7 +656,7 @@ export const flagsData: FlagDto[] = [
     ],
   },
   {
-    id: 16,
+    id: 15,
     x: 2150,
     y: 1138,
     levelStatus: 'hidden',
@@ -704,7 +690,7 @@ export const flagsData: FlagDto[] = [
     ],
   },
   {
-    id: 17,
+    id: 16,
     x: 2133,
     y: 1353,
     levelStatus: 'hidden',
@@ -748,7 +734,7 @@ export const flagsData: FlagDto[] = [
     ],
   },
   {
-    id: 18,
+    id: 17,
     x: 1846,
     y: 1385,
     levelStatus: 'hidden',
@@ -802,7 +788,7 @@ export const flagsData: FlagDto[] = [
     ],
   },
   {
-    id: 19,
+    id: 18,
     x: 2158,
     y: 1722,
     levelStatus: 'hidden',
@@ -856,7 +842,7 @@ export const flagsData: FlagDto[] = [
     ],
   },
   {
-    id: 20,
+    id: 19,
     x: 2423,
     y: 1446,
     levelStatus: 'hidden',
@@ -874,7 +860,7 @@ export const flagsData: FlagDto[] = [
     dots: [],
   },
   {
-    id: 21,
+    id: 20,
     x: 1511,
     y: 759,
     levelStatus: 'hidden',
