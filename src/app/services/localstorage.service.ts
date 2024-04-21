@@ -31,6 +31,7 @@ import {
 import { gameTheme } from '../models/theme';
 import { PlayerDto } from '../models/player';
 import { HeroData } from 'src/assets/data/hero';
+import { Router } from '@angular/router';
 
 type RouteUrl = 'cardkingdom-map' | 'zelda-map';
 
@@ -188,7 +189,7 @@ interface HeroData {
 export class LocalStorageService {
   readonly showTip$ = new BehaviorSubject<boolean>(false);
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   public currentRoute = (): RouteUrl =>
     (localStorage.getItem('currentRoute') as RouteUrl) ?? 'cardkingdom-map';
@@ -227,6 +228,29 @@ export class LocalStorageService {
       challengeFlags: ChallengeFlags,
       wheelData: WheelData,
     };
+  }
+
+  public setCampaignRoute(): gameTheme {
+    const campaignsData = this.getCampaignsData();
+    if (this.router.url.slice(1) === 'cardkingdom-map') {
+      const campaign = campaignsData.find((x) => x.id === 1);
+      if (campaign) {
+        localStorage.setItem('currentRoute', campaign.url);
+        return campaign.theme;
+      }
+    }
+
+    if (this.router.url.slice(1) === 'zelda-map') {
+      const campaign = campaignsData.find((x) => x.id === 2);
+      if (campaign) {
+        localStorage.setItem('currentRoute', campaign.url);
+        return campaign.theme;
+      }
+    }
+
+    const currentTheme =
+      (localStorage.getItem('currentRoute') as gameTheme) ?? 'default';
+    return currentTheme;
   }
 
   public getHeroDataForWorld(): HeroData {

@@ -67,7 +67,7 @@ type Music = 'startingPageMusic.mp3' | 'mapMusic.mp3' | 'battleMusic.mp3';
 @Injectable({
   providedIn: 'root',
 })
-export class playerService implements OnInit {
+export class playerService {
   readonly gameTheme$ = new BehaviorSubject<gameTheme>('default');
   readonly wildCard: CardDto = {
     id: 55,
@@ -132,8 +132,6 @@ export class playerService implements OnInit {
       this.currentMusic = x;
     });
   }
-
-  ngOnInit(): void {}
 
   public stopCurrentAudio() {
     this.currentMusic?.pause();

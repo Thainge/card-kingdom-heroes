@@ -729,6 +729,61 @@
       }"
           >
             <div class="flagBox" (click)="showBattleStartOverlay(item)">
+              <div
+                class="flagsStarsBox"
+                *ngIf="
+                  item.levelStatus === 'justFinished' ||
+                  item.levelStatus === 'finished'
+                "
+              >
+                <div class="flagsStarsRelative">
+                  <img
+                    class="flagsStar"
+                    src="./assets/progressStar.png"
+                    [@.disabled]="
+                      nextLevel?.alreadyAnimated || currentLevel?.id !== item.id
+                    "
+                    [@zoomInEnter]="{
+                      value: '',
+                      params: {
+                        duration: 400,
+                        delay: 1400,
+                        translate: '100px'
+                      }
+                    }"
+                  />
+                  <img
+                    class="flagsStar biggerStar"
+                    src="./assets/progressStar.png"
+                    [@.disabled]="
+                      nextLevel?.alreadyAnimated || currentLevel?.id !== item.id
+                    "
+                    [@zoomInEnter]="{
+                      value: '',
+                      params: {
+                        duration: 400,
+                        delay: 1600,
+                        translate: '100px'
+                      }
+                    }"
+                  />
+                  <img
+                    class="flagsStar"
+                    src="./assets/progressStar.png"
+                    [@.disabled]="
+                      nextLevel?.alreadyAnimated || currentLevel?.id !== item.id
+                    "
+                    [@zoomInEnter]="{
+                      value: '',
+                      params: {
+                        duration: 400,
+                        delay: 1800,
+                        translate: '100px'
+                      }
+                    }"
+                  />
+                </div>
+              </div>
               <!-- Next Level -->
               <div
                 class="flagLevelBox currentLevelAnimation"
@@ -780,25 +835,55 @@
                   class="flag hoverFlag"
                 />
               </div>
-              <!-- Boss level -->
+              <!-- Next Level -->
               <div
-                class="flagLevelBox"
+                class="flagLevelBox currentLevelAnimation"
                 *ngIf="
                   item.levelType === 'boss' && item.levelStatus === 'nextLevel'
                 "
+                [@.disabled]="
+                  currentLevel?.id === item.id || nextLevel?.alreadyAnimated
+                "
+                [@zoomInEnter]="{
+                  value: '',
+                  params: {
+                    duration: 400,
+                    delay: determineDelayFlag() + 2000,
+                    translate: '100px'
+                  }
+                }"
               >
-                <img src="./assets/finishedFlagActive.png" class="flag" />
-                <img src="./assets/finishedFlag.png" class="flag hoverFlag" />
+                <img src="./assets/bossFlagActive.png" class="flag" />
+                <img src="./assets/bossFlag.png" class="flag hoverFlag" />
               </div>
-              <!-- Finished Boss level -->
+              <!-- Finished Level -->
               <div
                 class="flagLevelBox"
                 *ngIf="
-                  item.levelType === 'boss' && item.levelStatus === 'finished'
+                  item.levelType === 'boss' &&
+                  (item.levelStatus === 'finished' ||
+                    item.levelStatus === 'justFinished')
                 "
               >
-                <img src="./assets/finishedFlagActive.png" class="flag" />
-                <img src="./assets/finishedFlag.png" class="flag hoverFlag" />
+                <img
+                  src="./assets/bossFlag.png"
+                  class="flag"
+                  *ngIf="item.levelStatus === 'justFinished'"
+                />
+                <img
+                  src="./assets/bossFinishedFlag.png"
+                  class="flag"
+                  *ngIf="item.levelStatus === 'finished'"
+                  [ngClass]="{
+                    zoomInFlag:
+                      currentLevel?.id === item.id &&
+                      item.levelStatus === 'finished'
+                  }"
+                />
+                <img
+                  src="./assets/bossFinishedFlagActive.png"
+                  class="flag hoverFlag"
+                />
               </div>
             </div>
           </div>

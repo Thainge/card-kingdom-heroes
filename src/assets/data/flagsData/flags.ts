@@ -230,7 +230,7 @@ export const flagsData: FlagDto[] = [
       rewardMin: 100,
       rewardMax: 150,
     },
-    levelType: 'normal',
+    levelType: 'boss',
     dots: [
       {
         id: 1,
@@ -440,7 +440,7 @@ export const flagsData: FlagDto[] = [
       rewardMin: 100,
       rewardMax: 150,
     },
-    levelType: 'normal',
+    levelType: 'boss',
     dots: [
       {
         id: 1,
@@ -640,7 +640,7 @@ export const flagsData: FlagDto[] = [
       rewardMin: 100,
       rewardMax: 150,
     },
-    levelType: 'normal',
+    levelType: 'boss',
     dots: [
       {
         id: 1,
@@ -870,7 +870,7 @@ export const flagsData: FlagDto[] = [
       rewardMin: 100,
       rewardMax: 150,
     },
-    levelType: 'normal',
+    levelType: 'boss',
     dots: [],
   },
   {

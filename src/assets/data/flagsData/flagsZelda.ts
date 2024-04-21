@@ -173,7 +173,7 @@ export const flagsDataZelda: FlagDto[] = [
       rewardMin: 50,
       rewardMax: 100,
     },
-    levelType: 'normal',
+    levelType: 'boss',
     dots: [
       {
         id: 1,
@@ -320,7 +320,7 @@ export const flagsDataZelda: FlagDto[] = [
       rewardMin: 50,
       rewardMax: 100,
     },
-    levelType: 'normal',
+    levelType: 'boss',
     dots: [
       {
         id: 1,
@@ -477,7 +477,7 @@ export const flagsDataZelda: FlagDto[] = [
       rewardMin: 50,
       rewardMax: 100,
     },
-    levelType: 'normal',
+    levelType: 'boss',
     dots: [],
   },
   {

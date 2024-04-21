@@ -179,6 +179,8 @@ export class MapComponent implements AfterViewInit, OnInit {
       this.currentLevel = this.flagsList.find(
         (x) => x.levelStatus === 'justFinished'
       );
+      console.log(this.nextLevel);
+      console.log(this.currentLevel);
       this.flagsList = this.flagsList.map((x) => {
         if (x.levelStatus === 'justFinished') {
           return { ...x, levelStatus: 'finished' };
@@ -194,7 +196,11 @@ export class MapComponent implements AfterViewInit, OnInit {
         localStorage.getItem('heroData') ?? '[]'
       );
       this.flagsList.forEach((x) => {
-        if (x.id === 3 && x.levelStatus === 'finished') {
+        if (
+          x.id === 3 &&
+          x.levelStatus === 'finished' &&
+          this.specialLevelsData.wheelShow === false
+        ) {
           this.specialLevelsData.wheelShow = true;
           this.showNewCampaigns = true;
           this.shownNewCampaigns = [
@@ -379,6 +385,27 @@ export class MapComponent implements AfterViewInit, OnInit {
       this.localStorageService.setFlagsData(this.flagsList);
     }, 1);
   }
+
+  // finishLevelTest() {
+  //   const foundCurrentFlag = this.flagsList.find(
+  //     (x) => x.levelStatus === 'nextLevel'
+  //   );
+  //   if (foundCurrentFlag) {
+  //     this.flagsList = this.flagsList.map((x) => {
+  //       if (x.id === foundCurrentFlag.id) {
+  //         return { ...x, levelStatus: 'justFinished', alreadyAnimated: false };
+  //       }
+
+  //       if (x.id === foundCurrentFlag.id + 1) {
+  //         return { ...x, levelStatus: 'nextLevel' };
+  //       }
+
+  //       return x;
+  //     });
+  //     this.localStorageService.setFlagsData(this.flagsList);
+  //     location.reload();
+  //   }
+  // }
 
   showCampaignsData() {
     let showData = false;
@@ -604,6 +631,8 @@ export class MapComponent implements AfterViewInit, OnInit {
 
   @HostListener('window:keydown', ['$event'])
   onKeyPress($event: KeyboardEvent) {
+    // this.finishLevelTest();
+
     if (!this.devMode) {
       return;
     }

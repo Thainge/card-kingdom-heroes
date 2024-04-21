@@ -19,7 +19,7 @@ import {
 } from 'angular-animations';
 import { CheatsService } from './services/cheats.service';
 import { LoadingService } from './services/loading.service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { LocalStorageService } from './services/localstorage.service';
 
 type ClickObject = {
@@ -81,6 +81,12 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.router.events.subscribe((val) => {
+      if (val instanceof NavigationEnd) {
+        const gameTheme = this.localStorageService.setCampaignRoute();
+        this.playerService.gameTheme$.next(gameTheme);
+      }
+    });
     this.playerService.audioVolume$.subscribe((x) => {
       this.soundControl.setValue(x.toString());
     });

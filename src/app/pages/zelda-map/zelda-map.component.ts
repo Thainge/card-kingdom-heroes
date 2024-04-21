@@ -363,28 +363,28 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
     }
   }
 
-  // finishLevelTest() {
-  //   const foundCurrentFlag = this.flagsList.find(
-  //     (x) => x.levelStatus === 'nextLevel'
-  //   );
-  //   console.log(foundCurrentFlag);
-  //   if (foundCurrentFlag) {
-  //     this.flagsList = this.flagsList.map((x) => {
-  //       if (x.id === foundCurrentFlag.id) {
-  //         return { ...x, levelStatus: 'justFinished', alreadyAnimated: false };
-  //       }
+  finishLevelTest() {
+    const foundCurrentFlag = this.flagsList.find(
+      (x) => x.levelStatus === 'nextLevel'
+    );
+    console.log(foundCurrentFlag);
+    if (foundCurrentFlag) {
+      this.flagsList = this.flagsList.map((x) => {
+        if (x.id === foundCurrentFlag.id) {
+          return { ...x, levelStatus: 'justFinished', alreadyAnimated: false };
+        }
 
-  //       if (x.id === foundCurrentFlag.id + 1) {
-  //         return { ...x, levelStatus: 'nextLevel' };
-  //       }
+        if (x.id === foundCurrentFlag.id + 1) {
+          return { ...x, levelStatus: 'nextLevel' };
+        }
 
-  //       return x;
-  //     });
-  //     this.localStorageService.setFlagsData(this.flagsList);
-  //     console.log('hit');
-  //     location.reload();
-  //   }
-  // }
+        return x;
+      });
+      this.localStorageService.setFlagsData(this.flagsList);
+      console.log('hit');
+      location.reload();
+    }
+  }
 
   async initPanZoom() {
     setTimeout(() => {
@@ -499,6 +499,8 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
 
   @HostListener('window:keydown', ['$event'])
   onKeyPress($event: KeyboardEvent) {
+    this.finishLevelTest();
+
     if (!this.devMode) {
       return;
     }
