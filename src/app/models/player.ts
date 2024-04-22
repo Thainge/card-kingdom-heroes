@@ -1,3 +1,5 @@
+import { HeroSound } from './sound';
+
 export interface PlayerDto {
   id: number;
   health: number;
@@ -7,6 +9,7 @@ export interface PlayerDto {
   baseHealth: number;
   baseAttack: number;
   level: number;
+  heroSelectSound?: HeroSound;
   xp?: number;
   xpLevels?: number[];
   isMaxLevel?: boolean;

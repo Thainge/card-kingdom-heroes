@@ -10,6 +10,7 @@ import { HeroData } from 'src/assets/data/hero';
 import { AchievementService } from './achievement.service';
 import { LocalStorageService } from './localstorage.service';
 import { Music } from '../models/music';
+import { HeroSound, Sound } from '../models/sound';
 
 const defaultPlayer: PlayerDto = {
   id: 0,
@@ -17,6 +18,7 @@ const defaultPlayer: PlayerDto = {
   attack: 1,
   image: 'link.png',
   name: '',
+  heroSelectSound: 'mario.mp3',
   baseHealth: 1,
   baseAttack: 1,
   level: 1,
@@ -42,26 +44,6 @@ const defaultPlayer: PlayerDto = {
   ],
   usedPoints: 0,
 };
-
-type Sound =
-  | 'attack.mp3'
-  | 'battleStart.mp3'
-  | 'block.mp3'
-  | 'button.mp3'
-  | 'buyItem.mp3'
-  | 'cardDestroyed.mp3'
-  | 'cardFlip.mp3'
-  | 'cardOpen.mp3'
-  | 'close.mp3'
-  | 'defeat.mp3'
-  | 'fire.mp3'
-  | 'freeze.mp3'
-  | 'heal.mp3'
-  | 'open.mp3'
-  | 'start.wav'
-  | 'victory.mp3'
-  | 'horn.mp3'
-  | 'achievement.mp3';
 
 @Injectable({
   providedIn: 'root',
@@ -134,6 +116,17 @@ export class playerService {
 
   public stopCurrentAudio() {
     this.currentMusic?.pause();
+  }
+
+  public playHeroSound(sound: HeroSound) {
+    try {
+      let audio = new Audio();
+      const localVolume = Number(localStorage.getItem('audioVolume'));
+      audio.src = './assets/sound/' + sound;
+      audio.volume = localVolume / 100;
+      audio.load();
+      audio.play();
+    } catch (err) {}
   }
 
   public playSound(sound: Sound) {

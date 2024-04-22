@@ -92,7 +92,8 @@ export class HeroOverlayComponent implements OnInit {
       return;
     }
 
-    this.playerService.playSound('button.mp3');
+    const heroSound = this.currentHero.heroSelectSound ?? 'mario.mp3';
+    this.playerService.playHeroSound(heroSound);
 
     this.heroes = this.heroes.map((x) => {
       if (x.id === this.currentHero?.id) {

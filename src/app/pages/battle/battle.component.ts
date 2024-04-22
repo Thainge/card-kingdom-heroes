@@ -80,6 +80,7 @@ const defaultPlayer: PlayerDto = {
   id: 0,
   health: 1,
   attack: 1,
+  heroSelectSound: 'mario.mp3',
   image: 'link.png',
   name: '',
   baseHealth: 1,
