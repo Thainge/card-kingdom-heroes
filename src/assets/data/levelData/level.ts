@@ -5,7 +5,7 @@ import { Cards } from '../cards';
 
 const Level: LevelDto = {
   id: 1,
-  skipRedrawPhase: true,
+  skipRedrawPhase: false,
   battleRewardXp: 50,
   playerLevelUpEnabled: true,
   hideDialog: false,
@@ -26,6 +26,7 @@ export const LevelsData: LevelDto[] = [
   {
     ...Level,
     id: 1,
+    skipRedrawPhase: true,
     battleRewardXp: 50,
     comicData: ComicData[0],
     showComicStart: true,

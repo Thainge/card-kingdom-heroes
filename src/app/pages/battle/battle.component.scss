@@ -1,3 +1,17 @@
+:root {
+  --animation-speed-1: 3s;
+  --animation-speed-2: 1s;
+
+  --animation-combat-1: 2s;
+  --animation-combat-delay-1: 3s
+
+  --animation-shake-1: 2.7s;
+  --animation-shake-delay-1: 2.4s;
+
+  --animation-chop-1: 1.3s;
+  --animation-chop-delay-1: 2s;
+}
+
 @-webkit-keyframes zoomOutHeal {
   0% {
     scale: 0;
@@ -1728,6 +1742,41 @@
   z-index: 1003;
 }
 
+.optionsButtonBoxBottomRight {
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1003;
+}
+
+.speedText {
+  position: absolute;
+  text-align: center;
+  color: white;
+  font-family: "headerFont";
+  background: -webkit-linear-gradient(#f5f2e6, #a8a075);
+  -webkit-text-stroke: 1px #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.relativeSpeedBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
 .optionsButton {
   display: flex;
   justify-content: center;
@@ -3276,10 +3325,10 @@ text {
   top: 10%;
   -webkit-animation: chop;
   animation: chop;
-  -webkit-animation-duration: 1.3s;
-  animation-duration: 1.3s;
-  -webkit-animation-delay: 2s;
-  animation-delay: 2s;
+  -webkit-animation-duration: var(--animation-chop-1);
+  animation-duration: var(--animation-chop-1);
+  -webkit-animation-delay: var(--animation-chop-delay-1);
+  animation-delay: var(--animation-chop-delay-1);
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
   z-index: 20 !important;
@@ -3290,10 +3339,10 @@ text {
   top: 10%;
   -webkit-animation: chopReverse;
   animation: chopReverse;
-  -webkit-animation-duration: 1.3s;
-  animation-duration: 1.3s;
-  -webkit-animation-delay: 2s;
-  animation-delay: 2s;
+  -webkit-animation-duration: var(--animation-chop-1);
+  animation-duration: var(--animation-chop-1);
+  -webkit-animation-delay: var(--animation-chop-delay-1);
+  animation-delay: var(--animation-chop-delay-1);
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
   z-index: 20 !important;
@@ -3304,19 +3353,19 @@ text {
 }
 
 .attackCardBorder {
-  -webkit-animation: shakeReverse 2.7s linear;
-  animation: shakeReverse 2.7s linear;
-  -webkit-animation-delay: 2.4s;
-  animation-delay: 2.4s;
+  -webkit-animation: shakeReverse var(--animation-shake-1) linear;
+  animation: shakeReverse var(--animation-shake-1) linear;
+  -webkit-animation-delay: var(--animation-shake-delay-1);
+  animation-delay: var(--animation-shake-delay-1);
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
 }
 
 .attackCardBorderLeft {
-  -webkit-animation: shake 2.7s linear;
-  animation: shake 2.7s linear;
-  -webkit-animation-delay: 2.4s;
-  animation-delay: 2.4s;
+  -webkit-animation: shake var(--animation-shake-1) linear;
+  animation: shake var(--animation-shake-1) linear;
+  -webkit-animation-delay: var(--animation-shake-delay-1);
+  animation-delay: var(--animation-shake-delay-1);
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
 }
@@ -3330,10 +3379,10 @@ text {
   top: 10%;
   -webkit-animation: zoomOutClaws;
   animation: zoomOutClaws;
-  -webkit-animation-duration: 2s;
-  animation-duration: 2s;
-  -webkit-animation-delay: 3s;
-  animation-delay: 3s;
+  -webkit-animation-duration: var(--animation-combat-1);
+  animation-duration: var(--animation-combat-1);
+  -webkit-animation-delay: var(--animation-combat-delay-1);
+  animation-delay: var(--animation-combat-delay-1);
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
 }
@@ -3341,8 +3390,8 @@ text {
 .healing {
   -webkit-animation: zoomOutHeal;
   animation: zoomOutHeal;
-  -webkit-animation-duration: 2s;
-  animation-duration: 2s;
+  -webkit-animation-duration: var(--animation-combat-1);
+  animation-duration: var(--animation-combat-1);
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
   z-index: 99 !important;
@@ -3351,8 +3400,8 @@ text {
 .leaching {
   -webkit-animation: zoomOutLeach;
   animation: zoomOutLeach;
-  -webkit-animation-duration: 2s;
-  animation-duration: 2s;
+  -webkit-animation-duration: var(--animation-combat-1);
+  animation-duration: var(--animation-combat-1);
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
   z-index: 99 !important;
@@ -3361,8 +3410,8 @@ text {
 .protecting {
   -webkit-animation: zoomOutLeach;
   animation: zoomOutLeach;
-  -webkit-animation-duration: 2s;
-  animation-duration: 2s;
+  -webkit-animation-duration: var(--animation-combat-1);
+  animation-duration: var(--animation-combat-1);
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
   z-index: 99 !important;
@@ -3396,8 +3445,8 @@ text {
   animation: darkenZoomOut;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
-  -webkit-animation-delay: 1s;
-  animation-delay: 1s;
+  -webkit-animation-delay: var(--animation-speed-2);
+  animation-delay: var(--animation-speed-2);
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
 }
@@ -3407,8 +3456,8 @@ text {
   animation: zoomIn;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
-  -webkit-animation-delay: 1s;
-  animation-delay: 1s;
+  -webkit-animation-delay: var(--animation-speed-2);
+  animation-delay: var(--animation-speed-2);
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
 }
@@ -3808,6 +3857,12 @@ text {
   pointer-events: none;
   -webkit-filter: brightness(0.7);
   filter: brightness(0.7);
+}
+
+.disabled {
+  filter: brightness(.7);
+  user-select: none;
+  pointer-events: none;
 }
 
 .enabledCards {
@@ -4597,8 +4652,8 @@ text {
   align-items: center;
   width: 25%;
   -webkit-user-drag: none;
-  -webkit-animation: 3s victoryDefeatFadeInOut ease-in-out;
-  animation: 3s victoryDefeatFadeInOut ease-in-out;
+  -webkit-animation: var(--animation-speed-1) victoryDefeatFadeInOut ease-in-out;
+  animation: var(--animation-speed-1) victoryDefeatFadeInOut ease-in-out;
   -webkit-animation-delay: 400ms;
   animation-delay: 400ms;
   -webkit-animation-fill-mode: forwards;

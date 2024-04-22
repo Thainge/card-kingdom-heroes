@@ -407,6 +407,28 @@ export class BattleComponent implements OnInit {
   comicData: Comic = { id: 0, comics: [], display: false };
   showComic: boolean = false;
 
+  // Speed and delays
+  TwoTimesSpeed: boolean = false;
+  Delay500Variable: number = 500; // 300
+  Delay2000Variable: number = 2000; // 1000
+  Delay1000Variable: number = 1000; // 500
+  Delay2400Variable: number = 2400; // 1400
+  Delay1500WildTextVariable: number = 1500; // 700
+
+  AbilityDelay: number = 0; // 400
+  AbilityDelayLonger: number = 0; // 800
+  BattleDelay: number = 0; // 300
+  DefaultTimeoutDelay: number = 2500; // 1000
+  DefaultNumbersDelay: number = 400; // 0
+  TotalWaitDelay: number = 3500; // 2000
+  TotalMiniWaitDelay: number = 500; // 300
+  EndGameDelay: number = 2000; // 800
+  AbilityDelaySmall: number = 0; // 100
+
+  VictoryEnd1000: number = 1000; // 500
+  VictoryEnd4300: number = 4300; // 3300
+  VictoryEnd3500: number = 3500; // 2500
+
   constructor(
     private cardService: CardService,
     private userService: playerService,
@@ -415,10 +437,24 @@ export class BattleComponent implements OnInit {
     private loadingService: LoadingService,
     private playerService: playerService,
     private achievementService: AchievementService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private elementRef: ElementRef
   ) {}
 
   ngOnInit() {
+    try {
+      const localBattleSpeed = localStorage.getItem('battleSpeed2x');
+      if (localBattleSpeed === 'true') {
+        this.setSpeedToDouble();
+        this.TwoTimesSpeed = true;
+      } else {
+        this.setSpeedToNormal();
+        this.TwoTimesSpeed = false;
+      }
+    } catch (err) {
+      this.setSpeedToNormal();
+      this.TwoTimesSpeed = false;
+    }
     try {
       const localPremium = JSON.parse(
         localStorage.getItem('premiumData') ?? '[]'
@@ -509,6 +545,124 @@ export class BattleComponent implements OnInit {
         }
       }
     }, 50);
+  }
+
+  ToggleSpeed() {
+    if (this.TwoTimesSpeed) {
+      // Normal speed
+      this.setSpeedToNormal();
+    } else {
+      // 2x speed
+      this.setSpeedToDouble();
+    }
+    localStorage.setItem('battleSpeed2x', JSON.stringify(this.TwoTimesSpeed));
+  }
+
+  setSpeedToDouble() {
+    this.TwoTimesSpeed = true;
+    this.elementRef.nativeElement.style.setProperty(
+      '--animation-speed-1',
+      '2s'
+    );
+    this.elementRef.nativeElement.style.setProperty(
+      '--animation-speed-2',
+      '400ms'
+    );
+    this.elementRef.nativeElement.style.setProperty(
+      '--animation-combat-1',
+      '1.5s'
+    );
+    this.elementRef.nativeElement.style.setProperty(
+      '--animation-combat-delay-1',
+      '2.5s'
+    );
+    this.elementRef.nativeElement.style.setProperty(
+      '--animation-shake-1',
+      '1.4s'
+    );
+    this.elementRef.nativeElement.style.setProperty(
+      '--animation-shake-delay-1',
+      '1s'
+    );
+    this.elementRef.nativeElement.style.setProperty('--animation-chop-1', '1s');
+    this.elementRef.nativeElement.style.setProperty(
+      '--animation-chop-delay-1',
+      '500ms'
+    );
+    this.Delay500Variable = 300;
+    this.Delay2000Variable = 1000;
+    this.Delay1000Variable = 500;
+    this.Delay2400Variable = 1400;
+    this.Delay1500WildTextVariable = 700;
+
+    this.AbilityDelay = 400;
+    this.AbilityDelayLonger = 800;
+    this.BattleDelay = 300;
+    this.DefaultTimeoutDelay = 1000;
+    this.DefaultNumbersDelay = 0;
+    this.TotalWaitDelay = 2000;
+    this.TotalMiniWaitDelay = 300;
+    this.EndGameDelay = 800;
+    this.AbilityDelaySmall = 100;
+
+    this.VictoryEnd1000 = 500;
+    this.VictoryEnd4300 = 3300;
+    this.VictoryEnd3500 = 2500;
+  }
+
+  setSpeedToNormal() {
+    this.TwoTimesSpeed = false;
+    this.elementRef.nativeElement.style.setProperty(
+      '--animation-speed-1',
+      '3s'
+    );
+    this.elementRef.nativeElement.style.setProperty(
+      '--animation-speed-2',
+      '1s'
+    );
+    this.elementRef.nativeElement.style.setProperty(
+      '--animation-combat-1',
+      '2s'
+    );
+    this.elementRef.nativeElement.style.setProperty(
+      '--animation-combat-delay-1',
+      '3s'
+    );
+    this.elementRef.nativeElement.style.setProperty(
+      '--animation-shake-1',
+      '2.7s'
+    );
+    this.elementRef.nativeElement.style.setProperty(
+      '--animation-shake-delay-1',
+      '2.4s'
+    );
+    this.elementRef.nativeElement.style.setProperty(
+      '--animation-chop-1',
+      '1.3s'
+    );
+    this.elementRef.nativeElement.style.setProperty(
+      '--animation-chop-delay-1',
+      '2s'
+    );
+    this.Delay500Variable = 500;
+    this.Delay2000Variable = 2000;
+    this.Delay1000Variable = 1000;
+    this.Delay2400Variable = 2400;
+    this.Delay1500WildTextVariable = 1500;
+
+    this.AbilityDelay = 0;
+    this.AbilityDelayLonger = 0;
+    this.BattleDelay = 0;
+    this.DefaultTimeoutDelay = 2500;
+    this.DefaultNumbersDelay = 400;
+    this.TotalWaitDelay = 3500;
+    this.TotalMiniWaitDelay = 500;
+    this.EndGameDelay = 2000;
+    this.AbilityDelaySmall = 0;
+
+    this.VictoryEnd1000 = 1000;
+    this.VictoryEnd4300 = 4300;
+    this.VictoryEnd3500 = 3500;
   }
 
   checkShowWildCardHint(card: CardDto) {
@@ -1830,7 +1984,7 @@ export class BattleComponent implements OnInit {
     await this.timeout(400);
     this.player.attack = newAttack;
 
-    this.endAbilityTurn(ability, 800);
+    this.endAbilityTurn(ability, 800 - this.AbilityDelay); // 500
   }
 
   async drawAbility(ability: AbilityCard) {
@@ -1891,7 +2045,7 @@ export class BattleComponent implements OnInit {
 
         return { ...x, attack: newAttack };
       });
-      this.endAbilityTurn(ability, 1200);
+      this.endAbilityTurn(ability, 1200 - this.AbilityDelay); // 500
     } else {
       const ID = this.pushDisplayMessage(
         `Select An Enemy To Apply -${
@@ -1985,7 +2139,7 @@ export class BattleComponent implements OnInit {
         this.numbersGoDownIncrementallyBot(x.health, newHealth);
       }
       await this.timeout(200 * ability.abilityValue[ability.level]);
-      this.endAbilityTurn(ability, 1200);
+      this.endAbilityTurn(ability, 1200 - this.AbilityDelay); // 500
     } else {
       const ID = this.pushDisplayMessage(
         `Select An Enemy To Deal ${
@@ -2014,7 +2168,7 @@ export class BattleComponent implements OnInit {
     await this.timeout(400);
     this.numbersGoUpIncrementallyPlayer(this.player.health, newHealth);
 
-    this.endAbilityTurn(ability, 700);
+    this.endAbilityTurn(ability, 700 - this.AbilityDelay); // 500
   }
 
   async endAbilityTurn(ability: AbilityCard, timeout: number) {
@@ -2076,7 +2230,7 @@ export class BattleComponent implements OnInit {
       }
     }
 
-    this.endAbilityTurn(ability, 2000);
+    this.endAbilityTurn(ability, 1900 - this.AbilityDelayLonger); // 800
     setTimeout(() => {
       this.abilityEnemyTarget = 0;
     }, 4000);
@@ -2101,7 +2255,7 @@ export class BattleComponent implements OnInit {
       return x;
     });
 
-    this.endAbilityTurn(ability, 1800);
+    this.endAbilityTurn(ability, 1800 - this.AbilityDelay); // 500
     setTimeout(() => {
       this.abilityEnemyTarget = 0;
     }, 4000);
@@ -3598,7 +3752,7 @@ export class BattleComponent implements OnInit {
           // Determine winner
           const result = this.cardService.determineWinner(playerHand, botHand);
           this.setWinner(result, true);
-        }, 500);
+        }, 500 - this.BattleDelay); // 300
       } else {
         setTimeout(() => {
           this.enemyAttackHand = {
@@ -3618,9 +3772,9 @@ export class BattleComponent implements OnInit {
             this.enemyAttackHand
           );
           this.setWinner(result, true);
-        }, 500);
+        }, 500 - this.BattleDelay); // 300
       }
-    }, 1000);
+    }, 1000 - this.AbilityDelay); // 500
   }
 
   async numbersGoUpIncrementallyPlayer(
@@ -3660,7 +3814,7 @@ export class BattleComponent implements OnInit {
     currentHealth: number,
     newHealth: number,
     isAttackingPlayer: boolean = false,
-    defaultTimeout: number = 2500
+    defaultTimeout: number = this.DefaultTimeoutDelay // 2500 / 1000
   ) {
     const enemyTarget = this.enemyTarget;
     await this.timeout(defaultTimeout);
@@ -3693,9 +3847,9 @@ export class BattleComponent implements OnInit {
       }
     }
 
-    if (defaultTimeout === 2500) {
+    if (defaultTimeout === this.DefaultTimeoutDelay) {
       this.wrappingTurn = true;
-      return await this.timeout(1000);
+      return await this.timeout(1000 - this.AbilityDelay);
     } else {
       return;
     }
@@ -3732,7 +3886,7 @@ export class BattleComponent implements OnInit {
           );
           setTimeout(() => {
             this.numbersGoDownIncrementally(x.health, newHealth);
-          }, 400);
+          }, this.DefaultNumbersDelay);
         }
       }
     }
@@ -3749,7 +3903,7 @@ export class BattleComponent implements OnInit {
       );
       setTimeout(() => {
         this.numbersGoDownIncrementally(this.player.health, newHealth, true);
-      }, 400);
+      }, this.DefaultNumbersDelay);
     }
 
     // Tie
@@ -3774,7 +3928,7 @@ export class BattleComponent implements OnInit {
           );
           setTimeout(() => {
             this.numbersGoDownIncrementally(x.health, newHealth);
-          }, 400);
+          }, this.DefaultNumbersDelay);
         }
       }
     }
@@ -3785,10 +3939,10 @@ export class BattleComponent implements OnInit {
     }
 
     const extraTime = extraTimeout * 100;
-    const totalWaitTime = 3500 + extraTime;
+    const totalWaitTime = this.TotalWaitDelay + extraTime; // 3500 or 2000
     await this.timeout(totalWaitTime);
     this.attackEnding = true;
-    await this.timeout(500);
+    await this.timeout(this.TotalMiniWaitDelay); // 500 or 300
     this.attackStarted = false;
     this.newTurn();
     await this.addCardsToBothHands();
@@ -3832,7 +3986,7 @@ export class BattleComponent implements OnInit {
             this.displayDialogGameEnd = false;
             this.endGame(true);
           }
-        }, 2000);
+        }, this.EndGameDelay); // 2000 or 800
         return true;
       }
     }
@@ -3961,20 +4115,20 @@ export class BattleComponent implements OnInit {
       setTimeout(() => {
         this.gameWinnerPlayer = true;
         this.playerService.playSound('victory.mp3');
-      }, 1000);
+      }, this.VictoryEnd1000);
       if (this.playerLevelUpEnabled) {
         setTimeout(() => {
           this.showHeroLevelUp = true;
-        }, 4300);
+        }, this.VictoryEnd4300);
         setTimeout(() => {
           this.levelUpPlayer();
-        }, 4600);
+        }, this.VictoryEnd4300 + 300);
       } else {
         setTimeout(() => {
           this.showHeroLevelUp = false;
           this.canClickNextReward = true;
           this.nextReward({ id: 0 });
-        }, 3500);
+        }, this.VictoryEnd3500);
       }
     } else {
       localStorage.setItem('gameStartedYet', JSON.stringify(true));
@@ -3983,10 +4137,10 @@ export class BattleComponent implements OnInit {
         this.gameLoserPlayer = true;
         this.rewardItems = [];
         this.rewardItemsClean = [];
-      }, 1000);
+      }, this.VictoryEnd1000);
       setTimeout(() => {
         this.finishedRewards = true;
-      }, 4500);
+      }, this.VictoryEnd4300);
     }
   }
 
@@ -4246,7 +4400,7 @@ export class BattleComponent implements OnInit {
           const newHealth = x.health - incomingAttackPower;
           setTimeout(() => {
             this.numbersGoDownIncrementally(x.health, newHealth);
-          }, 400);
+          }, this.DefaultNumbersDelay);
         }
       }
     }
@@ -4266,7 +4420,7 @@ export class BattleComponent implements OnInit {
       );
       setTimeout(() => {
         this.numbersGoDownIncrementally(this.player.health, newHealth, true);
-      }, 400);
+      }, this.DefaultNumbersDelay);
     }
 
     // Tie
@@ -4294,7 +4448,7 @@ export class BattleComponent implements OnInit {
           const newHealth = x.health - incomingAttackPower;
           setTimeout(() => {
             this.numbersGoDownIncrementally(x.health, newHealth);
-          }, 400);
+          }, this.DefaultNumbersDelay);
         }
       }
     }
@@ -4305,10 +4459,10 @@ export class BattleComponent implements OnInit {
     }
 
     const extraTime = extraTimeout * 100;
-    const totalWaitTime = 3500 + extraTime;
+    const totalWaitTime = this.TotalWaitDelay + extraTime; // 3500 or 2000
     await this.timeout(totalWaitTime);
     this.attackEnding = true;
-    await this.timeout(500);
+    await this.timeout(this.TotalMiniWaitDelay); // 500 or 300
     this.attackStarted = false;
     this.newTurn();
     this.startBotTurnsLoop();
@@ -4324,7 +4478,7 @@ export class BattleComponent implements OnInit {
       if (canUse.length > 0 || ability.cost[ability.level].length === 0) {
         this.usedAbilityCardBot = true;
 
-        await this.timeout(1000);
+        await this.timeout(1000 - this.AbilityDelay); // 500
         this.selectedEnemyCards = canUse;
         this.hoveringAbilityCardBot = ability;
         this.setAttackArrowsEnemyAbility();
@@ -4404,7 +4558,7 @@ export class BattleComponent implements OnInit {
     this.enemyPlayers.forEach((x) => {
       this.supportOnEnemies.push(x);
     });
-    await this.timeout(1000);
+    await this.timeout(1000 - this.AbilityDelay);
     const newAllies = ability.alliesCalled![ability.level];
     newAllies?.forEach((x) => {
       const newId = this.enemyPlayers.length + 1;
@@ -4414,7 +4568,7 @@ export class BattleComponent implements OnInit {
     });
     this.playerService.playSound('horn.mp3');
 
-    await this.timeout(700);
+    await this.timeout(700 - this.AbilityDelay);
     this.abilityDeckBot = this.abilityDeckBot.filter(
       (x) => x.id !== ability.id
     );
@@ -4427,7 +4581,7 @@ export class BattleComponent implements OnInit {
       this.pushDisplayMessage(
         `All Defense +${ability.abilityValue[ability.level]}`
       );
-      await this.timeout(500);
+      await this.timeout(500 - this.AbilityDelaySmall);
       this.enemyPlayers = this.enemyPlayers.map((x) => {
         if (x.health < 1) {
           return x;
@@ -4439,14 +4593,14 @@ export class BattleComponent implements OnInit {
         }
       });
       this.playerService.playSound('heal.mp3');
-      await this.timeout(1200);
+      await this.timeout(1200 - this.AbilityDelay);
       this.botEndAbilityTurn();
     } else {
       // Heal single
       this.pushDisplayMessage(
         `Defense +${ability.abilityValue[ability.level]}`
       );
-      await this.timeout(500);
+      await this.timeout(500 - this.AbilityDelaySmall);
       const validPlayer: PlayerDto | undefined = this.enemyPlayers.find(
         (x) => x.health > 0
       );
@@ -4472,7 +4626,7 @@ export class BattleComponent implements OnInit {
           return x;
         });
       }
-      await this.timeout(1200);
+      await this.timeout(1200 - this.AbilityDelay);
       this.botEndAbilityTurn();
     }
   }
@@ -4480,21 +4634,21 @@ export class BattleComponent implements OnInit {
   async botUseDamageAbility(ability: AbilityCard) {
     // Attack player
     this.pushDisplayMessage('Fire Attack');
-    await this.timeout(500);
+    await this.timeout(500 - this.AbilityDelaySmall);
     this.playerService.playSound('fire.mp3');
 
     this.player.health =
       this.player.health - ability.abilityValue[ability.level];
 
     this.fireOnPlayer = true;
-    await this.timeout(1200);
+    await this.timeout(1200 - this.AbilityDelay);
     this.botEndAbilityTurn();
   }
 
   async botUseOffenseAbility(ability: AbilityCard) {
     // -offense on player
     this.pushDisplayMessage(`-${ability.abilityValue[ability.level]} Defense`);
-    await this.timeout(500);
+    await this.timeout(500 - this.AbilityDelaySmall);
 
     this.player.attack =
       this.player.attack - ability.abilityValue[ability.level];
@@ -4504,7 +4658,7 @@ export class BattleComponent implements OnInit {
     this.playerService.playSound('block.mp3');
 
     this.shieldOnPlayer = true;
-    await this.timeout(1200);
+    await this.timeout(1200 - this.AbilityDelay);
     this.botEndAbilityTurn();
   }
 
@@ -4513,7 +4667,7 @@ export class BattleComponent implements OnInit {
     this.pushDisplayMessage(
       `Discard ${ability.abilityValue[ability.level]} Cards`
     );
-    await this.timeout(500);
+    await this.timeout(500 - this.AbilityDelaySmall);
     const shuffledArray = this.cardService.shuffle(this.playerHand);
     let finishedDiscards = 0;
     this.playerService.playSound('cardFlip.mp3');
@@ -4532,7 +4686,7 @@ export class BattleComponent implements OnInit {
     this.pushDisplayMessage(
       `Draw ${ability.abilityValue[ability.level]} Cards`
     );
-    await this.timeout(500);
+    await this.timeout(500 - this.AbilityDelaySmall);
 
     this.addBotCardsToHand(ability.abilityValue[ability.level]);
     await this.timeout(100);
@@ -4545,7 +4699,7 @@ export class BattleComponent implements OnInit {
       this.pushDisplayMessage(
         `Heal All ${ability.abilityValue[ability.level]} Health`
       );
-      await this.timeout(500);
+      await this.timeout(500 - this.AbilityDelaySmall);
       this.enemyPlayers = this.enemyPlayers.map((x) => {
         if (x.health < 1) {
           return x;
@@ -4560,14 +4714,14 @@ export class BattleComponent implements OnInit {
         }
       });
       this.playerService.playSound('heal.mp3');
-      await this.timeout(1200);
+      await this.timeout(1200 - this.AbilityDelay);
       this.botEndAbilityTurn();
     } else {
       // Heal single
       this.pushDisplayMessage(
         `Heal ${ability.abilityValue[ability.level]} Health`
       );
-      await this.timeout(500);
+      await this.timeout(500 - this.AbilityDelaySmall);
       const validPlayer: PlayerDto | undefined = this.enemyPlayers.find(
         (x) => x.health > 0
       );
@@ -4597,7 +4751,7 @@ export class BattleComponent implements OnInit {
           return x;
         });
       }
-      await this.timeout(1200);
+      await this.timeout(1200 - this.AbilityDelay);
       this.botEndAbilityTurn();
     }
   }
