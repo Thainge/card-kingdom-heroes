@@ -77,9 +77,30 @@
               disabledBooster: currentIndex !== i,
               scaleDownBooster: currentIndex !== i
             }"
+            (mouseenter)="currentHoveringItem = item"
+            (mouseleave)="currentHoveringItem = undefined"
           >
             <div class="relativeBox">
               <img class="overlayImage" [src]="'./assets/' + item.image" />
+              <div
+                class="hoveringDescriptionBox"
+                [ngClass]="{
+                  showHoveringBox: currentHoveringItem?.id === item.id
+                }"
+              >
+                <div class="hoveringTitle">{{ item.title }}</div>
+                <div class="hoveringDescription">
+                  {{ item.description }}
+                </div>
+                <img
+                  [src]="goldImage"
+                  class="hoveringOrb"
+                  *ngIf="!item.bought"
+                />
+                <div class="hoveringCost" *ngIf="!item.bought">
+                  {{ item.cost }}
+                </div>
+              </div>
             </div>
           </div>
           <div class="swipeBtnBox">

@@ -27,6 +27,8 @@ interface PremiumBox {
   active: boolean;
   cost: number;
   type: PremiumType;
+  title: string;
+  description: string;
 }
 
 type PremiumType = 'quadrupleGold' | 'wheelCostsLess' | 'abilitiesCostLess';
@@ -71,6 +73,8 @@ export class PremiumOverlayComponent implements OnInit {
       active: false,
       cost: 2500,
       type: 'wheelCostsLess',
+      title: 'Discount Wheel',
+      description: 'Spin wheel becomes much cheaper to spin',
     },
     {
       id: 2,
@@ -79,6 +83,8 @@ export class PremiumOverlayComponent implements OnInit {
       active: false,
       cost: 5000,
       type: 'quadrupleGold',
+      title: 'Quadruple Cash',
+      description: 'Enables 4x cash mode for battle rewards',
     },
     {
       id: 3,
@@ -87,10 +93,13 @@ export class PremiumOverlayComponent implements OnInit {
       active: false,
       cost: 7500,
       type: 'abilitiesCostLess',
+      title: 'Ability Chopper',
+      description: "All ability card's costs are decreased by 1",
     },
   ];
   gold: number = 0;
   goldImage: string = './assets/gold.png';
+  currentHoveringItem: PremiumBox | undefined;
 
   constructor(
     private loadingService: LoadingService,
