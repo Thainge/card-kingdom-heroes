@@ -3,14 +3,14 @@ import { PlayerDto } from 'src/app/models/player';
 export const HeroData: PlayerDto[] = [
   {
     id: 1,
-    name: 'Mario',
-    image: 'mario.png',
+    name: 'Eridan',
+    image: 'eridan.png',
     color: 'red',
     level: 1,
-    health: 3,
+    health: 5,
     attack: 1,
     baseAttack: 1,
-    baseHealth: 3,
+    baseHealth: 5,
     heroSelectSound: 'mario.mp3',
     canDefendWithMultipleCards: false,
     alwaysWinTies: false,
