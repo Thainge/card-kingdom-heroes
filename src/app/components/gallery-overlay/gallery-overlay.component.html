@@ -27,7 +27,7 @@
               (click)="setCurrentItem(item)"
             >
               <img
-                [src]="'./assets/heroImages/' + item.image"
+                [src]="'./assets/players/' + item.image"
                 class="heroImage"
               />
               <img
@@ -44,7 +44,7 @@
               (click)="currentImage = item"
             >
               <img
-                [src]="'./assets/heroImages/' + item.image"
+                [src]="'./assets/players/' + item.image"
                 class="heroImage"
               />
               <img
@@ -61,7 +61,7 @@
               (click)="currentImage = item"
             >
               <img
-                [src]="'./assets/heroImages/' + item.image"
+                [src]="'./assets/players/' + item.image"
                 class="heroImage"
               />
               <img
@@ -78,7 +78,7 @@
       <div class="relativeBoxRight">
         <img
           src="./assets/players/link.png"
-          [src]="'./assets/heroImages/' + currentImage?.image"
+          [src]="'./assets/players/' + currentImage?.image"
           class="detailImage"
         />
         <div class="attackBoxRight">

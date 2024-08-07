@@ -39,7 +39,7 @@
     }"
   >
     <img src="./assets/dialogBox.png" class="dialogBoxImage" />
-    <img src="./assets/dialogPlayers/avatar.png" class="dialogBoxPlayer" />
+    <img  [src]="'./assets/dialogPlayers/' + activeDialog.image" class="dialogBoxPlayer" />
     <div
       class="dialogTextTitle"
       [ngStyle]="{

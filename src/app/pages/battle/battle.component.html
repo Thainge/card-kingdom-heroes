@@ -2317,7 +2317,7 @@
               <div class="abilityTitleText">{{ card.name }}</div>
               <div class="abilitySuitsBox">
                 <img
-                  *ngFor="let cost of card.cost[card.level]"
+                  *ngFor="let cost of card.cost[card.level - 1]"
                   [src]="'./assets/' + cost + '.png'"
                   class="abilitySuit"
                 />
@@ -2602,7 +2602,7 @@
               }"
               [@fadeOutLeave]="{ value: '', params: { duration: 200 } }"
             >
-              -{{ currentAbilityBot.abilityValue[currentAbilityBot.level] }}
+              -{{ currentAbilityBot.abilityValue[currentAbilityBot.level - 1] }}
             </div>
             <div
               class="cardPlayerBorderRotatingBox"
@@ -2682,7 +2682,7 @@
                     currentAbility.targetAll === false &&
                     abilityEnemyTarget !== 0
                       ? player.health +
-                        currentAbility.abilityValue[currentAbility.level]
+                        currentAbility.abilityValue[currentAbility.level - 1]
                       : player.health
                   }}
                 </div>
@@ -2858,7 +2858,7 @@
                 }"
                 [@fadeOutLeave]="{ value: '', params: { duration: 200 } }"
               >
-                -{{ currentAbility.abilityValue[currentAbility.level] }}
+                -{{ currentAbility.abilityValue[currentAbility.level - 1] }}
               </div>
               <div
                 *ngIf="
@@ -2922,11 +2922,11 @@
                       !startedAbilityTurn &&
                       !canSelectCards
                         ? item.attack -
-                            currentAbility.abilityValue[currentAbility.level] <
+                            currentAbility.abilityValue[currentAbility.level - 1] <
                           0
                           ? "0"
                           : item.attack -
-                            currentAbility.abilityValue[currentAbility.level]
+                            currentAbility.abilityValue[currentAbility.level - 1]
                         : item.attack
                     }}
                   </div>
@@ -2971,7 +2971,7 @@
                           !startedAbilityTurn &&
                           !canSelectCards
                         ? item.health -
-                          currentAbility.abilityValue[currentAbility.level]
+                          currentAbility.abilityValue[currentAbility.level - 1]
                         : item.health
                     }}
                   </div>
@@ -3062,7 +3062,7 @@
                 <div class="abilitySuitsBox">
                   <img
                     *ngFor="
-                      let cost of topAbilityCard.cost[topAbilityCard.level]
+                      let cost of topAbilityCard.cost[topAbilityCard.level - 1]
                     "
                     [src]="'./assets/' + cost + '.png'"
                     class="abilitySuit"
@@ -3168,7 +3168,7 @@
           </div>
           <div class="abilitySuitsBox abilitySuitsBoxHover">
             <img
-              *ngFor="let cost of card.cost[card.level]"
+              *ngFor="let cost of card.cost[card.level - 1]"
               [src]="'./assets/' + cost + '.png'"
               class="abilitySuit"
             />
@@ -3200,7 +3200,7 @@
               <div class="abilityTitleText">{{ card.name }}</div>
               <div class="abilitySuitsBox">
                 <img
-                  *ngFor="let cost of card.cost[card.level]"
+                  *ngFor="let cost of card.cost[card.level - 1]"
                   [src]="'./assets/' + cost + '.png'"
                   class="abilitySuit"
                 />

@@ -439,16 +439,16 @@ export class DeckOverlayComponent implements OnInit {
         // First sort by cost
         this.abilityCards = this.abilityCards.sort((a, b) => {
           if (
-            a.cost[a.level] &&
-            b.cost[b.level] &&
-            a.cost[a.level].length < b.cost[b.level].length
+            a.cost[a.level - 1] &&
+            b.cost[b.level - 1] &&
+            a.cost[a.level - 1].length < b.cost[b.level - 1].length
           ) {
             return -1;
           }
           if (
-            a.cost[a.level] &&
-            b.cost[b.level] &&
-            a.cost[a.level].length > b.cost[b.level].length
+            a.cost[a.level - 1] &&
+            b.cost[b.level - 1] &&
+            a.cost[a.level - 1].length > b.cost[b.level - 1].length
           ) {
             return 1;
           }
@@ -458,17 +458,17 @@ export class DeckOverlayComponent implements OnInit {
         // Manually sort
         this.abilityCards.forEach((x) => {
           const includesHearts =
-            x.cost[x.level] && x.cost[x.level].includes('hearts');
+            x.cost[x.level - 1] && x.cost[x.level - 1].includes('hearts');
           const includesDiamonds =
-            x.cost[x.level] && x.cost[x.level].includes('diamonds');
+            x.cost[x.level - 1] && x.cost[x.level - 1].includes('diamonds');
           const includesRed =
-            x.cost[x.level] && x.cost[x.level].includes('red');
+            x.cost[x.level - 1] && x.cost[x.level - 1].includes('red');
           const includesSpades =
-            x.cost[x.level] && x.cost[x.level].includes('spades');
+            x.cost[x.level - 1] && x.cost[x.level - 1].includes('spades');
           const includesClubs =
-            x.cost[x.level] && x.cost[x.level].includes('clubs');
+            x.cost[x.level - 1] && x.cost[x.level - 1].includes('clubs');
           const includesBlack =
-            x.cost[x.level] && x.cost[x.level].includes('black');
+            x.cost[x.level - 1] && x.cost[x.level - 1].includes('black');
           const onlyRed =
             (includesHearts || includesDiamonds || includesRed) &&
             !includesSpades &&
@@ -480,7 +480,7 @@ export class DeckOverlayComponent implements OnInit {
             !includesDiamonds &&
             !includesRed;
 
-          if (onlyRed || (x.cost[x.level] && x.cost[x.level].length === 0)) {
+          if (onlyRed || (x.cost[x.level - 1] && x.cost[x.level - 1].length === 0)) {
             onlyRedArray.push(x);
           } else if (onlyBlack) {
             onlyBlackArray.push(x);
@@ -510,16 +510,16 @@ export class DeckOverlayComponent implements OnInit {
       if (this.currentSort === 'Cost') {
         this.abilityCards = this.abilityCards.sort((a, b) => {
           if (
-            a.cost[a.level] &&
-            b.cost[b.level] &&
-            a.cost[a.level].length < b.cost[b.level].length
+            a.cost[a.level - 1] &&
+            b.cost[b.level - 1] &&
+            a.cost[a.level - 1].length < b.cost[b.level - 1].length
           ) {
             return -1;
           }
           if (
-            a.cost[a.level] &&
-            b.cost[b.level] &&
-            a.cost[a.level].length > b.cost[b.level].length
+            a.cost[a.level - 1] &&
+            b.cost[b.level - 1] &&
+            a.cost[a.level - 1].length > b.cost[b.level - 1].length
           ) {
             return 1;
           }

@@ -14,11 +14,11 @@ export class AbilityService {
     let handValues: any = { diamonds: 0, spades: 0, clubs: 0, hearts: 0 };
     let foundValue = 0;
 
-    [...ability.cost[ability.level]].forEach((x: any) => {
+    [...ability.cost[ability.level - 1]].forEach((x: any) => {
       // Suits count are the values in hand
       let keyIndex = x;
 
-      if (foundValue !== [...ability.cost[ability.level]].length) {
+      if (foundValue !== [...ability.cost[ability.level - 1]].length) {
         if (keyIndex === 'red') {
           // convert red to diamond or heart
           if (SuitsDetails['hearts'] > 0) {
@@ -54,9 +54,9 @@ export class AbilityService {
       handValues['spades'] +
       handValues['clubs'];
 
-    if ([...ability.cost[ability.level]].length === totalValidCards) {
+    if ([...ability.cost[ability.level - 1]].length === totalValidCards) {
       const foundCards: CardDto[] = [];
-      const totalValidCardsArray = [...ability.cost[ability.level]];
+      const totalValidCardsArray = [...ability.cost[ability.level - 1]];
 
       // Loop through cards array
       // Check what cards we still need

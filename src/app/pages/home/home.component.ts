@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit {
     if (gameStarted) {
       this.loadingService.navigate(
         '/' + this.localStorageService.currentRoute(),
-        'loadingBg.png',
+        'homeLoading.png',
         'Loading...'
       );
       this.playerService.playSound('start.wav');

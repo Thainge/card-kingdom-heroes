@@ -1,4 +1,4 @@
-export type HeroSound = 'mario.mp3' | 'link.mp3';
+export type HeroSound = 'mario.mp3' | 'link.mp3' | 'cardFlip.mp3';
 
 export type Sound =
   | 'attack.mp3'

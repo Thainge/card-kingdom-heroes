@@ -161,7 +161,12 @@ export class playerService {
       localStorage.setItem('heroData', JSON.stringify(HeroData));
       heroes = HeroData;
     }
-    return heroes.find((x) => x.selected) ?? defaultPlayer;
+    let foundHero = heroes.find((x) => x.selected) ?? defaultPlayer;
+    foundHero.attack = foundHero.attack + (foundHero?.skills?.extraAttack ?? 0);
+    foundHero.baseAttack = foundHero.baseAttack + (foundHero?.skills?.extraAttack ?? 0);
+    foundHero.health = foundHero.health + (foundHero?.skills?.extraHealth ?? 0);
+    foundHero.baseHealth = foundHero.baseHealth + (foundHero?.skills?.extraHealth ?? 0);
+    return foundHero;
   }
 
   public getAbilityCards(): AbilityCard[] {

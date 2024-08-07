@@ -111,7 +111,7 @@
                         </div>
                         <div class="abilitySuitsBox">
                           <img
-                            *ngFor="let cost of card.cost[card.level]"
+                            *ngFor="let cost of card.cost[card.level - 1]"
                             [src]="'./assets/' + cost + '.png'"
                             class="abilitySuit"
                           />

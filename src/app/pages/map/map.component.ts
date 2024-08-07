@@ -448,43 +448,7 @@ export class MapComponent implements AfterViewInit, OnInit {
           showNew: true,
           title: 'New Campaign',
           unlocked: true,
-        },
-        {
-          id: 107,
-          cost: 0,
-          count: 0,
-          image: './assets/marioCampaign.png',
-          showNew: true,
-          title: 'New Campaign',
-          unlocked: true,
-        },
-        {
-          id: 108,
-          cost: 0,
-          count: 0,
-          image: './assets/tf2Campaign.png',
-          showNew: true,
-          title: 'New Campaign',
-          unlocked: true,
-        },
-        {
-          id: 109,
-          cost: 0,
-          count: 0,
-          image: './assets/donkeyKongCampaign.png',
-          showNew: true,
-          title: 'New Campaign',
-          unlocked: true,
-        },
-        {
-          id: 110,
-          cost: 0,
-          count: 0,
-          image: './assets/kirbyCampaign.png',
-          showNew: true,
-          title: 'New Campaign',
-          unlocked: true,
-        },
+        }
       ];
       this.shownRewardItem = this.shownNewCampaigns[0];
       this.localStorageService.setCampaignsData(newCampaignsData);
@@ -641,7 +605,7 @@ export class MapComponent implements AfterViewInit, OnInit {
 
   @HostListener('window:keydown', ['$event'])
   onKeyPress($event: KeyboardEvent) {
-    // this.finishLevelTest();
+    this.finishLevelTest();
 
     if (!this.devMode) {
       return;

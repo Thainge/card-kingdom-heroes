@@ -56,7 +56,7 @@ export class AppComponent implements OnInit {
 
   isLoading: boolean = false;
   initFinished: boolean = false;
-  loadingBg: string = 'loadingBg.png';
+  loadingBg: string = 'homeLoading.png';
 
   optionsMenuOpened: boolean = false;
   docElement: HTMLElement | undefined;

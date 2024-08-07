@@ -8,9 +8,9 @@ export const flagsData: FlagDto[] = [
     levelStatus: 'nextLevel',
     alreadyAnimated: true,
     missionDetails: {
-      image: 'loadingBg.png',
-      title: 'Skyloft',
-      description: `A place of harmony and peace...`,
+      image: 'greenForest.png',
+      title: 'Farmland',
+      description: `Peace has been disturbed and a great calamity is growing in our kingdom. A void which grows stronger everyday...`,
       rewardMin: 50,
       rewardMax: 100,
     },
@@ -55,11 +55,9 @@ export const flagsData: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Forest',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'greenForest.png',
+      title: 'Small Town',
+      description: `The void transports monsters which infest our good land and raid our villages, protect the town!`,
       rewardMin: 100,
       rewardMax: 150,
     },
@@ -99,11 +97,9 @@ export const flagsData: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'greenForest.png',
+      title: 'Circus',
+      description: `This is an interesting group, they say if we help defend their circus they'll let us use their magic wheel.`,
       rewardMin: 100,
       rewardMax: 150,
     },
@@ -168,11 +164,9 @@ export const flagsData: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'greenForest.png',
+      title: 'Ruins',
+      description: `The void has already destroyed this place, and there are enemies lying wait in ambush ahead. Prepare yourself soliders!`,
       rewardMin: 100,
       rewardMax: 150,
     },
@@ -222,11 +216,9 @@ export const flagsData: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'greenForest.png',
+      title: 'Castle Town',
+      description: `We have reached the castle, thank goodness everyone is still ok... But wait, there are reports of.. dragons?`,
       rewardMin: 100,
       rewardMax: 150,
     },
@@ -261,11 +253,9 @@ export const flagsData: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'snow.png',
+      title: 'Frozen Cave',
+      description: `We have defeated that pesky dragon and his minions, we must press onward into the alps.`,
       rewardMin: 100,
       rewardMax: 150,
     },
@@ -300,11 +290,9 @@ export const flagsData: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'snow.png',
+      title: 'Snowfall City',
+      description: `The journey is cold and tiresome, our men are tired and we are hungry and thirsty. We see a town up ahead, hopefully the locals can help us.`,
       rewardMin: 100,
       rewardMax: 150,
     },
@@ -339,11 +327,9 @@ export const flagsData: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'snow.png',
+      title: 'Mountain Cave',
+      description: `The locals were all gone and there were naught but monsters inside each home.. It is growing dark and we will seek shelter inside the cave.`,
       rewardMin: 100,
       rewardMax: 150,
     },
@@ -393,11 +379,9 @@ export const flagsData: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'snow.png',
+      title: 'Mountain Pass',
+      description: `The night was rough but we survived, we see a building on the distant hill, hopefully we can find what we are looking for there.`,
       rewardMin: 100,
       rewardMax: 150,
     },
@@ -432,11 +416,9 @@ export const flagsData: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'snow.png',
+      title: 'Mountain Retreat',
+      description: `We have traveled through this cave forever to reach the top of the mountain where the building lies, but we are almost there.`,
       rewardMin: 100,
       rewardMax: 150,
     },
@@ -466,11 +448,9 @@ export const flagsData: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'desert.png',
+      title: 'Desert Entrance',
+      description: `We have been delivered from the icy hell which we were put into only to be dropped into the desert. This journey will not be easy.`,
       rewardMin: 100,
       rewardMax: 150,
     },
@@ -505,11 +485,9 @@ export const flagsData: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'desert.png',
+      title: 'Desert Town',
+      description: `The locals are not friendly, and we are tired of people not helping us, onward!`,
       rewardMin: 100,
       rewardMax: 150,
     },
@@ -564,11 +542,9 @@ export const flagsData: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'desert.png',
+      title: 'Desert City',
+      description: `We have reached the desert city but we have only been met with hostility, a wicked king rules these lands. We must destroy the root of the evil infesting this place.`,
       rewardMin: 100,
       rewardMax: 150,
     },
@@ -618,11 +594,9 @@ export const flagsData: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'desert.png',
+      title: 'Desert Temple',
+      description: `We can sense an evil inside the temple ahead, this fight will not be easy but we are determined and will destroy this evil which awaits us.`,
       rewardMin: 100,
       rewardMax: 150,
     },
@@ -662,11 +636,9 @@ export const flagsData: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'fire.png',
+      title: 'Jail',
+      description: `The forsaken desert is behind us and we have finally reached the dead lands. This cursed land has been affected the worst by the void.`,
       rewardMin: 100,
       rewardMax: 150,
     },
@@ -696,11 +668,9 @@ export const flagsData: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'fire.png',
+      title: 'Swamp Entrance',
+      description: `It will not be much longer now, we see the evil tower in the distance and are drawing closer every day.`,
       rewardMin: 100,
       rewardMax: 150,
     },
@@ -740,11 +710,9 @@ export const flagsData: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'fire.png',
+      title: 'Swampland',
+      description: `There are many monsters in this swampland, and the stink is horrible, I wonder what awaits us at the end of this journey.`,
       rewardMin: 100,
       rewardMax: 150,
     },
@@ -794,11 +762,9 @@ export const flagsData: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'fire.png',
+      title: 'Graveyard',
+      description: `Thank the king we are out of the swamp, I don't know how much longer our men would have lasted. Only a short distance further until we reach our goal.`,
       rewardMin: 100,
       rewardMax: 150,
     },
@@ -848,11 +814,9 @@ export const flagsData: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'fire.png',
+      title: 'Evil Castle',
+      description: `We have finally reached our destination, the curse which brought this upon our land is waiting for us inside.`,
       rewardMin: 100,
       rewardMax: 150,
     },
@@ -867,11 +831,9 @@ export const flagsData: FlagDto[] = [
     alreadyAnimated: false,
     dots: [],
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'fire.png',
+      title: '.???',
+      description: `???`,
       rewardMin: 100,
       rewardMax: 150,
     },
