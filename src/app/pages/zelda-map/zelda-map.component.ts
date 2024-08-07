@@ -508,7 +508,7 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
 
   @HostListener('window:keydown', ['$event'])
   onKeyPress($event: KeyboardEvent) {
-    // this.finishLevelTest();
+    this.finishLevelTest();
 
     if (!this.devMode) {
       return;

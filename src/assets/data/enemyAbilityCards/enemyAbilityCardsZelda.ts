@@ -393,4 +393,3 @@ import { AbilityCard } from 'src/app/models/abilityCard';
       hitAnimation: 'fire',
     },
   ];
-  

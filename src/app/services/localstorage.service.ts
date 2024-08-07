@@ -402,9 +402,9 @@ export class LocalStorageService {
     if (this.currentRoute() === 'cardkingdom-map') {
       return 1;
     }
-    if (this.currentRoute() === 'zelda-map') {
-      return 2;
-    }
+    // if (this.currentRoute() === 'zelda-map') {
+    //   return 2;
+    // }
 
     return 1;
   }

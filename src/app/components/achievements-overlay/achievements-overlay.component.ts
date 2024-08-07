@@ -40,7 +40,7 @@ export class AchievementsOverlayComponent implements OnInit {
   achievementsList: AchievementObject[] = [];
   achievementsListClean: AchievementObject[] = [];
   currentpage: number = 1;
-  pageNumbers: number[] = [1, 2];
+  pageNumbers: number[] = [1];
   gold: number = 0;
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);

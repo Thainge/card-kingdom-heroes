@@ -8,11 +8,9 @@ export const flagsDataZelda: FlagDto[] = [
     levelStatus: 'nextLevel',
     alreadyAnimated: true,
     missionDetails: {
-      image: 'forest.png',
+      image: 'zeldaSkyloft.png',
       title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      description: `Skyloft, a place of harmony, until...`,
       rewardMin: 50,
       rewardMax: 100,
     },
@@ -57,11 +55,9 @@ export const flagsDataZelda: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'zeldaForest2.png',
+      title: 'Faron Woods Entrance',
+      description: `We have chased the moblins off of skyloft but now they have infested the land below!`,
       rewardMin: 50,
       rewardMax: 100,
     },
@@ -121,11 +117,9 @@ export const flagsDataZelda: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'zeldaForest.png',
+      title: 'Faron Woods',
+      description: `No matter how many times we chop them down they keep popping up, we need to reach the forest temple and stop them!`,
       rewardMin: 50,
       rewardMax: 100,
     },
@@ -165,11 +159,9 @@ export const flagsDataZelda: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'zeldaForest.png',
+      title: 'Faron Woods Temple',
+      description: `Thank goodness, we have left that forest behind with the infinitely spawning moblin hoards, time to figure out who's behind this.`,
       rewardMin: 50,
       rewardMax: 100,
     },
@@ -219,11 +211,9 @@ export const flagsDataZelda: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'zeldaVolcano.png',
+      title: 'Eldin Volcano Base',
+      description: `It was Ghirahim! He has fled into eldin volcano, we must pursue him at all costs!`,
       rewardMin: 50,
       rewardMax: 100,
     },
@@ -258,11 +248,9 @@ export const flagsDataZelda: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'zeldaVolcano.png',
+      title: 'Eldin Volcano Peak',
+      description: `The volcano path is treacherous and we have lost many troops making our way up, thankfully the worst is behind us. We must proceed into the mountain`,
       rewardMin: 50,
       rewardMax: 100,
     },
@@ -312,11 +300,9 @@ export const flagsDataZelda: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'zeldaVolcano.png',
+      title: 'Eldin Volcano Temple',
+      description: `We have located the eldin volcano temple and we believe that Ghirahim is inside. Find him and take him down.`,
       rewardMin: 50,
       rewardMax: 100,
     },
@@ -396,11 +382,9 @@ export const flagsDataZelda: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'zeldaDesert.png',
+      title: 'Lanayru Desert',
+      description: `Good job men, the land is being cleared of these pests that Ghirahim has been spawning, we must continue the purge!`,
       rewardMin: 50,
       rewardMax: 100,
     },
@@ -455,11 +439,9 @@ export const flagsDataZelda: FlagDto[] = [
     levelStatus: 'hidden',
     alreadyAnimated: false,
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'zeldaDesert.png',
+      title: 'Lanayru Desert Temple',
+      description: `We don't know what Ghirahim is planning but he has led himself into a dead end, we must take him now!`,
       rewardMin: 50,
       rewardMax: 100,
     },
@@ -475,11 +457,9 @@ export const flagsDataZelda: FlagDto[] = [
     alreadyAnimated: false,
     dots: [],
     missionDetails: {
-      image: 'forest.png',
-      title: 'Skyloft',
-      description: `General, a band of gnolls approaches! They are beasts who only
-      think about looting and burning everything their wake, but they
-      will be sorry they ever left their arid hills... For the queen!`,
+      image: 'zeldaFinal.png',
+      title: 'Sealed Grounds',
+      description: `Ghirahim has done the impossible, he has brought back Ganondorf, we must prevent the destruction and defeat him. Prepare yourself!`,
       rewardMin: 50,
       rewardMax: 100,
     },

@@ -1114,8 +1114,8 @@ export const LevelsData: LevelDto[] = [
         showBubblesEffect: false,
         showLeavesEffect: false,
         showSunFlareEffect: false,
-        showCloudsEffect: false,
-        showNightEffect: false,
+        showCloudsEffect: true,
+        showNightEffect: true,
         showFireEffect: false,
         showAshesEffect: true,
         dialogStart: [
@@ -1162,8 +1162,8 @@ export const LevelsData: LevelDto[] = [
         showBubblesEffect: false,
         showLeavesEffect: false,
         showSunFlareEffect: false,
-        showCloudsEffect: false,
-        showNightEffect: false,
+        showCloudsEffect: true,
+        showNightEffect: true,
         showFireEffect: false,
         showAshesEffect: true,
         dialogStart: [
@@ -1250,7 +1250,7 @@ export const LevelsData: LevelDto[] = [
         showSunFlareEffect: false,
         showCloudsEffect: false,
         showNightEffect: false,
-        showFireEffect: false,
+        showFireEffect: true,
         showAshesEffect: true,
         dialogStart: [
           {
