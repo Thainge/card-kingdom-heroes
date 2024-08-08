@@ -290,6 +290,9 @@ export class AppComponent implements OnInit {
         this.consoleItems.unshift(
           "Sets the player's health to 99:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>infiniteHealth</b>"
         );
+        this.consoleItems.unshift(
+          "Sets the enemies's health to 1:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>defeatEnemy</b>"
+        );
       }
 
       this.consoleItems.unshift(
@@ -337,6 +340,13 @@ export class AppComponent implements OnInit {
       this.consoleItems.unshift(value);
       this.consoleItems.unshift('');
       this.cheatsService.cheats$.next('infiniteHealth');
+      return;
+    }
+
+    if (value.includes('defeatenemy') && secretCodeEntered) {
+      this.consoleItems.unshift(value);
+      this.consoleItems.unshift('');
+      this.cheatsService.cheats$.next('defeatEnemy');
       return;
     }
 

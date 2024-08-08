@@ -3,5 +3,6 @@ export type CheatCommands =
   | 'help'
   | 'setGold'
   | 'wildHand'
-  | 'infiniteHealth' 
-  | 'easymode';
+  | 'infiniteHealth'
+  | 'easymode'
+  | 'defeatEnemy';

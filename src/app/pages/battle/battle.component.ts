@@ -479,6 +479,7 @@ export class BattleComponent implements OnInit {
       (localStorage.getItem('gameThemePath') as gameTheme) ?? 'default';
     // Cheats
     this.cheatsService.cheats$.subscribe((x) => {
+      console.log(x);
       if (x === 'wildHand') {
         this.playerHand = this.playerHand.map((x) => {
           const newCard: CardDto = {
@@ -494,6 +495,12 @@ export class BattleComponent implements OnInit {
 
       if (x === 'infiniteHealth') {
         this.player.health = 99;
+      }
+
+      if (x === 'defeatEnemy') {
+        this.enemyPlayers = this.enemyPlayers.map((x) => {
+          return { ...x, health: 1, baseHealth: 1, attack: 1, baseAttack: 0 };
+        });
       }
     });
 
@@ -1977,7 +1984,8 @@ export class BattleComponent implements OnInit {
   async increaseDefenseAbility(ability: AbilityCard) {
     // green hp while healing
     // potion fades on player
-    let newAttack = this.player.attack + ability.abilityValue[ability.level - 1];
+    let newAttack =
+      this.player.attack + ability.abilityValue[ability.level - 1];
 
     // Remove ability card from hand
     this.abilityCardsHand = this.abilityCardsHand.filter(
@@ -2158,7 +2166,8 @@ export class BattleComponent implements OnInit {
   async healAbility(ability: AbilityCard) {
     // green hp while healing
     // potion fades on player
-    let newHealth = this.player.health + ability.abilityValue[ability.level - 1];
+    let newHealth =
+      this.player.health + ability.abilityValue[ability.level - 1];
     if (newHealth > this.player.baseHealth) {
       newHealth = this.player.baseHealth;
     }
@@ -2332,7 +2341,8 @@ export class BattleComponent implements OnInit {
     const newCard: CardDto = {
       ...card,
       wild: true,
-      wildRange: this.currentAbility.abilityValue[this.currentAbility.level - 1],
+      wildRange:
+        this.currentAbility.abilityValue[this.currentAbility.level - 1],
     };
     this.playerHand = this.playerHand.map((x) => {
       if (x.id === card.id) {
@@ -2350,7 +2360,8 @@ export class BattleComponent implements OnInit {
     const newCard: CardDto = {
       ...card,
       wild: true,
-      wildRange: this.currentAbility.abilityValue[this.currentAbility.level - 1],
+      wildRange:
+        this.currentAbility.abilityValue[this.currentAbility.level - 1],
       wildSuit: true,
       wildSuits: [1, 1, 1, 1],
     };
@@ -2592,7 +2603,11 @@ export class BattleComponent implements OnInit {
       playerHand
     );
 
-    if (canUse.length < 1 && ability.cost.length > 0 && ability.cost[ability.level - 1].length !== 0) {
+    if (
+      canUse.length < 1 &&
+      ability.cost.length > 0 &&
+      ability.cost[ability.level - 1].length !== 0
+    ) {
       return;
     }
 
@@ -4652,7 +4667,9 @@ export class BattleComponent implements OnInit {
 
   async botUseOffenseAbility(ability: AbilityCard) {
     // -offense on player
-    this.pushDisplayMessage(`-${ability.abilityValue[ability.level - 1]} Defense`);
+    this.pushDisplayMessage(
+      `-${ability.abilityValue[ability.level - 1]} Defense`
+    );
     await this.timeout(500 - this.AbilityDelaySmall);
 
     this.player.attack =

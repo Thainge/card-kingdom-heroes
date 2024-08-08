@@ -112,7 +112,7 @@ export class DialogComponent implements OnInit {
       this.activeDialog.text.length > 0
     ) {
       const textArr = this.activeDialog.text.split('');
-      let i = 0;
+      let i = 1;
 
       this.isIterating = true;
       // Iterate over letters

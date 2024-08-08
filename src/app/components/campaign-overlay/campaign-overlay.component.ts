@@ -57,6 +57,9 @@ export class CampaignOverlayComponent implements OnInit {
       this.swiper = this.swiperRef?.nativeElement.swiper;
       this.swiper?.slideTo(this.localStorageService.getCurrentSlide());
     }, 0);
+    setTimeout(() => {
+      this.setStars();
+    }, 1);
   }
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
   @Input('navigate') navigate: boolean = true;

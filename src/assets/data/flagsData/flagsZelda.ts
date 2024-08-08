@@ -457,9 +457,9 @@ export const flagsDataZelda: FlagDto[] = [
     alreadyAnimated: false,
     dots: [],
     missionDetails: {
-      image: 'zeldaFinal.png',
+      image: 'zeldaFinal1.png',
       title: 'Sealed Grounds',
-      description: `Ghirahim has done the impossible, he has brought back Ganondorf, we must prevent the destruction and defeat him. Prepare yourself!`,
+      description: `Ghirahim has done the impossible, he has brought back Demise, we must prevent the destruction and defeat him. Prepare yourself!`,
       rewardMin: 50,
       rewardMax: 100,
     },

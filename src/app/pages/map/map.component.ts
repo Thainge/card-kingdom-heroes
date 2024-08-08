@@ -448,7 +448,7 @@ export class MapComponent implements AfterViewInit, OnInit {
           showNew: true,
           title: 'New Campaign',
           unlocked: true,
-        }
+        },
       ];
       this.shownRewardItem = this.shownNewCampaigns[0];
       this.localStorageService.setCampaignsData(newCampaignsData);
@@ -605,7 +605,7 @@ export class MapComponent implements AfterViewInit, OnInit {
 
   @HostListener('window:keydown', ['$event'])
   onKeyPress($event: KeyboardEvent) {
-    // this.finishLevelTest();
+    this.finishLevelTest();
 
     if (!this.devMode) {
       return;
