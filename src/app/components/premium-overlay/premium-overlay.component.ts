@@ -134,6 +134,8 @@ export class PremiumOverlayComponent implements OnInit {
         tipRows: ['- Expensive'],
       });
       this.loadingService.showTip$.next(true);
+    } else {
+      this.loadingService.showTip$.next(false);
     }
   }
 

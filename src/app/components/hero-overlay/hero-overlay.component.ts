@@ -84,6 +84,8 @@ export class HeroOverlayComponent implements OnInit {
         tipRows: ['- Upgrade heroes', '- Change heroes'],
       });
       this.loadingService.showTip$.next(true);
+    } else {
+      this.loadingService.showTip$.next(false);
     }
   }
 

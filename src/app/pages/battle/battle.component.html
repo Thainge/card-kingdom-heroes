@@ -6,6 +6,7 @@
     </div>
   </div>
   <app-comic
+    *ngIf="!tempHideComic"
     [comicData]="comicData"
     [open]="showComic"
     (onCloseMenu)="showComic = false"
@@ -2922,11 +2923,15 @@
                       !startedAbilityTurn &&
                       !canSelectCards
                         ? item.attack -
-                            currentAbility.abilityValue[currentAbility.level - 1] <
+                            currentAbility.abilityValue[
+                              currentAbility.level - 1
+                            ] <
                           0
                           ? "0"
                           : item.attack -
-                            currentAbility.abilityValue[currentAbility.level - 1]
+                            currentAbility.abilityValue[
+                              currentAbility.level - 1
+                            ]
                         : item.attack
                     }}
                   </div>

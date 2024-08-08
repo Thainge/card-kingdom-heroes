@@ -18,6 +18,8 @@ export interface LevelDto {
   showComicStart?: boolean;
   showComicEnd?: boolean;
   comicData?: Comic;
+  comicDataEndOnly?: Comic;
+  showComicEndOnly?: boolean;
 
   cards: CardDto[];
 

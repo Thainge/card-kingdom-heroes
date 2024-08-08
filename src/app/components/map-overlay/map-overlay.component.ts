@@ -234,6 +234,8 @@ export class MapOverlayComponent implements OnInit {
         tipRows: ['- Select flags to start missions'],
       });
       this.loadingService.showTip$.next(true);
+    } else {
+      this.loadingService.showTip$.next(false);
     }
   }
 }

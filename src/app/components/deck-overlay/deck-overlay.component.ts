@@ -150,6 +150,8 @@ export class DeckOverlayComponent implements OnInit {
         ],
       });
       this.loadingService.showTip$.next(true);
+    } else {
+      this.loadingService.showTip$.next(false);
     }
   }
 

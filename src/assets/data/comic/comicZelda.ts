@@ -554,4 +554,25 @@ export const ComicDataZelda: Comic[] = [
       },
     ],
   },
+  {
+    id: 9,
+    display: false,
+    comics: [
+      {
+        id: 1,
+        display: false,
+        image: 'Link9.png',
+        blackList: [
+          {
+            id: 1,
+            height: 450,
+            width: 300,
+            left: 0,
+            top: 0,
+            display: true,
+          },
+        ],
+      },
+    ],
+  },
 ];

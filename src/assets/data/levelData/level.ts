@@ -30,7 +30,6 @@ export const LevelsData: LevelDto[] = [
     battleRewardXp: 50,
     comicData: ComicData[0],
     showComicStart: true,
-    showComicEnd: true,
     combatPhases: [
       {
         id: 1,
@@ -115,7 +114,6 @@ export const LevelsData: LevelDto[] = [
         dialogStart: [],
         dialogEnd: [],
       },
-      
     ],
   },
   {
@@ -161,7 +159,6 @@ export const LevelsData: LevelDto[] = [
         dialogStart: [],
         dialogEnd: [],
       },
-      
     ],
   },
   {
@@ -207,7 +204,6 @@ export const LevelsData: LevelDto[] = [
         dialogStart: [],
         dialogEnd: [],
       },
-      
     ],
   },
   {
@@ -265,7 +261,7 @@ export const LevelsData: LevelDto[] = [
             image: 'avatar.png',
             title: 'Warrior',
             color: '#4CE500',
-            text: "Tread lightly, for fear of waking the dragon.. Wait..",
+            text: 'Tread lightly, for fear of waking the dragon.. Wait..',
             shownText: '',
             player: true,
           },
@@ -274,7 +270,7 @@ export const LevelsData: LevelDto[] = [
             image: 'dragon.png',
             title: 'Dragon',
             color: '#E50000',
-            text: "Roooooooaaaaaar!!",
+            text: 'Roooooooaaaaaar!!',
             shownText: '',
             player: false,
           },
@@ -382,7 +378,6 @@ export const LevelsData: LevelDto[] = [
         dialogStart: [],
         dialogEnd: [],
       },
-      
     ],
   },
   {
@@ -438,7 +433,6 @@ export const LevelsData: LevelDto[] = [
         dialogStart: [],
         dialogEnd: [],
       },
-      
     ],
   },
   {
@@ -484,7 +478,6 @@ export const LevelsData: LevelDto[] = [
         dialogStart: [],
         dialogEnd: [],
       },
-      
     ],
   },
   {
@@ -540,7 +533,6 @@ export const LevelsData: LevelDto[] = [
         dialogStart: [],
         dialogEnd: [],
       },
-      
     ],
   },
   {
@@ -617,7 +609,7 @@ export const LevelsData: LevelDto[] = [
             image: 'avatar.png',
             title: 'Warrior',
             color: '#4CE500',
-            text: "We mean no harm! Please help us find a way out of this place and we will leave you alone.",
+            text: 'We mean no harm! Please help us find a way out of this place and we will leave you alone.',
             shownText: '',
             player: true,
           },
@@ -626,7 +618,7 @@ export const LevelsData: LevelDto[] = [
             image: 'skull.png',
             title: '???',
             color: '#E50000',
-            text: "Hehehehahaha, you think to leave do you? Leave MY mountain. I think not. HAHAHHA.",
+            text: 'Hehehehahaha, you think to leave do you? Leave MY mountain. I think not. HAHAHHA.',
             shownText: '',
             player: false,
           },
@@ -635,7 +627,7 @@ export const LevelsData: LevelDto[] = [
             image: 'skull.png',
             title: '???',
             color: '#E50000',
-            text: "DRAGONS, to me!!!",
+            text: 'DRAGONS, to me!!!',
             shownText: '',
             player: false,
           },
@@ -644,47 +636,49 @@ export const LevelsData: LevelDto[] = [
             image: 'avatar.png',
             title: 'Warrior',
             color: '#4CE500',
-            text: "Ready yourself, his minions approach!",
+            text: 'Ready yourself, his minions approach!',
             shownText: '',
             player: true,
           },
         ],
-        dialogEnd: [{
-          id: 1,
-          image: 'skull.png',
-          title: '???',
-          color: '#E50000',
-          text: "Noooooo!!!! My dragons, my friends, they are gone now!!",
-          shownText: '',
-          player: false,
-        },
-        {
-          id: 2,
-          image: 'avatar.png',
-          title: 'Warrior',
-          color: '#4CE500',
-          text: "You brought this upon yourself, fiend! Leave or suffer the consequences!",
-          shownText: '',
-          player: true,
-        },
-        {
-          id: 3,
-          image: 'skull.png',
-          title: '???',
-          color: '#E50000',
-          text: "Aghh... I will have my revenge...",
-          shownText: '',
-          player: false,
-        },
-        {
-          id: 4,
-          image: 'avatar.png',
-          title: 'Warrior',
-          color: '#4CE500',
-          text: "Leave him men, I see a way out ahead, onward!",
-          shownText: '',
-          player: true,
-        },],
+        dialogEnd: [
+          {
+            id: 1,
+            image: 'skull.png',
+            title: '???',
+            color: '#E50000',
+            text: 'Noooooo!!!! My dragons, my friends, they are gone now!!',
+            shownText: '',
+            player: false,
+          },
+          {
+            id: 2,
+            image: 'avatar.png',
+            title: 'Warrior',
+            color: '#4CE500',
+            text: 'You brought this upon yourself, fiend! Leave or suffer the consequences!',
+            shownText: '',
+            player: true,
+          },
+          {
+            id: 3,
+            image: 'skull.png',
+            title: '???',
+            color: '#E50000',
+            text: 'Aghh... I will have my revenge...',
+            shownText: '',
+            player: false,
+          },
+          {
+            id: 4,
+            image: 'avatar.png',
+            title: 'Warrior',
+            color: '#4CE500',
+            text: 'Leave him men, I see a way out ahead, onward!',
+            shownText: '',
+            player: true,
+          },
+        ],
       },
     ],
   },
@@ -734,7 +728,7 @@ export const LevelsData: LevelDto[] = [
             image: 'holy.png',
             title: 'Holy Warrior',
             color: '#E50000',
-            text: "Who dares walk this land without permission of the desert king?",
+            text: 'Who dares walk this land without permission of the desert king?',
             shownText: '',
             player: false,
           },
@@ -743,7 +737,7 @@ export const LevelsData: LevelDto[] = [
             image: 'avatar.png',
             title: 'Warrior',
             color: '#4CE500',
-            text: "We mean no harm, we are simply passing through to reach the lands beyond.",
+            text: 'We mean no harm, we are simply passing through to reach the lands beyond.',
             shownText: '',
             player: true,
           },
@@ -752,7 +746,7 @@ export const LevelsData: LevelDto[] = [
             image: 'holy.png',
             title: 'Holy Warrior',
             color: '#E50000',
-            text: "You must pay 100,000 diamonds to the king to pass.",
+            text: 'You must pay 100,000 diamonds to the king to pass.',
             shownText: '',
             player: false,
           },
@@ -770,14 +764,13 @@ export const LevelsData: LevelDto[] = [
             image: 'holy.png',
             title: 'Holy Warrior',
             color: '#E50000',
-            text: "So be it. Prepare yourselfs, for divine jugdgement is upon you!",
+            text: 'So be it. Prepare yourselfs, for divine jugdgement is upon you!',
             shownText: '',
             player: false,
           },
         ],
         dialogEnd: [],
       },
-      
     ],
   },
   {
@@ -838,7 +831,7 @@ export const LevelsData: LevelDto[] = [
             image: '24.png',
             name: 'Holy Giant',
             attack: 3,
-            baseAttack:3,
+            baseAttack: 3,
             health: 8,
             baseHealth: 8,
             level: 1,
@@ -858,7 +851,6 @@ export const LevelsData: LevelDto[] = [
         dialogStart: [],
         dialogEnd: [],
       },
-      
     ],
   },
   {
@@ -917,7 +909,7 @@ export const LevelsData: LevelDto[] = [
             image: 'king.png',
             title: 'Holy King',
             color: '#E50000',
-            text: "WHO DARE APPROACHES THE HOLY TEMPLE OF THE DESERT KING??",
+            text: 'WHO DARE APPROACHES THE HOLY TEMPLE OF THE DESERT KING??',
             shownText: '',
             player: false,
           },
@@ -935,7 +927,7 @@ export const LevelsData: LevelDto[] = [
             image: 'king.png',
             title: 'Holy King',
             color: '#E50000',
-            text: "HAHAHAHAHAHA. PREPARE TO DIE, MORTALS.",
+            text: 'HAHAHAHAHAHA. PREPARE TO DIE, MORTALS.',
             shownText: '',
             player: false,
           },
@@ -948,7 +940,7 @@ export const LevelsData: LevelDto[] = [
           {
             id: 1,
             image: '29.png',
-            name: 'King\'s Chariot',
+            name: "King's Chariot",
             attack: 3,
             baseAttack: 3,
             health: 3,
@@ -958,7 +950,7 @@ export const LevelsData: LevelDto[] = [
           {
             id: 2,
             image: '29.png',
-            name: 'King\'s Chariot',
+            name: "King's Chariot",
             attack: 3,
             baseAttack: 3,
             health: 3,
@@ -989,13 +981,12 @@ export const LevelsData: LevelDto[] = [
         showAshesEffect: false,
         dialogStart: [],
         dialogEnd: [
-          
           {
             id: 1,
             image: 'king.png',
             title: 'Holy King',
             color: '#E50000',
-            text: "AGGHHGGHH!!! HOW....",
+            text: 'AGGHHGGHH!!! HOW....',
             shownText: '',
             player: false,
           },
@@ -1013,7 +1004,7 @@ export const LevelsData: LevelDto[] = [
             image: 'king.png',
             title: 'Holy King',
             color: '#E50000',
-            text: "AHHHH!! *POOF",
+            text: 'AHHHH!! *POOF',
             shownText: '',
             player: false,
           },
@@ -1080,12 +1071,9 @@ export const LevelsData: LevelDto[] = [
         showNightEffect: false,
         showFireEffect: false,
         showAshesEffect: true,
-        dialogStart: [
-        ],
-        dialogEnd: [
-        ],
+        dialogStart: [],
+        dialogEnd: [],
       },
-      
     ],
   },
   {
@@ -1118,12 +1106,9 @@ export const LevelsData: LevelDto[] = [
         showNightEffect: true,
         showFireEffect: false,
         showAshesEffect: true,
-        dialogStart: [
-        ],
-        dialogEnd: [
-        ],
+        dialogStart: [],
+        dialogEnd: [],
       },
-      
     ],
   },
   {
@@ -1166,12 +1151,9 @@ export const LevelsData: LevelDto[] = [
         showNightEffect: true,
         showFireEffect: false,
         showAshesEffect: true,
-        dialogStart: [
-        ],
-        dialogEnd: [
-        ],
+        dialogStart: [],
+        dialogEnd: [],
       },
-      
     ],
   },
   {
@@ -1214,12 +1196,9 @@ export const LevelsData: LevelDto[] = [
         showNightEffect: false,
         showFireEffect: false,
         showAshesEffect: true,
-        dialogStart: [
-        ],
-        dialogEnd: [
-        ],
+        dialogStart: [],
+        dialogEnd: [],
       },
-      
     ],
   },
   {
@@ -1258,7 +1237,7 @@ export const LevelsData: LevelDto[] = [
             image: 'avatar.png',
             title: 'Warrior',
             color: '#4CE500',
-            text: 'We\'ed reached the end of the trail, come out dragon, stop this curse upon the land!',
+            text: "We'ed reached the end of the trail, come out dragon, stop this curse upon the land!",
             shownText: '',
             player: true,
           },
@@ -1267,7 +1246,7 @@ export const LevelsData: LevelDto[] = [
             image: 'lava.png',
             title: 'Lava Dragon',
             color: '#E50000',
-            text: "YOU HAVE CAUSED ME MUCH GRIEF... YOUR CAMPAIGN WILL END NOW.",
+            text: 'YOU HAVE CAUSED ME MUCH GRIEF... YOUR CAMPAIGN WILL END NOW.',
             shownText: '',
             player: false,
           },
@@ -1276,7 +1255,7 @@ export const LevelsData: LevelDto[] = [
             image: 'avatar.png',
             title: 'Warrior',
             color: '#4CE500',
-            text: "On the contrary fiend, it is not our campaign that will end, it is yours!",
+            text: 'On the contrary fiend, it is not our campaign that will end, it is yours!',
             shownText: '',
             player: true,
           },
@@ -1287,7 +1266,7 @@ export const LevelsData: LevelDto[] = [
             image: 'lava.png',
             title: 'Lava Dragon',
             color: '#E50000',
-            text: "AGHHHH, HOW ARE YOU SO POWERFUL..? NO MATTER, I HAVE STALLED YOU LONG ENOUGH, THE VOID GROWS...",
+            text: 'AGHHHH, HOW ARE YOU SO POWERFUL..? NO MATTER, I HAVE STALLED YOU LONG ENOUGH, THE VOID GROWS...',
             shownText: '',
             player: false,
           },
@@ -1302,7 +1281,6 @@ export const LevelsData: LevelDto[] = [
           },
         ],
       },
-      
     ],
   },
   {
@@ -1352,7 +1330,7 @@ export const LevelsData: LevelDto[] = [
             image: 'death.png',
             title: 'Death',
             color: '#E50000',
-            text: "I SEE YOU LITTLE MORTALS... HAVE YOU COME TO CHALLENGE ME?",
+            text: 'I SEE YOU LITTLE MORTALS... HAVE YOU COME TO CHALLENGE ME?',
             shownText: '',
             player: false,
           },
@@ -1370,7 +1348,7 @@ export const LevelsData: LevelDto[] = [
             image: 'death.png',
             title: 'Death',
             color: '#E50000',
-            text: "WE SHALL SEE. PREPARE TO DIE!",
+            text: 'WE SHALL SEE. PREPARE TO DIE!',
             shownText: '',
             player: false,
           },
@@ -1396,7 +1374,6 @@ export const LevelsData: LevelDto[] = [
           },
         ],
       },
-      
     ],
   },
 ];

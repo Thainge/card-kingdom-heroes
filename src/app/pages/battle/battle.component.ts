@@ -430,6 +430,8 @@ export class BattleComponent implements OnInit {
   VictoryEnd4300: number = 4300; // 3300
   VictoryEnd3500: number = 3500; // 2500
 
+  tempHideComic: boolean = false;
+
   constructor(
     private cardService: CardService,
     private userService: playerService,
@@ -3386,6 +3388,24 @@ export class BattleComponent implements OnInit {
       this.displayDialogGameEnd = true;
       this.dialogArrayGameEnd = this.currentCombatPhase.dialogEnd;
       this.currentCombatPhase.dialogEnd = [];
+
+      console.log(this.currentLevel?.showComicEndOnly);
+      console.log(this.currentLevel?.showComicEndOnly ?? false);
+      if (this.currentLevel?.showComicEndOnly ?? false) {
+        console.log(this.currentLevel?.showComicEndOnly ?? false);
+        this.tempHideComic = true;
+
+        this.showComic = this.currentLevel?.showComicEndOnly ?? false;
+        this.comicData = this.currentLevel?.comicDataEndOnly ?? {
+          comics: [],
+          display: false,
+          id: 0,
+        };
+        console.log(this.comicData);
+        setTimeout(() => {
+          this.tempHideComic = false;
+        }, 500);
+      }
     } else {
       this.endGame(true);
     }

@@ -112,6 +112,8 @@ export class AchievementsOverlayComponent implements OnInit {
         ],
       });
       this.loadingService.showTip$.next(true);
+    } else {
+      this.loadingService.showTip$.next(false);
     }
   }
 
@@ -133,7 +135,7 @@ export class AchievementsOverlayComponent implements OnInit {
     this.pageAchievements(this.currentpage);
     this.playerService.gold$.next(this.gold + achievement.reward);
     this.localStorageService.setAchievements(this.achievementsListClean);
-    this.achievementService.allAchievements$.next(this.achievementsListClean);
+    // this.achievementService.allAchievements$.next(this.achievementsListClean);
     setTimeout(() => {
       this.checkTipFinish();
     }, 1);

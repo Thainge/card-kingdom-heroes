@@ -143,6 +143,7 @@ export class ShopOverlayComponent implements OnInit {
 
   checkShopTip() {
     const shopTipShown = localStorage.getItem('shopTipShown');
+    console.log(shopTipShown);
     if (!shopTipShown) {
       localStorage.setItem('shopTipShown', JSON.stringify(true));
       this.loadingService.currentTip$.next({
@@ -153,6 +154,8 @@ export class ShopOverlayComponent implements OnInit {
         tipRows: ['- Buy booster packs', '- Open booster packs'],
       });
       this.loadingService.showTip$.next(true);
+    } else {
+      this.loadingService.showTip$.next(false);
     }
   }
 
