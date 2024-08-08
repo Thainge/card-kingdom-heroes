@@ -46,7 +46,7 @@ export class GalleryOverlayComponent implements OnInit {
       theme: 'mario',
     };
     const boss: GalleryImage = {
-      image: 'moblin.png',
+      image: 'bokoblin.png',
       theme: 'default',
     };
     const enemy: GalleryImage = {

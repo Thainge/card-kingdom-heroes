@@ -57,7 +57,7 @@ export const flagsDataZelda: FlagDto[] = [
     missionDetails: {
       image: 'zeldaForest2.png',
       title: 'Faron Woods Entrance',
-      description: `We have chased the moblins off of skyloft but now they have infested the land below!`,
+      description: `We have chased the bokoblins off of skyloft but now they have infested the land below!`,
       rewardMin: 50,
       rewardMax: 100,
     },
@@ -161,7 +161,7 @@ export const flagsDataZelda: FlagDto[] = [
     missionDetails: {
       image: 'zeldaForest.png',
       title: 'Faron Woods Temple',
-      description: `Thank goodness, we have left that forest behind with the infinitely spawning moblin hoards, time to figure out who's behind this.`,
+      description: `Thank goodness, we have left that forest behind with the infinitely spawning bokoblin hoards, time to figure out who's behind this.`,
       rewardMin: 50,
       rewardMax: 100,
     },
