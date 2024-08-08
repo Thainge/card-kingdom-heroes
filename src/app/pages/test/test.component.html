@@ -1,0 +1,108 @@
+<div class="container">
+  <div
+    style="
+      position: absolute;
+      top: 1em;
+      left: 1em;
+      display: flex;
+      flex-direction: column;
+      row-gap: 1em;
+      padding: 1em;
+      background-color: rgba(255, 255, 255, 0.445);
+      border-radius: 0.5em;
+      z-index: 99999;
+      overflow-y: scroll;
+      max-height: 100vh;
+    "
+  >
+    <div style="display: flex; flex-direction: column; row-gap: 1em">
+      <div>
+        <button (click)="updateIndex(0)">1</button>
+        <button
+          (click)="updateIndex(1)"
+          *ngIf="
+            ((allComics ?? [])[this.currentComicIndex ?? 0]?.comics ?? [])
+              .length > 1
+          "
+        >
+          2
+        </button>
+        <button
+          (click)="updateIndex(2)"
+          *ngIf="
+            ((allComics ?? [])[this.currentComicIndex ?? 0]?.comics ?? [])
+              .length > 2
+          "
+        >
+          3
+        </button>
+        <button (click)="add()">Add Row</button>
+      </div>
+      <div
+        style="display: flex; flex-direction: column"
+        *ngFor="let item of currentBlackList; let i = index"
+      >
+        <div style="display: flex">
+          <div style="width: 5em">Height:</div>
+          <input
+            [value]="item.height"
+            (change)="updateBox($event, i, 'height')"
+          />
+        </div>
+        <div style="display: flex">
+          <div style="width: 5em">Width:</div>
+          <input
+            [value]="item.width"
+            (change)="updateBox($event, i, 'width')"
+          />
+        </div>
+        <div style="display: flex">
+          <div style="width: 5em">Top:</div>
+          <input [value]="item.top" (change)="updateBox($event, i, 'top')" />
+        </div>
+        <div style="display: flex">
+          <div style="width: 5em">Left:</div>
+          <input [value]="item.left" (change)="updateBox($event, i, 'left')" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    style="
+      position: absolute;
+      top: 1em;
+      right: 1em;
+      display: flex;
+      flex-direction: column;
+      row-gap: 1em;
+      padding: 1em;
+      background-color: rgba(255, 255, 255, 0.445);
+      border-radius: 0.5em;
+      z-index: 99999;
+      overflow-y: scroll;
+      max-height: 70vh;
+    "
+  >
+    <div style="display: flex; flex-direction: column">
+      <div
+        style="display: flex; flex-direction: column"
+        *ngFor="let item of currentBlackList; let i = index"
+      >
+        {{ "{" }}
+        <div>id: {{ i + 1 }},</div>
+        <div>height: {{ item.height }},</div>
+        <div>width: {{ item.width }},</div>
+        <div>left: {{ item.left }},</div>
+        <div>top: {{ item.top }},</div>
+        <div>display: true,</div>
+        {{ "}," }}
+      </div>
+    </div>
+  </div>
+  <app-comic
+    *ngIf="showComic"
+    [comicData]="currentComic"
+    [open]="showComic"
+    (onCloseMenuTest)="nextComic()"
+  ></app-comic>
+</div>

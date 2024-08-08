@@ -34,6 +34,7 @@ export class ComicComponent implements OnInit {
   interval: any;
 
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
+  @Output() onCloseMenuTest = new EventEmitter<boolean>(false);
 
   constructor(private playerService: playerService) {}
 
@@ -83,6 +84,7 @@ export class ComicComponent implements OnInit {
       } else {
         // If no more pages end display
         this.comicData.display = false;
+        this.onCloseMenuTest.emit(false);
       }
     }
 

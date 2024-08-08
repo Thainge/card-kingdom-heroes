@@ -121,6 +121,8 @@ export const LevelsDataZelda: LevelDto[] = [
     ...Level,
     id: 2,
     battleRewardXp: 50,
+    comicData: ComicDataZelda[1],
+    showComicStart: true,
     combatPhases: [
       {
         id: 1,
@@ -156,6 +158,8 @@ export const LevelsDataZelda: LevelDto[] = [
     ...Level,
     id: 3,
     battleRewardXp: 50,
+    comicData: ComicDataZelda[2],
+    showComicStart: true,
     combatPhases: [
       {
         id: 1,
@@ -201,6 +205,8 @@ export const LevelsDataZelda: LevelDto[] = [
     ...Level,
     id: 4,
     battleRewardXp: 100,
+    comicData: ComicDataZelda[3],
+    showComicEnd: true,
     combatPhases: [
       {
         id: 1,
@@ -340,6 +346,8 @@ export const LevelsDataZelda: LevelDto[] = [
     ...Level,
     id: 5,
     battleRewardXp: 50,
+    comicData: ComicDataZelda[4],
+    showComicStart: true,
     combatPhases: [
       {
         id: 1,
@@ -538,6 +546,8 @@ export const LevelsDataZelda: LevelDto[] = [
     ...Level,
     id: 9,
     battleRewardXp: 100,
+    comicData: ComicDataZelda[5],
+    showComicStart: true,
     combatPhases: [
       {
         id: 1,
@@ -677,6 +687,8 @@ export const LevelsDataZelda: LevelDto[] = [
     ...Level,
     id: 10,
     battleRewardXp: 100,
+    comicData: ComicDataZelda[6],
+    showComicStart: true,
     combatPhases: [
       {
         id: 1,
