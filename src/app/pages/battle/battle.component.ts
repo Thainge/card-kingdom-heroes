@@ -915,6 +915,10 @@ export class BattleComponent implements OnInit {
     }
     if (!this.easyMode) {
       this.abilityDeck = this.userService.getAbilityCards();
+      this.abilityDeck = this.abilityDeck.map((x, i) => {
+        return { ...x, id: i + 1 };
+      });
+
       if (
         this.currentLevel.shuffleAbilityCards &&
         this.abilityDeck.length > 0

@@ -46,6 +46,8 @@ export class AchievementsOverlayComponent implements OnInit {
   @Output() onCloseMenu = new EventEmitter<boolean>(false);
   goldImage: string = './assets/gold.png';
 
+  updatingAchievements: boolean = false;
+
   constructor(
     private playerService: playerService,
     private achievementService: AchievementService,
@@ -62,7 +64,11 @@ export class AchievementsOverlayComponent implements OnInit {
       this.initAchievements();
     });
     this.achievementService.allAchievements$.subscribe((x) => {
-      this.initAchievements();
+      if (this.updatingAchievements) {
+        this.updatingAchievements = false;
+      } else {
+        this.initAchievements();
+      }
     });
     this.initAchievements();
     this.currentpage = this.localStorageService.getCurrentAchievementPage();
@@ -135,7 +141,8 @@ export class AchievementsOverlayComponent implements OnInit {
     this.pageAchievements(this.currentpage);
     this.playerService.gold$.next(this.gold + achievement.reward);
     this.localStorageService.setAchievements(this.achievementsListClean);
-    // this.achievementService.allAchievements$.next(this.achievementsListClean);
+    this.updatingAchievements = true;
+    this.achievementService.allAchievements$.next(this.achievementsListClean);
     setTimeout(() => {
       this.checkTipFinish();
     }, 1);

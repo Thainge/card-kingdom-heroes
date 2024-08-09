@@ -80,6 +80,15 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (
+      !localStorage.getItem('clearStorage') ||
+      localStorage.getItem('clearStorage') === 'v2'
+    ) {
+      localStorage.clear();
+      localStorage.setItem('clearStorage', 'v3');
+      location.reload();
+    }
+
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
         const gameTheme = this.localStorageService.setCampaignRoute();
