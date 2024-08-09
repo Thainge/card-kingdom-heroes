@@ -14,6 +14,7 @@ import { MapOverlayComponent } from 'src/app/components/map-overlay/map-overlay.
 import { FlagDto } from 'src/app/models/flag';
 import { LoadingService } from 'src/app/services/loading.service';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
+import { LocalStorageVersion } from 'src/app/services/env';
 
 @Component({
   selector: 'app-home',
@@ -48,16 +49,21 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const localRoute = localStorage.getItem('currentRoute') ?? '';
+    const localRoute =
+      localStorage.getItem(LocalStorageVersion + 'currentRoute') ?? '';
     if (localRoute.length < 1) {
-      localStorage.setItem('currentRoute', 'cardkingdom-map');
+      localStorage.setItem(
+        LocalStorageVersion + 'currentRoute',
+        'cardkingdom-map'
+      );
       this.playerService.gameTheme$.next('default');
     }
     this.localStorageService.getStarsData();
   }
 
   startGame() {
-    const gameStarted = localStorage.getItem('gameStartedYet') ?? '';
+    const gameStarted =
+      localStorage.getItem(LocalStorageVersion + 'gameStartedYet') ?? '';
     if (gameStarted) {
       this.loadingService.navigate(
         '/' + this.localStorageService.currentRoute(),

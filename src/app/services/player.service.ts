@@ -11,6 +11,7 @@ import { AchievementService } from './achievement.service';
 import { LocalStorageService } from './localstorage.service';
 import { Music } from '../models/music';
 import { HeroSound, Sound } from '../models/sound';
+import { LocalStorageVersion } from './env';
 
 const defaultPlayer: PlayerDto = {
   id: 0,
@@ -91,8 +92,12 @@ export class playerService {
         this.achievementService.unlockNewAchievement(3);
       }
     });
-    const localAudio = localStorage.getItem('audioVolume');
-    const localMusic = localStorage.getItem('musicVolume');
+    const localAudio = localStorage.getItem(
+      LocalStorageVersion + 'audioVolume'
+    );
+    const localMusic = localStorage.getItem(
+      LocalStorageVersion + 'musicVolume'
+    );
     if (localAudio) {
       this.audioVolume$.next(Number(localAudio));
     }
@@ -100,10 +105,16 @@ export class playerService {
       this.musicVolume$.next(Number(localMusic));
     }
     this.audioVolume$.subscribe((x) => {
-      localStorage.setItem('audioVolume', JSON.stringify(x));
+      localStorage.setItem(
+        LocalStorageVersion + 'audioVolume',
+        JSON.stringify(x)
+      );
     });
     this.musicVolume$.subscribe((x) => {
-      localStorage.setItem('musicVolume', JSON.stringify(x));
+      localStorage.setItem(
+        LocalStorageVersion + 'musicVolume',
+        JSON.stringify(x)
+      );
       if (this.currentMusic) {
         this.currentMusic.volume = x / 100;
         this.currentPlayingMusic$.next(this.currentMusic);
@@ -121,7 +132,9 @@ export class playerService {
   public playHeroSound(sound: HeroSound) {
     try {
       let audio = new Audio();
-      const localVolume = Number(localStorage.getItem('audioVolume'));
+      const localVolume = Number(
+        localStorage.getItem(LocalStorageVersion + 'audioVolume')
+      );
       audio.src = './assets/sound/' + sound;
       audio.volume = localVolume / 100;
       audio.load();
@@ -132,7 +145,9 @@ export class playerService {
   public playSound(sound: Sound) {
     try {
       let audio = new Audio();
-      const localVolume = Number(localStorage.getItem('audioVolume'));
+      const localVolume = Number(
+        localStorage.getItem(LocalStorageVersion + 'audioVolume')
+      );
       audio.src = './assets/sound/' + sound;
       audio.volume = localVolume / 100;
       audio.load();
@@ -144,7 +159,9 @@ export class playerService {
     try {
       let audio = new Audio();
       this.currentMusic?.pause();
-      const localVolume = Number(localStorage.getItem('musicVolume'));
+      const localVolume = Number(
+        localStorage.getItem(LocalStorageVersion + 'musicVolume')
+      );
       audio.src = './assets/sound/' + music;
       audio.volume = localVolume / 100;
       audio.load();
@@ -155,17 +172,22 @@ export class playerService {
 
   public getPlayer(): PlayerDto {
     let heroes: PlayerDto[] = JSON.parse(
-      localStorage.getItem('heroData') ?? '[]'
+      localStorage.getItem(LocalStorageVersion + 'heroData') ?? '[]'
     );
     if (heroes.length < 1) {
-      localStorage.setItem('heroData', JSON.stringify(HeroData));
+      localStorage.setItem(
+        LocalStorageVersion + 'heroData',
+        JSON.stringify(HeroData)
+      );
       heroes = HeroData;
     }
     let foundHero = heroes.find((x) => x.selected) ?? defaultPlayer;
     foundHero.attack = foundHero.attack + (foundHero?.skills?.extraAttack ?? 0);
-    foundHero.baseAttack = foundHero.baseAttack + (foundHero?.skills?.extraAttack ?? 0);
+    foundHero.baseAttack =
+      foundHero.baseAttack + (foundHero?.skills?.extraAttack ?? 0);
     foundHero.health = foundHero.health + (foundHero?.skills?.extraHealth ?? 0);
-    foundHero.baseHealth = foundHero.baseHealth + (foundHero?.skills?.extraHealth ?? 0);
+    foundHero.baseHealth =
+      foundHero.baseHealth + (foundHero?.skills?.extraHealth ?? 0);
     return foundHero;
   }
 

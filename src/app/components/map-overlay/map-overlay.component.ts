@@ -27,6 +27,7 @@ import { AchievementObject } from 'src/app/models/achievement';
 import { FlagDto } from 'src/app/models/flag';
 import { AbilityCard } from 'src/app/models/abilityCard';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
+import { LocalStorageVersion } from 'src/app/services/env';
 
 interface Tip {
   title: string;
@@ -223,9 +224,14 @@ export class MapOverlayComponent implements OnInit {
   }
 
   checkTip() {
-    const mapTipShown = localStorage.getItem('mapTipShown');
+    const mapTipShown = localStorage.getItem(
+      LocalStorageVersion + 'mapTipShown'
+    );
     if (!mapTipShown) {
-      localStorage.setItem('mapTipShown', JSON.stringify(true));
+      localStorage.setItem(
+        LocalStorageVersion + 'mapTipShown',
+        JSON.stringify(true)
+      );
       this.loadingService.currentTip$.next({
         title: 'New Tip',
         header: 'Map',

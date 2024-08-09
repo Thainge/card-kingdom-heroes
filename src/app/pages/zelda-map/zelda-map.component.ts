@@ -26,6 +26,7 @@ import { PlayerDto } from 'src/app/models/player';
 import { LoadingService } from 'src/app/services/loading.service';
 import { AchievementService } from 'src/app/services/achievement.service';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
+import { LocalStorageVersion } from 'src/app/services/env';
 const { Pins } = require('@fancyapps/ui/dist/panzoom/panzoom.pins.esm.js');
 
 type WhirlpoolSize = 0 | 1 | 1.25 | 1.5 | 2 | 2.5;
@@ -195,7 +196,7 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
         return x;
       });
       const heroes: PlayerDto[] = JSON.parse(
-        localStorage.getItem('heroData') ?? '[]'
+        localStorage.getItem(LocalStorageVersion + 'heroData') ?? '[]'
       );
       this.flagsList.forEach((x) => {
         if (x.id === 1) {
@@ -258,7 +259,10 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
               return x;
             });
             this.playerService.heroDataChanged$.next(true);
-            localStorage.setItem('heroData', JSON.stringify(newHeroes));
+            localStorage.setItem(
+              LocalStorageVersion + 'heroData',
+              JSON.stringify(newHeroes)
+            );
           }
         }
 
@@ -476,7 +480,7 @@ export class ZeldaMapComponent implements AfterViewInit, OnInit {
   checkStartOfGame() {
     try {
       const gameStartedYet = JSON.parse(
-        localStorage.getItem('gameStartedYet') ?? 'false'
+        localStorage.getItem(LocalStorageVersion + 'gameStartedYet') ?? 'false'
       );
       if (!gameStartedYet) {
         this.router.navigate(['/']);

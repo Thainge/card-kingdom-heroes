@@ -13,6 +13,7 @@ import {
   fadeInUpOnEnterAnimation,
   fadeOutUpOnLeaveAnimation,
 } from 'angular-animations';
+import { LocalStorageVersion } from 'src/app/services/env';
 import { LoadingService } from 'src/app/services/loading.service';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
 import { playerService } from 'src/app/services/player.service';
@@ -52,14 +53,20 @@ export class DifficultyOverlayComponent implements OnInit {
   chooseEasy() {
     this.playerService.playSound('button.mp3');
     this.loadingService.difficultyIsOpen$.next(false);
-    localStorage.setItem('easymode', JSON.stringify(true));
+    localStorage.setItem(
+      LocalStorageVersion + 'easymode',
+      JSON.stringify(true)
+    );
     this.closeMenu();
   }
 
   chooseHard() {
     this.playerService.playSound('button.mp3');
     this.loadingService.difficultyIsOpen$.next(false);
-    localStorage.setItem('easymode', JSON.stringify(false));
+    localStorage.setItem(
+      LocalStorageVersion + 'easymode',
+      JSON.stringify(false)
+    );
     this.closeMenu();
   }
 

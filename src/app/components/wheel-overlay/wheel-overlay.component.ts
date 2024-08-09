@@ -10,6 +10,7 @@ import { Wheel } from 'spin-wheel';
 import { BoosterPack } from 'src/app/models/boosterPack';
 import { AchievementService } from 'src/app/services/achievement.service';
 import { CardService } from 'src/app/services/card.service';
+import { LocalStorageVersion } from 'src/app/services/env';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
 import { playerService } from 'src/app/services/player.service';
 
@@ -120,7 +121,7 @@ export class WheelOverlayComponent implements OnInit {
     this.goldImage = this.localStorageService.getCurrentGoldImage();
     try {
       const localPremium = JSON.parse(
-        localStorage.getItem('premiumData') ?? '[]'
+        localStorage.getItem(LocalStorageVersion + 'premiumData') ?? '[]'
       );
 
       if (localPremium && localPremium.length > 0) {
