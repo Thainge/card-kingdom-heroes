@@ -15,7 +15,6 @@ import {
 } from 'angular-animations';
 import { AbilityCard } from 'src/app/models/abilityCard';
 import { AchievementService } from 'src/app/services/achievement.service';
-import { LocalStorageVersion } from 'src/app/services/env';
 import { LoadingService } from 'src/app/services/loading.service';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
 import { playerService } from 'src/app/services/player.service';
@@ -136,14 +135,9 @@ export class DeckOverlayComponent implements OnInit {
   }
 
   checkTip() {
-    const deckTipShown = localStorage.getItem(
-      LocalStorageVersion + 'deckTipShown'
-    );
+    const deckTipShown = localStorage.getItem('deckTipShown');
     if (!deckTipShown) {
-      localStorage.setItem(
-        LocalStorageVersion + 'deckTipShown',
-        JSON.stringify(true)
-      );
+      localStorage.setItem('deckTipShown', JSON.stringify(true));
       this.loadingService.currentTip$.next({
         title: 'New Tip',
         header: 'Deck',
@@ -488,10 +482,7 @@ export class DeckOverlayComponent implements OnInit {
             !includesDiamonds &&
             !includesRed;
 
-          if (
-            onlyRed ||
-            (x.cost[x.level - 1] && x.cost[x.level - 1].length === 0)
-          ) {
+          if (onlyRed || (x.cost[x.level - 1] && x.cost[x.level - 1].length === 0)) {
             onlyRedArray.push(x);
           } else if (onlyBlack) {
             onlyBlackArray.push(x);

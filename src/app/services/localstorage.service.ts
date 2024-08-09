@@ -33,7 +33,6 @@ import { PlayerDto } from '../models/player';
 import { HeroData } from 'src/assets/data/hero';
 import { Router } from '@angular/router';
 import { Music } from '../models/music';
-import { LocalStorageVersion } from './env';
 
 type RouteUrl = 'cardkingdom-map' | 'zelda-map';
 
@@ -194,8 +193,7 @@ export class LocalStorageService {
   constructor(private router: Router) {}
 
   public currentRoute = (): RouteUrl =>
-    (localStorage.getItem(LocalStorageVersion + 'currentRoute') as RouteUrl) ??
-    'cardkingdom-map';
+    (localStorage.getItem('currentRoute') as RouteUrl) ?? 'cardkingdom-map';
 
   private getRouteData(
     custom: boolean = false,
@@ -238,10 +236,7 @@ export class LocalStorageService {
     if (this.router.url.slice(1) === 'cardkingdom-map') {
       const campaign = campaignsData.find((x) => x.id === 1);
       if (campaign) {
-        localStorage.setItem(
-          LocalStorageVersion + 'currentRoute',
-          campaign.url
-        );
+        localStorage.setItem('currentRoute', campaign.url);
         return campaign.theme;
       }
     }
@@ -249,18 +244,13 @@ export class LocalStorageService {
     if (this.router.url.slice(1) === 'zelda-map') {
       const campaign = campaignsData.find((x) => x.id === 2);
       if (campaign) {
-        localStorage.setItem(
-          LocalStorageVersion + 'currentRoute',
-          campaign.url
-        );
+        localStorage.setItem('currentRoute', campaign.url);
         return campaign.theme;
       }
     }
 
     const currentTheme =
-      (localStorage.getItem(
-        LocalStorageVersion + 'currentRoute'
-      ) as gameTheme) ?? 'default';
+      (localStorage.getItem('currentRoute') as gameTheme) ?? 'default';
     return currentTheme;
   }
 
@@ -306,9 +296,7 @@ export class LocalStorageService {
   }
 
   public getHideWhirlpool(): boolean {
-    const data = localStorage.getItem(
-      LocalStorageVersion + this.currentRoute() + '-hideWhirlpool'
-    );
+    const data = localStorage.getItem(this.currentRoute() + '-hideWhirlpool');
     if (data) {
       return true;
     } else {
@@ -318,14 +306,14 @@ export class LocalStorageService {
 
   public setHideWhirlpool(data: boolean) {
     localStorage.setItem(
-      LocalStorageVersion + this.currentRoute() + '-hideWhirlpool',
+      this.currentRoute() + '-hideWhirlpool',
       JSON.stringify(data)
     );
   }
 
   public getDidShowCampaignFinish(): boolean {
     const data = localStorage.getItem(
-      LocalStorageVersion + this.currentRoute() + '-finishedCampaignShow'
+      this.currentRoute() + '-finishedCampaignShow'
     );
     if (data) {
       return true;
@@ -336,21 +324,18 @@ export class LocalStorageService {
 
   public setDidShowCampaignFinish(data: boolean) {
     localStorage.setItem(
-      LocalStorageVersion + this.currentRoute() + '-finishedCampaignShow',
+      this.currentRoute() + '-finishedCampaignShow',
       JSON.stringify(data)
     );
   }
 
   public getHeroDataForWorld(): HeroData {
     let heroes: PlayerDto[] = JSON.parse(
-      localStorage.getItem(LocalStorageVersion + 'heroData') ?? '[]'
+      localStorage.getItem('heroData') ?? '[]'
     );
     if (heroes.length < 1) {
       heroes = HeroData;
-      localStorage.setItem(
-        LocalStorageVersion + 'heroData',
-        JSON.stringify(heroes)
-      );
+      localStorage.setItem('heroData', JSON.stringify(heroes));
     }
     heroes = heroes.map((x) => {
       return { ...x, selected: false };
@@ -464,9 +449,7 @@ export class LocalStorageService {
   }
 
   public getCampaignsData(): CampaignBox[] {
-    const localData = JSON.parse(
-      localStorage.getItem(LocalStorageVersion + 'campaignData') ?? '[]'
-    );
+    const localData = JSON.parse(localStorage.getItem('campaignData') ?? '[]');
     if (localData.length < 1) {
       const defaultData: CampaignBox[] = [
         {
@@ -496,10 +479,7 @@ export class LocalStorageService {
   }
 
   public setCampaignsData(data: CampaignBox[]) {
-    localStorage.setItem(
-      LocalStorageVersion + 'campaignData',
-      JSON.stringify(data)
-    );
+    localStorage.setItem('campaignData', JSON.stringify(data));
   }
 
   public getLevelsData(): LevelDto[] {
@@ -523,8 +503,7 @@ export class LocalStorageService {
   private getSingleAchievementList(route: RouteUrl): AchievementObject[] {
     const RouteData = this.getRouteData(true, route).achievement;
     const data = JSON.parse(
-      localStorage.getItem(LocalStorageVersion + route + '-achievements') ??
-        '[]'
+      localStorage.getItem(route + '-achievements') ?? '[]'
     );
     if (data.length < 1) {
       return RouteData;
@@ -536,9 +515,7 @@ export class LocalStorageService {
   public getAchievements(): AchievementObject[] {
     const RouteData = this.getRouteData().achievement;
     const data = JSON.parse(
-      localStorage.getItem(
-        LocalStorageVersion + this.currentRoute() + '-achievements'
-      ) ?? '[]'
+      localStorage.getItem(this.currentRoute() + '-achievements') ?? '[]'
     );
     if (data.length < 1) {
       this.setAchievements(RouteData);
@@ -550,7 +527,7 @@ export class LocalStorageService {
 
   public setAchievements(data: AchievementObject[]) {
     localStorage.setItem(
-      LocalStorageVersion + this.currentRoute() + '-achievements',
+      this.currentRoute() + '-achievements',
       JSON.stringify(data)
     );
   }
@@ -558,9 +535,7 @@ export class LocalStorageService {
   public getAbilityCards(): AbilityDeckCard[] {
     const RouteData = this.getRouteData().defaultAbility;
     const data = JSON.parse(
-      localStorage.getItem(
-        LocalStorageVersion + this.currentRoute() + '-abilityCards'
-      ) ?? '[]'
+      localStorage.getItem(this.currentRoute() + '-abilityCards') ?? '[]'
     );
     if (data.length < 1) {
       const handCards: AbilityDeckCard[] = RouteData.map((x) => {
@@ -582,15 +557,14 @@ export class LocalStorageService {
 
   public setAbilityCards(data: AbilityDeckCard[]) {
     localStorage.setItem(
-      LocalStorageVersion + this.currentRoute() + '-abilityCards',
+      this.currentRoute() + '-abilityCards',
       JSON.stringify(data)
     );
   }
 
   public getStarsData(): StarsData {
     let cardKingdomFlags: FlagDto[] = JSON.parse(
-      localStorage.getItem(LocalStorageVersion + 'cardkingdom-map-flagsData') ??
-        '[]'
+      localStorage.getItem('cardkingdom-map-flagsData') ?? '[]'
     );
     if (cardKingdomFlags.length < 1) {
       cardKingdomFlags = flagsData;
@@ -599,7 +573,7 @@ export class LocalStorageService {
       (x) => x.levelStatus === 'finished' || x.levelStatus === 'justFinished'
     );
     let zeldaFlags: FlagDto[] = JSON.parse(
-      localStorage.getItem(LocalStorageVersion + 'zelda-map-flagsData') ?? '[]'
+      localStorage.getItem('zelda-map-flagsData') ?? '[]'
     );
     if (zeldaFlags.length < 1) {
       zeldaFlags = flagsDataZelda;
@@ -619,9 +593,7 @@ export class LocalStorageService {
   public getFlagsData(): FlagDto[] {
     const RouteData = this.getRouteData().flagsData;
     const data = JSON.parse(
-      localStorage.getItem(
-        LocalStorageVersion + this.currentRoute() + '-flagsData'
-      ) ?? '[]'
+      localStorage.getItem(this.currentRoute() + '-flagsData') ?? '[]'
     );
     if (data.length < 1) {
       this.setFlagsData(RouteData);
@@ -633,7 +605,7 @@ export class LocalStorageService {
 
   public setFlagsData(data: FlagDto[]) {
     localStorage.setItem(
-      LocalStorageVersion + this.currentRoute() + '-flagsData',
+      this.currentRoute() + '-flagsData',
       JSON.stringify(data)
     );
   }
@@ -641,9 +613,7 @@ export class LocalStorageService {
   public getPlayerDeck(): AbilityDeckCard[] {
     const RouteData = this.getRouteData().defaultAbility;
     const data = JSON.parse(
-      localStorage.getItem(
-        LocalStorageVersion + this.currentRoute() + '-playerDeck'
-      ) ?? '[]'
+      localStorage.getItem(this.currentRoute() + '-playerDeck') ?? '[]'
     );
     if (data.length < 1) {
       const deckCards: AbilityDeckCard[] = RouteData.map((x) => {
@@ -665,7 +635,7 @@ export class LocalStorageService {
 
   public setPlayerDeck(data: AbilityDeckCard[]) {
     localStorage.setItem(
-      LocalStorageVersion + this.currentRoute() + '-playerDeck',
+      this.currentRoute() + '-playerDeck',
       JSON.stringify(data)
     );
   }
@@ -673,9 +643,7 @@ export class LocalStorageService {
   public getBoosterPacks(): BoosterPack[] {
     const RouteData = this.getRouteData().booster;
     const data = JSON.parse(
-      localStorage.getItem(
-        LocalStorageVersion + this.currentRoute() + '-boosterPacks'
-      ) ?? '[]'
+      localStorage.getItem(this.currentRoute() + '-boosterPacks') ?? '[]'
     );
     if (data.length < 1) {
       this.setBoosterPacks(RouteData);
@@ -687,16 +655,14 @@ export class LocalStorageService {
 
   public setBoosterPacks(data: BoosterPack[]) {
     localStorage.setItem(
-      LocalStorageVersion + this.currentRoute() + '-boosterPacks',
+      this.currentRoute() + '-boosterPacks',
       JSON.stringify(data)
     );
   }
 
   public getCurrentBattle(): LevelDto | empty {
     const data = JSON.parse(
-      localStorage.getItem(
-        LocalStorageVersion + this.currentRoute() + '-currentBattle'
-      ) ?? '{}'
+      localStorage.getItem(this.currentRoute() + '-currentBattle') ?? '{}'
     );
     if (data) {
       return data;
@@ -707,16 +673,14 @@ export class LocalStorageService {
 
   public setCurrentBattle(data: LevelDto) {
     localStorage.setItem(
-      LocalStorageVersion + this.currentRoute() + '-currentBattle',
+      this.currentRoute() + '-currentBattle',
       JSON.stringify(data)
     );
   }
 
   public getCurrentDetails(): MissionDetails | empty {
     const data = JSON.parse(
-      localStorage.getItem(
-        LocalStorageVersion + this.currentRoute() + '-currentDetails'
-      ) ?? '[]'
+      localStorage.getItem(this.currentRoute() + '-currentDetails') ?? '[]'
     );
     if (data) {
       return data;
@@ -727,7 +691,7 @@ export class LocalStorageService {
 
   public setCurrentDetails(data: MissionDetails) {
     localStorage.setItem(
-      LocalStorageVersion + this.currentRoute() + '-currentDetails',
+      this.currentRoute() + '-currentDetails',
       JSON.stringify(data)
     );
   }
@@ -735,9 +699,7 @@ export class LocalStorageService {
   public getChallengeFlags(): FlagDto[] {
     const RouteData = this.getRouteData().challengeFlags;
     const data = JSON.parse(
-      localStorage.getItem(
-        LocalStorageVersion + this.currentRoute() + '-challengeFlags'
-      ) ?? '[]'
+      localStorage.getItem(this.currentRoute() + '-challengeFlags') ?? '[]'
     );
     if (data.length < 1) {
       this.setChallengeFlags(RouteData);
@@ -749,7 +711,7 @@ export class LocalStorageService {
 
   public setChallengeFlags(data: FlagDto[]) {
     localStorage.setItem(
-      LocalStorageVersion + this.currentRoute() + '-challengeFlags',
+      this.currentRoute() + '-challengeFlags',
       JSON.stringify(data)
     );
   }
@@ -757,9 +719,7 @@ export class LocalStorageService {
   public getChallengeLevels(): LevelDto[] {
     const RouteData = this.getRouteData().challengeLevels;
     const data = JSON.parse(
-      localStorage.getItem(
-        LocalStorageVersion + this.currentRoute() + '-challengeLevels'
-      ) ?? '[]'
+      localStorage.getItem(this.currentRoute() + '-challengeLevels') ?? '[]'
     );
     if (data.length < 1) {
       this.setChallengeLevels(RouteData);
@@ -771,7 +731,7 @@ export class LocalStorageService {
 
   public setChallengeLevels(data: LevelDto[]) {
     localStorage.setItem(
-      LocalStorageVersion + this.currentRoute() + '-challengeLevels',
+      this.currentRoute() + '-challengeLevels',
       JSON.stringify(data)
     );
   }
@@ -779,9 +739,7 @@ export class LocalStorageService {
   public getSpecialLevelsData(): SpecialLevels {
     const RouteData = this.getRouteData().specialLevels;
     const data = JSON.parse(
-      localStorage.getItem(
-        LocalStorageVersion + this.currentRoute() + '-specialLevelsData'
-      ) ?? '{}'
+      localStorage.getItem(this.currentRoute() + '-specialLevelsData') ?? '{}'
     );
     if (!data) {
       this.setSpecialLevelsData(RouteData);
@@ -793,16 +751,14 @@ export class LocalStorageService {
 
   public setSpecialLevelsData(data: SpecialLevels) {
     localStorage.setItem(
-      LocalStorageVersion + this.currentRoute() + '-specialLevelsData',
+      this.currentRoute() + '-specialLevelsData',
       JSON.stringify(data)
     );
   }
 
   public getPlayerGold(): number {
     const data = JSON.parse(
-      localStorage.getItem(
-        LocalStorageVersion + this.currentRoute() + '-playerGold'
-      ) ?? '0'
+      localStorage.getItem(this.currentRoute() + '-playerGold') ?? '0'
     );
     if (!data) {
       this.setPlayerGold(0);
@@ -814,7 +770,7 @@ export class LocalStorageService {
 
   public setPlayerGold(data: number) {
     localStorage.setItem(
-      LocalStorageVersion + this.currentRoute() + '-playerGold',
+      this.currentRoute() + '-playerGold',
       JSON.stringify(data)
     );
   }

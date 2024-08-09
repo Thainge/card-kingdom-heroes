@@ -8,7 +8,6 @@ import {
 } from 'angular-animations';
 import { AchievementObject } from 'src/app/models/achievement';
 import { AchievementService } from 'src/app/services/achievement.service';
-import { LocalStorageVersion } from 'src/app/services/env';
 import { LoadingService } from 'src/app/services/loading.service';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
 import { playerService } from 'src/app/services/player.service';
@@ -75,14 +74,9 @@ export class AchievementsOverlayComponent implements OnInit {
   }
 
   checkTip() {
-    const deckTipShown = localStorage.getItem(
-      LocalStorageVersion + 'achievementTipShown'
-    );
+    const deckTipShown = localStorage.getItem('achievementTipShown');
     if (!deckTipShown) {
-      localStorage.setItem(
-        LocalStorageVersion + 'achievementTipShown',
-        JSON.stringify(true)
-      );
+      localStorage.setItem('achievementTipShown', JSON.stringify(true));
       this.loadingService.currentTip$.next({
         title: 'New Tip',
         header: 'Achievements',
@@ -103,14 +97,9 @@ export class AchievementsOverlayComponent implements OnInit {
       return;
     }
 
-    const deckTipShown = localStorage.getItem(
-      LocalStorageVersion + 'achievementTipShownFinish'
-    );
+    const deckTipShown = localStorage.getItem('achievementTipShownFinish');
     if (!deckTipShown) {
-      localStorage.setItem(
-        LocalStorageVersion + 'achievementTipShownFinish',
-        JSON.stringify(true)
-      );
+      localStorage.setItem('achievementTipShownFinish', JSON.stringify(true));
       this.loadingService.currentTip$.next({
         title: 'New Unlock',
         header: 'Congratulations!',

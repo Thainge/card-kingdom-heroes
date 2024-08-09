@@ -28,7 +28,6 @@ import { AbilityCard } from 'src/app/models/abilityCard';
 import { BoosterPack } from 'src/app/models/boosterPack';
 import { AchievementService } from 'src/app/services/achievement.service';
 import { CardService } from 'src/app/services/card.service';
-import { LocalStorageVersion } from 'src/app/services/env';
 import { LoadingService } from 'src/app/services/loading.service';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
 import { playerService } from 'src/app/services/player.service';
@@ -143,15 +142,10 @@ export class ShopOverlayComponent implements OnInit {
   }
 
   checkShopTip() {
-    const shopTipShown = localStorage.getItem(
-      LocalStorageVersion + 'shopTipShown'
-    );
+    const shopTipShown = localStorage.getItem('shopTipShown');
     console.log(shopTipShown);
     if (!shopTipShown) {
-      localStorage.setItem(
-        LocalStorageVersion + 'shopTipShown',
-        JSON.stringify(true)
-      );
+      localStorage.setItem('shopTipShown', JSON.stringify(true));
       this.loadingService.currentTip$.next({
         title: 'New Tip',
         header: 'Shop',

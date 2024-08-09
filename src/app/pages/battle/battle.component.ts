@@ -48,7 +48,6 @@ import { ComicComponent } from 'src/app/components/comic/comic.component';
 import { AchievementService } from 'src/app/services/achievement.service';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
 import { Cards } from 'src/assets/data/cards';
-import { LocalStorageVersion } from 'src/app/services/env';
 
 interface MissionDetails {
   image: string;
@@ -447,9 +446,7 @@ export class BattleComponent implements OnInit {
 
   ngOnInit() {
     try {
-      const localBattleSpeed = localStorage.getItem(
-        LocalStorageVersion + 'battleSpeed2x'
-      );
+      const localBattleSpeed = localStorage.getItem('battleSpeed2x');
       if (localBattleSpeed === 'true') {
         this.setSpeedToDouble();
         this.TwoTimesSpeed = true;
@@ -463,7 +460,7 @@ export class BattleComponent implements OnInit {
     }
     try {
       const localPremium = JSON.parse(
-        localStorage.getItem(LocalStorageVersion + 'premiumData') ?? '[]'
+        localStorage.getItem('premiumData') ?? '[]'
       );
 
       if (localPremium && localPremium.length > 0) {
@@ -481,9 +478,7 @@ export class BattleComponent implements OnInit {
     });
     // Update theme
     this.gameThemePath =
-      (localStorage.getItem(
-        LocalStorageVersion + 'gameThemePath'
-      ) as gameTheme) ?? 'default';
+      (localStorage.getItem('gameThemePath') as gameTheme) ?? 'default';
     // Cheats
     this.cheatsService.cheats$.subscribe((x) => {
       console.log(x);
@@ -536,9 +531,7 @@ export class BattleComponent implements OnInit {
 
   ngAfterContentInit() {
     setTimeout(() => {
-      const loadingLocal = localStorage.getItem(
-        LocalStorageVersion + 'showLoading'
-      );
+      const loadingLocal = localStorage.getItem('showLoading');
       if (loadingLocal) {
         const showLoading = JSON.parse(loadingLocal);
         if (showLoading) {
@@ -559,10 +552,7 @@ export class BattleComponent implements OnInit {
               'Loading...'
             );
           }
-          localStorage.setItem(
-            LocalStorageVersion + 'showLoading',
-            JSON.stringify(false)
-          );
+          localStorage.setItem('showLoading', JSON.stringify(false));
         }
       }
     }, 50);
@@ -576,10 +566,7 @@ export class BattleComponent implements OnInit {
       // 2x speed
       this.setSpeedToDouble();
     }
-    localStorage.setItem(
-      LocalStorageVersion + 'battleSpeed2x',
-      JSON.stringify(this.TwoTimesSpeed)
-    );
+    localStorage.setItem('battleSpeed2x', JSON.stringify(this.TwoTimesSpeed));
   }
 
   setSpeedToDouble() {
@@ -691,14 +678,9 @@ export class BattleComponent implements OnInit {
 
   checkShowWildCardHint(card: CardDto) {
     // Show wild card hint
-    const wildTipShown = localStorage.getItem(
-      LocalStorageVersion + 'wildTipShown'
-    );
+    const wildTipShown = localStorage.getItem('wildTipShown');
     if (!wildTipShown && (card.wildRange ?? 0) >= 13) {
-      localStorage.setItem(
-        LocalStorageVersion + 'wildTipShown',
-        JSON.stringify(true)
-      );
+      localStorage.setItem('wildTipShown', JSON.stringify(true));
       this.showWildHintOverlay = true;
       this.currentTip = {
         title: 'New Tip',
@@ -784,7 +766,7 @@ export class BattleComponent implements OnInit {
 
     // set player xp
     const heroes: PlayerDto[] = JSON.parse(
-      localStorage.getItem(LocalStorageVersion + 'heroData') ?? '[]'
+      localStorage.getItem('heroData') ?? '[]'
     );
     const newHeroes = heroes.map((x) => {
       if (x.id === this.player.id) {
@@ -801,10 +783,7 @@ export class BattleComponent implements OnInit {
       return x;
     });
     this.playerService.currentHero$.next(newHeroes.find((x) => x.selected));
-    localStorage.setItem(
-      LocalStorageVersion + 'heroData',
-      JSON.stringify(newHeroes)
-    );
+    localStorage.setItem('heroData', JSON.stringify(newHeroes));
   }
 
   isActiveReward(rewardItem: any) {
@@ -910,9 +889,7 @@ export class BattleComponent implements OnInit {
     }
 
     // Easy mode
-    const localEasyMode = localStorage.getItem(
-      LocalStorageVersion + 'easymode'
-    );
+    const localEasyMode = localStorage.getItem('easymode');
     if (localEasyMode) {
       this.easyMode = JSON.parse(localEasyMode);
     }
@@ -983,7 +960,7 @@ export class BattleComponent implements OnInit {
     this.showAbilityGuide = currentLevel.showAbilityGuide ?? false;
 
     const localShownGuideAlready = localStorage.getItem(
-      LocalStorageVersion + 'localShownGuideAlready'
+      'localShownGuideAlready'
     );
 
     // Guide is initially false, hide guide
@@ -1249,10 +1226,7 @@ export class BattleComponent implements OnInit {
   async skipGuide() {
     this.playerService.playSound('button.mp3');
     if (!this.skippingGuide) {
-      localStorage.setItem(
-        LocalStorageVersion + 'localShownGuideAlready',
-        JSON.stringify(true)
-      );
+      localStorage.setItem('localShownGuideAlready', JSON.stringify(true));
       this.skippingGuide = true;
 
       await this.hidePreviousGuideMessages();
@@ -1581,10 +1555,7 @@ export class BattleComponent implements OnInit {
       } else {
         this.loadingService.navigate('/battle', 'loadingBg.png', 'Loading...');
       }
-      localStorage.setItem(
-        LocalStorageVersion + 'localShownGuideAlready',
-        JSON.stringify(true)
-      );
+      localStorage.setItem('localShownGuideAlready', JSON.stringify(true));
       this.resetGame();
       this.Cards = this.currentLevel?.cards ? this.currentLevel.cards : Cards;
       setTimeout(() => {
@@ -1671,7 +1642,7 @@ export class BattleComponent implements OnInit {
   }
 
   async continue() {
-    // localStorage.setItem(LocalStorageVersion + 'showLoading', JSON.stringify(true));
+    // localStorage.setItem('showLoading', JSON.stringify(true));
     // window.location.reload();
     this.activeLeaderLines.forEach((x) => {
       x.hide();
@@ -1694,7 +1665,7 @@ export class BattleComponent implements OnInit {
   }
 
   async retry() {
-    // localStorage.setItem(LocalStorageVersion + 'showLoading', JSON.stringify(true));
+    // localStorage.setItem('showLoading', JSON.stringify(true));
     // window.location.reload();
     this.activeLeaderLines.forEach((x) => {
       x.hide();
@@ -4171,10 +4142,7 @@ export class BattleComponent implements OnInit {
   endGame(playerWon: boolean) {
     this.playerService.stopCurrentAudio();
     if (playerWon) {
-      localStorage.setItem(
-        LocalStorageVersion + 'gameStartedYet',
-        JSON.stringify(true)
-      );
+      localStorage.setItem('gameStartedYet', JSON.stringify(true));
       let challengeFlags: FlagDto[] =
         this.localStorageService.getChallengeFlags();
       challengeFlags = challengeFlags.map((x) => {
@@ -4203,10 +4171,7 @@ export class BattleComponent implements OnInit {
         }, this.VictoryEnd3500);
       }
     } else {
-      localStorage.setItem(
-        LocalStorageVersion + 'gameStartedYet',
-        JSON.stringify(true)
-      );
+      localStorage.setItem('gameStartedYet', JSON.stringify(true));
       setTimeout(() => {
         this.playerService.playSound('defeat.mp3');
         this.gameLoserPlayer = true;

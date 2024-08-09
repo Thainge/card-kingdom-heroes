@@ -9,7 +9,6 @@ import {
   zoomOutOnLeaveAnimation,
 } from 'angular-animations';
 import { HeroUpgrade, PlayerDto } from 'src/app/models/player';
-import { LocalStorageVersion } from 'src/app/services/env';
 import { LoadingService } from 'src/app/services/loading.service';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
 import { playerService } from 'src/app/services/player.service';
@@ -67,24 +66,16 @@ export class HeroOverlayComponent implements OnInit {
     this.heroes = localHeroData.heroes;
     this.currentHero = localHeroData.currentHero;
     this.currentHero = this.heroes.find((x) => x.selected);
-    localStorage.setItem(
-      LocalStorageVersion + 'heroData',
-      JSON.stringify(this.heroes)
-    );
+    localStorage.setItem('heroData', JSON.stringify(this.heroes));
     this.playerService.currentHero$.next(this.heroes.find((x) => x.selected));
   }
 
   trackById = (index: number, item: HeroUpgrade) => item.id;
 
   checkTip() {
-    const heroTipShown = localStorage.getItem(
-      LocalStorageVersion + 'heroTipShown'
-    );
+    const heroTipShown = localStorage.getItem('heroTipShown');
     if (!heroTipShown) {
-      localStorage.setItem(
-        LocalStorageVersion + 'heroTipShown',
-        JSON.stringify(true)
-      );
+      localStorage.setItem('heroTipShown', JSON.stringify(true));
       this.loadingService.currentTip$.next({
         title: 'New Tip',
         header: 'Hero Room',
@@ -114,10 +105,7 @@ export class HeroOverlayComponent implements OnInit {
     });
 
     this.currentHero.selected = true;
-    localStorage.setItem(
-      LocalStorageVersion + 'heroData',
-      JSON.stringify(this.heroes)
-    );
+    localStorage.setItem('heroData', JSON.stringify(this.heroes));
     this.playerService.currentHero$.next(this.heroes.find((x) => x.selected));
   }
 
@@ -232,10 +220,7 @@ export class HeroOverlayComponent implements OnInit {
         return x;
       });
 
-      localStorage.setItem(
-        LocalStorageVersion + 'heroData',
-        JSON.stringify(this.heroes)
-      );
+      localStorage.setItem('heroData', JSON.stringify(this.heroes));
       this.playerService.currentHero$.next(this.heroes.find((x) => x.selected));
     }
   }
@@ -286,10 +271,7 @@ export class HeroOverlayComponent implements OnInit {
         return x;
       });
 
-      localStorage.setItem(
-        LocalStorageVersion + 'heroData',
-        JSON.stringify(this.heroes)
-      );
+      localStorage.setItem('heroData', JSON.stringify(this.heroes));
       this.playerService.currentHero$.next(this.heroes.find((x) => x.selected));
     }
   }

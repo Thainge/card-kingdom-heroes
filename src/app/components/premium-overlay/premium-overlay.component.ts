@@ -15,7 +15,6 @@ import {
   fadeInUpOnEnterAnimation,
   fadeOutUpOnLeaveAnimation,
 } from 'angular-animations';
-import { LocalStorageVersion } from 'src/app/services/env';
 import { LoadingService } from 'src/app/services/loading.service';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
 import { playerService } from 'src/app/services/player.service';
@@ -111,7 +110,7 @@ export class PremiumOverlayComponent implements OnInit {
   ngOnInit() {
     this.goldImage = this.localStorageService.getCurrentGoldImage();
     const localPremium = JSON.parse(
-      localStorage.getItem(LocalStorageVersion + 'premiumData') ?? '[]'
+      localStorage.getItem('premiumData') ?? '[]'
     );
     if (localPremium.length > 0) {
       this.premiumItems = localPremium;
@@ -124,14 +123,9 @@ export class PremiumOverlayComponent implements OnInit {
   ngAfterViewInit() {}
 
   checkTip() {
-    const premiumTipShown = localStorage.getItem(
-      LocalStorageVersion + 'premiumTipShown'
-    );
+    const premiumTipShown = localStorage.getItem('premiumTipShown');
     if (!premiumTipShown) {
-      localStorage.setItem(
-        LocalStorageVersion + 'premiumTipShown',
-        JSON.stringify(true)
-      );
+      localStorage.setItem('premiumTipShown', JSON.stringify(true));
       this.loadingService.currentTip$.next({
         title: 'New Tip',
         header: 'Premium',
@@ -175,10 +169,7 @@ export class PremiumOverlayComponent implements OnInit {
       return x;
     });
 
-    localStorage.setItem(
-      LocalStorageVersion + 'premiumData',
-      JSON.stringify(this.premiumItems)
-    );
+    localStorage.setItem('premiumData', JSON.stringify(this.premiumItems));
   }
 
   toggleActive(item: PremiumBox) {
@@ -190,10 +181,7 @@ export class PremiumOverlayComponent implements OnInit {
 
       return x;
     });
-    localStorage.setItem(
-      LocalStorageVersion + 'premiumData',
-      JSON.stringify(this.premiumItems)
-    );
+    localStorage.setItem('premiumData', JSON.stringify(this.premiumItems));
   }
 
   changeIndexLeft() {

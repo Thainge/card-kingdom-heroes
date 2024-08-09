@@ -21,7 +21,6 @@ import { CheatsService } from './services/cheats.service';
 import { LoadingService } from './services/loading.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { LocalStorageService } from './services/localstorage.service';
-import { LocalStorageVersion } from './services/env';
 
 type ClickObject = {
   id: number;
@@ -272,11 +271,9 @@ export class AppComponent implements OnInit {
   }
 
   async determineCommand(value: string) {
-    const secretCodeEntered = localStorage.getItem(
-      LocalStorageVersion + 'secretCodeEntered'
-    );
+    const secretCodeEntered = localStorage.getItem('secretCodeEntered');
     const secretCodeUnlocked = localStorage.getItem(
-      LocalStorageVersion + 'achievementTipShownFinish'
+      'achievementTipShownFinish'
     );
 
     if (value.toLowerCase() === 'help') {
@@ -354,10 +351,7 @@ export class AppComponent implements OnInit {
     }
 
     if (value.includes('iloveyou')) {
-      localStorage.setItem(
-        LocalStorageVersion + 'secretCodeEntered',
-        JSON.stringify(true)
-      );
+      localStorage.setItem('secretCodeEntered', JSON.stringify(true));
       setTimeout(() => {
         this.consoleItems.unshift('Congratualations!');
       }, 100);
