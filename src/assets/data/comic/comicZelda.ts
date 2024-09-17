@@ -2,6 +2,7 @@ import { Comic } from 'src/app/models/level';
 
 export const ComicDataZelda: Comic[] = [
   {
+    // 0
     id: 1,
     display: false,
     comics: [
@@ -56,6 +57,7 @@ export const ComicDataZelda: Comic[] = [
     ],
   },
   {
+    // 1
     id: 2,
     display: false,
     comics: [
@@ -148,7 +150,8 @@ export const ComicDataZelda: Comic[] = [
     ],
   },
   {
-    id: 4,
+    // 2
+    id: 3,
     display: false,
     comics: [
       {
@@ -256,7 +259,8 @@ export const ComicDataZelda: Comic[] = [
     ],
   },
   {
-    id: 5,
+    // 3
+    id: 4,
     display: false,
     comics: [
       {
@@ -380,7 +384,8 @@ export const ComicDataZelda: Comic[] = [
     ],
   },
   {
-    id: 6,
+    // 4
+    id: 5,
     display: false,
     comics: [
       {
@@ -433,7 +438,8 @@ export const ComicDataZelda: Comic[] = [
     ],
   },
   {
-    id: 7,
+    // 5
+    id: 6,
     display: false,
     comics: [
       {
@@ -494,7 +500,131 @@ export const ComicDataZelda: Comic[] = [
     ],
   },
   {
+    // 6
+    id: 7,
+    display: false,
+    comics: [
+      {
+        id: 1,
+        display: false,
+        image: 'Link11.png',
+        blackList: [
+          {
+            id: 1,
+            height: 1000,
+            width: 1400,
+            left: 0,
+            top: 0,
+            display: true,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    // 7
     id: 8,
+    display: false,
+    comics: [
+      {
+        id: 1,
+        display: false,
+        image: 'Link12.png',
+        blackList: [
+          {
+            id: 1,
+            height: 380,
+            width: 380,
+            left: 0,
+            top: 0,
+            display: true,
+          },
+          {
+            id: 2,
+            height: 380,
+            width: 440,
+            left: 390,
+            top: 0,
+            display: true,
+          },
+          {
+            id: 3,
+            height: 345,
+            width: 440,
+            left: 820,
+            top: 0,
+            display: true,
+          },
+          {
+            id: 4,
+            height: 450,
+            width: 410,
+            left: 0,
+            top: 400,
+            display: true,
+          },
+          {
+            id: 5,
+            height: 450,
+            width: 340,
+            left: 450,
+            top: 380,
+            display: true,
+          },
+          {
+            id: 6,
+            height: 480,
+            width: 340,
+            left: 840,
+            top: 350,
+            display: true,
+          },
+        ],
+      },
+      {
+        id: 2,
+        display: false,
+        image: 'Link13.png',
+        blackList: [
+          {
+            id: 1,
+            height: 420,
+            width: 660,
+            left: 0,
+            top: 0,
+            display: true,
+          },
+          {
+            id: 2,
+            height: 420,
+            width: 660,
+            left: 670,
+            top: 0,
+            display: true,
+          },
+          {
+            id: 3,
+            height: 420,
+            width: 660,
+            left: 0,
+            top: 420,
+            display: true,
+          },
+          {
+            id: 4,
+            height: 420,
+            width: 660,
+            left: 650,
+            top: 435,
+            display: true,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    // 8
+    id: 9,
     display: false,
     comics: [
       {
@@ -548,27 +678,6 @@ export const ComicDataZelda: Comic[] = [
             width: 350,
             left: 851,
             top: 470,
-            display: true,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 9,
-    display: false,
-    comics: [
-      {
-        id: 1,
-        display: false,
-        image: 'Link9.png',
-        blackList: [
-          {
-            id: 1,
-            height: 450,
-            width: 300,
-            left: 0,
-            top: 0,
             display: true,
           },
         ],

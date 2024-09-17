@@ -501,7 +501,7 @@ export class BattleComponent implements OnInit {
 
       if (x === 'defeatEnemy') {
         this.enemyPlayers = this.enemyPlayers.map((x) => {
-          return { ...x, health: 1, baseHealth: 1, attack: 1, baseAttack: 0 };
+          return { ...x, health: 1, baseHealth: 1, attack: 1, baseAttack: 1 };
         });
       }
     });

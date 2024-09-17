@@ -16,6 +16,7 @@
     "
   >
     <div style="display: flex; flex-direction: column; row-gap: 1em">
+      <h2>{{ (allComics ?? [])[this.currentComicIndex ?? 0]?.id }}</h2>
       <div>
         <button (click)="updateIndex(0)">1</button>
         <button

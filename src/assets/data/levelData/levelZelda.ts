@@ -428,6 +428,8 @@ export const LevelsDataZelda: LevelDto[] = [
     ...Level,
     id: 7,
     battleRewardXp: 100,
+    comicData: ComicDataZelda[8],
+    showComicStart: true,
     combatPhases: [
       {
         id: 1,
