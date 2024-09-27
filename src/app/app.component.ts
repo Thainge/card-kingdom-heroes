@@ -82,10 +82,11 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     if (
       !localStorage.getItem('clearStorage') ||
-      localStorage.getItem('clearStorage') === 'v2'
+      localStorage.getItem('clearStorage') === 'v2' ||
+      localStorage.getItem('clearStorage') === 'v3'
     ) {
       localStorage.clear();
-      localStorage.setItem('clearStorage', 'v3');
+      localStorage.setItem('clearStorage', 'v4');
       location.reload();
     }
 
