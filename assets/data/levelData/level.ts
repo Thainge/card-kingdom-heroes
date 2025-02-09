@@ -1050,7 +1050,7 @@ export const LevelsData: LevelDto[] = [
             level: 1,
           },
           {
-            id: 2,
+            id: 3,
             image: '31.png',
             name: 'Fire Fiend',
             attack: 3,

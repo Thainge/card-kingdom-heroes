@@ -45,7 +45,7 @@ export const LevelsDataZelda: LevelDto[] = [
             level: 1,
           },
           {
-            id: 1,
+            id: 2,
             image: 'zelda0.png',
             name: 'Bokoblin',
             attack: 1,
